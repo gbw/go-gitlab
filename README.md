@@ -179,3 +179,21 @@ For complete usage of go-gitlab, see the full [package docs](https://godoc.org/g
 
 Contributions are always welcome. For more information, check out the
 [contributing guide](https://gitlab.com/gitlab-org/api/client-go/-/blob/main/CONTRIBUTING.md).
+
+## Maintenance
+
+This is a community maintained project. If you have a paid GitLab subscription,
+please note that this project is not packaged as a part of GitLab, and falls outside
+of the scope of support.
+
+For more information, see GitLab's
+[Statement of Support](https://about.gitlab.com/support/statement-of-support.html).
+Please fill out an issue in this projects issue tracker and someone from the community
+will respond as soon as they are available to help you.
+
+### Known GitLab Projects using this package
+
+- [GitLab Terraform Provider](https://gitlab.com/gitlab-org/terraform-provider-gitlab)
+  maintained by the community with support from ~"group::environments"
+- [GitLab CLI (`glab`)](https://gitlab.com/gitlab-org/cli)
+  maintained by ~"group::code review"
