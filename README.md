@@ -175,10 +175,6 @@ func main() {
 
 For complete usage of go-gitlab, see the full [package docs](https://godoc.org/gitlab.com/gitlab-org/api/client-go).
 
-## ToDo
-
-- The biggest thing this package still needs is tests :disappointed:
-
 ## Issues
 
 - If you have an issue: report it on the [issue tracker](https://gitlab.com/gitlab-org/client-go/issues)
