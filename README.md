@@ -8,12 +8,6 @@ A GitLab API client enabling Go programs to interact with GitLab in a simple and
 [![Go Report Card](https://goreportcard.com/badge/github.com/xanzy/go-gitlab)](https://goreportcard.com/report/github.com/xanzy/go-gitlab)
 [![Coverage](https://github.com/xanzy/go-gitlab/wiki/coverage.svg)](https://raw.githack.com/wiki/xanzy/go-gitlab/coverage.html)
 
-## NOTE
-
-Release v0.6.0 (released on 25-08-2017) no longer supports the older V3 GitLab API. If
-you need V3 support, please use the `f-api-v3` branch. This release contains some backwards
-incompatible changes that were needed to fully support the V4 GitLab API.
-
 ## Coverage
 
 This API client package covers most of the existing GitLab API calls and is updated regularly
