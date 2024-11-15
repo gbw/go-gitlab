@@ -175,10 +175,6 @@ func main() {
 
 For complete usage of go-gitlab, see the full [package docs](https://godoc.org/gitlab.com/gitlab-org/api/client-go).
 
-## Author
-
-Sander van Harmelen (<sander@vanharmelen.nl>)
-
 ## Contributing
 
 Contributions are always welcome. For more information, check out the
