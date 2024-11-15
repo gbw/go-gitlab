@@ -2,12 +2,6 @@
 
 A GitLab API client enabling Go programs to interact with GitLab in a simple and uniform way
 
-[![Build Status](https://github.com/xanzy/go-gitlab/workflows/Lint%20and%20Test/badge.svg)](https://github.com/xanzy/go-gitlab/actions?workflow=Lint%20and%20Test)
-[![Sourcegraph](https://sourcegraph.com/github.com/xanzy/go-gitlab/-/badge.svg)](https://sourcegraph.com/github.com/xanzy/go-gitlab?badge)
-[![GoDoc](https://godoc.org/github.com/xanzy/go-gitlab?status.svg)](https://godoc.org/github.com/xanzy/go-gitlab)
-[![Go Report Card](https://goreportcard.com/badge/github.com/xanzy/go-gitlab)](https://goreportcard.com/report/github.com/xanzy/go-gitlab)
-[![Coverage](https://github.com/xanzy/go-gitlab/wiki/coverage.svg)](https://raw.githack.com/wiki/xanzy/go-gitlab/coverage.html)
-
 ## Coverage
 
 This API client package covers most of the existing GitLab API calls and is updated regularly
