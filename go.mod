@@ -1,4 +1,4 @@
-module github.com/xanzy/go-gitlab
+module gitlab.com/gitlab-org/api/client-go
 
 go 1.19
 

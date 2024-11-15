@@ -1,4 +1,4 @@
-# go-gitlab
+# GitLab client-go (former `github.com/xanzy/go-gitlab`)
 
 A GitLab API client enabling Go programs to interact with GitLab in a simple and uniform way
 
@@ -91,7 +91,7 @@ to add new and/or missing endpoints. Currently, the following services are suppo
 ## Usage
 
 ```go
-import "github.com/xanzy/go-gitlab"
+import "gitlab.com/gitlab-org/api/client-go"
 ```
 
 Construct a new GitLab client, then use the various services on the client to
@@ -128,7 +128,7 @@ projects, _, err := git.Projects.ListProjects(opt)
 
 ### Examples
 
-The [examples](https://github.com/xanzy/go-gitlab/tree/master/examples) directory
+The [examples](https://gitlab.com/gitlab-org/api/client-go/tree/master/examples) directory
 contains a couple for clear examples, of which one is partially listed here as well:
 
 ```go
@@ -137,7 +137,7 @@ package main
 import (
 	"log"
 
-	"github.com/xanzy/go-gitlab"
+	"gitlab.com/gitlab-org/api/client-go"
 )
 
 func main() {
@@ -173,7 +173,7 @@ func main() {
 }
 ```
 
-For complete usage of go-gitlab, see the full [package docs](https://godoc.org/github.com/xanzy/go-gitlab).
+For complete usage of go-gitlab, see the full [package docs](https://godoc.org/gitlab.com/gitlab-org/api/client-go).
 
 ## ToDo
 
@@ -181,7 +181,7 @@ For complete usage of go-gitlab, see the full [package docs](https://godoc.org/g
 
 ## Issues
 
-- If you have an issue: report it on the [issue tracker](https://github.com/xanzy/go-gitlab/issues)
+- If you have an issue: report it on the [issue tracker](https://gitlab.com/gitlab-org/client-go/issues)
 
 ## Author
 
@@ -189,7 +189,8 @@ Sander van Harmelen (<sander@vanharmelen.nl>)
 
 ## Contributing
 
-Contributions are always welcome. For more information, check out the [contributing guide](https://github.com/xanzy/go-gitlab/blob/master/CONTRIBUTING.md)
+Contributions are always welcome. For more information, check out the
+[contributing guide](https://gitlab.com/gitlab-org/api/client-go/-/blob/main/CONTRIBUTING.md).
 
 ## License
 
