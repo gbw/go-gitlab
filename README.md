@@ -1,18 +1,6 @@
-# go-gitlab
+# GitLab client-go (former `github.com/xanzy/go-gitlab`)
 
 A GitLab API client enabling Go programs to interact with GitLab in a simple and uniform way
-
-[![Build Status](https://github.com/xanzy/go-gitlab/workflows/Lint%20and%20Test/badge.svg)](https://github.com/xanzy/go-gitlab/actions?workflow=Lint%20and%20Test)
-[![Sourcegraph](https://sourcegraph.com/github.com/xanzy/go-gitlab/-/badge.svg)](https://sourcegraph.com/github.com/xanzy/go-gitlab?badge)
-[![GoDoc](https://godoc.org/github.com/xanzy/go-gitlab?status.svg)](https://godoc.org/github.com/xanzy/go-gitlab)
-[![Go Report Card](https://goreportcard.com/badge/github.com/xanzy/go-gitlab)](https://goreportcard.com/report/github.com/xanzy/go-gitlab)
-[![Coverage](https://github.com/xanzy/go-gitlab/wiki/coverage.svg)](https://raw.githack.com/wiki/xanzy/go-gitlab/coverage.html)
-
-## NOTE
-
-Release v0.6.0 (released on 25-08-2017) no longer supports the older V3 GitLab API. If
-you need V3 support, please use the `f-api-v3` branch. This release contains some backwards
-incompatible changes that were needed to fully support the V4 GitLab API.
 
 ## Coverage
 
@@ -26,7 +14,6 @@ to add new and/or missing endpoints. Currently, the following services are suppo
 - [x] Commits
 - [x] Container Registry
 - [x] Custom Attributes
-- [x] Dependency List Export
 - [x] Deploy Keys
 - [x] Deployments
 - [x] Discussions (threaded comments)
@@ -104,7 +91,7 @@ to add new and/or missing endpoints. Currently, the following services are suppo
 ## Usage
 
 ```go
-import "github.com/xanzy/go-gitlab"
+import "gitlab.com/gitlab-org/api/client-go"
 ```
 
 Construct a new GitLab client, then use the various services on the client to
@@ -141,7 +128,7 @@ projects, _, err := git.Projects.ListProjects(opt)
 
 ### Examples
 
-The [examples](https://github.com/xanzy/go-gitlab/tree/master/examples) directory
+The [examples](https://gitlab.com/gitlab-org/api/client-go/tree/master/examples) directory
 contains a couple for clear examples, of which one is partially listed here as well:
 
 ```go
@@ -150,7 +137,7 @@ package main
 import (
 	"log"
 
-	"github.com/xanzy/go-gitlab"
+	"gitlab.com/gitlab-org/api/client-go"
 )
 
 func main() {
@@ -186,24 +173,27 @@ func main() {
 }
 ```
 
-For complete usage of go-gitlab, see the full [package docs](https://godoc.org/github.com/xanzy/go-gitlab).
-
-## ToDo
-
-- The biggest thing this package still needs is tests :disappointed:
-
-## Issues
-
-- If you have an issue: report it on the [issue tracker](https://github.com/xanzy/go-gitlab/issues)
-
-## Author
-
-Sander van Harmelen (<sander@vanharmelen.nl>)
+For complete usage of go-gitlab, see the full [package docs](https://godoc.org/gitlab.com/gitlab-org/api/client-go).
 
 ## Contributing
 
-Contributions are always welcome. For more information, check out the [contributing guide](https://github.com/xanzy/go-gitlab/blob/master/CONTRIBUTING.md)
+Contributions are always welcome. For more information, check out the
+[contributing guide](https://gitlab.com/gitlab-org/api/client-go/-/blob/main/CONTRIBUTING.md).
 
-## License
+## Maintenance
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+This is a community maintained project. If you have a paid GitLab subscription,
+please note that this project is not packaged as a part of GitLab, and falls outside
+of the scope of support.
+
+For more information, see GitLab's
+[Statement of Support](https://about.gitlab.com/support/statement-of-support.html).
+Please fill out an issue in this projects issue tracker and someone from the community
+will respond as soon as they are available to help you.
+
+### Known GitLab Projects using this package
+
+- [GitLab Terraform Provider](https://gitlab.com/gitlab-org/terraform-provider-gitlab)
+  maintained by the community with support from ~"group::environments"
+- [GitLab CLI (`glab`)](https://gitlab.com/gitlab-org/cli)
+  maintained by ~"group::code review"

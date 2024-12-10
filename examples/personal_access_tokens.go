@@ -22,7 +22,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/xanzy/go-gitlab"
+	"gitlab.com/gitlab-org/api/client-go"
 )
 
 func patRevokeExample() {
