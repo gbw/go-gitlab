@@ -17,8 +17,14 @@ stages:
         - '1.22'
         - '1.23'
 
+.go:base:
+  tags:
+    - saas-linux-large-amd64
+
 # From: https://docs.gitlab.com/ee/ci/caching/#cache-go-dependencies
 .go-cache:
+  extends:
+    - .go:base
   variables:
     GOPATH: $CI_PROJECT_DIR/.go
     GOLANGCI_LINT_CACHE: $CI_PROJECT_DIR/.golangci-lint
@@ -36,6 +42,7 @@ golangci-lint:
   extends:
     - .go-cache
   stage: lint
+  needs: []
   variables:
     REPORT_FILENAME: 'gl-code-quality-report.json'
   image: golangci/golangci-lint:v1.62.0
@@ -52,6 +59,7 @@ tests:unit:
     - .go-cache
     - .go-versions
   stage: test
+  needs: []
   image: golang:$GOLANG_IMAGE_VERSION
   variables:
     # configure tooling versions
