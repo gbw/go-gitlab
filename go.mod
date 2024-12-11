@@ -11,7 +11,7 @@ require (
 	golang.org/x/time v0.3.0
 )
 
-require google.golang.org/appengine v1.6.7 // indirect
+require google.golang.org/appengine/v2 v2.0.6 // indirect
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
