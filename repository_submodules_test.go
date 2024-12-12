@@ -44,7 +44,7 @@ func TestRepositorySubmodulesService_UpdateSubmodule(t *testing.T) {
 		Status:         Ptr(Running),
 	}
 
-	sc, resp, err := client.RepositorySubmodules.UpdateSubmodule(13083, "app%2Fproject", nil)
+	sc, resp, err := client.RepositorySubmodules.UpdateSubmodule(13083, "app/project", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, sc)

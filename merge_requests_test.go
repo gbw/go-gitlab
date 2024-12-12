@@ -102,7 +102,7 @@ var (
 func TestGetMergeRequest(t *testing.T) {
 	mux, client := setup(t)
 
-	path := "/api/v4/projects/namespace/name/merge_requests/123"
+	path := `/api/v4/projects/namespace%2Fname/merge_requests/123`
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
