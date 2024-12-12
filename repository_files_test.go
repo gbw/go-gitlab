@@ -45,22 +45,22 @@ func TestRepositoryFilesService_GetFile(t *testing.T) {
 		LastCommitID:    "570e7b2abdd848b95f2f578043fc23bd6f6fd24d",
 	}
 
-	f, resp, err := client.RepositoryFiles.GetFile(13083, "app%2Fmodels%2Fkey%2Erb?ref=master", nil)
+	f, resp, err := client.RepositoryFiles.GetFile(13083, "app/models/key.rb?ref=master", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, f)
 
-	f, resp, err = client.RepositoryFiles.GetFile(13083.01, "app%2Fmodels%2Fkey%2Erb?ref=master", nil)
+	f, resp, err = client.RepositoryFiles.GetFile(13083.01, "app/models/key.rb?ref=master", nil)
 	require.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
 	require.Nil(t, resp)
 	require.Nil(t, f)
 
-	f, resp, err = client.RepositoryFiles.GetFile(13083, "app%2Fmodels%2Fkey%2Erb?ref=master", nil, errorOption)
+	f, resp, err = client.RepositoryFiles.GetFile(13083, "app/models/key.rb?ref=master", nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, f)
 
-	f, resp, err = client.RepositoryFiles.GetFile(13084, "app%2Fmodels%2Fkey%2Erb?ref=master", nil)
+	f, resp, err = client.RepositoryFiles.GetFile(13084, "app/models/key.rb?ref=master", nil)
 	require.Error(t, err)
 	require.Nil(t, f)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -96,22 +96,22 @@ func TestRepositoryFilesService_GetFileMetaData(t *testing.T) {
 		LastCommitID:    "570e7b2abdd848b95f2f578043fc23bd6f6fd24d",
 	}
 
-	f, resp, err := client.RepositoryFiles.GetFileMetaData(13083, "app%2Fmodels%2Fkey%2Erb?ref=master", nil)
+	f, resp, err := client.RepositoryFiles.GetFileMetaData(13083, "app/models/key.rb?ref=master", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, f)
 
-	f, resp, err = client.RepositoryFiles.GetFileMetaData(13083.01, "app%2Fmodels%2Fkey%2Erb?ref=master", nil)
+	f, resp, err = client.RepositoryFiles.GetFileMetaData(13083.01, "app/models/key.rb?ref=master", nil)
 	require.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
 	require.Nil(t, resp)
 	require.Nil(t, f)
 
-	f, resp, err = client.RepositoryFiles.GetFileMetaData(13083, "app%2Fmodels%2Fkey%2Erb?ref=master", nil, errorOption)
+	f, resp, err = client.RepositoryFiles.GetFileMetaData(13083, "app/models/key.rb?ref=master", nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, f)
 
-	f, resp, err = client.RepositoryFiles.GetFileMetaData(13084, "app%2Fmodels%2Fkey%2Erb?ref=master", nil)
+	f, resp, err = client.RepositoryFiles.GetFileMetaData(13084, "app/models/key.rb?ref=master", nil)
 	require.Error(t, err)
 	require.Nil(t, f)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -170,22 +170,22 @@ func TestRepositoryFilesService_GetFileBlame(t *testing.T) {
 		},
 	}
 
-	fbr, resp, err := client.RepositoryFiles.GetFileBlame(13083, "path%2Fto%2Ffile.rb", nil)
+	fbr, resp, err := client.RepositoryFiles.GetFileBlame(13083, "path/to/file.rb", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, fbr)
 
-	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13083.01, "path%2Fto%2Ffile.rb", nil)
+	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13083.01, "path/to/file.rb", nil)
 	require.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
 	require.Nil(t, resp)
 	require.Nil(t, fbr)
 
-	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13083, "path%2Fto%2Ffile.rb", nil, errorOption)
+	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13083, "path/to/file.rb", nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, fbr)
 
-	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13084, "path%2Fto%2Ffile.rb", nil)
+	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13084, "path/to/file.rb", nil)
 	require.Error(t, err)
 	require.Nil(t, fbr)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -224,22 +224,22 @@ func TestRepositoryFilesService_GetRawFile(t *testing.T) {
 		"...",
 	)
 
-	b, resp, err := client.RepositoryFiles.GetRawFile(13083, "app%2Fmodels%2Fkey%2Erb", nil)
+	b, resp, err := client.RepositoryFiles.GetRawFile(13083, "app/models/key.rb", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, b)
 
-	b, resp, err = client.RepositoryFiles.GetRawFile(13083.01, "app%2Fmodels%2Fkey%2Erb", nil)
+	b, resp, err = client.RepositoryFiles.GetRawFile(13083.01, "app/models/key.rb", nil)
 	require.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
-	b, resp, err = client.RepositoryFiles.GetRawFile(13083, "app%2Fmodels%2Fkey%2Erb", nil, errorOption)
+	b, resp, err = client.RepositoryFiles.GetRawFile(13083, "app/models/key.rb", nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
-	b, resp, err = client.RepositoryFiles.GetRawFile(13084, "app%2Fmodels%2Fkey%2Erb", nil)
+	b, resp, err = client.RepositoryFiles.GetRawFile(13084, "app/models/key.rb", nil)
 	require.Error(t, err)
 	require.Nil(t, b)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -263,27 +263,27 @@ func TestRepositoryFilesService_CreateFile(t *testing.T) {
 		Branch:   "master",
 	}
 
-	fi, resp, err := client.RepositoryFiles.CreateFile(13083, "app%2Fproject%2Erb", nil)
+	fi, resp, err := client.RepositoryFiles.CreateFile(13083, "app/project.rb", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, fi)
 
-	fi, resp, err = client.RepositoryFiles.CreateFile(13083, "app%2Fproject%2Erb", &CreateFileOptions{ExecuteFilemode: Ptr(true)})
+	fi, resp, err = client.RepositoryFiles.CreateFile(13083, "app/project.rb", &CreateFileOptions{ExecuteFilemode: Ptr(true)})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, fi)
 
-	fi, resp, err = client.RepositoryFiles.CreateFile(13083.01, "app%2Fproject%2Erb", nil)
+	fi, resp, err = client.RepositoryFiles.CreateFile(13083.01, "app/project.rb", nil)
 	require.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
 	require.Nil(t, resp)
 	require.Nil(t, fi)
 
-	fi, resp, err = client.RepositoryFiles.CreateFile(13083, "app%2Fproject%2Erb", nil, errorOption)
+	fi, resp, err = client.RepositoryFiles.CreateFile(13083, "app/project.rb", nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, fi)
 
-	fi, resp, err = client.RepositoryFiles.CreateFile(13084, "app%2Fproject%2Erb", nil)
+	fi, resp, err = client.RepositoryFiles.CreateFile(13084, "app/project.rb", nil)
 	require.Error(t, err)
 	require.Nil(t, fi)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -307,27 +307,27 @@ func TestRepositoryFilesService_UpdateFile(t *testing.T) {
 		Branch:   "master",
 	}
 
-	fi, resp, err := client.RepositoryFiles.UpdateFile(13083, "app%2Fproject%2Erb", nil)
+	fi, resp, err := client.RepositoryFiles.UpdateFile(13083, "app/project.rb", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, fi)
 
-	fi, resp, err = client.RepositoryFiles.UpdateFile(13083, "app%2Fproject%2Erb", &UpdateFileOptions{ExecuteFilemode: Ptr(true)})
+	fi, resp, err = client.RepositoryFiles.UpdateFile(13083, "app/project.rb", &UpdateFileOptions{ExecuteFilemode: Ptr(true)})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, fi)
 
-	fi, resp, err = client.RepositoryFiles.UpdateFile(13083.01, "app%2Fproject%2Erb", nil)
+	fi, resp, err = client.RepositoryFiles.UpdateFile(13083.01, "app/project.rb", nil)
 	require.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
 	require.Nil(t, resp)
 	require.Nil(t, fi)
 
-	fi, resp, err = client.RepositoryFiles.UpdateFile(13083, "app%2Fproject%2Erb", nil, errorOption)
+	fi, resp, err = client.RepositoryFiles.UpdateFile(13083, "app/project.rb", nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, fi)
 
-	fi, resp, err = client.RepositoryFiles.UpdateFile(13084, "app%2Fproject%2Erb", nil)
+	fi, resp, err = client.RepositoryFiles.UpdateFile(13084, "app/project.rb", nil)
 	require.Error(t, err)
 	require.Nil(t, fi)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -340,19 +340,19 @@ func TestRepositoryFilesService_DeleteFile(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	resp, err := client.RepositoryFiles.DeleteFile(13083, "app%2Fproject%2Erb", nil)
+	resp, err := client.RepositoryFiles.DeleteFile(13083, "app/project.rb", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	resp, err = client.RepositoryFiles.DeleteFile(13083.01, "app%2Fproject%2Erb", nil)
+	resp, err = client.RepositoryFiles.DeleteFile(13083.01, "app/project.rb", nil)
 	require.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
 	require.Nil(t, resp)
 
-	resp, err = client.RepositoryFiles.DeleteFile(13083, "app%2Fproject%2Erb", nil, errorOption)
+	resp, err = client.RepositoryFiles.DeleteFile(13083, "app/project.rb", nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 
-	resp, err = client.RepositoryFiles.DeleteFile(13084, "app%2Fproject%2Erb", nil)
+	resp, err = client.RepositoryFiles.DeleteFile(13084, "app/project.rb", nil)
 	require.Error(t, err)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }

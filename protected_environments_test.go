@@ -575,8 +575,7 @@ func TestUpdateRepositoryEnvironmentsEscapesURL(t *testing.T) {
 	rawRequest := ""
 
 	// Use a "/" in the environment name, so it needs encoding
-	// Note: Mux requires the path to be unencoded for some reason. Using %2F will never intercept the request.
-	mux.HandleFunc("/api/v4/projects/1/protected_environments/test/environment", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/protected_environments/test%2Fenvironment", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
 
 		// Store the raw request so we're sure it's encoded properly
