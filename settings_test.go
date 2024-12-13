@@ -17,10 +17,13 @@
 package gitlab
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetSettings(t *testing.T) {
@@ -81,4 +84,44 @@ func TestSettingsWithEmptyContainerRegistry(t *testing.T) {
 	if !reflect.DeepEqual(settings, want) {
 		t.Errorf("Settings.UpdateSettings returned %+v, want %+v", settings, want)
 	}
+}
+
+func TestSettingsDefaultBranchProtectionDefaults(t *testing.T) {
+	mux, client := setup(t)
+
+	var requestBody map[string]interface{}
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		// Read the request body into `requestBody` by unmarshalling it
+		err := json.NewDecoder(r.Body).Decode(&requestBody)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		fmt.Fprint(w, `{"id":1,    "default_projects_limit" : 100000}`)
+	})
+
+	_, _, err := client.Settings.UpdateSettings(&UpdateSettingsOptions{
+		DefaultBranchProtectionDefaults: &DefaultBranchProtectionDefaultsOptions{
+			AllowedToPush: &[]*GroupAccessLevel{
+				{AccessLevel: Ptr(DeveloperPermissions)},
+			},
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// This is the payload that should be produced. Float vs int won't matter when converted to a JSON string, so don't bother investigating why
+	// it uses float insead of int when unmarshalled.
+	want := map[string]interface{}{
+		"default_branch_protection_defaults": map[string]interface{}{
+			"allowed_to_push": []interface{}{
+				map[string]interface{}{"access_level": float64(30)},
+			},
+		},
+	}
+
+	assert.Equal(t, want["default_branch_protection_defaults"], requestBody["default_branch_protection_defaults"])
 }
