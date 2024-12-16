@@ -16,6 +16,6 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/protobuf v1.35.2 // indirect
+	google.golang.org/protobuf v1.36.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
