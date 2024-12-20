@@ -20,6 +20,7 @@ stages:
   parallel:
     matrix:
       - GOLANG_IMAGE_VERSION:
+        - '1.22.10'
         - '1.23.4'
 
 .go:base:
