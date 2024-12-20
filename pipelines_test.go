@@ -30,7 +30,7 @@ func TestListProjectPipelines(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `[{"id":1},{"id":2}]`)
+		fmt.Fprint(w, `[{"id":1, "name":"test"},{"id":2}]`)
 	})
 
 	opt := &ListProjectPipelinesOptions{Ref: Ptr("master")}
@@ -39,7 +39,7 @@ func TestListProjectPipelines(t *testing.T) {
 		t.Errorf("Pipelines.ListProjectPipelines returned error: %v", err)
 	}
 
-	want := []*PipelineInfo{{ID: 1}, {ID: 2}}
+	want := []*PipelineInfo{{ID: 1, Name: "test"}, {ID: 2}}
 	if !reflect.DeepEqual(want, piplines) {
 		t.Errorf("Pipelines.ListProjectPipelines returned %+v, want %+v", piplines, want)
 	}
