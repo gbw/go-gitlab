@@ -1,6 +1,6 @@
 module gitlab.com/gitlab-org/api/client-go
 
-go 1.23.4
+go 1.22.10
 
 require (
 	github.com/google/go-querystring v1.1.0
