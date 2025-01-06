@@ -500,3 +500,90 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 		assert.Equal(t, `{"assignee_id":5}`, string(js))
 	})
 }
+
+func TestCreateMergeRequestDependency(t *testing.T) {
+	mux, client := setup(t)
+	const project = "12345"
+	const mergeRequest = 1
+	blockingMergeRequest := int(2)
+
+	path := fmt.Sprintf("/%sprojects/%s/merge_requests/%d/blocks", apiVersionPath, project, mergeRequest)
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusCreated)
+
+		fmt.Fprint(w, `[{"id": 1, "blocking_merge_request": {"iid":12}, "project_id": 7}]`)
+	})
+
+	opts := CreateMergeRequestDependencyOptions{
+		BlockingMergeRequestID: &blockingMergeRequest,
+	}
+	dependencies, resp, err := client.MergeRequests.CreateMergeRequestDependency(project, mergeRequest, opts, nil)
+	if err != nil {
+		t.Errorf("MergeRequestDependencies.CreateMergeRequestDependency returned error: %v", err)
+	}
+	if resp != nil {
+		if resp.StatusCode != http.StatusCreated {
+			t.Errorf("MergeRequestDependencies.CreateMergeRequestDependency = %v, want %v", resp.StatusCode, http.StatusCreated)
+		}
+	}
+
+	want := []MergeRequestDependency{
+		{
+			ID: 1,
+			BlockingMergeRequest: BlockingMergeRequest{
+				Iid: 12,
+			},
+			ProjectID: 7,
+		},
+	}
+	if !reflect.DeepEqual(want, dependencies) {
+		t.Fatalf("MergeRequestDependencies.GetMergeRequestDependencies returned %+v, want %+v", dependencies, want)
+	}
+}
+
+func TestGetMergeRequestDependencies(t *testing.T) {
+	mux, client := setup(t)
+	const project = "12345"
+	const mergeRequest = 1
+
+	path := fmt.Sprintf("/%sprojects/%s/merge_requests/%d/blocks", apiVersionPath, project, mergeRequest)
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_merge_request_dependencies.json")
+	})
+
+	dependencies, resp, err := client.MergeRequests.GetMergeRequestDependencies(project, mergeRequest, nil)
+	if err != nil {
+		t.Errorf("MergeRequestDependencies.GetMergeRequestDependencies returned error: %v", err)
+	}
+	if resp == nil {
+		t.Error("MergeRequestDependencies.GetMergeRequestDependencies did not return a response")
+	}
+	if len(dependencies) != 1 {
+		t.Errorf("MergeRequestDependencies.GetMergeRequestDependencies returned %d dependencies, want 1", len(dependencies))
+	}
+}
+
+func TestDeleteMergeRequestDependency(t *testing.T) {
+	mux, client := setup(t)
+	const project = "12345"
+	const mergeRequest = 1
+	const blockingMergeRequest = 2
+
+	path := fmt.Sprintf("/%sprojects/%s/merge_requests/%d/blocks/%d", apiVersionPath, project, mergeRequest, blockingMergeRequest)
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	resp, err := client.MergeRequests.DeleteMergeRequestDependency(project, mergeRequest, blockingMergeRequest, nil)
+	if err != nil {
+		t.Errorf("MergeRequestDependencies.DeleteMergeRequestDependency returned error: %v", err)
+	}
+	if resp != nil {
+		if resp.StatusCode != http.StatusNoContent {
+			t.Errorf("MergeRequestDependencies.DeleteMergeRequestDependency = %v, want %v", resp.StatusCode, http.StatusNoContent)
+		}
+	}
+}
