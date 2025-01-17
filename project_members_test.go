@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -366,4 +367,62 @@ func TestProjectMembersService_DeleteProjectMember(t *testing.T) {
 	resp, err = client.ProjectMembers.DeleteProjectMember(2, 1, nil, nil)
 	require.Error(t, err)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+}
+
+func TestProjectMembersService_CustomRole(t *testing.T) {
+	mux, client := setup(t)
+
+	path := fmt.Sprintf("/%sprojects/1/members/2", apiVersionPath)
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		fmt.Fprint(w, `
+		{
+			"id":1,
+			"username":"test",
+			"name":"testName",
+			"access_level":30,
+			"member_role":{
+				"id":1,
+				"group_id":2,
+				"name":"TestingCustomRole",
+				"description":"",
+				"base_access_level":30,
+				"admin_cicd_variables":null,
+				"admin_group_member":null,
+				"admin_merge_request":null,
+				"admin_push_rules":null,
+				"admin_terraform_state":null,
+				"admin_vulnerability":null,
+				"archive_project":null,
+				"manage_group_access_tokens":null,
+				"manage_project_access_tokens":null,
+				"read_code":true,
+				"read_dependency":null,
+				"read_vulnerability":null,
+				"remove_group":null,
+				"remove_project":null
+			}
+		}
+		`)
+	})
+
+	want := &ProjectMember{
+		ID:          1,
+		Username:    "test",
+		Name:        "testName",
+		AccessLevel: AccessLevelValue(30),
+		MemberRole: &MemberRole{
+			ID:              1,
+			GroupID:         2,
+			Name:            "TestingCustomRole",
+			Description:     "",
+			BaseAccessLevel: AccessLevelValue(30),
+			ReadCode:        true,
+		},
+	}
+	member, _, err := client.ProjectMembers.GetProjectMember(1, 2)
+
+	assert.NoError(t, err)
+	assert.Equal(t, want, member)
 }
