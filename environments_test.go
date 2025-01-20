@@ -116,6 +116,7 @@ func TestGetEnvironment(t *testing.T) {
 			"state": "stopped",
 			"created_at": "2013-10-02T10:12:29Z",
 			"updated_at": "2013-12-02T10:12:29Z",
+			"auto_stop_at": "2025-01-25T15:08:29Z",
 			"cluster_agent": {
 				"id": 1,
 				"name": "agent-1",
@@ -132,7 +133,8 @@ func TestGetEnvironment(t *testing.T) {
 				"created_by_user_id": 42
 			},
 			"kubernetes_namespace": "flux-system",
-			"flux_resource_path": "HelmRelease/flux-system"
+			"flux_resource_path": "HelmRelease/flux-system",
+			"auto_stop_setting": "always"
 		}`)
 	})
 
@@ -143,6 +145,7 @@ func TestGetEnvironment(t *testing.T) {
 
 	createdAtWant, _ := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
 	updatedAtWant, _ := time.Parse(timeLayout, "2013-12-02T10:12:29Z")
+	autoStopAtWant, _ := time.Parse(timeLayout, "2025-01-25T15:08:29Z")
 	want := &Environment{
 		ID:          1,
 		Name:        "review/fix-foo",
@@ -168,6 +171,8 @@ func TestGetEnvironment(t *testing.T) {
 		},
 		KubernetesNamespace: "flux-system",
 		FluxResourcePath:    "HelmRelease/flux-system",
+		AutoStopAt:          &autoStopAtWant,
+		AutoStopSetting:     "always",
 	}
 	if !reflect.DeepEqual(want, env) {
 		t.Errorf("Environments.GetEnvironment returned %+v, want %+v", env, want)
@@ -203,7 +208,8 @@ func TestCreateEnvironment(t *testing.T) {
         "created_by_user_id": 42
       },
       "kubernetes_namespace": "flux-system",
-      "flux_resource_path": "HelmRelease/flux-system"
+      "flux_resource_path": "HelmRelease/flux-system",
+      "auto_stop_setting": "always"
     }`)
 	})
 
@@ -215,6 +221,7 @@ func TestCreateEnvironment(t *testing.T) {
 		ClusterAgentID:      Ptr(1),
 		KubernetesNamespace: Ptr("flux-system"),
 		FluxResourcePath:    Ptr("HelmRelease/flux-system"),
+		AutoStopSetting:     Ptr("always"),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -244,6 +251,7 @@ func TestCreateEnvironment(t *testing.T) {
 		},
 		KubernetesNamespace: "flux-system",
 		FluxResourcePath:    "HelmRelease/flux-system",
+		AutoStopSetting:     "always",
 	}
 	if !reflect.DeepEqual(want, envs) {
 		t.Errorf("Environments.CreateEnvironment returned %+v, want %+v", envs, want)
@@ -279,7 +287,8 @@ func TestEditEnvironment(t *testing.T) {
         "created_by_user_id": 42
     },
 	  "kubernetes_namespace": "flux-system",
-	  "flux_resource_path": "HelmRelease/flux-system"
+	  "flux_resource_path": "HelmRelease/flux-system",
+	  "auto_stop_setting": "with_action"
     }`)
 	})
 
@@ -291,6 +300,7 @@ func TestEditEnvironment(t *testing.T) {
 		ClusterAgentID:      Ptr(1),
 		KubernetesNamespace: Ptr("flux-system"),
 		FluxResourcePath:    Ptr("HelmRelease/flux-system"),
+		AutoStopSetting:     Ptr("with_action"),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -320,6 +330,7 @@ func TestEditEnvironment(t *testing.T) {
 		},
 		KubernetesNamespace: "flux-system",
 		FluxResourcePath:    "HelmRelease/flux-system",
+		AutoStopSetting:     "with_action",
 	}
 	if !reflect.DeepEqual(want, envs) {
 		t.Errorf("Environments.EditEnvironment returned %+v, want %+v", envs, want)
@@ -397,7 +408,10 @@ func TestUnmarshal(t *testing.T) {
                 "web_url": "https://example.gitlab.com/groups/foobar-group"
             }
         },
-        "state": "available"
+        "state": "available",
+        "auto_stop_setting": "always",
+        "kubernetes_namespace": "flux-system",
+        "flux_resource_path": "HelmRelease/flux-system"	
     }`
 
 	var env Environment
@@ -412,5 +426,8 @@ func TestUnmarshal(t *testing.T) {
 		if assert.NotNil(t, env.Project) {
 			assert.Equal(t, "Awesome Project", env.Project.Name)
 		}
+		assert.Equal(t, "always", env.AutoStopSetting)
+		assert.Equal(t, "flux-system", env.KubernetesNamespace)
+		assert.Equal(t, "HelmRelease/flux-system", env.FluxResourcePath)
 	}
 }
