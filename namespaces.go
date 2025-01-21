@@ -61,6 +61,7 @@ type ListNamespacesOptions struct {
 	ListOptions
 	Search    *string `url:"search,omitempty" json:"search,omitempty"`
 	OwnedOnly *bool   `url:"owned_only,omitempty" json:"owned_only,omitempty"`
+	TopLevelOnly *bool `url:"top_level_only,omitempty" json:"top_level_only,omitempty"`
 }
 
 // ListNamespaces gets a list of projects accessible by the authenticated user.
