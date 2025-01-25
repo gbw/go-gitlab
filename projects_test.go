@@ -18,12 +18,14 @@ package gitlab
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"reflect"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -622,6 +624,34 @@ func TestUploadAvatar_Retry(t *testing.T) {
 	_, _, err := client.Projects.UploadAvatar(1, avatar, "avatar.png")
 	if err != nil {
 		t.Fatalf("Projects.UploadAvatar returns an error: %v", err)
+	}
+}
+
+func TestDownloadAvatar(t *testing.T) {
+	mux, client := setup(t)
+
+	ico, _ := base64.StdEncoding.DecodeString("AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAACABAAAgAQAAAAAAAAAAAAD9/f39/f39/f39/f39/f39/f3y9/x+u+9qsO3l8Pr9/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f3c7Plfq+xFnepFnepSo+vI4ff9/f39/f39/f39/f39/f39/f39/f39/f39/f26z/VLkupFnepFnepFnepFnepFlOmevPL7/P39/f39/f39/f39/f39/f34+vyPsvBAe+hAe+hCh+lFm+pFnepDjOlAe+hAe+h2oO3v8/v9/f39/f39/f3o7/pqmOxAe+hAe+hAe+hAe+hBf+dBgedAe+hAe+hAe+hAe+hYi+rX4/j9/f3u8/tXi+pAe+hAe+hAe+hAe+g/deU7X9w6Xds+ceRAe+hAe+hAe+hAe+hIgenZ5fmVtvFAe+hAe+hAe+hAe+g+b+M6XNs6W9o6W9o6W9o9a+FAe+hAe+hAe+hAe+hyne1hketAe+hAe+hAeug9aOA6W9o6W9o6W9o6W9o6W9o6W9o8ZN5AeedAe+hAe+hDfehajepAe+g/d+Y7Yt06W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o7X9w/dOVAe+hAe+iAoew8Z986XNo6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o8ZN5chufDzfI6W9o6W9o6W9o6W9pTb95Wct9Wct9Wct9Wct9Wct88Xdo6W9o6W9o6W9qfr+z6+vxMat06W9o6W9pKaN37+/z9/f39/f39/f39/f39/f1sheM6W9o6W9o7XNrm6vj9/f2Qo+k6W9o6W9qFmef9/f39/f39/f39/f39/f39/f2puO46W9o6W9psheL9/f39/f3Y3/Y6W9o6W9rDzfL9/f39/f39/f39/f39/f39/f3m6vk7XNo6W9q0wO/9/f39/f39/f1eeeBDY9v3+Pz9/f39/f39/f39/f39/f39/f39/f1ifOFDYtvz9fv9/f39/f39/f2vvO6InOf9/f39/f39/f39/f39/f39/f39/f39/f2quO2NoOj9/f39/f0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
+	mux.HandleFunc("/api/v4/projects/1/avatar",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			w.Header().Add("Content-length", strconv.Itoa(len(ico)))
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write(ico)
+		},
+	)
+
+	_, resp, err := client.Projects.DownloadAvatar(1)
+	if err != nil {
+		t.Fatalf("Projects.DownloadAvatar returned error: %v", err)
+	}
+
+	if resp.Status != "200 OK" {
+		t.Fatalf("Projects.DownloadAvatar returned wrong status code: %v", resp.Status)
+	}
+
+	if int(resp.ContentLength) != len(ico) {
+		t.Fatalf("Projects.DownloadAvatar returned wrong content length: %v", resp.ContentLength)
 	}
 }
 

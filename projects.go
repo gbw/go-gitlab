@@ -17,6 +17,7 @@
 package gitlab
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -1666,6 +1667,31 @@ func (s *ProjectsService) UploadAvatar(pid interface{}, avatar io.Reader, filena
 	}
 
 	return p, resp, nil
+}
+
+// DownloadAvatar downloads an avatar.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/ee/api/projects.html#download-a-project-avatar
+func (s *ProjectsService) DownloadAvatar(pid interface{}, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
+	project, err := parseID(pid)
+	if err != nil {
+		return nil, nil, err
+	}
+	u := fmt.Sprintf("projects/%s/avatar", PathEscape(project))
+
+	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	avatar := new(bytes.Buffer)
+	resp, err := s.client.Do(req, avatar)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return bytes.NewReader(avatar.Bytes()), resp, err
 }
 
 // ListProjectForks gets a list of project forks.
