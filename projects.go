@@ -1601,7 +1601,11 @@ type ProjectFile struct {
 
 // UploadFile uploads a file.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/projects.html#upload-a-file
+// Deprecated: UploadFile is deprecated and will be removed in a future release.
+// Use [ProjectMarkdownUploadsService.UploadProjectMarkdown] instead for uploading
+// markdown files to a project.
+//
+// GitLab API docs: https://docs.gitlab.com/ee/api/project_markdown_uploads.html#upload-a-file
 func (s *ProjectsService) UploadFile(pid interface{}, content io.Reader, filename string, options ...RequestOptionFunc) (*ProjectFile, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
