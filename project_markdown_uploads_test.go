@@ -3,6 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -15,6 +16,12 @@ func TestProjectMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
+			t.Fatalf("Projects.UploadFile request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
+		}
+		if r.ContentLength == -1 {
+			t.Fatalf("Projects.UploadFile request content-length is -1")
+		}
 		fmt.Fprint(w, `
 			{
 				"id": 5,
@@ -34,8 +41,53 @@ func TestProjectMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
 		Markdown: "![dk](/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png)",
 	}
 
-	content := strings.NewReader("bar = baz")
-	upload, resp, err := client.ProjectMarkdownUploads.UploadProjectMarkdown(1, content)
+	b := strings.NewReader("dummy")
+	upload, resp, err := client.ProjectMarkdownUploads.UploadProjectMarkdown(1, b, "test.txt")
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, want, upload)
+}
+
+func TestProjectMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
+	mux, client := setup(t)
+
+	tf, _ := os.CreateTemp(os.TempDir(), "test")
+	defer os.Remove(tf.Name())
+
+	isFirstRequest := true
+	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
+		if isFirstRequest {
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			isFirstRequest = false
+			return
+		}
+		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
+			t.Fatalf("Projects.UploadFile request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
+		}
+		if r.ContentLength == -1 {
+			t.Fatalf("Projects.UploadFile request content-length is -1")
+		}
+		fmt.Fprint(w, `
+			{
+				"id": 5,
+				"alt": "dk",
+				"url": "/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png",
+				"full_path": "/-/project/1234/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png",
+				"markdown": "![dk](/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png)"
+			}
+		`)
+	})
+
+	want := &ProjectMarkdownUploadedFile{
+		ID:       5,
+		Alt:      "dk",
+		URL:      "/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png",
+		FullPath: "/-/project/1234/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png",
+		Markdown: "![dk](/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png)",
+	}
+
+	b := strings.NewReader("dummy")
+	upload, resp, err := client.ProjectMarkdownUploads.UploadProjectMarkdown(1, b, "test.txt")
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, upload)
