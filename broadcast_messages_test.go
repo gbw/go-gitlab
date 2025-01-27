@@ -40,7 +40,8 @@ func TestListBroadcastMessages(t *testing.T) {
 			"target_access_levels": [10,30],
 			"target_path": "*/welcome",
 			"broadcast_type": "banner",
-			"dismissable": false
+			"dismissable": false,
+			"theme": "indigo"
 		},{
 			"message": "SomeMessage2",
 			"starts_at": "2015-04-27T06:43:00.000Z",
@@ -79,6 +80,7 @@ func TestListBroadcastMessages(t *testing.T) {
 		TargetPath:         "*/welcome",
 		BroadcastType:      "banner",
 		Dismissable:        false,
+		Theme:              "indigo",
 	}, {
 		Message:            "SomeMessage2",
 		StartsAt:           &wantedSecondStartsAt,
@@ -114,7 +116,8 @@ func TestGetBroadcastMessages(t *testing.T) {
 			"target_access_levels": [10,30],
 			"target_path": "*/welcome",
 			"broadcast_type": "banner",
-			"dismissable": false
+			"dismissable": false,
+			"theme": "indigo"
 		}`)
 	})
 
@@ -138,6 +141,7 @@ func TestGetBroadcastMessages(t *testing.T) {
 		TargetPath:         "*/welcome",
 		BroadcastType:      "banner",
 		Dismissable:        false,
+		Theme:              "indigo",
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("GetBroadcastMessage returned \ngot:\n%v\nwant:\n%v", Stringify(got), Stringify(want))
@@ -163,7 +167,8 @@ func TestCreateBroadcastMessages(t *testing.T) {
 			"target_access_levels": [10,30],
 			"target_path": "*/welcome",
 			"broadcast_type": "banner",
-			"dismissable": false
+			"dismissable": false,
+			"theme": "indigo"
 		}`)
 	})
 
@@ -177,6 +182,7 @@ func TestCreateBroadcastMessages(t *testing.T) {
 		TargetPath:         Ptr("*/welcome"),
 		BroadcastType:      Ptr("banner"),
 		Dismissable:        Ptr(false),
+		Theme:              Ptr("indigo"),
 	}
 
 	got, _, err := client.BroadcastMessage.CreateBroadcastMessage(opt)
@@ -196,6 +202,7 @@ func TestCreateBroadcastMessages(t *testing.T) {
 		TargetPath:         "*/welcome",
 		BroadcastType:      "banner",
 		Dismissable:        false,
+		Theme:              "indigo",
 	}
 
 	if !reflect.DeepEqual(got, want) {
@@ -222,7 +229,8 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 			"target_access_levels": [10,30],
 			"target_path": "*/welcome",
 			"broadcast_type": "banner",
-			"dismissable": false
+			"dismissable": false,
+			"theme": "indigo"
 		}`)
 	})
 
@@ -236,6 +244,7 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 		TargetPath:         Ptr("*/welcome"),
 		BroadcastType:      Ptr("banner"),
 		Dismissable:        Ptr(false),
+		Theme:              Ptr("indigo"),
 	}
 
 	got, _, err := client.BroadcastMessage.UpdateBroadcastMessage(1, opt)
@@ -255,6 +264,7 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 		TargetPath:         "*/welcome",
 		BroadcastType:      "banner",
 		Dismissable:        false,
+		Theme:              "indigo",
 	}
 
 	if !reflect.DeepEqual(got, want) {
