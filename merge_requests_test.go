@@ -446,6 +446,41 @@ func TestListMergeRequestDiffs(t *testing.T) {
 	}
 }
 
+func TestShowMergeRequestRawDiffs(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/raw_diffs", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/show_merge_request_raw_diff.txt")
+	})
+
+	opts := &ShowMergeRequestRawDiffsOptions{}
+
+	rawDiff, _, err := client.MergeRequests.ShowMergeRequestRawDiffs(1, 1, opts)
+	if err != nil {
+		t.Errorf("MergeRequests.ShowMergeRequestRawDiffs returned error: %v", err)
+	}
+
+	want := `diff --git a/also_testing b/also_testing
+index d4d510b..2a2c3b1 100644
+--- a/also_testing
++++ b/also_testing
+@@ -1,3 +1,2 @@
+ aaaaaaaaaaaaaaaa
+-bbbbbbbbbbbbbbbb
+ cccccccccccccccc
+diff --git a/testing b/testing
+index c7c7da3..ce2cd85 100644
+--- a/testing
++++ b/testing
+@@ -1 +1,2 @@
+ hello there
++i'm a test :)
+`
+
+	require.Equal(t, []byte(want), rawDiff)
+}
+
 func TestIntSliceOrString(t *testing.T) {
 	t.Run("any", func(t *testing.T) {
 		opts := &ListMergeRequestsOptions{}
