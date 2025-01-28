@@ -17,6 +17,7 @@
 package gitlab
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -531,6 +532,42 @@ func (s *MergeRequestsService) ListMergeRequestDiffs(pid interface{}, mergeReque
 	}
 
 	return m, resp, nil
+}
+
+// ShowMergeRequestRawDiffsOptions represents the available ShowMergeRequestRawDiffs()
+// options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/ee/api/merge_requests.html#show-merge-request-raw-diffs
+type ShowMergeRequestRawDiffsOptions struct{}
+
+// ShowMergeRequestRawDiffs Show raw diffs of the files changed in a merge request
+//
+// GitLab API docs:
+// https://docs.gitlab.com/ee/api/merge_requests.html#show-merge-request-raw-diffs
+func (s *MergeRequestsService) ShowMergeRequestRawDiffs(pid interface{}, mergeRequest int, opt *ShowMergeRequestRawDiffsOptions, options ...RequestOptionFunc) ([]byte, *Response, error) {
+	project, err := parseID(pid)
+	if err != nil {
+		return []byte{}, nil, err
+	}
+	u := fmt.Sprintf(
+		"projects/%s/merge_requests/%d/raw_diffs",
+		PathEscape(project),
+		mergeRequest,
+	)
+
+	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
+	if err != nil {
+		return []byte{}, nil, err
+	}
+
+	var rd bytes.Buffer
+	resp, err := s.client.Do(req, &rd)
+	if err != nil {
+		return []byte{}, resp, err
+	}
+
+	return rd.Bytes(), resp, nil
 }
 
 // GetMergeRequestParticipants gets a list of merge request participants.
