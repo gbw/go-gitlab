@@ -130,6 +130,8 @@ func TestListProjectDeployKeys(t *testing.T) {
 			  "id": 1,
 			  "title": "Public key",
 			  "key": "ssh-rsa AAAA...",
+			  "fingerprint": "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
+			  "fingerprint_sha256": "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
 			  "created_at": "2013-10-02T10:12:29Z",
 			  "can_push": false
 			},
@@ -137,6 +139,8 @@ func TestListProjectDeployKeys(t *testing.T) {
 			  "id": 3,
 			  "title": "Another Public key",
 			  "key": "ssh-rsa AAAA...",
+			  "fingerprint": "0b:cf:58:40:b9:23:96:c7:ba:44:df:0e:9e:87:5e:75",
+			  "fingerprint_sha256": "SHA256:lGI/Ys/Wx7PfMhUO1iuBH92JQKYN+3mhJZvWO4Q5ims",
 			  "created_at": "2013-10-02T11:12:29Z",
 			  "can_push": false
 			}
@@ -160,18 +164,22 @@ func TestListProjectDeployKeys(t *testing.T) {
 
 	want := []*ProjectDeployKey{
 		{
-			ID:        1,
-			Title:     "Public key",
-			Key:       "ssh-rsa AAAA...",
-			CreatedAt: &createdAt,
-			CanPush:   false,
+			ID:                1,
+			Title:             "Public key",
+			Key:               "ssh-rsa AAAA...",
+			Fingerprint:       "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
+			FingerprintSHA256: "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
+			CreatedAt:         &createdAt,
+			CanPush:           false,
 		},
 		{
-			ID:        3,
-			Title:     "Another Public key",
-			Key:       "ssh-rsa AAAA...",
-			CreatedAt: &createdAt2,
-			CanPush:   false,
+			ID:                3,
+			Title:             "Another Public key",
+			Key:               "ssh-rsa AAAA...",
+			Fingerprint:       "0b:cf:58:40:b9:23:96:c7:ba:44:df:0e:9e:87:5e:75",
+			FingerprintSHA256: "SHA256:lGI/Ys/Wx7PfMhUO1iuBH92JQKYN+3mhJZvWO4Q5ims",
+			CreatedAt:         &createdAt2,
+			CanPush:           false,
 		},
 	}
 	if !reflect.DeepEqual(want, deployKeys) {
@@ -188,6 +196,8 @@ func TestGetDeployKey(t *testing.T) {
 			"id": 1,
 			"title": "Public key",
 			"key": "ssh-rsa AAAA...",
+			"fingerprint": "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
+			"fingerprint_sha256": "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
 			"created_at": "2013-10-02T10:12:29Z",
 			"can_push": false
 		  }`)
@@ -204,11 +214,13 @@ func TestGetDeployKey(t *testing.T) {
 	}
 
 	want := &ProjectDeployKey{
-		ID:        1,
-		Title:     "Public key",
-		Key:       "ssh-rsa AAAA...",
-		CreatedAt: &createdAt,
-		CanPush:   false,
+		ID:                1,
+		Title:             "Public key",
+		Key:               "ssh-rsa AAAA...",
+		Fingerprint:       "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
+		FingerprintSHA256: "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
+		CreatedAt:         &createdAt,
+		CanPush:           false,
 	}
 	if !reflect.DeepEqual(want, deployKey) {
 		t.Errorf("DeployKeys.GetDeployKey returned %+v, want %+v", deployKey, want)
