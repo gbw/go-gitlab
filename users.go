@@ -56,6 +56,7 @@ type BasicUser struct {
 	Username  string     `json:"username"`
 	Name      string     `json:"name"`
 	State     string     `json:"state"`
+	Locked    bool       `json:"locked"`
 	CreatedAt *time.Time `json:"created_at"`
 	AvatarURL string     `json:"avatar_url"`
 	WebURL    string     `json:"web_url"`
@@ -119,6 +120,7 @@ type User struct {
 	CustomAttributes               []*CustomAttribute `json:"custom_attributes"`
 	NamespaceID                    int                `json:"namespace_id"`
 	Locked                         bool               `json:"locked"`
+	CreatedBy                      *BasicUser         `json:"created_by"`
 }
 
 // UserIdentity represents a user identity.

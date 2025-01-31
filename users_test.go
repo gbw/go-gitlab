@@ -121,6 +121,61 @@ func TestGetUserAdmin(t *testing.T) {
 	require.Equal(t, want, user)
 }
 
+func TestCreatedBy(t *testing.T) {
+	mux, client := setup(t)
+
+	path := "/api/v4/users/2"
+
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_user_bot.json")
+	})
+
+	user, _, err := client.Users.GetUser(2, GetUsersOptions{})
+	require.NoError(t, err)
+
+	lastActivityOn := ISOTime(time.Date(2012, time.May, 23, 0, 0, 0, 0, time.UTC))
+
+	want := &User{
+		ID:        2,
+		Username:  "project_1_bot_3cca1d029554e372cf8f39df76bf507d",
+		Email:     "project_1_bot_3cca1d029554e372cf8f39df76bf507d@example.com",
+		Name:      "John Bot",
+		State:     "active",
+		WebURL:    "http://localhost:3000/project_1_bot_3cca1d029554e372cf8f39df76bf507d",
+		CreatedAt: Ptr(time.Date(2012, time.May, 23, 8, 0o0, 58, 0, time.UTC)),
+		Bot:       true,
+		// Bio:          "Bio of John Smith",
+		// Location:     "USA",
+		// PublicEmail:  "john@example.com",
+		// Skype:        "john_smith",
+		// Linkedin:     "john_smith",
+		// Twitter:      "john_smith",
+		// WebsiteURL:   "john_smith.example.com",
+		// Organization: "Smith Inc",
+		// JobTitle:     "Operations Specialist",
+		ThemeID:        3,
+		LastActivityOn: &lastActivityOn,
+		ColorSchemeID:  1,
+		IsAdmin:        false,
+		AvatarURL:      "http://localhost:3000/uploads/user/avatar/2/index.jpg",
+		ConfirmedAt:    Ptr(time.Date(2012, time.May, 23, 8, 0o0, 58, 0, time.UTC)),
+		Identities:     []*UserIdentity{},
+		NamespaceID:    4,
+		Locked:         false,
+		CreatedBy: &BasicUser{
+			ID:        1,
+			Username:  "john_smith",
+			Name:      "John Smith",
+			State:     "active",
+			Locked:    false,
+			WebURL:    "http://localhost:3000/john_smith",
+			AvatarURL: "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+		},
+	}
+	require.Equal(t, want, user)
+}
+
 func TestBlockUser(t *testing.T) {
 	mux, client := setup(t)
 
