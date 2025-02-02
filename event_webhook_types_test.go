@@ -1044,16 +1044,16 @@ func TestPipelineEventUnmarshal(t *testing.T) {
 		t.Errorf("Builds[0].Failurereason is %v, want %v", event.Builds[0].FailureReason, "''")
 	}
 
-	if event.SourcePipline.PipelineID != 30 {
-		t.Errorf("Source Pipline ID is %v, want %v", event.SourcePipline.PipelineID, 30)
+	if event.SourcePipeline.PipelineID != 30 {
+		t.Errorf("Source Pipline ID is %v, want %v", event.SourcePipeline.PipelineID, 30)
 	}
 
-	if event.SourcePipline.JobID != 3401 {
-		t.Errorf("Source Pipline JobID is %v, want %v", event.SourcePipline.JobID, 3401)
+	if event.SourcePipeline.JobID != 3401 {
+		t.Errorf("Source Pipline JobID is %v, want %v", event.SourcePipeline.JobID, 3401)
 	}
 
-	if event.SourcePipline.Project.ID != 41 {
-		t.Errorf("Source Pipline Project ID is %v, want %v", event.SourcePipline.Project.ID, 41)
+	if event.SourcePipeline.Project.ID != 41 {
+		t.Errorf("Source Pipline Project ID is %v, want %v", event.SourcePipeline.Project.ID, 41)
 	}
 
 	if event.MergeRequest.DetailedMergeStatus != "mergeable" {
