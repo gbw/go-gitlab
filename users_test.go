@@ -673,7 +673,8 @@ func TestGetSingleSSHKeyForUser(t *testing.T) {
 			"id": 1,
 			"title": "Public key",
 			"key": "ssh-rsa AAAA...",
-			"created_at": "2014-08-01T14:47:39.080Z"
+			"created_at": "2014-08-01T14:47:39.080Z",
+			"usage_type": "auth"
 		}`)
 	})
 
@@ -688,6 +689,7 @@ func TestGetSingleSSHKeyForUser(t *testing.T) {
 		ID:        1,
 		Title:     "Public key",
 		Key:       "ssh-rsa AAAA...",
+		UsageType: "auth",
 		CreatedAt: &wantCreatedAt,
 	}
 
