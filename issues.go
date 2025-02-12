@@ -120,6 +120,7 @@ type Issue struct {
 	Epic                 *Epic                  `json:"epic"`
 	Iteration            *GroupIteration        `json:"iteration"`
 	TaskCompletionStatus *TasksCompletionStatus `json:"task_completion_status"`
+	ServiceDeskReplyTo   string                 `json:"service_desk_reply_to"`
 }
 
 func (i Issue) String() string {
