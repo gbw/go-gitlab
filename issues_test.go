@@ -959,3 +959,29 @@ func TestGetIssueGroupMilestone(t *testing.T) {
 		t.Errorf("Issues.GetIssue returned %+v, want %+v", issue, want)
 	}
 }
+
+func TestGetIssueWithServiceDesk(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"id":1, "description": "This is test project", "author" : {"id" : 1, "name": "snehal"}, "assignees":[{"id":1}],"service_desk_reply_to": "snehal@test.com"}`)
+	})
+
+	issue, _, err := client.Issues.GetIssue("1", 5)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := &Issue{
+		ID:                 1,
+		Description:        "This is test project",
+		Author:             &IssueAuthor{ID: 1, Name: "snehal"},
+		Assignees:          []*IssueAssignee{{ID: 1}},
+		ServiceDeskReplyTo: "snehal@test.com",
+	}
+
+	if !reflect.DeepEqual(want, issue) {
+		t.Errorf("Issues.GetIssue returned %+v, want %+v", issue, want)
+	}
+}
