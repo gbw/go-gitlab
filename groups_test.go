@@ -38,7 +38,20 @@ func TestGetGroup(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/g",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
-			fmt.Fprint(w, `{"id": 1, "name": "g", "default_branch": "branch"}`)
+			fmt.Fprint(w, `
+			{
+			"id": 1, 
+			"name": "g", 
+			"default_branch": "branch",
+			"shared_with_groups": [
+				{
+				"group_id": 1,
+				"group_name": "whiskers delicious",
+				"member_role_id": 2
+				}
+			]
+			}
+		`)
 		})
 
 	group, _, err := client.Groups.GetGroup("g", &GetGroupOptions{})
@@ -46,7 +59,24 @@ func TestGetGroup(t *testing.T) {
 		t.Errorf("Groups.GetGroup returned error: %v", err)
 	}
 
-	want := &Group{ID: 1, Name: "g", DefaultBranch: "branch"}
+	// Create the group shares struct to test.
+	// We need to re-declare the struct here since it's an anonymous struct in the upstream struct.
+	shares := []struct {
+		GroupID          int      `json:"group_id"`
+		GroupName        string   `json:"group_name"`
+		GroupFullPath    string   `json:"group_full_path"`
+		GroupAccessLevel int      `json:"group_access_level"`
+		ExpiresAt        *ISOTime `json:"expires_at"`
+		MemberRoleID     int      `json:"member_role_id"`
+	}{
+		{
+			GroupID:      1,
+			GroupName:    "whiskers delicious",
+			MemberRoleID: 2,
+		},
+	}
+	want := &Group{ID: 1, Name: "g", DefaultBranch: "branch", SharedWithGroups: shares}
+
 	if !reflect.DeepEqual(want, group) {
 		t.Errorf("Groups.GetGroup returned %+v, want %+v", group, want)
 	}
@@ -747,23 +777,40 @@ func TestRestoreGroup(t *testing.T) {
 
 func TestShareGroupWithGroup(t *testing.T) {
 	mux, client := setup(t)
+
+	var input ShareGroupWithGroupOptions
 	mux.HandleFunc("/api/v4/groups/1/share",
 		func(w http.ResponseWriter, r *http.Request) {
+			// Parse the options so we can test them
+			body, err := io.ReadAll(r.Body)
+			if err != nil {
+				t.Fatalf("Unable to read request body. Err: %v", err)
+			}
+			err = json.Unmarshal(body, &input)
+			if err != nil {
+				t.Fatalf("Unable to unmarshal request body. Err: %v", err)
+			}
+
+			// Return group details
 			testMethod(t, r, http.MethodPost)
 			fmt.Fprint(w, `{"id": 1, "name": "g"}`)
 		})
 
 	group, _, err := client.Groups.ShareGroupWithGroup(1, &ShareGroupWithGroupOptions{
-		GroupID:     Ptr(1),
-		GroupAccess: Ptr(DeveloperPermissions),
+		GroupID:      Ptr(1),
+		GroupAccess:  Ptr(DeveloperPermissions),
+		MemberRoleID: Ptr(1),
 	})
 	if err != nil {
 		t.Errorf("Groups.ShareGroupWithGroup returned error: %v", err)
 	}
+
 	want := &Group{ID: 1, Name: "g"}
 	if !reflect.DeepEqual(want, group) {
 		t.Errorf("Groups.ShareGroupWithGroup returned %+v, want %+v", group, want)
 	}
+
+	assert.Equal(t, 1, *input.MemberRoleID)
 }
 
 func TestUnshareGroupFromGroup(t *testing.T) {
