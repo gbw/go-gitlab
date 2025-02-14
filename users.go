@@ -602,16 +602,17 @@ func (s *UsersService) GetSSHKeyForUser(user int, key int, options ...RequestOpt
 
 // AddSSHKeyOptions represents the available AddSSHKey() options.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/users.html#add-ssh-key
+// GitLab API docs: https://docs.gitlab.com/ee/api/user_keys.html#add-an-ssh-key
 type AddSSHKeyOptions struct {
 	Title     *string  `url:"title,omitempty" json:"title,omitempty"`
 	Key       *string  `url:"key,omitempty" json:"key,omitempty"`
 	ExpiresAt *ISOTime `url:"expires_at,omitempty" json:"expires_at,omitempty"`
+	UsageType *string  `url:"usage_type,omitempty" json:"usage_type,omitempty"`
 }
 
 // AddSSHKey creates a new key owned by the currently authenticated user.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/users.html#add-ssh-key
+// GitLab API docs: https://docs.gitlab.com/ee/api/user_keys.html#add-an-ssh-key
 func (s *UsersService) AddSSHKey(opt *AddSSHKeyOptions, options ...RequestOptionFunc) (*SSHKey, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "user/keys", opt, options)
 	if err != nil {
@@ -630,7 +631,7 @@ func (s *UsersService) AddSSHKey(opt *AddSSHKeyOptions, options ...RequestOption
 // AddSSHKeyForUser creates new key owned by specified user. Available only for
 // admin.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/users.html#add-ssh-key-for-user
+// GitLab API docs: https://docs.gitlab.com/ee/api/user_keys.html#add-an-ssh-key-for-a-user
 func (s *UsersService) AddSSHKeyForUser(user int, opt *AddSSHKeyOptions, options ...RequestOptionFunc) (*SSHKey, *Response, error) {
 	u := fmt.Sprintf("users/%d/keys", user)
 
