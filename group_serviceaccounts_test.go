@@ -132,13 +132,13 @@ func TestRotateServiceAccountPersonalAccessToken(t *testing.T) {
       }`)
 	})
 
-	pat, _, err := client.Groups.RotateServiceAccountPersonalAccessToken(1, 57, 6)
+	datePointer := time.Date(2023, 0o6, 13, 0o7, 54, 49, 0, time.UTC)
+	expiresAt := ISOTime(time.Date(2025, time.June, 20, 0, 0, 0, 0, time.UTC))
+	opts := &RotateServiceAccountPersonalAccessTokenOptions{ExpiresAt: &expiresAt}
+	pat, _, err := client.Groups.RotateServiceAccountPersonalAccessToken(1, 57, 6, opts)
 	if err != nil {
 		t.Error(err)
 	}
-
-	datePointer := time.Date(2023, 0o6, 13, 0o7, 54, 49, 0, time.UTC)
-	expiresAt := ISOTime(time.Date(2025, time.June, 20, 0, 0, 0, 0, time.UTC))
 
 	want := &PersonalAccessToken{
 		ID:         7,
