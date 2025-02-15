@@ -26,6 +26,47 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestListGroupServiceAccounts(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/service_accounts", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[
+			{
+				"id": 57,
+				"username": "service_account_group_345_6018816a18e515214e0c34c2b33523fc",
+				"name": "Service account user"
+			},
+			{
+				"id": 58,
+				"username": "service_account_group_346_7129927b29f626325f1d45d3c44634fd",
+				"name": "Another service account"
+			}
+		]`)
+	})
+
+	serviceAccounts, resp, err := client.Groups.ListServiceAccounts(1, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	want := []*GroupServiceAccount{
+		{
+			ID:       57,
+			UserName: "service_account_group_345_6018816a18e515214e0c34c2b33523fc",
+			Name:     "Service account user",
+		},
+		{
+			ID:       58,
+			UserName: "service_account_group_346_7129927b29f626325f1d45d3c44634fd",
+			Name:     "Another service account",
+		},
+	}
+
+	if !reflect.DeepEqual(serviceAccounts, want) {
+		t.Errorf("ListServiceAccounts returned \ngot:\n%v\nwant:\n%v", Stringify(serviceAccounts), Stringify(want))
+	}
+}
+
 func TestCreateServiceAccount(t *testing.T) {
 	mux, client := setup(t)
 
@@ -39,13 +80,12 @@ func TestCreateServiceAccount(t *testing.T) {
       }`)
 	})
 
-	sa, _, err := client.Groups.CreateServiceAccount(1, &CreateServiceAccountOptions{
+	sa, resp, err := client.Groups.CreateServiceAccount(1, &CreateServiceAccountOptions{
 		Name:     Ptr("Service account user"),
 		Username: Ptr("service_account_group_345_6018816a18e515214e0c34c2b33523fc"),
 	})
-	if err != nil {
-		t.Error(err)
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	want := &GroupServiceAccount{
 		ID:       57,
@@ -56,6 +96,18 @@ func TestCreateServiceAccount(t *testing.T) {
 	if !reflect.DeepEqual(sa, want) {
 		t.Errorf("CreateServiceAccount returned \ngot:\n%v\nwant:\n%v", Stringify(sa), Stringify(want))
 	}
+}
+
+func TestDeleteServiceAccount(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/service_accounts/57", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Groups.DeleteServiceAccount(1, 57, &DeleteServiceAccountOptions{HardDelete: Ptr(true)})
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 func TestCreateServiceAccountPersonalAccessToken(t *testing.T) {
@@ -86,10 +138,9 @@ func TestCreateServiceAccountPersonalAccessToken(t *testing.T) {
 		Name:      Ptr("service_account_token"),
 		ExpiresAt: Ptr(expireTime),
 	}
-	pat, _, err := client.Groups.CreateServiceAccountPersonalAccessToken(1, 57, options)
-	if err != nil {
-		t.Error(err)
-	}
+	pat, resp, err := client.Groups.CreateServiceAccountPersonalAccessToken(1, 57, options)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	datePointer := time.Date(2023, 0o6, 13, 0o7, 47, 13, 0, time.UTC)
 	expiresAt := ISOTime(time.Date(2024, time.June, 12, 0, 0, 0, 0, time.UTC))
@@ -135,10 +186,9 @@ func TestRotateServiceAccountPersonalAccessToken(t *testing.T) {
 	datePointer := time.Date(2023, 0o6, 13, 0o7, 54, 49, 0, time.UTC)
 	expiresAt := ISOTime(time.Date(2025, time.June, 20, 0, 0, 0, 0, time.UTC))
 	opts := &RotateServiceAccountPersonalAccessTokenOptions{ExpiresAt: &expiresAt}
-	pat, _, err := client.Groups.RotateServiceAccountPersonalAccessToken(1, 57, 6, opts)
-	if err != nil {
-		t.Error(err)
-	}
+	pat, resp, err := client.Groups.RotateServiceAccountPersonalAccessToken(1, 57, 6, opts)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	want := &PersonalAccessToken{
 		ID:         7,
