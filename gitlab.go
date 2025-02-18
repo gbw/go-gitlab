@@ -202,6 +202,7 @@ type Client struct {
 	ProjectMembers               *ProjectMembersService
 	ProjectMirrors               *ProjectMirrorService
 	ProjectRepositoryStorageMove *ProjectRepositoryStorageMoveService
+	ProjectSecuritySettings      *ProjectSecuritySettingsService
 	ProjectSnippets              *ProjectSnippetsService
 	ProjectTemplates             *ProjectTemplatesService
 	ProjectVariables             *ProjectVariablesService
@@ -444,6 +445,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.ProjectMembers = &ProjectMembersService{client: c}
 	c.ProjectMirrors = &ProjectMirrorService{client: c}
 	c.ProjectRepositoryStorageMove = &ProjectRepositoryStorageMoveService{client: c}
+	c.ProjectSecuritySettings = &ProjectSecuritySettingsService{client: c}
 	c.ProjectSnippets = &ProjectSnippetsService{client: c}
 	c.ProjectTemplates = &ProjectTemplatesService{client: c}
 	c.ProjectVariables = &ProjectVariablesService{client: c}
