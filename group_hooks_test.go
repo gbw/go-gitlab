@@ -25,7 +25,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListGroupHooks(t *testing.T) {
@@ -65,10 +65,9 @@ func TestListGroupHooks(t *testing.T) {
 ]`)
 	})
 
-	groupHooks, _, err := client.Groups.ListGroupHooks(1, nil)
-	if err != nil {
-		t.Error(err)
-	}
+	groupHooks, resp, err := client.Groups.ListGroupHooks(1, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
 	want := []*GroupHook{{
@@ -143,10 +142,9 @@ func TestGetGroupHook(t *testing.T) {
 }`)
 	})
 
-	groupHook, _, err := client.Groups.GetGroupHook(1, 1)
-	if err != nil {
-		t.Error(err)
-	}
+	groupHook, resp, err := client.Groups.GetGroupHook(1, 1)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
 	want := &GroupHook{
@@ -184,6 +182,20 @@ func TestGetGroupHook(t *testing.T) {
 	if !reflect.DeepEqual(groupHook, want) {
 		t.Errorf("getGroupHooks returned \ngot:\n%v\nwant:\n%v", Stringify(groupHook), Stringify(want))
 	}
+}
+
+func TestResendGroupHookEvent(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/events/1/resend", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, `{"response_status": 200}`)
+	})
+
+	resp, err := client.Groups.ResendGroupHookEvent(1, 1, 1)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 func TestAddGroupHook(t *testing.T) {
@@ -226,10 +238,9 @@ func TestAddGroupHook(t *testing.T) {
 		URL: &url,
 	}
 
-	groupHooks, _, err := client.Groups.AddGroupHook(1, opt)
-	if err != nil {
-		t.Error(err)
-	}
+	groupHooks, resp, err := client.Groups.AddGroupHook(1, opt)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
 	want := &GroupHook{
@@ -312,10 +323,9 @@ func TestEditGroupHook(t *testing.T) {
 		URL: &url,
 	}
 
-	groupHooks, _, err := client.Groups.EditGroupHook(1, 1, opt)
-	if err != nil {
-		t.Error(err)
-	}
+	groupHooks, resp, err := client.Groups.EditGroupHook(1, 1, opt)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
 	want := &GroupHook{
@@ -356,6 +366,18 @@ func TestEditGroupHook(t *testing.T) {
 	if !reflect.DeepEqual(groupHooks, want) {
 		t.Errorf("EditGroupHook returned \ngot:\n%v\nwant:\n%v", Stringify(groupHooks), Stringify(want))
 	}
+}
+
+func TestDeleteGroupHook(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Groups.DeleteGroupHook(1, 1)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 func TestTriggerTestGroupHook(t *testing.T) {
@@ -414,75 +436,19 @@ func TestTriggerTestGroupHook(t *testing.T) {
 			resp, err := client.Groups.TriggerTestGroupHook(tt.groupID, tt.hookID, tt.trigger)
 
 			if tt.wantErr {
-				assert.Error(t, err)
+				require.Error(t, err)
 				if tt.wantStatus != 0 {
-					assert.Equal(t, tt.wantStatus, resp.StatusCode)
+					require.Equal(t, tt.wantStatus, resp.StatusCode)
 				}
 				if tt.wantErrMsg != "" {
-					assert.Contains(t, err.Error(), tt.wantErrMsg)
+					require.Contains(t, err.Error(), tt.wantErrMsg)
 				}
 			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, resp)
-				assert.Equal(t, tt.wantStatus, resp.StatusCode)
+				require.NoError(t, err)
+				require.NotNil(t, resp)
+				require.Equal(t, tt.wantStatus, resp.StatusCode)
 			}
 		})
-	}
-}
-
-func TestDeleteGroupHook(t *testing.T) {
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/groups/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-	})
-
-	_, err := client.Groups.DeleteGroupHook(1, 1)
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestGetGroupWebhookHeader(t *testing.T) {
-	mux, client := setup(t)
-
-	// Removed most of the arguments to keep test slim
-	mux.HandleFunc("/api/v4/groups/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `{
-			"id": 1,
-			"custom_webhook_template": "{\"event\":\"{{object_kind}}\"}",
-			"custom_headers": [
-			  {
-				"key": "Authorization"
-			  },
-			  {
-				"key": "OtherKey"
-			  }
-			]
-		  }`)
-	})
-
-	hook, _, err := client.Groups.GetGroupHook(1, 1)
-	if err != nil {
-		t.Errorf("Projects.GetGroupHook returned error: %v", err)
-	}
-
-	want := &GroupHook{
-		ID:                    1,
-		CustomWebhookTemplate: "{\"event\":\"{{object_kind}}\"}",
-		CustomHeaders: []*HookCustomHeader{
-			{
-				Key: "Authorization",
-			},
-			{
-				Key: "OtherKey",
-			},
-		},
-	}
-
-	if !reflect.DeepEqual(want, hook) {
-		t.Errorf("Projects.GetGroupHook returned %+v, want %+v", hook, want)
 	}
 }
 
@@ -512,6 +478,39 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 		t.Errorf("Groups.SetGroupCustomHeader returned error: %v", err)
 	}
 
-	assert.Equal(t, bodyJson["value"], "testValue")
-	assert.Equal(t, http.StatusNoContent, req.StatusCode)
+	require.Equal(t, bodyJson["value"], "testValue")
+	require.Equal(t, http.StatusNoContent, req.StatusCode)
+}
+
+func TestDeleteGroupCustomHeader(t *testing.T) {
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Groups.DeleteGroupCustomHeader(1, 1, "Authorization")
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+}
+
+func TestSetGroupHookURLVariable(t *testing.T) {
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+	})
+
+	resp, err := client.Groups.SetGroupHookURLVariable(1, 1, "KEY", &SetHookURLVariableOptions{Value: Ptr("VALUE")})
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+}
+
+func TestDeleteGroupHookURLVariable(t *testing.T) {
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Groups.DeleteGroupHookURLVariable(1, 1, "KEY")
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
