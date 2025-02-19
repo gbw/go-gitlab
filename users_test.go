@@ -796,6 +796,7 @@ func TestCreateServiceAccountUser(t *testing.T) {
 	user, _, err := client.Users.CreateServiceAccountUser(&CreateServiceAccountUserOptions{
 		Name:     Ptr("Test Service Account"),
 		Username: Ptr("serviceaccount"),
+		Email:    Ptr("serviceaccount@test.com"),
 	})
 	require.NoError(t, err)
 
@@ -803,6 +804,7 @@ func TestCreateServiceAccountUser(t *testing.T) {
 		ID:        999,
 		Username:  "serviceaccount",
 		Name:      "Test Service Account",
+		Email:     "serviceaccount@test.com",
 		State:     "active",
 		Locked:    false,
 		AvatarURL: "http://localhost:3000/uploads/user/avatar/999/cd8.jpeg",

@@ -1563,6 +1563,7 @@ func (s *UsersService) CreateUserRunner(opts *CreateUserRunnerOptions, options .
 type CreateServiceAccountUserOptions struct {
 	Name     *string `url:"name,omitempty" json:"name,omitempty"`
 	Username *string `url:"username,omitempty" json:"username,omitempty"`
+	Email    *string `url:"email,omitempty" json:"email,omitempty"`
 }
 
 // CreateServiceAccountUser creates a new service account user.
