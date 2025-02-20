@@ -1,7 +1,9 @@
 package gitlab
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"testing"
 
@@ -226,8 +228,21 @@ func TestProjectMembersService_GetInheritedProjectMember(t *testing.T) {
 func TestProjectMembersService_AddProjectMember(t *testing.T) {
 	mux, client := setup(t)
 
+	var requestOpts AddProjectMemberOptions
 	mux.HandleFunc("/api/v4/projects/1/members", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+
+		// Read the input arguments and unmarshal them into requestOpts
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			t.Fatalf("Failed to read request body: %v", err)
+		}
+
+		err = json.Unmarshal(body, &requestOpts)
+		if err != nil {
+			t.Fatalf("Failed to unmarshal request body: %v", err)
+		}
+
 		fmt.Fprintf(w, `
 			{
 			  "id": 1,
@@ -256,10 +271,13 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 	}
 
-	pm, resp, err := client.ProjectMembers.AddProjectMember(1, nil, nil)
+	pm, resp, err := client.ProjectMembers.AddProjectMember(1, &AddProjectMemberOptions{
+		Username: Ptr("venkatesh_thalluri"),
+	}, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, pm)
+	require.Equal(t, "venkatesh_thalluri", *requestOpts.Username)
 
 	pm, resp, err = client.ProjectMembers.AddProjectMember(1.01, nil, nil)
 	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
