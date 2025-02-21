@@ -59,26 +59,28 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 
 	want := []*PersonalAccessToken{
 		{
-			ID:         1,
-			Name:       "test 1",
-			Revoked:    true,
-			CreatedAt:  &createdAt1,
-			Scopes:     []string{"api"},
-			UserID:     1,
-			LastUsedAt: &lastUsedAt1,
-			Active:     false,
-			ExpiresAt:  &expiresAt1,
+			ID:          1,
+			Name:        "test 1",
+			Description: "Describe test 1",
+			Revoked:     true,
+			CreatedAt:   &createdAt1,
+			Scopes:      []string{"api"},
+			UserID:      1,
+			LastUsedAt:  &lastUsedAt1,
+			Active:      false,
+			ExpiresAt:   &expiresAt1,
 		},
 		{
-			ID:         2,
-			Name:       "test 2",
-			Revoked:    false,
-			CreatedAt:  &createdAt2,
-			Scopes:     []string{"api", "read_user"},
-			UserID:     1,
-			LastUsedAt: nil,
-			Active:     false,
-			ExpiresAt:  &expiresAt2,
+			ID:          2,
+			Name:        "test 2",
+			Description: "Describe test 2",
+			Revoked:     false,
+			CreatedAt:   &createdAt2,
+			Scopes:      []string{"api", "read_user"},
+			UserID:      1,
+			LastUsedAt:  nil,
+			Active:      false,
+			ExpiresAt:   &expiresAt2,
 		},
 	}
 
@@ -125,26 +127,28 @@ func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
 
 	want := []*PersonalAccessToken{
 		{
-			ID:         1,
-			Name:       "test 1",
-			Revoked:    true,
-			CreatedAt:  &createdAt1,
-			Scopes:     []string{"api"},
-			UserID:     1,
-			LastUsedAt: &lastUsedAt1,
-			Active:     false,
-			ExpiresAt:  &expiresAt1,
+			ID:          1,
+			Name:        "test 1",
+			Description: "Describe test 1",
+			Revoked:     true,
+			CreatedAt:   &createdAt1,
+			Scopes:      []string{"api"},
+			UserID:      1,
+			LastUsedAt:  &lastUsedAt1,
+			Active:      false,
+			ExpiresAt:   &expiresAt1,
 		},
 		{
-			ID:         2,
-			Name:       "test 2",
-			Revoked:    false,
-			CreatedAt:  &createdAt2,
-			Scopes:     []string{"api", "read_user"},
-			UserID:     2,
-			LastUsedAt: nil,
-			Active:     false,
-			ExpiresAt:  &expiresAt2,
+			ID:          2,
+			Name:        "test 2",
+			Description: "Describe test 2",
+			Revoked:     false,
+			CreatedAt:   &createdAt2,
+			Scopes:      []string{"api", "read_user"},
+			UserID:      2,
+			LastUsedAt:  nil,
+			Active:      false,
+			ExpiresAt:   &expiresAt2,
 		},
 	}
 
@@ -179,14 +183,15 @@ func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
 	}
 
 	want := &PersonalAccessToken{
-		ID:         1,
-		Name:       "Test Token",
-		Revoked:    false,
-		CreatedAt:  &createdAt,
-		Scopes:     []string{"api"},
-		UserID:     1,
-		LastUsedAt: &lastUsedAt,
-		Active:     true,
+		ID:          1,
+		Name:        "Test Token",
+		Description: "Describe test token",
+		Revoked:     false,
+		CreatedAt:   &createdAt,
+		Scopes:      []string{"api"},
+		UserID:      1,
+		LastUsedAt:  &lastUsedAt,
+		Active:      true,
 	}
 
 	if !reflect.DeepEqual(want, token) {
@@ -218,14 +223,15 @@ func TestGetSinglePersonalAccessToken(t *testing.T) {
 	}
 
 	want := &PersonalAccessToken{
-		ID:         1,
-		Name:       "Test Token",
-		Revoked:    false,
-		CreatedAt:  &createdAt,
-		Scopes:     []string{"api"},
-		UserID:     1,
-		LastUsedAt: &lastUsedAt,
-		Active:     true,
+		ID:          1,
+		Name:        "Test Token",
+		Description: "Describe test token",
+		Revoked:     false,
+		CreatedAt:   &createdAt,
+		Scopes:      []string{"api"},
+		UserID:      1,
+		LastUsedAt:  &lastUsedAt,
+		Active:      true,
 	}
 
 	if !reflect.DeepEqual(want, token) {
@@ -249,15 +255,16 @@ func TestRotatePersonalAccessToken(t *testing.T) {
 	}
 
 	want := &PersonalAccessToken{
-		ID:        42,
-		UserID:    1337,
-		Name:      "Rotated Token",
-		Scopes:    []string{"api"},
-		ExpiresAt: &expiration,
-		CreatedAt: &createdAt,
-		Active:    true,
-		Revoked:   false,
-		Token:     "s3cr3t",
+		ID:          42,
+		UserID:      1337,
+		Name:        "Rotated Token",
+		Description: "Describe rotated token",
+		Scopes:      []string{"api"},
+		ExpiresAt:   &expiration,
+		CreatedAt:   &createdAt,
+		Active:      true,
+		Revoked:     false,
+		Token:       "s3cr3t",
 	}
 
 	if !reflect.DeepEqual(want, rotatedToken) {
@@ -283,15 +290,16 @@ func TestRotatePersonalAccessTokenByID(t *testing.T) {
 	}
 
 	want := &PersonalAccessToken{
-		ID:        42,
-		UserID:    1337,
-		Name:      "Rotated Token",
-		Scopes:    []string{"api"},
-		ExpiresAt: &expiration,
-		CreatedAt: &createdAt,
-		Active:    true,
-		Revoked:   false,
-		Token:     "s3cr3t",
+		ID:          42,
+		UserID:      1337,
+		Name:        "Rotated Token",
+		Description: "Describe rotated token",
+		Scopes:      []string{"api"},
+		ExpiresAt:   &expiration,
+		CreatedAt:   &createdAt,
+		Active:      true,
+		Revoked:     false,
+		Token:       "s3cr3t",
 	}
 
 	if !reflect.DeepEqual(want, rotatedToken) {
@@ -317,15 +325,16 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 	}
 
 	want := &PersonalAccessToken{
-		ID:        42,
-		UserID:    1337,
-		Name:      "Rotated Token",
-		Scopes:    []string{"api"},
-		ExpiresAt: &expiration,
-		CreatedAt: &createdAt,
-		Active:    true,
-		Revoked:   false,
-		Token:     "s3cr3t",
+		ID:          42,
+		UserID:      1337,
+		Name:        "Rotated Token",
+		Description: "Describe rotated token",
+		Scopes:      []string{"api"},
+		ExpiresAt:   &expiration,
+		CreatedAt:   &createdAt,
+		Active:      true,
+		Revoked:     false,
+		Token:       "s3cr3t",
 	}
 
 	if !reflect.DeepEqual(want, rotatedToken) {
