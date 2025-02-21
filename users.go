@@ -1341,17 +1341,18 @@ func (s *UsersService) RevokeImpersonationToken(user, token int, options ...Requ
 // CreatePersonalAccessToken() options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/users.html#create-a-personal-access-token
+// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token-for-a-user
 type CreatePersonalAccessTokenOptions struct {
-	Name      *string   `url:"name,omitempty" json:"name,omitempty"`
-	ExpiresAt *ISOTime  `url:"expires_at,omitempty" json:"expires_at,omitempty"`
-	Scopes    *[]string `url:"scopes,omitempty" json:"scopes,omitempty"`
+	Name        *string   `url:"name,omitempty" json:"name,omitempty"`
+	Description *string   `url:"description,omitempty" json:"description,omitempty"`
+	ExpiresAt   *ISOTime  `url:"expires_at,omitempty" json:"expires_at,omitempty"`
+	Scopes      *[]string `url:"scopes,omitempty" json:"scopes,omitempty"`
 }
 
 // CreatePersonalAccessToken creates a personal access token.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/users.html#create-a-personal-access-token
+// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token-for-a-user
 func (s *UsersService) CreatePersonalAccessToken(user int, opt *CreatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
 	u := fmt.Sprintf("users/%d/personal_access_tokens", user)
 
@@ -1373,17 +1374,18 @@ func (s *UsersService) CreatePersonalAccessToken(user int, opt *CreatePersonalAc
 // CreatePersonalAccessTokenForCurrentUser() options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/users.html#create-a-personal-access-token-with-limited-scopes-for-the-currently-authenticated-user
+// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token
 type CreatePersonalAccessTokenForCurrentUserOptions struct {
-	Name      *string   `url:"name,omitempty" json:"name,omitempty"`
-	Scopes    *[]string `url:"scopes,omitempty" json:"scopes,omitempty"`
-	ExpiresAt *ISOTime  `url:"expires_at,omitempty" json:"expires_at,omitempty"`
+	Name        *string   `url:"name,omitempty" json:"name,omitempty"`
+	Description *string   `url:"description,omitempty" json:"description,omitempty"`
+	Scopes      *[]string `url:"scopes,omitempty" json:"scopes,omitempty"`
+	ExpiresAt   *ISOTime  `url:"expires_at,omitempty" json:"expires_at,omitempty"`
 }
 
 // CreatePersonalAccessTokenForCurrentUser creates a personal access token with limited scopes for the currently authenticated user.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/users.html#create-a-personal-access-token-with-limited-scopes-for-the-currently-authenticated-user
+// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token
 func (s *UsersService) CreatePersonalAccessTokenForCurrentUser(opt *CreatePersonalAccessTokenForCurrentUserOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
 	u := "user/personal_access_tokens"
 

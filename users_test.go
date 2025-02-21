@@ -764,15 +764,16 @@ func TestCreatePersonalAccessTokenForCurrentUser(t *testing.T) {
 
 	createdAt := time.Date(2020, time.October, 14, 11, 58, 53, 526000000, time.UTC)
 	want := &PersonalAccessToken{
-		ID:        3,
-		Name:      "mytoken",
-		Revoked:   false,
-		CreatedAt: &createdAt,
-		Scopes:    scopes,
-		UserID:    42,
-		Active:    true,
-		ExpiresAt: &expiresAt,
-		Token:     "glpat-aaaaaaaa-bbbbbbbbb",
+		ID:          3,
+		Name:        "mytoken",
+		Description: "Describe mytoken",
+		Revoked:     false,
+		CreatedAt:   &createdAt,
+		Scopes:      scopes,
+		UserID:      42,
+		Active:      true,
+		ExpiresAt:   &expiresAt,
+		Token:       "glpat-aaaaaaaa-bbbbbbbbb",
 	}
 	require.Equal(t, want, user)
 }
