@@ -59,7 +59,10 @@ func (v ProjectAccessToken) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_access_tokens/#list-all-project-access-tokens
-type ListProjectAccessTokensOptions ListOptions
+type ListProjectAccessTokensOptions struct {
+	ListOptions
+	State *string `url:"state,omitempty" json:"state,omitempty"`
+}
 
 // ListProjectAccessTokens gets a list of all project access tokens in a
 // project.

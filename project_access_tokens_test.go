@@ -31,7 +31,7 @@ func TestListProjectAccessTokens(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/list_project_access_tokens.json")
 	})
 
-	projectAccessTokens, _, err := client.ProjectAccessTokens.ListProjectAccessTokens(1, &ListProjectAccessTokensOptions{Page: 1, PerPage: 20})
+	projectAccessTokens, _, err := client.ProjectAccessTokens.ListProjectAccessTokens(1, &ListProjectAccessTokensOptions{State: Ptr("active"), ListOptions: ListOptions{Page: 1, PerPage: 20}})
 	if err != nil {
 		t.Errorf("ProjectAccessTokens.ListProjectAccessTokens returned error: %v", err)
 	}
