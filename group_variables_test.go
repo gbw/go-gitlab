@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListGroupVariabless(t *testing.T) {
@@ -32,10 +33,9 @@ func TestListGroupVariabless(t *testing.T) {
 			fmt.Fprint(w, `[{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": true}]`)
 		})
 
-	variables, _, err := client.GroupVariables.ListVariables(1, &ListGroupVariablesOptions{})
-	if err != nil {
-		t.Errorf("GroupVariables.ListVariables returned error: %v", err)
-	}
+	variables, resp, err := client.GroupVariables.ListVariables(1, &ListGroupVariablesOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*GroupVariable{
 		{
@@ -47,9 +47,7 @@ func TestListGroupVariabless(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, variables) {
-		t.Errorf("GroupVariables.ListVariablesreturned %+v, want %+v", variables, want)
-	}
+	assert.ElementsMatch(t, want, variables)
 }
 
 func TestGetGroupVariable(t *testing.T) {
@@ -62,15 +60,12 @@ func TestGetGroupVariable(t *testing.T) {
 			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": false}`)
 		})
 
-	variable, _, err := client.GroupVariables.GetVariable(1, "TEST_VARIABLE_1", &GetGroupVariableOptions{Filter: &VariableFilter{EnvironmentScope: "prod"}})
-	if err != nil {
-		t.Errorf("GroupVariables.GetVariable returned error: %v", err)
-	}
+	variable, resp, err := client.GroupVariables.GetVariable(1, "TEST_VARIABLE_1", &GetGroupVariableOptions{Filter: &VariableFilter{EnvironmentScope: "prod"}})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &GroupVariable{Key: "TEST_VARIABLE_1", Value: "test1", Protected: false, Masked: true, Hidden: false}
-	if !reflect.DeepEqual(want, variable) {
-		t.Errorf("GroupVariables.GetVariable returned %+v, want %+v", variable, want)
-	}
+	assert.Equal(t, want, variable)
 }
 
 func TestCreateGroupVariable(t *testing.T) {
@@ -90,15 +85,12 @@ func TestCreateGroupVariable(t *testing.T) {
 		MaskedAndHidden: Ptr(false),
 	}
 
-	variable, _, err := client.GroupVariables.CreateVariable(1, opt, nil)
-	if err != nil {
-		t.Errorf("GroupVariables.CreateVariable returned error: %v", err)
-	}
+	variable, resp, err := client.GroupVariables.CreateVariable(1, opt, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &GroupVariable{Key: "TEST_VARIABLE_1", Value: "test1", Protected: false, Masked: true, Hidden: false}
-	if !reflect.DeepEqual(want, variable) {
-		t.Errorf("GroupVariables.CreateVariable returned %+v, want %+v", variable, want)
-	}
+	assert.Equal(t, want, variable)
 }
 
 func TestCreateGroupVariable_MaskedAndHidden(t *testing.T) {
@@ -118,15 +110,12 @@ func TestCreateGroupVariable_MaskedAndHidden(t *testing.T) {
 		MaskedAndHidden: Ptr(true),
 	}
 
-	variable, _, err := client.GroupVariables.CreateVariable(1, opt, nil)
-	if err != nil {
-		t.Errorf("GroupVariables.CreateVariable returned error: %v", err)
-	}
+	variable, resp, err := client.GroupVariables.CreateVariable(1, opt, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &GroupVariable{Key: "TEST_VARIABLE_1", Protected: false, Masked: true, Hidden: true}
-	if !reflect.DeepEqual(want, variable) {
-		t.Errorf("GroupVariables.CreateVariable returned %+v, want %+v", variable, want)
-	}
+	assert.Equal(t, want, variable)
 }
 
 func TestDeleteGroupVariable(t *testing.T) {
@@ -138,16 +127,13 @@ func TestDeleteGroupVariable(t *testing.T) {
 			w.WriteHeader(http.StatusAccepted)
 		})
 
-	resp, err := client.GroupVariables.RemoveVariable(1, "TEST_VARIABLE_1")
-	if err != nil {
-		t.Errorf("GroupVariables.RemoveVariable returned error: %v", err)
-	}
+	resp, err := client.GroupVariables.RemoveVariable(1, "TEST_VARIABLE_1", &RemoveGroupVariableOptions{Filter: &VariableFilter{EnvironmentScope: "prod"}})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := http.StatusAccepted
 	got := resp.StatusCode
-	if got != want {
-		t.Errorf("GroupVariables.RemoveVariable returned %d, want %d", got, want)
-	}
+	assert.Equal(t, want, got)
 }
 
 func TestUpdateGroupVariable(t *testing.T) {
@@ -159,15 +145,29 @@ func TestUpdateGroupVariable(t *testing.T) {
 			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": false}`)
 		})
 
-	variable, _, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{})
-	if err != nil {
-		t.Errorf("GroupVariables.UpdateVariable returned error: %v", err)
-	}
+	variable, resp, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &GroupVariable{Key: "TEST_VARIABLE_1", Value: "test1", Protected: false, Masked: true, Hidden: false}
-	if !reflect.DeepEqual(want, variable) {
-		t.Errorf("Groups.UpdatedGroup returned %+v, want %+v", variable, want)
-	}
+	assert.Equal(t, want, variable)
+}
+
+func TestUpdateGroupVariable_Filter(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": false}`)
+		})
+
+	variable, resp, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{Filter: &VariableFilter{EnvironmentScope: "prod"}})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := &GroupVariable{Key: "TEST_VARIABLE_1", Value: "test1", Protected: false, Masked: true, Hidden: false}
+	assert.Equal(t, want, variable)
 }
 
 func TestUpdateGroupVariable_MaskedAndHidden(t *testing.T) {
@@ -179,13 +179,10 @@ func TestUpdateGroupVariable_MaskedAndHidden(t *testing.T) {
 			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","protected": false,"masked": true,"hidden": true}`)
 		})
 
-	variable, _, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{})
-	if err != nil {
-		t.Errorf("GroupVariables.UpdateVariable returned error: %v", err)
-	}
+	variable, resp, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &GroupVariable{Key: "TEST_VARIABLE_1", Protected: false, Masked: true, Hidden: true}
-	if !reflect.DeepEqual(want, variable) {
-		t.Errorf("Groups.UpdatedGroup returned %+v, want %+v", variable, want)
-	}
+	assert.Equal(t, want, variable)
 }
