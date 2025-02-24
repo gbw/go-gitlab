@@ -34,31 +34,47 @@ import (
 )
 
 func TestListProjects(t *testing.T) {
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `[{"id":1},{"id":2}]`)
-	})
-
-	opt := &ListProjectsOptions{
-		ListOptions: ListOptions{Page: 2, PerPage: 3},
-		Archived:    Ptr(true),
-		OrderBy:     Ptr("name"),
-		Sort:        Ptr("asc"),
-		Search:      Ptr("query"),
-		Simple:      Ptr(true),
-		Visibility:  Ptr(PublicVisibility),
+	testCases := []struct {
+		name  string
+		input string
+		want  []*Project
+	}{
+		{"only id", `[{"id":1},{"id":2}]`, []*Project{{ID: 1}, {ID: 2}}},
+		{
+			"with ci_delete_pipelines_in_seconds",
+			`[{"id":1, "ci_delete_pipelines_in_seconds": 14},{"id":2}]`,
+			[]*Project{{ID: 1, CIDeletePipelinesInSeconds: 14}, {ID: 2}},
+		},
 	}
 
-	projects, _, err := client.Projects.ListProjects(opt)
-	if err != nil {
-		t.Errorf("Projects.ListProjects returned error: %v", err)
-	}
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			mux, client := setup(t)
 
-	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListProjects returned %+v, want %+v", projects, want)
+			mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				fmt.Fprint(w, testCase.input)
+			})
+
+			opt := &ListProjectsOptions{
+				ListOptions: ListOptions{Page: 2, PerPage: 3},
+				Archived:    Ptr(true),
+				OrderBy:     Ptr("name"),
+				Sort:        Ptr("asc"),
+				Search:      Ptr("query"),
+				Simple:      Ptr(true),
+				Visibility:  Ptr(PublicVisibility),
+			}
+
+			projects, _, err := client.Projects.ListProjects(opt)
+			if err != nil {
+				t.Errorf("Projects.ListProjects returned error: %v", err)
+			}
+
+			if !reflect.DeepEqual(testCase.want, projects) {
+				t.Errorf("Projects.ListProjects returned %+v, want %+v", projects, testCase.want)
+			}
+		})
 	}
 }
 
@@ -319,7 +335,8 @@ func TestEditProject(t *testing.T) {
 			"web_url": "http://example.com/diaspora/diaspora-project-site",
 			"readme_url": "http://example.com/diaspora/diaspora-project-site/blob/main/README.md",
 			"ci_restrict_pipeline_cancellation_role": "developer",
-			"ci_pipeline_variables_minimum_override_role": "developer"
+			"ci_pipeline_variables_minimum_override_role": "developer",
+			"ci_delete_pipelines_in_seconds": 14
 		}`)
 	})
 
@@ -329,6 +346,7 @@ func TestEditProject(t *testing.T) {
 	assert.Equal(t, true, attributesFound)
 	assert.Equal(t, developerRole, project.CIRestrictPipelineCancellationRole)
 	assert.Equal(t, developerPipelineVariablesRole, project.CIPipelineVariablesMinimumOverrideRole)
+	assert.Equal(t, 14, project.CIDeletePipelinesInSeconds)
 }
 
 func TestListStarredProjects(t *testing.T) {
@@ -383,7 +401,8 @@ func TestGetProjectByID(t *testing.T) {
 			"ci_restrict_pipeline_cancellation_role": "developer",
 			"ci_pipeline_variables_minimum_override_role": "no_one_allowed",
 			"packages_enabled": false,
-			"build_coverage_regex": "Total.*([0-9]{1,3})%"
+			"build_coverage_regex": "Total.*([0-9]{1,3})%",
+			"ci_delete_pipelines_in_seconds": 14
 		  }`)
 	})
 
@@ -401,6 +420,7 @@ func TestGetProjectByID(t *testing.T) {
 		CIForwardDeploymentRollbackAllowed:     true,
 		CIRestrictPipelineCancellationRole:     "developer",
 		CIPipelineVariablesMinimumOverrideRole: "no_one_allowed",
+		CIDeletePipelinesInSeconds:             14,
 	}
 
 	project, _, err := client.Projects.GetProject(1, nil)
