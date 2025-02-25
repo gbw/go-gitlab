@@ -226,6 +226,7 @@ type Client struct {
 	ResourceWeightEvents         *ResourceWeightEventsService
 	Runners                      *RunnersService
 	Search                       *SearchService
+	SecureFiles                  *SecureFilesService
 	Services                     *ServicesService
 	Settings                     *SettingsService
 	Sidekiq                      *SidekiqService
@@ -471,6 +472,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.ResourceWeightEvents = &ResourceWeightEventsService{client: c}
 	c.Runners = &RunnersService{client: c}
 	c.Search = &SearchService{client: c}
+	c.SecureFiles = &SecureFilesService{client: c}
 	c.Services = &ServicesService{client: c}
 	c.Settings = &SettingsService{client: c}
 	c.Sidekiq = &SidekiqService{client: c}
