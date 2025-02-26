@@ -547,7 +547,7 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 		testMethod(t, r, http.MethodPost)
 		w.WriteHeader(http.StatusCreated)
 
-		fmt.Fprint(w, `[{"id": 1, "blocking_merge_request": {"iid":12}, "project_id": 7}]`)
+		fmt.Fprint(w, `{"id": 1, "blocking_merge_request": {"iid":12}, "project_id": 7}`)
 	})
 
 	opts := CreateMergeRequestDependencyOptions{
@@ -563,16 +563,14 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 		}
 	}
 
-	want := []MergeRequestDependency{
-		{
-			ID: 1,
-			BlockingMergeRequest: BlockingMergeRequest{
-				Iid: 12,
-			},
-			ProjectID: 7,
+	want := &MergeRequestDependency{
+		ID: 1,
+		BlockingMergeRequest: BlockingMergeRequest{
+			Iid: 12,
 		},
+		ProjectID: 7,
 	}
-	if !reflect.DeepEqual(want, dependencies) {
+	if dependencies == nil || (dependencies != nil && !reflect.DeepEqual(*want, *dependencies)) {
 		t.Fatalf("MergeRequestDependencies.GetMergeRequestDependencies returned %+v, want %+v", dependencies, want)
 	}
 }
