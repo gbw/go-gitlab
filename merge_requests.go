@@ -1202,7 +1202,7 @@ type CreateMergeRequestDependencyOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/merge_requests.html#create-a-merge-request-dependency
-func (s *MergeRequestsService) CreateMergeRequestDependency(pid interface{}, mergeRequest int, opts CreateMergeRequestDependencyOptions, options ...RequestOptionFunc) ([]MergeRequestDependency, *Response, error) {
+func (s *MergeRequestsService) CreateMergeRequestDependency(pid interface{}, mergeRequest int, opts CreateMergeRequestDependencyOptions, options ...RequestOptionFunc) (*MergeRequestDependency, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1214,13 +1214,13 @@ func (s *MergeRequestsService) CreateMergeRequestDependency(pid interface{}, mer
 		return nil, nil, err
 	}
 
-	var mrd []MergeRequestDependency
+	var mrd MergeRequestDependency
 	resp, err := s.client.Do(req, &mrd)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return mrd, resp, err
+	return &mrd, resp, err
 }
 
 // DeleteMergeRequestDependency deletes a merge request dependency for a given
