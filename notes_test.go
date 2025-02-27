@@ -21,20 +21,730 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
-func TestGetEpicNote(t *testing.T) {
+func TestNotes_ListIssueNotes(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/2/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `
+			[
+				{
+					"id": 302,
+					"body": "closed",
+					"attachment": null,
+					"author": {
+						"id": 1,
+						"username": "pipin",
+						"email": "admin@example.com",
+						"name": "Pip",
+						"state": "active"
+					},
+					"created_at": "2013-10-02T09:56:03.0Z",
+					"updated_at": "2013-10-02T09:56:03.0Z",
+					"system": true,
+					"noteable_id": 377,
+					"noteable_type": "Issue",
+					"project_id": 5,
+					"noteable_iid": 377,
+					"resolvable": false,
+					"confidential": false,
+					"internal": false
+				},
+				{
+					"id": 305,
+					"body": "Text of the comment\r\n",
+					"attachment": null,
+					"author": {
+						"id": 1,
+						"username": "pipin",
+						"email": "admin@example.com",
+						"name": "Pip",
+						"state": "active"
+					},
+					"created_at": "2013-10-02T09:56:03.0Z",
+					"updated_at": "2013-10-02T09:56:03.0Z",
+					"system": true,
+					"noteable_id": 121,
+					"noteable_type": "Issue",
+					"project_id": 5,
+					"noteable_iid": 121,
+					"resolvable": false,
+					"confidential": true,
+					"internal": true
+				}
+			]
+		`)
+	})
+
+	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	want := []*Note{
+		{
+			ID:         302,
+			Body:       "closed",
+			Attachment: "",
+			Author: NoteAuthor{
+				ID:       1,
+				Username: "pipin",
+				Email:    "admin@example.com",
+				Name:     "Pip",
+				State:    "active",
+			},
+			CreatedAt:    &createdAt,
+			UpdatedAt:    &createdAt,
+			System:       true,
+			NoteableID:   377,
+			NoteableType: "Issue",
+			ProjectID:    5,
+			NoteableIID:  377,
+			Resolvable:   false,
+			Confidential: false,
+			Internal:     false,
+		},
+		{
+			ID:         305,
+			Body:       "Text of the comment\r\n",
+			Attachment: "",
+			Author: NoteAuthor{
+				ID:       1,
+				Username: "pipin",
+				Email:    "admin@example.com",
+				Name:     "Pip",
+				State:    "active",
+			},
+			CreatedAt:    &createdAt,
+			UpdatedAt:    &createdAt,
+			System:       true,
+			NoteableID:   121,
+			NoteableType: "Issue",
+			ProjectID:    5,
+			NoteableIID:  121,
+			Resolvable:   false,
+			Confidential: true,
+			Internal:     true,
+		},
+	}
+
+	notes, resp, err := client.Notes.ListIssueNotes(1, 2, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, notes)
+}
+
+func TestNotes_GetIssueNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `
+			{
+				"id": 302,
+				"body": "closed",
+				"attachment": null,
+				"author": {
+					"id": 1,
+					"username": "pipin",
+					"email": "admin@example.com",
+					"name": "Pip",
+					"state": "active"
+				},
+				"created_at": "2013-10-02T09:56:03.0Z",
+				"updated_at": "2013-10-02T09:56:03.0Z",
+				"system": true,
+				"noteable_id": 377,
+				"noteable_type": "Issue",
+				"project_id": 5,
+				"noteable_iid": 377,
+				"resolvable": false,
+				"confidential": false,
+				"internal": false
+			},
+		`)
+	})
+
+	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	want := &Note{
+		ID:         302,
+		Body:       "closed",
+		Attachment: "",
+		Author: NoteAuthor{
+			ID:       1,
+			Username: "pipin",
+			Email:    "admin@example.com",
+			Name:     "Pip",
+			State:    "active",
+		},
+		CreatedAt:    &createdAt,
+		UpdatedAt:    &createdAt,
+		System:       true,
+		NoteableID:   377,
+		NoteableType: "Issue",
+		ProjectID:    5,
+		NoteableIID:  377,
+		Resolvable:   false,
+		Confidential: false,
+		Internal:     false,
+	}
+
+	note, resp, err := client.Notes.GetIssueNote(1, 2, 3)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_CreateIssueNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/2/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `
+			{
+				"id": 302,
+				"body": "closed",
+				"attachment": null,
+				"author": {
+					"id": 1,
+					"username": "pipin",
+					"email": "admin@example.com",
+					"name": "Pip",
+					"state": "active"
+				},
+				"created_at": "2013-10-02T09:56:03.0Z",
+				"updated_at": "2013-10-02T09:56:03.0Z",
+				"system": true,
+				"noteable_id": 377,
+				"noteable_type": "Issue",
+				"project_id": 5,
+				"noteable_iid": 377,
+				"resolvable": false,
+				"confidential": false,
+				"internal": false
+			},
+		`)
+	})
+
+	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	want := &Note{
+		ID:         302,
+		Body:       "closed",
+		Attachment: "",
+		Author: NoteAuthor{
+			ID:       1,
+			Username: "pipin",
+			Email:    "admin@example.com",
+			Name:     "Pip",
+			State:    "active",
+		},
+		CreatedAt:    &createdAt,
+		UpdatedAt:    &createdAt,
+		System:       true,
+		NoteableID:   377,
+		NoteableType: "Issue",
+		ProjectID:    5,
+		NoteableIID:  377,
+		Resolvable:   false,
+		Confidential: false,
+		Internal:     false,
+	}
+
+	note, resp, err := client.Notes.CreateIssueNote(1, 2, &CreateIssueNoteOptions{Body: Ptr("closed"), Internal: Ptr(false), CreatedAt: &createdAt})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_UpdateIssueNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `
+			{
+				"id": 302,
+				"body": "closed2",
+				"attachment": null,
+				"author": {
+					"id": 1,
+					"username": "pipin",
+					"email": "admin@example.com",
+					"name": "Pip",
+					"state": "active"
+				},
+				"created_at": "2013-10-02T09:56:03.0Z",
+				"updated_at": "2013-10-02T09:56:03.0Z",
+				"system": true,
+				"noteable_id": 377,
+				"noteable_type": "Issue",
+				"project_id": 5,
+				"noteable_iid": 377,
+				"resolvable": false,
+				"confidential": false,
+				"internal": false
+			},
+		`)
+	})
+
+	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	want := &Note{
+		ID:         302,
+		Body:       "closed2",
+		Attachment: "",
+		Author: NoteAuthor{
+			ID:       1,
+			Username: "pipin",
+			Email:    "admin@example.com",
+			Name:     "Pip",
+			State:    "active",
+		},
+		CreatedAt:    &createdAt,
+		UpdatedAt:    &createdAt,
+		System:       true,
+		NoteableID:   377,
+		NoteableType: "Issue",
+		ProjectID:    5,
+		NoteableIID:  377,
+		Resolvable:   false,
+		Confidential: false,
+		Internal:     false,
+	}
+
+	note, resp, err := client.Notes.UpdateIssueNote(1, 2, 3, &UpdateIssueNoteOptions{Body: Ptr("closed")})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_DeleteIssueNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(204)
+	})
+
+	resp, err := client.Notes.DeleteIssueNote(1, 2, 3)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, 204, resp.StatusCode)
+}
+
+func TestNotes_ListSnippetNotes(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `
+			[
+				{
+					"id": 302,
+					"body": "closed",
+					"attachment": null,
+					"author": {
+						"id": 1,
+						"username": "pipin",
+						"email": "admin@example.com",
+						"name": "Pip",
+						"state": "active"
+					},
+					"created_at": "2013-10-02T09:56:03.0Z",
+					"updated_at": "2013-10-02T09:56:03.0Z",
+					"system": true,
+					"noteable_id": 377,
+					"noteable_type": "Issue",
+					"project_id": 5,
+					"noteable_iid": 377,
+					"resolvable": false,
+					"confidential": false,
+					"internal": false
+				},
+				{
+					"id": 305,
+					"body": "Text of the comment\r\n",
+					"attachment": null,
+					"author": {
+						"id": 1,
+						"username": "pipin",
+						"email": "admin@example.com",
+						"name": "Pip",
+						"state": "active"
+					},
+					"created_at": "2013-10-02T09:56:03.0Z",
+					"updated_at": "2013-10-02T09:56:03.0Z",
+					"system": true,
+					"noteable_id": 121,
+					"noteable_type": "Issue",
+					"project_id": 5,
+					"noteable_iid": 121,
+					"resolvable": false,
+					"confidential": true,
+					"internal": true
+				}
+			]
+		`)
+	})
+
+	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	want := []*Note{
+		{
+			ID:         302,
+			Body:       "closed",
+			Attachment: "",
+			Author: NoteAuthor{
+				ID:       1,
+				Username: "pipin",
+				Email:    "admin@example.com",
+				Name:     "Pip",
+				State:    "active",
+			},
+			CreatedAt:    &createdAt,
+			UpdatedAt:    &createdAt,
+			System:       true,
+			NoteableID:   377,
+			NoteableType: "Issue",
+			ProjectID:    5,
+			NoteableIID:  377,
+			Resolvable:   false,
+			Confidential: false,
+			Internal:     false,
+		},
+		{
+			ID:         305,
+			Body:       "Text of the comment\r\n",
+			Attachment: "",
+			Author: NoteAuthor{
+				ID:       1,
+				Username: "pipin",
+				Email:    "admin@example.com",
+				Name:     "Pip",
+				State:    "active",
+			},
+			CreatedAt:    &createdAt,
+			UpdatedAt:    &createdAt,
+			System:       true,
+			NoteableID:   121,
+			NoteableType: "Issue",
+			ProjectID:    5,
+			NoteableIID:  121,
+			Resolvable:   false,
+			Confidential: true,
+			Internal:     true,
+		},
+	}
+
+	notes, resp, err := client.Notes.ListSnippetNotes(1, 2, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, notes)
+}
+
+func TestNotes_CreateSnippetNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `
+			{
+				"id": 302,
+				"body": "closed",
+				"attachment": null,
+				"author": {
+					"id": 1,
+					"username": "pipin",
+					"email": "admin@example.com",
+					"name": "Pip",
+					"state": "active"
+				},
+				"created_at": "2013-10-02T09:56:03.0Z",
+				"updated_at": "2013-10-02T09:56:03.0Z",
+				"system": true,
+				"noteable_id": 377,
+				"noteable_type": "Issue",
+				"project_id": 5,
+				"noteable_iid": 377,
+				"resolvable": false,
+				"confidential": false,
+				"internal": false
+			},
+		`)
+	})
+
+	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	want := &Note{
+		ID:         302,
+		Body:       "closed",
+		Attachment: "",
+		Author: NoteAuthor{
+			ID:       1,
+			Username: "pipin",
+			Email:    "admin@example.com",
+			Name:     "Pip",
+			State:    "active",
+		},
+		CreatedAt:    &createdAt,
+		UpdatedAt:    &createdAt,
+		System:       true,
+		NoteableID:   377,
+		NoteableType: "Issue",
+		ProjectID:    5,
+		NoteableIID:  377,
+		Resolvable:   false,
+		Confidential: false,
+		Internal:     false,
+	}
+
+	note, resp, err := client.Notes.CreateSnippetNote(1, 2, &CreateSnippetNoteOptions{Body: Ptr("closed"), CreatedAt: &createdAt})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_UpdateSnippetNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `
+			{
+				"id": 302,
+				"body": "closed2",
+				"attachment": null,
+				"author": {
+					"id": 1,
+					"username": "pipin",
+					"email": "admin@example.com",
+					"name": "Pip",
+					"state": "active"
+				},
+				"created_at": "2013-10-02T09:56:03.0Z",
+				"updated_at": "2013-10-02T09:56:03.0Z",
+				"system": true,
+				"noteable_id": 377,
+				"noteable_type": "Issue",
+				"project_id": 5,
+				"noteable_iid": 377,
+				"resolvable": false,
+				"confidential": false,
+				"internal": false
+			},
+		`)
+	})
+
+	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	want := &Note{
+		ID:         302,
+		Body:       "closed2",
+		Attachment: "",
+		Author: NoteAuthor{
+			ID:       1,
+			Username: "pipin",
+			Email:    "admin@example.com",
+			Name:     "Pip",
+			State:    "active",
+		},
+		CreatedAt:    &createdAt,
+		UpdatedAt:    &createdAt,
+		System:       true,
+		NoteableID:   377,
+		NoteableType: "Issue",
+		ProjectID:    5,
+		NoteableIID:  377,
+		Resolvable:   false,
+		Confidential: false,
+		Internal:     false,
+	}
+
+	note, resp, err := client.Notes.UpdateSnippetNote(1, 2, 3, &UpdateSnippetNoteOptions{Body: Ptr("closed")})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_DeleteSnippetNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(204)
+	})
+
+	resp, err := client.Notes.DeleteSnippetNote(1, 2, 3)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, 204, resp.StatusCode)
+}
+
+func TestNotes_ListMergeRequestNotes(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[
+		{
+			"id": 3,
+			"type": "DiffNote",
+			"body": "foo bar",
+			"attachment": null,
+			"system": false,
+			"noteable_id": 4392,
+			"noteable_type": "Epic",
+			"resolvable": false,
+			"noteable_iid": null
+		}]`)
+	})
+
+	want := []*Note{{
+		ID:           3,
+		Type:         DiffNote,
+		Body:         "foo bar",
+		System:       false,
+		NoteableID:   4392,
+		NoteableType: "Epic",
+	}}
+
+	notes, resp, err := client.Notes.ListMergeRequestNotes("1", 4329, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, notes)
+}
+
+func TestNotes_GetMergeRequestNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `
+		{
+			"id": 3,
+			"type": "DiffNote",
+			"body": "foo bar",
+			"attachment": null,
+			"system": false,
+			"noteable_id": 4392,
+			"noteable_type": "Epic",
+			"resolvable": false,
+			"noteable_iid": null
+		}`)
+	})
+
+	want := &Note{
+		ID:           3,
+		Type:         DiffNote,
+		Body:         "foo bar",
+		System:       false,
+		NoteableID:   4392,
+		NoteableType: "Epic",
+	}
+
+	note, resp, err := client.Notes.GetMergeRequestNote("1", 4329, 3, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_CreateMergeRequestNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `
+		{
+			"id": 3,
+			"type": "DiffNote",
+			"body": "foo bar",
+			"attachment": null,
+			"system": false,
+			"noteable_id": 4392,
+			"noteable_type": "Epic",
+			"resolvable": false,
+			"noteable_iid": null
+		}`)
+	})
+
+	want := &Note{
+		ID:           3,
+		Type:         DiffNote,
+		Body:         "foo bar",
+		System:       false,
+		NoteableID:   4392,
+		NoteableType: "Epic",
+	}
+
+	note, resp, err := client.Notes.CreateMergeRequestNote("1", 4329, &CreateMergeRequestNoteOptions{Body: Ptr("foo bar")})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_UpdateMergeRequestNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `
+		{
+			"id": 3,
+			"type": "DiffNote",
+			"body": "foo bar",
+			"attachment": null,
+			"system": false,
+			"noteable_id": 4392,
+			"noteable_type": "Epic",
+			"resolvable": false,
+			"noteable_iid": null
+		}`)
+	})
+
+	want := &Note{
+		ID:           3,
+		Type:         DiffNote,
+		Body:         "foo bar",
+		System:       false,
+		NoteableID:   4392,
+		NoteableType: "Epic",
+	}
+
+	note, resp, err := client.Notes.UpdateMergeRequestNote("1", 4329, 3, &UpdateMergeRequestNoteOptions{Body: Ptr("foo bar")})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
+}
+
+func TestNotes_DeleteMergeRequestNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(204)
+	})
+
+	resp, err := client.Notes.DeleteMergeRequestNote(1, 2, 3)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, 204, resp.StatusCode)
+}
+
+func TestNotes_GetEpicNote(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/epics/4329/notes/3", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `{"id":3,"type":null,"body":"foo bar","attachment":null,"system":false,"noteable_id":4392,"noteable_type":"Epic","resolvable":false,"noteable_iid":null}`)
+		fmt.Fprint(w, `
+		{
+			"id": 3,
+			"type": null,
+			"body": "foo bar",
+			"attachment": null,
+			"system": false,
+			"noteable_id": 4392,
+			"noteable_type": "Epic",
+			"resolvable": false,
+			"noteable_iid": null
+		}`)
 	})
-
-	note, _, err := client.Notes.GetEpicNote("1", 4329, 3, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
 
 	want := &Note{
 		ID:           3,
@@ -47,36 +757,10 @@ func TestGetEpicNote(t *testing.T) {
 		NoteableType: "Epic",
 	}
 
-	if !reflect.DeepEqual(note, want) {
-		t.Errorf("Notes.GetEpicNote want %#v, got %#v", note, want)
-	}
-}
-
-func TestGetMergeRequestNote(t *testing.T) {
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes/3", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `{"id":3,"type":"DiffNote","body":"foo bar","attachment":null,"system":false,"noteable_id":4392,"noteable_type":"Epic","resolvable":false,"noteable_iid":null}`)
-	})
-
-	note, _, err := client.Notes.GetMergeRequestNote("1", 4329, 3, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	want := &Note{
-		ID:           3,
-		Type:         DiffNote,
-		Body:         "foo bar",
-		System:       false,
-		NoteableID:   4392,
-		NoteableType: "Epic",
-	}
-
-	if !reflect.DeepEqual(note, want) {
-		t.Errorf("Notes.GetEpicNote want %#v, got %#v", note, want)
-	}
+	note, resp, err := client.Notes.GetEpicNote("1", 4329, 3, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, note)
 }
 
 func TestCreateNote(t *testing.T) {
