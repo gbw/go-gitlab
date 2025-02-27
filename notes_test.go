@@ -78,3 +78,70 @@ func TestGetMergeRequestNote(t *testing.T) {
 		t.Errorf("Notes.GetEpicNote want %#v, got %#v", note, want)
 	}
 }
+
+func TestCreateNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/1/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{"id": 1, "body": "Body of note", "author" : {"id" : 1, "name": "snehal", "username": "snehal", "state": "active", "email": "snehal@example.com"}}`)
+	})
+
+	createNoteOptions := &CreateIssueNoteOptions{
+		Body: Ptr("Body of note"),
+	}
+
+	note, _, err := client.Notes.CreateIssueNote("1", 1, createNoteOptions)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := &Note{
+		ID:   1,
+		Body: "Body of note",
+		Author: struct {
+			ID        int    "json:\"id\""
+			Username  string "json:\"username\""
+			Email     string "json:\"email\""
+			Name      string "json:\"name\""
+			State     string "json:\"state\""
+			AvatarURL string "json:\"avatar_url\""
+			WebURL    string "json:\"web_url\""
+		}{
+			ID: 1, Username: "snehal", Name: "snehal", Email: "snehal@example.com", State: "active", AvatarURL: "", WebURL: "",
+		},
+		Internal: false,
+	}
+
+	if !reflect.DeepEqual(want, note) {
+		t.Errorf("Notes.CreateNote returned %+v, want %+v", note, want)
+	}
+}
+
+func TestCreateInternalNote(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/issues/1/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{"id": 1, "body": "Body of internal note", "internal": true}`)
+	})
+
+	createNoteOptions := &CreateIssueNoteOptions{
+		Body: Ptr("Body of internal note"),
+	}
+
+	note, _, err := client.Notes.CreateIssueNote("1", 1, createNoteOptions)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := &Note{
+		ID:       1,
+		Body:     "Body of internal note",
+		Internal: true,
+	}
+
+	if !reflect.DeepEqual(want, note) {
+		t.Errorf("Notes.CreateNote returned %+v, want %+v", note, want)
+	}
+}

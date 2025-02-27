@@ -174,6 +174,7 @@ func (s *NotesService) GetIssueNote(pid interface{}, issue, note int, options ..
 type CreateIssueNoteOptions struct {
 	Body      *string    `url:"body,omitempty" json:"body,omitempty"`
 	CreatedAt *time.Time `url:"created_at,omitempty" json:"created_at,omitempty"`
+	Internal  *bool      `url:"internal,omitempty" json:"internal,omitempty"`
 }
 
 // CreateIssueNote creates a new note to a single project issue.
