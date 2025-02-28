@@ -722,7 +722,7 @@ func TestListMergeRequestsClosingIssue(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	want := []*MergeRequest{{ID: 1, Title: "test merge one"}, {ID: 2, Title: "test merge two"}}
+	want := []*BasicMergeRequest{{ID: 1, Title: "test merge one"}, {ID: 2, Title: "test merge two"}}
 
 	if !reflect.DeepEqual(want, mergeRequest) {
 		t.Errorf("Issues.ListMergeRequestsClosingIssue returned %+v, want %+v", mergeRequest, want)
@@ -748,7 +748,7 @@ func TestListMergeRequestsRelatedToIssue(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	want := []*MergeRequest{{ID: 1, Title: "test merge one"}, {ID: 2, Title: "test merge two"}}
+	want := []*BasicMergeRequest{{ID: 1, Title: "test merge one"}, {ID: 2, Title: "test merge two"}}
 
 	if !reflect.DeepEqual(want, mergeRequest) {
 		t.Errorf("Issues.ListMergeRequestsClosingIssue returned %+v, want %+v", mergeRequest, want)
