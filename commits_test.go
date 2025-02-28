@@ -729,7 +729,7 @@ func TestCommitsService_ListMergeRequestsByCommit(t *testing.T) {
 		`)
 	})
 
-	want := []*MergeRequest{{
+	want := []*BasicMergeRequest{{
 		ID:           1,
 		IID:          1,
 		TargetBranch: "master",
@@ -772,7 +772,6 @@ func TestCommitsService_ListMergeRequestsByCommit(t *testing.T) {
 		SourceProjectID: 2,
 		TargetProjectID: 3,
 		Description:     "fixed login page css paddings",
-		WorkInProgress:  false,
 		Milestone: &Milestone{
 			ID:          5,
 			IID:         1,
@@ -784,7 +783,6 @@ func TestCommitsService_ListMergeRequestsByCommit(t *testing.T) {
 		},
 		MergeWhenPipelineSucceeds: true,
 		DetailedMergeStatus:       "mergeable",
-		MergeError:                "",
 		MergedBy: &BasicUser{
 			ID:        87854,
 			Username:  "DouweM",
@@ -793,12 +791,10 @@ func TestCommitsService_ListMergeRequestsByCommit(t *testing.T) {
 			AvatarURL: "https://gitlab.example.com/uploads/-/system/user/avatar/87854/avatar.png",
 			WebURL:    "https://gitlab.com/DouweM",
 		},
-		Subscribed:               false,
 		SHA:                      "8888888888888888888888888888888888888888",
 		MergeCommitSHA:           "",
 		SquashCommitSHA:          "",
 		UserNotesCount:           1,
-		ChangesCount:             "",
 		ShouldRemoveSourceBranch: true,
 		ForceRemoveSourceBranch:  false,
 		AllowCollaboration:       false,
@@ -808,20 +804,14 @@ func TestCommitsService_ListMergeRequestsByCommit(t *testing.T) {
 			Relative: "my-group/my-project!1",
 			Full:     "my-group/my-project!1",
 		},
-		DiscussionLocked:     false,
-		Squash:               false,
-		DivergedCommitsCount: 0,
-		RebaseInProgress:     false,
-		ApprovalsBeforeMerge: 0,
-		Reference:            "",
-		FirstContribution:    false,
+		DiscussionLocked: false,
+		Squash:           false,
 		TaskCompletionStatus: &TasksCompletionStatus{
 			Count:          0,
 			CompletedCount: 0,
 		},
 		HasConflicts:                false,
 		BlockingDiscussionsResolved: false,
-		Overflow:                    false,
 	}}
 
 	mrs, resp, err := client.Commits.ListMergeRequestsByCommit(1, "master", nil)

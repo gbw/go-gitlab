@@ -116,7 +116,6 @@ func TestGetMergeRequest(t *testing.T) {
 	require.Equal(t, mergeRequest.ID, 33092005)
 	require.Equal(t, mergeRequest.SHA, "8e0b45049b6253b8984cde9241830d2851168142")
 	require.Equal(t, mergeRequest.IID, 14656)
-	require.Equal(t, mergeRequest.Reference, "!14656")
 	require.Equal(t, mergeRequest.ProjectID, 278964)
 	require.Equal(t, mergeRequest.SourceBranch, "delete-designs-v2")
 	require.Equal(t, mergeRequest.TaskCompletionStatus.Count, 9)
@@ -194,10 +193,6 @@ func TestListProjectMergeRequests(t *testing.T) {
 		assert.LessOrEqual(t, mr.CreatedAt.Unix(), mr.UpdatedAt.Unix())
 		assert.LessOrEqual(t, mr.TaskCompletionStatus.CompletedCount, mr.TaskCompletionStatus.Count)
 		require.Contains(t, detailedMergeStatuses, mr.DetailedMergeStatus)
-		// list requests do not provide these fields:
-		assert.Nil(t, mr.Pipeline)
-		assert.Nil(t, mr.HeadPipeline)
-		assert.Equal(t, "", mr.DiffRefs.HeadSha)
 	}
 }
 
@@ -251,10 +246,6 @@ func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
 		assert.LessOrEqual(t, mr.CreatedAt.Unix(), mr.UpdatedAt.Unix())
 		assert.LessOrEqual(t, mr.TaskCompletionStatus.CompletedCount, mr.TaskCompletionStatus.Count)
 		require.Contains(t, detailedMergeStatuses, mr.DetailedMergeStatus)
-		// list requests do not provide these fields:
-		assert.Nil(t, mr.Pipeline)
-		assert.Nil(t, mr.HeadPipeline)
-		assert.Equal(t, "", mr.DiffRefs.HeadSha)
 	}
 }
 
@@ -308,10 +299,6 @@ func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
 		assert.LessOrEqual(t, mr.CreatedAt.Unix(), mr.UpdatedAt.Unix())
 		assert.LessOrEqual(t, mr.TaskCompletionStatus.CompletedCount, mr.TaskCompletionStatus.Count)
 		require.Contains(t, detailedMergeStatuses, mr.DetailedMergeStatus)
-		// list requests do not provide these fields:
-		assert.Nil(t, mr.Pipeline)
-		assert.Nil(t, mr.HeadPipeline)
-		assert.Equal(t, "", mr.DiffRefs.HeadSha)
 	}
 }
 
