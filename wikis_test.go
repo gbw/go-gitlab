@@ -18,8 +18,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
+	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListWikis(t *testing.T) {
@@ -49,10 +51,9 @@ func TestListWikis(t *testing.T) {
 		  ]`)
 	})
 
-	wikis, _, err := client.Wikis.ListWikis(1, &ListWikisOptions{WithContent: Ptr(true)})
-	if err != nil {
-		t.Errorf("Wikis.ListWikis returned error: %v", err)
-	}
+	wikis, resp, err := client.Wikis.ListWikis(1, &ListWikisOptions{WithContent: Ptr(true)})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Wiki{
 		{
@@ -75,9 +76,7 @@ func TestListWikis(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, wikis) {
-		t.Errorf("Labels.CreateLabel returned %+v, want %+v", wikis, want)
-	}
+	assert.Equal(t, want, wikis)
 }
 
 func TestGetWikiPage(t *testing.T) {
@@ -94,10 +93,9 @@ func TestGetWikiPage(t *testing.T) {
 		  }`)
 	})
 
-	wiki, _, err := client.Wikis.GetWikiPage(1, "home", &GetWikiPageOptions{})
-	if err != nil {
-		t.Errorf("Wiki.GetWikiPage returned error: %v", err)
-	}
+	wiki, resp, err := client.Wikis.GetWikiPage(1, "home", &GetWikiPageOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &Wiki{
 		Content:  "home page",
@@ -107,9 +105,7 @@ func TestGetWikiPage(t *testing.T) {
 		Title:    "home",
 	}
 
-	if !reflect.DeepEqual(want, wiki) {
-		t.Errorf("Labels.CreateLabel returned %+v, want %+v", wiki, want)
-	}
+	assert.Equal(t, want, wiki)
 }
 
 func TestCreateWikiPage(t *testing.T) {
@@ -130,10 +126,9 @@ func TestCreateWikiPage(t *testing.T) {
 		Title:   Ptr("Hello"),
 		Format:  Ptr(WikiFormatMarkdown),
 	}
-	wiki, _, err := client.Wikis.CreateWikiPage(1, opt)
-	if err != nil {
-		t.Errorf("Wiki.CreateWikiPage returned error: %v", err)
-	}
+	wiki, resp, err := client.Wikis.CreateWikiPage(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &Wiki{
 		Content: "Hello world",
@@ -142,9 +137,7 @@ func TestCreateWikiPage(t *testing.T) {
 		Title:   "Hello",
 	}
 
-	if !reflect.DeepEqual(want, wiki) {
-		t.Errorf("Wiki.CreateWikiPage returned %+v, want %+v", wiki, want)
-	}
+	assert.Equal(t, want, wiki)
 }
 
 func TestEditWikiPage(t *testing.T) {
@@ -165,10 +158,9 @@ func TestEditWikiPage(t *testing.T) {
 		Format:  Ptr(WikiFormatMarkdown),
 		Title:   Ptr("Docs"),
 	}
-	wiki, _, err := client.Wikis.EditWikiPage(1, "foo", opt)
-	if err != nil {
-		t.Errorf("Wiki.EditWikiPage returned error: %v", err)
-	}
+	wiki, resp, err := client.Wikis.EditWikiPage(1, "foo", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &Wiki{
 		Content: "documentation",
@@ -177,9 +169,7 @@ func TestEditWikiPage(t *testing.T) {
 		Title:   "Docs",
 	}
 
-	if !reflect.DeepEqual(want, wiki) {
-		t.Errorf("Wiki.EditWikiPage returned %+v, want %+v", wiki, want)
-	}
+	assert.Equal(t, want, wiki)
 }
 
 func TestDeleteWikiPage(t *testing.T) {
@@ -189,8 +179,42 @@ func TestDeleteWikiPage(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Wikis.DeleteWikiPage(1, "foo")
-	if err != nil {
-		t.Errorf("Wiki.DeleteWikiPage returned error: %v", err)
+	resp, err := client.Wikis.DeleteWikiPage(1, "foo")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestUploadWikiAttachment(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/wikis/attachments", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `
+			{
+				"file_name" : "dk.png",
+				"file_path" : "uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png",
+				"branch" : "main",
+				"link" : {
+					"url" : "uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png",
+					"markdown" : "![A description of the attachment](uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png)"
+				}
+			}
+		`)
+	})
+
+	want := &WikiAttachment{
+		FileName: "dk.png",
+		FilePath: "uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png",
+		Branch:   "main",
+		Link: WikiAttachmentLink{
+			URL:      "uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png",
+			Markdown: "![A description of the attachment](uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png)",
+		},
 	}
+
+	b := strings.NewReader("dummy")
+	attachment, resp, err := client.Wikis.UploadWikiAttachment(1, b, "dk.png", &UploadWikiAttachmentOptions{Branch: Ptr("main")})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, attachment)
 }
