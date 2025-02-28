@@ -61,14 +61,7 @@ func TestGetGroup(t *testing.T) {
 
 	// Create the group shares struct to test.
 	// We need to re-declare the struct here since it's an anonymous struct in the upstream struct.
-	shares := []struct {
-		GroupID          int      `json:"group_id"`
-		GroupName        string   `json:"group_name"`
-		GroupFullPath    string   `json:"group_full_path"`
-		GroupAccessLevel int      `json:"group_access_level"`
-		ExpiresAt        *ISOTime `json:"expires_at"`
-		MemberRoleID     int      `json:"member_role_id"`
-	}{
+	shares := []SharedWithGroup{
 		{
 			GroupID:      1,
 			GroupName:    "whiskers delicious",
