@@ -179,6 +179,7 @@ type Client struct {
 	Markdown                     *MarkdownService
 	MemberRolesService           *MemberRolesService
 	MergeRequestApprovals        *MergeRequestApprovalsService
+	MergeRequestApprovalSettings *MergeRequestApprovalSettingsService
 	MergeRequests                *MergeRequestsService
 	MergeTrains                  *MergeTrainsService
 	Metadata                     *MetadataService
@@ -425,6 +426,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.Markdown = &MarkdownService{client: c}
 	c.MemberRolesService = &MemberRolesService{client: c}
 	c.MergeRequestApprovals = &MergeRequestApprovalsService{client: c}
+	c.MergeRequestApprovalSettings = &MergeRequestApprovalSettingsService{client: c}
 	c.MergeRequests = &MergeRequestsService{client: c, timeStats: timeStats}
 	c.MergeTrains = &MergeTrainsService{client: c}
 	c.Metadata = &MetadataService{client: c}
