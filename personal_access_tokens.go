@@ -47,6 +47,14 @@ type PersonalAccessToken struct {
 	Token       string     `json:"token,omitempty"`
 }
 
+// ResourceAccessToken represents a generic access token used for both
+// project and group access tokens. It's only used as an alias type, which
+// is why it's not exported.
+type resourceAccessToken struct {
+	PersonalAccessToken
+	AccessLevel AccessLevelValue `json:"access_level"`
+}
+
 func (p PersonalAccessToken) String() string {
 	return Stringify(p)
 }
