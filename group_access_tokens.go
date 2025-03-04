@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"time"
 )
 
 // GroupAccessTokensService handles communication with the
@@ -35,20 +34,7 @@ type GroupAccessTokensService struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_access_tokens/
-type GroupAccessToken struct {
-	ID          int              `json:"id"`
-	UserID      int              `json:"user_id"`
-	Name        string           `json:"name"`
-	Description string           `json:"description"`
-	Scopes      []string         `json:"scopes"`
-	CreatedAt   *time.Time       `json:"created_at"`
-	ExpiresAt   *ISOTime         `json:"expires_at"`
-	LastUsedAt  *time.Time       `json:"last_used_at"`
-	Active      bool             `json:"active"`
-	Revoked     bool             `json:"revoked"`
-	Token       string           `json:"token"`
-	AccessLevel AccessLevelValue `json:"access_level"`
-}
+type GroupAccessToken resourceAccessToken
 
 func (v GroupAccessToken) String() string {
 	return Stringify(v)

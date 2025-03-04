@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"time"
 )
 
 // ProjectAccessTokensService handles communication with the
@@ -35,20 +34,7 @@ type ProjectAccessTokensService struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_access_tokens/
-type ProjectAccessToken struct {
-	ID          int              `json:"id"`
-	UserID      int              `json:"user_id"`
-	Name        string           `json:"name"`
-	Description string           `json:"description"`
-	Scopes      []string         `json:"scopes"`
-	CreatedAt   *time.Time       `json:"created_at"`
-	LastUsedAt  *time.Time       `json:"last_used_at"`
-	ExpiresAt   *ISOTime         `json:"expires_at"`
-	Active      bool             `json:"active"`
-	Revoked     bool             `json:"revoked"`
-	Token       string           `json:"token"`
-	AccessLevel AccessLevelValue `json:"access_level"`
-}
+type ProjectAccessToken resourceAccessToken
 
 func (v ProjectAccessToken) String() string {
 	return Stringify(v)

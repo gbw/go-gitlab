@@ -51,26 +51,30 @@ func TestListGroupAccessTokens(t *testing.T) {
 
 	want := []*GroupAccessToken{
 		{
-			ID:          1876,
-			UserID:      2453,
-			Name:        "token 10",
-			Description: "Describe token 10",
-			Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-			CreatedAt:   &time1,
-			LastUsedAt:  &time3,
-			Active:      true,
-			Revoked:     false,
+			PersonalAccessToken: PersonalAccessToken{
+				ID:          1876,
+				UserID:      2453,
+				Active:      true,
+				Name:        "token 10",
+				Description: "Describe token 10",
+				Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
+				CreatedAt:   &time1,
+				LastUsedAt:  &time3,
+				Revoked:     false,
+			},
 			AccessLevel: AccessLevelValue(40),
 		},
 		{
-			ID:          1877,
-			UserID:      2456,
-			Name:        "token 8",
-			Description: "Describe token 8",
-			Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-			CreatedAt:   &time2,
-			Active:      true,
-			Revoked:     false,
+			PersonalAccessToken: PersonalAccessToken{
+				ID:          1877,
+				UserID:      2456,
+				Active:      true,
+				Name:        "token 8",
+				Description: "Describe token 8",
+				Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
+				CreatedAt:   &time2,
+				Revoked:     false,
+			},
 			AccessLevel: AccessLevelValue(30),
 		},
 	}
@@ -99,14 +103,16 @@ func TestGetGroupAccessToken(t *testing.T) {
 	}
 
 	want := &GroupAccessToken{
-		ID:          1,
-		UserID:      2453,
-		Name:        "token 10",
-		Description: "Describe token 10",
-		Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-		CreatedAt:   &createdAt,
-		Active:      true,
-		Revoked:     false,
+		PersonalAccessToken: PersonalAccessToken{
+			ID:          1,
+			UserID:      2453,
+			Active:      true,
+			Name:        "token 10",
+			Description: "Describe token 10",
+			Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
+			CreatedAt:   &createdAt,
+			Revoked:     false,
+		},
 		AccessLevel: AccessLevelValue(40),
 	}
 
@@ -133,16 +139,18 @@ func TestCreateGroupAccessToken(t *testing.T) {
 		t.Errorf("GroupAccessTokens.CreateGroupAccessToken returned error: %v", err)
 	}
 	want := &GroupAccessToken{
-		ID:          1876,
-		UserID:      2453,
-		Name:        "token 10",
-		Description: "Describe token 10",
-		Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-		ExpiresAt:   nil,
-		CreatedAt:   &time1,
-		Active:      true,
-		Revoked:     false,
-		Token:       "2UsevZE1x1ZdFZW4MNzH",
+		PersonalAccessToken: PersonalAccessToken{
+			ID:          1876,
+			UserID:      2453,
+			Active:      true,
+			Name:        "token 10",
+			Description: "Describe token 10",
+			Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
+			CreatedAt:   &time1,
+			Revoked:     false,
+			Token:       "2UsevZE1x1ZdFZW4MNzH",
+			ExpiresAt:   nil,
+		},
 		AccessLevel: AccessLevelValue(40),
 	}
 
@@ -167,16 +175,18 @@ func TestRotateGroupAccessToken(t *testing.T) {
 	}
 
 	want := &GroupAccessToken{
-		ID:          42,
-		UserID:      1337,
-		Name:        "Rotated Token",
-		Description: "Describe rotated token",
-		Scopes:      []string{"api"},
-		ExpiresAt:   &expiration,
-		CreatedAt:   &createdAt,
-		Active:      true,
-		Revoked:     false,
-		Token:       "s3cr3t",
+		PersonalAccessToken: PersonalAccessToken{
+			ID:          42,
+			UserID:      1337,
+			Active:      true,
+			Name:        "Rotated Token",
+			Description: "Describe rotated token",
+			Scopes:      []string{"api"},
+			ExpiresAt:   &expiration,
+			CreatedAt:   &createdAt,
+			Revoked:     false,
+			Token:       "s3cr3t",
+		},
 		AccessLevel: AccessLevelValue(30),
 	}
 
