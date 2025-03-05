@@ -11,6 +11,19 @@ include:
       job_stage: lint
       job_allow_failure: true
 
+  # NOTE: the two includes below are a hack to conditionally set the tags node
+  # on our Go jobs. We want to use the large Ultimate runners if possible,
+  # which is what we have available in the gitlab-org and gitlab-community (Community Forks)
+  # groups. However, there is no easy way to conditionally set tags or even variables without
+  # jeopardizing existing (complex) workflow:rules or job:rules. Thus, we resort to
+  # this nasty conditionally include hack.
+  - local: '.gitlab/ci/gitlab-go-runner-tags.gitlab-ci.yml'
+    rules:
+      - if: $CI_PROJECT_ROOT_NAMESPACE == 'gitlab-org' || $CI_PROJECT_ROOT_NAMESPACE == 'gitlab-community'
+  - local: '.gitlab/ci/community-go-runner-tags.gitlab-ci.yml'
+    rules:
+      - if: $CI_PROJECT_ROOT_NAMESPACE != 'gitlab-org' && $CI_PROJECT_ROOT_NAMESPACE != 'gitlab-community'
+
 stages:
   - lint
   - test
@@ -25,6 +38,8 @@ stages:
         - '1.24'
 
 .go:base:
+  extends:
+    - .go:runner-tags
   # From: https://docs.gitlab.com/ee/ci/caching/#cache-go-dependencies
   variables:
     GOPATH: $CI_PROJECT_DIR/.go
@@ -38,14 +53,6 @@ stages:
     key:
       files:
         - go.sum
-  # We want to speed up CI a bit.
-  # Community contributors are recommended to use the Community fork
-  # which has access to this runners.
-  # For other forks to free tier namespaces this might fail,
-  # which is a good reminder to use the Community fork and not
-  # to accidentally burn to personal compute minutes.
-  tags:
-    - saas-linux-large-amd64
   # We only need to run Go-related jobs when actual Go files changed
   # or when running either on the default branch or for a tag.
   rules:
