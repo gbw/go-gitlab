@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -747,6 +748,65 @@ func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
 	}
 	if !reflect.DeepEqual(want, link) {
 		t.Errorf("Groups.AddGroupSAMLLink returned %+v, want %+v", link, want)
+	}
+}
+
+func TestGroupsService_ListGroupSharedProjects(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/projects/shared", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		testURL(t, r, "/api/v4/groups/1/projects/shared?page=2&per_page=3")
+		fmt.Fprint(w, `[
+			{
+				"id": 1,
+				"description": "Foobar project",
+				"name": "Foobar",
+				"name_with_namespace": "Group / Foobar",
+				"path": "foobar",
+				"path_with_namespace": "group/foobar",
+				"created_at": "2020-01-01T00:00:00.000Z"
+			},
+			{
+				"id": 2,
+				"description": "Shared project",
+				"name": "Shared",
+				"name_with_namespace": "Group / Shared",
+				"path": "shared",
+				"path_with_namespace": "group/shared",
+				"created_at": "2020-01-01T00:00:00.000Z"
+			}
+		]`)
+	})
+
+	opt := &ListGroupSharedProjectsOptions{ListOptions: ListOptions{Page: 2, PerPage: 3}}
+	projects, _, err := client.Groups.ListGroupSharedProjects(1, opt)
+	if err != nil {
+		t.Errorf("Groups.ListGroupSharedProjects returned error: %v", err)
+	}
+
+	want := []*Project{
+		{
+			ID:                1,
+			Description:       "Foobar project",
+			Name:              "Foobar",
+			NameWithNamespace: "Group / Foobar",
+			Path:              "foobar",
+			PathWithNamespace: "group/foobar",
+			CreatedAt:         Ptr(time.Date(2020, time.January, 1, 0, 0, 0, 0, time.UTC)),
+		},
+		{
+			ID:                2,
+			Description:       "Shared project",
+			Name:              "Shared",
+			NameWithNamespace: "Group / Shared",
+			Path:              "shared",
+			PathWithNamespace: "group/shared",
+			CreatedAt:         Ptr(time.Date(2020, time.January, 1, 0, 0, 0, 0, time.UTC)),
+		},
+	}
+	if !reflect.DeepEqual(want, projects) {
+		t.Errorf("Groups.ListGroupSharedProjects returned %+v, want %+v", projects, want)
 	}
 }
 

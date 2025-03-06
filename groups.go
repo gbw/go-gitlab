@@ -898,6 +898,51 @@ func (s *GroupsService) ListGroupSAMLLinks(gid interface{}, options ...RequestOp
 	return gl, resp, nil
 }
 
+// ListGroupSharedProjectsOptions represents the available ListGroupSharedProjects() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/groups/#list-shared-projects
+type ListGroupSharedProjectsOptions struct {
+	ListOptions
+	Archived                 *bool             `url:"archived,omitempty" json:"archived,omitempty"`
+	MinAccessLevel           *AccessLevelValue `url:"min_access_level,omitempty" json:"min_access_level,omitempty"`
+	OrderBy                  *string           `url:"order_by,omitempty" json:"order_by,omitempty"`
+	Search                   *string           `url:"search,omitempty" json:"search,omitempty"`
+	Simple                   *bool             `url:"simple,omitempty" json:"simple,omitempty"`
+	Sort                     *string           `url:"sort,omitempty" json:"sort,omitempty"`
+	Starred                  *bool             `url:"starred,omitempty" json:"starred,omitempty"`
+	Visibility               *VisibilityValue  `url:"visibility,omitempty" json:"visibility,omitempty"`
+	WithCustomAttributes     *bool             `url:"with_custom_attributes,omitempty" json:"with_custom_attributes,omitempty"`
+	WithIssuesEnabled        *bool             `url:"with_issues_enabled,omitempty" json:"with_issues_enabled,omitempty"`
+	WithMergeRequestsEnabled *bool             `url:"with_merge_requests_enabled,omitempty" json:"with_merge_requests_enabled,omitempty"`
+}
+
+
+// ListGroupSharedProjects gets a list of projects shared to this group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/groups/#list-shared-projects
+func (s *GroupsService) ListGroupSharedProjects(gid interface{}, opt *ListGroupSharedProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error) {
+	group, err := parseID(gid)
+	if err != nil {
+		return nil, nil, err
+	}
+	u := fmt.Sprintf("groups/%s/projects/shared", PathEscape(group))
+
+	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var p []*Project
+	resp, err := s.client.Do(req, &p)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return p, resp, nil
+}
+
 // GetGroupSAMLLink get a specific group SAML link. Available only for users who
 // can edit groups.
 //
