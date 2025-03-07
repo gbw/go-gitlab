@@ -2028,14 +2028,15 @@ func (s *ProjectsService) GetProjectApprovalRule(pid interface{}, ruleID int, op
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/merge_request_approvals.html#create-project-level-rule
 type CreateProjectLevelRuleOptions struct {
-	Name                          *string `url:"name,omitempty" json:"name,omitempty"`
-	ApprovalsRequired             *int    `url:"approvals_required,omitempty" json:"approvals_required,omitempty"`
-	ReportType                    *string `url:"report_type,omitempty" json:"report_type,omitempty"`
-	RuleType                      *string `url:"rule_type,omitempty" json:"rule_type,omitempty"`
-	UserIDs                       *[]int  `url:"user_ids,omitempty" json:"user_ids,omitempty"`
-	GroupIDs                      *[]int  `url:"group_ids,omitempty" json:"group_ids,omitempty"`
-	ProtectedBranchIDs            *[]int  `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
-	AppliesToAllProtectedBranches *bool   `url:"applies_to_all_protected_branches,omitempty" json:"applies_to_all_protected_branches,omitempty"`
+	Name                          *string   `url:"name,omitempty" json:"name,omitempty"`
+	ApprovalsRequired             *int      `url:"approvals_required,omitempty" json:"approvals_required,omitempty"`
+	ReportType                    *string   `url:"report_type,omitempty" json:"report_type,omitempty"`
+	RuleType                      *string   `url:"rule_type,omitempty" json:"rule_type,omitempty"`
+	UserIDs                       *[]int    `url:"user_ids,omitempty" json:"user_ids,omitempty"`
+	GroupIDs                      *[]int    `url:"group_ids,omitempty" json:"group_ids,omitempty"`
+	ProtectedBranchIDs            *[]int    `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
+	AppliesToAllProtectedBranches *bool     `url:"applies_to_all_protected_branches,omitempty" json:"applies_to_all_protected_branches,omitempty"`
+	Usernames                     *[]string `url:"usernames,omitempty" json:"usernames,omitempty"`
 }
 
 // CreateProjectApprovalRule creates a new project-level approval rule.
@@ -2069,12 +2070,13 @@ func (s *ProjectsService) CreateProjectApprovalRule(pid interface{}, opt *Create
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/merge_request_approvals.html#update-project-level-rule
 type UpdateProjectLevelRuleOptions struct {
-	Name                          *string `url:"name,omitempty" json:"name,omitempty"`
-	ApprovalsRequired             *int    `url:"approvals_required,omitempty" json:"approvals_required,omitempty"`
-	UserIDs                       *[]int  `url:"user_ids,omitempty" json:"user_ids,omitempty"`
-	GroupIDs                      *[]int  `url:"group_ids,omitempty" json:"group_ids,omitempty"`
-	ProtectedBranchIDs            *[]int  `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
-	AppliesToAllProtectedBranches *bool   `url:"applies_to_all_protected_branches,omitempty" json:"applies_to_all_protected_branches,omitempty"`
+	Name                          *string   `url:"name,omitempty" json:"name,omitempty"`
+	ApprovalsRequired             *int      `url:"approvals_required,omitempty" json:"approvals_required,omitempty"`
+	UserIDs                       *[]int    `url:"user_ids,omitempty" json:"user_ids,omitempty"`
+	GroupIDs                      *[]int    `url:"group_ids,omitempty" json:"group_ids,omitempty"`
+	ProtectedBranchIDs            *[]int    `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
+	AppliesToAllProtectedBranches *bool     `url:"applies_to_all_protected_branches,omitempty" json:"applies_to_all_protected_branches,omitempty"`
+	Usernames                     *[]string `url:"usernames,omitempty" json:"usernames,omitempty"`
 }
 
 // UpdateProjectApprovalRule updates an existing approval rule with new options.

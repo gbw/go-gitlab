@@ -1288,6 +1288,14 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 					"web_url": "http://localhost/jdoe"
 				},
 				{
+					"id": 6,
+					"name": "Cool user",
+					"username": "some-cool-user",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+					"web_url": "http://localhost/cool-user"
+				},
+				{
 					"id": 50,
 					"name": "Group Member 1",
 					"username": "group_member_1",
@@ -1305,6 +1313,14 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 					"state": "active",
 					"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
 					"web_url": "http://localhost/jdoe"
+				},
+				{
+					"id": 6,
+					"name": "Cool user",
+					"username": "some-cool-user",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+					"web_url": "http://localhost/cool-user"
 				}
 			],
 			"groups": [
@@ -1360,6 +1376,7 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 		UserIDs:           &[]int{5, 50},
 		GroupIDs:          &[]int{5},
 		ReportType:        String("code_coverage"),
+		Usernames:         &([]string{"some-cool-user"}),
 	}
 
 	rule, _, err := client.Projects.CreateProjectApprovalRule(1, opt)
@@ -1381,6 +1398,14 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 				WebURL:    "http://localhost/jdoe",
 			},
 			{
+				ID:        6,
+				Name:      "Cool user",
+				Username:  "some-cool-user",
+				State:     "active",
+				AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+				WebURL:    "http://localhost/cool-user",
+			},
+			{
 				ID:        50,
 				Name:      "Group Member 1",
 				Username:  "group_member_1",
@@ -1398,6 +1423,14 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 				State:     "active",
 				AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
 				WebURL:    "http://localhost/jdoe",
+			},
+			{
+				ID:        6,
+				Name:      "Cool user",
+				Username:  "some-cool-user",
+				State:     "active",
+				AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+				WebURL:    "http://localhost/cool-user",
 			},
 		},
 		Groups: []*Group{
