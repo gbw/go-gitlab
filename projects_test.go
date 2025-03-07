@@ -45,6 +45,11 @@ func TestListProjects(t *testing.T) {
 			`[{"id":1, "ci_delete_pipelines_in_seconds": 14},{"id":2}]`,
 			[]*Project{{ID: 1, CIDeletePipelinesInSeconds: 14}, {ID: 2}},
 		},
+		{
+			"with ci_id_token_sub_claim_components",
+			`[{"id":1, "ci_id_token_sub_claim_components": ["project_path", "ref_type"]},{"id":2}]`,
+			[]*Project{{ID: 1, CIIdTokenSubClaimComponents: []string{"project_path", "ref_type"}}, {ID: 2}},
+		},
 	}
 
 	for _, testCase := range testCases {
