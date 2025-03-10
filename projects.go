@@ -2162,7 +2162,7 @@ func (s *ProjectsService) ChangeAllowedApprovers(pid interface{}, opt *ChangeAll
 // mirror and its update status.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/projects.html#get-a-projects-pull-mirror-details
+// https://docs.gitlab.com/api/project_pull_mirroring/
 type ProjectPullMirrorDetails struct {
 	ID                     int        `json:"id"`
 	LastError              string     `json:"last_error"`
@@ -2176,7 +2176,7 @@ type ProjectPullMirrorDetails struct {
 // GetProjectPullMirrorDetails returns the pull mirror details.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/projects.html#get-a-projects-pull-mirror-details
+// https://docs.gitlab.com/api/project_pull_mirroring/#get-a-projects-pull-mirror-details
 func (s *ProjectsService) GetProjectPullMirrorDetails(pid interface{}, options ...RequestOptionFunc) (*ProjectPullMirrorDetails, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
@@ -2198,10 +2198,50 @@ func (s *ProjectsService) GetProjectPullMirrorDetails(pid interface{}, options .
 	return pmd, resp, nil
 }
 
+// ConfigureProjectPullMirrorOptions represents the available ConfigureProjectPullMirror() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_pull_mirroring/#configure-pull-mirroring-for-a-project
+type ConfigureProjectPullMirrorOptions struct {
+	Enabled                          *bool   `url:"enabled,omitempty" json:"enabled,omitempty"`
+	URL                              *string `url:"url,omitempty" json:"url,omitempty"`
+	AuthUser                         *string `url:"auth_user,omitempty" json:"auth_user,omitempty"`
+	AuthPassword                     *string `url:"auth_password,omitempty" json:"auth_password,omitempty"`
+	MirrorTriggerBuilds              *bool   `url:"mirror_trigger_builds,omitempty" json:"mirror_trigger_builds,omitempty"`
+	OnlyMirrorProtectedBranches      *bool   `url:"only_mirror_protected_branches,omitempty" json:"only_mirror_protected_branches,omitempty"`
+	MirrorOverwritesDivergedBranches *bool   `url:"mirror_overwrites_diverged_branches,omitempty" json:"mirror_overwrites_diverged_branches,omitempty"`
+	MirrorBranchRegex                *string `url:"mirror_branch_regex,omitempty" json:"mirror_branch_regex,omitempty"`
+}
+
+// ConfigureProjectPullMirror configures pull mirroring settings.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_pull_mirroring/#configure-pull-mirroring-for-a-project
+func (s *ProjectsService) ConfigureProjectPullMirror(pid interface{}, opt *ConfigureProjectPullMirrorOptions, options ...RequestOptionFunc) (*ProjectPullMirrorDetails, *Response, error) {
+	project, err := parseID(pid)
+	if err != nil {
+		return nil, nil, err
+	}
+	u := fmt.Sprintf("projects/%s/mirror/pull", PathEscape(project))
+
+	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	pmd := new(ProjectPullMirrorDetails)
+	resp, err := s.client.Do(req, pmd)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return pmd, resp, nil
+}
+
 // StartMirroringProject start the pull mirroring process for a project.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/projects.html#start-the-pull-mirroring-process-for-a-project
+// https://docs.gitlab.com/api/project_pull_mirroring/#start-the-pull-mirroring-process-for-a-project
 func (s *ProjectsService) StartMirroringProject(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {

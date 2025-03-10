@@ -1497,10 +1497,9 @@ func TestGetProjectPullMirrorDetails(t *testing.T) {
 		}`)
 	})
 
-	pullMirror, _, err := client.Projects.GetProjectPullMirrorDetails(1)
-	if err != nil {
-		t.Errorf("Projects.GetProjectPullMirrorDetails returned error: %v", err)
-	}
+	pullMirror, resp, err := client.Projects.GetProjectPullMirrorDetails(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	wantLastSuccessfulUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
 	wantLastUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
@@ -1515,9 +1514,66 @@ func TestGetProjectPullMirrorDetails(t *testing.T) {
 		URL:                    "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
 	}
 
-	if !reflect.DeepEqual(want, pullMirror) {
-		t.Errorf("Projects.GetProjectPullMirrorDetails returned %+v, want %+v", pullMirror, want)
+	assert.Equal(t, want, pullMirror)
+}
+
+func TestConfigureProjectPullMirror(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/mirror/pull", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+		  "id": 101486,
+		  "last_error": null,
+		  "last_successful_update_at": "2020-01-06T17:32:02.823Z",
+		  "last_update_at": "2020-01-06T17:32:02.823Z",
+		  "last_update_started_at": "2020-01-06T17:31:55.864Z",
+		  "update_status": "finished",
+		  "url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git"
+		}`)
+	})
+
+	options := &ConfigureProjectPullMirrorOptions{
+		Enabled:                          Ptr(true),
+		URL:                              Ptr("https://gitlab.com/gitlab-org/security/gitlab.git"),
+		AuthUser:                         Ptr("username"),
+		AuthPassword:                     Ptr("secret"),
+		MirrorTriggerBuilds:              Ptr(false),
+		OnlyMirrorProtectedBranches:      Ptr(false),
+		MirrorOverwritesDivergedBranches: Ptr(true),
+		MirrorBranchRegex:                Ptr("releases/*"),
 	}
+
+	pullMirror, resp, err := client.Projects.ConfigureProjectPullMirror(1, options)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	wantLastSuccessfulUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
+	wantLastUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
+	wantLastUpdateStartedAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 31, 55, 864000000, time.UTC)
+	want := &ProjectPullMirrorDetails{
+		ID:                     101486,
+		LastError:              "",
+		LastSuccessfulUpdateAt: &wantLastSuccessfulUpdateAtTimestamp,
+		LastUpdateAt:           &wantLastUpdateAtTimestamp,
+		LastUpdateStartedAt:    &wantLastUpdateStartedAtTimestamp,
+		UpdateStatus:           "finished",
+		URL:                    "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
+	}
+
+	assert.Equal(t, want, pullMirror)
+}
+
+func TestStartMirroringProject(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/mirror/pull", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+	})
+
+	resp, err := client.Projects.StartMirroringProject(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestCreateProjectApprovalRuleEligibleApprovers(t *testing.T) {
