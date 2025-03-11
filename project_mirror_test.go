@@ -22,6 +22,7 @@ func TestProjectMirrorService_ListProjectMirror(t *testing.T) {
 				"only_protected_branches": true,
 				"keep_divergent_refs": true,
 				"update_status": "finished",
+				"auth_method": "password",
 				"url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git"
 			  }
 			]
@@ -35,6 +36,7 @@ func TestProjectMirrorService_ListProjectMirror(t *testing.T) {
 		OnlyProtectedBranches: true,
 		KeepDivergentRefs:     true,
 		UpdateStatus:          "finished",
+		AuthMethod:            "password",
 		URL:                   "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
 	}}
 
@@ -72,6 +74,7 @@ func TestProjectMirrorService_GetProjectMirror(t *testing.T) {
 				"only_protected_branches": true,
 				"keep_divergent_refs": true,
 				"update_status": "finished",
+				"auth_method": "password",
 				"url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git"
 			}
 		`)
@@ -84,10 +87,33 @@ func TestProjectMirrorService_GetProjectMirror(t *testing.T) {
 		OnlyProtectedBranches: true,
 		KeepDivergentRefs:     true,
 		UpdateStatus:          "finished",
+		AuthMethod:            "password",
 		URL:                   "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
 	}
 
 	pm, resp, err := client.ProjectMirrors.GetProjectMirror(42, 1, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, want, pm)
+}
+
+func TestProjectMirrorService_GetProjectMirrorPublicKey(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/42/remote_mirrors/1/public_key", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `
+			{
+				"public_key": "ssh-rsa AAAA..."
+			}
+		`)
+	})
+
+	want := &ProjectMirrorPublicKey{
+		PublicKey: "ssh-rsa AAAA...",
+	}
+
+	pm, resp, err := client.ProjectMirrors.GetProjectMirrorPublicKey(42, 1, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, pm)
@@ -109,6 +135,7 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 				"only_protected_branches": false,
 				"keep_divergent_refs": false,
 				"update_status": "none",
+				"auth_method": "password",
 				"url": "https://*****:*****@example.com/gitlab/example.git"
 			}
 		`)
@@ -124,6 +151,7 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 		OnlyProtectedBranches:  false,
 		KeepDivergentRefs:      false,
 		UpdateStatus:           "none",
+		AuthMethod:             "password",
 		URL:                    "https://*****:*****@example.com/gitlab/example.git",
 	}
 
@@ -161,6 +189,7 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 				"only_protected_branches": true,
 				"keep_divergent_refs": true,
 				"update_status": "finished",
+				"auth_method": "password",
 				"url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git"
 			}
 		`)
@@ -173,6 +202,7 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 		OnlyProtectedBranches: true,
 		KeepDivergentRefs:     true,
 		UpdateStatus:          "finished",
+		AuthMethod:            "password",
 		URL:                   "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
 	}
 
