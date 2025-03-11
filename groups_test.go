@@ -456,7 +456,8 @@ func TestListGroupLDAPLinks(t *testing.T) {
 	{
 		"cn":"gitlab_group_example_30",
 		"group_access":30,
-		"provider":"example_ldap_provider"
+		"provider":"example_ldap_provider",
+		"member_role_id":2
 	},
 	{
 		"cn":"gitlab_group_example_40",
@@ -466,16 +467,16 @@ func TestListGroupLDAPLinks(t *testing.T) {
 ]`)
 		})
 
-	links, _, err := client.Groups.ListGroupLDAPLinks(1)
-	if err != nil {
-		t.Errorf("Groups.ListGroupLDAPLinks returned error: %v", err)
-	}
+	links, resp, err := client.Groups.ListGroupLDAPLinks(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*LDAPGroupLink{
 		{
-			CN:          "gitlab_group_example_30",
-			GroupAccess: 30,
-			Provider:    "example_ldap_provider",
+			CN:           "gitlab_group_example_30",
+			GroupAccess:  30,
+			Provider:     "example_ldap_provider",
+			MemberRoleID: 2,
 		},
 		{
 			CN:          "gitlab_group_example_40",
@@ -483,9 +484,7 @@ func TestListGroupLDAPLinks(t *testing.T) {
 			Provider:    "example_ldap_provider",
 		},
 	}
-	if !reflect.DeepEqual(want, links) {
-		t.Errorf("Groups.ListGroupLDAPLinks returned %+v, want %+v", links, want)
-	}
+	assert.Equal(t, want, links)
 }
 
 func TestAddGroupLDAPLink(t *testing.T) {
@@ -498,29 +497,29 @@ func TestAddGroupLDAPLink(t *testing.T) {
 {
 	"cn":"gitlab_group_example_30",
 	"group_access":30,
-	"provider":"example_ldap_provider"
+	"provider":"example_ldap_provider",
+	"member_role_id":2
 }`)
 		})
 
 	opt := &AddGroupLDAPLinkOptions{
-		CN:          Ptr("gitlab_group_example_30"),
-		GroupAccess: Ptr(AccessLevelValue(30)),
-		Provider:    Ptr("example_ldap_provider"),
+		CN:           Ptr("gitlab_group_example_30"),
+		GroupAccess:  Ptr(AccessLevelValue(30)),
+		Provider:     Ptr("example_ldap_provider"),
+		MemberRoleID: Ptr(int64(2)),
 	}
 
-	link, _, err := client.Groups.AddGroupLDAPLink(1, opt)
-	if err != nil {
-		t.Errorf("Groups.AddGroupLDAPLink returned error: %v", err)
-	}
+	link, resp, err := client.Groups.AddGroupLDAPLink(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &LDAPGroupLink{
-		CN:          "gitlab_group_example_30",
-		GroupAccess: 30,
-		Provider:    "example_ldap_provider",
+		CN:           "gitlab_group_example_30",
+		GroupAccess:  30,
+		Provider:     "example_ldap_provider",
+		MemberRoleID: 2,
 	}
-	if !reflect.DeepEqual(want, link) {
-		t.Errorf("Groups.AddGroupLDAPLink returned %+v, want %+v", link, want)
-	}
+	assert.Equal(t, want, link)
 }
 
 func TestAddGroupLDAPLinkFilter(t *testing.T) {
@@ -543,19 +542,43 @@ func TestAddGroupLDAPLinkFilter(t *testing.T) {
 		Provider:    Ptr("example_ldap_provider"),
 	}
 
-	link, _, err := client.Groups.AddGroupLDAPLink(1, opt)
-	if err != nil {
-		t.Errorf("Groups.AddGroupLDAPLink returned error: %v", err)
-	}
+	link, resp, err := client.Groups.AddGroupLDAPLink(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &LDAPGroupLink{
 		Filter:      "(memberOf=example_group_dn)",
 		GroupAccess: 30,
 		Provider:    "example_ldap_provider",
 	}
-	if !reflect.DeepEqual(want, link) {
-		t.Errorf("Groups.AddGroupLDAPLink returned %+v, want %+v", link, want)
+	assert.Equal(t, want, link)
+}
+
+func TestDeleteGroupLDAPLink(t *testing.T) {
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/groups/1/ldap_group_links/gitlab_group_example_30", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusAccepted)
+	})
+	resp, err := client.Groups.DeleteGroupLDAPLink(1, "gitlab_group_example_30")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestDeleteGroupLDAPLinkWithCNOrFilter(t *testing.T) {
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/groups/1/ldap_group_links", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusAccepted)
+	})
+	opt := &DeleteGroupLDAPLinkWithCNOrFilterOptions{
+		CN:       Ptr("gitlab_group_example_30"),
+		Provider: Ptr("example_ldap_provider"),
 	}
+
+	resp, err := client.Groups.DeleteGroupLDAPLinkWithCNOrFilter(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestListGroupSAMLLinks(t *testing.T) {

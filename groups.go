@@ -141,12 +141,14 @@ func (a *GroupAvatar) MarshalJSON() ([]byte, error) {
 
 // LDAPGroupLink represents a GitLab LDAP group link.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/groups.html#ldap-group-links
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_ldap_links/
 type LDAPGroupLink struct {
-	CN          string           `json:"cn"`
-	Filter      string           `json:"filter"`
-	GroupAccess AccessLevelValue `json:"group_access"`
-	Provider    string           `json:"provider"`
+	CN           string           `json:"cn"`
+	Filter       string           `json:"filter"`
+	GroupAccess  AccessLevelValue `json:"group_access"`
+	Provider     string           `json:"provider"`
+	MemberRoleID int64            `json:"member_role_id"`
 }
 
 // SAMLGroupLink represents a GitLab SAML group link.
@@ -738,7 +740,7 @@ func (s *GroupsService) ListProvisionedUsers(gid interface{}, opt *ListProvision
 // can edit groups.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#list-ldap-group-links
+// https://docs.gitlab.com/api/group_ldap_links/#list-ldap-group-links
 func (s *GroupsService) ListGroupLDAPLinks(gid interface{}, options ...RequestOptionFunc) ([]*LDAPGroupLink, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
@@ -763,29 +765,20 @@ func (s *GroupsService) ListGroupLDAPLinks(gid interface{}, options ...RequestOp
 // AddGroupLDAPLinkOptions represents the available AddGroupLDAPLink() options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#add-ldap-group-link-with-cn-or-filter
+// https://docs.gitlab.com/api/group_ldap_links/#add-an-ldap-group-link-with-cn-or-filter
 type AddGroupLDAPLinkOptions struct {
-	CN          *string           `url:"cn,omitempty" json:"cn,omitempty"`
-	Filter      *string           `url:"filter,omitempty" json:"filter,omitempty"`
-	GroupAccess *AccessLevelValue `url:"group_access,omitempty" json:"group_access,omitempty"`
-	Provider    *string           `url:"provider,omitempty" json:"provider,omitempty"`
-}
-
-// DeleteGroupLDAPLinkWithCNOrFilterOptions represents the available DeleteGroupLDAPLinkWithCNOrFilter() options.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#delete-ldap-group-link-with-cn-or-filter
-type DeleteGroupLDAPLinkWithCNOrFilterOptions struct {
-	CN       *string `url:"cn,omitempty" json:"cn,omitempty"`
-	Filter   *string `url:"filter,omitempty" json:"filter,omitempty"`
-	Provider *string `url:"provider,omitempty" json:"provider,omitempty"`
+	CN           *string           `url:"cn,omitempty" json:"cn,omitempty"`
+	Filter       *string           `url:"filter,omitempty" json:"filter,omitempty"`
+	GroupAccess  *AccessLevelValue `url:"group_access,omitempty" json:"group_access,omitempty"`
+	Provider     *string           `url:"provider,omitempty" json:"provider,omitempty"`
+	MemberRoleID *int64            `url:"member_role_id,omitempty" json:"member_role_id,omitempty"`
 }
 
 // AddGroupLDAPLink creates a new group LDAP link. Available only for users who
 // can edit groups.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#add-ldap-group-link-with-cn-or-filter
+// https://docs.gitlab.com/api/group_ldap_links/#add-an-ldap-group-link-with-cn-or-filter
 func (s *GroupsService) AddGroupLDAPLink(gid interface{}, opt *AddGroupLDAPLinkOptions, options ...RequestOptionFunc) (*LDAPGroupLink, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
@@ -809,9 +802,10 @@ func (s *GroupsService) AddGroupLDAPLink(gid interface{}, opt *AddGroupLDAPLinkO
 
 // DeleteGroupLDAPLink deletes a group LDAP link. Available only for users who
 // can edit groups.
+// Deprecated as upstream API is deprecated. Use DeleteGroupLDAPLinkWithCNOrFilter() instead.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#delete-ldap-group-link
+// https://docs.gitlab.com/api/group_ldap_links/#delete-an-ldap-group-link-deprecated
 func (s *GroupsService) DeleteGroupLDAPLink(gid interface{}, cn string, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
@@ -825,6 +819,16 @@ func (s *GroupsService) DeleteGroupLDAPLink(gid interface{}, cn string, options 
 	}
 
 	return s.client.Do(req, nil)
+}
+
+// DeleteGroupLDAPLinkWithCNOrFilterOptions represents the available DeleteGroupLDAPLinkWithCNOrFilter() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_ldap_links/#delete-an-ldap-group-link-with-cn-or-filter
+type DeleteGroupLDAPLinkWithCNOrFilterOptions struct {
+	CN       *string `url:"cn,omitempty" json:"cn,omitempty"`
+	Filter   *string `url:"filter,omitempty" json:"filter,omitempty"`
+	Provider *string `url:"provider,omitempty" json:"provider,omitempty"`
 }
 
 // DeleteGroupLDAPLinkWithCNOrFilter deletes a group LDAP link. Available only for users who
@@ -916,7 +920,6 @@ type ListGroupSharedProjectsOptions struct {
 	WithIssuesEnabled        *bool             `url:"with_issues_enabled,omitempty" json:"with_issues_enabled,omitempty"`
 	WithMergeRequestsEnabled *bool             `url:"with_merge_requests_enabled,omitempty" json:"with_merge_requests_enabled,omitempty"`
 }
-
 
 // ListGroupSharedProjects gets a list of projects shared to this group.
 //
