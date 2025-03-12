@@ -1637,3 +1637,19 @@ func (s *UsersService) UploadAvatar(avatar io.Reader, filename string, options .
 
 	return usr, resp, nil
 }
+
+// DeleteUserIdentity deletes a user's authentication identity using the provider
+// name associated with that identity. Only available for administrators.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/users/#delete-authentication-identity-from-a-user
+func (s *UsersService) DeleteUserIdentity(user int, provider string, options ...RequestOptionFunc) (*Response, error) {
+	u := fmt.Sprintf("users/%d/identities/%s", user, provider)
+
+	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
+	if err != nil {
+		return nil, err
+	}
+
+	return s.client.Do(req, nil)
+}

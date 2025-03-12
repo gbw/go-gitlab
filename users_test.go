@@ -989,3 +989,15 @@ func TestListServiceAccounts(t *testing.T) {
 	}
 	require.Equal(t, want, serviceaccounts)
 }
+
+func TestDeleteUserIdentity(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/users/1/identities/google", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Users.DeleteUserIdentity(1, "google")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
