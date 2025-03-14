@@ -21,14 +21,28 @@ import (
 	"net/http"
 )
 
-// ProjectAccessTokensService handles communication with the
-// project access tokens related methods of the GitLab API.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_access_tokens/
-type ProjectAccessTokensService struct {
-	client *Client
-}
+type (
+	ProjectAccessTokensServiceInterface interface {
+		ListProjectAccessTokens(pid interface{}, opt *ListProjectAccessTokensOptions, options ...RequestOptionFunc) ([]*ProjectAccessToken, *Response, error)
+		GetProjectAccessToken(pid interface{}, id int, options ...RequestOptionFunc) (*ProjectAccessToken, *Response, error)
+		CreateProjectAccessToken(pid interface{}, opt *CreateProjectAccessTokenOptions, options ...RequestOptionFunc) (*ProjectAccessToken, *Response, error)
+		RotateProjectAccessToken(pid interface{}, id int, opt *RotateProjectAccessTokenOptions, options ...RequestOptionFunc) (*ProjectAccessToken, *Response, error)
+		RevokeProjectAccessToken(pid interface{}, id int, options ...RequestOptionFunc) (*Response, error)
+	}
+
+	// ProjectAccessTokensService handles communication with the
+	// project access tokens related methods of the GitLab API.
+	//
+	// GitLab API docs:
+	// https://docs.gitlab.com/api/project_access_tokens/
+	ProjectAccessTokensService struct {
+		client *Client
+	}
+)
+
+var (
+	_ ProjectAccessTokensServiceInterface = (*ProjectAccessTokensService)(nil)
+)
 
 // ProjectAccessToken represents a GitLab project access token.
 //

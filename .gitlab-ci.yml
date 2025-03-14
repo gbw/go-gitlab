@@ -81,6 +81,24 @@ golangci-lint:
     paths: [$REPORT_FILENAME]
     when: always
 
+verify-generated-code:
+  extends:
+    - .go:base
+  stage: lint
+  needs: []
+  image: golang:1.22-bookworm
+  script:
+    - make generate
+    - |
+      echo "Checking git status"
+      [ -z "$(git status --short)" ] || {
+        echo "Error: Files should have been generated:";
+        git status --short; echo "Diff:";
+        git --no-pager diff HEAD;
+        echo "Run \"make generate\" and try again";
+        exit 1;
+      }
+
 tests:unit:
   extends:
     - .go:base

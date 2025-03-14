@@ -22,13 +22,31 @@ import (
 	"time"
 )
 
-// PersonalAccessTokensService handles communication with the personal access
-// tokens related methods of the GitLab API.
-//
-// GitLab API docs: https://docs.gitlab.com/api/personal_access_tokens/
-type PersonalAccessTokensService struct {
-	client *Client
-}
+type (
+	PersonalAccessTokensServiceInterface interface {
+		ListPersonalAccessTokens(opt *ListPersonalAccessTokensOptions, options ...RequestOptionFunc) ([]*PersonalAccessToken, *Response, error)
+		GetSinglePersonalAccessTokenByID(token int, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		GetSinglePersonalAccessToken(options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		RotatePersonalAccessToken(token int, opt *RotatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		RotatePersonalAccessTokenByID(token int, opt *RotatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		RotatePersonalAccessTokenSelf(opt *RotatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		RevokePersonalAccessToken(token int, options ...RequestOptionFunc) (*Response, error)
+		RevokePersonalAccessTokenByID(token int, options ...RequestOptionFunc) (*Response, error)
+		RevokePersonalAccessTokenSelf(options ...RequestOptionFunc) (*Response, error)
+	}
+
+	// PersonalAccessTokensService handles communication with the personal access
+	// tokens related methods of the GitLab API.
+	//
+	// GitLab API docs: https://docs.gitlab.com/api/personal_access_tokens/
+	PersonalAccessTokensService struct {
+		client *Client
+	}
+)
+
+var (
+	_ PersonalAccessTokensServiceInterface = (*PersonalAccessTokensService)(nil)
+)
 
 // PersonalAccessToken represents a personal access token.
 //
