@@ -22,13 +22,28 @@ import (
 	"time"
 )
 
-// ProjectMirrorService handles communication with the project mirror
-// related methods of the GitLab API.
-//
-// GitLAb API docs: https://docs.gitlab.com/ee/api/remote_mirrors.html
-type ProjectMirrorService struct {
-	client *Client
-}
+type (
+	ProjectMirrorServiceInterface interface {
+		ListProjectMirror(pid interface{}, opt *ListProjectMirrorOptions, options ...RequestOptionFunc) ([]*ProjectMirror, *Response, error)
+		GetProjectMirror(pid interface{}, mirror int, options ...RequestOptionFunc) (*ProjectMirror, *Response, error)
+		GetProjectMirrorPublicKey(pid interface{}, mirror int, options ...RequestOptionFunc) (*ProjectMirrorPublicKey, *Response, error)
+		AddProjectMirror(pid interface{}, opt *AddProjectMirrorOptions, options ...RequestOptionFunc) (*ProjectMirror, *Response, error)
+		EditProjectMirror(pid interface{}, mirror int, opt *EditProjectMirrorOptions, options ...RequestOptionFunc) (*ProjectMirror, *Response, error)
+		DeleteProjectMirror(pid interface{}, mirror int, options ...RequestOptionFunc) (*Response, error)
+	}
+
+	// ProjectMirrorService handles communication with the project mirror
+	// related methods of the GitLab API.
+	//
+	// GitLAb API docs: https://docs.gitlab.com/ee/api/remote_mirrors.html
+	ProjectMirrorService struct {
+		client *Client
+	}
+)
+
+var (
+	_ ProjectMirrorServiceInterface = (*ProjectMirrorService)(nil)
+)
 
 // ProjectMirror represents a project mirror configuration.
 //

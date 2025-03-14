@@ -19,14 +19,27 @@ import (
 	"net/http"
 )
 
-// MergeRequestApprovalSettingsService handles communication with the merge
-// requests approval settings related methods of the GitLab API.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/merge_request_approval_settings/
-type MergeRequestApprovalSettingsService struct {
-	client *Client
-}
+type (
+	MergeRequestApprovalSettingsServiceInterface interface {
+		GetGroupMergeRequestApprovalSettings(gid interface{}, options ...RequestOptionFunc) (*MergeRequestApprovalSettings, *Response, error)
+		UpdateGroupMergeRequestApprovalSettings(gid interface{}, opt *UpdateMergeRequestApprovalSettingsOptions, options ...RequestOptionFunc) (*MergeRequestApprovalSettings, *Response, error)
+		GetProjectMergeRequestApprovalSettings(pid interface{}, options ...RequestOptionFunc) (*MergeRequestApprovalSettings, *Response, error)
+		UpdateProjectMergeRequestApprovalSettings(pid interface{}, opt *UpdateMergeRequestApprovalSettingsOptions, options ...RequestOptionFunc) (*MergeRequestApprovalSettings, *Response, error)
+	}
+
+	// MergeRequestApprovalSettingsService handles communication with the merge
+	// requests approval settings related methods of the GitLab API.
+	//
+	// GitLab API docs:
+	// https://docs.gitlab.com/api/merge_request_approval_settings/
+	MergeRequestApprovalSettingsService struct {
+		client *Client
+	}
+)
+
+var (
+	_ MergeRequestApprovalSettingsServiceInterface = (*MergeRequestApprovalSettingsService)(nil)
+)
 
 // MergeRequestApprovalSettings represents the merge request approval settings.
 //

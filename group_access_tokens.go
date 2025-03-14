@@ -21,14 +21,29 @@ import (
 	"net/http"
 )
 
-// GroupAccessTokensService handles communication with the
-// groups access tokens related methods of the GitLab API.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_access_tokens/
-type GroupAccessTokensService struct {
-	client *Client
-}
+type (
+	// GroupAccessTokensServiceInterface defines all the API methods for the GroupAccessTokensService
+	GroupAccessTokensServiceInterface interface {
+		ListGroupAccessTokens(gid interface{}, opt *ListGroupAccessTokensOptions, options ...RequestOptionFunc) ([]*GroupAccessToken, *Response, error)
+		GetGroupAccessToken(gid interface{}, id int, options ...RequestOptionFunc) (*GroupAccessToken, *Response, error)
+		CreateGroupAccessToken(gid interface{}, opt *CreateGroupAccessTokenOptions, options ...RequestOptionFunc) (*GroupAccessToken, *Response, error)
+		RotateGroupAccessToken(gid interface{}, id int, opt *RotateGroupAccessTokenOptions, options ...RequestOptionFunc) (*GroupAccessToken, *Response, error)
+		RevokeGroupAccessToken(gid interface{}, id int, options ...RequestOptionFunc) (*Response, error)
+	}
+
+	// GroupAccessTokensService handles communication with the
+	// groups access tokens related methods of the GitLab API.
+	//
+	// GitLab API docs:
+	// https://docs.gitlab.com/api/group_access_tokens/
+	GroupAccessTokensService struct {
+		client *Client
+	}
+)
+
+var (
+	_ GroupAccessTokensServiceInterface = (*GroupAccessTokensService)(nil)
+)
 
 // GroupAccessToken represents a GitLab group access token.
 //
