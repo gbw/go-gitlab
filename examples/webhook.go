@@ -8,8 +8,9 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
-	"gitlab.com/gitlab-org/api/client-go"
+	gitlab "gitlab.com/gitlab-org/api/client-go"
 )
 
 // webhook is a HTTP Handler for Gitlab Webhook events.
@@ -27,7 +28,16 @@ func webhookExample() {
 
 	mux := http.NewServeMux()
 	mux.Handle("/webhook", wh)
-	if err := http.ListenAndServe("0.0.0.0:8080", mux); err != nil {
+
+	server := &http.Server{
+		Addr:         "127.0.0.1:8080",
+		Handler:      mux,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  15 * time.Second,
+	}
+
+	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("HTTP server ListenAndServe: %v", err)
 	}
 }
@@ -115,3 +125,4 @@ func isEventSubscribed(event gitlab.EventType, events []gitlab.EventType) bool {
 	}
 	return false
 }
+
