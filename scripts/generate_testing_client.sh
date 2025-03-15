@@ -1,6 +1,15 @@
 #!/usr/bin/env sh
 
-testing_pkg_dir=$(readlink -e "$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)/../testing")
+case $(uname -s) in
+Darwin)
+  READLINK_FLAG="-f"
+  ;;
+*)
+  READLINK_FLAG="-e"
+  ;;
+esac
+
+testing_pkg_dir=$(readlink $READLINK_FLAG "$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)/../testing")
 testing_client_generated_file="$testing_pkg_dir/client_generated.go"
 
 instantiations_file="$(mktemp)"
@@ -15,7 +24,7 @@ grep -E '^\s[A-Z][a-zA-Z0-9]+\s+[A-Z][a-zA-Z0-9]+Interface$' -- gitlab.go | whil
   echo "mock${field} := NewMock${interface}(ctrl)" >>"$instantiations_file"
   echo "${field}: mock${field}," >>"$client_fields_file"
   echo "Mock${field}: mock${field}," >>"$testclient_mock_fields_file"
-  echo "Mock${field} *Mock${interface}" >> "$testclient_mocks_file"
+  echo "Mock${field} *Mock${interface}" >>"$testclient_mocks_file"
 done
 
 (
@@ -44,6 +53,6 @@ done
   echo '    },'
   echo '  }'
   echo '}'
-) > "$testing_client_generated_file"
+) >"$testing_client_generated_file"
 
 go fmt "$testing_client_generated_file"
