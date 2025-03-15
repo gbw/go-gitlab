@@ -6,6 +6,7 @@ workflow:
     - if: $CI_COMMIT_REF_PROTECTED == "true"
 
 include:
+  - template: Jobs/SAST.gitlab-ci.yml
   - component: ${CI_SERVER_FQDN}/gitlab-org/components/danger-review/danger-review@2.0.0
     inputs:
       job_stage: lint
@@ -170,3 +171,11 @@ release:
     tag_message: 'Version $CI_COMMIT_TAG'
     name: '$CI_COMMIT_TAG'
     description: release-notes.md
+
+# Update rules on SAST to ensure the jobs show up in the pipeline
+# this prevents forks that don't have `ultimate` from skipping SAST scans
+# since gitlab-advaced-sast replaces semgrep.
+semgrep-sast:
+  needs: []
+  rules:
+    - when: always

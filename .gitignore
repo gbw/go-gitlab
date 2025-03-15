@@ -31,5 +31,5 @@ _testmain.go
 
 # vendor
 vendor
-
 .go/
+.golangci-lint/
