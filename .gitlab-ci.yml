@@ -118,6 +118,8 @@ tests:unit:
     COVERPROFILE_XML_FILENAME: coverage.xml
   script:
     - go run gotest.tools/gotestsum@${GOTESTSUM_VERSION} --format=standard-quiet --junitfile=$JUNIT_FILENAME -- -race -coverprofile=$COVERPROFILE_FILENAME -covermode=atomic ./...
+    - grep -v '_generated.go' "$COVERPROFILE_FILENAME" | grep -v '_mock.go' > "${COVERPROFILE_FILENAME}.tmp"
+    - mv "${COVERPROFILE_FILENAME}.tmp" "$COVERPROFILE_FILENAME"
     - go run github.com/boumenot/gocover-cobertura@${GOCOVER_COBERTURA_VERSION} < $COVERPROFILE_FILENAME > $COVERPROFILE_XML_FILENAME
     - go tool cover -func $COVERPROFILE_FILENAME
   coverage: '/total:.+\(statements\).+\d+\.\d+/'
