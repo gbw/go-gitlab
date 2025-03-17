@@ -237,6 +237,7 @@ type Client struct {
 	Tags                         TagsServiceInterface
 	Todos                        TodosServiceInterface
 	Topics                       TopicsServiceInterface
+	UsageData                    UsageDataServiceInterface
 	Users                        UsersServiceInterface
 	Validate                     ValidateServiceInterface
 	Version                      VersionServiceInterface
@@ -484,6 +485,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.Tags = &TagsService{client: c}
 	c.Todos = &TodosService{client: c}
 	c.Topics = &TopicsService{client: c}
+	c.UsageData = &UsageDataService{client: c}
 	c.Users = &UsersService{client: c}
 	c.Validate = &ValidateService{client: c}
 	c.Version = &VersionService{client: c}
