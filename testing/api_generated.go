@@ -130,6 +130,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=tags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go TagsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=todos_mock.go -package=testing gitlab.com/gitlab-org/api/client-go TodosServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=topics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go TopicsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=usage_data_mock.go -package=testing gitlab.com/gitlab-org/api/client-go UsageDataServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=users_mock.go -package=testing gitlab.com/gitlab-org/api/client-go UsersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=validate_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ValidateServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=version_mock.go -package=testing gitlab.com/gitlab-org/api/client-go VersionServiceInterface

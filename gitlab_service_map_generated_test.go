@@ -132,6 +132,7 @@ var (
 		&TagsService{}:                         (*TagsServiceInterface)(nil),
 		&TodosService{}:                        (*TodosServiceInterface)(nil),
 		&TopicsService{}:                       (*TopicsServiceInterface)(nil),
+		&UsageDataService{}:                    (*UsageDataServiceInterface)(nil),
 		&UsersService{}:                        (*UsersServiceInterface)(nil),
 		&ValidateService{}:                     (*ValidateServiceInterface)(nil),
 		&VersionService{}:                      (*VersionServiceInterface)(nil),

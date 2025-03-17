@@ -137,6 +137,7 @@ type testClientMocks struct {
 	MockTags                         *MockTagsServiceInterface
 	MockTodos                        *MockTodosServiceInterface
 	MockTopics                       *MockTopicsServiceInterface
+	MockUsageData                    *MockUsageDataServiceInterface
 	MockUsers                        *MockUsersServiceInterface
 	MockValidate                     *MockValidateServiceInterface
 	MockVersion                      *MockVersionServiceInterface
@@ -273,6 +274,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockTags := NewMockTagsServiceInterface(ctrl)
 	mockTodos := NewMockTodosServiceInterface(ctrl)
 	mockTopics := NewMockTopicsServiceInterface(ctrl)
+	mockUsageData := NewMockUsageDataServiceInterface(ctrl)
 	mockUsers := NewMockUsersServiceInterface(ctrl)
 	mockValidate := NewMockValidateServiceInterface(ctrl)
 	mockVersion := NewMockVersionServiceInterface(ctrl)
@@ -409,6 +411,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			Tags:                         mockTags,
 			Todos:                        mockTodos,
 			Topics:                       mockTopics,
+			UsageData:                    mockUsageData,
 			Users:                        mockUsers,
 			Validate:                     mockValidate,
 			Version:                      mockVersion,
@@ -544,6 +547,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockTags:                         mockTags,
 			MockTodos:                        mockTodos,
 			MockTopics:                       mockTopics,
+			MockUsageData:                    mockUsageData,
 			MockUsers:                        mockUsers,
 			MockValidate:                     mockValidate,
 			MockVersion:                      mockVersion,
