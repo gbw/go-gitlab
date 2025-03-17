@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ TagsServiceInterface = (*TagsService)(nil)
-)
+var _ TagsServiceInterface = (*TagsService)(nil)
 
 // Tag represents a GitLab tag.
 //

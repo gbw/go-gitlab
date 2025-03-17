@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ SecureFilesServiceInterface = (*SecureFilesService)(nil)
-)
+var _ SecureFilesServiceInterface = (*SecureFilesService)(nil)
 
 // SecureFile represents a single secure file.
 //

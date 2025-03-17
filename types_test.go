@@ -22,6 +22,7 @@ import (
 )
 
 func TestBoolValue(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		name     string
 		data     []byte

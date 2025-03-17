@@ -8,6 +8,7 @@ import (
 )
 
 func TestListProjectMergeTrains(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_trains", func(w http.ResponseWriter, r *http.Request) {
@@ -78,6 +79,7 @@ func TestListProjectMergeTrains(t *testing.T) {
 }
 
 func TestListMergeRequestInMergeTrain(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/597/merge_trains/main", func(w http.ResponseWriter, r *http.Request) {
@@ -150,6 +152,7 @@ func TestListMergeRequestInMergeTrain(t *testing.T) {
 }
 
 func TestGetMergeRequestOnAMergeTrain(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/597/merge_trains/merge_requests/1", func(w http.ResponseWriter, r *http.Request) {
@@ -218,6 +221,7 @@ func TestGetMergeRequestOnAMergeTrain(t *testing.T) {
 }
 
 func TestAddMergeRequestToMergeTrain(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/597/merge_trains/merge_requests/1", func(w http.ResponseWriter, r *http.Request) {

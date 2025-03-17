@@ -9,6 +9,8 @@ import (
 )
 
 func TestClient_SmokeTestMetadataService(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	tc := NewTestClient(t)
 

@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ EpicsServiceInterface = (*EpicsService)(nil)
-)
+var _ EpicsServiceInterface = (*EpicsService)(nil)
 
 // EpicAuthor represents a author of the epic.
 type EpicAuthor struct {

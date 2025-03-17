@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ ApplicationsServiceInterface = (*ApplicationsService)(nil)
-)
+var _ ApplicationsServiceInterface = (*ApplicationsService)(nil)
 
 // Application represents a GitLab application
 type Application struct {

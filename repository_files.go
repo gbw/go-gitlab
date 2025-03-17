@@ -44,9 +44,7 @@ type (
 	}
 )
 
-var (
-	_ RepositoryFilesServiceInterface = (*RepositoryFilesService)(nil)
-)
+var _ RepositoryFilesServiceInterface = (*RepositoryFilesService)(nil)
 
 // File represents a GitLab repository file.
 //

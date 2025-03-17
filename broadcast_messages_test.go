@@ -25,6 +25,7 @@ import (
 )
 
 func TestListBroadcastMessages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/broadcast_messages", func(w http.ResponseWriter, r *http.Request) {
@@ -101,6 +102,7 @@ func TestListBroadcastMessages(t *testing.T) {
 }
 
 func TestGetBroadcastMessages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/broadcast_messages/1/", func(w http.ResponseWriter, r *http.Request) {
@@ -149,6 +151,7 @@ func TestGetBroadcastMessages(t *testing.T) {
 }
 
 func TestCreateBroadcastMessages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	wantedStartsAt := time.Date(2017, time.June, 26, 6, 0, 0, 0, time.UTC)
@@ -211,6 +214,7 @@ func TestCreateBroadcastMessages(t *testing.T) {
 }
 
 func TestUpdateBroadcastMessages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	wantedStartsAt := time.Date(2017, time.June, 26, 6, 0, 0, 0, time.UTC)
@@ -273,6 +277,7 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 }
 
 func TestDeleteBroadcastMessages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/broadcast_messages/1", func(w http.ResponseWriter, r *http.Request) {

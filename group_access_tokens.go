@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ GroupAccessTokensServiceInterface = (*GroupAccessTokensService)(nil)
-)
+var _ GroupAccessTokensServiceInterface = (*GroupAccessTokensService)(nil)
 
 // GroupAccessToken represents a GitLab group access token.
 //

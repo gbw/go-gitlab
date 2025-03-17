@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ ProtectedBranchesServiceInterface = (*ProtectedBranchesService)(nil)
-)
+var _ ProtectedBranchesServiceInterface = (*ProtectedBranchesService)(nil)
 
 // ProtectedBranch represents a protected branch.
 //

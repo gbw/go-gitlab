@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ PackagesServiceInterface = (*PackagesService)(nil)
-)
+var _ PackagesServiceInterface = (*PackagesService)(nil)
 
 // Package represents a GitLab package.
 //

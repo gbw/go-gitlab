@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectSnippetsServiceInterface = (*ProjectSnippetsService)(nil)
-)
+var _ ProjectSnippetsServiceInterface = (*ProjectSnippetsService)(nil)
 
 // ListProjectSnippetsOptions represents the available ListSnippets() options.
 //

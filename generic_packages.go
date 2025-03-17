@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ GenericPackagesServiceInterface = (*GenericPackagesService)(nil)
-)
+var _ GenericPackagesServiceInterface = (*GenericPackagesService)(nil)
 
 // GenericPackagesFile represents a GitLab generic package file.
 //

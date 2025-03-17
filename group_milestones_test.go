@@ -9,6 +9,7 @@ import (
 )
 
 func TestGroupMilestonesService_ListGroupMilestones(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/milestones", func(w http.ResponseWriter, r *http.Request) {
@@ -61,6 +62,7 @@ func TestGroupMilestonesService_ListGroupMilestones(t *testing.T) {
 }
 
 func TestGroupMilestonesService_GetGroupMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/milestones/12", func(w http.ResponseWriter, r *http.Request) {
@@ -111,6 +113,7 @@ func TestGroupMilestonesService_GetGroupMilestone(t *testing.T) {
 }
 
 func TestGroupMilestonesService_CreateGroupMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/milestones", func(w http.ResponseWriter, r *http.Request) {
@@ -161,6 +164,7 @@ func TestGroupMilestonesService_CreateGroupMilestone(t *testing.T) {
 }
 
 func TestGroupMilestonesService_UpdateGroupMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/milestones/12", func(w http.ResponseWriter, r *http.Request) {
@@ -211,6 +215,7 @@ func TestGroupMilestonesService_UpdateGroupMilestone(t *testing.T) {
 }
 
 func TestGroupMilestonesService_DeleteGroupMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/milestones/12", func(w http.ResponseWriter, r *http.Request) {
@@ -235,6 +240,7 @@ func TestGroupMilestonesService_DeleteGroupMilestone(t *testing.T) {
 }
 
 func TestGroupMilestonesService_GetGroupMilestoneIssues(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/milestones/12/issues", func(w http.ResponseWriter, r *http.Request) {
@@ -354,6 +360,7 @@ func TestGroupMilestonesService_GetGroupMilestoneIssues(t *testing.T) {
 }
 
 func TestGroupMilestonesService_GetGroupMilestoneMergeRequests(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/3/milestones/12/merge_requests", func(w http.ResponseWriter, r *http.Request) {
@@ -560,6 +567,7 @@ func TestGroupMilestonesService_GetGroupMilestoneMergeRequests(t *testing.T) {
 }
 
 func TestGroupMilestonesService_GetGroupMilestoneBurndownChartEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/3/milestones/12/burndown_events", func(w http.ResponseWriter, r *http.Request) {

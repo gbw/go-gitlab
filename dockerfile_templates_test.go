@@ -24,6 +24,7 @@ import (
 )
 
 func TestDockerfileTemplatesService_ListTemplates(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/templates/dockerfiles", func(w http.ResponseWriter, r *http.Request) {
@@ -93,6 +94,7 @@ func TestDockerfileTemplatesService_ListTemplates(t *testing.T) {
 }
 
 func TestDockerfileTemplatesService_GetTemplate(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/templates/dockerfiles/Binary", func(w http.ResponseWriter, r *http.Request) {

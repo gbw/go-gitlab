@@ -9,6 +9,7 @@ import (
 )
 
 func TestProjectRepositoryStorageMove_RetrieveAllProjectStorageMoves(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -59,6 +60,7 @@ func TestProjectRepositoryStorageMove_RetrieveAllProjectStorageMoves(t *testing.
 }
 
 func TestProjectRepositoryStorageMove_RetrieveAllStorageMovesForProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -109,6 +111,7 @@ func TestProjectRepositoryStorageMove_RetrieveAllStorageMovesForProject(t *testi
 }
 
 func TestProjectRepositoryStorageMove_GetStorageMove(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_repository_storage_moves/123", func(w http.ResponseWriter, r *http.Request) {
@@ -139,6 +142,7 @@ func TestProjectRepositoryStorageMove_GetStorageMove(t *testing.T) {
 }
 
 func TestProjectRepositoryStorageMove_GetStorageMoveForProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository_storage_moves/123", func(w http.ResponseWriter, r *http.Request) {
@@ -169,6 +173,7 @@ func TestProjectRepositoryStorageMove_GetStorageMoveForProject(t *testing.T) {
 }
 
 func TestProjectRepositoryStorageMove_ScheduleStorageMoveForProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -199,6 +204,7 @@ func TestProjectRepositoryStorageMove_ScheduleStorageMoveForProject(t *testing.T
 }
 
 func TestProjectRepositoryStorageMove_ScheduleAllStorageMoves(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {

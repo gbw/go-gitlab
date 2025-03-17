@@ -9,6 +9,7 @@ import (
 )
 
 func TestGeoNodesService_CreateGeoNode(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes", func(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +83,7 @@ func TestGeoNodesService_CreateGeoNode(t *testing.T) {
 }
 
 func TestGeoNodesService_CreateGeoNode_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes", func(w http.ResponseWriter, r *http.Request) {
@@ -96,6 +98,7 @@ func TestGeoNodesService_CreateGeoNode_StatusNotFound(t *testing.T) {
 }
 
 func TestGeoNodesService_ListGeoNodes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes", func(w http.ResponseWriter, r *http.Request) {
@@ -173,6 +176,7 @@ func TestGeoNodesService_ListGeoNodes(t *testing.T) {
 }
 
 func TestGeoNodesService_ListGeoNodes_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes", func(w http.ResponseWriter, r *http.Request) {
@@ -187,6 +191,7 @@ func TestGeoNodesService_ListGeoNodes_StatusNotFound(t *testing.T) {
 }
 
 func TestGeoNodesService_GetGeoNode(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -265,6 +270,7 @@ func TestGeoNodesService_GetGeoNode(t *testing.T) {
 }
 
 func TestGeoNodesService_EditGeoNode(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -343,6 +349,7 @@ func TestGeoNodesService_EditGeoNode(t *testing.T) {
 }
 
 func TestGeoNodesService_DeleteGeoNode(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -363,6 +370,7 @@ func TestGeoNodesService_DeleteGeoNode(t *testing.T) {
 }
 
 func TestGeoNodesService_RepairGeoNode(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes/3/repair", func(w http.ResponseWriter, r *http.Request) {
@@ -441,6 +449,7 @@ func TestGeoNodesService_RepairGeoNode(t *testing.T) {
 }
 
 func TestGeoNodesService_RetrieveStatusOfAllGeoNodes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes/status", func(w http.ResponseWriter, r *http.Request) {
@@ -548,6 +557,7 @@ func TestGeoNodesService_RetrieveStatusOfAllGeoNodes(t *testing.T) {
 }
 
 func TestGeoNodesService_RetrieveStatusOfAllGeoNodes_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes/status", func(w http.ResponseWriter, r *http.Request) {
@@ -562,6 +572,7 @@ func TestGeoNodesService_RetrieveStatusOfAllGeoNodes_StatusNotFound(t *testing.T
 }
 
 func TestGeoNodesService_RetrieveStatusOfGeoNode(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/geo_nodes/1/status", func(w http.ResponseWriter, r *http.Request) {

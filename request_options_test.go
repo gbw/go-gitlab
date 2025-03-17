@@ -24,6 +24,7 @@ import (
 )
 
 func TestWithHeader(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/without-header", func(w http.ResponseWriter, r *http.Request) {
 		assert.Empty(t, r.Header.Get("X-CUSTOM-HEADER"))
@@ -91,6 +92,7 @@ func TestWithHeader(t *testing.T) {
 }
 
 func TestWithHeaders(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/without-headers", func(w http.ResponseWriter, r *http.Request) {
 		assert.Empty(t, r.Header.Get("X-CUSTOM-HEADER-1"))
@@ -164,6 +166,7 @@ func TestWithHeaders(t *testing.T) {
 }
 
 func TestWithKeysetPaginationParameters(t *testing.T) {
+	t.Parallel()
 	req, err := retryablehttp.NewRequest("GET", "https://gitlab.example.com/api/v4/groups?pagination=keyset&per_page=50&order_by=name&sort=asc", nil)
 	assert.NoError(t, err)
 

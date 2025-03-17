@@ -23,9 +23,7 @@ type (
 	}
 )
 
-var (
-	_ DependencyListExportServiceInterface = (*DependencyListExportService)(nil)
-)
+var _ DependencyListExportServiceInterface = (*DependencyListExportService)(nil)
 
 // CreateDependencyListExportOptions represents the available CreateDependencyListExport()
 // options.

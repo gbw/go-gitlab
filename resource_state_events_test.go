@@ -9,6 +9,7 @@ import (
 )
 
 func TestResourceStateEventsService_ListIssueStateEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/issues/11/resource_state_events", func(w http.ResponseWriter, r *http.Request) {
@@ -54,6 +55,7 @@ func TestResourceStateEventsService_ListIssueStateEvents(t *testing.T) {
 }
 
 func TestResourceStateEventsService_GetIssueStateEvent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/issues/11/resource_state_events/143", func(w http.ResponseWriter, r *http.Request) {
@@ -97,6 +99,7 @@ func TestResourceStateEventsService_GetIssueStateEvent(t *testing.T) {
 }
 
 func TestResourceStateEventsService_ListMergeStateEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/merge_requests/11/resource_state_events", func(w http.ResponseWriter, r *http.Request) {
@@ -142,6 +145,7 @@ func TestResourceStateEventsService_ListMergeStateEvents(t *testing.T) {
 }
 
 func TestResourceStateEventsService_GetMergeRequestStateEvent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/merge_requests/11/resource_state_events/120", func(w http.ResponseWriter, r *http.Request) {

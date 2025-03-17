@@ -9,6 +9,7 @@ import (
 )
 
 func TestGroupRepositoryStorageMove_RetrieveAllGroupStorageMoves(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/group_repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -63,6 +64,7 @@ func TestGroupRepositoryStorageMove_RetrieveAllGroupStorageMoves(t *testing.T) {
 }
 
 func TestGroupRepositoryStorageMove_RetrieveAllStorageMovesForGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/283/repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -117,6 +119,7 @@ func TestGroupRepositoryStorageMove_RetrieveAllStorageMovesForGroup(t *testing.T
 }
 
 func TestGroupRepositoryStorageMove_GetStorageMove(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/group_repository_storage_moves/123", func(w http.ResponseWriter, r *http.Request) {
@@ -149,6 +152,7 @@ func TestGroupRepositoryStorageMove_GetStorageMove(t *testing.T) {
 }
 
 func TestGroupRepositoryStorageMove_GetStorageMoveForGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/283/repository_storage_moves/123", func(w http.ResponseWriter, r *http.Request) {
@@ -181,6 +185,7 @@ func TestGroupRepositoryStorageMove_GetStorageMoveForGroup(t *testing.T) {
 }
 
 func TestGroupRepositoryStorageMove_ScheduleStorageMoveForGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/283/repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -213,6 +218,7 @@ func TestGroupRepositoryStorageMove_ScheduleStorageMoveForGroup(t *testing.T) {
 }
 
 func TestGroupRepositoryStorageMove_ScheduleAllStorageMoves(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/group_repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {

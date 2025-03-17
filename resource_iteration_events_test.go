@@ -23,6 +23,7 @@ import (
 )
 
 func TestListIssueIterationEventsService_ListIssueIterationEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/issues/11/resource_iteration_events", func(w http.ResponseWriter, r *http.Request) {
@@ -104,6 +105,7 @@ func TestListIssueIterationEventsService_ListIssueIterationEvents(t *testing.T) 
 }
 
 func TestListIssueIterationEventsService_GetIssueIterationEvent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/issues/11/resource_iteration_events/143", func(w http.ResponseWriter, r *http.Request) {

@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ ProtectedTagsServiceInterface = (*ProtectedTagsService)(nil)
-)
+var _ ProtectedTagsServiceInterface = (*ProtectedTagsService)(nil)
 
 // ProtectedTag represents a protected tag.
 //

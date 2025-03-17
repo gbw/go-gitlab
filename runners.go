@@ -53,9 +53,7 @@ type (
 	}
 )
 
-var (
-	_ RunnersServiceInterface = (*RunnersService)(nil)
-)
+var _ RunnersServiceInterface = (*RunnersService)(nil)
 
 // Runner represents a GitLab CI Runner.
 //

@@ -46,9 +46,7 @@ type (
 	}
 )
 
-var (
-	_ PipelineSchedulesServiceInterface = (*PipelineSchedulesService)(nil)
-)
+var _ PipelineSchedulesServiceInterface = (*PipelineSchedulesService)(nil)
 
 // PipelineSchedule represents a pipeline schedule.
 //

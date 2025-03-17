@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ LabelsServiceInterface = (*LabelsService)(nil)
-)
+var _ LabelsServiceInterface = (*LabelsService)(nil)
 
 // Label represents a GitLab label.
 //

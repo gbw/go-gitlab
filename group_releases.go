@@ -33,9 +33,7 @@ type (
 	}
 )
 
-var (
-	_ GroupReleasesServiceInterface = (*GroupReleasesService)(nil)
-)
+var _ GroupReleasesServiceInterface = (*GroupReleasesService)(nil)
 
 // ListGroupReleasesOptions represents the available ListGroupReleases() options.
 //

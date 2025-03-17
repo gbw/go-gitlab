@@ -25,6 +25,7 @@ import (
 )
 
 func TestPublishPackageFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1234/packages/generic/foo/0.1.2/bar-baz.txt", func(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,7 @@ func TestPublishPackageFile(t *testing.T) {
 }
 
 func TestDownloadPackageFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1234/packages/generic/foo/0.1.2/bar-baz.txt", func(w http.ResponseWriter, r *http.Request) {

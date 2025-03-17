@@ -56,9 +56,7 @@ type (
 	}
 )
 
-var (
-	_ NotesServiceInterface = (*NotesService)(nil)
-)
+var _ NotesServiceInterface = (*NotesService)(nil)
 
 // Note represents a GitLab note.
 //

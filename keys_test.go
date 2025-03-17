@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetKeyWithUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/keys/1",
@@ -101,6 +102,7 @@ func TestGetKeyWithUser(t *testing.T) {
 }
 
 func TestGetKeyByFingerprint(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/keys",

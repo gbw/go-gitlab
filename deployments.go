@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ DeploymentsServiceInterface = (*DeploymentsService)(nil)
-)
+var _ DeploymentsServiceInterface = (*DeploymentsService)(nil)
 
 // Deployment represents the Gitlab deployment
 type Deployment struct {

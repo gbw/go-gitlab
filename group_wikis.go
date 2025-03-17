@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ GroupWikisServiceInterface = (*GroupWikisService)(nil)
-)
+var _ GroupWikisServiceInterface = (*GroupWikisService)(nil)
 
 // GroupWiki represents a GitLab groups wiki.
 //

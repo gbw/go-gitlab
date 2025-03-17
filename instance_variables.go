@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ InstanceVariablesServiceInterface = (*InstanceVariablesService)(nil)
-)
+var _ InstanceVariablesServiceInterface = (*InstanceVariablesService)(nil)
 
 // InstanceVariable represents a GitLab instance level CI Variable.
 //

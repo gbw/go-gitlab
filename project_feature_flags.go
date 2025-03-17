@@ -24,9 +24,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectFeatureFlagServiceInterface = (*ProjectFeatureFlagService)(nil)
-)
+var _ ProjectFeatureFlagServiceInterface = (*ProjectFeatureFlagService)(nil)
 
 // ProjectFeatureFlag represents a GitLab project iteration.
 //

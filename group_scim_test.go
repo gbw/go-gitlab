@@ -9,6 +9,7 @@ import (
 )
 
 func TestGroupSCIM_GetSCIMIdentitiesForGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/scim/identities", func(w http.ResponseWriter, r *http.Request) {
@@ -35,6 +36,7 @@ func TestGroupSCIM_GetSCIMIdentitiesForGroup(t *testing.T) {
 }
 
 func TestGroupSCIM_GetSCIMIdentity(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/scim/be20d8dcc028677c931e04f387", func(w http.ResponseWriter, r *http.Request) {
@@ -59,6 +61,7 @@ func TestGroupSCIM_GetSCIMIdentity(t *testing.T) {
 }
 
 func TestGroupSCIM_UpdateSCIMIdentity(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/scim/be20d8dcc028677c931e04f387", func(w http.ResponseWriter, r *http.Request) {
@@ -71,6 +74,7 @@ func TestGroupSCIM_UpdateSCIMIdentity(t *testing.T) {
 }
 
 func TestGroupSCIM_DeleteSCIMIdentity(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/scim/be20d8dcc028677c931e04f387", func(w http.ResponseWriter, r *http.Request) {

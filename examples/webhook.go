@@ -125,4 +125,3 @@ func isEventSubscribed(event gitlab.EventType, events []gitlab.EventType) bool {
 	}
 	return false
 }
-

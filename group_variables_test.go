@@ -25,6 +25,7 @@ import (
 )
 
 func TestListGroupVariabless(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables",
@@ -51,6 +52,7 @@ func TestListGroupVariabless(t *testing.T) {
 }
 
 func TestGetGroupVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
@@ -69,6 +71,7 @@ func TestGetGroupVariable(t *testing.T) {
 }
 
 func TestCreateGroupVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables",
@@ -94,6 +97,7 @@ func TestCreateGroupVariable(t *testing.T) {
 }
 
 func TestCreateGroupVariable_MaskedAndHidden(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables",
@@ -119,6 +123,7 @@ func TestCreateGroupVariable_MaskedAndHidden(t *testing.T) {
 }
 
 func TestDeleteGroupVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
@@ -137,6 +142,7 @@ func TestDeleteGroupVariable(t *testing.T) {
 }
 
 func TestUpdateGroupVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
@@ -154,6 +160,7 @@ func TestUpdateGroupVariable(t *testing.T) {
 }
 
 func TestUpdateGroupVariable_Filter(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
@@ -171,6 +178,7 @@ func TestUpdateGroupVariable_Filter(t *testing.T) {
 }
 
 func TestUpdateGroupVariable_MaskedAndHidden(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",

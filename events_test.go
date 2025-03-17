@@ -9,6 +9,7 @@ import (
 )
 
 func TestUsersService_ListUserContributionEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/1/events", func(w http.ResponseWriter, r *http.Request) {
@@ -91,6 +92,7 @@ func TestUsersService_ListUserContributionEvents(t *testing.T) {
 }
 
 func TestEventsService_ListCurrentUserContributionEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/events", func(w http.ResponseWriter, r *http.Request) {
@@ -163,6 +165,7 @@ func TestEventsService_ListCurrentUserContributionEvents(t *testing.T) {
 }
 
 func TestEventsService_ListCurrentUserContributionEvents_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/events", func(w http.ResponseWriter, r *http.Request) {
@@ -177,6 +180,7 @@ func TestEventsService_ListCurrentUserContributionEvents_StatusNotFound(t *testi
 }
 
 func TestEventsService_ListProjectVisibleEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/15/events", func(w http.ResponseWriter, r *http.Request) {

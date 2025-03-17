@@ -9,6 +9,7 @@ import (
 )
 
 func TestMilestonesService_ListMilestones(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/milestones", func(w http.ResponseWriter, r *http.Request) {
@@ -61,6 +62,7 @@ func TestMilestonesService_ListMilestones(t *testing.T) {
 }
 
 func TestMilestonesService_GetMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/milestones/12", func(w http.ResponseWriter, r *http.Request) {
@@ -111,6 +113,7 @@ func TestMilestonesService_GetMilestone(t *testing.T) {
 }
 
 func TestMilestonesService_CreateMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/milestones", func(w http.ResponseWriter, r *http.Request) {
@@ -161,6 +164,7 @@ func TestMilestonesService_CreateMilestone(t *testing.T) {
 }
 
 func TestMilestonesService_UpdateMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/milestones/12", func(w http.ResponseWriter, r *http.Request) {
@@ -211,6 +215,7 @@ func TestMilestonesService_UpdateMilestone(t *testing.T) {
 }
 
 func TestMilestonesService_DeleteMilestone(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/milestones/12", func(w http.ResponseWriter, r *http.Request) {
@@ -235,6 +240,7 @@ func TestMilestonesService_DeleteMilestone(t *testing.T) {
 }
 
 func TestMilestonesService_GetMilestoneIssues(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/milestones/12/issues", func(w http.ResponseWriter, r *http.Request) {
@@ -354,6 +360,7 @@ func TestMilestonesService_GetMilestoneIssues(t *testing.T) {
 }
 
 func TestMilestonesService_GetMilestoneMergeRequests(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/3/milestones/12/merge_requests", func(w http.ResponseWriter, r *http.Request) {

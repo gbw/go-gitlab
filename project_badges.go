@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectBadgesServiceInterface = (*ProjectBadgesService)(nil)
-)
+var _ ProjectBadgesServiceInterface = (*ProjectBadgesService)(nil)
 
 // ProjectBadge represents a project badge.
 //

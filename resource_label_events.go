@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ ResourceLabelEventsServiceInterface = (*ResourceLabelEventsService)(nil)
-)
+var _ ResourceLabelEventsServiceInterface = (*ResourceLabelEventsService)(nil)
 
 // LabelEvent represents a resource label event.
 //

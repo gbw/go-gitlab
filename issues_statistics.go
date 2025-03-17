@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ IssuesStatisticsServiceInterface = (*IssuesStatisticsService)(nil)
-)
+var _ IssuesStatisticsServiceInterface = (*IssuesStatisticsService)(nil)
 
 // IssuesStatistics represents a GitLab issues statistic.
 //

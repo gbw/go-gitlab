@@ -24,6 +24,7 @@ import (
 )
 
 func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/personal_access_tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -92,6 +93,7 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 }
 
 func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/personal_access_tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -160,6 +162,7 @@ func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
 }
 
 func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/personal_access_tokens/1", func(w http.ResponseWriter, r *http.Request) {
@@ -200,6 +203,7 @@ func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
 }
 
 func TestGetSinglePersonalAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/personal_access_tokens/self", func(w http.ResponseWriter, r *http.Request) {
@@ -240,6 +244,7 @@ func TestGetSinglePersonalAccessToken(t *testing.T) {
 }
 
 func TestRotatePersonalAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/personal_access_tokens/42/rotate", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
@@ -275,6 +280,7 @@ func TestRotatePersonalAccessToken(t *testing.T) {
 }
 
 func TestRotatePersonalAccessTokenByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/personal_access_tokens/42/rotate", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
@@ -310,6 +316,7 @@ func TestRotatePersonalAccessTokenByID(t *testing.T) {
 }
 
 func TestRotatePersonalAccessTokenSelf(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/personal_access_tokens/self/rotate", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
@@ -343,6 +350,7 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 }
 
 func TestRevokePersonalAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/personal_access_tokens/1", func(w http.ResponseWriter, r *http.Request) {
@@ -356,6 +364,7 @@ func TestRevokePersonalAccessToken(t *testing.T) {
 }
 
 func TestRevokePersonalAccessTokenByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/personal_access_tokens/1", func(w http.ResponseWriter, r *http.Request) {
@@ -369,6 +378,7 @@ func TestRevokePersonalAccessTokenByID(t *testing.T) {
 }
 
 func TestRevokePersonalAccessTokenSelf(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/personal_access_tokens/self", func(w http.ResponseWriter, r *http.Request) {

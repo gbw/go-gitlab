@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectMembersServiceInterface = (*ProjectMembersService)(nil)
-)
+var _ ProjectMembersServiceInterface = (*ProjectMembersService)(nil)
 
 // ProjectMember represents a project member.
 //

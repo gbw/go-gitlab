@@ -53,9 +53,7 @@ type (
 	}
 )
 
-var (
-	_ JobsServiceInterface = (*JobsService)(nil)
-)
+var _ JobsServiceInterface = (*JobsService)(nil)
 
 // Job represents a ci build.
 //

@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ JobTokenScopeServiceInterface = (*JobTokenScopeService)(nil)
-)
+var _ JobTokenScopeServiceInterface = (*JobTokenScopeService)(nil)
 
 // JobTokenAccessSettings represents job token access attributes for this project.
 //

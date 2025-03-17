@@ -106,6 +106,7 @@ func errorOption(*retryablehttp.Request) error {
 }
 
 func TestNewClient(t *testing.T) {
+	t.Parallel()
 	c, err := NewClient("")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -122,6 +123,7 @@ func TestNewClient(t *testing.T) {
 }
 
 func TestCheckResponse(t *testing.T) {
+	t.Parallel()
 	c, err := NewClient("")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -174,6 +176,7 @@ func TestCheckResponse(t *testing.T) {
 }
 
 func TestCheckResponseOnUnknownErrorFormat(t *testing.T) {
+	t.Parallel()
 	c, err := NewClient("")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -203,6 +206,7 @@ func TestCheckResponseOnUnknownErrorFormat(t *testing.T) {
 }
 
 func TestCheckResponseOnHeadRequestError(t *testing.T) {
+	t.Parallel()
 	c, err := NewClient("")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -232,6 +236,7 @@ func TestCheckResponseOnHeadRequestError(t *testing.T) {
 }
 
 func TestRequestWithContext(t *testing.T) {
+	t.Parallel()
 	c, err := NewClient("")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -260,6 +265,7 @@ func loadFixture(t *testing.T, filePath string) []byte {
 }
 
 func TestPathEscape(t *testing.T) {
+	t.Parallel()
 	want := "diaspora%2Fdiaspora"
 	got := PathEscape("diaspora/diaspora")
 	if want != got {
@@ -268,6 +274,7 @@ func TestPathEscape(t *testing.T) {
 }
 
 func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
+	t.Parallel()
 	wantPageHeaders := map[string]int{
 		xTotal:      0,
 		xTotalPages: 0,
@@ -315,6 +322,7 @@ func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
 }
 
 func TestPaginationPopulatePageValuesOffset(t *testing.T) {
+	t.Parallel()
 	wantPageHeaders := map[string]int{
 		xTotal:      100,
 		xTotalPages: 5,
@@ -374,6 +382,7 @@ func TestPaginationPopulatePageValuesOffset(t *testing.T) {
 }
 
 func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
+	t.Parallel()
 	wantPageHeaders := map[string]int{
 		xTotal:      0,
 		xTotalPages: 0,
@@ -420,6 +429,7 @@ func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
 }
 
 func TestExponentialBackoffLogic(t *testing.T) {
+	t.Parallel()
 	// Can't use the default `setup` because it disabled the backoff
 	mux := http.NewServeMux()
 	server := httptest.NewServer(mux)

@@ -36,9 +36,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectIterationsServiceInterface = (*ProjectIterationsService)(nil)
-)
+var _ ProjectIterationsServiceInterface = (*ProjectIterationsService)(nil)
 
 // ProjectIteration represents a GitLab project iteration.
 //

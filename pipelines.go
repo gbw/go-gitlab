@@ -45,9 +45,7 @@ type (
 	}
 )
 
-var (
-	_ PipelinesServiceInterface = (*PipelinesService)(nil)
-)
+var _ PipelinesServiceInterface = (*PipelinesService)(nil)
 
 // PipelineVariable represents a pipeline variable.
 //

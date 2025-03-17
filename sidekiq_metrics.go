@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ SidekiqServiceInterface = (*SidekiqService)(nil)
-)
+var _ SidekiqServiceInterface = (*SidekiqService)(nil)
 
 // QueueMetrics represents the GitLab sidekiq queue metrics.
 //

@@ -9,6 +9,7 @@ import (
 )
 
 func TestProjectVariablesService_ListVariables(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -58,6 +59,7 @@ func TestProjectVariablesService_ListVariables(t *testing.T) {
 }
 
 func TestProjectVariablesService_GetVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/variables/TEST_VARIABLE_1", func(w http.ResponseWriter, r *http.Request) {
@@ -109,6 +111,7 @@ func TestProjectVariablesService_GetVariable(t *testing.T) {
 }
 
 func TestProjectVariablesService_CreateVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -161,6 +164,7 @@ func TestProjectVariablesService_CreateVariable(t *testing.T) {
 }
 
 func TestProjectVariablesService_CreateVariable_MaskedAndHidden(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -211,6 +215,7 @@ func TestProjectVariablesService_CreateVariable_MaskedAndHidden(t *testing.T) {
 }
 
 func TestProjectVariablesService_UpdateVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {
@@ -265,6 +270,7 @@ func TestProjectVariablesService_UpdateVariable(t *testing.T) {
 }
 
 func TestProjectVariablesService_UpdateVariable_MaskedAndHidden(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {
@@ -319,6 +325,7 @@ func TestProjectVariablesService_UpdateVariable_MaskedAndHidden(t *testing.T) {
 }
 
 func TestProjectVariablesService_RemoveVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/variables/VARIABLE_1", func(w http.ResponseWriter, r *http.Request) {

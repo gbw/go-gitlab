@@ -34,6 +34,7 @@ import (
 )
 
 func TestListProjects(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		name  string
 		input string
@@ -84,6 +85,7 @@ func TestListProjects(t *testing.T) {
 }
 
 func TestListUserProjects(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/1/projects", func(w http.ResponseWriter, r *http.Request) {
@@ -113,6 +115,7 @@ func TestListUserProjects(t *testing.T) {
 }
 
 func TestListUserContributedProjects(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/1/contributed_projects", func(w http.ResponseWriter, r *http.Request) {
@@ -142,6 +145,7 @@ func TestListUserContributedProjects(t *testing.T) {
 }
 
 func TestListUserStarredProjects(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/1/starred_projects", func(w http.ResponseWriter, r *http.Request) {
@@ -171,6 +175,7 @@ func TestListUserStarredProjects(t *testing.T) {
 }
 
 func TestListProjectsUsersByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/", func(w http.ResponseWriter, r *http.Request) {
@@ -196,6 +201,7 @@ func TestListProjectsUsersByID(t *testing.T) {
 }
 
 func TestListProjectsUsersByName(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/", func(w http.ResponseWriter, r *http.Request) {
@@ -221,6 +227,7 @@ func TestListProjectsUsersByName(t *testing.T) {
 }
 
 func TestListProjectsGroupsByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/", func(w http.ResponseWriter, r *http.Request) {
@@ -246,6 +253,7 @@ func TestListProjectsGroupsByID(t *testing.T) {
 }
 
 func TestListProjectsGroupsByName(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/", func(w http.ResponseWriter, r *http.Request) {
@@ -271,6 +279,7 @@ func TestListProjectsGroupsByName(t *testing.T) {
 }
 
 func TestListOwnedProjects(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
@@ -301,6 +310,7 @@ func TestListOwnedProjects(t *testing.T) {
 }
 
 func TestEditProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	var developerRole AccessControlValue = "developer"
@@ -355,6 +365,7 @@ func TestEditProject(t *testing.T) {
 }
 
 func TestListStarredProjects(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
@@ -385,6 +396,7 @@ func TestListStarredProjects(t *testing.T) {
 }
 
 func TestGetProjectByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
@@ -439,6 +451,7 @@ func TestGetProjectByID(t *testing.T) {
 }
 
 func TestGetProjectByName(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/", func(w http.ResponseWriter, r *http.Request) {
@@ -459,6 +472,7 @@ func TestGetProjectByName(t *testing.T) {
 }
 
 func TestGetProjectWithOptions(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
@@ -504,6 +518,7 @@ func TestGetProjectWithOptions(t *testing.T) {
 }
 
 func TestCreateProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
@@ -528,6 +543,7 @@ func TestCreateProject(t *testing.T) {
 }
 
 func TestUploadFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
@@ -563,6 +579,7 @@ func TestUploadFile(t *testing.T) {
 }
 
 func TestUploadFile_Retry(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	tf, _ := os.CreateTemp(os.TempDir(), "test")
@@ -606,6 +623,7 @@ func TestUploadFile_Retry(t *testing.T) {
 }
 
 func TestUploadAvatar(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
@@ -627,6 +645,7 @@ func TestUploadAvatar(t *testing.T) {
 }
 
 func TestUploadAvatar_Retry(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	isFirstRequest := true
@@ -653,6 +672,7 @@ func TestUploadAvatar_Retry(t *testing.T) {
 }
 
 func TestDownloadAvatar(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	ico, _ := base64.StdEncoding.DecodeString("AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAACABAAAgAQAAAAAAAAAAAAD9/f39/f39/f39/f39/f39/f3y9/x+u+9qsO3l8Pr9/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f3c7Plfq+xFnepFnepSo+vI4ff9/f39/f39/f39/f39/f39/f39/f39/f39/f26z/VLkupFnepFnepFnepFnepFlOmevPL7/P39/f39/f39/f39/f39/f34+vyPsvBAe+hAe+hCh+lFm+pFnepDjOlAe+hAe+h2oO3v8/v9/f39/f39/f3o7/pqmOxAe+hAe+hAe+hAe+hBf+dBgedAe+hAe+hAe+hAe+hYi+rX4/j9/f3u8/tXi+pAe+hAe+hAe+hAe+g/deU7X9w6Xds+ceRAe+hAe+hAe+hAe+hIgenZ5fmVtvFAe+hAe+hAe+hAe+g+b+M6XNs6W9o6W9o6W9o9a+FAe+hAe+hAe+hAe+hyne1hketAe+hAe+hAeug9aOA6W9o6W9o6W9o6W9o6W9o6W9o8ZN5AeedAe+hAe+hDfehajepAe+g/d+Y7Yt06W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o7X9w/dOVAe+hAe+iAoew8Z986XNo6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o6W9o8ZN5chufDzfI6W9o6W9o6W9o6W9pTb95Wct9Wct9Wct9Wct9Wct88Xdo6W9o6W9o6W9qfr+z6+vxMat06W9o6W9pKaN37+/z9/f39/f39/f39/f39/f1sheM6W9o6W9o7XNrm6vj9/f2Qo+k6W9o6W9qFmef9/f39/f39/f39/f39/f39/f2puO46W9o6W9psheL9/f39/f3Y3/Y6W9o6W9rDzfL9/f39/f39/f39/f39/f39/f3m6vk7XNo6W9q0wO/9/f39/f39/f1eeeBDY9v3+Pz9/f39/f39/f39/f39/f39/f39/f1ifOFDYtvz9fv9/f39/f39/f2vvO6InOf9/f39/f39/f39/f39/f39/f39/f39/f2quO2NoOj9/f39/f0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
@@ -681,6 +701,7 @@ func TestDownloadAvatar(t *testing.T) {
 }
 
 func TestListProjectForks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/", func(w http.ResponseWriter, r *http.Request) {
@@ -710,6 +731,7 @@ func TestListProjectForks(t *testing.T) {
 }
 
 func TestDeleteProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
@@ -728,6 +750,7 @@ func TestDeleteProject(t *testing.T) {
 }
 
 func TestShareProjectWithGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/share", func(w http.ResponseWriter, r *http.Request) {
@@ -746,6 +769,7 @@ func TestShareProjectWithGroup(t *testing.T) {
 }
 
 func TestDeleteSharedProjectFromGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/share/2", func(w http.ResponseWriter, r *http.Request) {
@@ -759,6 +783,7 @@ func TestDeleteSharedProjectFromGroup(t *testing.T) {
 }
 
 func TestGetApprovalConfiguration(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/approvals", func(w http.ResponseWriter, r *http.Request) {
@@ -797,6 +822,7 @@ func TestGetApprovalConfiguration(t *testing.T) {
 }
 
 func TestChangeApprovalConfiguration(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/approvals", func(w http.ResponseWriter, r *http.Request) {
@@ -840,6 +866,7 @@ func TestChangeApprovalConfiguration(t *testing.T) {
 }
 
 func TestChangeAllowedApprovers(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/approvers", func(w http.ResponseWriter, r *http.Request) {
@@ -896,6 +923,7 @@ func TestChangeAllowedApprovers(t *testing.T) {
 }
 
 func TestForkProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	namespaceID := 42
@@ -924,6 +952,7 @@ func TestForkProject(t *testing.T) {
 }
 
 func TestGetProjectApprovalRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/approval_rules", func(w http.ResponseWriter, r *http.Request) {
@@ -1099,6 +1128,7 @@ func TestGetProjectApprovalRules(t *testing.T) {
 }
 
 func TestGetProjectApprovalRule(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/approval_rules/1", func(w http.ResponseWriter, r *http.Request) {
@@ -1270,6 +1300,7 @@ func TestGetProjectApprovalRule(t *testing.T) {
 }
 
 func TestCreateProjectApprovalRule(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/approval_rules", func(w http.ResponseWriter, r *http.Request) {
@@ -1482,6 +1513,7 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 }
 
 func TestGetProjectPullMirrorDetails(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/mirror/pull", func(w http.ResponseWriter, r *http.Request) {
@@ -1518,6 +1550,7 @@ func TestGetProjectPullMirrorDetails(t *testing.T) {
 }
 
 func TestConfigureProjectPullMirror(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/mirror/pull", func(w http.ResponseWriter, r *http.Request) {
@@ -1565,6 +1598,7 @@ func TestConfigureProjectPullMirror(t *testing.T) {
 }
 
 func TestStartMirroringProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/mirror/pull", func(w http.ResponseWriter, r *http.Request) {
@@ -1577,6 +1611,7 @@ func TestStartMirroringProject(t *testing.T) {
 }
 
 func TestCreateProjectApprovalRuleEligibleApprovers(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/approval_rules", func(w http.ResponseWriter, r *http.Request) {
@@ -1621,6 +1656,7 @@ func TestCreateProjectApprovalRuleEligibleApprovers(t *testing.T) {
 }
 
 func TestProjectModelsOptionalMergeAttribute(t *testing.T) {
+	t.Parallel()
 	// Create a `CreateProjectOptions` struct, ensure that merge attribute doesn't serialize
 	jsonString, err := json.Marshal(&CreateProjectOptions{
 		Name: Ptr("testProject"),
@@ -1641,6 +1677,7 @@ func TestProjectModelsOptionalMergeAttribute(t *testing.T) {
 }
 
 func TestListProjectHooks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/hooks", func(w http.ResponseWriter, r *http.Request) {
@@ -1725,6 +1762,7 @@ func TestListProjectHooks(t *testing.T) {
 
 // Test that the "CustomWebhookTemplate" serializes properly
 func TestProjectAddWebhook_CustomTemplateStuff(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	customWebhookSet := false
 	authValueSet := false
@@ -1779,6 +1817,7 @@ func TestProjectAddWebhook_CustomTemplateStuff(t *testing.T) {
 
 // Test that the "CustomWebhookTemplate" serializes properly when editing
 func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	customWebhookSet := false
 	authValueSet := false
@@ -1831,6 +1870,7 @@ func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
 }
 
 func TestGetProjectPushRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/push_rule", func(w http.ResponseWriter, r *http.Request) {
@@ -1881,6 +1921,7 @@ func TestGetProjectPushRules(t *testing.T) {
 }
 
 func TestAddProjectPushRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/push_rule", func(w http.ResponseWriter, r *http.Request) {
@@ -1947,6 +1988,7 @@ func TestAddProjectPushRules(t *testing.T) {
 }
 
 func TestEditProjectPushRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/push_rule", func(w http.ResponseWriter, r *http.Request) {
@@ -2013,6 +2055,7 @@ func TestEditProjectPushRules(t *testing.T) {
 }
 
 func TestGetProjectWebhookHeader(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Removed most of the arguments to keep test slim
@@ -2056,6 +2099,7 @@ func TestGetProjectWebhookHeader(t *testing.T) {
 }
 
 func TestSetProjectWebhookHeader(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	var bodyJson map[string]interface{}
 
@@ -2086,6 +2130,7 @@ func TestSetProjectWebhookHeader(t *testing.T) {
 }
 
 func TestDeleteProjectWebhookHeader(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Removed most of the arguments to keep test slim

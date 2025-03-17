@@ -34,9 +34,7 @@ type (
 	}
 )
 
-var (
-	_ DeploymentMergeRequestsServiceInterface = (*DeploymentMergeRequestsService)(nil)
-)
+var _ DeploymentMergeRequestsServiceInterface = (*DeploymentMergeRequestsService)(nil)
 
 // ListDeploymentMergeRequests get the merge requests associated with deployment.
 //

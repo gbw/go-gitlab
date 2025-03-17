@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ DraftNotesServiceInterface = (*DraftNotesService)(nil)
-)
+var _ DraftNotesServiceInterface = (*DraftNotesService)(nil)
 
 type DraftNote struct {
 	ID                int           `json:"id"`

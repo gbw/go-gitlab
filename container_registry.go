@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ ContainerRegistryServiceInterface = (*ContainerRegistryService)(nil)
-)
+var _ ContainerRegistryServiceInterface = (*ContainerRegistryService)(nil)
 
 // RegistryRepository represents a GitLab content registry repository.
 //

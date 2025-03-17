@@ -9,6 +9,7 @@ import (
 )
 
 func TestFreezePeriodsService_ListFreezePeriods(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/19/freeze_periods", func(w http.ResponseWriter, r *http.Request) {
@@ -56,6 +57,7 @@ func TestFreezePeriodsService_ListFreezePeriods(t *testing.T) {
 }
 
 func TestFreezePeriodsService_GetFreezePeriod(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/19/freeze_periods/1", func(w http.ResponseWriter, r *http.Request) {
@@ -99,6 +101,7 @@ func TestFreezePeriodsService_GetFreezePeriod(t *testing.T) {
 }
 
 func TestFreezePeriodsService_CreateFreezePeriodOptions(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/19/freeze_periods", func(w http.ResponseWriter, r *http.Request) {
@@ -142,6 +145,7 @@ func TestFreezePeriodsService_CreateFreezePeriodOptions(t *testing.T) {
 }
 
 func TestFreezePeriodsService_UpdateFreezePeriodOptions(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/19/freeze_periods/1", func(w http.ResponseWriter, r *http.Request) {
@@ -185,6 +189,7 @@ func TestFreezePeriodsService_UpdateFreezePeriodOptions(t *testing.T) {
 }
 
 func TestFreezePeriodsService_DeleteFreezePeriod(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/19/freeze_periods/1", func(w http.ResponseWriter, r *http.Request) {

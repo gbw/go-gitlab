@@ -24,6 +24,7 @@ import (
 )
 
 func TestListFeatureFlags(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/features", func(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +66,7 @@ func TestListFeatureFlags(t *testing.T) {
 }
 
 func TestSetFeatureFlag(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/features/new_library", func(w http.ResponseWriter, r *http.Request) {

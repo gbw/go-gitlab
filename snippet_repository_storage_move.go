@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ SnippetRepositoryStorageMoveServiceInterface = (*SnippetRepositoryStorageMoveService)(nil)
-)
+var _ SnippetRepositoryStorageMoveServiceInterface = (*SnippetRepositoryStorageMoveService)(nil)
 
 // SnippetRepositoryStorageMove represents the status of a repository move.
 //

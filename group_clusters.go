@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ GroupClustersServiceInterface = (*GroupClustersService)(nil)
-)
+var _ GroupClustersServiceInterface = (*GroupClustersService)(nil)
 
 // GroupCluster represents a GitLab Group Cluster.
 //

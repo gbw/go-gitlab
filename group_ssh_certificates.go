@@ -23,9 +23,7 @@ type (
 	}
 )
 
-var (
-	_ GroupSSHCertificatesServiceInterface = (*GroupSSHCertificatesService)(nil)
-)
+var _ GroupSSHCertificatesServiceInterface = (*GroupSSHCertificatesService)(nil)
 
 // GroupSSHCertificate represents a GitLab Group SSH certificate.
 //

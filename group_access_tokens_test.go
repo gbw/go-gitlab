@@ -24,6 +24,7 @@ import (
 )
 
 func TestListGroupAccessTokens(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -85,6 +86,7 @@ func TestListGroupAccessTokens(t *testing.T) {
 }
 
 func TestGetGroupAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_tokens/1", func(w http.ResponseWriter, r *http.Request) {
@@ -122,6 +124,7 @@ func TestGetGroupAccessToken(t *testing.T) {
 }
 
 func TestCreateGroupAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -160,6 +163,7 @@ func TestCreateGroupAccessToken(t *testing.T) {
 }
 
 func TestRotateGroupAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/access_tokens/42/rotate", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
@@ -196,6 +200,7 @@ func TestRotateGroupAccessToken(t *testing.T) {
 }
 
 func TestRevokeGroupAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_tokens/1234", func(w http.ResponseWriter, r *http.Request) {

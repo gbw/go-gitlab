@@ -27,6 +27,7 @@ import (
 )
 
 func TestListGroupServiceAccounts(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/service_accounts", func(w http.ResponseWriter, r *http.Request) {
@@ -68,6 +69,7 @@ func TestListGroupServiceAccounts(t *testing.T) {
 }
 
 func TestCreateServiceAccount(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/service_accounts", func(w http.ResponseWriter, r *http.Request) {
@@ -99,6 +101,7 @@ func TestCreateServiceAccount(t *testing.T) {
 }
 
 func TestDeleteServiceAccount(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/service_accounts/57", func(w http.ResponseWriter, r *http.Request) {
@@ -111,6 +114,7 @@ func TestDeleteServiceAccount(t *testing.T) {
 }
 
 func TestCreateServiceAccountPersonalAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/service_accounts/57/personal_access_tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -164,6 +168,7 @@ func TestCreateServiceAccountPersonalAccessToken(t *testing.T) {
 }
 
 func TestRotateServiceAccountPersonalAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/service_accounts/57/personal_access_tokens/6/rotate", func(w http.ResponseWriter, r *http.Request) {

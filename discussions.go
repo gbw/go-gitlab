@@ -67,9 +67,7 @@ type (
 	}
 )
 
-var (
-	_ DiscussionsServiceInterface = (*DiscussionsService)(nil)
-)
+var _ DiscussionsServiceInterface = (*DiscussionsService)(nil)
 
 // Discussion represents a GitLab discussion.
 //

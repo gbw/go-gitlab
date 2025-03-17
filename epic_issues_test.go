@@ -9,6 +9,7 @@ import (
 )
 
 func TestEpicIssuesService_ListEpicIssues(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/epics/5/issues", func(w http.ResponseWriter, r *http.Request) {
@@ -180,6 +181,7 @@ func TestEpicIssuesService_ListEpicIssues(t *testing.T) {
 }
 
 func TestEpicIssuesService_AssignEpicIssue(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/epics/5/issues/55", func(w http.ResponseWriter, r *http.Request) {
@@ -372,6 +374,7 @@ func TestEpicIssuesService_AssignEpicIssue(t *testing.T) {
 }
 
 func TestEpicIssuesService_RemoveEpicIssue(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/epics/5/issues/55", func(w http.ResponseWriter, r *http.Request) {
@@ -564,6 +567,7 @@ func TestEpicIssuesService_RemoveEpicIssue(t *testing.T) {
 }
 
 func TestEpicIssuesService_UpdateEpicIssueAssignment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/epics/5/issues/2", func(w http.ResponseWriter, r *http.Request) {

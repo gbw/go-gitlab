@@ -10,6 +10,7 @@ import (
 )
 
 func TestResourceGroups_GetAllResourceGroupsForAProject(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/resource_groups", func(w http.ResponseWriter, r *http.Request) {
@@ -57,6 +58,7 @@ func TestResourceGroups_GetAllResourceGroupsForAProject(t *testing.T) {
 }
 
 func TestResourceGroups_GetASpecificResourceGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/resource_groups/production", func(w http.ResponseWriter, r *http.Request) {
@@ -104,6 +106,7 @@ func TestResourceGroups_GetASpecificResourceGroup(t *testing.T) {
 }
 
 func TestResourceGroups_ListUpcomingJobsForASpecificResourceGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/resource_groups/production/upcoming_jobs", func(w http.ResponseWriter, r *http.Request) {
@@ -141,6 +144,7 @@ func TestResourceGroups_ListUpcomingJobsForASpecificResourceGroup(t *testing.T) 
 }
 
 func TestResourceGroup_EditAnExistingResourceGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/resource_groups/production", func(w http.ResponseWriter, r *http.Request) {

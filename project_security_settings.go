@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectSecuritySettingsServiceInterface = (*ProjectSecuritySettingsService)(nil)
-)
+var _ ProjectSecuritySettingsServiceInterface = (*ProjectSecuritySettingsService)(nil)
 
 // ProjectSecuritySettings represents the project security settings data.
 //

@@ -9,6 +9,7 @@ import (
 )
 
 func TestAwardEmojiService_ListMergeRequestAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -79,6 +80,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_ListIssueAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -149,6 +151,7 @@ func TestAwardEmojiService_ListIssueAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_ListSnippetAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -219,6 +222,7 @@ func TestAwardEmojiService_ListSnippetAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_GetMergeRequestAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/award_emoji/4", func(w http.ResponseWriter, r *http.Request) {
@@ -287,6 +291,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_GetIssueAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/award_emoji/4", func(w http.ResponseWriter, r *http.Request) {
@@ -355,6 +360,7 @@ func TestAwardEmojiService_GetIssueAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_GetSnippetAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/award_emoji/4", func(w http.ResponseWriter, r *http.Request) {
@@ -423,6 +429,7 @@ func TestAwardEmojiService_GetSnippetAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_CreateMergeRequestAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -491,6 +498,7 @@ func TestAwardEmojiService_CreateMergeRequestAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_CreateIssueAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -559,6 +567,7 @@ func TestAwardEmojiService_CreateIssueAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_CreateSnippetAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -627,6 +636,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_DeleteMergeRequestAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/award_emoji/1", func(w http.ResponseWriter, r *http.Request) {
@@ -651,6 +661,7 @@ func TestAwardEmojiService_DeleteMergeRequestAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_DeleteIssueAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/award_emoji/1", func(w http.ResponseWriter, r *http.Request) {
@@ -675,6 +686,7 @@ func TestAwardEmojiService_DeleteIssueAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_DeleteSnippetAwardEmoji(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/award_emoji/1", func(w http.ResponseWriter, r *http.Request) {
@@ -699,6 +711,7 @@ func TestAwardEmojiService_DeleteSnippetAwardEmoji(t *testing.T) {
 }
 
 func TestAwardEmojiService_ListMergeRequestAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/notes/1/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -769,6 +782,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_ListIssuesAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/notes/1/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -839,6 +853,7 @@ func TestAwardEmojiService_ListIssuesAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_ListSnippetAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/notes/1/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -909,6 +924,7 @@ func TestAwardEmojiService_ListSnippetAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_GetMergeRequestAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/notes/1/award_emoji/4", func(w http.ResponseWriter, r *http.Request) {
@@ -977,6 +993,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_GetIssuesAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/notes/1/award_emoji/4", func(w http.ResponseWriter, r *http.Request) {
@@ -1045,6 +1062,7 @@ func TestAwardEmojiService_GetIssuesAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_GetSnippetAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/notes/1/award_emoji/4", func(w http.ResponseWriter, r *http.Request) {
@@ -1113,6 +1131,7 @@ func TestAwardEmojiService_GetSnippetAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_CCreateMergeRequestAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/notes/1/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -1181,6 +1200,7 @@ func TestAwardEmojiService_CCreateMergeRequestAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_CreateIssuesAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/notes/1/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -1249,6 +1269,7 @@ func TestAwardEmojiService_CreateIssuesAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_CreateSnippetAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/notes/1/award_emoji", func(w http.ResponseWriter, r *http.Request) {
@@ -1317,6 +1338,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_DeleteMergeRequestAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/notes/1/award_emoji/1", func(w http.ResponseWriter, r *http.Request) {
@@ -1341,6 +1363,7 @@ func TestAwardEmojiService_DeleteMergeRequestAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_DeleteIssuesAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/80/notes/1/award_emoji/1", func(w http.ResponseWriter, r *http.Request) {
@@ -1365,6 +1388,7 @@ func TestAwardEmojiService_DeleteIssuesAwardEmojiOnNote(t *testing.T) {
 }
 
 func TestAwardEmojiService_DeleteSnippetAwardEmojiOnNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/80/notes/1/award_emoji/1", func(w http.ResponseWriter, r *http.Request) {

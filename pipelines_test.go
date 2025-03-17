@@ -26,6 +26,7 @@ import (
 )
 
 func TestListProjectPipelines(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines", func(w http.ResponseWriter, r *http.Request) {
@@ -46,6 +47,7 @@ func TestListProjectPipelines(t *testing.T) {
 }
 
 func TestGetPipeline(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167", func(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +67,7 @@ func TestGetPipeline(t *testing.T) {
 }
 
 func TestGetPipelineVariables(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -84,6 +87,7 @@ func TestGetPipelineVariables(t *testing.T) {
 }
 
 func TestGetPipelineTestReport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/123456/test_report", func(w http.ResponseWriter, r *http.Request) {
@@ -170,6 +174,7 @@ func TestGetPipelineTestReport(t *testing.T) {
 }
 
 func TestGetLatestPipeline(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/latest", func(w http.ResponseWriter, r *http.Request) {
@@ -185,6 +190,7 @@ func TestGetLatestPipeline(t *testing.T) {
 }
 
 func TestGetLatestPipeline_WithRef(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/latest", func(w http.ResponseWriter, r *http.Request) {
@@ -202,6 +208,7 @@ func TestGetLatestPipeline_WithRef(t *testing.T) {
 }
 
 func TestCreatePipeline(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipeline", func(w http.ResponseWriter, r *http.Request) {
@@ -222,6 +229,7 @@ func TestCreatePipeline(t *testing.T) {
 }
 
 func TestRetryPipelineBuild(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167/retry", func(w http.ResponseWriter, r *http.Request) {
@@ -241,6 +249,7 @@ func TestRetryPipelineBuild(t *testing.T) {
 }
 
 func TestCancelPipelineBuild(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167/cancel", func(w http.ResponseWriter, r *http.Request) {
@@ -260,6 +269,7 @@ func TestCancelPipelineBuild(t *testing.T) {
 }
 
 func TestDeletePipeline(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167", func(w http.ResponseWriter, r *http.Request) {
@@ -273,6 +283,7 @@ func TestDeletePipeline(t *testing.T) {
 }
 
 func TestUpdateMetadata(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/234/metadata", func(w http.ResponseWriter, r *http.Request) {

@@ -12,6 +12,7 @@ import (
 )
 
 func TestProjectMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +50,7 @@ func TestProjectMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
 }
 
 func TestProjectMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	tf, _ := os.CreateTemp(os.TempDir(), "test")
@@ -94,6 +96,7 @@ func TestProjectMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
 }
 
 func TestProjectMarkdownUploads_ListProjectMarkdownUploads(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
@@ -151,6 +154,7 @@ func TestProjectMarkdownUploads_ListProjectMarkdownUploads(t *testing.T) {
 }
 
 func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/uploads/2", func(w http.ResponseWriter, r *http.Request) {
@@ -169,6 +173,7 @@ func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadByID(t *testing.T) 
 }
 
 func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadBySecretAndFilename(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/uploads/secret/filename", func(w http.ResponseWriter, r *http.Request) {
@@ -187,6 +192,7 @@ func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadBySecretAndFilename
 }
 
 func TestProjectMarkdownUploads_DeleteProjectMarkdownUploadByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/uploads/2", func(w http.ResponseWriter, r *http.Request) {
@@ -201,6 +207,7 @@ func TestProjectMarkdownUploads_DeleteProjectMarkdownUploadByID(t *testing.T) {
 }
 
 func TestProjectMarkdownUploads_DeleteProjectMarkdownUploadBySecretAndFilename(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/uploads/secret/filename", func(w http.ResponseWriter, r *http.Request) {

@@ -24,6 +24,7 @@ import (
 )
 
 func TestTopicsService_ListTopics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/topics", func(w http.ResponseWriter, r *http.Request) {
@@ -88,6 +89,7 @@ func TestTopicsService_ListTopics(t *testing.T) {
 }
 
 func TestTopicsService_GetTopic(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/topics/1", func(w http.ResponseWriter, r *http.Request) {
@@ -121,6 +123,7 @@ func TestTopicsService_GetTopic(t *testing.T) {
 }
 
 func TestTopicsService_CreateTopic(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/topics", func(w http.ResponseWriter, r *http.Request) {
@@ -148,6 +151,7 @@ func TestTopicsService_CreateTopic(t *testing.T) {
 }
 
 func TestTopicsService_UpdateTopic(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/topics/1", func(w http.ResponseWriter, r *http.Request) {

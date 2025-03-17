@@ -24,6 +24,7 @@ import (
 )
 
 func TestCreateGroupGroupLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels", func(w http.ResponseWriter, r *http.Request) {
@@ -46,6 +47,7 @@ func TestCreateGroupGroupLabel(t *testing.T) {
 }
 
 func TestDeleteGroupLabelByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels/1", func(w http.ResponseWriter, r *http.Request) {
@@ -59,6 +61,7 @@ func TestDeleteGroupLabelByID(t *testing.T) {
 }
 
 func TestDeleteGroupLabelByName(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels/MyGroupLabel", func(w http.ResponseWriter, r *http.Request) {
@@ -72,6 +75,7 @@ func TestDeleteGroupLabelByName(t *testing.T) {
 }
 
 func TestUpdateGroupLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels/MyGroupLabel", func(w http.ResponseWriter, r *http.Request) {
@@ -102,6 +106,7 @@ func TestUpdateGroupLabel(t *testing.T) {
 }
 
 func TestSubscribeToGroupLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels/5/subscribe", func(w http.ResponseWriter, r *http.Request) {
@@ -120,6 +125,7 @@ func TestSubscribeToGroupLabel(t *testing.T) {
 }
 
 func TestUnsubscribeFromGroupLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels/5/unsubscribe", func(w http.ResponseWriter, r *http.Request) {
@@ -133,6 +139,7 @@ func TestUnsubscribeFromGroupLabel(t *testing.T) {
 }
 
 func TestListGroupLabels(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels", func(w http.ResponseWriter, r *http.Request) {
@@ -157,6 +164,7 @@ func TestListGroupLabels(t *testing.T) {
 }
 
 func TestGetGroupLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/labels/5", func(w http.ResponseWriter, r *http.Request) {

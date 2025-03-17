@@ -25,6 +25,7 @@ import (
 )
 
 func TestWebhookEventType(t *testing.T) {
+	t.Parallel()
 	req, err := http.NewRequest(http.MethodGet, "https://gitlab.com", nil)
 	if err != nil {
 		t.Errorf("Error creating HTTP request: %s", err)
@@ -38,6 +39,7 @@ func TestWebhookEventType(t *testing.T) {
 }
 
 func TestWebhookEventToken(t *testing.T) {
+	t.Parallel()
 	req, err := http.NewRequest(http.MethodGet, "https://gitlab.com", nil)
 	if err != nil {
 		t.Errorf("Error creating HTTP request: %s", err)
@@ -51,6 +53,7 @@ func TestWebhookEventToken(t *testing.T) {
 }
 
 func TestParseBuildHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/build.json")
 
 	parsedEvent, err := ParseWebhook("Build Hook", raw)
@@ -85,6 +88,7 @@ func TestParseBuildHook(t *testing.T) {
 }
 
 func TestParseCommitCommentHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/note_commit.json")
 
 	parsedEvent, err := ParseWebhook("Note Hook", raw)
@@ -115,6 +119,7 @@ func TestParseCommitCommentHook(t *testing.T) {
 }
 
 func TestParseFeatureFlagHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/feature_flag.json")
 
 	parsedEvent, err := ParseWebhook("Feature Flag Hook", raw)
@@ -161,6 +166,7 @@ func TestParseFeatureFlagHook(t *testing.T) {
 }
 
 func TestParseGroupResourceAccessTokenHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/resource_access_token_group.json")
 
 	parsedEvent, err := ParseWebhook("Resource Access Token Hook", raw)
@@ -181,6 +187,7 @@ func TestParseGroupResourceAccessTokenHook(t *testing.T) {
 }
 
 func TestParseHookWebHook(t *testing.T) {
+	t.Parallel()
 	parsedEvent1, err := ParseHook("Merge Request Hook", loadFixture(t, "testdata/webhooks/merge_request.json"))
 	if err != nil {
 		t.Errorf("Error parsing build hook: %s", err)
@@ -193,6 +200,7 @@ func TestParseHookWebHook(t *testing.T) {
 }
 
 func TestParseIssueCommentHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/note_issue.json")
 
 	parsedEvent, err := ParseWebhook("Note Hook", raw)
@@ -224,6 +232,7 @@ func TestParseIssueCommentHook(t *testing.T) {
 }
 
 func TestParseIssueHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/issue.json")
 
 	parsedEvent, err := ParseWebhook("Issue Hook", raw)
@@ -263,6 +272,7 @@ func TestParseIssueHook(t *testing.T) {
 }
 
 func TestParseMergeRequestCommentHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/note_merge_request.json")
 
 	parsedEvent, err := ParseWebhook("Note Hook", raw)
@@ -298,6 +308,7 @@ func TestParseMergeRequestCommentHook(t *testing.T) {
 }
 
 func TestParseMemberHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/member.json")
 
 	parsedEvent, err := ParseWebhook("Member Hook", raw)
@@ -316,6 +327,7 @@ func TestParseMemberHook(t *testing.T) {
 }
 
 func TestParseMergeRequestHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/merge_request.json")
 
 	parsedEvent, err := ParseWebhook("Merge Request Hook", raw)
@@ -351,6 +363,7 @@ func TestParseMergeRequestHook(t *testing.T) {
 }
 
 func TestParsePipelineHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/pipeline.json")
 
 	parsedEvent, err := ParseWebhook("Pipeline Hook", raw)
@@ -385,6 +398,7 @@ func TestParsePipelineHook(t *testing.T) {
 }
 
 func TestParseProjectResourceAccessTokenHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/resource_access_token_project.json")
 
 	parsedEvent, err := ParseWebhook("Resource Access Token Hook", raw)
@@ -405,6 +419,7 @@ func TestParseProjectResourceAccessTokenHook(t *testing.T) {
 }
 
 func TestParsePushHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/push.json")
 
 	parsedEvent, err := ParseWebhook("Push Hook", raw)
@@ -439,6 +454,7 @@ func TestParsePushHook(t *testing.T) {
 }
 
 func TestParseReleaseHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/release.json")
 
 	parsedEvent, err := ParseWebhook("Release Hook", raw)
@@ -461,6 +477,7 @@ func TestParseReleaseHook(t *testing.T) {
 }
 
 func TestParseServiceWebHook(t *testing.T) {
+	t.Parallel()
 	parsedEvent, err := ParseWebhook("Service Hook", loadFixture(t, "testdata/webhooks/service_merge_request.json"))
 	if err != nil {
 		t.Errorf("Error parsing service hook merge request: %s", err)
@@ -484,6 +501,7 @@ func TestParseServiceWebHook(t *testing.T) {
 }
 
 func TestParseSnippetCommentHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/note_snippet.json")
 
 	parsedEvent, err := ParseWebhook("Note Hook", raw)
@@ -514,6 +532,7 @@ func TestParseSnippetCommentHook(t *testing.T) {
 }
 
 func TestParseSubGroupHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/subgroup.json")
 
 	parsedEvent, err := ParseWebhook("Subgroup Hook", raw)
@@ -532,6 +551,7 @@ func TestParseSubGroupHook(t *testing.T) {
 }
 
 func TestParseTagHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/tag_push.json")
 
 	parsedEvent, err := ParseWebhook("Tag Push Hook", raw)
@@ -566,6 +586,7 @@ func TestParseTagHook(t *testing.T) {
 }
 
 func TestParseWikiPageHook(t *testing.T) {
+	t.Parallel()
 	raw := loadFixture(t, "testdata/webhooks/wiki_page.json")
 
 	parsedEvent, err := ParseWebhook("Wiki Page Hook", raw)

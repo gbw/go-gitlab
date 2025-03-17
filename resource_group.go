@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ ResourceGroupServiceInterface = (*ResourceGroupService)(nil)
-)
+var _ ResourceGroupServiceInterface = (*ResourceGroupService)(nil)
 
 // ResourceGrouop represents a GitLab Project Resource Group.
 //

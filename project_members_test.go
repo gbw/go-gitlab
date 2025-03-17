@@ -12,6 +12,7 @@ import (
 )
 
 func TestProjectMembersService_ListProjectMembers(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/members", func(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +66,7 @@ func TestProjectMembersService_ListProjectMembers(t *testing.T) {
 }
 
 func TestProjectMembersService_ListAllProjectMembers(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/members/all", func(w http.ResponseWriter, r *http.Request) {
@@ -118,6 +120,7 @@ func TestProjectMembersService_ListAllProjectMembers(t *testing.T) {
 }
 
 func TestProjectMembersService_GetProjectMember(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/members/1", func(w http.ResponseWriter, r *http.Request) {
@@ -172,6 +175,7 @@ func TestProjectMembersService_GetProjectMember(t *testing.T) {
 }
 
 func TestProjectMembersService_GetInheritedProjectMember(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/members/all/1", func(w http.ResponseWriter, r *http.Request) {
@@ -226,6 +230,7 @@ func TestProjectMembersService_GetInheritedProjectMember(t *testing.T) {
 }
 
 func TestProjectMembersService_AddProjectMember(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	var requestOpts AddProjectMemberOptions
@@ -296,6 +301,7 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 }
 
 func TestProjectMembersService_EditProjectMember(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/members/1", func(w http.ResponseWriter, r *http.Request) {
@@ -350,6 +356,7 @@ func TestProjectMembersService_EditProjectMember(t *testing.T) {
 }
 
 func TestProjectMembersService_DeleteProjectMember(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/members/1", func(w http.ResponseWriter, r *http.Request) {
@@ -388,6 +395,7 @@ func TestProjectMembersService_DeleteProjectMember(t *testing.T) {
 }
 
 func TestProjectMembersService_CustomRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%sprojects/1/members/2", apiVersionPath)

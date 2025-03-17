@@ -23,6 +23,7 @@ import (
 )
 
 func TestGetDraftNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/draft_notes/3", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
@@ -52,6 +53,7 @@ func TestGetDraftNote(t *testing.T) {
 }
 
 func TestListDraftNotes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/draft_notes", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
@@ -114,6 +116,7 @@ func TestListDraftNotes(t *testing.T) {
 }
 
 func TestCreateDraftNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/draft_notes", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
@@ -145,6 +148,7 @@ func TestCreateDraftNote(t *testing.T) {
 }
 
 func TestUpdateDraftNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/draft_notes/3", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
@@ -176,6 +180,7 @@ func TestUpdateDraftNote(t *testing.T) {
 }
 
 func TestDeleteDraftNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/draft_notes/3", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
@@ -188,6 +193,7 @@ func TestDeleteDraftNote(t *testing.T) {
 }
 
 func TestPublishDraftNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/draft_notes/3/publish", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
@@ -200,6 +206,7 @@ func TestPublishDraftNote(t *testing.T) {
 }
 
 func TestPublishAllDraftNotes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/draft_notes/bulk_publish", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)

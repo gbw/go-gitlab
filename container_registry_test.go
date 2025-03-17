@@ -25,6 +25,7 @@ import (
 )
 
 func TestListProjectRegistryRepositories(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/registry/repositories", func(w http.ResponseWriter, r *http.Request) {
@@ -102,6 +103,7 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 }
 
 func TestListGroupRegistryRepositories(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/registry/repositories", func(w http.ResponseWriter, r *http.Request) {
@@ -179,6 +181,7 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 }
 
 func TestGetSingleRegistryRepository(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/registry/repositories/5", func(w http.ResponseWriter, r *http.Request) {
@@ -223,6 +226,7 @@ func TestGetSingleRegistryRepository(t *testing.T) {
 }
 
 func TestDeleteRegistryRepository(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/registry/repositories/2", func(w http.ResponseWriter, r *http.Request) {
@@ -236,6 +240,7 @@ func TestDeleteRegistryRepository(t *testing.T) {
 }
 
 func TestListRegistryRepositoryTags(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/registry/repositories/2/tags", func(w http.ResponseWriter, r *http.Request) {
@@ -278,6 +283,7 @@ func TestListRegistryRepositoryTags(t *testing.T) {
 }
 
 func TestGetRegistryRepositoryTagDetail(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/registry/repositories/2/tags/v10.0.0", func(w http.ResponseWriter, r *http.Request) {
@@ -320,6 +326,7 @@ func TestGetRegistryRepositoryTagDetail(t *testing.T) {
 }
 
 func TestDeleteRegistryRepositoryTag(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/registry/repositories/2/tags/v10.0.0", func(w http.ResponseWriter, r *http.Request) {
@@ -333,6 +340,7 @@ func TestDeleteRegistryRepositoryTag(t *testing.T) {
 }
 
 func TestDeleteRegistryRepositoryTags(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/registry/repositories/2/tags", func(w http.ResponseWriter, r *http.Request) {

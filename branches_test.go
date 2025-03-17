@@ -26,6 +26,7 @@ import (
 )
 
 func TestGetBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/branches/master", func(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +68,7 @@ func TestGetBranch(t *testing.T) {
 }
 
 func TestBranchesService_ListBranches(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/repository/branches", func(w http.ResponseWriter, r *http.Request) {
@@ -122,6 +124,7 @@ func TestBranchesService_ListBranches(t *testing.T) {
 }
 
 func TestBranchesService_ProtectBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/branches/master/protect", func(w http.ResponseWriter, r *http.Request) {
@@ -176,6 +179,7 @@ func TestBranchesService_ProtectBranch(t *testing.T) {
 }
 
 func TestBranchesService_UnprotectBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/branches/master/unprotect", func(w http.ResponseWriter, r *http.Request) {
@@ -230,6 +234,7 @@ func TestBranchesService_UnprotectBranch(t *testing.T) {
 }
 
 func TestBranchesService_CreateBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/branches", func(w http.ResponseWriter, r *http.Request) {
@@ -284,6 +289,7 @@ func TestBranchesService_CreateBranch(t *testing.T) {
 }
 
 func TestBranchesService_DeleteBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/branches/master", func(w http.ResponseWriter, r *http.Request) {
@@ -308,6 +314,7 @@ func TestBranchesService_DeleteBranch(t *testing.T) {
 }
 
 func TestBranchesService_DeleteMergedBranches(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/merged_branches", func(w http.ResponseWriter, r *http.Request) {

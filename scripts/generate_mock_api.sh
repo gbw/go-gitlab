@@ -30,5 +30,5 @@ grep -E '^\s[A-Z][a-zA-Z0-9]+Interface interface {$' -- *.go | awk '{ print $1 $
   echo "//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=${filename}_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ${interface}" >>"$api_file"
 done
 
-go fmt "$api_file"
 go generate ./...
+make fmt

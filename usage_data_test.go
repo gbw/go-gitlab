@@ -12,6 +12,7 @@ import (
 )
 
 func TestUsageDataService_GetServicePing(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/usage_data/service_ping", func(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,7 @@ func TestUsageDataService_GetServicePing(t *testing.T) {
 }
 
 func TestUsageDataService_GetMetricDefinitionsAsYAML(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	expectedYAML := `---
@@ -75,6 +77,7 @@ func TestUsageDataService_GetMetricDefinitionsAsYAML(t *testing.T) {
 }
 
 func TestUsageDataService_GetQueries(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/usage_data/queries", func(w http.ResponseWriter, r *http.Request) {
@@ -158,6 +161,7 @@ func TestUsageDataService_GetQueries(t *testing.T) {
 }
 
 func TestUsageDataService_GetServicePingNonSqlMetrics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/usage_data/non_sql_metrics", func(w http.ResponseWriter, r *http.Request) {
@@ -233,6 +237,7 @@ func TestUsageDataService_GetServicePingNonSqlMetrics(t *testing.T) {
 }
 
 func TestUsageDataService_TrackEvent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/usage_data/track_event", func(w http.ResponseWriter, r *http.Request) {
@@ -263,6 +268,7 @@ func TestUsageDataService_TrackEvent(t *testing.T) {
 }
 
 func TestUsageDataService_TrackEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/usage_data/track_events", func(w http.ResponseWriter, r *http.Request) {

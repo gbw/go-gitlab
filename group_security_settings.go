@@ -35,9 +35,7 @@ type (
 	}
 )
 
-var (
-	_ GroupSecuritySettingsServiceInterface = (*GroupSecuritySettingsService)(nil)
-)
+var _ GroupSecuritySettingsServiceInterface = (*GroupSecuritySettingsService)(nil)
 
 // GroupSecuritySettings represents the group security settings data.
 //

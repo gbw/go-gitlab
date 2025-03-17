@@ -9,6 +9,7 @@ import (
 const markdownHTMLResponse = "<h1>Testing</h1>"
 
 func TestRender(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/markdown", func(writer http.ResponseWriter, request *http.Request) {

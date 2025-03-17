@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetApprovalState(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approval_state", func(w http.ResponseWriter, r *http.Request) {
@@ -179,6 +180,7 @@ func TestGetApprovalState(t *testing.T) {
 }
 
 func TestGetApprovalRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approval_rules", func(w http.ResponseWriter, r *http.Request) {
@@ -306,6 +308,7 @@ func TestGetApprovalRules(t *testing.T) {
 }
 
 func TestCreateApprovalRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approval_rules", func(w http.ResponseWriter, r *http.Request) {

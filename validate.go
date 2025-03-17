@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ ValidateServiceInterface = (*ValidateService)(nil)
-)
+var _ ValidateServiceInterface = (*ValidateService)(nil)
 
 // LintResult represents the linting results.
 //

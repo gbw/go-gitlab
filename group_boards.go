@@ -45,9 +45,7 @@ type (
 	}
 )
 
-var (
-	_ GroupIssueBoardsServiceInterface = (*GroupIssueBoardsService)(nil)
-)
+var _ GroupIssueBoardsServiceInterface = (*GroupIssueBoardsService)(nil)
 
 // GroupIssueBoard represents a GitLab group issue board.
 //

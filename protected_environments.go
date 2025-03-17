@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ ProtectedEnvironmentsServiceInterface = (*ProtectedEnvironmentsService)(nil)
-)
+var _ ProtectedEnvironmentsServiceInterface = (*ProtectedEnvironmentsService)(nil)
 
 // ProtectedEnvironment represents a protected environment.
 //

@@ -36,9 +36,7 @@ type (
 	}
 )
 
-var (
-	_ RepositorySubmodulesServiceInterface = (*RepositorySubmodulesService)(nil)
-)
+var _ RepositorySubmodulesServiceInterface = (*RepositorySubmodulesService)(nil)
 
 // SubmoduleCommit represents a GitLab submodule commit.
 //

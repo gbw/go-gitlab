@@ -24,6 +24,7 @@ import (
 )
 
 func TestListProjectVulnerabilities(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/vulnerabilities", func(w http.ResponseWriter, r *http.Request) {
@@ -47,6 +48,7 @@ func TestListProjectVulnerabilities(t *testing.T) {
 }
 
 func TestCreateVulnerability(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/vulnerabilities", func(w http.ResponseWriter, r *http.Request) {

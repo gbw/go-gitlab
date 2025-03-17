@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ KeysServiceInterface = (*KeysService)(nil)
-)
+var _ KeysServiceInterface = (*KeysService)(nil)
 
 // Key represents a GitLab user's SSH key.
 //

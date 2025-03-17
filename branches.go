@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ BranchesServiceInterface = (*BranchesService)(nil)
-)
+var _ BranchesServiceInterface = (*BranchesService)(nil)
 
 // Branch represents a GitLab branch.
 //

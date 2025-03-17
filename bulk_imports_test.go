@@ -12,6 +12,7 @@ import (
 )
 
 func TestBulkImportsService_StartMigration(t *testing.T) {
+	t.Parallel()
 	startMigrationOptions := &BulkImportStartMigrationOptions{
 		Configuration: &BulkImportStartMigrationConfiguration{
 			URL:         Ptr("https://source-gitlab-instance.example.com"),

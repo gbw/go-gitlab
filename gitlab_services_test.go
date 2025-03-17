@@ -9,6 +9,7 @@ import (
 // TestServiceMethodsInInterface ensures that all exported methods on Service structs
 // are part of their corresponding interfaces
 func TestServiceMethodsInInterface(t *testing.T) {
+	t.Parallel()
 	for concreteService, interfaceType := range serviceMap {
 		concreteType := reflect.TypeOf(concreteService)
 		interfaceTyp := reflect.TypeOf(interfaceType).Elem()

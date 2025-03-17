@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ GroupProtectedEnvironmentsServiceInterface = (*GroupProtectedEnvironmentsService)(nil)
-)
+var _ GroupProtectedEnvironmentsServiceInterface = (*GroupProtectedEnvironmentsService)(nil)
 
 // GroupProtectedEnvironment represents a group-level protected environment.
 //

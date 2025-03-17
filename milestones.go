@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ MilestonesServiceInterface = (*MilestonesService)(nil)
-)
+var _ MilestonesServiceInterface = (*MilestonesService)(nil)
 
 // Milestone represents a GitLab milestone.
 //

@@ -26,6 +26,7 @@ import (
 )
 
 func TestReleasesService_ListReleases(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases",
@@ -45,6 +46,7 @@ func TestReleasesService_ListReleases(t *testing.T) {
 }
 
 func TestReleasesService_GetRelease(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",
@@ -63,6 +65,7 @@ func TestReleasesService_GetRelease(t *testing.T) {
 }
 
 func TestReleasesService_CreateRelease(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases",
@@ -107,6 +110,7 @@ func TestReleasesService_CreateRelease(t *testing.T) {
 }
 
 func TestReleasesService_CreateReleaseWithAsset(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases",
@@ -156,6 +160,7 @@ func TestReleasesService_CreateReleaseWithAsset(t *testing.T) {
 }
 
 func TestReleasesService_CreateReleaseWithAssetAndNameMetadata(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases",
@@ -205,6 +210,7 @@ func TestReleasesService_CreateReleaseWithAssetAndNameMetadata(t *testing.T) {
 }
 
 func TestReleasesService_CreateReleaseWithMilestones(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases",
@@ -250,6 +256,7 @@ func TestReleasesService_CreateReleaseWithMilestones(t *testing.T) {
 }
 
 func TestReleasesService_CreateReleaseWithReleasedAt(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases",
@@ -295,6 +302,7 @@ func TestReleasesService_CreateReleaseWithReleasedAt(t *testing.T) {
 }
 
 func TestReleasesService_UpdateRelease(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",
@@ -330,6 +338,7 @@ func TestReleasesService_UpdateRelease(t *testing.T) {
 }
 
 func TestReleasesService_UpdateReleaseWithMilestones(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",
@@ -366,6 +375,7 @@ func TestReleasesService_UpdateReleaseWithMilestones(t *testing.T) {
 }
 
 func TestReleasesService_UpdateReleaseWithReleasedAt(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",
@@ -402,6 +412,7 @@ func TestReleasesService_UpdateReleaseWithReleasedAt(t *testing.T) {
 }
 
 func TestReleasesService_DeleteRelease(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",

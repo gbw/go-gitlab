@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ IssueLinksServiceInterface = (*IssueLinksService)(nil)
-)
+var _ IssueLinksServiceInterface = (*IssueLinksService)(nil)
 
 // IssueLink represents a two-way relation between two issues.
 //

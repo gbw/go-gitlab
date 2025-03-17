@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ EpicIssuesServiceInterface = (*EpicIssuesService)(nil)
-)
+var _ EpicIssuesServiceInterface = (*EpicIssuesService)(nil)
 
 // EpicIssueAssignment contains both the epic and issue objects returned from
 // Gitlab with the assignment ID.

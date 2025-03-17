@@ -25,6 +25,7 @@ import (
 )
 
 func TestGroupListProtectedEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/protected_environments", func(w http.ResponseWriter, r *http.Request) {
@@ -115,6 +116,7 @@ func TestGroupListProtectedEnvironments(t *testing.T) {
 }
 
 func TestGroupGetProtectedEnvironment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Test with RequiredApprovalCount
@@ -204,6 +206,7 @@ func TestGroupGetProtectedEnvironment(t *testing.T) {
 }
 
 func TestGroupProtectEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Test with RequiredApprovalCount and ApprovalRules
@@ -311,6 +314,7 @@ func TestGroupProtectEnvironments(t *testing.T) {
 }
 
 func TestGroupUpdateProtectedEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Test with DeployAccessLevels, RequiredApprovalCount, and ApprovalRules as if adding new to existing protected environment
@@ -576,6 +580,7 @@ func TestGroupUpdateProtectedEnvironments(t *testing.T) {
 }
 
 func TestGroupUnprotectEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/protected_environments/staging", func(w http.ResponseWriter, r *http.Request) {

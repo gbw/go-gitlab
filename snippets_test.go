@@ -9,6 +9,7 @@ import (
 )
 
 func TestSnippetsService_ListSnippets(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets", func(w http.ResponseWriter, r *http.Request) {
@@ -26,6 +27,7 @@ func TestSnippetsService_ListSnippets(t *testing.T) {
 }
 
 func TestSnippetsService_GetSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/1", func(w http.ResponseWriter, r *http.Request) {
@@ -41,6 +43,7 @@ func TestSnippetsService_GetSnippet(t *testing.T) {
 }
 
 func TestSnippetsService_CreateSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets", func(w http.ResponseWriter, r *http.Request) {
@@ -64,6 +67,7 @@ func TestSnippetsService_CreateSnippet(t *testing.T) {
 }
 
 func TestSnippetsService_UpdateSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/1", func(w http.ResponseWriter, r *http.Request) {
@@ -87,6 +91,7 @@ func TestSnippetsService_UpdateSnippet(t *testing.T) {
 }
 
 func TestSnippetsService_DeleteSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/1", func(w http.ResponseWriter, r *http.Request) {
@@ -99,6 +104,7 @@ func TestSnippetsService_DeleteSnippet(t *testing.T) {
 }
 
 func TestSnippetsService_SnippetContent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/1/raw", func(w http.ResponseWriter, r *http.Request) {
@@ -114,6 +120,7 @@ func TestSnippetsService_SnippetContent(t *testing.T) {
 }
 
 func TestSnippetsService_ExploreSnippets(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/public", func(w http.ResponseWriter, r *http.Request) {
@@ -131,6 +138,7 @@ func TestSnippetsService_ExploreSnippets(t *testing.T) {
 }
 
 func TestSnippetsService_ListAllSnippets(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/all", func(w http.ResponseWriter, r *http.Request) {

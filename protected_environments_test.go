@@ -25,6 +25,7 @@ import (
 )
 
 func TestListProtectedEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_environments", func(w http.ResponseWriter, r *http.Request) {
@@ -116,6 +117,7 @@ func TestListProtectedEnvironments(t *testing.T) {
 }
 
 func TestGetProtectedEnvironment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Test with RequiredApprovalCount
@@ -201,6 +203,7 @@ func TestGetProtectedEnvironment(t *testing.T) {
 }
 
 func TestProtectRepositoryEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Test with RequiredApprovalCount and ApprovalRules
@@ -305,6 +308,7 @@ func TestProtectRepositoryEnvironments(t *testing.T) {
 }
 
 func TestUpdateProtectedEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Test with DeployAccessLevels, RequiredApprovalCount, and ApprovalRules as if adding new to existing protected environment
@@ -570,6 +574,7 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 }
 
 func TestUpdateRepositoryEnvironmentsEscapesURL(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	rawRequest := ""
@@ -593,6 +598,7 @@ func TestUpdateRepositoryEnvironmentsEscapesURL(t *testing.T) {
 }
 
 func TestUnprotectRepositoryEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_environments/my-awesome-environment", func(w http.ResponseWriter, r *http.Request) {

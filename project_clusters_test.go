@@ -23,6 +23,7 @@ import (
 )
 
 func TestListClusters(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	pid := 1234
 
@@ -78,6 +79,7 @@ func TestListClusters(t *testing.T) {
 }
 
 func TestGetCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	pid := 1234
 
@@ -156,6 +158,7 @@ func TestGetCluster(t *testing.T) {
 }
 
 func TestAddCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	pid := 1234
 
@@ -230,6 +233,7 @@ func TestAddCluster(t *testing.T) {
 }
 
 func TestEditCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	pid := 1234
 
@@ -304,6 +308,7 @@ func TestEditCluster(t *testing.T) {
 }
 
 func TestDeleteCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1234/clusters/1", func(w http.ResponseWriter, r *http.Request) {

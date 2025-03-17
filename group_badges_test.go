@@ -24,6 +24,7 @@ import (
 )
 
 func TestListGroupBadges(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/badges",
@@ -44,6 +45,7 @@ func TestListGroupBadges(t *testing.T) {
 }
 
 func TestGetGroupBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/badges/2",
@@ -64,6 +66,7 @@ func TestGetGroupBadge(t *testing.T) {
 }
 
 func TestAddGroupBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/badges",
@@ -85,6 +88,7 @@ func TestAddGroupBadge(t *testing.T) {
 }
 
 func TestEditGroupBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/badges/2",
@@ -106,6 +110,7 @@ func TestEditGroupBadge(t *testing.T) {
 }
 
 func TestRemoveGroupBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/badges/2",

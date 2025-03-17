@@ -26,6 +26,7 @@ import (
 )
 
 func TestGetGlobalSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/notification_settings", func(w http.ResponseWriter, r *http.Request) {
@@ -51,6 +52,7 @@ func TestGetGlobalSettings(t *testing.T) {
 }
 
 func TestGetProjectSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/notification_settings", func(w http.ResponseWriter, r *http.Request) {
@@ -114,6 +116,7 @@ func TestGetProjectSettings(t *testing.T) {
 }
 
 func TestUpdateProjectSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Create the request to send

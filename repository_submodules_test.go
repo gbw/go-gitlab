@@ -9,6 +9,7 @@ import (
 )
 
 func TestRepositorySubmodulesService_UpdateSubmodule(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/submodules/app%2Fproject", func(w http.ResponseWriter, r *http.Request) {

@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ GroupEpicBoardsServiceInterface = (*GroupEpicBoardsService)(nil)
-)
+var _ GroupEpicBoardsServiceInterface = (*GroupEpicBoardsService)(nil)
 
 // GroupEpicBoard represents a GitLab group epic board.
 //

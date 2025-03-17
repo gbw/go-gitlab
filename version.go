@@ -32,9 +32,7 @@ type (
 	}
 )
 
-var (
-	_ VersionServiceInterface = (*VersionService)(nil)
-)
+var _ VersionServiceInterface = (*VersionService)(nil)
 
 // Version represents a GitLab instance version.
 //

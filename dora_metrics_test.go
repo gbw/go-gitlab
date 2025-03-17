@@ -10,6 +10,7 @@ import (
 )
 
 func TestDORAMetrics_GetProjectDORAMetrics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/dora/metrics", func(w http.ResponseWriter, r *http.Request) {
@@ -64,6 +65,7 @@ func TestDORAMetrics_GetProjectDORAMetrics(t *testing.T) {
 }
 
 func TestDORAMetrics_GetGroupDORAMetrics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/dora/metrics", func(w http.ResponseWriter, r *http.Request) {

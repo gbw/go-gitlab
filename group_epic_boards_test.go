@@ -9,6 +9,7 @@ import (
 )
 
 func TestGroupEpicBoardsService_ListGroupEpicBoards(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/epic_boards", func(w http.ResponseWriter, r *http.Request) {
@@ -146,6 +147,7 @@ func TestGroupEpicBoardsService_ListGroupEpicBoards(t *testing.T) {
 }
 
 func TestGroupEpicBoardsService_GetGroupEpicBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/epic_boards/1", func(w http.ResponseWriter, r *http.Request) {

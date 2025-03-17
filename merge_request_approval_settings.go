@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ MergeRequestApprovalSettingsServiceInterface = (*MergeRequestApprovalSettingsService)(nil)
-)
+var _ MergeRequestApprovalSettingsServiceInterface = (*MergeRequestApprovalSettingsService)(nil)
 
 // MergeRequestApprovalSettings represents the merge request approval settings.
 //

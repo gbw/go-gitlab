@@ -24,6 +24,7 @@ import (
 )
 
 func TestValidate(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		description string
 		opts        *LintOptions
@@ -93,6 +94,7 @@ func TestValidate(t *testing.T) {
 }
 
 func TestValidateProject(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		description string
 		response    string
@@ -154,6 +156,7 @@ func TestValidateProject(t *testing.T) {
 }
 
 func TestValidateProjectNamespace(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		description string
 		request     *ProjectNamespaceLintOptions
@@ -253,6 +256,7 @@ func TestValidateProjectNamespace(t *testing.T) {
 }
 
 func TestValidateProjectLint(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		description string
 		request     *ProjectLintOptions

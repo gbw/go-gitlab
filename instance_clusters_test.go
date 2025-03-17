@@ -9,6 +9,7 @@ import (
 )
 
 func TestInstanceClustersService_ListClusters(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/clusters", func(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +87,7 @@ func TestInstanceClustersService_ListClusters(t *testing.T) {
 }
 
 func TestInstanceClustersService_ListClusters_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/clusters", func(w http.ResponseWriter, r *http.Request) {
@@ -100,6 +102,7 @@ func TestInstanceClustersService_ListClusters_StatusNotFound(t *testing.T) {
 }
 
 func TestInstanceClustersService_GetCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/clusters/9", func(w http.ResponseWriter, r *http.Request) {
@@ -180,6 +183,7 @@ func TestInstanceClustersService_GetCluster(t *testing.T) {
 }
 
 func TestInstanceClustersService_AddCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/clusters/add", func(w http.ResponseWriter, r *http.Request) {
@@ -255,6 +259,7 @@ func TestInstanceClustersService_AddCluster(t *testing.T) {
 }
 
 func TestInstanceClustersService_AddCluster_StatusInternalServerError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/clusters/add", func(w http.ResponseWriter, r *http.Request) {
@@ -269,6 +274,7 @@ func TestInstanceClustersService_AddCluster_StatusInternalServerError(t *testing
 }
 
 func TestInstanceClustersService_EditCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/clusters/11", func(w http.ResponseWriter, r *http.Request) {
@@ -349,6 +355,7 @@ func TestInstanceClustersService_EditCluster(t *testing.T) {
 }
 
 func TestInstanceClustersService_DeleteCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/clusters/11", func(w http.ResponseWriter, r *http.Request) {

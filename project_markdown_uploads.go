@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectMarkdownUploadsServiceInterface = (*ProjectMarkdownUploadsService)(nil)
-)
+var _ ProjectMarkdownUploadsServiceInterface = (*ProjectMarkdownUploadsService)(nil)
 
 // ProjectMarkdownUploadedFile represents a single project markdown uploaded file.
 //

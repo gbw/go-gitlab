@@ -10,6 +10,7 @@ import (
 )
 
 func TestListMergeStatusChecks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/status_checks", func(w http.ResponseWriter, r *http.Request) {
@@ -41,6 +42,7 @@ func TestListMergeStatusChecks(t *testing.T) {
 }
 
 func TestListProjectStatusChecks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/external_status_checks", func(w http.ResponseWriter, r *http.Request) {
@@ -81,6 +83,7 @@ func TestListProjectStatusChecks(t *testing.T) {
 }
 
 func TestRetryFailedStatusCheckForAMergeRequest(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/2/status_checks/3/retry", func(w http.ResponseWriter, r *http.Request) {

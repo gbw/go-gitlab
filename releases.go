@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ ReleasesServiceInterface = (*ReleasesService)(nil)
-)
+var _ ReleasesServiceInterface = (*ReleasesService)(nil)
 
 // Release represents a project release.
 //

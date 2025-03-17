@@ -23,6 +23,7 @@ import (
 )
 
 func TestGetAvatar(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	const url = "https://www.gravatar.com/avatar/10e6bf7bcf22c2f00a3ef684b4ada178"

@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ EnvironmentsServiceInterface = (*EnvironmentsService)(nil)
-)
+var _ EnvironmentsServiceInterface = (*EnvironmentsService)(nil)
 
 // Environment represents a GitLab environment.
 //

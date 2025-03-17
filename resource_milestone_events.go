@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ ResourceMilestoneEventsServiceInterface = (*ResourceMilestoneEventsService)(nil)
-)
+var _ ResourceMilestoneEventsServiceInterface = (*ResourceMilestoneEventsService)(nil)
 
 // MilestoneEvent represents a resource milestone event.
 //

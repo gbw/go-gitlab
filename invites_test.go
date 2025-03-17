@@ -8,6 +8,7 @@ import (
 )
 
 func TestListGroupPendingInvites(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/test/invitations", func(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +32,7 @@ func TestListGroupPendingInvites(t *testing.T) {
 }
 
 func TestGroupInvites(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/test/invitations", func(w http.ResponseWriter, r *http.Request) {
@@ -54,6 +56,7 @@ func TestGroupInvites(t *testing.T) {
 }
 
 func TestGroupInvitesError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/test/invitations", func(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +80,7 @@ func TestGroupInvitesError(t *testing.T) {
 }
 
 func TestListProjectPendingInvites(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/test/invitations", func(w http.ResponseWriter, r *http.Request) {
@@ -100,6 +104,7 @@ func TestListProjectPendingInvites(t *testing.T) {
 }
 
 func TestProjectInvites(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/test/invitations", func(w http.ResponseWriter, r *http.Request) {
@@ -123,6 +128,7 @@ func TestProjectInvites(t *testing.T) {
 }
 
 func TestProjectInvitesError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/test/invitations", func(w http.ResponseWriter, r *http.Request) {

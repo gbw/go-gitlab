@@ -10,6 +10,7 @@ import (
 )
 
 func TestResourceWeightEventsService_ListIssueWightEvents(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/issues/11/resource_weight_events", func(w http.ResponseWriter, r *http.Request) {

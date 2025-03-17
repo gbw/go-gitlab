@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ ErrorTrackingServiceInterface = (*ErrorTrackingService)(nil)
-)
+var _ ErrorTrackingServiceInterface = (*ErrorTrackingService)(nil)
 
 // ErrorTrackingClientKey represents an error tracking client key.
 //

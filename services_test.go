@@ -25,6 +25,7 @@ import (
 )
 
 func TestListServices(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services", func(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,7 @@ func TestListServices(t *testing.T) {
 }
 
 func TestCustomIssueTrackerService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/custom-issue-tracker", func(w http.ResponseWriter, r *http.Request) {
@@ -81,6 +83,7 @@ func TestCustomIssueTrackerService(t *testing.T) {
 }
 
 func TestSetCustomIssueTrackerService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/custom-issue-tracker", func(w http.ResponseWriter, r *http.Request) {
@@ -101,6 +104,7 @@ func TestSetCustomIssueTrackerService(t *testing.T) {
 }
 
 func TestDeleteCustomIssueTrackerService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/custom-issue-tracker", func(w http.ResponseWriter, r *http.Request) {
@@ -114,6 +118,7 @@ func TestDeleteCustomIssueTrackerService(t *testing.T) {
 }
 
 func TestGetDataDogService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/datadog", func(w http.ResponseWriter, r *http.Request) {
@@ -153,6 +158,7 @@ func TestGetDataDogService(t *testing.T) {
 }
 
 func TestSetDataDogService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/datadog", func(w http.ResponseWriter, r *http.Request) {
@@ -177,6 +183,7 @@ func TestSetDataDogService(t *testing.T) {
 }
 
 func TestDeleteDataDogService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/datadog", func(w http.ResponseWriter, r *http.Request) {
@@ -190,6 +197,7 @@ func TestDeleteDataDogService(t *testing.T) {
 }
 
 func TestGetDiscordService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/discord", func(w http.ResponseWriter, r *http.Request) {
@@ -208,6 +216,7 @@ func TestGetDiscordService(t *testing.T) {
 }
 
 func TestSetDiscordService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/discord", func(w http.ResponseWriter, r *http.Request) {
@@ -226,6 +235,7 @@ func TestSetDiscordService(t *testing.T) {
 }
 
 func TestDeleteDiscordService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/discord", func(w http.ResponseWriter, r *http.Request) {
@@ -239,6 +249,7 @@ func TestDeleteDiscordService(t *testing.T) {
 }
 
 func TestGetDroneCIService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/drone-ci", func(w http.ResponseWriter, r *http.Request) {
@@ -257,6 +268,7 @@ func TestGetDroneCIService(t *testing.T) {
 }
 
 func TestSetDroneCIService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/drone-ci", func(w http.ResponseWriter, r *http.Request) {
@@ -273,6 +285,7 @@ func TestSetDroneCIService(t *testing.T) {
 }
 
 func TestDeleteDroneCIService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/drone-ci", func(w http.ResponseWriter, r *http.Request) {
@@ -286,6 +299,7 @@ func TestDeleteDroneCIService(t *testing.T) {
 }
 
 func TestGetEmailsOnPushService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/emails-on-push", func(w http.ResponseWriter, r *http.Request) {
@@ -304,6 +318,7 @@ func TestGetEmailsOnPushService(t *testing.T) {
 }
 
 func TestSetEmailsOnPushService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/emails-on-push", func(w http.ResponseWriter, r *http.Request) {
@@ -320,6 +335,7 @@ func TestSetEmailsOnPushService(t *testing.T) {
 }
 
 func TestDeleteEmailsOnPushService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/emails-on-push", func(w http.ResponseWriter, r *http.Request) {
@@ -333,6 +349,7 @@ func TestDeleteEmailsOnPushService(t *testing.T) {
 }
 
 func TestGetHarborService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
@@ -351,6 +368,7 @@ func TestGetHarborService(t *testing.T) {
 }
 
 func TestSetHarborService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
@@ -373,6 +391,7 @@ func TestSetHarborService(t *testing.T) {
 }
 
 func TestDeleteHarborService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
@@ -386,6 +405,7 @@ func TestDeleteHarborService(t *testing.T) {
 }
 
 func TestGetSlackApplication(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/gitlab-slack-application", func(w http.ResponseWriter, r *http.Request) {
@@ -404,6 +424,7 @@ func TestGetSlackApplication(t *testing.T) {
 }
 
 func TestSetSlackApplication(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/gitlab-slack-application", func(w http.ResponseWriter, r *http.Request) {
@@ -420,6 +441,7 @@ func TestSetSlackApplication(t *testing.T) {
 }
 
 func TestDisableSlackApplication(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/gitlab-slack-application", func(w http.ResponseWriter, r *http.Request) {
@@ -433,6 +455,7 @@ func TestDisableSlackApplication(t *testing.T) {
 }
 
 func TestGetJiraService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/0/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
@@ -504,6 +527,7 @@ func TestGetJiraService(t *testing.T) {
 }
 
 func TestSetJiraService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
@@ -536,6 +560,7 @@ func TestSetJiraService(t *testing.T) {
 }
 
 func TestSetJiraServiceProjecKeys(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
@@ -568,6 +593,7 @@ func TestSetJiraServiceProjecKeys(t *testing.T) {
 }
 
 func TestSetJiraServiceAuthTypeBasicAuth(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
@@ -589,6 +615,7 @@ func TestSetJiraServiceAuthTypeBasicAuth(t *testing.T) {
 }
 
 func TestSetJiraServiceAuthTypeTokenAuth(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
@@ -609,6 +636,7 @@ func TestSetJiraServiceAuthTypeTokenAuth(t *testing.T) {
 }
 
 func TestDeleteJiraService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
@@ -622,6 +650,7 @@ func TestDeleteJiraService(t *testing.T) {
 }
 
 func TestGetMattermostService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/mattermost", func(w http.ResponseWriter, r *http.Request) {
@@ -640,6 +669,7 @@ func TestGetMattermostService(t *testing.T) {
 }
 
 func TestSetMattermostService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/mattermost", func(w http.ResponseWriter, r *http.Request) {
@@ -660,6 +690,7 @@ func TestSetMattermostService(t *testing.T) {
 }
 
 func TestDeleteMattermostService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/mattermost", func(w http.ResponseWriter, r *http.Request) {
@@ -673,6 +704,7 @@ func TestDeleteMattermostService(t *testing.T) {
 }
 
 func TestGetMattermostSlashCommandsService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/mattermost-slash-commands", func(w http.ResponseWriter, r *http.Request) {
@@ -691,6 +723,7 @@ func TestGetMattermostSlashCommandsService(t *testing.T) {
 }
 
 func TestSetMattermostSlashCommandsService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/mattermost-slash-commands", func(w http.ResponseWriter, r *http.Request) {
@@ -710,6 +743,7 @@ func TestSetMattermostSlashCommandsService(t *testing.T) {
 }
 
 func TestDeleteMattermostSlashCommandsService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/mattermost-slash-commands", func(w http.ResponseWriter, r *http.Request) {
@@ -723,6 +757,7 @@ func TestDeleteMattermostSlashCommandsService(t *testing.T) {
 }
 
 func TestGetPipelinesEmailService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/pipelines-email", func(w http.ResponseWriter, r *http.Request) {
@@ -741,6 +776,7 @@ func TestGetPipelinesEmailService(t *testing.T) {
 }
 
 func TestSetPipelinesEmailService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/pipelines-email", func(w http.ResponseWriter, r *http.Request) {
@@ -764,6 +800,7 @@ func TestSetPipelinesEmailService(t *testing.T) {
 }
 
 func TestDeletePipelinesEmailService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/pipelines-email", func(w http.ResponseWriter, r *http.Request) {
@@ -777,6 +814,7 @@ func TestDeletePipelinesEmailService(t *testing.T) {
 }
 
 func TestGetPrometheusService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/prometheus", func(w http.ResponseWriter, r *http.Request) {
@@ -795,6 +833,7 @@ func TestGetPrometheusService(t *testing.T) {
 }
 
 func TestSetPrometheusService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/prometheus", func(w http.ResponseWriter, r *http.Request) {
@@ -811,6 +850,7 @@ func TestSetPrometheusService(t *testing.T) {
 }
 
 func TestDeletePrometheusService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/prometheus", func(w http.ResponseWriter, r *http.Request) {
@@ -824,6 +864,7 @@ func TestDeletePrometheusService(t *testing.T) {
 }
 
 func TestGetRedmineService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/redmine", func(w http.ResponseWriter, r *http.Request) {
@@ -842,6 +883,7 @@ func TestGetRedmineService(t *testing.T) {
 }
 
 func TestSetRedmineService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/redmine", func(w http.ResponseWriter, r *http.Request) {
@@ -858,6 +900,7 @@ func TestSetRedmineService(t *testing.T) {
 }
 
 func TestDeleteRedmineService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/redmine", func(w http.ResponseWriter, r *http.Request) {
@@ -871,6 +914,7 @@ func TestDeleteRedmineService(t *testing.T) {
 }
 
 func TestGetSlackService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/slack", func(w http.ResponseWriter, r *http.Request) {
@@ -889,6 +933,7 @@ func TestGetSlackService(t *testing.T) {
 }
 
 func TestSetSlackService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/slack", func(w http.ResponseWriter, r *http.Request) {
@@ -909,6 +954,7 @@ func TestSetSlackService(t *testing.T) {
 }
 
 func TestDeleteSlackService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/slack", func(w http.ResponseWriter, r *http.Request) {
@@ -922,6 +968,7 @@ func TestDeleteSlackService(t *testing.T) {
 }
 
 func TestGetSlackSlashCommandsService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/slack-slash-commands", func(w http.ResponseWriter, r *http.Request) {
@@ -940,6 +987,7 @@ func TestGetSlackSlashCommandsService(t *testing.T) {
 }
 
 func TestSetSlackSlashCommandsService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/slack-slash-commands", func(w http.ResponseWriter, r *http.Request) {
@@ -958,6 +1006,7 @@ func TestSetSlackSlashCommandsService(t *testing.T) {
 }
 
 func TestDeleteSlackSlashCommandsService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/slack-slash-commands", func(w http.ResponseWriter, r *http.Request) {
@@ -971,6 +1020,7 @@ func TestDeleteSlackSlashCommandsService(t *testing.T) {
 }
 
 func TestGetTelegramService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/telegram", func(w http.ResponseWriter, r *http.Request) {
@@ -1050,6 +1100,7 @@ func TestGetTelegramService(t *testing.T) {
 }
 
 func TestSetTelegramService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/telegram", func(w http.ResponseWriter, r *http.Request) {
@@ -1080,6 +1131,7 @@ func TestSetTelegramService(t *testing.T) {
 }
 
 func TestDeleteTelegramService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/telegram", func(w http.ResponseWriter, r *http.Request) {
@@ -1093,6 +1145,7 @@ func TestDeleteTelegramService(t *testing.T) {
 }
 
 func TestGetYouTrackService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/youtrack", func(w http.ResponseWriter, r *http.Request) {
@@ -1111,6 +1164,7 @@ func TestGetYouTrackService(t *testing.T) {
 }
 
 func TestSetYouTrackService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/youtrack", func(w http.ResponseWriter, r *http.Request) {
@@ -1132,6 +1186,7 @@ func TestSetYouTrackService(t *testing.T) {
 }
 
 func TestDeleteYouTrackService(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/services/youtrack", func(w http.ResponseWriter, r *http.Request) {

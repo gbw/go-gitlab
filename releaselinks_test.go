@@ -26,6 +26,7 @@ import (
 )
 
 func TestReleaseLinksService_ListReleaseLinks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1/assets/links",
@@ -59,6 +60,7 @@ func TestReleaseLinksService_ListReleaseLinks(t *testing.T) {
 }
 
 func TestReleaseLinksService_CreateReleaseLink(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		description string
 		options     *CreateReleaseLinkOptions
@@ -129,6 +131,7 @@ func TestReleaseLinksService_CreateReleaseLink(t *testing.T) {
 }
 
 func TestReleaseLinksService_GetReleaseLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1/assets/links/1",
@@ -148,6 +151,7 @@ func TestReleaseLinksService_GetReleaseLink(t *testing.T) {
 }
 
 func TestReleaseLinksService_UpdateReleaseLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1/assets/links/1",
@@ -177,6 +181,7 @@ func TestReleaseLinksService_UpdateReleaseLink(t *testing.T) {
 }
 
 func TestReleaseLinksService_DeleteReleaseLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1/assets/links/1",

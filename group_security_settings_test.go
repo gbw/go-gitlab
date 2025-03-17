@@ -9,6 +9,7 @@ import (
 )
 
 func TestGroupSecuritySettings_UpdateSecretPushProtectionEnabledSetting(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/security_settings", func(w http.ResponseWriter, r *http.Request) {
