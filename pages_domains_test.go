@@ -10,6 +10,7 @@ import (
 )
 
 func TestPagesDomainsService_ListPagesDomains(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/pages/domains", func(w http.ResponseWriter, r *http.Request) {
@@ -76,6 +77,7 @@ func TestPagesDomainsService_ListPagesDomains(t *testing.T) {
 }
 
 func TestPagesDomainsService_ListAllPagesDomains(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/pages/domains", func(w http.ResponseWriter, r *http.Request) {
@@ -127,6 +129,7 @@ func TestPagesDomainsService_ListAllPagesDomains(t *testing.T) {
 }
 
 func TestPagesDomainsService_ListAllPagesDomains_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/pages/domains", func(w http.ResponseWriter, r *http.Request) {
@@ -141,6 +144,7 @@ func TestPagesDomainsService_ListAllPagesDomains_StatusNotFound(t *testing.T) {
 }
 
 func TestPagesDomainsService_GetPagesDomain(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/pages/domains/www.domain.example", func(w http.ResponseWriter, r *http.Request) {
@@ -205,6 +209,7 @@ func TestPagesDomainsService_GetPagesDomain(t *testing.T) {
 }
 
 func TestPagesDomainsService_CreatePagesDomain(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/pages/domains", func(w http.ResponseWriter, r *http.Request) {
@@ -269,6 +274,7 @@ func TestPagesDomainsService_CreatePagesDomain(t *testing.T) {
 }
 
 func TestPagesDomainsService_UpdatePagesDomain(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/pages/domains/ssl.domain.example", func(w http.ResponseWriter, r *http.Request) {
@@ -333,6 +339,7 @@ func TestPagesDomainsService_UpdatePagesDomain(t *testing.T) {
 }
 
 func TestPagesDomainsService_DeletePagesDomain(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/pages/domains/ssl.domain.example", func(w http.ResponseWriter, r *http.Request) {

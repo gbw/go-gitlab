@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetProjectTokenAccessSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Handle project ID 1, and print a result of access settings
@@ -46,6 +47,7 @@ func TestGetProjectTokenAccessSettings(t *testing.T) {
 }
 
 func TestPatchProjectJobTokenAccessSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope", func(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +88,7 @@ func TestPatchProjectJobTokenAccessSettings(t *testing.T) {
 // specifieid, because the object returned is a *Project object, which is already
 // tested in project.go.
 func TestGetProjectJobTokenInboundAllowList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Handle project ID 1, and print a result of two projects
@@ -107,6 +110,7 @@ func TestGetProjectJobTokenInboundAllowList(t *testing.T) {
 }
 
 func TestAddProjectToJobScopeAllowList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/allowlist", func(w http.ResponseWriter, r *http.Request) {
@@ -150,6 +154,7 @@ func TestAddProjectToJobScopeAllowList(t *testing.T) {
 }
 
 func TestRemoveProjectFromJobScopeAllowList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/allowlist/2", func(w http.ResponseWriter, r *http.Request) {
@@ -183,6 +188,7 @@ func TestRemoveProjectFromJobScopeAllowList(t *testing.T) {
 // because the object returned is a *Group object, which is already tested in
 // groups.go.
 func TestGetJobTokenAllowlistGroups(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// Handle project ID 1, and print a result of two groups
@@ -204,6 +210,7 @@ func TestGetJobTokenAllowlistGroups(t *testing.T) {
 }
 
 func TestAddGroupToJobTokenAllowlist(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/groups_allowlist", func(w http.ResponseWriter, r *http.Request) {
@@ -247,6 +254,7 @@ func TestAddGroupToJobTokenAllowlist(t *testing.T) {
 }
 
 func TestRemoveGroupFromJobTokenAllowlist(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/groups_allowlist/2", func(w http.ResponseWriter, r *http.Request) {

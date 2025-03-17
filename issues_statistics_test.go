@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetIssuesStatistics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/issues_statistics", func(w http.ResponseWriter, r *http.Request) {
@@ -66,6 +67,7 @@ func TestGetIssuesStatistics(t *testing.T) {
 }
 
 func TestGetGroupIssuesStatistics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/issues_statistics", func(w http.ResponseWriter, r *http.Request) {
@@ -108,6 +110,7 @@ func TestGetGroupIssuesStatistics(t *testing.T) {
 }
 
 func TestGetProjectIssuesStatistics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues_statistics", func(w http.ResponseWriter, r *http.Request) {

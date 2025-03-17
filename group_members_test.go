@@ -28,6 +28,7 @@ import (
 )
 
 func TestListBillableGroupMembers(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/billable_members",
@@ -82,6 +83,7 @@ func TestListBillableGroupMembers(t *testing.T) {
 }
 
 func TestListMembershipsForBillableGroupMember(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/billable_members/42/memberships",
 		func(w http.ResponseWriter, r *http.Request) {
@@ -126,6 +128,7 @@ func TestListMembershipsForBillableGroupMember(t *testing.T) {
 }
 
 func TestListGroupMembersWithoutEmail(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/members",
@@ -175,6 +178,7 @@ func TestListGroupMembersWithoutEmail(t *testing.T) {
 }
 
 func TestListGroupMembersWithEmail(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/members",
@@ -226,6 +230,7 @@ func TestListGroupMembersWithEmail(t *testing.T) {
 }
 
 func TestListGroupMembersWithoutSAML(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/members",
@@ -276,6 +281,7 @@ func TestListGroupMembersWithoutSAML(t *testing.T) {
 }
 
 func TestListGroupMembersWithSAML(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/members",
@@ -334,6 +340,7 @@ func TestListGroupMembersWithSAML(t *testing.T) {
 }
 
 func TestGetGroupMemberCustomRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%sgroups/1/members/2", apiVersionPath)
@@ -393,6 +400,7 @@ func TestGetGroupMemberCustomRole(t *testing.T) {
 }
 
 func TestGetGroupMemberAll(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%sgroups/1/members/all/2", apiVersionPath)

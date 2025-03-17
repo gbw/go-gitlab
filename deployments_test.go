@@ -10,6 +10,7 @@ import (
 )
 
 func TestDeploymentsService_ListProjectDeployments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/deployments", func(w http.ResponseWriter, r *http.Request) {
@@ -207,6 +208,7 @@ func TestDeploymentsService_ListProjectDeployments(t *testing.T) {
 }
 
 func TestDeploymentsService_GetProjectDeployment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/deployments/1", func(w http.ResponseWriter, r *http.Request) {
@@ -402,6 +404,7 @@ func TestDeploymentsService_GetProjectDeployment(t *testing.T) {
 }
 
 func TestDeploymentsService_CreateProjectDeployment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/deployments", func(w http.ResponseWriter, r *http.Request) {
@@ -597,6 +600,7 @@ func TestDeploymentsService_CreateProjectDeployment(t *testing.T) {
 }
 
 func TestDeploymentsService_UpdateProjectDeployment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/deployments/1", func(w http.ResponseWriter, r *http.Request) {

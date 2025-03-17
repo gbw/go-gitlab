@@ -23,6 +23,7 @@ import (
 )
 
 func TestParseSystemhookPush(t *testing.T) {
+	t.Parallel()
 	payload := loadFixture(t, "testdata/systemhooks/push.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
@@ -38,6 +39,7 @@ func TestParseSystemhookPush(t *testing.T) {
 }
 
 func TestParseSystemhookTagPush(t *testing.T) {
+	t.Parallel()
 	payload := loadFixture(t, "testdata/systemhooks/tag_push.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
@@ -53,6 +55,7 @@ func TestParseSystemhookTagPush(t *testing.T) {
 }
 
 func TestParseSystemhookMergeRequest(t *testing.T) {
+	t.Parallel()
 	payload := loadFixture(t, "testdata/systemhooks/merge_request.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
@@ -68,6 +71,7 @@ func TestParseSystemhookMergeRequest(t *testing.T) {
 }
 
 func TestParseSystemhookRepositoryUpdate(t *testing.T) {
+	t.Parallel()
 	payload := loadFixture(t, "testdata/systemhooks/repository_update.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
@@ -83,6 +87,7 @@ func TestParseSystemhookRepositoryUpdate(t *testing.T) {
 }
 
 func TestParseSystemhookProject(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		event   string
 		payload []byte
@@ -109,6 +114,7 @@ func TestParseSystemhookProject(t *testing.T) {
 }
 
 func TestParseSystemhookGroup(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		event   string
 		payload []byte
@@ -133,6 +139,7 @@ func TestParseSystemhookGroup(t *testing.T) {
 }
 
 func TestParseSystemhookUser(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		event   string
 		payload []byte
@@ -158,6 +165,7 @@ func TestParseSystemhookUser(t *testing.T) {
 }
 
 func TestParseSystemhookUserGroup(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		event   string
 		payload []byte
@@ -182,6 +190,7 @@ func TestParseSystemhookUserGroup(t *testing.T) {
 }
 
 func TestParseSystemhookUserTeam(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		event   string
 		payload []byte
@@ -206,6 +215,7 @@ func TestParseSystemhookUserTeam(t *testing.T) {
 }
 
 func TestParseHookSystemHook(t *testing.T) {
+	t.Parallel()
 	parsedEvent1, err := ParseHook("System Hook", loadFixture(t, "testdata/systemhooks/merge_request.json"))
 	if err != nil {
 		t.Errorf("Error parsing build hook: %s", err)

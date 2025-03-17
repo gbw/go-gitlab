@@ -27,6 +27,7 @@ import (
 )
 
 func TestListPipelineJobs(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/1/jobs", func(w http.ResponseWriter, r *http.Request) {
@@ -46,6 +47,7 @@ func TestListPipelineJobs(t *testing.T) {
 }
 
 func TestJobsService_ListProjectJobs(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/jobs", func(w http.ResponseWriter, r *http.Request) {
@@ -190,6 +192,7 @@ func TestJobsService_ListProjectJobs(t *testing.T) {
 }
 
 func TestDownloadSingleArtifactsFileByTagOrBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	wantContent := []byte("This is the file content")

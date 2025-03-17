@@ -27,6 +27,7 @@ import (
 )
 
 func TestGetSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
@@ -46,6 +47,7 @@ func TestGetSettings(t *testing.T) {
 }
 
 func TestUpdateSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
@@ -68,6 +70,7 @@ func TestUpdateSettings(t *testing.T) {
 }
 
 func TestSettingsWithEmptyContainerRegistry(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
@@ -87,6 +90,7 @@ func TestSettingsWithEmptyContainerRegistry(t *testing.T) {
 }
 
 func TestSettingsDefaultBranchProtectionDefaults(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	var requestBody map[string]interface{}

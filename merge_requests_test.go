@@ -100,6 +100,7 @@ var (
 )
 
 func TestGetMergeRequest(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := `/api/v4/projects/namespace%2Fname/merge_requests/123`
@@ -145,6 +146,7 @@ func TestGetMergeRequest(t *testing.T) {
 }
 
 func TestListProjectMergeRequests(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/projects/278964/merge_requests"
@@ -197,6 +199,7 @@ func TestListProjectMergeRequests(t *testing.T) {
 }
 
 func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/projects/278964/merge_requests"
@@ -250,6 +253,7 @@ func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
 }
 
 func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/projects/278964/merge_requests"
@@ -303,6 +307,7 @@ func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
 }
 
 func TestCreateMergeRequestPipeline(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/pipelines", func(w http.ResponseWriter, r *http.Request) {
@@ -320,6 +325,7 @@ func TestCreateMergeRequestPipeline(t *testing.T) {
 }
 
 func TestGetMergeRequestParticipants(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/5/participants", func(w http.ResponseWriter, r *http.Request) {
@@ -346,6 +352,7 @@ func TestGetMergeRequestParticipants(t *testing.T) {
 }
 
 func TestGetMergeRequestReviewers(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/5/reviewers", func(w http.ResponseWriter, r *http.Request) {
@@ -374,6 +381,7 @@ func TestGetMergeRequestReviewers(t *testing.T) {
 }
 
 func TestGetIssuesClosedOnMerge_Jira(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/closes_issues", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
@@ -389,6 +397,7 @@ func TestGetIssuesClosedOnMerge_Jira(t *testing.T) {
 }
 
 func TestListMergeRequestDiffs(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/diffs", func(w http.ResponseWriter, r *http.Request) {
@@ -434,6 +443,7 @@ func TestListMergeRequestDiffs(t *testing.T) {
 }
 
 func TestShowMergeRequestRawDiffs(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/raw_diffs", func(w http.ResponseWriter, r *http.Request) {
@@ -469,6 +479,7 @@ index c7c7da3..ce2cd85 100644
 }
 
 func TestIntSliceOrString(t *testing.T) {
+	t.Parallel()
 	t.Run("any", func(t *testing.T) {
 		opts := &ListMergeRequestsOptions{}
 		opts.ApprovedByIDs = ApproverIDs(UserIDAny)
@@ -494,6 +505,7 @@ func TestIntSliceOrString(t *testing.T) {
 }
 
 func TestAssigneeIDMarshalling(t *testing.T) {
+	t.Parallel()
 	t.Run("any", func(t *testing.T) {
 		opts := &ListMergeRequestsOptions{}
 		opts.AssigneeID = AssigneeID(UserIDAny)
@@ -524,6 +536,7 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 }
 
 func TestCreateMergeRequestDependency(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	const project = "12345"
 	const mergeRequest = 1
@@ -563,6 +576,7 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 }
 
 func TestGetMergeRequestDependencies(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	const project = "12345"
 	const mergeRequest = 1
@@ -586,6 +600,7 @@ func TestGetMergeRequestDependencies(t *testing.T) {
 }
 
 func TestDeleteMergeRequestDependency(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	const project = "12345"
 	const mergeRequest = 1

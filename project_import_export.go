@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectImportExportServiceInterface = (*ProjectImportExportService)(nil)
-)
+var _ ProjectImportExportServiceInterface = (*ProjectImportExportService)(nil)
 
 // ImportStatus represents a project import status.
 //

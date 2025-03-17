@@ -10,6 +10,7 @@ import (
 )
 
 func TestSidekiqService_GetQueueMetrics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/sidekiq/queue_metrics", func(w http.ResponseWriter, r *http.Request) {
@@ -28,6 +29,7 @@ func TestSidekiqService_GetQueueMetrics(t *testing.T) {
 }
 
 func TestSidekiqService_GetProcessMetrics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/sidekiq/process_metrics", func(w http.ResponseWriter, r *http.Request) {
@@ -52,6 +54,7 @@ func TestSidekiqService_GetProcessMetrics(t *testing.T) {
 }
 
 func TestSidekiqService_GetJobStats(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/sidekiq/job_stats", func(w http.ResponseWriter, r *http.Request) {
@@ -75,6 +78,7 @@ func TestSidekiqService_GetJobStats(t *testing.T) {
 }
 
 func TestSidekiqService_GetCompoundMetrics(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/sidekiq/compound_metrics", func(w http.ResponseWriter, r *http.Request) {

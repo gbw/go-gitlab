@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ GroupMembersServiceInterface = (*GroupMembersService)(nil)
-)
+var _ GroupMembersServiceInterface = (*GroupMembersService)(nil)
 
 // GroupMember represents a GitLab group member.
 //

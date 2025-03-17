@@ -9,6 +9,7 @@ import (
 )
 
 func TestGroupIssueBoardsService_ListGroupIssueBoards(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards", func(w http.ResponseWriter, r *http.Request) {
@@ -129,6 +130,7 @@ func TestGroupIssueBoardsService_ListGroupIssueBoards(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_CreateGroupIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards", func(w http.ResponseWriter, r *http.Request) {
@@ -187,6 +189,7 @@ func TestGroupIssueBoardsService_CreateGroupIssueBoard(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_GetGroupIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1", func(w http.ResponseWriter, r *http.Request) {
@@ -337,6 +340,7 @@ func TestGroupIssueBoardsService_GetGroupIssueBoard(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_UpdateIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1", func(w http.ResponseWriter, r *http.Request) {
@@ -430,6 +434,7 @@ func TestGroupIssueBoardsService_UpdateIssueBoard(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_DeleteIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1", func(w http.ResponseWriter, r *http.Request) {
@@ -454,6 +459,7 @@ func TestGroupIssueBoardsService_DeleteIssueBoard(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_ListGroupIssueBoardLists(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1/lists", func(w http.ResponseWriter, r *http.Request) {
@@ -543,6 +549,7 @@ func TestGroupIssueBoardsService_ListGroupIssueBoardLists(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_GetGroupIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1/lists/1", func(w http.ResponseWriter, r *http.Request) {
@@ -592,6 +599,7 @@ func TestGroupIssueBoardsService_GetGroupIssueBoardList(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_CreateGroupIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1/lists", func(w http.ResponseWriter, r *http.Request) {
@@ -651,6 +659,7 @@ func TestGroupIssueBoardsService_CreateGroupIssueBoardList(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_UpdateIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1/lists/1", func(w http.ResponseWriter, r *http.Request) {
@@ -740,6 +749,7 @@ func TestGroupIssueBoardsService_UpdateIssueBoardList(t *testing.T) {
 }
 
 func TestGroupIssueBoardsService_DeleteGroupIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/boards/1/lists/1", func(w http.ResponseWriter, r *http.Request) {

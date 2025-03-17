@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ GroupVariablesServiceInterface = (*GroupVariablesService)(nil)
-)
+var _ GroupVariablesServiceInterface = (*GroupVariablesService)(nil)
 
 // GroupVariable represents a GitLab group Variable.
 //

@@ -9,6 +9,7 @@ import (
 )
 
 func TestSnippetRepositoryStorageMove_RetrieveAllSnippetStorageMoves(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippet_repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -59,6 +60,7 @@ func TestSnippetRepositoryStorageMove_RetrieveAllSnippetStorageMoves(t *testing.
 }
 
 func TestSnippetRepositoryStorageMove_RetrieveAllStorageMovesForSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/65/repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -109,6 +111,7 @@ func TestSnippetRepositoryStorageMove_RetrieveAllStorageMovesForSnippet(t *testi
 }
 
 func TestSnippetRepositoryStorageMove_GetStorageMove(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippet_repository_storage_moves/123", func(w http.ResponseWriter, r *http.Request) {
@@ -139,6 +142,7 @@ func TestSnippetRepositoryStorageMove_GetStorageMove(t *testing.T) {
 }
 
 func TestSnippetRepositoryStorageMove_GetStorageMoveForSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/65/repository_storage_moves/123", func(w http.ResponseWriter, r *http.Request) {
@@ -169,6 +173,7 @@ func TestSnippetRepositoryStorageMove_GetStorageMoveForSnippet(t *testing.T) {
 }
 
 func TestSnippetRepositoryStorageMove_ScheduleStorageMoveForSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippets/65/repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {
@@ -199,6 +204,7 @@ func TestSnippetRepositoryStorageMove_ScheduleStorageMoveForSnippet(t *testing.T
 }
 
 func TestSnippetRepositoryStorageMove_ScheduleAllStorageMoves(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/snippet_repository_storage_moves", func(w http.ResponseWriter, r *http.Request) {

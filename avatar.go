@@ -34,9 +34,7 @@ type (
 	}
 )
 
-var (
-	_ AvatarRequestsServiceInterface = (*AvatarRequestsService)(nil)
-)
+var _ AvatarRequestsServiceInterface = (*AvatarRequestsService)(nil)
 
 // Avatar represents a GitLab avatar.
 //

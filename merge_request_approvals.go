@@ -47,9 +47,7 @@ type (
 	}
 )
 
-var (
-	_ MergeRequestApprovalsServiceInterface = (*MergeRequestApprovalsService)(nil)
-)
+var _ MergeRequestApprovalsServiceInterface = (*MergeRequestApprovalsService)(nil)
 
 // MergeRequestApprovals represents GitLab merge request approvals.
 //

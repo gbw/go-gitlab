@@ -16,9 +16,7 @@ type (
 	}
 )
 
-var (
-	_ MarkdownServiceInterface = (*MarkdownService)(nil)
-)
+var _ MarkdownServiceInterface = (*MarkdownService)(nil)
 
 // Markdown represents a markdown document.
 //

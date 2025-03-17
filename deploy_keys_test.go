@@ -25,6 +25,7 @@ import (
 )
 
 func TestListAllDeployKeys(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/deploy_keys", func(w http.ResponseWriter, r *http.Request) {
@@ -121,6 +122,7 @@ func TestListAllDeployKeys(t *testing.T) {
 }
 
 func TestListProjectDeployKeys(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/deploy_keys", func(w http.ResponseWriter, r *http.Request) {
@@ -188,6 +190,7 @@ func TestListProjectDeployKeys(t *testing.T) {
 }
 
 func TestGetDeployKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/deploy_keys/11", func(w http.ResponseWriter, r *http.Request) {
@@ -228,6 +231,7 @@ func TestGetDeployKey(t *testing.T) {
 }
 
 func TestAddDeployKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/deploy_keys", func(w http.ResponseWriter, r *http.Request) {
@@ -270,6 +274,7 @@ func TestAddDeployKey(t *testing.T) {
 }
 
 func TestAddDeployKey_withExpiresAt(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/deploy_keys", func(w http.ResponseWriter, r *http.Request) {
@@ -319,6 +324,7 @@ func TestAddDeployKey_withExpiresAt(t *testing.T) {
 }
 
 func TestDeleteDeployKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/deploy_keys/13", func(w http.ResponseWriter, r *http.Request) {
@@ -332,6 +338,7 @@ func TestDeleteDeployKey(t *testing.T) {
 }
 
 func TestEnableDeployKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/deploy_keys/13/enable", func(w http.ResponseWriter, r *http.Request) {
@@ -366,6 +373,7 @@ func TestEnableDeployKey(t *testing.T) {
 }
 
 func TestUpdateDeployKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/deploy_keys/11", func(w http.ResponseWriter, r *http.Request) {

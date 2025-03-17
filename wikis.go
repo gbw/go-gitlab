@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ WikisServiceInterface = (*WikisService)(nil)
-)
+var _ WikisServiceInterface = (*WikisService)(nil)
 
 // Wiki represents a GitLab wiki.
 //

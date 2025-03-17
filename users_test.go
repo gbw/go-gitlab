@@ -32,6 +32,7 @@ import (
 )
 
 func TestGetUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users/1"
@@ -66,6 +67,7 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestGetUserAdmin(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users/1"
@@ -122,6 +124,7 @@ func TestGetUserAdmin(t *testing.T) {
 }
 
 func TestCreatedBy(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users/2"
@@ -177,6 +180,7 @@ func TestCreatedBy(t *testing.T) {
 }
 
 func TestBlockUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/block", apiVersionPath)
@@ -192,6 +196,7 @@ func TestBlockUser(t *testing.T) {
 }
 
 func TestBlockUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/block", apiVersionPath)
@@ -207,6 +212,7 @@ func TestBlockUser_UserNotFound(t *testing.T) {
 }
 
 func TestBlockUser_BlockPrevented(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/block", apiVersionPath)
@@ -222,6 +228,7 @@ func TestBlockUser_BlockPrevented(t *testing.T) {
 }
 
 func TestBlockUser_UnknownError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/block", apiVersionPath)
@@ -239,6 +246,7 @@ func TestBlockUser_UnknownError(t *testing.T) {
 }
 
 func TestUnblockUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/unblock", apiVersionPath)
@@ -254,6 +262,7 @@ func TestUnblockUser(t *testing.T) {
 }
 
 func TestUnblockUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/unblock", apiVersionPath)
@@ -269,6 +278,7 @@ func TestUnblockUser_UserNotFound(t *testing.T) {
 }
 
 func TestUnblockUser_UnblockPrevented(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/unblock", apiVersionPath)
@@ -284,6 +294,7 @@ func TestUnblockUser_UnblockPrevented(t *testing.T) {
 }
 
 func TestUnblockUser_UnknownError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/unblock", apiVersionPath)
@@ -301,6 +312,7 @@ func TestUnblockUser_UnknownError(t *testing.T) {
 }
 
 func TestBanUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/block", apiVersionPath)
@@ -316,6 +328,7 @@ func TestBanUser(t *testing.T) {
 }
 
 func TestBanUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/ban", apiVersionPath)
@@ -331,6 +344,7 @@ func TestBanUser_UserNotFound(t *testing.T) {
 }
 
 func TestBanUser_UnknownError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/ban", apiVersionPath)
@@ -348,6 +362,7 @@ func TestBanUser_UnknownError(t *testing.T) {
 }
 
 func TestUnbanUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/unban", apiVersionPath)
@@ -363,6 +378,7 @@ func TestUnbanUser(t *testing.T) {
 }
 
 func TestUnbanUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/unban", apiVersionPath)
@@ -378,6 +394,7 @@ func TestUnbanUser_UserNotFound(t *testing.T) {
 }
 
 func TestUnbanUser_UnknownError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/unban", apiVersionPath)
@@ -395,6 +412,7 @@ func TestUnbanUser_UnknownError(t *testing.T) {
 }
 
 func TestDeactivateUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/deactivate", apiVersionPath)
@@ -410,6 +428,7 @@ func TestDeactivateUser(t *testing.T) {
 }
 
 func TestDeactivateUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/deactivate", apiVersionPath)
@@ -425,6 +444,7 @@ func TestDeactivateUser_UserNotFound(t *testing.T) {
 }
 
 func TestDeactivateUser_DeactivatePrevented(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/deactivate", apiVersionPath)
@@ -440,6 +460,7 @@ func TestDeactivateUser_DeactivatePrevented(t *testing.T) {
 }
 
 func TestActivateUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/activate", apiVersionPath)
@@ -455,6 +476,7 @@ func TestActivateUser(t *testing.T) {
 }
 
 func TestActivateUser_ActivatePrevented(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/activate", apiVersionPath)
@@ -470,6 +492,7 @@ func TestActivateUser_ActivatePrevented(t *testing.T) {
 }
 
 func TestActivateUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/activate", apiVersionPath)
@@ -485,6 +508,7 @@ func TestActivateUser_UserNotFound(t *testing.T) {
 }
 
 func TestApproveUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/approve", apiVersionPath)
@@ -500,6 +524,7 @@ func TestApproveUser(t *testing.T) {
 }
 
 func TestApproveUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/approve", apiVersionPath)
@@ -515,6 +540,7 @@ func TestApproveUser_UserNotFound(t *testing.T) {
 }
 
 func TestApproveUser_ApprovePrevented(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/approve", apiVersionPath)
@@ -530,6 +556,7 @@ func TestApproveUser_ApprovePrevented(t *testing.T) {
 }
 
 func TestApproveUser_UnknownError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/approve", apiVersionPath)
@@ -547,6 +574,7 @@ func TestApproveUser_UnknownError(t *testing.T) {
 }
 
 func TestRejectUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/reject", apiVersionPath)
@@ -562,6 +590,7 @@ func TestRejectUser(t *testing.T) {
 }
 
 func TestRejectUser_UserNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/reject", apiVersionPath)
@@ -577,6 +606,7 @@ func TestRejectUser_UserNotFound(t *testing.T) {
 }
 
 func TestRejectUser_RejectPrevented(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/reject", apiVersionPath)
@@ -592,6 +622,7 @@ func TestRejectUser_RejectPrevented(t *testing.T) {
 }
 
 func TestRejectUser_Conflict(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/reject", apiVersionPath)
@@ -607,6 +638,7 @@ func TestRejectUser_Conflict(t *testing.T) {
 }
 
 func TestRejectUser_UnknownError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/reject", apiVersionPath)
@@ -624,6 +656,7 @@ func TestRejectUser_UnknownError(t *testing.T) {
 }
 
 func TestGetMemberships(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/memberships", apiVersionPath)
@@ -642,6 +675,7 @@ func TestGetMemberships(t *testing.T) {
 }
 
 func TestGetUserAssociationsCount(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users/1/associations_count"
@@ -664,6 +698,7 @@ func TestGetUserAssociationsCount(t *testing.T) {
 }
 
 func TestGetSingleSSHKeyForUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/1/keys/1", func(w http.ResponseWriter, r *http.Request) {
@@ -699,6 +734,7 @@ func TestGetSingleSSHKeyForUser(t *testing.T) {
 }
 
 func TestDisableUser2FA(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%susers/1/disable_two_factor", apiVersionPath)
@@ -714,6 +750,7 @@ func TestDisableUser2FA(t *testing.T) {
 }
 
 func TestCreateUserRunner(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := fmt.Sprintf("/%suser/runners", apiVersionPath)
@@ -744,6 +781,7 @@ func TestCreateUserRunner(t *testing.T) {
 }
 
 func TestCreatePersonalAccessTokenForCurrentUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/user/personal_access_tokens"
@@ -779,6 +817,7 @@ func TestCreatePersonalAccessTokenForCurrentUser(t *testing.T) {
 }
 
 func TestCreateServiceAccountUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/service_accounts"
@@ -815,6 +854,7 @@ func TestCreateServiceAccountUser(t *testing.T) {
 }
 
 func TestCreateUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users"
@@ -854,6 +894,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestCreateUserAvatar(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users"
@@ -900,6 +941,7 @@ func TestCreateUserAvatar(t *testing.T) {
 }
 
 func TestModifyUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users/1"
@@ -919,6 +961,7 @@ func TestModifyUser(t *testing.T) {
 }
 
 func TestModifyUserAvatar(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/users/1"
@@ -943,6 +986,7 @@ func TestModifyUserAvatar(t *testing.T) {
 }
 
 func TestUploadAvatarUser(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/user/avatar", func(w http.ResponseWriter, r *http.Request) {
@@ -964,6 +1008,7 @@ func TestUploadAvatarUser(t *testing.T) {
 }
 
 func TestListServiceAccounts(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/service_accounts"
@@ -991,6 +1036,7 @@ func TestListServiceAccounts(t *testing.T) {
 }
 
 func TestDeleteUserIdentity(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/1/identities/google", func(w http.ResponseWriter, r *http.Request) {

@@ -9,6 +9,7 @@ import (
 )
 
 func TestIssueLinksService_ListIssueRelations(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/4/issues/14/links", func(w http.ResponseWriter, r *http.Request) {
@@ -97,6 +98,7 @@ func TestIssueLinksService_ListIssueRelations(t *testing.T) {
 }
 
 func TestIssueLinksService_CreateIssueLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/4/issues/1/links", func(w http.ResponseWriter, r *http.Request) {
@@ -252,6 +254,7 @@ func TestIssueLinksService_CreateIssueLink(t *testing.T) {
 }
 
 func TestIssueLinksService_DeleteIssueLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/4/issues/1/links/83", func(w http.ResponseWriter, r *http.Request) {

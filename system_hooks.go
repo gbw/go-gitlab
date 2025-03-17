@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ SystemHooksServiceInterface = (*SystemHooksService)(nil)
-)
+var _ SystemHooksServiceInterface = (*SystemHooksService)(nil)
 
 // Hook represents a GitLap system hook.
 //

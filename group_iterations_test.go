@@ -8,6 +8,7 @@ import (
 )
 
 func TestListGroupIterations(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/5/iterations",

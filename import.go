@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ ImportServiceInterface = (*ImportService)(nil)
-)
+var _ ImportServiceInterface = (*ImportService)(nil)
 
 // GitHubImport represents the response from an import from GitHub.
 //

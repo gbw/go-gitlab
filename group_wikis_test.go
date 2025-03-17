@@ -8,6 +8,7 @@ import (
 )
 
 func TestListGroupWikis(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/wikis",
@@ -42,6 +43,7 @@ func TestListGroupWikis(t *testing.T) {
 }
 
 func TestGetGroupWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/wikis/deploy",
@@ -74,6 +76,7 @@ func TestGetGroupWikiPage(t *testing.T) {
 }
 
 func TestCreateGroupWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/wikis",
@@ -108,6 +111,7 @@ func TestCreateGroupWikiPage(t *testing.T) {
 }
 
 func TestEditGroupWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/wikis/deploy",
@@ -142,6 +146,7 @@ func TestEditGroupWikiPage(t *testing.T) {
 }
 
 func TestDeleteGroupWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/wikis/deploy",

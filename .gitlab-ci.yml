@@ -47,6 +47,7 @@ stages:
     GOLANGCI_LINT_CACHE: $CI_PROJECT_DIR/.golangci-lint
   before_script:
     - mkdir -p "${GOPATH}" "${GOLANGCI_LINT_CACHE}"
+    - export PATH="${GOPATH}/bin:$PATH"
   cache:
     paths:
       - $GOPATH/pkg/mod/
@@ -65,6 +66,7 @@ stages:
         - go.mod
         - go.sum
         - .gitlab-ci.yml
+        - .gitlab/ci/*.yml
 
 golangci-lint:
   extends:

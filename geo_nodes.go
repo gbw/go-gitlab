@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ GeoNodesServiceInterface = (*GeoNodesService)(nil)
-)
+var _ GeoNodesServiceInterface = (*GeoNodesService)(nil)
 
 // GeoNode represents a GitLab Geo Node.
 //

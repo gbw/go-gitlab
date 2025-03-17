@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ EventsServiceInterface = (*EventsService)(nil)
-)
+var _ EventsServiceInterface = (*EventsService)(nil)
 
 // ContributionEvent represents a user's contribution
 //

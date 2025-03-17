@@ -44,9 +44,7 @@ type (
 	}
 )
 
-var (
-	_ PersonalAccessTokensServiceInterface = (*PersonalAccessTokensService)(nil)
-)
+var _ PersonalAccessTokensServiceInterface = (*PersonalAccessTokensService)(nil)
 
 // PersonalAccessToken represents a personal access token.
 //

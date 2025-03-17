@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectVulnerabilitiesServiceInterface = (*ProjectVulnerabilitiesService)(nil)
-)
+var _ ProjectVulnerabilitiesServiceInterface = (*ProjectVulnerabilitiesService)(nil)
 
 // Project represents a GitLab project vulnerability.
 //

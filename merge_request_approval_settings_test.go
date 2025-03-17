@@ -9,6 +9,7 @@ import (
 )
 
 func TestGetGroupMergeRequestApprovalSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/merge_request_approval_setting", func(w http.ResponseWriter, r *http.Request) {
@@ -99,6 +100,7 @@ func TestGetGroupMergeRequestApprovalSettings(t *testing.T) {
 }
 
 func TestUpdateGroupMergeRequestApprovalSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/merge_request_approval_setting", func(w http.ResponseWriter, r *http.Request) {
@@ -196,6 +198,7 @@ func TestUpdateGroupMergeRequestApprovalSettings(t *testing.T) {
 }
 
 func TestGetProjectMergeRequestApprovalSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_request_approval_setting", func(w http.ResponseWriter, r *http.Request) {
@@ -286,6 +289,7 @@ func TestGetProjectMergeRequestApprovalSettings(t *testing.T) {
 }
 
 func TestUpdateProjectMergeRequestApprovalSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_request_approval_setting", func(w http.ResponseWriter, r *http.Request) {

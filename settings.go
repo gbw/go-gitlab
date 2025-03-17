@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ SettingsServiceInterface = (*SettingsService)(nil)
-)
+var _ SettingsServiceInterface = (*SettingsService)(nil)
 
 // Settings represents the GitLab application settings.
 //

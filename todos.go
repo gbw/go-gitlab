@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ TodosServiceInterface = (*TodosService)(nil)
-)
+var _ TodosServiceInterface = (*TodosService)(nil)
 
 // Todo represents a GitLab todo.
 //

@@ -12,6 +12,7 @@ import (
 )
 
 func TestSecureFiles_ListProjectSecureFiles(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/secure_files", func(w http.ResponseWriter, r *http.Request) {
@@ -102,6 +103,7 @@ func TestSecureFiles_ListProjectSecureFiles(t *testing.T) {
 }
 
 func TestSecureFiles_ShowSecureFileDetails(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/secure_files/2", func(w http.ResponseWriter, r *http.Request) {
@@ -137,6 +139,7 @@ func TestSecureFiles_ShowSecureFileDetails(t *testing.T) {
 }
 
 func TestSecureFiles_CreateSecureFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/secure_files", func(w http.ResponseWriter, r *http.Request) {
@@ -173,6 +176,7 @@ func TestSecureFiles_CreateSecureFile(t *testing.T) {
 }
 
 func TestSecureFiles_DownloadSecureFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/secure_files/2/download", func(w http.ResponseWriter, r *http.Request) {
@@ -192,6 +196,7 @@ func TestSecureFiles_DownloadSecureFile(t *testing.T) {
 }
 
 func TestSecureFiles_RemoveSecureFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/secure_files/2", func(w http.ResponseWriter, r *http.Request) {

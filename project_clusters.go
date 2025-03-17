@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectClustersServiceInterface = (*ProjectClustersService)(nil)
-)
+var _ ProjectClustersServiceInterface = (*ProjectClustersService)(nil)
 
 // ProjectCluster represents a GitLab Project Cluster.
 //

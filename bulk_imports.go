@@ -18,9 +18,7 @@ type (
 	}
 )
 
-var (
-	_ BulkImportsServiceInterface = (*BulkImportsService)(nil)
-)
+var _ BulkImportsServiceInterface = (*BulkImportsService)(nil)
 
 // BulkImportStartMigrationConfiguration represents the available configuration options to start a migration.
 //

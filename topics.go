@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ TopicsServiceInterface = (*TopicsService)(nil)
-)
+var _ TopicsServiceInterface = (*TopicsService)(nil)
 
 // Topic represents a GitLab project topic.
 //

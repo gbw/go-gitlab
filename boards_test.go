@@ -9,6 +9,7 @@ import (
 )
 
 func TestIssueBoardsService_CreateIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards", func(w http.ResponseWriter, r *http.Request) {
@@ -74,6 +75,7 @@ func TestIssueBoardsService_CreateIssueBoard(t *testing.T) {
 }
 
 func TestIssueBoardsService_UpdateIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1", func(w http.ResponseWriter, r *http.Request) {
@@ -139,6 +141,7 @@ func TestIssueBoardsService_UpdateIssueBoard(t *testing.T) {
 }
 
 func TestIssueBoardsService_DeleteIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1", func(w http.ResponseWriter, r *http.Request) {
@@ -163,6 +166,7 @@ func TestIssueBoardsService_DeleteIssueBoard(t *testing.T) {
 }
 
 func TestIssueBoardsService_ListIssueBoards(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards", func(w http.ResponseWriter, r *http.Request) {
@@ -293,6 +297,7 @@ func TestIssueBoardsService_ListIssueBoards(t *testing.T) {
 }
 
 func TestIssueBoardsService_GetIssueBoard(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1", func(w http.ResponseWriter, r *http.Request) {
@@ -422,6 +427,7 @@ func TestIssueBoardsService_GetIssueBoard(t *testing.T) {
 }
 
 func TestIssueBoardsService_GetIssueBoardLists(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1/lists", func(w http.ResponseWriter, r *http.Request) {
@@ -517,6 +523,7 @@ func TestIssueBoardsService_GetIssueBoardLists(t *testing.T) {
 }
 
 func TestIssueBoardsService_GetIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1/lists/1", func(w http.ResponseWriter, r *http.Request) {
@@ -568,6 +575,7 @@ func TestIssueBoardsService_GetIssueBoardList(t *testing.T) {
 }
 
 func TestIssueBoardsService_CreateIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1/lists", func(w http.ResponseWriter, r *http.Request) {
@@ -619,6 +627,7 @@ func TestIssueBoardsService_CreateIssueBoardList(t *testing.T) {
 }
 
 func TestIssueBoardsService_UpdateIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1/lists/1", func(w http.ResponseWriter, r *http.Request) {
@@ -670,6 +679,7 @@ func TestIssueBoardsService_UpdateIssueBoardList(t *testing.T) {
 }
 
 func TestIssueBoardsService_DeleteIssueBoardList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/boards/1/lists/1", func(w http.ResponseWriter, r *http.Request) {

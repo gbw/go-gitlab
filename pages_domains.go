@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ PagesDomainsServiceInterface = (*PagesDomainsService)(nil)
-)
+var _ PagesDomainsServiceInterface = (*PagesDomainsService)(nil)
 
 // PagesDomain represents a pages domain.
 //

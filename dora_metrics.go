@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ DORAMetricsServiceInterface = (*DORAMetricsService)(nil)
-)
+var _ DORAMetricsServiceInterface = (*DORAMetricsService)(nil)
 
 // DORAMetric represents a single DORA metric data point.
 //

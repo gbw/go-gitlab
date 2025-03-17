@@ -35,6 +35,7 @@ const (
 )
 
 func TestBuildEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/build.json")
 
 	var event *BuildEvent
@@ -65,6 +66,7 @@ func TestBuildEventUnmarshal(t *testing.T) {
 }
 
 func TestCommitCommentEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/note_commit.json")
 
 	var event *CommitCommentEvent
@@ -111,6 +113,7 @@ func TestCommitCommentEventUnmarshal(t *testing.T) {
 }
 
 func TestJobEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/job.json")
 
 	var event *JobEvent
@@ -195,6 +198,7 @@ func TestJobEventUnmarshal(t *testing.T) {
 }
 
 func TestDeploymentEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/deployment.json")
 
 	var event *DeploymentEvent
@@ -245,6 +249,7 @@ func TestDeploymentEventUnmarshal(t *testing.T) {
 }
 
 func TestFeatureFlagEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/feature_flag.json")
 
 	var event *FeatureFlagEvent
@@ -291,6 +296,7 @@ func TestFeatureFlagEventUnmarshal(t *testing.T) {
 }
 
 func TestGroupResourceAccessTokenEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/resource_access_token_group.json")
 	var event *GroupResourceAccessTokenEvent
 	err := json.Unmarshal(jsonObject, &event)
@@ -326,6 +332,7 @@ func TestGroupResourceAccessTokenEventUnmarshal(t *testing.T) {
 }
 
 func TestIssueCommentEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/note_issue.json")
 
 	var event *IssueCommentEvent
@@ -403,6 +410,7 @@ func TestIssueCommentEventUnmarshal(t *testing.T) {
 }
 
 func TestIssueEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/issue.json")
 
 	var event *IssueEvent
@@ -531,6 +539,7 @@ func TestIssueEventUnmarshal(t *testing.T) {
 
 // Generate unit test for MergeCommentEvent
 func TestMergeCommentEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/note_merge_request.json")
 
 	var event *MergeCommentEvent
@@ -653,6 +662,7 @@ func TestMergeCommentEventUnmarshal(t *testing.T) {
 }
 
 func TestMergeEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/merge_request.json")
 
 	var event *MergeEvent
@@ -845,6 +855,7 @@ func TestMergeEventUnmarshal(t *testing.T) {
 }
 
 func TestMemberEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/member.json")
 
 	var event *MemberEvent
@@ -914,6 +925,7 @@ func TestMemberEventUnmarshal(t *testing.T) {
 }
 
 func TestMergeEventUnmarshalFromGroup(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/group_merge_request.json")
 
 	var event *MergeEvent
@@ -968,6 +980,7 @@ func TestMergeEventUnmarshalFromGroup(t *testing.T) {
 }
 
 func TestPipelineEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/pipeline.json")
 
 	var event *PipelineEvent
@@ -1062,6 +1075,7 @@ func TestPipelineEventUnmarshal(t *testing.T) {
 }
 
 func TestProjectResourceAccessTokenEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/resource_access_token_project.json")
 	var event *ProjectResourceAccessTokenEvent
 	err := json.Unmarshal(jsonObject, &event)
@@ -1110,6 +1124,7 @@ func TestProjectResourceAccessTokenEventUnmarshal(t *testing.T) {
 }
 
 func TestPushEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/push.json")
 	var event *PushEvent
 	err := json.Unmarshal(jsonObject, &event)
@@ -1155,6 +1170,7 @@ func TestPushEventUnmarshal(t *testing.T) {
 }
 
 func TestReleaseEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/release.json")
 
 	var event *ReleaseEvent
@@ -1197,6 +1213,7 @@ func TestReleaseEventUnmarshal(t *testing.T) {
 }
 
 func TestSubGroupEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/subgroup.json")
 
 	var event *SubGroupEvent
@@ -1227,6 +1244,7 @@ func TestSubGroupEventUnmarshal(t *testing.T) {
 }
 
 func TestTagEventUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := loadFixture(t, "testdata/webhooks/tag_push.json")
 	var event *TagEvent
 	err := json.Unmarshal(jsonObject, &event)

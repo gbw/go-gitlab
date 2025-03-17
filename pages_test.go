@@ -26,6 +26,7 @@ import (
 )
 
 func TestUnpublishPages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/2/pages", func(w http.ResponseWriter, r *http.Request) {
@@ -39,6 +40,7 @@ func TestUnpublishPages(t *testing.T) {
 }
 
 func TestGetPages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/2/pages", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
@@ -80,6 +82,7 @@ func TestGetPages(t *testing.T) {
 }
 
 func TestUpdatePages(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/2/pages", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPatch)

@@ -9,6 +9,7 @@ import (
 )
 
 func TestLicenseService_GetLicense(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/license", func(w http.ResponseWriter, r *http.Request) {
@@ -74,6 +75,7 @@ func TestLicenseService_GetLicense(t *testing.T) {
 }
 
 func TestLicenseService_GetLicense_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/license", func(w http.ResponseWriter, r *http.Request) {
@@ -88,6 +90,7 @@ func TestLicenseService_GetLicense_StatusNotFound(t *testing.T) {
 }
 
 func TestLicenseService_AddLicense(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/license", func(w http.ResponseWriter, r *http.Request) {
@@ -158,6 +161,7 @@ func TestLicenseService_AddLicense(t *testing.T) {
 }
 
 func TestLicenseService_AddLicense_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/license", func(w http.ResponseWriter, r *http.Request) {

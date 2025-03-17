@@ -32,9 +32,7 @@ type (
 	}
 )
 
-var (
-	_ MetadataServiceInterface = (*MetadataService)(nil)
-)
+var _ MetadataServiceInterface = (*MetadataService)(nil)
 
 // Metadata represents a GitLab instance version.
 //

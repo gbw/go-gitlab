@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ DockerfileTemplatesServiceInterface = (*DockerfileTemplatesService)(nil)
-)
+var _ DockerfileTemplatesServiceInterface = (*DockerfileTemplatesService)(nil)
 
 // DockerfileTemplate represents a GitLab Dockerfile template.
 //

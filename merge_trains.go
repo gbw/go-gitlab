@@ -23,9 +23,7 @@ type (
 	}
 )
 
-var (
-	_ MergeTrainsServiceInterface = (*MergeTrainsService)(nil)
-)
+var _ MergeTrainsServiceInterface = (*MergeTrainsService)(nil)
 
 // MergeTrain represents a Gitlab merge train.
 //

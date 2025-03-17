@@ -24,6 +24,7 @@ import (
 )
 
 func TestListCustomUserAttributes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/2/custom_attributes", func(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,7 @@ func TestListCustomUserAttributes(t *testing.T) {
 }
 
 func TestListCustomGroupAttributes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/2/custom_attributes", func(w http.ResponseWriter, r *http.Request) {
@@ -62,6 +64,7 @@ func TestListCustomGroupAttributes(t *testing.T) {
 }
 
 func TestListCustomProjectAttributes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/2/custom_attributes", func(w http.ResponseWriter, r *http.Request) {
@@ -81,6 +84,7 @@ func TestListCustomProjectAttributes(t *testing.T) {
 }
 
 func TestGetCustomUserAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {
@@ -100,6 +104,7 @@ func TestGetCustomUserAttribute(t *testing.T) {
 }
 
 func TestGetCustomGropupAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {
@@ -119,6 +124,7 @@ func TestGetCustomGropupAttribute(t *testing.T) {
 }
 
 func TestGetCustomProjectAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {
@@ -138,6 +144,7 @@ func TestGetCustomProjectAttribute(t *testing.T) {
 }
 
 func TestSetCustomUserAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {
@@ -160,6 +167,7 @@ func TestSetCustomUserAttribute(t *testing.T) {
 }
 
 func TestSetCustomGroupAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {
@@ -182,6 +190,7 @@ func TestSetCustomGroupAttribute(t *testing.T) {
 }
 
 func TestDeleteCustomUserAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/users/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {
@@ -202,6 +211,7 @@ func TestDeleteCustomUserAttribute(t *testing.T) {
 }
 
 func TestDeleteCustomGroupAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {
@@ -222,6 +232,7 @@ func TestDeleteCustomGroupAttribute(t *testing.T) {
 }
 
 func TestDeleteCustomProjectAttribute(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/2/custom_attributes/testkey1", func(w http.ResponseWriter, r *http.Request) {

@@ -46,9 +46,7 @@ type (
 	}
 )
 
-var (
-	_ CustomAttributesServiceInterface = (*CustomAttributesService)(nil)
-)
+var _ CustomAttributesServiceInterface = (*CustomAttributesService)(nil)
 
 // CustomAttribute struct is used to unmarshal response to api calls.
 //

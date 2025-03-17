@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectAccessTokensServiceInterface = (*ProjectAccessTokensService)(nil)
-)
+var _ ProjectAccessTokensServiceInterface = (*ProjectAccessTokensService)(nil)
 
 // ProjectAccessToken represents a GitLab project access token.
 //

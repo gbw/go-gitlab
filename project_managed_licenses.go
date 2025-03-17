@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ ManagedLicensesServiceInterface = (*ManagedLicensesService)(nil)
-)
+var _ ManagedLicensesServiceInterface = (*ManagedLicensesService)(nil)
 
 // ManagedLicense represents a managed license.
 //

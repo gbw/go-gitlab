@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectVariablesServiceInterface = (*ProjectVariablesService)(nil)
-)
+var _ ProjectVariablesServiceInterface = (*ProjectVariablesService)(nil)
 
 // ProjectVariable represents a GitLab Project Variable.
 //

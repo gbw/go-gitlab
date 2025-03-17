@@ -33,9 +33,7 @@ type (
 	}
 )
 
-var (
-	_ PlanLimitsServiceInterface = (*PlanLimitsService)(nil)
-)
+var _ PlanLimitsServiceInterface = (*PlanLimitsService)(nil)
 
 // PlanLimit represents a GitLab pipeline.
 //

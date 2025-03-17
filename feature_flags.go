@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ FeaturesServiceInterface = (*FeaturesService)(nil)
-)
+var _ FeaturesServiceInterface = (*FeaturesService)(nil)
 
 // Feature represents a GitLab feature flag.
 //

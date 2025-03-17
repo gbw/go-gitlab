@@ -13,6 +13,7 @@ import (
 )
 
 func TestCreateDependencyListExport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/pipelines/1234/dependency_list_exports", func(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +46,7 @@ func TestCreateDependencyListExport(t *testing.T) {
 }
 
 func TestGetDependencyListExport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/dependency_list_exports/5678", func(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +67,7 @@ func TestGetDependencyListExport(t *testing.T) {
 }
 
 func TestDownloadDependencyListExport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/dependency_list_exports/5678/download", func(w http.ResponseWriter, r *http.Request) {

@@ -24,6 +24,7 @@ import (
 )
 
 func TestListAllTemplates(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/templates/gitlab_ci_ymls", func(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +78,7 @@ func TestListAllTemplates(t *testing.T) {
 }
 
 func TestGetTemplate(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/templates/gitlab_ci_ymls/Ruby", func(w http.ResponseWriter, r *http.Request) {

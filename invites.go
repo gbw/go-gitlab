@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ InvitesServiceInterface = (*InvitesService)(nil)
-)
+var _ InvitesServiceInterface = (*InvitesService)(nil)
 
 // PendingInvite represents a pending invite.
 //

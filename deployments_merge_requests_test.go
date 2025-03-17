@@ -10,6 +10,7 @@ import (
 )
 
 func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/278964/deployments/2/merge_requests", func(w http.ResponseWriter, r *http.Request) {

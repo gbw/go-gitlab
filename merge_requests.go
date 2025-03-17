@@ -71,9 +71,7 @@ type (
 	}
 )
 
-var (
-	_ MergeRequestsServiceInterface = (*MergeRequestsService)(nil)
-)
+var _ MergeRequestsServiceInterface = (*MergeRequestsService)(nil)
 
 // BasicMergeRequest represents a basic GitLab merge request.
 //

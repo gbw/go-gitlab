@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ NotificationSettingsServiceInterface = (*NotificationSettingsService)(nil)
-)
+var _ NotificationSettingsServiceInterface = (*NotificationSettingsService)(nil)
 
 // NotificationSettings represents the Gitlab notification setting.
 //

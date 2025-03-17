@@ -53,9 +53,7 @@ type (
 	}
 )
 
-var (
-	_ CommitsServiceInterface = (*CommitsService)(nil)
-)
+var _ CommitsServiceInterface = (*CommitsService)(nil)
 
 // Commit represents a GitLab commit.
 //

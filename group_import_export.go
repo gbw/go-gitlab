@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ GroupImportExportServiceInterface = (*GroupImportExportService)(nil)
-)
+var _ GroupImportExportServiceInterface = (*GroupImportExportService)(nil)
 
 // ScheduleExport starts a new group export.
 //

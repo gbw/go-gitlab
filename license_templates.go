@@ -54,9 +54,7 @@ type (
 	}
 )
 
-var (
-	_ LicenseTemplatesServiceInterface = (*LicenseTemplatesService)(nil)
-)
+var _ LicenseTemplatesServiceInterface = (*LicenseTemplatesService)(nil)
 
 // ListLicenseTemplatesOptions represents the available
 // ListLicenseTemplates() options.

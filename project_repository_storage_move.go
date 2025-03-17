@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectRepositoryStorageMoveServiceInterface = (*ProjectRepositoryStorageMoveService)(nil)
-)
+var _ ProjectRepositoryStorageMoveServiceInterface = (*ProjectRepositoryStorageMoveService)(nil)
 
 // ProjectRepositoryStorageMove represents the status of a repository move.
 //

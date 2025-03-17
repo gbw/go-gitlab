@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetCurrentPlanLimits(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/application/plan_limits", func(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +66,7 @@ func TestGetCurrentPlanLimits(t *testing.T) {
 }
 
 func TestChangePlanLimits(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/application/plan_limits", func(w http.ResponseWriter, r *http.Request) {

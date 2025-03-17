@@ -9,6 +9,7 @@ import (
 )
 
 func TestImportService_ImportRepositoryFromGitHub(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/import/github", func(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +61,7 @@ func TestImportService_ImportRepositoryFromGitHub(t *testing.T) {
 }
 
 func TestImportService_CancelGitHubProjectImport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/import/github/cancel", func(w http.ResponseWriter, r *http.Request) {
@@ -105,6 +107,7 @@ func TestImportService_CancelGitHubProjectImport(t *testing.T) {
 }
 
 func TestImportService_ImportGitHubGistsIntoGitLabSnippets(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/import/github/gists", func(w http.ResponseWriter, r *http.Request) {
@@ -123,6 +126,7 @@ func TestImportService_ImportGitHubGistsIntoGitLabSnippets(t *testing.T) {
 }
 
 func TestImportService_ImportRepositoryFromBitbucketServer(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/import/bitbucket_server", func(w http.ResponseWriter, r *http.Request) {
@@ -169,6 +173,7 @@ func TestImportService_ImportRepositoryFromBitbucketServer(t *testing.T) {
 }
 
 func TestImportService_ImportRepositoryFromBitbucketCloud(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/import/bitbucket", func(w http.ResponseWriter, r *http.Request) {

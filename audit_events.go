@@ -25,9 +25,7 @@ type (
 	}
 )
 
-var (
-	_ AuditEventsServiceInterface = (*AuditEventsService)(nil)
-)
+var _ AuditEventsServiceInterface = (*AuditEventsService)(nil)
 
 // AuditEvent represents an audit event for a group, a project or the instance.
 //

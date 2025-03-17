@@ -27,6 +27,7 @@ import (
 )
 
 func TestListProjectAccessRequests(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_requests", func(w http.ResponseWriter, r *http.Request) {
@@ -93,6 +94,7 @@ func TestListProjectAccessRequests(t *testing.T) {
 }
 
 func TestListGroupAccessRequests(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_requests", func(w http.ResponseWriter, r *http.Request) {
@@ -159,6 +161,7 @@ func TestListGroupAccessRequests(t *testing.T) {
 }
 
 func TestRequestProjectAccess(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_requests", func(w http.ResponseWriter, r *http.Request) {
@@ -205,6 +208,7 @@ func TestRequestProjectAccess(t *testing.T) {
 }
 
 func TestRequestGroupAccess(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_requests", func(w http.ResponseWriter, r *http.Request) {
@@ -251,6 +255,7 @@ func TestRequestGroupAccess(t *testing.T) {
 }
 
 func TestApproveProjectAccessRequest(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_requests/10/approve", func(w http.ResponseWriter, r *http.Request) {
@@ -310,6 +315,7 @@ func TestApproveProjectAccessRequest(t *testing.T) {
 }
 
 func TestApproveGroupAccessRequest(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_requests/10/approve", func(w http.ResponseWriter, r *http.Request) {
@@ -369,6 +375,7 @@ func TestApproveGroupAccessRequest(t *testing.T) {
 }
 
 func TestDenyProjectAccessRequest(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_requests/10", func(w http.ResponseWriter, r *http.Request) {
@@ -393,6 +400,7 @@ func TestDenyProjectAccessRequest(t *testing.T) {
 }
 
 func TestDenyGroupAccessRequest(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/access_requests/10", func(w http.ResponseWriter, r *http.Request) {

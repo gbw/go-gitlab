@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetErrorTracking(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/error_tracking/settings", func(w http.ResponseWriter, r *http.Request) {
@@ -56,6 +57,7 @@ func TestGetErrorTracking(t *testing.T) {
 }
 
 func TestDisableErrorTracking(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/error_tracking/settings", func(w http.ResponseWriter, r *http.Request) {
@@ -94,6 +96,7 @@ func TestDisableErrorTracking(t *testing.T) {
 }
 
 func TestListErrorTrackingClientKeys(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/error_tracking/client_keys", func(w http.ResponseWriter, r *http.Request) {
@@ -126,6 +129,7 @@ func TestListErrorTrackingClientKeys(t *testing.T) {
 }
 
 func TestCreateClientKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/error_tracking/client_keys", func(w http.ResponseWriter, r *http.Request) {
@@ -156,6 +160,7 @@ func TestCreateClientKey(t *testing.T) {
 }
 
 func TestDeleteClientKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/error_tracking/client_keys/3", func(w http.ResponseWriter, r *http.Request) {

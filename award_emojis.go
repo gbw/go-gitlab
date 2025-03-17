@@ -59,9 +59,7 @@ type (
 	}
 )
 
-var (
-	_ AwardEmojiServiceInterface = (*AwardEmojiService)(nil)
-)
+var _ AwardEmojiServiceInterface = (*AwardEmojiService)(nil)
 
 // AwardEmoji represents a GitLab Award Emoji.
 //

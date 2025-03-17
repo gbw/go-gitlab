@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ PagesServiceInterface = (*PagesService)(nil)
-)
+var _ PagesServiceInterface = (*PagesService)(nil)
 
 // Pages represents the Pages of a project.
 //

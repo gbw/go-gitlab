@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ NamespacesServiceInterface = (*NamespacesService)(nil)
-)
+var _ NamespacesServiceInterface = (*NamespacesService)(nil)
 
 // Namespace represents a GitLab namespace.
 //

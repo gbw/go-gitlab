@@ -10,6 +10,7 @@ import (
 )
 
 func TestRepositoryFilesService_GetFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/files/app%2Fmodels%2Fkey%2Erb?ref=master", func(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +68,7 @@ func TestRepositoryFilesService_GetFile(t *testing.T) {
 }
 
 func TestRepositoryFilesService_GetFileMetaData(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/files/app%2Fmodels%2Fkey%2Erb?ref=master", func(w http.ResponseWriter, r *http.Request) {
@@ -118,6 +120,7 @@ func TestRepositoryFilesService_GetFileMetaData(t *testing.T) {
 }
 
 func TestRepositoryFilesService_GetFileBlame(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/files/path%2Fto%2Ffile.rb/blame", func(w http.ResponseWriter, r *http.Request) {
@@ -192,6 +195,7 @@ func TestRepositoryFilesService_GetFileBlame(t *testing.T) {
 }
 
 func TestRepositoryFilesService_GetRawFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/files/app%2Fmodels%2Fkey%2Erb/raw", func(w http.ResponseWriter, r *http.Request) {
@@ -246,6 +250,7 @@ func TestRepositoryFilesService_GetRawFile(t *testing.T) {
 }
 
 func TestRepositoryFilesService_CreateFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/files/app%2Fproject%2Erb", func(w http.ResponseWriter, r *http.Request) {
@@ -290,6 +295,7 @@ func TestRepositoryFilesService_CreateFile(t *testing.T) {
 }
 
 func TestRepositoryFilesService_UpdateFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/files/app%2Fproject%2Erb", func(w http.ResponseWriter, r *http.Request) {
@@ -334,6 +340,7 @@ func TestRepositoryFilesService_UpdateFile(t *testing.T) {
 }
 
 func TestRepositoryFilesService_DeleteFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/13083/repository/files/app%2Fproject%2Erb", func(w http.ResponseWriter, r *http.Request) {

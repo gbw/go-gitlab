@@ -96,9 +96,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectsServiceInterface = (*ProjectsService)(nil)
-)
+var _ ProjectsServiceInterface = (*ProjectsService)(nil)
 
 // Project represents a GitLab project.
 //

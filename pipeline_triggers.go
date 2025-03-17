@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ PipelineTriggersServiceInterface = (*PipelineTriggersService)(nil)
-)
+var _ PipelineTriggersServiceInterface = (*PipelineTriggersService)(nil)
 
 // PipelineTrigger represents a project pipeline trigger.
 //

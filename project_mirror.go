@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectMirrorServiceInterface = (*ProjectMirrorService)(nil)
-)
+var _ ProjectMirrorServiceInterface = (*ProjectMirrorService)(nil)
 
 // ProjectMirror represents a project mirror configuration.
 //

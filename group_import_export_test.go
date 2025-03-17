@@ -10,6 +10,7 @@ import (
 )
 
 func TestGroupScheduleExport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/export",
@@ -25,6 +26,7 @@ func TestGroupScheduleExport(t *testing.T) {
 }
 
 func TestGroupExportDownload(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	content := []byte("fake content")
 
@@ -51,6 +53,7 @@ func TestGroupExportDownload(t *testing.T) {
 }
 
 func TestGroupImport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	content := []byte("temporary file's content")

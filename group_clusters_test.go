@@ -25,6 +25,7 @@ import (
 )
 
 func TestGroupListClusters(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/26/clusters", func(w http.ResponseWriter, r *http.Request) {
@@ -135,6 +136,7 @@ func TestGroupListClusters(t *testing.T) {
 }
 
 func TestGetGroupCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/26/clusters/18", func(w http.ResponseWriter, r *http.Request) {
@@ -244,6 +246,7 @@ func TestGetGroupCluster(t *testing.T) {
 }
 
 func TestAddGroupCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/26/clusters/user", func(w http.ResponseWriter, r *http.Request) {
@@ -329,6 +332,7 @@ func TestAddGroupCluster(t *testing.T) {
 }
 
 func TestEditGroupCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/26/clusters/24", func(w http.ResponseWriter, r *http.Request) {
@@ -448,6 +452,7 @@ func TestEditGroupCluster(t *testing.T) {
 }
 
 func TestDeleteGroupCluster(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/26/clusters/23", func(w http.ResponseWriter, r *http.Request) {

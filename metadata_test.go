@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetMetadata(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/metadata",

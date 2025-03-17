@@ -60,9 +60,7 @@ type (
 	}
 )
 
-var (
-	_ SearchServiceInterface = (*SearchService)(nil)
-)
+var _ SearchServiceInterface = (*SearchService)(nil)
 
 // SearchOptions represents the available options for all search methods.
 //

@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ CIYMLTemplatesServiceInterface = (*CIYMLTemplatesService)(nil)
-)
+var _ CIYMLTemplatesServiceInterface = (*CIYMLTemplatesService)(nil)
 
 // CIYMLTemplate represents a GitLab CI YML template.
 //

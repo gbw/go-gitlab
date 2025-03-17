@@ -10,6 +10,7 @@ import (
 )
 
 func TestRepositoriesService_ListTree(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/tree", func(w http.ResponseWriter, r *http.Request) {
@@ -71,6 +72,7 @@ func TestRepositoriesService_ListTree(t *testing.T) {
 }
 
 func TestRepositoriesService_Blob(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/blobs/2dc6aa325a317eda67812f05600bdf0fcdc70ab0", func(w http.ResponseWriter, r *http.Request) {
@@ -109,6 +111,7 @@ func TestRepositoriesService_Blob(t *testing.T) {
 }
 
 func TestRepositoriesService_RawBlobContent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/blobs/2dc6aa325a317eda67812f05600bdf0fcdc70ab0/raw", func(w http.ResponseWriter, r *http.Request) {
@@ -147,6 +150,7 @@ func TestRepositoriesService_RawBlobContent(t *testing.T) {
 }
 
 func TestRepositoriesService_Archive(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/archive.gz", func(w http.ResponseWriter, r *http.Request) {
@@ -186,6 +190,7 @@ func TestRepositoriesService_Archive(t *testing.T) {
 }
 
 func TestRepositoriesService_StreamArchive(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/archive.gz", func(w http.ResponseWriter, r *http.Request) {
@@ -213,6 +218,7 @@ func TestRepositoriesService_StreamArchive(t *testing.T) {
 }
 
 func TestRepositoriesService_Compare(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/12d65c8dd2b2676fa3ac47d955accc085a37a9c1/repository/compare", func(w http.ResponseWriter, r *http.Request) {
@@ -306,6 +312,7 @@ func TestRepositoriesService_Compare(t *testing.T) {
 }
 
 func TestRepositoriesService_Contributors(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/12d65c8dd2b2676fa3ac47d955accc085a37a9c1/repository/contributors", func(w http.ResponseWriter, r *http.Request) {
@@ -351,6 +358,7 @@ func TestRepositoriesService_Contributors(t *testing.T) {
 }
 
 func TestRepositoriesService_MergeBase(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1a0b36b3cdad1d2ee32457c102a8c0b7056fa863/repository/merge_base", func(w http.ResponseWriter, r *http.Request) {
@@ -404,6 +412,7 @@ func TestRepositoriesService_MergeBase(t *testing.T) {
 }
 
 func TestAddChangelogData(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/changelog",
@@ -422,6 +431,7 @@ func TestAddChangelogData(t *testing.T) {
 }
 
 func TestGenerateChangelogData(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/repository/changelog",

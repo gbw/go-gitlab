@@ -45,9 +45,7 @@ type (
 	}
 )
 
-var (
-	_ SnippetsServiceInterface = (*SnippetsService)(nil)
-)
+var _ SnippetsServiceInterface = (*SnippetsService)(nil)
 
 // Snippet represents a GitLab snippet.
 //

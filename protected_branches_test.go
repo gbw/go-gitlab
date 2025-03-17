@@ -24,6 +24,7 @@ import (
 )
 
 func TestListProtectedBranches(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_branches", func(w http.ResponseWriter, r *http.Request) {
@@ -110,6 +111,7 @@ func TestListProtectedBranches(t *testing.T) {
 }
 
 func TestListProtectedBranchesWithoutCodeOwnerApproval(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_branches", func(w http.ResponseWriter, r *http.Request) {
@@ -160,6 +162,7 @@ func TestListProtectedBranchesWithoutCodeOwnerApproval(t *testing.T) {
 }
 
 func TestProtectRepositoryBranches(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_branches", func(w http.ResponseWriter, r *http.Request) {
@@ -215,6 +218,7 @@ func TestProtectRepositoryBranches(t *testing.T) {
 }
 
 func TestUpdateRepositoryBranches(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_branches/master", func(w http.ResponseWriter, r *http.Request) {

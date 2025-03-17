@@ -55,4 +55,4 @@ done
   echo '}'
 ) >"$testing_client_generated_file"
 
-go fmt "$testing_client_generated_file"
+make fmt

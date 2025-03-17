@@ -9,6 +9,7 @@ import (
 )
 
 func TestProjectBadgesService_ListProjectBadges(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/badges", func(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +61,7 @@ func TestProjectBadgesService_ListProjectBadges(t *testing.T) {
 }
 
 func TestProjectBadgesService_GetProjectBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/badges/1", func(w http.ResponseWriter, r *http.Request) {
@@ -109,6 +111,7 @@ func TestProjectBadgesService_GetProjectBadge(t *testing.T) {
 }
 
 func TestProjectBadgesService_AddProjectBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/badges", func(w http.ResponseWriter, r *http.Request) {
@@ -158,6 +161,7 @@ func TestProjectBadgesService_AddProjectBadge(t *testing.T) {
 }
 
 func TestProjectBadgesService_EditProjectBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/badges/1", func(w http.ResponseWriter, r *http.Request) {
@@ -207,6 +211,7 @@ func TestProjectBadgesService_EditProjectBadge(t *testing.T) {
 }
 
 func TestProjectBadgesService_DeleteProjectBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/badges/1", func(w http.ResponseWriter, r *http.Request) {
@@ -231,6 +236,7 @@ func TestProjectBadgesService_DeleteProjectBadge(t *testing.T) {
 }
 
 func TestProjectBadgesService_PreviewProjectBadge(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/badges/render", func(w http.ResponseWriter, r *http.Request) {

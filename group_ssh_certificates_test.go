@@ -9,6 +9,7 @@ import (
 )
 
 func TestListGroupSSHCertificates(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/groups/1/ssh_certificates"
@@ -34,6 +35,7 @@ func TestListGroupSSHCertificates(t *testing.T) {
 }
 
 func TestCreateGroupSSHCertificate(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/groups/84/ssh_certificates"
@@ -60,6 +62,7 @@ func TestCreateGroupSSHCertificate(t *testing.T) {
 }
 
 func TestDeleteGroupSSHCertificate(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/groups/1/ssh_certificates/1876"

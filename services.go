@@ -105,9 +105,7 @@ type (
 	}
 )
 
-var (
-	_ ServicesServiceInterface = (*ServicesService)(nil)
-)
+var _ ServicesServiceInterface = (*ServicesService)(nil)
 
 // Service represents a GitLab service.
 //

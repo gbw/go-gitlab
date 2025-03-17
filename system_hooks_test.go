@@ -10,6 +10,7 @@ import (
 )
 
 func TestSystemHooksService_ListHooks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/hooks", func(w http.ResponseWriter, r *http.Request) {
@@ -47,6 +48,7 @@ func TestSystemHooksService_ListHooks(t *testing.T) {
 }
 
 func TestSystemHooksService_GetHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/hooks/1", func(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +84,7 @@ func TestSystemHooksService_GetHook(t *testing.T) {
 }
 
 func TestSystemHooksService_AddHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/hooks", func(w http.ResponseWriter, r *http.Request) {
@@ -101,6 +104,7 @@ func TestSystemHooksService_AddHook(t *testing.T) {
 }
 
 func TestSystemHooksService_TestHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/hooks/1", func(w http.ResponseWriter, r *http.Request) {
@@ -124,6 +128,7 @@ func TestSystemHooksService_TestHook(t *testing.T) {
 }
 
 func TestSystemHooksService_DeleteHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/hooks/1", func(w http.ResponseWriter, r *http.Request) {

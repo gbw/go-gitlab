@@ -24,6 +24,7 @@ import (
 )
 
 func TestListProjectAccessTokens(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -85,6 +86,7 @@ func TestListProjectAccessTokens(t *testing.T) {
 }
 
 func TestGetProjectAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_tokens/1", func(w http.ResponseWriter, r *http.Request) {
@@ -122,6 +124,7 @@ func TestGetProjectAccessToken(t *testing.T) {
 }
 
 func TestCreateProjectAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -160,6 +163,7 @@ func TestCreateProjectAccessToken(t *testing.T) {
 }
 
 func TestRotateProjectAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/projects/1/access_tokens/42/rotate", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
@@ -196,6 +200,7 @@ func TestRotateProjectAccessToken(t *testing.T) {
 }
 
 func TestRevokeProjectAccessToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/access_tokens/1234", func(w http.ResponseWriter, r *http.Request) {

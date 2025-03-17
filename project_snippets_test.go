@@ -10,6 +10,7 @@ import (
 )
 
 func TestProjectSnippetsService_ListSnippets(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets", func(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +83,7 @@ func TestProjectSnippetsService_ListSnippets(t *testing.T) {
 }
 
 func TestProjectSnippetsService_GetSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/1", func(w http.ResponseWriter, r *http.Request) {
@@ -152,6 +154,7 @@ func TestProjectSnippetsService_GetSnippet(t *testing.T) {
 }
 
 func TestProjectSnippetsService_CreateSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets", func(w http.ResponseWriter, r *http.Request) {
@@ -237,6 +240,7 @@ func TestProjectSnippetsService_CreateSnippet(t *testing.T) {
 }
 
 func TestProjectSnippetsService_UpdateSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/1", func(w http.ResponseWriter, r *http.Request) {
@@ -307,6 +311,7 @@ func TestProjectSnippetsService_UpdateSnippet(t *testing.T) {
 }
 
 func TestProjectSnippetsService_DeleteSnippet(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/1", func(w http.ResponseWriter, r *http.Request) {
@@ -349,6 +354,7 @@ func TestProjectSnippetsService_DeleteSnippet(t *testing.T) {
 }
 
 func TestProjectSnippetsService_SnippetContent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/1/raw", func(w http.ResponseWriter, r *http.Request) {

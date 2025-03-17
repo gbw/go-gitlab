@@ -38,9 +38,7 @@ type (
 	}
 )
 
-var (
-	_ GitIgnoreTemplatesServiceInterface = (*GitIgnoreTemplatesService)(nil)
-)
+var _ GitIgnoreTemplatesServiceInterface = (*GitIgnoreTemplatesService)(nil)
 
 // GitIgnoreTemplate represents a GitLab gitignore template.
 //

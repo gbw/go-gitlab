@@ -40,9 +40,7 @@ type (
 	}
 )
 
-var (
-	_ BroadcastMessagesServiceInterface = (*BroadcastMessagesService)(nil)
-)
+var _ BroadcastMessagesServiceInterface = (*BroadcastMessagesService)(nil)
 
 // BroadcastMessage represents a GitLab broadcast message.
 //

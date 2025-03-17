@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ GroupBadgesServiceInterface = (*GroupBadgesService)(nil)
-)
+var _ GroupBadgesServiceInterface = (*GroupBadgesService)(nil)
 
 // BadgeKind represents a GitLab Badge Kind
 type BadgeKind string

@@ -10,6 +10,7 @@ import (
 )
 
 func TestProjectSecuritySettings_ListProjectSecuritySettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	createdAt := time.Date(2024, 10, 22, 14, 13, 35, 0, time.UTC)
@@ -50,6 +51,7 @@ func TestProjectSecuritySettings_ListProjectSecuritySettings(t *testing.T) {
 }
 
 func TestProjectSecuritySettings_UpdateSecretPushProtectionEnabledSetting(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	createdAt := time.Date(2024, 10, 22, 14, 13, 35, 0, time.UTC)

@@ -98,9 +98,7 @@ type (
 	}
 )
 
-var (
-	_ GroupsServiceInterface = (*GroupsService)(nil)
-)
+var _ GroupsServiceInterface = (*GroupsService)(nil)
 
 // Group represents a GitLab group.
 //

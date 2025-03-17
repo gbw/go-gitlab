@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ InstanceClustersServiceInterface = (*InstanceClustersService)(nil)
-)
+var _ InstanceClustersServiceInterface = (*InstanceClustersService)(nil)
 
 // InstanceCluster represents a GitLab Instance Cluster.
 //

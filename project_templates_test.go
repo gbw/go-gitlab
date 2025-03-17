@@ -9,6 +9,7 @@ import (
 )
 
 func TestProjectTemplatesService_ListTemplates(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/templates/issues", func(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +46,7 @@ func TestProjectTemplatesService_ListTemplates(t *testing.T) {
 }
 
 func TestProjectTemplatesService_GetProjectTemplate(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/templates/issues/test_issue", func(w http.ResponseWriter, r *http.Request) {

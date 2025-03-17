@@ -27,9 +27,7 @@ type (
 	}
 )
 
-var (
-	_ ExternalStatusChecksServiceInterface = (*ExternalStatusChecksService)(nil)
-)
+var _ ExternalStatusChecksServiceInterface = (*ExternalStatusChecksService)(nil)
 
 type MergeStatusCheck struct {
 	ID          int    `json:"id"`

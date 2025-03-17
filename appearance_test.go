@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetAppearance(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/application/appearance", func(w http.ResponseWriter, r *http.Request) {
@@ -80,6 +81,7 @@ func TestGetAppearance(t *testing.T) {
 }
 
 func TestChangeAppearance(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/application/appearance", func(w http.ResponseWriter, r *http.Request) {

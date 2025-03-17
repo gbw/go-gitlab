@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ ClusterAgentsServiceInterface = (*ClusterAgentsService)(nil)
-)
+var _ ClusterAgentsServiceInterface = (*ClusterAgentsService)(nil)
 
 // Agent represents a GitLab agent for Kubernetes.
 //

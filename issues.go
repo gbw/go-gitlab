@@ -59,9 +59,7 @@ type (
 	}
 )
 
-var (
-	_ IssuesServiceInterface = (*IssuesService)(nil)
-)
+var _ IssuesServiceInterface = (*IssuesService)(nil)
 
 // IssueAuthor represents a author of the issue.
 type IssueAuthor struct {

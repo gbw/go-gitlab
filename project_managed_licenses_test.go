@@ -23,6 +23,7 @@ import (
 )
 
 func TestListManagedLicenses(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/managed_licenses", func(w http.ResponseWriter, r *http.Request) {
@@ -54,6 +55,7 @@ func TestListManagedLicenses(t *testing.T) {
 }
 
 func TestGetManagedLicenses(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/managed_licenses/3", func(w http.ResponseWriter, r *http.Request) {
@@ -78,6 +80,7 @@ func TestGetManagedLicenses(t *testing.T) {
 }
 
 func TestAddManagedLicenses(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/managed_licenses", func(w http.ResponseWriter, r *http.Request) {
@@ -107,6 +110,7 @@ func TestAddManagedLicenses(t *testing.T) {
 }
 
 func TestDeleteManagedLicenses(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/managed_licenses/3", func(w http.ResponseWriter, r *http.Request) {
@@ -120,6 +124,7 @@ func TestDeleteManagedLicenses(t *testing.T) {
 }
 
 func TestEditManagedLicenses(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/managed_licenses/3", func(w http.ResponseWriter, r *http.Request) {

@@ -9,6 +9,7 @@ import (
 )
 
 func TestListProjectFeatureFlags(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/333/feature_flags",
@@ -85,6 +86,7 @@ func TestListProjectFeatureFlags(t *testing.T) {
 }
 
 func TestGetProjectFeatureFlag(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/feature_flags/testing", func(w http.ResponseWriter, r *http.Request) {
@@ -139,6 +141,7 @@ func TestGetProjectFeatureFlag(t *testing.T) {
 }
 
 func TestCreateProjectFeatureFlag(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/feature_flags/testing", func(w http.ResponseWriter, r *http.Request) {
@@ -181,6 +184,7 @@ func TestCreateProjectFeatureFlag(t *testing.T) {
 }
 
 func TestUpdateProjectFeatureFlag(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/feature_flags/testing", func(w http.ResponseWriter, r *http.Request) {
@@ -237,6 +241,7 @@ func TestUpdateProjectFeatureFlag(t *testing.T) {
 }
 
 func TestDeleteProjectFeatureFlag(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/feature_flags/testing", func(w http.ResponseWriter, r *http.Request) {

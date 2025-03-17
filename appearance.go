@@ -32,9 +32,7 @@ type (
 	}
 )
 
-var (
-	_ AppearanceServiceInterface = (*AppearanceService)(nil)
-)
+var _ AppearanceServiceInterface = (*AppearanceService)(nil)
 
 // Appearance represents a GitLab appearance.
 //

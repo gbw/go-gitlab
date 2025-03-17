@@ -36,9 +36,7 @@ type (
 	}
 )
 
-var (
-	_ ProjectTemplatesServiceInterface = (*ProjectTemplatesService)(nil)
-)
+var _ ProjectTemplatesServiceInterface = (*ProjectTemplatesService)(nil)
 
 // ProjectTemplate represents a GitLab ProjectTemplate.
 //

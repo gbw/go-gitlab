@@ -25,6 +25,7 @@ import (
 )
 
 func TestListWikis(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/wikis", func(w http.ResponseWriter, r *http.Request) {
@@ -80,6 +81,7 @@ func TestListWikis(t *testing.T) {
 }
 
 func TestGetWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/wikis/home", func(w http.ResponseWriter, r *http.Request) {
@@ -109,6 +111,7 @@ func TestGetWikiPage(t *testing.T) {
 }
 
 func TestCreateWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/wikis", func(w http.ResponseWriter, r *http.Request) {
@@ -141,6 +144,7 @@ func TestCreateWikiPage(t *testing.T) {
 }
 
 func TestEditWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/wikis/foo", func(w http.ResponseWriter, r *http.Request) {
@@ -173,6 +177,7 @@ func TestEditWikiPage(t *testing.T) {
 }
 
 func TestDeleteWikiPage(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/wikis/foo", func(w http.ResponseWriter, r *http.Request) {
@@ -185,6 +190,7 @@ func TestDeleteWikiPage(t *testing.T) {
 }
 
 func TestUploadWikiAttachment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/wikis/attachments", func(w http.ResponseWriter, r *http.Request) {

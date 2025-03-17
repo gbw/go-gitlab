@@ -42,9 +42,7 @@ type (
 	}
 )
 
-var (
-	_ DeployKeysServiceInterface = (*DeployKeysService)(nil)
-)
+var _ DeployKeysServiceInterface = (*DeployKeysService)(nil)
 
 // InstanceDeployKey represents a GitLab deploy key with the associated
 // projects it has write access to.

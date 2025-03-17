@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ AccessRequestsServiceInterface = (*AccessRequestsService)(nil)
-)
+var _ AccessRequestsServiceInterface = (*AccessRequestsService)(nil)
 
 // AccessRequest represents a access request for a group or project.
 //

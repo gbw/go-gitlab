@@ -14,6 +14,7 @@ import (
 )
 
 func TestListGroups(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups",
@@ -34,6 +35,7 @@ func TestListGroups(t *testing.T) {
 }
 
 func TestGetGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/g",
@@ -77,6 +79,7 @@ func TestGetGroup(t *testing.T) {
 }
 
 func TestGetGroupWithFileTemplateId(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/g",
@@ -97,6 +100,7 @@ func TestGetGroupWithFileTemplateId(t *testing.T) {
 }
 
 func TestCreateGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups",
@@ -122,6 +126,7 @@ func TestCreateGroup(t *testing.T) {
 }
 
 func TestCreateGroupWithDefaultBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups",
@@ -148,6 +153,7 @@ func TestCreateGroupWithDefaultBranch(t *testing.T) {
 }
 
 func TestCreateGroupDefaultBranchSettings(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	var jsonRequestBody CreateGroupOptions
@@ -236,6 +242,7 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 }
 
 func TestTransferGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/projects/2",
@@ -256,6 +263,7 @@ func TestTransferGroup(t *testing.T) {
 }
 
 func TestTransferSubGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/transfer",
@@ -280,6 +288,7 @@ func TestTransferSubGroup(t *testing.T) {
 }
 
 func TestDeleteGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1",
@@ -301,6 +310,7 @@ func TestDeleteGroup(t *testing.T) {
 }
 
 func TestDeleteGroup_WithPermanentDelete(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	var params url.Values
 
@@ -342,6 +352,7 @@ func TestDeleteGroup_WithPermanentDelete(t *testing.T) {
 }
 
 func TestSearchGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups",
@@ -362,6 +373,7 @@ func TestSearchGroup(t *testing.T) {
 }
 
 func TestUpdateGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1",
@@ -382,6 +394,7 @@ func TestUpdateGroup(t *testing.T) {
 }
 
 func TestUpdateGroupWithDefaultBranch(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1",
@@ -406,6 +419,7 @@ func TestUpdateGroupWithDefaultBranch(t *testing.T) {
 }
 
 func TestListGroupProjects(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/22/projects",
@@ -427,6 +441,7 @@ func TestListGroupProjects(t *testing.T) {
 }
 
 func TestListSubGroups(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/subgroups",
@@ -447,6 +462,7 @@ func TestListSubGroups(t *testing.T) {
 }
 
 func TestListGroupLDAPLinks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/ldap_group_links",
@@ -488,6 +504,7 @@ func TestListGroupLDAPLinks(t *testing.T) {
 }
 
 func TestAddGroupLDAPLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/ldap_group_links",
@@ -523,6 +540,7 @@ func TestAddGroupLDAPLink(t *testing.T) {
 }
 
 func TestAddGroupLDAPLinkFilter(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/ldap_group_links",
@@ -555,6 +573,7 @@ func TestAddGroupLDAPLinkFilter(t *testing.T) {
 }
 
 func TestDeleteGroupLDAPLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/ldap_group_links/gitlab_group_example_30", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
@@ -566,6 +585,7 @@ func TestDeleteGroupLDAPLink(t *testing.T) {
 }
 
 func TestDeleteGroupLDAPLinkWithCNOrFilter(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/ldap_group_links", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
@@ -582,6 +602,7 @@ func TestDeleteGroupLDAPLinkWithCNOrFilter(t *testing.T) {
 }
 
 func TestListGroupSAMLLinks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/saml_group_links",
@@ -620,6 +641,7 @@ func TestListGroupSAMLLinks(t *testing.T) {
 }
 
 func TestListGroupSAMLLinksCustomRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/saml_group_links",
@@ -652,6 +674,7 @@ func TestListGroupSAMLLinksCustomRole(t *testing.T) {
 }
 
 func TestGetGroupSAMLLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/saml_group_links/gitlab_group_example_developer",
@@ -679,6 +702,7 @@ func TestGetGroupSAMLLink(t *testing.T) {
 }
 
 func TestGetGroupSAMLLinkCustomRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/saml_group_links/gitlab_group_example_developer",
@@ -708,6 +732,7 @@ func TestGetGroupSAMLLinkCustomRole(t *testing.T) {
 }
 
 func TestAddGroupSAMLLink(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/saml_group_links",
@@ -740,6 +765,7 @@ func TestAddGroupSAMLLink(t *testing.T) {
 }
 
 func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/saml_group_links",
@@ -775,6 +801,7 @@ func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
 }
 
 func TestGroupsService_ListGroupSharedProjects(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/projects/shared", func(w http.ResponseWriter, r *http.Request) {
@@ -834,6 +861,7 @@ func TestGroupsService_ListGroupSharedProjects(t *testing.T) {
 }
 
 func TestRestoreGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/restore",
 		func(w http.ResponseWriter, r *http.Request) {
@@ -852,6 +880,7 @@ func TestRestoreGroup(t *testing.T) {
 }
 
 func TestShareGroupWithGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	var input ShareGroupWithGroupOptions
@@ -890,6 +919,7 @@ func TestShareGroupWithGroup(t *testing.T) {
 }
 
 func TestUnshareGroupFromGroup(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/share/2",
 		func(w http.ResponseWriter, r *http.Request) {
@@ -907,6 +937,7 @@ func TestUnshareGroupFromGroup(t *testing.T) {
 }
 
 func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	const ipRange = "192.168.0.0/24"
 
@@ -946,6 +977,7 @@ func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
 }
 
 func TestGetGroupWithEmailsEnabled(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1",
@@ -990,6 +1022,7 @@ func TestGetGroupWithEmailsEnabled(t *testing.T) {
 }
 
 func TestCreateGroupWithEmailsEnabled(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups",
@@ -1024,6 +1057,7 @@ func TestCreateGroupWithEmailsEnabled(t *testing.T) {
 }
 
 func TestUpdateGroupWithEmailsEnabled(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1",
@@ -1058,6 +1092,7 @@ func TestUpdateGroupWithEmailsEnabled(t *testing.T) {
 }
 
 func TestGetGroupPushRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/push_rule", func(w http.ResponseWriter, r *http.Request) {
@@ -1108,6 +1143,7 @@ func TestGetGroupPushRules(t *testing.T) {
 }
 
 func TestAddGroupPushRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/push_rule", func(w http.ResponseWriter, r *http.Request) {
@@ -1174,6 +1210,7 @@ func TestAddGroupPushRules(t *testing.T) {
 }
 
 func TestEditGroupPushRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/push_rule", func(w http.ResponseWriter, r *http.Request) {
@@ -1240,6 +1277,7 @@ func TestEditGroupPushRules(t *testing.T) {
 }
 
 func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	const domain = "example.com"
 

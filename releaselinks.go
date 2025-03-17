@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ ReleaseLinksServiceInterface = (*ReleaseLinksService)(nil)
-)
+var _ ReleaseLinksServiceInterface = (*ReleaseLinksService)(nil)
 
 // ReleaseLink represents a release link.
 //

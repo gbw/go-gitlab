@@ -28,12 +28,14 @@ type Company struct {
 }
 
 func TestStringify_nil(t *testing.T) {
+	t.Parallel()
 	var person *Person
 	resp := Stringify(person)
 	assert.Equal(t, "<nil>", resp)
 }
 
 func TestStringify(t *testing.T) {
+	t.Parallel()
 	person := &Person{"name", 16, []string{"n", "a", "m", "e"}, Address{}, nil}
 	resp := Stringify(person)
 	want := "gitlab.Person{Name:\"name\", Age:16, NickNames:[\"n\" \"a\" \"m\" \"e\"], Address:gitlab.Address{Street:\"\", City:\"\", Province:\"\", Country:\"\"}}"
@@ -41,6 +43,7 @@ func TestStringify(t *testing.T) {
 }
 
 func TestStringify_emptySlice(t *testing.T) {
+	t.Parallel()
 	person := &Person{"name", 16, nil, Address{}, nil}
 	resp := Stringify(person)
 	want := "gitlab.Person{Name:\"name\", Age:16, Address:gitlab.Address{Street:\"\", City:\"\", Province:\"\", Country:\"\"}}"

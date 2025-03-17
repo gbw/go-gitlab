@@ -9,6 +9,7 @@ import (
 )
 
 func TestProjectMirrorService_ListProjectMirror(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/42/remote_mirrors", func(w http.ResponseWriter, r *http.Request) {
@@ -62,6 +63,7 @@ func TestProjectMirrorService_ListProjectMirror(t *testing.T) {
 }
 
 func TestProjectMirrorService_GetProjectMirror(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/42/remote_mirrors/1", func(w http.ResponseWriter, r *http.Request) {
@@ -98,6 +100,7 @@ func TestProjectMirrorService_GetProjectMirror(t *testing.T) {
 }
 
 func TestProjectMirrorService_GetProjectMirrorPublicKey(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/42/remote_mirrors/1/public_key", func(w http.ResponseWriter, r *http.Request) {
@@ -120,6 +123,7 @@ func TestProjectMirrorService_GetProjectMirrorPublicKey(t *testing.T) {
 }
 
 func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/42/remote_mirrors", func(w http.ResponseWriter, r *http.Request) {
@@ -177,6 +181,7 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 }
 
 func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/42/remote_mirrors/101486", func(w http.ResponseWriter, r *http.Request) {

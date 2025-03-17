@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ LicenseServiceInterface = (*LicenseService)(nil)
-)
+var _ LicenseServiceInterface = (*LicenseService)(nil)
 
 // License represents a GitLab license.
 //

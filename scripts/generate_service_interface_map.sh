@@ -37,4 +37,4 @@ done
   echo ')'
 ) >>"$api_service_map_test_file"
 
-go fmt "$api_service_map_test_file"
+make fmt

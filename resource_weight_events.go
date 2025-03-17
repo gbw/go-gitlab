@@ -36,9 +36,7 @@ type (
 	}
 )
 
-var (
-	_ ResourceWeightEventsServiceInterface = (*ResourceWeightEventsService)(nil)
-)
+var _ ResourceWeightEventsServiceInterface = (*ResourceWeightEventsService)(nil)
 
 // WeightEvent represents a resource weight event.
 //

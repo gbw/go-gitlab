@@ -25,6 +25,7 @@ import (
 )
 
 func TestListNamespaces(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	trialEndsOn, _ := time.Parse(time.RFC3339, "2022-05-08T00:00:00Z")
@@ -172,6 +173,7 @@ func TestListNamespaces(t *testing.T) {
 }
 
 func TestGetNamespace(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/namespaces/2", func(w http.ResponseWriter, r *http.Request) {
@@ -222,6 +224,7 @@ func TestGetNamespace(t *testing.T) {
 }
 
 func TestNamespaceExists(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/namespaces/my-group/exists", func(w http.ResponseWriter, r *http.Request) {
@@ -252,6 +255,7 @@ func TestNamespaceExists(t *testing.T) {
 }
 
 func TestSearchNamespace(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/namespaces", func(w http.ResponseWriter, r *http.Request) {

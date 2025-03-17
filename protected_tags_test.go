@@ -25,6 +25,7 @@ import (
 )
 
 func TestListProtectedTags(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_tags", func(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +61,7 @@ func TestListProtectedTags(t *testing.T) {
 }
 
 func TestGetProtectedTag(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	tagName := "my-awesome-tag"
@@ -91,6 +93,7 @@ func TestGetProtectedTag(t *testing.T) {
 }
 
 func TestProtectRepositoryTags(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_tags", func(w http.ResponseWriter, r *http.Request) {
@@ -129,6 +132,7 @@ func TestProtectRepositoryTags(t *testing.T) {
 }
 
 func TestUnprotectRepositoryTags(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/protected_tags/my-awesome-tag", func(w http.ResponseWriter, r *http.Request) {

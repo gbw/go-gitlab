@@ -9,6 +9,7 @@ import (
 )
 
 func TestInstanceVariablesService_ListVariables(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/ci/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +49,7 @@ func TestInstanceVariablesService_ListVariables(t *testing.T) {
 }
 
 func TestInstanceVariablesService_ListVariables_StatusNotFound(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/ci/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -62,6 +64,7 @@ func TestInstanceVariablesService_ListVariables_StatusNotFound(t *testing.T) {
 }
 
 func TestInstanceVariablesService_GetVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/ci/variables/TEST_VARIABLE_1", func(w http.ResponseWriter, r *http.Request) {
@@ -104,6 +107,7 @@ func TestInstanceVariablesService_GetVariable(t *testing.T) {
 }
 
 func TestInstanceVariablesService_CreateVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/ci/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -141,6 +145,7 @@ func TestInstanceVariablesService_CreateVariable(t *testing.T) {
 }
 
 func TestInstanceVariablesService_StatusInternalServerError(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/ci/variables", func(w http.ResponseWriter, r *http.Request) {
@@ -155,6 +160,7 @@ func TestInstanceVariablesService_StatusInternalServerError(t *testing.T) {
 }
 
 func TestInstanceVariablesService_UpdateVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/ci/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {
@@ -197,6 +203,7 @@ func TestInstanceVariablesService_UpdateVariable(t *testing.T) {
 }
 
 func TestInstanceVariablesService_RemoveVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/admin/ci/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {

@@ -10,6 +10,7 @@ import (
 )
 
 func TestGroupReleases_ListGroupReleases(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/releases", func(w http.ResponseWriter, r *http.Request) {

@@ -10,6 +10,7 @@ import (
 )
 
 func TestProjectImportExportService_ScheduleExport(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/export", func(w http.ResponseWriter, r *http.Request) {
@@ -35,6 +36,7 @@ func TestProjectImportExportService_ScheduleExport(t *testing.T) {
 }
 
 func TestProjectImportExportService_ExportStatus(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/export", func(w http.ResponseWriter, r *http.Request) {
@@ -96,6 +98,7 @@ func TestProjectImportExportService_ExportStatus(t *testing.T) {
 }
 
 func TestProjectImportExportService_ExportDownload(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/export/download", func(w http.ResponseWriter, r *http.Request) {
@@ -127,6 +130,7 @@ func TestProjectImportExportService_ExportDownload(t *testing.T) {
 }
 
 func TestProjectImportExportService_ImportFile(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/import", func(w http.ResponseWriter, r *http.Request) {
@@ -169,6 +173,7 @@ func TestProjectImportExportService_ImportFile(t *testing.T) {
 }
 
 func TestProjectImportExportService_ImportStatus(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/import", func(w http.ResponseWriter, r *http.Request) {

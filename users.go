@@ -99,9 +99,7 @@ type (
 	}
 )
 
-var (
-	_ UsersServiceInterface = (*UsersService)(nil)
-)
+var _ UsersServiceInterface = (*UsersService)(nil)
 
 // List a couple of standard errors.
 var (

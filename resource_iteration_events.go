@@ -37,9 +37,7 @@ type (
 	}
 )
 
-var (
-	_ ResourceIterationEventsServiceInterface = (*ResourceIterationEventsService)(nil)
-)
+var _ ResourceIterationEventsServiceInterface = (*ResourceIterationEventsService)(nil)
 
 // IterationEvent represents a resource iteration event.
 //

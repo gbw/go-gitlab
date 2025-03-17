@@ -39,9 +39,7 @@ type (
 	}
 )
 
-var (
-	_ ResourceStateEventsServiceInterface = (*ResourceStateEventsService)(nil)
-)
+var _ ResourceStateEventsServiceInterface = (*ResourceStateEventsService)(nil)
 
 // StateEvent represents a resource state event.
 //

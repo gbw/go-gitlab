@@ -8,6 +8,7 @@ import (
 )
 
 func TestListInstanceMemberRoles(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/member_roles"
@@ -44,6 +45,7 @@ func TestListInstanceMemberRoles(t *testing.T) {
 }
 
 func TestCreateInstanceMemberRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/member_roles"
@@ -113,6 +115,7 @@ func TestCreateInstanceMemberRole(t *testing.T) {
 }
 
 func TestDeleteInstanceMemberRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/member_roles/2"
@@ -127,6 +130,7 @@ func TestDeleteInstanceMemberRole(t *testing.T) {
 }
 
 func TestListMemberRoles(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/groups/1/member_roles"
@@ -163,6 +167,7 @@ func TestListMemberRoles(t *testing.T) {
 }
 
 func TestCreateMemberRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/groups/84/member_roles"
@@ -232,6 +237,7 @@ func TestCreateMemberRole(t *testing.T) {
 }
 
 func TestDeleteMemberRole(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	path := "/api/v4/groups/1/member_roles/2"

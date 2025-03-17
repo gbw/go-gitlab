@@ -27,6 +27,7 @@ import (
 )
 
 func TestNotes_ListIssueNotes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/2/notes", func(w http.ResponseWriter, r *http.Request) {
@@ -136,6 +137,7 @@ func TestNotes_ListIssueNotes(t *testing.T) {
 }
 
 func TestNotes_GetIssueNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -197,6 +199,7 @@ func TestNotes_GetIssueNote(t *testing.T) {
 }
 
 func TestNotes_CreateIssueNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/2/notes", func(w http.ResponseWriter, r *http.Request) {
@@ -258,6 +261,7 @@ func TestNotes_CreateIssueNote(t *testing.T) {
 }
 
 func TestNotes_UpdateIssueNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -319,6 +323,7 @@ func TestNotes_UpdateIssueNote(t *testing.T) {
 }
 
 func TestNotes_DeleteIssueNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -333,6 +338,7 @@ func TestNotes_DeleteIssueNote(t *testing.T) {
 }
 
 func TestNotes_ListSnippetNotes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes", func(w http.ResponseWriter, r *http.Request) {
@@ -442,6 +448,7 @@ func TestNotes_ListSnippetNotes(t *testing.T) {
 }
 
 func TestNotes_CreateSnippetNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes", func(w http.ResponseWriter, r *http.Request) {
@@ -503,6 +510,7 @@ func TestNotes_CreateSnippetNote(t *testing.T) {
 }
 
 func TestNotes_UpdateSnippetNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -564,6 +572,7 @@ func TestNotes_UpdateSnippetNote(t *testing.T) {
 }
 
 func TestNotes_DeleteSnippetNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -578,6 +587,7 @@ func TestNotes_DeleteSnippetNote(t *testing.T) {
 }
 
 func TestNotes_ListMergeRequestNotes(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes", func(w http.ResponseWriter, r *http.Request) {
@@ -612,6 +622,7 @@ func TestNotes_ListMergeRequestNotes(t *testing.T) {
 }
 
 func TestNotes_GetMergeRequestNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -646,6 +657,7 @@ func TestNotes_GetMergeRequestNote(t *testing.T) {
 }
 
 func TestNotes_CreateMergeRequestNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes", func(w http.ResponseWriter, r *http.Request) {
@@ -680,6 +692,7 @@ func TestNotes_CreateMergeRequestNote(t *testing.T) {
 }
 
 func TestNotes_UpdateMergeRequestNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/4329/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -714,6 +727,7 @@ func TestNotes_UpdateMergeRequestNote(t *testing.T) {
 }
 
 func TestNotes_DeleteMergeRequestNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -728,6 +742,7 @@ func TestNotes_DeleteMergeRequestNote(t *testing.T) {
 }
 
 func TestNotes_GetEpicNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/epics/4329/notes/3", func(w http.ResponseWriter, r *http.Request) {
@@ -764,6 +779,7 @@ func TestNotes_GetEpicNote(t *testing.T) {
 }
 
 func TestCreateNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/1/notes", func(w http.ResponseWriter, r *http.Request) {
@@ -803,6 +819,7 @@ func TestCreateNote(t *testing.T) {
 }
 
 func TestCreateInternalNote(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/issues/1/notes", func(w http.ResponseWriter, r *http.Request) {

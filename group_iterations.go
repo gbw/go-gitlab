@@ -36,9 +36,7 @@ type (
 	}
 )
 
-var (
-	_ GroupIterationsServiceInterface = (*GroupIterationsService)(nil)
-)
+var _ GroupIterationsServiceInterface = (*GroupIterationsService)(nil)
 
 // GroupInteration represents a GitLab iteration.
 //

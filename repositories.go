@@ -47,9 +47,7 @@ type (
 	}
 )
 
-var (
-	_ RepositoriesServiceInterface = (*RepositoriesService)(nil)
-)
+var _ RepositoriesServiceInterface = (*RepositoriesService)(nil)
 
 // TreeNode represents a GitLab repository file or directory.
 //

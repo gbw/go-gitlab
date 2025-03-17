@@ -24,6 +24,7 @@ import (
 )
 
 func TestCreateApplication(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/applications",
@@ -55,6 +56,7 @@ func TestCreateApplication(t *testing.T) {
 }
 
 func TestListApplications(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/applications",
@@ -82,6 +84,7 @@ func TestListApplications(t *testing.T) {
 }
 
 func TestDeleteApplication(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/applications/4",

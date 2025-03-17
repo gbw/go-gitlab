@@ -41,9 +41,7 @@ type (
 	}
 )
 
-var (
-	_ GroupLabelsServiceInterface = (*GroupLabelsService)(nil)
-)
+var _ GroupLabelsServiceInterface = (*GroupLabelsService)(nil)
 
 // GroupLabel represents a GitLab group label.
 //

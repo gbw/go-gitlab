@@ -25,9 +25,7 @@ type (
 	}
 )
 
-var (
-	_ MemberRolesServiceInterface = (*MemberRolesService)(nil)
-)
+var _ MemberRolesServiceInterface = (*MemberRolesService)(nil)
 
 // MemberRole represents a GitLab member role.
 //

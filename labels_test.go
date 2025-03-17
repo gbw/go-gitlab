@@ -24,6 +24,7 @@ import (
 )
 
 func TestCreateLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels", func(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +49,7 @@ func TestCreateLabel(t *testing.T) {
 }
 
 func TestDeleteLabelbyID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels/1", func(w http.ResponseWriter, r *http.Request) {
@@ -62,6 +64,7 @@ func TestDeleteLabelbyID(t *testing.T) {
 }
 
 func TestDeleteLabelbyName(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels/MyLabel", func(w http.ResponseWriter, r *http.Request) {
@@ -80,6 +83,7 @@ func TestDeleteLabelbyName(t *testing.T) {
 }
 
 func TestUpdateLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels/MyLabel", func(w http.ResponseWriter, r *http.Request) {
@@ -112,6 +116,7 @@ func TestUpdateLabel(t *testing.T) {
 }
 
 func TestSubscribeToLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels/5/subscribe", func(w http.ResponseWriter, r *http.Request) {
@@ -130,6 +135,7 @@ func TestSubscribeToLabel(t *testing.T) {
 }
 
 func TestUnsubscribeFromLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels/5/unsubscribe", func(w http.ResponseWriter, r *http.Request) {
@@ -143,6 +149,7 @@ func TestUnsubscribeFromLabel(t *testing.T) {
 }
 
 func TestListLabels(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels", func(w http.ResponseWriter, r *http.Request) {
@@ -167,6 +174,7 @@ func TestListLabels(t *testing.T) {
 }
 
 func TestGetLabel(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/labels/5", func(w http.ResponseWriter, r *http.Request) {

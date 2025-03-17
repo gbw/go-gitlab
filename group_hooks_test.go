@@ -29,6 +29,7 @@ import (
 )
 
 func TestListGroupHooks(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/hooks", func(w http.ResponseWriter, r *http.Request) {
@@ -108,6 +109,7 @@ func TestListGroupHooks(t *testing.T) {
 }
 
 func TestGetGroupHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
@@ -185,6 +187,7 @@ func TestGetGroupHook(t *testing.T) {
 }
 
 func TestResendGroupHookEvent(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/hooks/1/events/1/resend", func(w http.ResponseWriter, r *http.Request) {
@@ -199,6 +202,7 @@ func TestResendGroupHookEvent(t *testing.T) {
 }
 
 func TestAddGroupHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/hooks", func(w http.ResponseWriter, r *http.Request) {
@@ -284,6 +288,7 @@ func TestAddGroupHook(t *testing.T) {
 }
 
 func TestEditGroupHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
@@ -369,6 +374,7 @@ func TestEditGroupHook(t *testing.T) {
 }
 
 func TestDeleteGroupHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
@@ -381,6 +387,7 @@ func TestDeleteGroupHook(t *testing.T) {
 }
 
 func TestTriggerTestGroupHook(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/1/hooks/1/test/push_events", func(w http.ResponseWriter, r *http.Request) {
@@ -453,6 +460,7 @@ func TestTriggerTestGroupHook(t *testing.T) {
 }
 
 func TestSetGroupWebhookHeader(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	var bodyJson map[string]interface{}
 
@@ -483,6 +491,7 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 }
 
 func TestDeleteGroupCustomHeader(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
@@ -494,6 +503,7 @@ func TestDeleteGroupCustomHeader(t *testing.T) {
 }
 
 func TestSetGroupHookURLVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
@@ -505,6 +515,7 @@ func TestSetGroupHookURLVariable(t *testing.T) {
 }
 
 func TestDeleteGroupHookURLVariable(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)

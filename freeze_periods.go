@@ -45,9 +45,7 @@ type (
 	}
 )
 
-var (
-	_ FreezePeriodsServiceInterface = (*FreezePeriodsService)(nil)
-)
+var _ FreezePeriodsServiceInterface = (*FreezePeriodsService)(nil)
 
 // FreezePeriod represents a freeze period object.
 //

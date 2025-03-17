@@ -25,6 +25,7 @@ import (
 )
 
 func TestDisableRunner(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/runners/2", func(w http.ResponseWriter, r *http.Request) {
@@ -39,6 +40,7 @@ func TestDisableRunner(t *testing.T) {
 }
 
 func TestListRunnersJobs(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/1/jobs", func(w http.ResponseWriter, r *http.Request) {
@@ -122,6 +124,7 @@ func TestListRunnersJobs(t *testing.T) {
 }
 
 func TestRemoveRunner(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/1", func(w http.ResponseWriter, r *http.Request) {
@@ -136,6 +139,7 @@ func TestRemoveRunner(t *testing.T) {
 }
 
 func TestUpdateRunnersDetails(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/6", func(w http.ResponseWriter, r *http.Request) {
@@ -187,6 +191,7 @@ func TestUpdateRunnersDetails(t *testing.T) {
 }
 
 func TestGetRunnerDetails(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/6", func(w http.ResponseWriter, r *http.Request) {
@@ -236,6 +241,7 @@ func TestGetRunnerDetails(t *testing.T) {
 }
 
 func TestRegisterNewRunner(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners", func(w http.ResponseWriter, r *http.Request) {
@@ -269,6 +275,7 @@ func TestRegisterNewRunner(t *testing.T) {
 // Similar to TestRegisterNewRunner but sends info struct and some extra other
 // fields too.
 func TestRegisterNewRunnerInfo(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners", func(w http.ResponseWriter, r *http.Request) {
@@ -329,6 +336,7 @@ func TestRegisterNewRunnerInfo(t *testing.T) {
 }
 
 func TestDeleteRegisteredRunner(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners", func(w http.ResponseWriter, r *http.Request) {
@@ -350,6 +358,7 @@ func TestDeleteRegisteredRunner(t *testing.T) {
 }
 
 func TestDeleteRegisteredRunnerByID(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/11111", func(w http.ResponseWriter, r *http.Request) {
@@ -371,6 +380,7 @@ func TestDeleteRegisteredRunnerByID(t *testing.T) {
 }
 
 func TestVerifyRegisteredRunner(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/verify", func(w http.ResponseWriter, r *http.Request) {
@@ -392,6 +402,7 @@ func TestVerifyRegisteredRunner(t *testing.T) {
 }
 
 func TestResetInstanceRunnerRegistrationToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/reset_registration_token", func(w http.ResponseWriter, r *http.Request) {
@@ -423,6 +434,7 @@ func TestResetInstanceRunnerRegistrationToken(t *testing.T) {
 }
 
 func TestResetGroupRunnerRegistrationToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/groups/foobar/runners/reset_registration_token", func(w http.ResponseWriter, r *http.Request) {
@@ -454,6 +466,7 @@ func TestResetGroupRunnerRegistrationToken(t *testing.T) {
 }
 
 func TestResetProjectRunnerRegistrationToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/9/runners/reset_registration_token", func(w http.ResponseWriter, r *http.Request) {
@@ -485,6 +498,7 @@ func TestResetProjectRunnerRegistrationToken(t *testing.T) {
 }
 
 func TestResetRunnerAuthenticationToken(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/runners/42/reset_authentication_token", func(w http.ResponseWriter, r *http.Request) {

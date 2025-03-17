@@ -28,6 +28,7 @@ import (
 )
 
 func TestListEnvironments(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/environments", func(w http.ResponseWriter, r *http.Request) {
@@ -103,6 +104,7 @@ func TestListEnvironments(t *testing.T) {
 }
 
 func TestGetEnvironment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/environments/5949167", func(w http.ResponseWriter, r *http.Request) {
@@ -180,6 +182,7 @@ func TestGetEnvironment(t *testing.T) {
 }
 
 func TestCreateEnvironment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/environments", func(w http.ResponseWriter, r *http.Request) {
@@ -259,6 +262,7 @@ func TestCreateEnvironment(t *testing.T) {
 }
 
 func TestEditEnvironment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/environments/1", func(w http.ResponseWriter, r *http.Request) {
@@ -338,6 +342,7 @@ func TestEditEnvironment(t *testing.T) {
 }
 
 func TestDeleteEnvironment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/environments/1", func(w http.ResponseWriter, r *http.Request) {
@@ -351,6 +356,7 @@ func TestDeleteEnvironment(t *testing.T) {
 }
 
 func TestStopEnvironment(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/1/environments/1/stop", func(w http.ResponseWriter, r *http.Request) {
@@ -372,6 +378,7 @@ func TestStopEnvironment(t *testing.T) {
 }
 
 func TestUnmarshal(t *testing.T) {
+	t.Parallel()
 	jsonObject := `
     {
         "id": 10,

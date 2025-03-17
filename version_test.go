@@ -24,6 +24,7 @@ import (
 )
 
 func TestGetVersion(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/version",

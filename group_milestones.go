@@ -43,9 +43,7 @@ type (
 	}
 )
 
-var (
-	_ GroupMilestonesServiceInterface = (*GroupMilestonesService)(nil)
-)
+var _ GroupMilestonesServiceInterface = (*GroupMilestonesService)(nil)
 
 // GroupMilestone represents a GitLab milestone.
 //
