@@ -263,3 +263,48 @@ func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall) DoAndR
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
+
+// RotateGroupAccessTokenSelf mocks base method.
+func (m *MockGroupAccessTokensServiceInterface) RotateGroupAccessTokenSelf(gid any, opt *gitlab.RotateGroupAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RotateGroupAccessTokenSelf", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupAccessToken)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// RotateGroupAccessTokenSelf indicates an expected call of RotateGroupAccessTokenSelf.
+func (mr *MockGroupAccessTokensServiceInterfaceMockRecorder) RotateGroupAccessTokenSelf(gid, opt any, options ...any) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RotateGroupAccessTokenSelf", reflect.TypeOf((*MockGroupAccessTokensServiceInterface)(nil).RotateGroupAccessTokenSelf), varargs...)
+	return &MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall{Call: call}
+}
+
+// MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall wrap *gomock.Call
+type MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall) Return(arg0 *gitlab.GroupAccessToken, arg1 *gitlab.Response, arg2 error) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall) Do(f func(any, *gitlab.RotateGroupAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall) DoAndReturn(f func(any, *gitlab.RotateGroupAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenSelfCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
