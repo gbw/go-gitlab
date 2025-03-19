@@ -199,6 +199,43 @@ func TestRotateProjectAccessToken(t *testing.T) {
 	}
 }
 
+func TestRotateProjectAccessTokenSelf(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/projects/1/access_tokens/self/rotate", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		mustWriteHTTPResponse(t, w, "testdata/rotate_project_access_token.json")
+	})
+
+	createdAt, _ := time.Parse(time.RFC3339, "2023-08-01T15:00:00.000Z")
+	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
+	opts := &RotateProjectAccessTokenOptions{ExpiresAt: &expiration}
+	rotatedToken, _, err := client.ProjectAccessTokens.RotateProjectAccessTokenSelf(1, opts)
+	if err != nil {
+		t.Errorf("ProjectAccessTokens.RotateProjectAccessTokenSelf returned error: %v", err)
+	}
+
+	want := &ProjectAccessToken{
+		PersonalAccessToken: PersonalAccessToken{
+			ID:          42,
+			UserID:      1337,
+			Active:      true,
+			Name:        "Rotated Token",
+			Description: "Describe rotated token",
+			Scopes:      []string{"api"},
+			ExpiresAt:   &expiration,
+			CreatedAt:   &createdAt,
+			Revoked:     false,
+			Token:       "s3cr3t",
+		},
+		AccessLevel: AccessLevelValue(30),
+	}
+
+	if !reflect.DeepEqual(want, rotatedToken) {
+		t.Errorf("ProjectAccessTokens.RotateProjectAccessTokenSelf returned %+v, want %+v", rotatedToken, want)
+	}
+}
+
 func TestRevokeProjectAccessToken(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
