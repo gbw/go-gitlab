@@ -263,3 +263,48 @@ func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall) Do
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
+
+// RotateProjectAccessTokenSelf mocks base method.
+func (m *MockProjectAccessTokensServiceInterface) RotateProjectAccessTokenSelf(pid any, opt *gitlab.RotateProjectAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RotateProjectAccessTokenSelf", varargs...)
+	ret0, _ := ret[0].(*gitlab.ProjectAccessToken)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// RotateProjectAccessTokenSelf indicates an expected call of RotateProjectAccessTokenSelf.
+func (mr *MockProjectAccessTokensServiceInterfaceMockRecorder) RotateProjectAccessTokenSelf(pid, opt any, options ...any) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RotateProjectAccessTokenSelf", reflect.TypeOf((*MockProjectAccessTokensServiceInterface)(nil).RotateProjectAccessTokenSelf), varargs...)
+	return &MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall{Call: call}
+}
+
+// MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall wrap *gomock.Call
+type MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall) Return(arg0 *gitlab.ProjectAccessToken, arg1 *gitlab.Response, arg2 error) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall) Do(f func(any, *gitlab.RotateProjectAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall) DoAndReturn(f func(any, *gitlab.RotateProjectAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenSelfCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
