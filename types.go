@@ -288,6 +288,23 @@ const (
 	ContainerRegistryStatusDeleteOngoing   ContainerRegistryStatus = "delete_ongoing"
 )
 
+// ProtectionRuleAccessLevel represents the access level for a Container
+// Registry Protection Rule.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/container_repository_protection_rules/
+type ProtectionRuleAccessLevel string
+
+// These constants represent all valid protection rule access levels.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/container_repository_protection_rules/
+const (
+	ProtectionRuleAccessLevelMaintainer ProtectionRuleAccessLevel = "maintainer"
+	ProtectionRuleAccessLevelOwner      ProtectionRuleAccessLevel = "owner"
+	ProtectionRuleAccessLevelAdmin      ProtectionRuleAccessLevel = "admin"
+)
+
 // DeploymentApprovalStatus represents a Gitlab deployment approval status.
 type DeploymentApprovalStatus string
 
