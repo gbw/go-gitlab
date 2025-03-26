@@ -309,6 +309,51 @@ func (c *MockRepositoryFilesServiceInterfaceGetRawFileCall) DoAndReturn(f func(a
 	return c
 }
 
+// GetRawFileMetaData mocks base method.
+func (m *MockRepositoryFilesServiceInterface) GetRawFileMetaData(pid any, fileName string, opt *gitlab.GetRawFileOptions, options ...gitlab.RequestOptionFunc) (*gitlab.File, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, fileName, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetRawFileMetaData", varargs...)
+	ret0, _ := ret[0].(*gitlab.File)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetRawFileMetaData indicates an expected call of GetRawFileMetaData.
+func (mr *MockRepositoryFilesServiceInterfaceMockRecorder) GetRawFileMetaData(pid, fileName, opt any, options ...any) *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, fileName, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRawFileMetaData", reflect.TypeOf((*MockRepositoryFilesServiceInterface)(nil).GetRawFileMetaData), varargs...)
+	return &MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall{Call: call}
+}
+
+// MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall wrap *gomock.Call
+type MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall) Return(arg0 *gitlab.File, arg1 *gitlab.Response, arg2 error) *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall) Do(f func(any, string, *gitlab.GetRawFileOptions, ...gitlab.RequestOptionFunc) (*gitlab.File, *gitlab.Response, error)) *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall) DoAndReturn(f func(any, string, *gitlab.GetRawFileOptions, ...gitlab.RequestOptionFunc) (*gitlab.File, *gitlab.Response, error)) *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // UpdateFile mocks base method.
 func (m *MockRepositoryFilesServiceInterface) UpdateFile(pid any, fileName string, opt *gitlab.UpdateFileOptions, options ...gitlab.RequestOptionFunc) (*gitlab.FileInfo, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
