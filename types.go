@@ -59,16 +59,17 @@ func AccessControl(v AccessControlValue) *AccessControlValue {
 
 // AccessLevelValue represents a permission level within GitLab.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/user/permissions.html
+// GitLab API docs: https://docs.gitlab.com/user/permissions/#roles
 type AccessLevelValue int
 
 // List of available access levels.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/user/permissions.html
+// GitLab API docs: https://docs.gitlab.com/api/access_requests/#valid-access-levels
 const (
 	NoPermissions            AccessLevelValue = 0
 	MinimalAccessPermissions AccessLevelValue = 5
 	GuestPermissions         AccessLevelValue = 10
+	PlannerPermissions       AccessLevelValue = 15
 	ReporterPermissions      AccessLevelValue = 20
 	DeveloperPermissions     AccessLevelValue = 30
 	MaintainerPermissions    AccessLevelValue = 40
