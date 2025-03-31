@@ -40,51 +40,6 @@ func (m *MockTagsServiceInterface) EXPECT() *MockTagsServiceInterfaceMockRecorde
 	return m.recorder
 }
 
-// CreateReleaseNote mocks base method.
-func (m *MockTagsServiceInterface) CreateReleaseNote(pid any, tag string, opt *gitlab.CreateReleaseNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseNote, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, tag, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "CreateReleaseNote", varargs...)
-	ret0, _ := ret[0].(*gitlab.ReleaseNote)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// CreateReleaseNote indicates an expected call of CreateReleaseNote.
-func (mr *MockTagsServiceInterfaceMockRecorder) CreateReleaseNote(pid, tag, opt any, options ...any) *MockTagsServiceInterfaceCreateReleaseNoteCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, tag, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateReleaseNote", reflect.TypeOf((*MockTagsServiceInterface)(nil).CreateReleaseNote), varargs...)
-	return &MockTagsServiceInterfaceCreateReleaseNoteCall{Call: call}
-}
-
-// MockTagsServiceInterfaceCreateReleaseNoteCall wrap *gomock.Call
-type MockTagsServiceInterfaceCreateReleaseNoteCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockTagsServiceInterfaceCreateReleaseNoteCall) Return(arg0 *gitlab.ReleaseNote, arg1 *gitlab.Response, arg2 error) *MockTagsServiceInterfaceCreateReleaseNoteCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockTagsServiceInterfaceCreateReleaseNoteCall) Do(f func(any, string, *gitlab.CreateReleaseNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseNote, *gitlab.Response, error)) *MockTagsServiceInterfaceCreateReleaseNoteCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTagsServiceInterfaceCreateReleaseNoteCall) DoAndReturn(f func(any, string, *gitlab.CreateReleaseNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseNote, *gitlab.Response, error)) *MockTagsServiceInterfaceCreateReleaseNoteCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // CreateTag mocks base method.
 func (m *MockTagsServiceInterface) CreateTag(pid any, opt *gitlab.CreateTagOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Tag, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -260,51 +215,6 @@ func (c *MockTagsServiceInterfaceListTagsCall) Do(f func(any, *gitlab.ListTagsOp
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockTagsServiceInterfaceListTagsCall) DoAndReturn(f func(any, *gitlab.ListTagsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Tag, *gitlab.Response, error)) *MockTagsServiceInterfaceListTagsCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
-// UpdateReleaseNote mocks base method.
-func (m *MockTagsServiceInterface) UpdateReleaseNote(pid any, tag string, opt *gitlab.UpdateReleaseNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseNote, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, tag, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpdateReleaseNote", varargs...)
-	ret0, _ := ret[0].(*gitlab.ReleaseNote)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// UpdateReleaseNote indicates an expected call of UpdateReleaseNote.
-func (mr *MockTagsServiceInterfaceMockRecorder) UpdateReleaseNote(pid, tag, opt any, options ...any) *MockTagsServiceInterfaceUpdateReleaseNoteCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, tag, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateReleaseNote", reflect.TypeOf((*MockTagsServiceInterface)(nil).UpdateReleaseNote), varargs...)
-	return &MockTagsServiceInterfaceUpdateReleaseNoteCall{Call: call}
-}
-
-// MockTagsServiceInterfaceUpdateReleaseNoteCall wrap *gomock.Call
-type MockTagsServiceInterfaceUpdateReleaseNoteCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockTagsServiceInterfaceUpdateReleaseNoteCall) Return(arg0 *gitlab.ReleaseNote, arg1 *gitlab.Response, arg2 error) *MockTagsServiceInterfaceUpdateReleaseNoteCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockTagsServiceInterfaceUpdateReleaseNoteCall) Do(f func(any, string, *gitlab.UpdateReleaseNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseNote, *gitlab.Response, error)) *MockTagsServiceInterfaceUpdateReleaseNoteCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTagsServiceInterfaceUpdateReleaseNoteCall) DoAndReturn(f func(any, string, *gitlab.UpdateReleaseNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseNote, *gitlab.Response, error)) *MockTagsServiceInterfaceUpdateReleaseNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
