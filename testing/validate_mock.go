@@ -40,51 +40,6 @@ func (m *MockValidateServiceInterface) EXPECT() *MockValidateServiceInterfaceMoc
 	return m.recorder
 }
 
-// Lint mocks base method.
-func (m *MockValidateServiceInterface) Lint(opts *gitlab.LintOptions, options ...gitlab.RequestOptionFunc) (*gitlab.LintResult, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{opts}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Lint", varargs...)
-	ret0, _ := ret[0].(*gitlab.LintResult)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// Lint indicates an expected call of Lint.
-func (mr *MockValidateServiceInterfaceMockRecorder) Lint(opts any, options ...any) *MockValidateServiceInterfaceLintCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{opts}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Lint", reflect.TypeOf((*MockValidateServiceInterface)(nil).Lint), varargs...)
-	return &MockValidateServiceInterfaceLintCall{Call: call}
-}
-
-// MockValidateServiceInterfaceLintCall wrap *gomock.Call
-type MockValidateServiceInterfaceLintCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockValidateServiceInterfaceLintCall) Return(arg0 *gitlab.LintResult, arg1 *gitlab.Response, arg2 error) *MockValidateServiceInterfaceLintCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockValidateServiceInterfaceLintCall) Do(f func(*gitlab.LintOptions, ...gitlab.RequestOptionFunc) (*gitlab.LintResult, *gitlab.Response, error)) *MockValidateServiceInterfaceLintCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockValidateServiceInterfaceLintCall) DoAndReturn(f func(*gitlab.LintOptions, ...gitlab.RequestOptionFunc) (*gitlab.LintResult, *gitlab.Response, error)) *MockValidateServiceInterfaceLintCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // ProjectLint mocks base method.
 func (m *MockValidateServiceInterface) ProjectLint(pid any, opt *gitlab.ProjectLintOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectLintResult, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
