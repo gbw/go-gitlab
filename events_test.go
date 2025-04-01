@@ -266,7 +266,7 @@ func TestEventsService_ListProjectVisibleEvents(t *testing.T) {
 			},
 			AuthorUsername: "venky333",
 		},
-		// example from https://docs.gitlab.com/ee/api/events.html#get-user-contribution-events
+		// example from https://docs.gitlab.com/api/events/#get-user-contribution-events
 		{
 			ID:          4,
 			Title:       "",
