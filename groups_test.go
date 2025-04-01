@@ -984,7 +984,7 @@ func TestGetGroupWithEmailsEnabled(t *testing.T) {
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
 
-			// Modified from https://docs.gitlab.com/ee/api/groups.html#details-of-a-group
+			// Modified from https://docs.gitlab.com/api/groups/#details-of-a-group
 			fmt.Fprint(w, `
 			{
 				"id": 1,
