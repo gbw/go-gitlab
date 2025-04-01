@@ -144,6 +144,8 @@ func TestSecureFiles_CreateSecureFile(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/secure_files", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testFormBody(t, r, "name", "test.jks")
+
 		fmt.Fprint(w, `
 			{
 				"id": 1,
@@ -169,7 +171,7 @@ func TestSecureFiles_CreateSecureFile(t *testing.T) {
 	}
 
 	b := strings.NewReader("dummy")
-	file, resp, err := client.SecureFiles.CreateSecureFile(1, b, "test.jks")
+	file, resp, err := client.SecureFiles.CreateSecureFile(1, b, &CreateSecureFileOptions{Name: Ptr("test.jks")})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.Equal(t, want, file)

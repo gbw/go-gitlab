@@ -72,6 +72,14 @@ func testMethod(t *testing.T, r *http.Request, want string) {
 	}
 }
 
+// Tests that a given form attribute has a value in a form request. Useful
+// for testing file upload API requests.
+func testFormBody(t *testing.T, r *http.Request, key string, want string) {
+	if got := r.FormValue(key); got != want {
+		t.Errorf("Request body for key %s got: %s, want %s", key, got, want)
+	}
+}
+
 func testBody(t *testing.T, r *http.Request, want string) {
 	buffer := new(bytes.Buffer)
 	_, err := buffer.ReadFrom(r.Body)
