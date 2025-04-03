@@ -530,7 +530,7 @@ func TestListGroupIssues(t *testing.T) {
 	listGroupIssue := &ListGroupIssuesOptions{
 		State:      Ptr("Open"),
 		AuthorID:   Ptr(0o1),
-		AssigneeID: Ptr(0o2),
+		AssigneeID: AssigneeID(0o2),
 	}
 
 	issues, _, err := client.Issues.ListGroupIssues("1", listGroupIssue)
