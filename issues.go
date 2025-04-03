@@ -279,25 +279,28 @@ type ListGroupIssuesOptions struct {
 	AuthorUsername    *string       `url:"author_username,omitempty" json:"author_username,omitempty"`
 	NotAuthorUsername *string       `url:"not[author_username],omitempty" json:"not[author_username],omitempty"`
 
-	AssigneeID          *int       `url:"assignee_id,omitempty" json:"assignee_id,omitempty"`
-	NotAssigneeID       *int       `url:"not[assignee_id],omitempty" json:"not[assignee_id],omitempty"`
-	AssigneeUsername    *string    `url:"assignee_username,omitempty" json:"assignee_username,omitempty"`
-	NotAssigneeUsername *string    `url:"not[assignee_username],omitempty" json:"not[assignee_username],omitempty"`
-	MyReactionEmoji     *string    `url:"my_reaction_emoji,omitempty" json:"my_reaction_emoji,omitempty"`
-	NotMyReactionEmoji  *string    `url:"not[my_reaction_emoji],omitempty" json:"not[my_reaction_emoji],omitempty"`
-	OrderBy             *string    `url:"order_by,omitempty" json:"order_by,omitempty"`
-	Sort                *string    `url:"sort,omitempty" json:"sort,omitempty"`
-	Search              *string    `url:"search,omitempty" json:"search,omitempty"`
-	NotSearch           *string    `url:"not[search],omitempty" json:"not[search],omitempty"`
-	In                  *string    `url:"in,omitempty" json:"in,omitempty"`
-	NotIn               *string    `url:"not[in],omitempty" json:"not[in],omitempty"`
-	CreatedAfter        *time.Time `url:"created_after,omitempty" json:"created_after,omitempty"`
-	CreatedBefore       *time.Time `url:"created_before,omitempty" json:"created_before,omitempty"`
-	DueDate             *string    `url:"due_date,omitempty" json:"due_date,omitempty"`
-	UpdatedAfter        *time.Time `url:"updated_after,omitempty" json:"updated_after,omitempty"`
-	UpdatedBefore       *time.Time `url:"updated_before,omitempty" json:"updated_before,omitempty"`
-	IssueType           *string    `url:"issue_type,omitempty" json:"issue_type,omitempty"`
-	IterationID         *int       `url:"iteration_id,omitempty" json:"iteration_id,omitempty"`
+	// AssigneeID is defined as an int the the documentation, however, the field
+	// must be able to accept Assignee IDs and the words 'None' and 'Any'.  Use
+	// *AssigneIDValue instead of *int.
+	AssigneeID          *AssigneeIDValue `url:"assignee_id,omitempty" json:"assignee_id,omitempty"`
+	NotAssigneeID       *int             `url:"not[assignee_id],omitempty" json:"not[assignee_id],omitempty"`
+	AssigneeUsername    *string          `url:"assignee_username,omitempty" json:"assignee_username,omitempty"`
+	NotAssigneeUsername *string          `url:"not[assignee_username],omitempty" json:"not[assignee_username],omitempty"`
+	MyReactionEmoji     *string          `url:"my_reaction_emoji,omitempty" json:"my_reaction_emoji,omitempty"`
+	NotMyReactionEmoji  *string          `url:"not[my_reaction_emoji],omitempty" json:"not[my_reaction_emoji],omitempty"`
+	OrderBy             *string          `url:"order_by,omitempty" json:"order_by,omitempty"`
+	Sort                *string          `url:"sort,omitempty" json:"sort,omitempty"`
+	Search              *string          `url:"search,omitempty" json:"search,omitempty"`
+	NotSearch           *string          `url:"not[search],omitempty" json:"not[search],omitempty"`
+	In                  *string          `url:"in,omitempty" json:"in,omitempty"`
+	NotIn               *string          `url:"not[in],omitempty" json:"not[in],omitempty"`
+	CreatedAfter        *time.Time       `url:"created_after,omitempty" json:"created_after,omitempty"`
+	CreatedBefore       *time.Time       `url:"created_before,omitempty" json:"created_before,omitempty"`
+	DueDate             *string          `url:"due_date,omitempty" json:"due_date,omitempty"`
+	UpdatedAfter        *time.Time       `url:"updated_after,omitempty" json:"updated_after,omitempty"`
+	UpdatedBefore       *time.Time       `url:"updated_before,omitempty" json:"updated_before,omitempty"`
+	IssueType           *string          `url:"issue_type,omitempty" json:"issue_type,omitempty"`
+	IterationID         *int             `url:"iteration_id,omitempty" json:"iteration_id,omitempty"`
 }
 
 // ListGroupIssues gets a list of group issues. This function accepts
