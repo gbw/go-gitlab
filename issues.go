@@ -120,7 +120,6 @@ type Issue struct {
 	Milestone            *Milestone             `json:"milestone"`
 	ProjectID            int                    `json:"project_id"`
 	Assignees            []*IssueAssignee       `json:"assignees"`
-	Assignee             *IssueAssignee         `json:"assignee"`
 	UpdatedAt            *time.Time             `json:"updated_at"`
 	ClosedAt             *time.Time             `json:"closed_at"`
 	ClosedBy             *IssueCloser           `json:"closed_by"`
@@ -149,6 +148,9 @@ type Issue struct {
 	Iteration            *GroupIteration        `json:"iteration"`
 	TaskCompletionStatus *TasksCompletionStatus `json:"task_completion_status"`
 	ServiceDeskReplyTo   string                 `json:"service_desk_reply_to"`
+
+	// Deprecated: use Assignees instead
+	Assignee *IssueAssignee `json:"assignee"`
 }
 
 func (i Issue) String() string {

@@ -149,9 +149,12 @@ func (s *MergeTrainsService) GetMergeRequestOnAMergeTrain(pid interface{}, merge
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/merge_trains.html#add-a-merge-request-to-a-merge-train
 type AddMergeRequestToMergeTrainOptions struct {
-	WhenPipelineSucceeds *bool   `url:"when_pipeline_succeeds,omitempty" json:"when_pipeline_succeeds,omitempty"`
-	SHA                  *string `url:"sha,omitempty" json:"sha,omitempty"`
-	Squash               *bool   `url:"squash,omitempty" json:"squash,omitempty"`
+	AutoMerge *bool   `url:"auto_merge,omitempty" json:"auto_merge,omitempty"`
+	SHA       *string `url:"sha,omitempty" json:"sha,omitempty"`
+	Squash    *bool   `url:"squash,omitempty" json:"squash,omitempty"`
+
+	// Deprecated: in 17.11, use AutoMerge instead
+	WhenPipelineSucceeds *bool `url:"when_pipeline_succeeds,omitempty" json:"when_pipeline_succeeds,omitempty"`
 }
 
 // AddMergeRequestToMergeTrain Add a merge request to the merge train targeting
