@@ -26,10 +26,13 @@ type (
 	ResourceLabelEventsServiceInterface interface {
 		ListIssueLabelEvents(pid interface{}, issue int, opt *ListLabelEventsOptions, options ...RequestOptionFunc) ([]*LabelEvent, *Response, error)
 		GetIssueLabelEvent(pid interface{}, issue int, event int, options ...RequestOptionFunc) (*LabelEvent, *Response, error)
-		ListGroupEpicLabelEvents(gid interface{}, epic int, opt *ListLabelEventsOptions, options ...RequestOptionFunc) ([]*LabelEvent, *Response, error)
-		GetGroupEpicLabelEvent(gid interface{}, epic int, event int, options ...RequestOptionFunc) (*LabelEvent, *Response, error)
 		ListMergeRequestsLabelEvents(pid interface{}, request int, opt *ListLabelEventsOptions, options ...RequestOptionFunc) ([]*LabelEvent, *Response, error)
 		GetMergeRequestLabelEvent(pid interface{}, request int, event int, options ...RequestOptionFunc) (*LabelEvent, *Response, error)
+
+		// Deprecated: for removal in v5 of the API, use Work Items API instead
+		ListGroupEpicLabelEvents(gid interface{}, epic int, opt *ListLabelEventsOptions, options ...RequestOptionFunc) ([]*LabelEvent, *Response, error)
+		// Deprecated: for removal in v5 of the API, use Work Items API instead
+		GetGroupEpicLabelEvent(gid interface{}, epic int, event int, options ...RequestOptionFunc) (*LabelEvent, *Response, error)
 	}
 
 	// ResourceLabelEventsService handles communication with the event related
@@ -132,6 +135,7 @@ func (s *ResourceLabelEventsService) GetIssueLabelEvent(pid interface{}, issue i
 
 // ListGroupEpicLabelEvents retrieves resource label events for the specified
 // group and epic.
+// Deprecated: for removal in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/resource_label_events.html#list-group-epic-label-events
@@ -157,6 +161,7 @@ func (s *ResourceLabelEventsService) ListGroupEpicLabelEvents(gid interface{}, e
 }
 
 // GetGroupEpicLabelEvent gets a single group epic label event.
+// Deprecated: for removal in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/resource_label_events.html#get-single-epic-label-event

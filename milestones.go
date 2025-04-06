@@ -73,11 +73,14 @@ func (m Milestone) String() string {
 // https://docs.gitlab.com/ee/api/milestones.html#list-project-milestones
 type ListMilestonesOptions struct {
 	ListOptions
-	IIDs                    *[]int  `url:"iids[],omitempty" json:"iids,omitempty"`
-	Title                   *string `url:"title,omitempty" json:"title,omitempty"`
-	State                   *string `url:"state,omitempty" json:"state,omitempty"`
-	Search                  *string `url:"search,omitempty" json:"search,omitempty"`
-	IncludeParentMilestones *bool   `url:"include_parent_milestones,omitempty" json:"include_parent_milestones,omitempty"`
+	IIDs             *[]int  `url:"iids[],omitempty" json:"iids,omitempty"`
+	Title            *string `url:"title,omitempty" json:"title,omitempty"`
+	State            *string `url:"state,omitempty" json:"state,omitempty"`
+	Search           *string `url:"search,omitempty" json:"search,omitempty"`
+	IncludeAncestors *bool   `url:"include_ancestors,omitempty" json:"include_ancestors,omitempty"`
+
+	// Deprecated: in GitLab 16,7, use IncludeAncestors instead
+	IncludeParentMilestones *bool `url:"include_parent_milestones,omitempty" json:"include_parent_milestones,omitempty"`
 }
 
 // ListMilestones returns a list of project milestones.

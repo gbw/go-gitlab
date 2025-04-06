@@ -103,11 +103,14 @@ func (s *ProjectSnippetsService) GetSnippet(pid interface{}, snippet int, option
 // https://docs.gitlab.com/ee/api/project_snippets.html#create-new-snippet
 type CreateProjectSnippetOptions struct {
 	Title       *string                      `url:"title,omitempty" json:"title,omitempty"`
-	FileName    *string                      `url:"file_name,omitempty" json:"file_name,omitempty"`
 	Description *string                      `url:"description,omitempty" json:"description,omitempty"`
-	Content     *string                      `url:"content,omitempty" json:"content,omitempty"`
 	Visibility  *VisibilityValue             `url:"visibility,omitempty" json:"visibility,omitempty"`
 	Files       *[]*CreateSnippetFileOptions `url:"files,omitempty" json:"files,omitempty"`
+
+	// Deprecated: use Files instead
+	FileName *string `url:"file_name,omitempty" json:"file_name,omitempty"`
+	// Deprecated: use Files instead
+	Content *string `url:"content,omitempty" json:"content,omitempty"`
 }
 
 // CreateSnippet creates a new project snippet. The user must have permission
@@ -142,11 +145,14 @@ func (s *ProjectSnippetsService) CreateSnippet(pid interface{}, opt *CreateProje
 // https://docs.gitlab.com/ee/api/project_snippets.html#update-snippet
 type UpdateProjectSnippetOptions struct {
 	Title       *string                      `url:"title,omitempty" json:"title,omitempty"`
-	FileName    *string                      `url:"file_name,omitempty" json:"file_name,omitempty"`
 	Description *string                      `url:"description,omitempty" json:"description,omitempty"`
-	Content     *string                      `url:"content,omitempty" json:"content,omitempty"`
 	Visibility  *VisibilityValue             `url:"visibility,omitempty" json:"visibility,omitempty"`
 	Files       *[]*UpdateSnippetFileOptions `url:"files,omitempty" json:"files,omitempty"`
+
+	// Deprecated: use Files instead
+	FileName *string `url:"file_name,omitempty" json:"file_name,omitempty"`
+	// Deprecated: use Files instead
+	Content *string `url:"content,omitempty" json:"content,omitempty"`
 }
 
 // UpdateSnippet updates an existing project snippet. The user must have

@@ -104,7 +104,6 @@ type BasicMergeRequest struct {
 	Milestone                   *Milestone             `json:"milestone"`
 	MergeWhenPipelineSucceeds   bool                   `json:"merge_when_pipeline_succeeds"`
 	DetailedMergeStatus         string                 `json:"detailed_merge_status"`
-	MergedBy                    *BasicUser             `json:"merged_by"`
 	MergeUser                   *BasicUser             `json:"merge_user"`
 	MergedAt                    *time.Time             `json:"merged_at"`
 	MergeAfter                  *time.Time             `json:"merge_after"`
@@ -128,6 +127,9 @@ type BasicMergeRequest struct {
 	TaskCompletionStatus        *TasksCompletionStatus `json:"task_completion_status"`
 	HasConflicts                bool                   `json:"has_conflicts"`
 	BlockingDiscussionsResolved bool                   `json:"blocking_discussions_resolved"`
+
+	// Deprecated: will be removed in v5 of the API, use MergeUser instead
+	MergedBy *BasicUser `json:"merged_by"`
 }
 
 func (m BasicMergeRequest) String() string {
@@ -139,11 +141,10 @@ func (m BasicMergeRequest) String() string {
 // GitLab API docs: https://docs.gitlab.com/ee/api/merge_requests.html
 type MergeRequest struct {
 	BasicMergeRequest
-	WorkInProgress bool   `json:"work_in_progress"`
-	MergeError     string `json:"merge_error"`
-	Subscribed     bool   `json:"subscribed"`
-	ChangesCount   string `json:"changes_count"`
-	User           struct {
+	MergeError   string `json:"merge_error"`
+	Subscribed   bool   `json:"subscribed"`
+	ChangesCount string `json:"changes_count"`
+	User         struct {
 		CanMerge bool `json:"can_merge"`
 	} `json:"user"`
 	LatestBuildStartedAt        *time.Time    `json:"latest_build_started_at"`
@@ -159,6 +160,9 @@ type MergeRequest struct {
 	RebaseInProgress     bool `json:"rebase_in_progress"`
 	DivergedCommitsCount int  `json:"diverged_commits_count"`
 	FirstContribution    bool `json:"first_contribution"`
+
+	// Deprecated: use Draft instead
+	WorkInProgress bool `json:"work_in_progress"`
 }
 
 func (m MergeRequest) String() string {
@@ -774,20 +778,22 @@ func (s *MergeRequestsService) GetIssuesClosedOnMerge(pid interface{}, mergeRequ
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/merge_requests.html#create-mr
 type CreateMergeRequestOptions struct {
-	Title                *string       `url:"title,omitempty" json:"title,omitempty"`
-	Description          *string       `url:"description,omitempty" json:"description,omitempty"`
-	SourceBranch         *string       `url:"source_branch,omitempty" json:"source_branch,omitempty"`
-	TargetBranch         *string       `url:"target_branch,omitempty" json:"target_branch,omitempty"`
-	Labels               *LabelOptions `url:"labels,comma,omitempty" json:"labels,omitempty"`
-	AssigneeID           *int          `url:"assignee_id,omitempty" json:"assignee_id,omitempty"`
-	AssigneeIDs          *[]int        `url:"assignee_ids,omitempty" json:"assignee_ids,omitempty"`
-	ReviewerIDs          *[]int        `url:"reviewer_ids,omitempty" json:"reviewer_ids,omitempty"`
-	TargetProjectID      *int          `url:"target_project_id,omitempty" json:"target_project_id,omitempty"`
-	MilestoneID          *int          `url:"milestone_id,omitempty" json:"milestone_id,omitempty"`
-	RemoveSourceBranch   *bool         `url:"remove_source_branch,omitempty" json:"remove_source_branch,omitempty"`
-	Squash               *bool         `url:"squash,omitempty" json:"squash,omitempty"`
-	AllowCollaboration   *bool         `url:"allow_collaboration,omitempty" json:"allow_collaboration,omitempty"`
-	ApprovalsBeforeMerge *int          `url:"approvals_before_merge,omitempty" json:"approvals_before_merge,omitempty"`
+	Title              *string       `url:"title,omitempty" json:"title,omitempty"`
+	Description        *string       `url:"description,omitempty" json:"description,omitempty"`
+	SourceBranch       *string       `url:"source_branch,omitempty" json:"source_branch,omitempty"`
+	TargetBranch       *string       `url:"target_branch,omitempty" json:"target_branch,omitempty"`
+	Labels             *LabelOptions `url:"labels,comma,omitempty" json:"labels,omitempty"`
+	AssigneeID         *int          `url:"assignee_id,omitempty" json:"assignee_id,omitempty"`
+	AssigneeIDs        *[]int        `url:"assignee_ids,omitempty" json:"assignee_ids,omitempty"`
+	ReviewerIDs        *[]int        `url:"reviewer_ids,omitempty" json:"reviewer_ids,omitempty"`
+	TargetProjectID    *int          `url:"target_project_id,omitempty" json:"target_project_id,omitempty"`
+	MilestoneID        *int          `url:"milestone_id,omitempty" json:"milestone_id,omitempty"`
+	RemoveSourceBranch *bool         `url:"remove_source_branch,omitempty" json:"remove_source_branch,omitempty"`
+	Squash             *bool         `url:"squash,omitempty" json:"squash,omitempty"`
+	AllowCollaboration *bool         `url:"allow_collaboration,omitempty" json:"allow_collaboration,omitempty"`
+
+	// Deprecated: will be removed in v5 of the API, use the Merge Request Approvals API instead
+	ApprovalsBeforeMerge *int `url:"approvals_before_merge,omitempty" json:"approvals_before_merge,omitempty"`
 }
 
 // CreateMergeRequest creates a new merge request.
@@ -1206,11 +1212,9 @@ type BlockingMergeRequest struct {
 	Labels                      *LabelOptions          `json:"labels"`
 	Description                 string                 `json:"description"`
 	Draft                       bool                   `json:"draft"`
-	WorkInProgress              bool                   `json:"work_in_progress"`
 	Milestone                   *string                `json:"milestone"`
-	MergeWhenPipelineSucceeds   bool                   `json:"merge_when_pipeline_succeeds"`
+	AutoMerge                   bool                   `json:"auto_merge"`
 	DetailedMergeStatus         string                 `json:"detailed_merge_status"`
-	MergedBy                    *BasicUser             `json:"merged_by"`
 	MergedAt                    *time.Time             `json:"merged_at"`
 	ClosedBy                    *BasicUser             `json:"closed_by"`
 	ClosedAt                    *time.Time             `json:"closed_at"`
@@ -1225,18 +1229,28 @@ type BlockingMergeRequest struct {
 	DiscussionLocked            *bool                  `json:"discussion_locked"`
 	TimeStats                   *TimeStats             `json:"time_stats"`
 	Squash                      bool                   `json:"squash"`
-	ApprovalsBeforeMerge        *int                   `json:"approvals_before_merge"`
-	Reference                   string                 `json:"reference"`
 	TaskCompletionStatus        *TasksCompletionStatus `json:"task_completion_status"`
 	HasConflicts                bool                   `json:"has_conflicts"`
 	BlockingDiscussionsResolved bool                   `json:"blocking_discussions_resolved"`
-	MergeStatus                 string                 `json:"merge_status"`
 	MergeUser                   *BasicUser             `json:"merge_user"`
 	MergeAfter                  time.Time              `json:"merge_after"`
 	Imported                    bool                   `json:"imported"`
 	ImportedFrom                string                 `json:"imported_from"`
 	PreparedAt                  *time.Time             `json:"prepared_at"`
 	SquashOnMerge               bool                   `json:"squash_on_merge"`
+
+	// Deprecated: use Draft instead
+	WorkInProgress bool `json:"work_in_progress"`
+	// Deprecated: will be removed in v5 of the API, use AutoMerge instead
+	MergeWhenPipelineSucceeds bool `json:"merge_when_pipeline_succeeds"`
+	// Deprecated: will be removed in v5 of the API, use MergeUser instead
+	MergedBy *BasicUser `json:"merged_by"`
+	// Deprecated: will be removed in v5 of the API, use the Merge Request Approvals API instead
+	ApprovalsBeforeMerge *int `json:"approvals_before_merge"`
+	// Deprecated: will be removed in v5 of the API, use References instead
+	Reference string `json:"reference"`
+	// Deprecated: in 15.6, use DetailedMergeStatus instead
+	MergeStatus string `json:"merge_status"`
 }
 
 func (m MergeRequestDependency) String() string {
