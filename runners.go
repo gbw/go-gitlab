@@ -38,10 +38,16 @@ type (
 		DeleteRegisteredRunner(opt *DeleteRegisteredRunnerOptions, options ...RequestOptionFunc) (*Response, error)
 		DeleteRegisteredRunnerByID(rid int, options ...RequestOptionFunc) (*Response, error)
 		VerifyRegisteredRunner(opt *VerifyRegisteredRunnerOptions, options ...RequestOptionFunc) (*Response, error)
-		ResetInstanceRunnerRegistrationToken(options ...RequestOptionFunc) (*RunnerRegistrationToken, *Response, error)
-		ResetGroupRunnerRegistrationToken(gid interface{}, options ...RequestOptionFunc) (*RunnerRegistrationToken, *Response, error)
-		ResetProjectRunnerRegistrationToken(pid interface{}, options ...RequestOptionFunc) (*RunnerRegistrationToken, *Response, error)
 		ResetRunnerAuthenticationToken(rid int, options ...RequestOptionFunc) (*RunnerAuthenticationToken, *Response, error)
+
+		// Deprecated: for removal in GitLab 20.0, see https://docs.gitlab.com/ci/runners/new_creation_workflow/ instead
+		ResetInstanceRunnerRegistrationToken(options ...RequestOptionFunc) (*RunnerRegistrationToken, *Response, error)
+
+		// Deprecated: for removal in GitLab 20.0, see https://docs.gitlab.com/ci/runners/new_creation_workflow/ instead
+		ResetGroupRunnerRegistrationToken(gid interface{}, options ...RequestOptionFunc) (*RunnerRegistrationToken, *Response, error)
+
+		// Deprecated: for removal in GitLab 20.0, see https://docs.gitlab.com/ci/runners/new_creation_workflow/ instead
+		ResetProjectRunnerRegistrationToken(pid interface{}, options ...RequestOptionFunc) (*RunnerRegistrationToken, *Response, error)
 	}
 
 	// RunnersService handles communication with the runner related methods of the
@@ -61,16 +67,20 @@ var _ RunnersServiceInterface = (*RunnersService)(nil)
 type Runner struct {
 	ID             int        `json:"id"`
 	Description    string     `json:"description"`
-	Active         bool       `json:"active"`
 	Paused         bool       `json:"paused"`
 	IsShared       bool       `json:"is_shared"`
-	IPAddress      string     `json:"ip_address"`
 	RunnerType     string     `json:"runner_type"`
 	Name           string     `json:"name"`
 	Online         bool       `json:"online"`
 	Status         string     `json:"status"`
 	Token          string     `json:"token"`
 	TokenExpiresAt *time.Time `json:"token_expires_at"`
+
+	// Deprecated: for removal in v5 of the API, use Paused instead
+	Active bool `json:"active"`
+
+	// Deprecated: returns an empty string from 17.0 onwards, see GraphQL resource CiRunnerManager instead
+	IPAddress string `json:"ip_address"`
 }
 
 // RunnerDetails represents the GitLab CI runner details.
@@ -78,10 +88,8 @@ type Runner struct {
 // GitLab API docs: https://docs.gitlab.com/ee/api/runners.html
 type RunnerDetails struct {
 	Paused          bool       `json:"paused"`
-	Architecture    string     `json:"architecture"`
 	Description     string     `json:"description"`
 	ID              int        `json:"id"`
-	IPAddress       string     `json:"ip_address"`
 	IsShared        bool       `json:"is_shared"`
 	RunnerType      string     `json:"runner_type"`
 	ContactedAt     *time.Time `json:"contacted_at"`
@@ -89,7 +97,6 @@ type RunnerDetails struct {
 	Name            string     `json:"name"`
 	Online          bool       `json:"online"`
 	Status          string     `json:"status"`
-	Platform        string     `json:"platform"`
 	Projects        []struct {
 		ID                int    `json:"id"`
 		Name              string `json:"name"`
@@ -98,10 +105,8 @@ type RunnerDetails struct {
 		PathWithNamespace string `json:"path_with_namespace"`
 	} `json:"projects"`
 	Token          string   `json:"token"`
-	Revision       string   `json:"revision"`
 	TagList        []string `json:"tag_list"`
 	RunUntagged    bool     `json:"run_untagged"`
-	Version        string   `json:"version"`
 	Locked         bool     `json:"locked"`
 	AccessLevel    string   `json:"access_level"`
 	MaximumTimeout int      `json:"maximum_timeout"`
@@ -110,6 +115,21 @@ type RunnerDetails struct {
 		Name   string `json:"name"`
 		WebURL string `json:"web_url"`
 	} `json:"groups"`
+
+	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
+	Architecture string `json:"architecture"`
+
+	// Deprecated: returns an empty string from 17.0 onwards, see GraphQL resource CiRunnerManager instead
+	IPAddress string `json:"ip_address"`
+
+	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
+	Platform string `json:"platform"`
+
+	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
+	Revision string `json:"revision"`
+
+	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
+	Version string `json:"version"`
 
 	// Deprecated: Use Paused instead. (Deprecated in GitLab 14.8)
 	Active bool `json:"active"`
@@ -425,7 +445,6 @@ type RegisterNewRunnerOptions struct {
 	Token           *string                       `url:"token" json:"token"`
 	Description     *string                       `url:"description,omitempty" json:"description,omitempty"`
 	Info            *RegisterNewRunnerInfoOptions `url:"info,omitempty" json:"info,omitempty"`
-	Active          *bool                         `url:"active,omitempty" json:"active,omitempty"`
 	Paused          *bool                         `url:"paused,omitempty" json:"paused,omitempty"`
 	Locked          *bool                         `url:"locked,omitempty" json:"locked,omitempty"`
 	RunUntagged     *bool                         `url:"run_untagged,omitempty" json:"run_untagged,omitempty"`
@@ -433,6 +452,9 @@ type RegisterNewRunnerOptions struct {
 	AccessLevel     *string                       `url:"access_level,omitempty" json:"access_level,omitempty"`
 	MaximumTimeout  *int                          `url:"maximum_timeout,omitempty" json:"maximum_timeout,omitempty"`
 	MaintenanceNote *string                       `url:"maintenance_note,omitempty" json:"maintenance_note,omitempty"`
+
+	// Deprecated: for removal in v5 of the API, use Paused instead
+	Active *bool `url:"active,omitempty" json:"active,omitempty"`
 }
 
 // RegisterNewRunnerInfoOptions represents the info hashmap parameter in
@@ -531,6 +553,7 @@ type RunnerRegistrationToken struct {
 
 // ResetInstanceRunnerRegistrationToken resets the instance runner registration
 // token.
+// Deprecated: for removal in GitLab 20.0, see https://docs.gitlab.com/ci/runners/new_creation_workflow/ instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/runners.html#reset-instances-runner-registration-token
@@ -550,6 +573,7 @@ func (s *RunnersService) ResetInstanceRunnerRegistrationToken(options ...Request
 }
 
 // ResetGroupRunnerRegistrationToken resets a group's runner registration token.
+// Deprecated: for removal in GitLab 20.0, see https://docs.gitlab.com/ci/runners/new_creation_workflow/ instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/runners.html#reset-groups-runner-registration-token
@@ -574,7 +598,8 @@ func (s *RunnersService) ResetGroupRunnerRegistrationToken(gid interface{}, opti
 	return r, resp, nil
 }
 
-// ResetGroupRunnerRegistrationToken resets a projects's runner registration token.
+// ResetProjectRunnerRegistrationToken resets a projects's runner registration token.
+// Deprecated: for removal in GitLab 20.0, see https://docs.gitlab.com/ci/runners/new_creation_workflow/ instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/runners.html#reset-projects-runner-registration-token
