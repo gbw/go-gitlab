@@ -466,6 +466,15 @@ type JobEvent struct {
 		Action         string `json:"action"`
 		DeploymentTier string `json:"deployment_tier"`
 	} `json:"environment"`
+	SourcePipeline struct {
+		Project struct {
+			ID                int    `json:"id"`
+			WebURL            string `json:"web_url"`
+			PathWithNamespace string `json:"path_with_namespace"`
+		} `json:"project"`
+		PipelineID int `json:"pipeline_id"`
+		JobID      int `json:"job_id"`
+	} `json:"source_pipeline"`
 }
 
 // MemberEvent represents a member event.

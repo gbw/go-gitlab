@@ -194,6 +194,12 @@ func TestJobEventUnmarshal(t *testing.T) {
 	expectedEvent.Environment.Action = "start"
 	expectedEvent.Environment.DeploymentTier = "production"
 
+	expectedEvent.SourcePipeline.Project.ID = 41
+	expectedEvent.SourcePipeline.Project.WebURL = "https://gitlab.example.com/gitlab-org/upstream-project"
+	expectedEvent.SourcePipeline.Project.PathWithNamespace = "gitlab-org/upstream-project"
+	expectedEvent.SourcePipeline.PipelineID = 30
+	expectedEvent.SourcePipeline.JobID = 3401
+
 	assert.Equal(t, expectedEvent, *event, "event should be equal to the expected one")
 }
 
