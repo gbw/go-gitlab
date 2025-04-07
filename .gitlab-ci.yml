@@ -41,7 +41,7 @@ stages:
 .go:base:
   extends:
     - .go:runner-tags
-  # From: https://docs.gitlab.com/ee/ci/caching/#cache-go-dependencies
+  # From: https://docs.gitlab.com/ci/caching/#cache-go-dependencies
   variables:
     GOPATH: $CI_PROJECT_DIR/.go
     GOLANGCI_LINT_CACHE: $CI_PROJECT_DIR/.golangci-lint

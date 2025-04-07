@@ -336,7 +336,7 @@ func TestEditProject(t *testing.T) {
 		attributesFound = strings.Contains(string(body), "ci_restrict_pipeline_cancellation_role") &&
 			strings.Contains(string(body), "ci_pipeline_variables_minimum_override_role")
 
-		// Print the start of the mock example from https://docs.gitlab.com/ee/api/projects.html#edit-project
+		// Print the start of the mock example from https://docs.gitlab.com/api/projects/#edit-a-project
 		// including the attribute we edited
 		fmt.Fprint(w, `
 		{
