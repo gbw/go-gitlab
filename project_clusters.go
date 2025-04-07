@@ -23,16 +23,23 @@ import (
 )
 
 type (
+	// Deprecated: in GitLab 14.5
 	ProjectClustersServiceInterface interface {
+		// Deprecated: in GitLab 14.5
 		ListClusters(pid interface{}, options ...RequestOptionFunc) ([]*ProjectCluster, *Response, error)
+		// Deprecated: in GitLab 14.5
 		GetCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*ProjectCluster, *Response, error)
+		// Deprecated: in GitLab 14.5
 		AddCluster(pid interface{}, opt *AddClusterOptions, options ...RequestOptionFunc) (*ProjectCluster, *Response, error)
+		// Deprecated: in GitLab 14.5
 		EditCluster(pid interface{}, cluster int, opt *EditClusterOptions, options ...RequestOptionFunc) (*ProjectCluster, *Response, error)
+		// Deprecated: in GitLab 14.5
 		DeleteCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// ProjectClustersService handles communication with the
 	// project clusters related methods of the GitLab API.
+	// Deprecated: in GitLab 14.5
 	//
 	// GitLab API docs:
 	// https://docs.gitlab.com/ee/api/project_clusters.html
@@ -41,9 +48,11 @@ type (
 	}
 )
 
+// Deprecated: in GitLab 14.5
 var _ ProjectClustersServiceInterface = (*ProjectClustersService)(nil)
 
 // ProjectCluster represents a GitLab Project Cluster.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/project_clusters.html
 type ProjectCluster struct {
@@ -61,11 +70,13 @@ type ProjectCluster struct {
 	Project            *Project            `json:"project"`
 }
 
+// Deprecated: in GitLab 14.5
 func (v ProjectCluster) String() string {
 	return Stringify(v)
 }
 
 // PlatformKubernetes represents a GitLab Project Cluster PlatformKubernetes.
+// Deprecated: in GitLab 14.5
 type PlatformKubernetes struct {
 	APIURL            string `json:"api_url"`
 	Token             string `json:"token"`
@@ -75,6 +86,7 @@ type PlatformKubernetes struct {
 }
 
 // ManagementProject represents a GitLab Project Cluster management_project.
+// Deprecated: in GitLab 14.5
 type ManagementProject struct {
 	ID                int        `json:"id"`
 	Description       string     `json:"description"`
@@ -86,6 +98,7 @@ type ManagementProject struct {
 }
 
 // ListClusters gets a list of all clusters in a project.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_clusters.html#list-project-clusters
@@ -111,6 +124,7 @@ func (s *ProjectClustersService) ListClusters(pid interface{}, options ...Reques
 }
 
 // GetCluster gets a cluster.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_clusters.html#get-a-single-project-cluster
@@ -136,6 +150,7 @@ func (s *ProjectClustersService) GetCluster(pid interface{}, cluster int, option
 }
 
 // AddClusterOptions represents the available AddCluster() options.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_clusters.html#add-existing-cluster-to-project
@@ -150,6 +165,7 @@ type AddClusterOptions struct {
 }
 
 // AddPlatformKubernetesOptions represents the available PlatformKubernetes options for adding.
+// Deprecated: in GitLab 14.5
 type AddPlatformKubernetesOptions struct {
 	APIURL            *string `url:"api_url,omitempty" json:"api_url,omitempty"`
 	Token             *string `url:"token,omitempty" json:"token,omitempty"`
@@ -159,6 +175,7 @@ type AddPlatformKubernetesOptions struct {
 }
 
 // AddCluster adds an existing cluster to the project.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_clusters.html#add-existing-cluster-to-project
@@ -184,6 +201,7 @@ func (s *ProjectClustersService) AddCluster(pid interface{}, opt *AddClusterOpti
 }
 
 // EditClusterOptions represents the available EditCluster() options.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_clusters.html#edit-project-cluster
@@ -196,6 +214,7 @@ type EditClusterOptions struct {
 }
 
 // EditPlatformKubernetesOptions represents the available PlatformKubernetes options for editing.
+// Deprecated: in GitLab 14.5
 type EditPlatformKubernetesOptions struct {
 	APIURL    *string `url:"api_url,omitempty" json:"api_url,omitempty"`
 	Token     *string `url:"token,omitempty" json:"token,omitempty"`
@@ -204,6 +223,7 @@ type EditPlatformKubernetesOptions struct {
 }
 
 // EditCluster updates an existing project cluster.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_clusters.html#edit-project-cluster
@@ -229,6 +249,7 @@ func (s *ProjectClustersService) EditCluster(pid interface{}, cluster int, opt *
 }
 
 // DeleteCluster deletes an existing project cluster.
+// Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_clusters.html#delete-project-cluster

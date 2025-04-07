@@ -22,16 +22,23 @@ import (
 )
 
 type (
+	// Deprecated: no matching docs found
 	ManagedLicensesServiceInterface interface {
+		// Deprecated: no matching docs found
 		ListManagedLicenses(pid interface{}, options ...RequestOptionFunc) ([]*ManagedLicense, *Response, error)
+		// Deprecated: no matching docs found
 		GetManagedLicense(pid, mlid interface{}, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
+		// Deprecated: no matching docs found
 		AddManagedLicense(pid interface{}, opt *AddManagedLicenseOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
+		// Deprecated: no matching docs found
 		DeleteManagedLicense(pid, mlid interface{}, options ...RequestOptionFunc) (*Response, error)
+		// Deprecated: no matching docs found
 		EditManagedLicense(pid, mlid interface{}, opt *EditManagedLicenceOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
 	}
 
 	// ManagedLicensesService handles communication with the managed licenses
 	// methods of the GitLab API.
+	// Deprecated: no matching docs found
 	//
 	// GitLab API docs: https://docs.gitlab.com/ee/api/managed_licenses.html
 	ManagedLicensesService struct {
@@ -39,9 +46,11 @@ type (
 	}
 )
 
+// Deprecated: no matching docs found
 var _ ManagedLicensesServiceInterface = (*ManagedLicensesService)(nil)
 
 // ManagedLicense represents a managed license.
+// Deprecated: no matching docs found
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/managed_licenses.html
 type ManagedLicense struct {
@@ -51,6 +60,7 @@ type ManagedLicense struct {
 }
 
 // ListManagedLicenses returns a list of managed licenses from a project.
+// Deprecated: no matching docs found
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/managed_licenses.html#list-managed-licenses
@@ -76,6 +86,7 @@ func (s *ManagedLicensesService) ListManagedLicenses(pid interface{}, options ..
 }
 
 // GetManagedLicense returns an existing managed license.
+// Deprecated: no matching docs found
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/managed_licenses.html#show-an-existing-managed-license
@@ -105,6 +116,7 @@ func (s *ManagedLicensesService) GetManagedLicense(pid, mlid interface{}, option
 }
 
 // AddManagedLicenseOptions represents the available AddManagedLicense() options.
+// Deprecated: no matching docs found
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/managed_licenses.html#create-a-new-managed-license
@@ -114,6 +126,7 @@ type AddManagedLicenseOptions struct {
 }
 
 // AddManagedLicense adds a managed license to a project.
+// Deprecated: no matching docs found
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/managed_licenses.html#create-a-new-managed-license
@@ -139,6 +152,7 @@ func (s *ManagedLicensesService) AddManagedLicense(pid interface{}, opt *AddMana
 }
 
 // DeleteManagedLicense deletes a managed license with a given ID.
+// Deprecated: no matching docs found
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/managed_licenses.html#delete-a-managed-license
@@ -162,6 +176,7 @@ func (s *ManagedLicensesService) DeleteManagedLicense(pid, mlid interface{}, opt
 }
 
 // EditManagedLicenceOptions represents the available EditManagedLicense() options.
+// Deprecated: no matching docs found
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/managed_licenses.html#edit-an-existing-managed-license
@@ -171,6 +186,7 @@ type EditManagedLicenceOptions struct {
 
 // EditManagedLicense updates an existing managed license with a new approval
 // status.
+// Deprecated: no matching docs found
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/managed_licenses.html#edit-an-existing-managed-license
