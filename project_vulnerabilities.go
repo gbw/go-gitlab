@@ -23,13 +23,17 @@ import (
 )
 
 type (
+	// Deprecated: use GraphQL Query.vulnerabilities instead
 	ProjectVulnerabilitiesServiceInterface interface {
+		// Deprecated: use GraphQL Query.vulnerabilities instead
 		ListProjectVulnerabilities(pid interface{}, opt *ListProjectVulnerabilitiesOptions, options ...RequestOptionFunc) ([]*ProjectVulnerability, *Response, error)
+		// Deprecated: use GraphQL Query.vulnerabilities instead
 		CreateVulnerability(pid interface{}, opt *CreateVulnerabilityOptions, options ...RequestOptionFunc) (*ProjectVulnerability, *Response, error)
 	}
 
 	// ProjectVulnerabilitiesService handles communication with the projects
 	// vulnerabilities related methods of the GitLab API.
+	// Deprecated: use GraphQL Query.vulnerabilities instead
 	//
 	// GitLab API docs: https://docs.gitlab.com/ee/api/project_vulnerabilities.html
 	ProjectVulnerabilitiesService struct {
@@ -37,9 +41,11 @@ type (
 	}
 )
 
+// Deprecated: use GraphQL Query.vulnerabilities instead
 var _ ProjectVulnerabilitiesServiceInterface = (*ProjectVulnerabilitiesService)(nil)
 
 // Project represents a GitLab project vulnerability.
+// Deprecated: use GraphQL Query.vulnerabilities instead
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/project_vulnerabilities.html
 type ProjectVulnerability struct {
@@ -69,6 +75,7 @@ type ProjectVulnerability struct {
 }
 
 // Project represents a GitLab project vulnerability finding.
+// Deprecated: use GraphQL Query.vulnerabilities instead
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/project_vulnerabilities.html
 type Finding struct {
@@ -92,6 +99,7 @@ type Finding struct {
 
 // ListProjectVulnerabilitiesOptions represents the available
 // ListProjectVulnerabilities() options.
+// Deprecated: use GraphQL Query.vulnerabilities instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_vulnerabilities.html#list-project-vulnerabilities
@@ -100,6 +108,7 @@ type ListProjectVulnerabilitiesOptions struct {
 }
 
 // ListProjectVulnerabilities gets a list of all project vulnerabilities.
+// Deprecated: use GraphQL Query.vulnerabilities instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_vulnerabilities.html#list-project-vulnerabilities
@@ -126,6 +135,7 @@ func (s *ProjectVulnerabilitiesService) ListProjectVulnerabilities(pid interface
 
 // CreateVulnerabilityOptions represents the available CreateVulnerability()
 // options.
+// Deprecated: use GraphQL Query.vulnerabilities instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_vulnerabilities.html#new-vulnerability
@@ -134,6 +144,7 @@ type CreateVulnerabilityOptions struct {
 }
 
 // CreateVulnerability creates a new vulnerability on the selected project.
+// Deprecated: use GraphQL Query.vulnerabilities instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/project_vulnerabilities.html#new-vulnerability
