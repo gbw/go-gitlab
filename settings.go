@@ -31,7 +31,7 @@ type (
 	// SettingsService handles communication with the application SettingsService
 	// related methods of the GitLab API.
 	//
-	// GitLab API docs: https://docs.gitlab.com/ee/api/settings.html
+	// GitLab API docs: https://docs.gitlab.com/api/settings/
 	SettingsService struct {
 		client *Client
 	}
@@ -41,7 +41,7 @@ var _ SettingsServiceInterface = (*SettingsService)(nil)
 
 // Settings represents the GitLab application settings.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/settings.html
+// GitLab API docs: https://docs.gitlab.com/api/settings/
 //
 // The available parameters have been modeled directly after the code, as the
 // documentation seems to be inaccurate.
@@ -510,7 +510,7 @@ func (s Settings) String() string {
 // GetSettings gets the current application settings.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/settings.html#get-current-application-settings
+// https://docs.gitlab.com/api/settings/#get-details-on-current-application-settings
 func (s *SettingsService) GetSettings(options ...RequestOptionFunc) (*Settings, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "application/settings", nil, options)
 	if err != nil {
@@ -529,7 +529,7 @@ func (s *SettingsService) GetSettings(options ...RequestOptionFunc) (*Settings, 
 // UpdateSettingsOptions represents the available UpdateSettings() options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/settings.html#change-application-settings
+// https://docs.gitlab.com/api/settings/#update-application-settings
 type UpdateSettingsOptions struct {
 	AbuseNotificationEmail                                *string                                 `url:"abuse_notification_email,omitempty" json:"abuse_notification_email,omitempty"`
 	AdminMode                                             *bool                                   `url:"admin_mode,omitempty" json:"admin_mode,omitempty"`
@@ -956,7 +956,7 @@ type UpdateSettingsOptions struct {
 // BranchProtectionDefaultsOptions represents default Git protected branch permissions options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#options-for-default_branch_protection_defaults
+// https://docs.gitlab.com/api/groups/#options-for-default_branch_protection_defaults
 type BranchProtectionDefaultsOptions struct {
 	AllowedToPush           *[]int `url:"allowed_to_push,omitempty" json:"allowed_to_push,omitempty"`
 	AllowForcePush          *bool  `url:"allow_force_push,omitempty" json:"allow_force_push,omitempty"`
@@ -967,7 +967,7 @@ type BranchProtectionDefaultsOptions struct {
 // UpdateSettings updates the application settings.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/settings.html#change-application-settings
+// https://docs.gitlab.com/api/settings/#update-application-settings
 func (s *SettingsService) UpdateSettings(opt *UpdateSettingsOptions, options ...RequestOptionFunc) (*Settings, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPut, "application/settings", opt, options)
 	if err != nil {
