@@ -42,7 +42,7 @@ type (
 	// Deprecated: in GitLab 14.5
 	//
 	// GitLab API docs:
-	// https://docs.gitlab.com/ee/api/project_clusters.html
+	// https://docs.gitlab.com/api/project_clusters/
 	ProjectClustersService struct {
 		client *Client
 	}
@@ -54,7 +54,7 @@ var _ ProjectClustersServiceInterface = (*ProjectClustersService)(nil)
 // ProjectCluster represents a GitLab Project Cluster.
 // Deprecated: in GitLab 14.5
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/project_clusters.html
+// GitLab API docs: https://docs.gitlab.com/api/project_clusters/
 type ProjectCluster struct {
 	ID                 int                 `json:"id"`
 	Name               string              `json:"name"`
@@ -101,7 +101,7 @@ type ManagementProject struct {
 // Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/project_clusters.html#list-project-clusters
+// https://docs.gitlab.com/api/project_clusters/#list-project-clusters
 func (s *ProjectClustersService) ListClusters(pid interface{}, options ...RequestOptionFunc) ([]*ProjectCluster, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
@@ -127,7 +127,7 @@ func (s *ProjectClustersService) ListClusters(pid interface{}, options ...Reques
 // Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/project_clusters.html#get-a-single-project-cluster
+// https://docs.gitlab.com/api/project_clusters/#get-a-single-project-cluster
 func (s *ProjectClustersService) GetCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*ProjectCluster, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
@@ -153,7 +153,7 @@ func (s *ProjectClustersService) GetCluster(pid interface{}, cluster int, option
 // Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/project_clusters.html#add-existing-cluster-to-project
+// https://docs.gitlab.com/api/project_clusters/#add-existing-cluster-to-project
 type AddClusterOptions struct {
 	Name                *string                       `url:"name,omitempty" json:"name,omitempty"`
 	Domain              *string                       `url:"domain,omitempty" json:"domain,omitempty"`
@@ -178,7 +178,7 @@ type AddPlatformKubernetesOptions struct {
 // Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/project_clusters.html#add-existing-cluster-to-project
+// https://docs.gitlab.com/api/project_clusters/#add-existing-cluster-to-project
 func (s *ProjectClustersService) AddCluster(pid interface{}, opt *AddClusterOptions, options ...RequestOptionFunc) (*ProjectCluster, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
@@ -204,7 +204,7 @@ func (s *ProjectClustersService) AddCluster(pid interface{}, opt *AddClusterOpti
 // Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/project_clusters.html#edit-project-cluster
+// https://docs.gitlab.com/api/project_clusters/#edit-project-cluster
 type EditClusterOptions struct {
 	Name                *string                        `url:"name,omitempty" json:"name,omitempty"`
 	Domain              *string                        `url:"domain,omitempty" json:"domain,omitempty"`
@@ -226,7 +226,7 @@ type EditPlatformKubernetesOptions struct {
 // Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/project_clusters.html#edit-project-cluster
+// https://docs.gitlab.com/api/project_clusters/#edit-project-cluster
 func (s *ProjectClustersService) EditCluster(pid interface{}, cluster int, opt *EditClusterOptions, options ...RequestOptionFunc) (*ProjectCluster, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
@@ -252,7 +252,7 @@ func (s *ProjectClustersService) EditCluster(pid interface{}, cluster int, opt *
 // Deprecated: in GitLab 14.5
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/project_clusters.html#delete-project-cluster
+// https://docs.gitlab.com/api/project_clusters/#delete-project-cluster
 func (s *ProjectClustersService) DeleteCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
