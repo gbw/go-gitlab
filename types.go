@@ -583,11 +583,13 @@ func LinkType(v LinkTypeValue) *LinkTypeValue {
 }
 
 // LicenseApprovalStatusValue describe the approval statuses of a license.
+// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/managed_licenses.html
 type LicenseApprovalStatusValue string
 
 // List of available license approval statuses.
+// Deprecated: no matching docs found
 const (
 	LicenseApproved    LicenseApprovalStatusValue = "approved"
 	LicenseBlacklisted LicenseApprovalStatusValue = "blacklisted"
@@ -716,12 +718,12 @@ func NotificationLevel(v NotificationLevelValue) *NotificationLevelValue {
 
 // ProjectCreationLevelValue represents a project creation level within GitLab.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/groups/
 type ProjectCreationLevelValue string
 
 // List of available project creation levels.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/groups/
 const (
 	NoOneProjectCreation      ProjectCreationLevelValue = "noone"
 	MaintainerProjectCreation ProjectCreationLevelValue = "maintainer"
@@ -763,13 +765,13 @@ const (
 // within a GitLab project.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/ci/resource_groups/index.html#process-modes
+// https://docs.gitlab.com/ci/resource_groups/#process-modes
 type ResourceGroupProcessMode string
 
 // List of available resource group process modes.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/ci/resource_groups/index.html#process-modes
+// https://docs.gitlab.com/ci/resource_groups/#process-modes
 const (
 	Unordered   ResourceGroupProcessMode = "unordered"
 	OldestFirst ResourceGroupProcessMode = "oldest_first"
@@ -780,13 +782,13 @@ const (
 // group’s subgroups and projects.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#options-for-shared_runners_setting
+// https://docs.gitlab.com/api/groups/#options-for-shared_runners_setting
 type SharedRunnersSettingValue string
 
 // List of available shared runner setting levels.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/ee/api/groups.html#options-for-shared_runners_setting
+// https://docs.gitlab.com/api/groups/#options-for-shared_runners_setting
 const (
 	EnabledSharedRunnersSettingValue                  SharedRunnersSettingValue = "enabled"
 	DisabledAndOverridableSharedRunnersSettingValue   SharedRunnersSettingValue = "disabled_and_overridable"
@@ -807,12 +809,12 @@ func SharedRunnersSetting(v SharedRunnersSettingValue) *SharedRunnersSettingValu
 
 // SubGroupCreationLevelValue represents a sub group creation level within GitLab.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/groups/
 type SubGroupCreationLevelValue string
 
 // List of available sub group creation levels.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/groups/
 const (
 	OwnerSubGroupCreationLevelValue      SubGroupCreationLevelValue = "owner"
 	MaintainerSubGroupCreationLevelValue SubGroupCreationLevelValue = "maintainer"
@@ -857,7 +859,7 @@ type TasksCompletionStatus struct {
 
 // TodoAction represents the available actions that can be performed on a todo.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/todos.html
+// GitLab API docs: https://docs.gitlab.com/api/todos/
 type TodoAction string
 
 // The available todo actions.
@@ -872,7 +874,7 @@ const (
 
 // TodoTargetType represents the available target that can be linked to a todo.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/todos.html
+// GitLab API docs: https://docs.gitlab.com/api/todos/
 type TodoTargetType string
 
 const (
@@ -893,12 +895,12 @@ const (
 
 // VariableTypeValue represents a variable type within GitLab.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/group_level_variables/
 type VariableTypeValue string
 
 // List of available variable types.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/group_level_variables/
 const (
 	EnvVariableType  VariableTypeValue = "env_var"
 	FileVariableType VariableTypeValue = "file"
@@ -914,12 +916,12 @@ func VariableType(v VariableTypeValue) *VariableTypeValue {
 
 // VisibilityValue represents a visibility level within GitLab.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/groups/
 type VisibilityValue string
 
 // List of available visibility levels.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/
+// GitLab API docs: https://docs.gitlab.com/api/groups/
 const (
 	PrivateVisibility  VisibilityValue = "private"
 	InternalVisibility VisibilityValue = "internal"
@@ -936,7 +938,7 @@ func Visibility(v VisibilityValue) *VisibilityValue {
 
 // WikiFormatValue represents the available wiki formats.
 //
-// GitLab API docs: https://docs.gitlab.com/ee/api/wikis.html
+// GitLab API docs: https://docs.gitlab.com/api/wikis/
 type WikiFormatValue string
 
 // The available wiki formats.
