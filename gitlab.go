@@ -143,6 +143,7 @@ type Client struct {
 	FreezePeriods                    FreezePeriodsServiceInterface
 	GenericPackages                  GenericPackagesServiceInterface
 	GeoNodes                         GeoNodesServiceInterface
+	GeoSites                         GeoSitesServiceInterface
 	GitIgnoreTemplates               GitIgnoreTemplatesServiceInterface
 	GroupAccessTokens                GroupAccessTokensServiceInterface
 	GroupBadges                      GroupBadgesServiceInterface
@@ -392,6 +393,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.FreezePeriods = &FreezePeriodsService{client: c}
 	c.GenericPackages = &GenericPackagesService{client: c}
 	c.GeoNodes = &GeoNodesService{client: c}
+	c.GeoSites = &GeoSitesService{client: c}
 	c.GitIgnoreTemplates = &GitIgnoreTemplatesService{client: c}
 	c.GroupAccessTokens = &GroupAccessTokensService{client: c}
 	c.GroupBadges = &GroupBadgesService{client: c}
