@@ -1,3 +1,6 @@
+//go:build go1.23
+// +build go1.23
+
 //
 // Copyright 2021, Sander van Harmelen
 //
@@ -33,27 +36,13 @@ func pagination() {
 			PerPage: 10,
 			Page:    1,
 		},
+		Owned: gitlab.Ptr(true),
 	}
 
-	for {
-		// Get the first page with projects.
-		ps, resp, err := git.Projects.ListProjects(opt)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// List all the projects we've found so far.
-		for _, p := range ps {
-			log.Printf("Found project: %s", p.Name)
-		}
-
-		// Exit the loop when we've seen all pages.
-		if resp.NextPage == 0 {
-			break
-		}
-
-		// Update the page number to get the next page.
-		opt.Page = resp.NextPage
+	for project := range gitlab.Must(gitlab.Scan2(func(p gitlab.PaginationOptionFunc) ([]*gitlab.Project, *gitlab.Response, error) {
+		return git.Projects.ListProjects(opt, p)
+	})) {
+		log.Printf("Found project: %s", project.Name)
 	}
 }
 
@@ -70,32 +59,12 @@ func keysetPagination() {
 			PerPage:    5,
 			Sort:       "asc",
 		},
-		Owned: gitlab.Bool(true),
+		Owned: gitlab.Ptr(true),
 	}
 
-	options := []gitlab.RequestOptionFunc{}
-
-	for {
-		// Get the first page with projects.
-		ps, resp, err := git.Projects.ListProjects(opt, options...)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// List all the projects we've found so far.
-		for _, p := range ps {
-			log.Printf("Found project: %s", p.Name)
-		}
-
-		// Exit the loop when we've seen all pages.
-		if resp.NextLink == "" {
-			break
-		}
-
-		// Set all query parameters in the next request to values in the
-		// returned parameters. This could go along with any existing options.
-		options = []gitlab.RequestOptionFunc{
-			gitlab.WithKeysetPaginationParameters(resp.NextLink),
-		}
+	for project := range gitlab.Must(gitlab.Scan2(func(p gitlab.PaginationOptionFunc) ([]*gitlab.Project, *gitlab.Response, error) {
+		return git.Projects.ListProjects(opt, p)
+	})) {
+		log.Printf("Found project: %s", project.Name)
 	}
 }
