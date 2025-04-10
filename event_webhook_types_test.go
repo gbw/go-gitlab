@@ -609,6 +609,22 @@ func TestMergeCommentEventUnmarshal(t *testing.T) {
 		t.Errorf("MergeRequest.AssigneeID is %v, want %v", event.MergeRequest.AssigneeID, 28)
 	}
 
+	if len(event.MergeRequest.AssigneeIDs) < 1 {
+		t.Errorf("MergeRequest.AssigneeIDs length is %d, want %d", len(event.MergeRequest.AssigneeIDs), 1)
+	}
+
+	if event.MergeRequest.AssigneeIDs[0] != 28 {
+		t.Errorf("MergeRequest.AssigneeIDs[0] is %v, want %v", event.MergeRequest.AssigneeIDs[0], 28)
+	}
+
+	if len(event.MergeRequest.ReviewerIDs) < 1 {
+		t.Errorf("MergeRequest.ReviewerIDs length is %d, want %d", len(event.MergeRequest.ReviewerIDs), 1)
+	}
+
+	if event.MergeRequest.ReviewerIDs[0] != 13 {
+		t.Errorf("MergeRequest.ReviewerIDs[0] is %v, want %v", event.MergeRequest.ReviewerIDs[0], 13)
+	}
+
 	if event.MergeRequest.State != "opened" {
 		t.Errorf("MergeRequest.state is %v, want %v", event.MergeRequest.State, "opened")
 	}
