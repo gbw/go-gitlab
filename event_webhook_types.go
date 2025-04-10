@@ -559,6 +559,7 @@ type MergeCommentEvent struct {
 		AuthorID                  int           `json:"author_id"`
 		AssigneeID                int           `json:"assignee_id"`
 		AssigneeIDs               []int         `json:"assignee_ids"`
+		ReviewerIDs               []int         `json:"reviewer_ids"`
 		Title                     string        `json:"title"`
 		CreatedAt                 string        `json:"created_at"`
 		UpdatedAt                 string        `json:"updated_at"`
