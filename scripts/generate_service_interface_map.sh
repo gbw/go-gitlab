@@ -23,14 +23,16 @@ api_service_map_test_file="$root_dir/gitlab_service_map_generated_test.go"
   echo '  serviceMap = map[any]any{'
 ) >"$api_service_map_test_file"
 
+(
 # shellcheck disable=SC2162,SC2038
 grep -E '^\s[A-Z][a-zA-Z0-9]+Service struct {' -- *.go | awk '{ print $1 $2 }' | while read line; do
   filename=$(echo "$line" | cut -d: -f1)
   filename=${filename%.go}
   service=$(echo "$line" | cut -d: -f2)
 
-  echo "&${service}{}: (*${service}Interface)(nil)," >>"$api_service_map_test_file"
+  echo "&${service}{}: (*${service}Interface)(nil),"
 done
+) | sort >> "$api_service_map_test_file"
 
 (
   echo '  }'

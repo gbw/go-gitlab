@@ -20,8 +20,8 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=dependency_list_export_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DependencyListExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=deploy_keys_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DeployKeysServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=deploy_tokens_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DeployTokensServiceInterface
-//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=deployments_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DeploymentsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=deployments_merge_requests_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DeploymentMergeRequestsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=deployments_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DeploymentsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=discussions_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DiscussionsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=dockerfile_templates_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DockerfileTemplatesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=dora_metrics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DORAMetricsServiceInterface
@@ -81,8 +81,8 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=notes_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NotesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=notifications_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NotificationSettingsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=packages_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PackagesServiceInterface
-//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=pages_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PagesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=pages_domains_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PagesDomainsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=pages_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PagesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=personal_access_tokens_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PersonalAccessTokensServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=pipeline_schedules_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PipelineSchedulesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=pipeline_triggers_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PipelineTriggersServiceInterface
