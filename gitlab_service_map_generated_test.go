@@ -36,6 +36,7 @@ var serviceMap = map[any]any{
 	&FreezePeriodsService{}:                    (*FreezePeriodsServiceInterface)(nil),
 	&GenericPackagesService{}:                  (*GenericPackagesServiceInterface)(nil),
 	&GeoNodesService{}:                         (*GeoNodesServiceInterface)(nil),
+	&GeoSitesService{}:                         (*GeoSitesServiceInterface)(nil),
 	&GitIgnoreTemplatesService{}:               (*GitIgnoreTemplatesServiceInterface)(nil),
 	&GroupAccessTokensService{}:                (*GroupAccessTokensServiceInterface)(nil),
 	&GroupBadgesService{}:                      (*GroupBadgesServiceInterface)(nil),

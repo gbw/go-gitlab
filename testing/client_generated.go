@@ -43,6 +43,7 @@ type testClientMocks struct {
 	MockFreezePeriods                    *MockFreezePeriodsServiceInterface
 	MockGenericPackages                  *MockGenericPackagesServiceInterface
 	MockGeoNodes                         *MockGeoNodesServiceInterface
+	MockGeoSites                         *MockGeoSitesServiceInterface
 	MockGitIgnoreTemplates               *MockGitIgnoreTemplatesServiceInterface
 	MockGroupAccessTokens                *MockGroupAccessTokensServiceInterface
 	MockGroupBadges                      *MockGroupBadgesServiceInterface
@@ -181,6 +182,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockFreezePeriods := NewMockFreezePeriodsServiceInterface(ctrl)
 	mockGenericPackages := NewMockGenericPackagesServiceInterface(ctrl)
 	mockGeoNodes := NewMockGeoNodesServiceInterface(ctrl)
+	mockGeoSites := NewMockGeoSitesServiceInterface(ctrl)
 	mockGitIgnoreTemplates := NewMockGitIgnoreTemplatesServiceInterface(ctrl)
 	mockGroupAccessTokens := NewMockGroupAccessTokensServiceInterface(ctrl)
 	mockGroupBadges := NewMockGroupBadgesServiceInterface(ctrl)
@@ -319,6 +321,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			FreezePeriods:                    mockFreezePeriods,
 			GenericPackages:                  mockGenericPackages,
 			GeoNodes:                         mockGeoNodes,
+			GeoSites:                         mockGeoSites,
 			GitIgnoreTemplates:               mockGitIgnoreTemplates,
 			GroupAccessTokens:                mockGroupAccessTokens,
 			GroupBadges:                      mockGroupBadges,
@@ -456,6 +459,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockFreezePeriods:                    mockFreezePeriods,
 			MockGenericPackages:                  mockGenericPackages,
 			MockGeoNodes:                         mockGeoNodes,
+			MockGeoSites:                         mockGeoSites,
 			MockGitIgnoreTemplates:               mockGitIgnoreTemplates,
 			MockGroupAccessTokens:                mockGroupAccessTokens,
 			MockGroupBadges:                      mockGroupBadges,

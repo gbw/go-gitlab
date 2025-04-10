@@ -36,6 +36,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=freeze_periods_mock.go -package=testing gitlab.com/gitlab-org/api/client-go FreezePeriodsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=generic_packages_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GenericPackagesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=geo_nodes_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GeoNodesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=geo_sites_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GeoSitesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=gitignore_templates_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GitIgnoreTemplatesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_access_tokens_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupAccessTokensServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_badges_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupBadgesServiceInterface
