@@ -570,7 +570,7 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 		},
 		ProjectID: 7,
 	}
-	if dependencies == nil || (dependencies != nil && !reflect.DeepEqual(*want, *dependencies)) {
+	if dependencies == nil || !reflect.DeepEqual(*want, *dependencies) {
 		t.Fatalf("MergeRequestDependencies.GetMergeRequestDependencies returned %+v, want %+v", dependencies, want)
 	}
 }
