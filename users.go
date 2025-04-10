@@ -103,16 +103,16 @@ var _ UsersServiceInterface = (*UsersService)(nil)
 
 // List a couple of standard errors.
 var (
-	ErrUserActivatePrevented         = errors.New("Cannot activate a user that is blocked by admin or by LDAP synchronization")
-	ErrUserApprovePrevented          = errors.New("Cannot approve a user that is blocked by admin or by LDAP synchronization")
-	ErrUserBlockPrevented            = errors.New("Cannot block a user that is already blocked by LDAP synchronization")
-	ErrUserConflict                  = errors.New("User does not have a pending request")
-	ErrUserDeactivatePrevented       = errors.New("Cannot deactivate a user that is blocked by admin or by LDAP synchronization")
-	ErrUserDisableTwoFactorPrevented = errors.New("Cannot disable two factor authentication if not authenticated as administrator")
-	ErrUserNotFound                  = errors.New("User does not exist")
-	ErrUserRejectPrevented           = errors.New("Cannot reject a user if not authenticated as administrator")
-	ErrUserTwoFactorNotEnabled       = errors.New("Cannot disable two factor authentication if not enabled")
-	ErrUserUnblockPrevented          = errors.New("Cannot unblock a user that is blocked by LDAP synchronization")
+	ErrUserActivatePrevented         = errors.New("cannot activate a user that is blocked by admin or by LDAP synchronization")
+	ErrUserApprovePrevented          = errors.New("cannot approve a user that is blocked by admin or by LDAP synchronization")
+	ErrUserBlockPrevented            = errors.New("cannot block a user that is already blocked by LDAP synchronization")
+	ErrUserConflict                  = errors.New("user does not have a pending request")
+	ErrUserDeactivatePrevented       = errors.New("cannot deactivate a user that is blocked by admin or by LDAP synchronization")
+	ErrUserDisableTwoFactorPrevented = errors.New("cannot disable two factor authentication if not authenticated as administrator")
+	ErrUserNotFound                  = errors.New("user does not exist")
+	ErrUserRejectPrevented           = errors.New("cannot reject a user if not authenticated as administrator")
+	ErrUserTwoFactorNotEnabled       = errors.New("cannot disable two factor authentication if not enabled")
+	ErrUserUnblockPrevented          = errors.New("cannot unblock a user that is blocked by LDAP synchronization")
 )
 
 // BasicUser included in other service responses (such as merge requests, pipelines, etc).
@@ -1092,7 +1092,7 @@ func (s *UsersService) BlockUser(user int, options ...RequestOptionFunc) error {
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1120,7 +1120,7 @@ func (s *UsersService) UnblockUser(user int, options ...RequestOptionFunc) error
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1146,7 +1146,7 @@ func (s *UsersService) BanUser(user int, options ...RequestOptionFunc) error {
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1172,7 +1172,7 @@ func (s *UsersService) UnbanUser(user int, options ...RequestOptionFunc) error {
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1200,7 +1200,7 @@ func (s *UsersService) DeactivateUser(user int, options ...RequestOptionFunc) er
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1228,7 +1228,7 @@ func (s *UsersService) ActivateUser(user int, options ...RequestOptionFunc) erro
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1256,7 +1256,7 @@ func (s *UsersService) ApproveUser(user int, options ...RequestOptionFunc) error
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1286,7 +1286,7 @@ func (s *UsersService) RejectUser(user int, options ...RequestOptionFunc) error 
 	case 409:
 		return ErrUserConflict
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 
@@ -1576,7 +1576,7 @@ func (s *UsersService) DisableTwoFactor(user int, options ...RequestOptionFunc) 
 	case 404:
 		return ErrUserNotFound
 	default:
-		return fmt.Errorf("Received unexpected result code: %d", resp.StatusCode)
+		return fmt.Errorf("received unexpected result code: %d", resp.StatusCode)
 	}
 }
 

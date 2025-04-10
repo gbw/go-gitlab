@@ -237,7 +237,7 @@ func TestBlockUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("Received unexpected result code: %d", http.StatusTeapot)
+	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.BlockUser(1)
 	if err.Error() != want {
@@ -303,7 +303,7 @@ func TestUnblockUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("Received unexpected result code: %d", http.StatusTeapot)
+	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.UnblockUser(1)
 	if err.Error() != want {
@@ -353,7 +353,7 @@ func TestBanUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("Received unexpected result code: %d", http.StatusTeapot)
+	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.BanUser(1)
 	if err.Error() != want {
@@ -403,7 +403,7 @@ func TestUnbanUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("Received unexpected result code: %d", http.StatusTeapot)
+	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.UnbanUser(1)
 	if err.Error() != want {
@@ -565,7 +565,7 @@ func TestApproveUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("Received unexpected result code: %d", http.StatusTeapot)
+	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.ApproveUser(1)
 	if err.Error() != want {
@@ -647,7 +647,7 @@ func TestRejectUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("Received unexpected result code: %d", http.StatusTeapot)
+	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.RejectUser(1)
 	if err.Error() != want {
