@@ -584,12 +584,10 @@ func LinkType(v LinkTypeValue) *LinkTypeValue {
 
 // LicenseApprovalStatusValue describe the approval statuses of a license.
 // Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-//
-// GitLab API docs: https://docs.gitlab.com/ee/api/managed_licenses.html
 type LicenseApprovalStatusValue string
 
 // List of available license approval statuses.
-// Deprecated: no matching docs found
+// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
 const (
 	LicenseApproved    LicenseApprovalStatusValue = "approved"
 	LicenseBlacklisted LicenseApprovalStatusValue = "blacklisted"
