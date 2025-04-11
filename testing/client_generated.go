@@ -8,6 +8,7 @@ import (
 )
 
 type testClientMocks struct {
+	MockGraphQL                          *MockGraphQLInterface
 	MockAccessRequests                   *MockAccessRequestsServiceInterface
 	MockAppearance                       *MockAppearanceServiceInterface
 	MockApplications                     *MockApplicationsServiceInterface
@@ -147,6 +148,7 @@ type testClientMocks struct {
 }
 
 func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
+	mockGraphQL := NewMockGraphQLInterface(ctrl)
 	mockAccessRequests := NewMockAccessRequestsServiceInterface(ctrl)
 	mockAppearance := NewMockAppearanceServiceInterface(ctrl)
 	mockApplications := NewMockApplicationsServiceInterface(ctrl)
@@ -286,6 +288,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 
 	return &TestClient{
 		Client: &gitlab.Client{
+			GraphQL:                          mockGraphQL,
 			AccessRequests:                   mockAccessRequests,
 			Appearance:                       mockAppearance,
 			Applications:                     mockApplications,
@@ -424,6 +427,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			Wikis:                            mockWikis,
 		},
 		testClientMocks: &testClientMocks{
+			MockGraphQL:                          mockGraphQL,
 			MockAccessRequests:                   mockAccessRequests,
 			MockAppearance:                       mockAppearance,
 			MockApplications:                     mockApplications,
