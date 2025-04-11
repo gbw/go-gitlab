@@ -107,6 +107,9 @@ type Client struct {
 	// User agent used when communicating with the GitLab API.
 	UserAgent string
 
+	// GraphQL interface
+	GraphQL GraphQLInterface
+
 	// Services used for talking to different parts of the GitLab API.
 	AccessRequests                   AccessRequestsServiceInterface
 	Appearance                       AppearanceServiceInterface
@@ -356,6 +359,9 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 
 	// Create the internal timeStats service.
 	timeStats := &timeStatsService{client: c}
+
+	// GraphQL interface
+	c.GraphQL = &GraphQL{client: c}
 
 	// Create all the public services.
 	c.AccessRequests = &AccessRequestsService{client: c}
