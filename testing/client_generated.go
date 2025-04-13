@@ -26,6 +26,7 @@ type testClientMocks struct {
 	MockContainerRegistryProtectionRules *MockContainerRegistryProtectionRulesServiceInterface
 	MockCustomAttribute                  *MockCustomAttributesServiceInterface
 	MockDependencyListExport             *MockDependencyListExportServiceInterface
+	MockDependencyProxy                  *MockDependencyProxyServiceInterface
 	MockDeployKeys                       *MockDeployKeysServiceInterface
 	MockDeployTokens                     *MockDeployTokensServiceInterface
 	MockDeploymentMergeRequests          *MockDeploymentMergeRequestsServiceInterface
@@ -166,6 +167,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockContainerRegistryProtectionRules := NewMockContainerRegistryProtectionRulesServiceInterface(ctrl)
 	mockCustomAttribute := NewMockCustomAttributesServiceInterface(ctrl)
 	mockDependencyListExport := NewMockDependencyListExportServiceInterface(ctrl)
+	mockDependencyProxy := NewMockDependencyProxyServiceInterface(ctrl)
 	mockDeployKeys := NewMockDeployKeysServiceInterface(ctrl)
 	mockDeployTokens := NewMockDeployTokensServiceInterface(ctrl)
 	mockDeploymentMergeRequests := NewMockDeploymentMergeRequestsServiceInterface(ctrl)
@@ -306,6 +308,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			ContainerRegistryProtectionRules: mockContainerRegistryProtectionRules,
 			CustomAttribute:                  mockCustomAttribute,
 			DependencyListExport:             mockDependencyListExport,
+			DependencyProxy:                  mockDependencyProxy,
 			DeployKeys:                       mockDeployKeys,
 			DeployTokens:                     mockDeployTokens,
 			DeploymentMergeRequests:          mockDeploymentMergeRequests,
@@ -445,6 +448,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockContainerRegistryProtectionRules: mockContainerRegistryProtectionRules,
 			MockCustomAttribute:                  mockCustomAttribute,
 			MockDependencyListExport:             mockDependencyListExport,
+			MockDependencyProxy:                  mockDependencyProxy,
 			MockDeployKeys:                       mockDeployKeys,
 			MockDeployTokens:                     mockDeployTokens,
 			MockDeploymentMergeRequests:          mockDeploymentMergeRequests,
