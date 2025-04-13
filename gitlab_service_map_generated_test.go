@@ -40,6 +40,7 @@ var serviceMap = map[any]any{
 	&GeoSitesService{}:                         (*GeoSitesServiceInterface)(nil),
 	&GitIgnoreTemplatesService{}:               (*GitIgnoreTemplatesServiceInterface)(nil),
 	&GroupAccessTokensService{}:                (*GroupAccessTokensServiceInterface)(nil),
+	&GroupActivityAnalyticsService{}:           (*GroupActivityAnalyticsServiceInterface)(nil),
 	&GroupBadgesService{}:                      (*GroupBadgesServiceInterface)(nil),
 	&GroupClustersService{}:                    (*GroupClustersServiceInterface)(nil),
 	&GroupEpicBoardsService{}:                  (*GroupEpicBoardsServiceInterface)(nil),

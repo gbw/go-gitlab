@@ -48,6 +48,7 @@ type testClientMocks struct {
 	MockGeoSites                         *MockGeoSitesServiceInterface
 	MockGitIgnoreTemplates               *MockGitIgnoreTemplatesServiceInterface
 	MockGroupAccessTokens                *MockGroupAccessTokensServiceInterface
+	MockGroupActivityAnalytics           *MockGroupActivityAnalyticsServiceInterface
 	MockGroupBadges                      *MockGroupBadgesServiceInterface
 	MockGroupCluster                     *MockGroupClustersServiceInterface
 	MockGroupEpicBoards                  *MockGroupEpicBoardsServiceInterface
@@ -189,6 +190,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockGeoSites := NewMockGeoSitesServiceInterface(ctrl)
 	mockGitIgnoreTemplates := NewMockGitIgnoreTemplatesServiceInterface(ctrl)
 	mockGroupAccessTokens := NewMockGroupAccessTokensServiceInterface(ctrl)
+	mockGroupActivityAnalytics := NewMockGroupActivityAnalyticsServiceInterface(ctrl)
 	mockGroupBadges := NewMockGroupBadgesServiceInterface(ctrl)
 	mockGroupCluster := NewMockGroupClustersServiceInterface(ctrl)
 	mockGroupEpicBoards := NewMockGroupEpicBoardsServiceInterface(ctrl)
@@ -330,6 +332,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			GeoSites:                         mockGeoSites,
 			GitIgnoreTemplates:               mockGitIgnoreTemplates,
 			GroupAccessTokens:                mockGroupAccessTokens,
+			GroupActivityAnalytics:           mockGroupActivityAnalytics,
 			GroupBadges:                      mockGroupBadges,
 			GroupCluster:                     mockGroupCluster,
 			GroupEpicBoards:                  mockGroupEpicBoards,
@@ -470,6 +473,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockGeoSites:                         mockGeoSites,
 			MockGitIgnoreTemplates:               mockGitIgnoreTemplates,
 			MockGroupAccessTokens:                mockGroupAccessTokens,
+			MockGroupActivityAnalytics:           mockGroupActivityAnalytics,
 			MockGroupBadges:                      mockGroupBadges,
 			MockGroupCluster:                     mockGroupCluster,
 			MockGroupEpicBoards:                  mockGroupEpicBoards,
