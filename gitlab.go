@@ -149,6 +149,7 @@ type Client struct {
 	GeoSites                         GeoSitesServiceInterface
 	GitIgnoreTemplates               GitIgnoreTemplatesServiceInterface
 	GroupAccessTokens                GroupAccessTokensServiceInterface
+	GroupActivityAnalytics           GroupActivityAnalyticsServiceInterface
 	GroupBadges                      GroupBadgesServiceInterface
 	GroupCluster                     GroupClustersServiceInterface
 	GroupEpicBoards                  GroupEpicBoardsServiceInterface
@@ -402,6 +403,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.GeoSites = &GeoSitesService{client: c}
 	c.GitIgnoreTemplates = &GitIgnoreTemplatesService{client: c}
 	c.GroupAccessTokens = &GroupAccessTokensService{client: c}
+	c.GroupActivityAnalytics = &GroupActivityAnalyticsService{client: c}
 	c.GroupBadges = &GroupBadgesService{client: c}
 	c.GroupCluster = &GroupClustersService{client: c}
 	c.GroupEpicBoards = &GroupEpicBoardsService{client: c}

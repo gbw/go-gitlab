@@ -40,6 +40,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=gitignore_templates_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GitIgnoreTemplatesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=graphql_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GraphQLInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_access_tokens_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupAccessTokensServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_activity_analytics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupActivityAnalyticsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_badges_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupBadgesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_boards_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupIssueBoardsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_clusters_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupClustersServiceInterface
