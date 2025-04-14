@@ -796,6 +796,8 @@ type LineRangeOptions struct {
 type LinePositionOptions struct {
 	LineCode *string `url:"line_code,omitempty" json:"line_code,omitempty"`
 	Type     *string `url:"type,omitempty" json:"type,omitempty"`
+	OldLine  *int    `url:"old_line,omitempty" json:"old_line,omitempty"`
+	NewLine  *int    `url:"new_line,omitempty" json:"new_line,omitempty"`
 }
 
 // CreateMergeRequestDiscussion creates a new discussion for a single merge
