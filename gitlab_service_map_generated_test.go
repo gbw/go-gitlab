@@ -27,6 +27,7 @@ var serviceMap = map[any]any{
 	&DiscussionsService{}:                      (*DiscussionsServiceInterface)(nil),
 	&DockerfileTemplatesService{}:              (*DockerfileTemplatesServiceInterface)(nil),
 	&DraftNotesService{}:                       (*DraftNotesServiceInterface)(nil),
+	&EnterpriseUsersService{}:                  (*EnterpriseUsersServiceInterface)(nil),
 	&EnvironmentsService{}:                     (*EnvironmentsServiceInterface)(nil),
 	&EpicIssuesService{}:                       (*EpicIssuesServiceInterface)(nil),
 	&EpicsService{}:                            (*EpicsServiceInterface)(nil),

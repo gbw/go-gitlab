@@ -137,6 +137,7 @@ type Client struct {
 	DockerfileTemplate               DockerfileTemplatesServiceInterface
 	DORAMetrics                      DORAMetricsServiceInterface
 	DraftNotes                       DraftNotesServiceInterface
+	EnterpriseUsers                  EnterpriseUsersServiceInterface
 	Environments                     EnvironmentsServiceInterface
 	EpicIssues                       EpicIssuesServiceInterface
 	Epics                            EpicsServiceInterface
@@ -392,6 +393,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.DockerfileTemplate = &DockerfileTemplatesService{client: c}
 	c.DORAMetrics = &DORAMetricsService{client: c}
 	c.DraftNotes = &DraftNotesService{client: c}
+	c.EnterpriseUsers = &EnterpriseUsersService{client: c}
 	c.Environments = &EnvironmentsService{client: c}
 	c.EpicIssues = &EpicIssuesService{client: c}
 	c.Epics = &EpicsService{client: c}
