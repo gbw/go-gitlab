@@ -41,6 +41,7 @@ type testClientMocks struct {
 	MockErrorTracking                    *MockErrorTrackingServiceInterface
 	MockEvents                           *MockEventsServiceInterface
 	MockExternalStatusChecks             *MockExternalStatusChecksServiceInterface
+	MockFeatureFlagUserLists             *MockFeatureFlagUserListsServiceInterface
 	MockFeatures                         *MockFeaturesServiceInterface
 	MockFreezePeriods                    *MockFreezePeriodsServiceInterface
 	MockGenericPackages                  *MockGenericPackagesServiceInterface
@@ -183,6 +184,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockErrorTracking := NewMockErrorTrackingServiceInterface(ctrl)
 	mockEvents := NewMockEventsServiceInterface(ctrl)
 	mockExternalStatusChecks := NewMockExternalStatusChecksServiceInterface(ctrl)
+	mockFeatureFlagUserLists := NewMockFeatureFlagUserListsServiceInterface(ctrl)
 	mockFeatures := NewMockFeaturesServiceInterface(ctrl)
 	mockFreezePeriods := NewMockFreezePeriodsServiceInterface(ctrl)
 	mockGenericPackages := NewMockGenericPackagesServiceInterface(ctrl)
@@ -325,6 +327,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			ErrorTracking:                    mockErrorTracking,
 			Events:                           mockEvents,
 			ExternalStatusChecks:             mockExternalStatusChecks,
+			FeatureFlagUserLists:             mockFeatureFlagUserLists,
 			Features:                         mockFeatures,
 			FreezePeriods:                    mockFreezePeriods,
 			GenericPackages:                  mockGenericPackages,
@@ -466,6 +469,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockErrorTracking:                    mockErrorTracking,
 			MockEvents:                           mockEvents,
 			MockExternalStatusChecks:             mockExternalStatusChecks,
+			MockFeatureFlagUserLists:             mockFeatureFlagUserLists,
 			MockFeatures:                         mockFeatures,
 			MockFreezePeriods:                    mockFreezePeriods,
 			MockGenericPackages:                  mockGenericPackages,

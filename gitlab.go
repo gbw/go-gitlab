@@ -143,6 +143,7 @@ type Client struct {
 	ErrorTracking                    ErrorTrackingServiceInterface
 	Events                           EventsServiceInterface
 	ExternalStatusChecks             ExternalStatusChecksServiceInterface
+	FeatureFlagUserLists             FeatureFlagUserListsServiceInterface
 	Features                         FeaturesServiceInterface
 	FreezePeriods                    FreezePeriodsServiceInterface
 	GenericPackages                  GenericPackagesServiceInterface
@@ -398,6 +399,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.ErrorTracking = &ErrorTrackingService{client: c}
 	c.Events = &EventsService{client: c}
 	c.ExternalStatusChecks = &ExternalStatusChecksService{client: c}
+	c.FeatureFlagUserLists = &FeatureFlagUserListsService{client: c}
 	c.Features = &FeaturesService{client: c}
 	c.FreezePeriods = &FreezePeriodsService{client: c}
 	c.GenericPackages = &GenericPackagesService{client: c}

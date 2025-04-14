@@ -33,6 +33,7 @@ var serviceMap = map[any]any{
 	&ErrorTrackingService{}:                    (*ErrorTrackingServiceInterface)(nil),
 	&EventsService{}:                           (*EventsServiceInterface)(nil),
 	&ExternalStatusChecksService{}:             (*ExternalStatusChecksServiceInterface)(nil),
+	&FeatureFlagUserListsService{}:             (*FeatureFlagUserListsServiceInterface)(nil),
 	&FeaturesService{}:                         (*FeaturesServiceInterface)(nil),
 	&FreezePeriodsService{}:                    (*FreezePeriodsServiceInterface)(nil),
 	&GenericPackagesService{}:                  (*GenericPackagesServiceInterface)(nil),
