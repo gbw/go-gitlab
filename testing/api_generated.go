@@ -28,6 +28,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=dockerfile_templates_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DockerfileTemplatesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=dora_metrics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DORAMetricsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=draft_notes_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DraftNotesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=enterprise_users_mock.go -package=testing gitlab.com/gitlab-org/api/client-go EnterpriseUsersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=environments_mock.go -package=testing gitlab.com/gitlab-org/api/client-go EnvironmentsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=epic_issues_mock.go -package=testing gitlab.com/gitlab-org/api/client-go EpicIssuesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=epics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go EpicsServiceInterface

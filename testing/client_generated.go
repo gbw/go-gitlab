@@ -36,6 +36,7 @@ type testClientMocks struct {
 	MockDockerfileTemplate               *MockDockerfileTemplatesServiceInterface
 	MockDORAMetrics                      *MockDORAMetricsServiceInterface
 	MockDraftNotes                       *MockDraftNotesServiceInterface
+	MockEnterpriseUsers                  *MockEnterpriseUsersServiceInterface
 	MockEnvironments                     *MockEnvironmentsServiceInterface
 	MockEpicIssues                       *MockEpicIssuesServiceInterface
 	MockEpics                            *MockEpicsServiceInterface
@@ -180,6 +181,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockDockerfileTemplate := NewMockDockerfileTemplatesServiceInterface(ctrl)
 	mockDORAMetrics := NewMockDORAMetricsServiceInterface(ctrl)
 	mockDraftNotes := NewMockDraftNotesServiceInterface(ctrl)
+	mockEnterpriseUsers := NewMockEnterpriseUsersServiceInterface(ctrl)
 	mockEnvironments := NewMockEnvironmentsServiceInterface(ctrl)
 	mockEpicIssues := NewMockEpicIssuesServiceInterface(ctrl)
 	mockEpics := NewMockEpicsServiceInterface(ctrl)
@@ -324,6 +326,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			DockerfileTemplate:               mockDockerfileTemplate,
 			DORAMetrics:                      mockDORAMetrics,
 			DraftNotes:                       mockDraftNotes,
+			EnterpriseUsers:                  mockEnterpriseUsers,
 			Environments:                     mockEnvironments,
 			EpicIssues:                       mockEpicIssues,
 			Epics:                            mockEpics,
@@ -467,6 +470,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockDockerfileTemplate:               mockDockerfileTemplate,
 			MockDORAMetrics:                      mockDORAMetrics,
 			MockDraftNotes:                       mockDraftNotes,
+			MockEnterpriseUsers:                  mockEnterpriseUsers,
 			MockEnvironments:                     mockEnvironments,
 			MockEpicIssues:                       mockEpicIssues,
 			MockEpics:                            mockEpics,
