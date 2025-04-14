@@ -114,6 +114,7 @@ type Client struct {
 	AccessRequests                   AccessRequestsServiceInterface
 	Appearance                       AppearanceServiceInterface
 	Applications                     ApplicationsServiceInterface
+	ApplicationStatistics            ApplicationStatisticsServiceInterface
 	AuditEvents                      AuditEventsServiceInterface
 	Avatar                           AvatarRequestsServiceInterface
 	AwardEmoji                       AwardEmojiServiceInterface
@@ -370,6 +371,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.AccessRequests = &AccessRequestsService{client: c}
 	c.Appearance = &AppearanceService{client: c}
 	c.Applications = &ApplicationsService{client: c}
+	c.ApplicationStatistics = &ApplicationStatisticsService{client: c}
 	c.AuditEvents = &AuditEventsService{client: c}
 	c.Avatar = &AvatarRequestsService{client: c}
 	c.AwardEmoji = &AwardEmojiService{client: c}

@@ -12,6 +12,7 @@ type testClientMocks struct {
 	MockAccessRequests                   *MockAccessRequestsServiceInterface
 	MockAppearance                       *MockAppearanceServiceInterface
 	MockApplications                     *MockApplicationsServiceInterface
+	MockApplicationStatistics            *MockApplicationStatisticsServiceInterface
 	MockAuditEvents                      *MockAuditEventsServiceInterface
 	MockAvatar                           *MockAvatarRequestsServiceInterface
 	MockAwardEmoji                       *MockAwardEmojiServiceInterface
@@ -155,6 +156,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockAccessRequests := NewMockAccessRequestsServiceInterface(ctrl)
 	mockAppearance := NewMockAppearanceServiceInterface(ctrl)
 	mockApplications := NewMockApplicationsServiceInterface(ctrl)
+	mockApplicationStatistics := NewMockApplicationStatisticsServiceInterface(ctrl)
 	mockAuditEvents := NewMockAuditEventsServiceInterface(ctrl)
 	mockAvatar := NewMockAvatarRequestsServiceInterface(ctrl)
 	mockAwardEmoji := NewMockAwardEmojiServiceInterface(ctrl)
@@ -298,6 +300,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			AccessRequests:                   mockAccessRequests,
 			Appearance:                       mockAppearance,
 			Applications:                     mockApplications,
+			ApplicationStatistics:            mockApplicationStatistics,
 			AuditEvents:                      mockAuditEvents,
 			Avatar:                           mockAvatar,
 			AwardEmoji:                       mockAwardEmoji,
@@ -440,6 +443,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockAccessRequests:                   mockAccessRequests,
 			MockAppearance:                       mockAppearance,
 			MockApplications:                     mockApplications,
+			MockApplicationStatistics:            mockApplicationStatistics,
 			MockAuditEvents:                      mockAuditEvents,
 			MockAvatar:                           mockAvatar,
 			MockAwardEmoji:                       mockAwardEmoji,
