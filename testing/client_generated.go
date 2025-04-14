@@ -25,6 +25,7 @@ type testClientMocks struct {
 	MockContainerRegistry                *MockContainerRegistryServiceInterface
 	MockContainerRegistryProtectionRules *MockContainerRegistryProtectionRulesServiceInterface
 	MockCustomAttribute                  *MockCustomAttributesServiceInterface
+	MockDatabaseMigrations               *MockDatabaseMigrationsServiceInterface
 	MockDependencyListExport             *MockDependencyListExportServiceInterface
 	MockDeployKeys                       *MockDeployKeysServiceInterface
 	MockDeployTokens                     *MockDeployTokensServiceInterface
@@ -165,6 +166,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockContainerRegistry := NewMockContainerRegistryServiceInterface(ctrl)
 	mockContainerRegistryProtectionRules := NewMockContainerRegistryProtectionRulesServiceInterface(ctrl)
 	mockCustomAttribute := NewMockCustomAttributesServiceInterface(ctrl)
+	mockDatabaseMigrations := NewMockDatabaseMigrationsServiceInterface(ctrl)
 	mockDependencyListExport := NewMockDependencyListExportServiceInterface(ctrl)
 	mockDeployKeys := NewMockDeployKeysServiceInterface(ctrl)
 	mockDeployTokens := NewMockDeployTokensServiceInterface(ctrl)
@@ -305,6 +307,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			ContainerRegistry:                mockContainerRegistry,
 			ContainerRegistryProtectionRules: mockContainerRegistryProtectionRules,
 			CustomAttribute:                  mockCustomAttribute,
+			DatabaseMigrations:               mockDatabaseMigrations,
 			DependencyListExport:             mockDependencyListExport,
 			DeployKeys:                       mockDeployKeys,
 			DeployTokens:                     mockDeployTokens,
@@ -444,6 +447,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockContainerRegistry:                mockContainerRegistry,
 			MockContainerRegistryProtectionRules: mockContainerRegistryProtectionRules,
 			MockCustomAttribute:                  mockCustomAttribute,
+			MockDatabaseMigrations:               mockDatabaseMigrations,
 			MockDependencyListExport:             mockDependencyListExport,
 			MockDeployKeys:                       mockDeployKeys,
 			MockDeployTokens:                     mockDeployTokens,

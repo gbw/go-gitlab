@@ -17,6 +17,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=container_registry_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ContainerRegistryServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=container_registry_protection_rules_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ContainerRegistryProtectionRulesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=custom_attributes_mock.go -package=testing gitlab.com/gitlab-org/api/client-go CustomAttributesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=database_migrations_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DatabaseMigrationsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=dependency_list_export_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DependencyListExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=deploy_keys_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DeployKeysServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=deploy_tokens_mock.go -package=testing gitlab.com/gitlab-org/api/client-go DeployTokensServiceInterface

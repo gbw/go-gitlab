@@ -18,6 +18,7 @@ var serviceMap = map[any]any{
 	&ContainerRegistryService{}:                (*ContainerRegistryServiceInterface)(nil),
 	&CustomAttributesService{}:                 (*CustomAttributesServiceInterface)(nil),
 	&DORAMetricsService{}:                      (*DORAMetricsServiceInterface)(nil),
+	&DatabaseMigrationsService{}:               (*DatabaseMigrationsServiceInterface)(nil),
 	&DependencyListExportService{}:             (*DependencyListExportServiceInterface)(nil),
 	&DeployKeysService{}:                       (*DeployKeysServiceInterface)(nil),
 	&DeployTokensService{}:                     (*DeployTokensServiceInterface)(nil),

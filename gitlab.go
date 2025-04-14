@@ -127,6 +127,7 @@ type Client struct {
 	ContainerRegistry                ContainerRegistryServiceInterface
 	ContainerRegistryProtectionRules ContainerRegistryProtectionRulesServiceInterface
 	CustomAttribute                  CustomAttributesServiceInterface
+	DatabaseMigrations               DatabaseMigrationsServiceInterface
 	DependencyListExport             DependencyListExportServiceInterface
 	DeployKeys                       DeployKeysServiceInterface
 	DeployTokens                     DeployTokensServiceInterface
@@ -380,6 +381,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.ContainerRegistry = &ContainerRegistryService{client: c}
 	c.ContainerRegistryProtectionRules = &ContainerRegistryProtectionRulesService{client: c}
 	c.CustomAttribute = &CustomAttributesService{client: c}
+	c.DatabaseMigrations = &DatabaseMigrationsService{client: c}
 	c.DependencyListExport = &DependencyListExportService{client: c}
 	c.DeployKeys = &DeployKeysService{client: c}
 	c.DeployTokens = &DeployTokensService{client: c}
