@@ -32,7 +32,7 @@ grep -E '^\s[A-Z][a-zA-Z0-9]+Service struct {' -- *.go | awk '{ print $1 $2 }' |
 
   echo "&${service}{}: (*${service}Interface)(nil),"
 done
-) | sort >> "$api_service_map_test_file"
+) | LC_ALL=C sort >> "$api_service_map_test_file"
 
 (
   echo '  }'

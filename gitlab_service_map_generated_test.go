@@ -4,6 +4,7 @@ package gitlab
 var serviceMap = map[any]any{
 	&AccessRequestsService{}:                   (*AccessRequestsServiceInterface)(nil),
 	&AppearanceService{}:                       (*AppearanceServiceInterface)(nil),
+	&ApplicationStatisticsService{}:            (*ApplicationStatisticsServiceInterface)(nil),
 	&ApplicationsService{}:                     (*ApplicationsServiceInterface)(nil),
 	&AuditEventsService{}:                      (*AuditEventsServiceInterface)(nil),
 	&AvatarRequestsService{}:                   (*AvatarRequestsServiceInterface)(nil),
