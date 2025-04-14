@@ -32,6 +32,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=error_tracking_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ErrorTrackingServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=events_mock.go -package=testing gitlab.com/gitlab-org/api/client-go EventsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=external_status_checks_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ExternalStatusChecksServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=feature_flag_user_lists_mock.go -package=testing gitlab.com/gitlab-org/api/client-go FeatureFlagUserListsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=feature_flags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go FeaturesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=freeze_periods_mock.go -package=testing gitlab.com/gitlab-org/api/client-go FreezePeriodsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=generic_packages_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GenericPackagesServiceInterface
