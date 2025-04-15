@@ -731,7 +731,7 @@ const (
 
 // ProjectCreationLevel is a helper routine that allocates a new ProjectCreationLevelValue
 // to store v and returns a pointer to it.
-// Please use Ptr instead.
+// Deprecated: Please use Ptr instead.
 func ProjectCreationLevel(v ProjectCreationLevelValue) *ProjectCreationLevelValue {
 	return Ptr(v)
 }
