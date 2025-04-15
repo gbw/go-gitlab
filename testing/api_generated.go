@@ -2,6 +2,7 @@
 package testing
 
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=access_requests_mock.go -package=testing gitlab.com/gitlab-org/api/client-go AccessRequestsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=alert_management_mock.go -package=testing gitlab.com/gitlab-org/api/client-go AlertManagementServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=appearance_mock.go -package=testing gitlab.com/gitlab-org/api/client-go AppearanceServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=application_statistics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ApplicationStatisticsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=applications_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ApplicationsServiceInterface
