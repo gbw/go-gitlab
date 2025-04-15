@@ -714,6 +714,31 @@ func NotificationLevel(v NotificationLevelValue) *NotificationLevelValue {
 	return Ptr(v)
 }
 
+// DependencyPackageManagerValue represents a dependency package manager.
+//
+// GitLab API docs: https://docs.gitlab.com/api/dependencies/
+type DependencyPackageManagerValue string
+
+// List of available package manager for dependencies
+//
+// GitLab API docs: https://docs.gitlab.com/api/dependencies/
+const (
+	Bundler    DependencyPackageManagerValue = "bundler"
+	Composer   DependencyPackageManagerValue = "composer"
+	Conan      DependencyPackageManagerValue = "conan"
+	Go         DependencyPackageManagerValue = "go"
+	Gradle     DependencyPackageManagerValue = "gradle"
+	Maven      DependencyPackageManagerValue = "maven"
+	NPM        DependencyPackageManagerValue = "npm"
+	NuGet      DependencyPackageManagerValue = "nuget"
+	Pip        DependencyPackageManagerValue = "pip"
+	Pipenv     DependencyPackageManagerValue = "pipenv"
+	PNPM       DependencyPackageManagerValue = "pnpm"
+	Yarn       DependencyPackageManagerValue = "yarn"
+	SBT        DependencyPackageManagerValue = "sbt"
+	Setuptools DependencyPackageManagerValue = "setuptools"
+)
+
 // ProjectCreationLevelValue represents a project creation level within GitLab.
 //
 // GitLab API docs: https://docs.gitlab.com/api/groups/

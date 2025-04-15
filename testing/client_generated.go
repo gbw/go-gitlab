@@ -27,6 +27,7 @@ type testClientMocks struct {
 	MockContainerRegistryProtectionRules *MockContainerRegistryProtectionRulesServiceInterface
 	MockCustomAttribute                  *MockCustomAttributesServiceInterface
 	MockDatabaseMigrations               *MockDatabaseMigrationsServiceInterface
+	MockDependencies                     *MockDependenciesServiceInterface
 	MockDependencyListExport             *MockDependencyListExportServiceInterface
 	MockDependencyProxy                  *MockDependencyProxyServiceInterface
 	MockDeployKeys                       *MockDeployKeysServiceInterface
@@ -173,6 +174,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockContainerRegistryProtectionRules := NewMockContainerRegistryProtectionRulesServiceInterface(ctrl)
 	mockCustomAttribute := NewMockCustomAttributesServiceInterface(ctrl)
 	mockDatabaseMigrations := NewMockDatabaseMigrationsServiceInterface(ctrl)
+	mockDependencies := NewMockDependenciesServiceInterface(ctrl)
 	mockDependencyListExport := NewMockDependencyListExportServiceInterface(ctrl)
 	mockDependencyProxy := NewMockDependencyProxyServiceInterface(ctrl)
 	mockDeployKeys := NewMockDeployKeysServiceInterface(ctrl)
@@ -319,6 +321,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			ContainerRegistryProtectionRules: mockContainerRegistryProtectionRules,
 			CustomAttribute:                  mockCustomAttribute,
 			DatabaseMigrations:               mockDatabaseMigrations,
+			Dependencies:                     mockDependencies,
 			DependencyListExport:             mockDependencyListExport,
 			DependencyProxy:                  mockDependencyProxy,
 			DeployKeys:                       mockDeployKeys,
@@ -464,6 +467,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockContainerRegistryProtectionRules: mockContainerRegistryProtectionRules,
 			MockCustomAttribute:                  mockCustomAttribute,
 			MockDatabaseMigrations:               mockDatabaseMigrations,
+			MockDependencies:                     mockDependencies,
 			MockDependencyListExport:             mockDependencyListExport,
 			MockDependencyProxy:                  mockDependencyProxy,
 			MockDeployKeys:                       mockDeployKeys,
