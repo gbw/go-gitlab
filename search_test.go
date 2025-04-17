@@ -25,27 +25,64 @@ import (
 
 func TestSearchService_Users(t *testing.T) {
 	t.Parallel()
-	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		mustWriteHTTPResponse(t, w, "testdata/search_users.json")
+	t.Run("successful search", func(t *testing.T) {
+		t.Parallel()
+		mux, client := setup(t)
+
+		mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			mustWriteHTTPResponse(t, w, "testdata/search_users.json")
+		})
+
+		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 2}}
+		users, _, err := client.Search.Users("doe", opts)
+
+		require.NoError(t, err)
+		want := []*User{{
+			ID:        1,
+			Username:  "user1",
+			Name:      "John Doe1",
+			State:     "active",
+			AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon",
+			WebURL:    "http://localhost/user1",
+		}}
+		require.Equal(t, want, users)
 	})
 
-	opts := &SearchOptions{ListOptions: ListOptions{PerPage: 2}}
-	users, _, err := client.Search.Users("doe", opts)
+	t.Run("error handling", func(t *testing.T) {
+		t.Parallel()
+		mux, client := setup(t)
 
-	require.NoError(t, err)
+		mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"message": "Internal Server Error"}`))
+		})
 
-	want := []*User{{
-		ID:        1,
-		Username:  "user1",
-		Name:      "John Doe1",
-		State:     "active",
-		AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon",
-		WebURL:    "http://localhost/user1",
-	}}
-	require.Equal(t, want, users)
+		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 20}}
+		users, resp, err := client.Search.Users("doe", opts)
+
+		require.Error(t, err)
+		require.Nil(t, users)
+		require.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+	})
+
+	t.Run("empty search term", func(t *testing.T) {
+		t.Parallel()
+		mux, client := setup(t)
+
+		mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("[]"))
+		})
+
+		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 20}}
+		users, _, err := client.Search.Users("", opts)
+		require.NoError(t, err)
+		require.Empty(t, users)
+	})
 }
 
 func TestSearchService_UsersByGroup(t *testing.T) {
