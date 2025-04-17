@@ -6,36 +6,67 @@ import (
 	"testing"
 )
 
-const markdownHTMLResponse = "<h1>Testing</h1>"
-
 func TestRender(t *testing.T) {
 	t.Parallel()
-	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/markdown", func(writer http.ResponseWriter, request *http.Request) {
-		testMethod(t, request, http.MethodPost)
-		writer.WriteHeader(http.StatusOK)
-		markdown := Markdown{HTML: markdownHTMLResponse}
-		resp, _ := json.Marshal(markdown)
-		_, _ = writer.Write(resp)
-	})
-
-	opt := &RenderOptions{
-		Text:                    Ptr("# Testing"),
-		GitlabFlavouredMarkdown: Ptr(true),
-		Project:                 Ptr("some/sub/group/project"),
+	tests := []struct {
+		name       string
+		options    *RenderOptions
+		wantHTML   string
+		statusCode int
+	}{
+		{
+			name: "Basic Markdown",
+			options: &RenderOptions{
+				Text: Ptr("# Testing"),
+			},
+			wantHTML:   "<h1>Testing</h1>",
+			statusCode: http.StatusOK,
+		},
+		{
+			name: "With GFM and project",
+			options: &RenderOptions{
+				Text:                    Ptr("**bold**"),
+				GitlabFlavouredMarkdown: Ptr(true),
+				Project:                 Ptr("group/project"),
+			},
+			wantHTML:   "<p><strong>bold</strong></p>",
+			statusCode: http.StatusOK,
+		},
 	}
-	markdown, resp, err := client.Markdown.Render(opt)
-	if err != nil {
-		t.Fatalf("Render returned error: %v", err)
-	}
 
-	if resp.StatusCode != http.StatusOK {
-		t.Fatalf("Render returned status, expected %q but got %q", http.StatusOK, resp.Status)
-	}
+	for _, tc := range tests {
+		tc := tc // pin for parallel
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 
-	if markdown.HTML != markdownHTMLResponse {
-		t.Fatalf("Render returned wrong response, expected %q but got %q",
-			markdownHTMLResponse, markdown.HTML)
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/v4/markdown", func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodPost)
+
+				var body map[string]interface{}
+				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+					t.Fatalf("Failed to decode request body: %v", err)
+				}
+				if body["text"] == nil {
+					t.Errorf("Expected 'text' field in request body, got nil")
+				}
+
+				w.WriteHeader(tc.statusCode)
+				_ = json.NewEncoder(w).Encode(Markdown{HTML: tc.wantHTML})
+			})
+
+			md, resp, err := client.Markdown.Render(tc.options)
+			if err != nil {
+				t.Fatalf("Render failed: %v", err)
+			}
+			if resp.StatusCode != tc.statusCode {
+				t.Fatalf("Expected status %d, got %d", tc.statusCode, resp.StatusCode)
+			}
+			if md == nil || md.HTML != tc.wantHTML {
+				t.Fatalf("Expected HTML %q, got %q", tc.wantHTML, md.HTML)
+			}
+		})
 	}
 }
