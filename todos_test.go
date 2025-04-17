@@ -46,15 +46,33 @@ func TestListTodos(t *testing.T) {
 
 func TestMarkAllTodosAsDone(t *testing.T) {
 	t.Parallel()
-	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/todos/mark_as_done", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		w.WriteHeader(http.StatusNoContent)
+	t.Run("successful request", func(t *testing.T) {
+		t.Parallel()
+		mux, client := setup(t)
+
+		mux.HandleFunc("/api/v4/todos/mark_as_done", func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			w.WriteHeader(http.StatusNoContent)
+		})
+
+		resp, err := client.Todos.MarkAllTodosAsDone()
+		require.NoError(t, err)
+		require.Equal(t, http.StatusNoContent, resp.StatusCode)
 	})
 
-	_, err := client.Todos.MarkAllTodosAsDone()
-	require.NoError(t, err)
+	t.Run("error handling", func(t *testing.T) {
+		t.Parallel()
+		mux, client := setup(t)
+
+		mux.HandleFunc("/api/v4/todos/mark_as_done", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusInternalServerError)
+		})
+
+		resp, err := client.Todos.MarkAllTodosAsDone()
+		require.Error(t, err)
+		require.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+	})
 }
 
 func TestMarkTodoAsDone(t *testing.T) {
