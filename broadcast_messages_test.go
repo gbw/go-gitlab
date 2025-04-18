@@ -19,9 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListBroadcastMessages(t *testing.T) {
@@ -58,10 +59,9 @@ func TestListBroadcastMessages(t *testing.T) {
 		}]`)
 	})
 
-	got, _, err := client.BroadcastMessage.ListBroadcastMessages(nil, nil)
-	if err != nil {
-		t.Errorf("ListBroadcastMessages returned error: %v", err)
-	}
+	got, resp, err := client.BroadcastMessage.ListBroadcastMessages(nil, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	wantedFirstStartsAt := time.Date(2017, 0o6, 26, 6, 0, 0, 0, time.UTC)
 	wantedFirstEndsAt := time.Date(2017, 0o6, 27, 12, 59, 0, 0, time.UTC)
@@ -73,7 +73,6 @@ func TestListBroadcastMessages(t *testing.T) {
 		Message:            "Some Message",
 		StartsAt:           &wantedFirstStartsAt,
 		EndsAt:             &wantedFirstEndsAt,
-		Color:              "#E75E40",
 		Font:               "#FFFFFF",
 		ID:                 1,
 		Active:             false,
@@ -86,7 +85,6 @@ func TestListBroadcastMessages(t *testing.T) {
 		Message:            "SomeMessage2",
 		StartsAt:           &wantedSecondStartsAt,
 		EndsAt:             &wantedSecondEndsAt,
-		Color:              "#AA33EE",
 		Font:               "#224466",
 		ID:                 2,
 		Active:             true,
@@ -96,9 +94,7 @@ func TestListBroadcastMessages(t *testing.T) {
 		Dismissable:        true,
 	}}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("ListBroadcastMessages returned \ngot:\n%v\nwant:\n%v", Stringify(got), Stringify(want))
-	}
+	assert.Equal(t, got, want)
 }
 
 func TestGetBroadcastMessages(t *testing.T) {
@@ -123,10 +119,9 @@ func TestGetBroadcastMessages(t *testing.T) {
 		}`)
 	})
 
-	got, _, err := client.BroadcastMessage.GetBroadcastMessage(1)
-	if err != nil {
-		t.Errorf("GetBroadcastMessage returned error: %v", err)
-	}
+	got, resp, err := client.BroadcastMessage.GetBroadcastMessage(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	wantedStartsAt := time.Date(2017, time.June, 26, 6, 0, 0, 0, time.UTC)
 	wantedEndsAt := time.Date(2017, time.June, 27, 12, 59, 0, 0, time.UTC)
@@ -135,7 +130,6 @@ func TestGetBroadcastMessages(t *testing.T) {
 		Message:            "Some Message",
 		StartsAt:           &wantedStartsAt,
 		EndsAt:             &wantedEndsAt,
-		Color:              "#E75E40",
 		Font:               "#FFFFFF",
 		ID:                 1,
 		Active:             false,
@@ -145,9 +139,7 @@ func TestGetBroadcastMessages(t *testing.T) {
 		Dismissable:        false,
 		Theme:              "indigo",
 	}
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("GetBroadcastMessage returned \ngot:\n%v\nwant:\n%v", Stringify(got), Stringify(want))
-	}
+	assert.Equal(t, got, want)
 }
 
 func TestCreateBroadcastMessages(t *testing.T) {
@@ -179,7 +171,6 @@ func TestCreateBroadcastMessages(t *testing.T) {
 		Message:            Ptr("Some Message"),
 		StartsAt:           &wantedStartsAt,
 		EndsAt:             &wantedEndsAt,
-		Color:              Ptr("#E75E40"),
 		Font:               Ptr("#FFFFFF"),
 		TargetAccessLevels: []AccessLevelValue{GuestPermissions, DeveloperPermissions},
 		TargetPath:         Ptr("*/welcome"),
@@ -188,16 +179,14 @@ func TestCreateBroadcastMessages(t *testing.T) {
 		Theme:              Ptr("indigo"),
 	}
 
-	got, _, err := client.BroadcastMessage.CreateBroadcastMessage(opt)
-	if err != nil {
-		t.Errorf("CreateBroadcastMessage returned error: %v", err)
-	}
+	got, resp, err := client.BroadcastMessage.CreateBroadcastMessage(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &BroadcastMessage{
 		Message:            "Some Message",
 		StartsAt:           &wantedStartsAt,
 		EndsAt:             &wantedEndsAt,
-		Color:              "#E75E40",
 		Font:               "#FFFFFF",
 		ID:                 42,
 		Active:             false,
@@ -208,9 +197,7 @@ func TestCreateBroadcastMessages(t *testing.T) {
 		Theme:              "indigo",
 	}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("CreateBroadcastMessage returned \ngot:\n%v\nwant:\n%v", Stringify(got), Stringify(want))
-	}
+	assert.Equal(t, got, want)
 }
 
 func TestUpdateBroadcastMessages(t *testing.T) {
@@ -242,7 +229,6 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 		Message:            Ptr("Some Message Updated"),
 		StartsAt:           &wantedStartsAt,
 		EndsAt:             &wantedEndsAt,
-		Color:              Ptr("#E75E40"),
 		Font:               Ptr("#FFFFFF"),
 		TargetAccessLevels: []AccessLevelValue{GuestPermissions, DeveloperPermissions},
 		TargetPath:         Ptr("*/welcome"),
@@ -251,16 +237,14 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 		Theme:              Ptr("indigo"),
 	}
 
-	got, _, err := client.BroadcastMessage.UpdateBroadcastMessage(1, opt)
-	if err != nil {
-		t.Errorf("UpdateBroadcastMessage returned error: %v", err)
-	}
+	got, resp, err := client.BroadcastMessage.UpdateBroadcastMessage(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &BroadcastMessage{
 		Message:            "Some Message Updated",
 		StartsAt:           &wantedStartsAt,
 		EndsAt:             &wantedEndsAt,
-		Color:              "#E75E40",
 		Font:               "#FFFFFF",
 		ID:                 42,
 		Active:             false,
@@ -271,9 +255,7 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 		Theme:              "indigo",
 	}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("UpdateBroadcastMessage returned \ngot:\n%v\nwant:\n%v", Stringify(got), Stringify(want))
-	}
+	assert.Equal(t, got, want)
 }
 
 func TestDeleteBroadcastMessages(t *testing.T) {
@@ -284,8 +266,7 @@ func TestDeleteBroadcastMessages(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.BroadcastMessage.DeleteBroadcastMessage(1)
-	if err != nil {
-		t.Errorf("UpdateBroadcastMessage returned error: %v", err)
-	}
+	resp, err := client.BroadcastMessage.DeleteBroadcastMessage(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
