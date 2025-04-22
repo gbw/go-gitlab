@@ -142,7 +142,10 @@ generate-release-notes:
   image: alpine:3.21.3
   before_script:
     - apk add --update jq curl git
+  variables:
+    GIT_FETCH_EXTRA_FLAGS: '--tags'
   script:
+    - set -x
     - |
       if [ -z "$CI_COMMIT_TAG" ]; then
         last_stable_version_sha="$(git tag | grep -E '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$' | sort -Vr | head -n1)"
@@ -151,6 +154,7 @@ generate-release-notes:
         version="$CI_COMMIT_TAG"
       fi
       urlencoded_version="$(jq -rn --arg x "${version}" '$x|@uri')"
+    - set +x
     - echo "Generating release notes for ${version} (urlencoded=${urlencoded_version}) ..."
     - 'curl --fail-with-body --header "JOB-TOKEN: $CI_JOB_TOKEN" "$CI_API_V4_URL/projects/$CI_PROJECT_ID/repository/changelog?version=${urlencoded_version}" | jq -r .notes > release-notes.md'
     - cat release-notes.md
