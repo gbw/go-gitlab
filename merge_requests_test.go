@@ -396,6 +396,22 @@ func TestGetIssuesClosedOnMerge_Jira(t *testing.T) {
 	assert.Equal(t, "Title of this issue", issues[0].Title)
 }
 
+func TestListRelatedIssues(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/related_issues", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		fmt.Fprint(w, `[{"id":"PROJECT-123","title":"Title of this issue"}]`)
+	})
+
+	issues, _, err := client.MergeRequests.ListRelatedIssues(1, 1, nil)
+
+	assert.NoError(t, err)
+	assert.Len(t, issues, 1)
+	assert.Equal(t, "PROJECT-123", issues[0].ExternalID)
+	assert.Equal(t, "Title of this issue", issues[0].Title)
+}
+
 func TestListMergeRequestDiffs(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
