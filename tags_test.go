@@ -18,6 +18,7 @@ package gitlab
 
 import (
 	"fmt"
+	"math/big"
 	"net/http"
 	"testing"
 	"time"
@@ -207,4 +208,58 @@ func TestTagsService_DeleteTag(t *testing.T) {
 	resp, err := client.Tags.DeleteTag(1, "v5.0.0")
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
+}
+
+func TestTagsService_GetTagSignature(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/repository/tags/v1.0.0%2Frc-1/signature", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"signature_type": "X509",
+			"verification_status": "unverified",
+			"x509_certificate": {
+				"id": 1,
+				"subject": "CN=gitlab@example.org,OU=Example,O=World",
+				"subject_key_identifier": "BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC",
+				"email": "gitlab@example.org",
+				"serial_number": 278969561018901340486471282831158785578,
+				"certificate_status": "good",
+				"x509_issuer": {
+				"id": 1,
+				"subject": "CN=PKI,OU=Example,O=World",
+				"subject_key_identifier": "AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB",
+				"crl_url": "http://example.com/pki.crl"
+				}
+			}
+		}`)
+	})
+
+	signature, _, err := client.Tags.GetTagSignature(1, "v1.0.0/rc-1", nil)
+	if err != nil {
+		t.Errorf("Tags.GetTagSignature returned error: %v", err)
+	}
+
+	serialNumber, _ := big.NewInt(0).SetString("278969561018901340486471282831158785578", 10)
+	want := &X509Signature{
+		SignatureType:      "X509",
+		VerificationStatus: "unverified",
+		X509Certificate: X509Certificate{
+			ID:                   1,
+			Subject:              "CN=gitlab@example.org,OU=Example,O=World",
+			SubjectKeyIdentifier: "BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC:BC",
+			Email:                "gitlab@example.org",
+			SerialNumber:         serialNumber,
+			CertificateStatus:    "good",
+			X509Issuer: X509Issuer{
+				ID:                   1,
+				Subject:              "CN=PKI,OU=Example,O=World",
+				SubjectKeyIdentifier: "AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB",
+				CrlUrl:               "http://example.com/pki.crl",
+			},
+		},
+	}
+
+	assert.Equal(t, signature, want)
 }
