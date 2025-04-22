@@ -32,6 +32,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	retryablehttp "github.com/hashicorp/go-retryablehttp"
+	"github.com/stretchr/testify/assert"
 )
 
 var timeLayout = "2006-01-02T15:04:05Z07:00"
@@ -495,4 +496,35 @@ func TestExponentialBackoffLogic(t *testing.T) {
 	if resp.StatusCode != 429 {
 		t.Fatal("Expected to get a 429 code given the server is hard-coded to return this. Received instead:", resp.StatusCode)
 	}
+}
+
+func TestErrorResponsePreservesURLEncoding(t *testing.T) {
+	t.Parallel()
+
+	projectID := "group/subgroup"
+	fileName := "path/file.txt"
+
+	expectedEscapedPath := "/api/v4/projects/group%2Fsubgroup/repository/files/path%2Ffile%2Etxt"
+
+	escapedProjectID := PathEscape(projectID)
+	escapedFileName := PathEscape(fileName)
+	escapedPath := fmt.Sprintf("/api/v4/projects/%s/repository/files/%s",
+		escapedProjectID, escapedFileName)
+
+	require.Equal(t, expectedEscapedPath, escapedPath)
+
+	fullURL := "https://gitlab.com" + expectedEscapedPath
+	req, _ := http.NewRequest("GET", fullURL, nil)
+	resp := &http.Response{
+		Request:    req,
+		StatusCode: http.StatusNotFound,
+		Body:       io.NopCloser(strings.NewReader(`{"message":"Not Found"}`)),
+	}
+
+	errorResponse := &ErrorResponse{Response: resp, Message: "Not Found"}
+
+	require.ErrorContains(t, errorResponse, expectedEscapedPath)
+
+	unescapedPath := fmt.Sprintf("/api/v4/projects/%s/repository/files/%s", projectID, fileName)
+	assert.NotContains(t, errorResponse.Error(), unescapedPath)
 }
