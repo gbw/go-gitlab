@@ -29,6 +29,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	retryablehttp "github.com/hashicorp/go-retryablehttp"
 )
 
@@ -115,19 +117,41 @@ func errorOption(*retryablehttp.Request) error {
 
 func TestNewClient(t *testing.T) {
 	t.Parallel()
-	c, err := NewClient("")
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
 
-	expectedBaseURL := defaultBaseURL + apiVersionPath
+	t.Run("Default Configuration", func(t *testing.T) {
+		t.Parallel()
+		c, err := NewClient("")
+		if err != nil {
+			t.Fatalf("Failed to create client: %v", err)
+		}
 
-	if c.BaseURL().String() != expectedBaseURL {
-		t.Errorf("NewClient BaseURL is %s, want %s", c.BaseURL().String(), expectedBaseURL)
-	}
-	if c.UserAgent != userAgent {
-		t.Errorf("NewClient UserAgent is %s, want %s", c.UserAgent, userAgent)
-	}
+		expectedBaseURL := defaultBaseURL + apiVersionPath
+
+		if c.BaseURL().String() != expectedBaseURL {
+			t.Errorf("NewClient BaseURL is %s, want %s", c.BaseURL().String(), expectedBaseURL)
+		}
+		if c.UserAgent != userAgent {
+			t.Errorf("NewClient UserAgent is %s, want %s", c.UserAgent, userAgent)
+		}
+	})
+
+	t.Run("Custom Base URL", func(t *testing.T) {
+		t.Parallel()
+		customURL := "https://custom.gitlab.com/api/v4"
+		c, err := NewClient("", WithBaseURL(customURL))
+		require.NoError(t, err)
+		require.NotNil(t, c, "Client is nil")
+
+		// The client will append a trailing slash to the base URL
+		expectedURL := customURL + "/"
+		require.Equal(t, expectedURL, c.BaseURL().String(), "BaseURL mismatch")
+	})
+
+	t.Run("Invalid Base URL", func(t *testing.T) {
+		t.Parallel()
+		_, err := NewClient("", WithBaseURL(":invalid:"))
+		require.Error(t, err)
+	})
 }
 
 func TestCheckResponse(t *testing.T) {
