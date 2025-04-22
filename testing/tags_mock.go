@@ -174,6 +174,51 @@ func (c *MockTagsServiceInterfaceGetTagCall) DoAndReturn(f func(any, string, ...
 	return c
 }
 
+// GetTagSignature mocks base method.
+func (m *MockTagsServiceInterface) GetTagSignature(pid any, tag string, options ...gitlab.RequestOptionFunc) (*gitlab.X509Signature, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, tag}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetTagSignature", varargs...)
+	ret0, _ := ret[0].(*gitlab.X509Signature)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetTagSignature indicates an expected call of GetTagSignature.
+func (mr *MockTagsServiceInterfaceMockRecorder) GetTagSignature(pid, tag any, options ...any) *MockTagsServiceInterfaceGetTagSignatureCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, tag}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTagSignature", reflect.TypeOf((*MockTagsServiceInterface)(nil).GetTagSignature), varargs...)
+	return &MockTagsServiceInterfaceGetTagSignatureCall{Call: call}
+}
+
+// MockTagsServiceInterfaceGetTagSignatureCall wrap *gomock.Call
+type MockTagsServiceInterfaceGetTagSignatureCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockTagsServiceInterfaceGetTagSignatureCall) Return(arg0 *gitlab.X509Signature, arg1 *gitlab.Response, arg2 error) *MockTagsServiceInterfaceGetTagSignatureCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockTagsServiceInterfaceGetTagSignatureCall) Do(f func(any, string, ...gitlab.RequestOptionFunc) (*gitlab.X509Signature, *gitlab.Response, error)) *MockTagsServiceInterfaceGetTagSignatureCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockTagsServiceInterfaceGetTagSignatureCall) DoAndReturn(f func(any, string, ...gitlab.RequestOptionFunc) (*gitlab.X509Signature, *gitlab.Response, error)) *MockTagsServiceInterfaceGetTagSignatureCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListTags mocks base method.
 func (m *MockTagsServiceInterface) ListTags(pid any, opt *gitlab.ListTagsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Tag, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
