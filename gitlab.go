@@ -1014,7 +1014,10 @@ type ErrorResponse struct {
 }
 
 func (e *ErrorResponse) Error() string {
-	path, _ := url.QueryUnescape(e.Response.Request.URL.Path)
+	path := e.Response.Request.URL.RawPath
+	if path == "" {
+		path = e.Response.Request.URL.Path
+	}
 	url := fmt.Sprintf("%s://%s%s", e.Response.Request.URL.Scheme, e.Response.Request.URL.Host, path)
 
 	if e.Message == "" {
