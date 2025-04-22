@@ -1163,6 +1163,51 @@ func (c *MockMergeRequestsServiceInterfaceListProjectMergeRequestsCall) DoAndRet
 	return c
 }
 
+// ListRelatedIssues mocks base method.
+func (m *MockMergeRequestsServiceInterface) ListRelatedIssues(pid any, mergeRequest int, opt *gitlab.ListRelatedIssuesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, mergeRequest, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListRelatedIssues", varargs...)
+	ret0, _ := ret[0].([]*gitlab.Issue)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListRelatedIssues indicates an expected call of ListRelatedIssues.
+func (mr *MockMergeRequestsServiceInterfaceMockRecorder) ListRelatedIssues(pid, mergeRequest, opt any, options ...any) *MockMergeRequestsServiceInterfaceListRelatedIssuesCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, mergeRequest, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListRelatedIssues", reflect.TypeOf((*MockMergeRequestsServiceInterface)(nil).ListRelatedIssues), varargs...)
+	return &MockMergeRequestsServiceInterfaceListRelatedIssuesCall{Call: call}
+}
+
+// MockMergeRequestsServiceInterfaceListRelatedIssuesCall wrap *gomock.Call
+type MockMergeRequestsServiceInterfaceListRelatedIssuesCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockMergeRequestsServiceInterfaceListRelatedIssuesCall) Return(arg0 []*gitlab.Issue, arg1 *gitlab.Response, arg2 error) *MockMergeRequestsServiceInterfaceListRelatedIssuesCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockMergeRequestsServiceInterfaceListRelatedIssuesCall) Do(f func(any, int, *gitlab.ListRelatedIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceListRelatedIssuesCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockMergeRequestsServiceInterfaceListRelatedIssuesCall) DoAndReturn(f func(any, int, *gitlab.ListRelatedIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceListRelatedIssuesCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // RebaseMergeRequest mocks base method.
 func (m *MockMergeRequestsServiceInterface) RebaseMergeRequest(pid any, mergeRequest int, opt *gitlab.RebaseMergeRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
