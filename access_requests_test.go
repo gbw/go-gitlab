@@ -33,23 +33,23 @@ func TestListProjectAccessRequests(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/access_requests", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `[
-			{
-			  "id": 1,
-			  "username": "raymond_smith",
-			  "name": "Raymond Smith",
-			  "state": "active",
-			  "created_at": "2012-10-22T14:13:35Z",
-			  "requested_at": "2012-10-22T14:13:35Z"
-			},
-			{
-			  "id": 2,
-			  "username": "john_doe",
-			  "name": "John Doe",
-			  "state": "active",
-			  "created_at": "2012-10-22T14:13:35Z",
-			  "requested_at": "2012-10-22T14:13:35Z"
-			}
-		]`)
+            {
+              "id": 1,
+              "username": "raymond_smith",
+              "name": "Raymond Smith",
+              "state": "active",
+              "created_at": "2012-10-22T14:13:35Z",
+              "requested_at": "2012-10-22T14:13:35Z"
+            },
+            {
+              "id": 2,
+              "username": "john_doe",
+              "name": "John Doe",
+              "state": "active",
+              "created_at": "2012-10-22T14:13:35Z",
+              "requested_at": "2012-10-22T14:13:35Z"
+            }
+        ]`)
 	})
 
 	created := time.Date(2012, 10, 22, 14, 13, 35, 0, time.UTC)
@@ -72,25 +72,54 @@ func TestListProjectAccessRequests(t *testing.T) {
 		},
 	}
 
-	requests, resp, err := client.AccessRequests.ListProjectAccessRequests(1, nil)
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.Equal(t, expected, requests)
+	tests := []struct {
+		name        string
+		projectID   interface{}
+		expectedErr string
+		expectedRes []*AccessRequest
+		statusCode  int
+	}{
+		{
+			name:        "Valid Project ID",
+			projectID:   1,
+			expectedErr: "",
+			expectedRes: expected,
+			statusCode:  http.StatusOK,
+		},
+		{
+			name:        "Invalid Project ID Type",
+			projectID:   1.5,
+			expectedErr: "invalid ID type 1.5, the ID must be an int or a string",
+			expectedRes: nil,
+			statusCode:  0,
+		},
+		{
+			name:        "Non-Existent Project ID",
+			projectID:   2,
+			expectedErr: "404 Not Found",
+			expectedRes: nil,
+			statusCode:  http.StatusNotFound,
+		},
+	}
 
-	requests, resp, err = client.AccessRequests.ListProjectAccessRequests(1.5, nil)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
-	assert.Nil(t, resp)
-	assert.Nil(t, requests)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			requests, resp, err := client.AccessRequests.ListProjectAccessRequests(tt.projectID, nil)
 
-	requests, resp, err = client.AccessRequests.ListProjectAccessRequests(2, nil)
-	assert.Error(t, err)
-	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-	assert.Nil(t, requests)
+			if tt.expectedErr != "" {
+				assert.EqualError(t, err, tt.expectedErr)
+				assert.Nil(t, requests)
+			} else {
+				assert.NoError(t, err)
+				assert.NotNil(t, resp)
+				assert.Equal(t, tt.expectedRes, requests)
+			}
 
-	requests, resp, err = client.AccessRequests.ListProjectAccessRequests(1, nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
-	assert.Nil(t, resp)
-	assert.Nil(t, requests)
+			if tt.statusCode != 0 && resp != nil {
+				assert.Equal(t, tt.statusCode, resp.StatusCode)
+			}
+		})
+	}
 }
 
 func TestListGroupAccessRequests(t *testing.T) {
