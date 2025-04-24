@@ -81,7 +81,7 @@ func TestResourceLabelEventsService_ListIssueLabelEvents(t *testing.T) {
 	require.Equal(t, want, les)
 
 	les, resp, err = client.ResourceLabelEvents.ListIssueLabelEvents(1.5, 11, nil)
-	require.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, les)
 
@@ -167,7 +167,7 @@ func TestResourceLabelEventsService_GetIssueLabelEvent(t *testing.T) {
 	require.Equal(t, want, le)
 
 	le, resp, err = client.ResourceLabelEvents.GetIssueLabelEvent(1.5, 11, 1)
-	require.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, le)
 
@@ -255,7 +255,7 @@ func TestResourceLabelEventsService_ListGroupEpicLabelEvents(t *testing.T) {
 	require.Equal(t, want, les)
 
 	les, resp, err = client.ResourceLabelEvents.ListGroupEpicLabelEvents(1.5, 11, nil)
-	require.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, les)
 
@@ -341,7 +341,7 @@ func TestResourceLabelEventsService_GetGroupEpicLabelEvent(t *testing.T) {
 	require.Equal(t, want, le)
 
 	le, resp, err = client.ResourceLabelEvents.GetGroupEpicLabelEvent(1.5, 11, 107)
-	require.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, le)
 
@@ -429,7 +429,7 @@ func TestResourceLabelEventsService_ListMergeRequestsLabelEvents(t *testing.T) {
 	require.Equal(t, want, les)
 
 	les, resp, err = client.ResourceLabelEvents.ListMergeRequestsLabelEvents(1.5, 11, nil)
-	require.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, les)
 
@@ -515,7 +515,7 @@ func TestResourceLabelEventsService_GetMergeRequestLabelEvent(t *testing.T) {
 	require.Equal(t, want, le)
 
 	le, resp, err = client.ResourceLabelEvents.GetMergeRequestLabelEvent(1.5, 11, 120)
-	require.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, le)
 

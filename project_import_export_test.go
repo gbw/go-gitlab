@@ -23,7 +23,7 @@ func TestProjectImportExportService_ScheduleExport(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.ProjectImportExport.ScheduleExport(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectImportExport.ScheduleExport(1, nil, errorOption)
@@ -82,7 +82,7 @@ func TestProjectImportExportService_ExportStatus(t *testing.T) {
 	require.Equal(t, want, es)
 
 	es, resp, err = client.ProjectImportExport.ExportStatus(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, es)
 
@@ -114,7 +114,7 @@ func TestProjectImportExportService_ExportDownload(t *testing.T) {
 	require.Equal(t, want, es)
 
 	es, resp, err = client.ProjectImportExport.ExportDownload(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, es)
 
@@ -209,7 +209,7 @@ func TestProjectImportExportService_ImportStatus(t *testing.T) {
 	require.Equal(t, want, es)
 
 	es, resp, err = client.ProjectImportExport.ImportStatus(1.01, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, es)
 

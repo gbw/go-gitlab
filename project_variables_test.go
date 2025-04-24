@@ -43,7 +43,7 @@ func TestProjectVariablesService_ListVariables(t *testing.T) {
 	require.Equal(t, want, pvs)
 
 	pvs, resp, err = client.ProjectVariables.ListVariables(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pvs)
 
@@ -95,7 +95,7 @@ func TestProjectVariablesService_GetVariable(t *testing.T) {
 	require.Equal(t, want, pv)
 
 	pv, resp, err = client.ProjectVariables.GetVariable(1.01, "TEST_VARIABLE_1", nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pv)
 
@@ -148,7 +148,7 @@ func TestProjectVariablesService_CreateVariable(t *testing.T) {
 	require.Equal(t, want, pv)
 
 	pv, resp, err = client.ProjectVariables.CreateVariable(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pv)
 
@@ -199,7 +199,7 @@ func TestProjectVariablesService_CreateVariable_MaskedAndHidden(t *testing.T) {
 	require.Equal(t, want, pv)
 
 	pv, resp, err = client.ProjectVariables.CreateVariable(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pv)
 
@@ -254,7 +254,7 @@ func TestProjectVariablesService_UpdateVariable(t *testing.T) {
 	require.Equal(t, want, pv)
 
 	pv, resp, err = client.ProjectVariables.UpdateVariable(1.01, "NEW_VARIABLE", nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pv)
 
@@ -309,7 +309,7 @@ func TestProjectVariablesService_UpdateVariable_MaskedAndHidden(t *testing.T) {
 	require.Equal(t, want, pv)
 
 	pv, resp, err = client.ProjectVariables.UpdateVariable(1.01, "NEW_VARIABLE", nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pv)
 
@@ -338,7 +338,7 @@ func TestProjectVariablesService_RemoveVariable(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.ProjectVariables.RemoveVariable(1.01, "VARIABLE_1", nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectVariables.RemoveVariable(1, "VARIABLE_1", nil, nil, errorOption)

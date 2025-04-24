@@ -52,7 +52,7 @@ func TestRepositoryFilesService_GetFile(t *testing.T) {
 	assert.Equal(t, want, f)
 
 	f, resp, err = client.RepositoryFiles.GetFile(13083.01, "app/models/key.rb?ref=master", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, f)
 
@@ -104,7 +104,7 @@ func TestRepositoryFilesService_GetFileMetaData(t *testing.T) {
 	assert.Equal(t, want, f)
 
 	f, resp, err = client.RepositoryFiles.GetFileMetaData(13083.01, "app/models/key.rb?ref=master", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, f)
 
@@ -179,7 +179,7 @@ func TestRepositoryFilesService_GetFileBlame(t *testing.T) {
 	assert.Equal(t, want, fbr)
 
 	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13083.01, "path/to/file.rb", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, fbr)
 
@@ -234,7 +234,7 @@ func TestRepositoryFilesService_GetRawFile(t *testing.T) {
 	assert.Equal(t, want, b)
 
 	b, resp, err = client.RepositoryFiles.GetRawFile(13083.01, "app/models/key.rb", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, b)
 
@@ -286,7 +286,7 @@ func TestRepositoryFilesService_GetRawFileMetaData(t *testing.T) {
 	assert.Equal(t, want, f)
 
 	f, resp, err = client.RepositoryFiles.GetRawFileMetaData(13083.01, "app/models/key.rb", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, f)
 
@@ -331,7 +331,7 @@ func TestRepositoryFilesService_CreateFile(t *testing.T) {
 	assert.Equal(t, want, fi)
 
 	fi, resp, err = client.RepositoryFiles.CreateFile(13083.01, "app/project.rb", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, fi)
 
@@ -376,7 +376,7 @@ func TestRepositoryFilesService_UpdateFile(t *testing.T) {
 	assert.Equal(t, want, fi)
 
 	fi, resp, err = client.RepositoryFiles.UpdateFile(13083.01, "app/project.rb", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, fi)
 
@@ -404,7 +404,7 @@ func TestRepositoryFilesService_DeleteFile(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	resp, err = client.RepositoryFiles.DeleteFile(13083.01, "app/project.rb", nil)
-	assert.EqualError(t, err, "invalid ID type 13083.01, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 
 	resp, err = client.RepositoryFiles.DeleteFile(13083, "app/project.rb", nil, errorOption)

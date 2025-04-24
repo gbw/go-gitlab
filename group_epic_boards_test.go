@@ -131,7 +131,7 @@ func TestGroupEpicBoardsService_ListGroupEpicBoards(t *testing.T) {
 	require.Equal(t, want, gibs)
 
 	gibs, resp, err = client.GroupEpicBoards.ListGroupEpicBoards(5.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gibs)
 
@@ -265,7 +265,7 @@ func TestGroupEpicBoardsService_GetGroupEpicBoard(t *testing.T) {
 	require.Equal(t, want, gib)
 
 	gib, resp, err = client.GroupEpicBoards.GetGroupEpicBoard(5.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 

@@ -114,7 +114,7 @@ func TestGroupIssueBoardsService_ListGroupIssueBoards(t *testing.T) {
 	require.Equal(t, want, gibs)
 
 	gibs, resp, err = client.GroupIssueBoards.ListGroupIssueBoards(5.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gibs)
 
@@ -173,7 +173,7 @@ func TestGroupIssueBoardsService_CreateGroupIssueBoard(t *testing.T) {
 	require.Equal(t, want, gib)
 
 	gib, resp, err = client.GroupIssueBoards.CreateGroupIssueBoard(5.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 
@@ -324,7 +324,7 @@ func TestGroupIssueBoardsService_GetGroupIssueBoard(t *testing.T) {
 	require.Equal(t, want, gib)
 
 	gib, resp, err = client.GroupIssueBoards.GetGroupIssueBoard(5.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 
@@ -418,7 +418,7 @@ func TestGroupIssueBoardsService_UpdateIssueBoard(t *testing.T) {
 	require.Equal(t, want, gib)
 
 	gib, resp, err = client.GroupIssueBoards.UpdateIssueBoard(5.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 
@@ -446,7 +446,7 @@ func TestGroupIssueBoardsService_DeleteIssueBoard(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteIssueBoard(5.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteIssueBoard(5, 1, nil, nil, errorOption)
@@ -533,7 +533,7 @@ func TestGroupIssueBoardsService_ListGroupIssueBoardLists(t *testing.T) {
 	require.Equal(t, want, bls)
 
 	bls, resp, err = client.GroupIssueBoards.ListGroupIssueBoardLists(5.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, bls)
 
@@ -583,7 +583,7 @@ func TestGroupIssueBoardsService_GetGroupIssueBoardList(t *testing.T) {
 	require.Equal(t, want, bl)
 
 	bl, resp, err = client.GroupIssueBoards.GetGroupIssueBoardList(5.01, 1, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, bl)
 
@@ -643,7 +643,7 @@ func TestGroupIssueBoardsService_CreateGroupIssueBoardList(t *testing.T) {
 	require.Equal(t, want, bl)
 
 	bl, resp, err = client.GroupIssueBoards.CreateGroupIssueBoardList(5.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, bl)
 
@@ -733,7 +733,7 @@ func TestGroupIssueBoardsService_UpdateIssueBoardList(t *testing.T) {
 	require.Equal(t, want, bl)
 
 	bl, resp, err = client.GroupIssueBoards.UpdateIssueBoardList(5.01, 1, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, bl)
 
@@ -761,7 +761,7 @@ func TestGroupIssueBoardsService_DeleteGroupIssueBoardList(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteGroupIssueBoardList(5.01, 1, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteGroupIssueBoardList(5, 1, 1, nil, nil, errorOption)

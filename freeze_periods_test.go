@@ -41,7 +41,7 @@ func TestFreezePeriodsService_ListFreezePeriods(t *testing.T) {
 	require.Equal(t, want, fps)
 
 	fps, resp, err = client.FreezePeriods.ListFreezePeriods(19.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 19.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, fps)
 
@@ -85,7 +85,7 @@ func TestFreezePeriodsService_GetFreezePeriod(t *testing.T) {
 	require.Equal(t, want, fp)
 
 	fp, resp, err = client.FreezePeriods.GetFreezePeriod(19.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 19.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, fp)
 
@@ -129,7 +129,7 @@ func TestFreezePeriodsService_CreateFreezePeriodOptions(t *testing.T) {
 	require.Equal(t, want, fp)
 
 	fp, resp, err = client.FreezePeriods.CreateFreezePeriodOptions(19.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 19.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, fp)
 
@@ -173,7 +173,7 @@ func TestFreezePeriodsService_UpdateFreezePeriodOptions(t *testing.T) {
 	require.Equal(t, want, fp)
 
 	fp, resp, err = client.FreezePeriods.UpdateFreezePeriodOptions(19.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 19.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, fp)
 
@@ -201,7 +201,7 @@ func TestFreezePeriodsService_DeleteFreezePeriod(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.FreezePeriods.DeleteFreezePeriod(19.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 19.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.FreezePeriods.DeleteFreezePeriod(19, 1, nil, nil, errorOption)

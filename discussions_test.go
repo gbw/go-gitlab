@@ -100,7 +100,7 @@ func TestDiscussionsService_ListIssueDiscussions(t *testing.T) {
 	require.Equal(t, want, ds)
 
 	ds, resp, err = client.Discussions.ListIssueDiscussions(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
@@ -205,7 +205,7 @@ func TestDiscussionsService_GetIssueDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.GetIssueDiscussion(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -310,7 +310,7 @@ func TestDiscussionsService_CreateIssueDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.CreateIssueDiscussion(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -405,7 +405,7 @@ func TestDiscussionsService_AddIssueDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.AddIssueDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -500,7 +500,7 @@ func TestDiscussionsService_UpdateIssueDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.UpdateIssueDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -528,7 +528,7 @@ func TestDiscussionsService_DeleteIssueDiscussionNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Discussions.DeleteIssueDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Discussions.DeleteIssueDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil, errorOption)
@@ -632,7 +632,7 @@ func TestDiscussionsService_ListSnippetDiscussions(t *testing.T) {
 	require.Equal(t, want, ds)
 
 	ds, resp, err = client.Discussions.ListSnippetDiscussions(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
@@ -737,7 +737,7 @@ func TestDiscussionsService_GetSnippetDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.GetSnippetDiscussion(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -842,7 +842,7 @@ func TestDiscussionsService_CreateSnippetDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.CreateSnippetDiscussion(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -937,7 +937,7 @@ func TestDiscussionsService_AddSnippetDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.AddSnippetDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -1032,7 +1032,7 @@ func TestDiscussionsService_UpdateSnippetDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.UpdateSnippetDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -1060,7 +1060,7 @@ func TestDiscussionsService_DeleteSnippetDiscussionNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Discussions.DeleteSnippetDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Discussions.DeleteSnippetDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil, errorOption)
@@ -1164,7 +1164,7 @@ func TestDiscussionsService_ListGroupEpicDiscussions(t *testing.T) {
 	require.Equal(t, want, ds)
 
 	ds, resp, err = client.Discussions.ListGroupEpicDiscussions(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
@@ -1269,7 +1269,7 @@ func TestDiscussionsService_GetEpicDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.GetEpicDiscussion(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -1374,7 +1374,7 @@ func TestDiscussionsService_CreateEpicDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.CreateEpicDiscussion(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -1469,7 +1469,7 @@ func TestDiscussionsService_AddEpicDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.AddEpicDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -1564,7 +1564,7 @@ func TestDiscussionsService_UpdateEpicDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.UpdateEpicDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -1592,7 +1592,7 @@ func TestDiscussionsService_DeleteEpicDiscussionNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Discussions.DeleteEpicDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Discussions.DeleteEpicDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil, errorOption)
@@ -1696,7 +1696,7 @@ func TestDiscussionsService_ListMergeRequestDiscussions(t *testing.T) {
 	require.Equal(t, want, ds)
 
 	ds, resp, err = client.Discussions.ListMergeRequestDiscussions(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
@@ -1801,7 +1801,7 @@ func TestDiscussionsService_GetMergeRequestDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.GetMergeRequestDiscussion(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -1906,7 +1906,7 @@ func TestDiscussionsService_CreateMergeRequestDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.CreateMergeRequestDiscussion(5.01, 11, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -2011,7 +2011,7 @@ func TestDiscussionsService_ResolveMergeRequestDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.ResolveMergeRequestDiscussion(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -2106,7 +2106,7 @@ func TestDiscussionsService_AddMergeRequestDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.AddMergeRequestDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -2201,7 +2201,7 @@ func TestDiscussionsService_UpdateMergeRequestDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.UpdateMergeRequestDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -2229,7 +2229,7 @@ func TestDiscussionsService_DeleteMergeRequestDiscussionNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Discussions.DeleteMergeRequestDiscussionNote(5.01, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Discussions.DeleteMergeRequestDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil, errorOption)
@@ -2333,7 +2333,7 @@ func TestDiscussionsService_ListCommitDiscussions(t *testing.T) {
 	require.Equal(t, want, ds)
 
 	ds, resp, err = client.Discussions.ListCommitDiscussions(5.01, "abc123", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
@@ -2438,7 +2438,7 @@ func TestDiscussionsService_GetCommitDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.GetCommitDiscussion(5.01, "abc123", "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -2543,7 +2543,7 @@ func TestDiscussionsService_CreateCommitDiscussion(t *testing.T) {
 	require.Equal(t, want, d)
 
 	d, resp, err = client.Discussions.CreateCommitDiscussion(5.01, "abc123", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -2638,7 +2638,7 @@ func TestDiscussionsService_AddCommitDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.AddCommitDiscussionNote(5.01, "abc123", "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -2733,7 +2733,7 @@ func TestDiscussionsService_UpdateCommitDiscussionNote(t *testing.T) {
 	require.Equal(t, want, n)
 
 	n, resp, err = client.Discussions.UpdateCommitDiscussionNote(5.01, "abc123", "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, n)
 
@@ -2761,7 +2761,7 @@ func TestDiscussionsService_DeleteCommitDiscussionNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Discussions.DeleteCommitDiscussionNote(5.01, "abc123", "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Discussions.DeleteCommitDiscussionNote(5, "abc123", "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil, errorOption)

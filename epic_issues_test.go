@@ -165,7 +165,7 @@ func TestEpicIssuesService_ListEpicIssues(t *testing.T) {
 	require.Equal(t, want, is)
 
 	is, resp, err = client.EpicIssues.ListEpicIssues(1.01, 5, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -358,7 +358,7 @@ func TestEpicIssuesService_AssignEpicIssue(t *testing.T) {
 	require.Equal(t, want, eia)
 
 	eia, resp, err = client.EpicIssues.AssignEpicIssue(1.01, 5, 55, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, eia)
 
@@ -551,7 +551,7 @@ func TestEpicIssuesService_RemoveEpicIssue(t *testing.T) {
 	require.Equal(t, want, eia)
 
 	eia, resp, err = client.EpicIssues.RemoveEpicIssue(1.01, 5, 55, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, eia)
 
@@ -723,7 +723,7 @@ func TestEpicIssuesService_UpdateEpicIssueAssignment(t *testing.T) {
 	require.Equal(t, want, is)
 
 	is, resp, err = client.EpicIssues.UpdateEpicIssueAssignment(1.01, 5, 2, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 

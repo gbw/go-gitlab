@@ -174,7 +174,7 @@ func TestListGroupAccessRequests(t *testing.T) {
 	assert.Equal(t, expected, requests)
 
 	requests, resp, err = client.AccessRequests.ListGroupAccessRequests(1.5, nil)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, requests)
 
@@ -221,7 +221,7 @@ func TestRequestProjectAccess(t *testing.T) {
 	assert.Equal(t, expected, accessRequest)
 
 	accessRequest, resp, err = client.AccessRequests.RequestProjectAccess(1.5, nil)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, accessRequest)
 
@@ -268,7 +268,7 @@ func TestRequestGroupAccess(t *testing.T) {
 	assert.Equal(t, expected, accessRequest)
 
 	accessRequest, resp, err = client.AccessRequests.RequestGroupAccess(1.5, nil)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, accessRequest)
 
@@ -328,7 +328,7 @@ func TestApproveProjectAccessRequest(t *testing.T) {
 	assert.Equal(t, expected, request)
 
 	request, resp, err = client.AccessRequests.ApproveProjectAccessRequest(1.5, 10, opt)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, request)
 
@@ -388,7 +388,7 @@ func TestApproveGroupAccessRequest(t *testing.T) {
 	assert.Equal(t, expected, request)
 
 	request, resp, err = client.AccessRequests.ApproveGroupAccessRequest(1.5, 10, opt)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 	assert.Nil(t, request)
 
@@ -416,7 +416,7 @@ func TestDenyProjectAccessRequest(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	resp, err = client.AccessRequests.DenyProjectAccessRequest(1.5, 10)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 
 	resp, err = client.AccessRequests.DenyProjectAccessRequest(2, 10)
@@ -441,7 +441,7 @@ func TestDenyGroupAccessRequest(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	resp, err = client.AccessRequests.DenyGroupAccessRequest(1.5, 10)
-	assert.EqualError(t, err, "invalid ID type 1.5, the ID must be an int or a string")
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 	assert.Nil(t, resp)
 
 	resp, err = client.AccessRequests.DenyGroupAccessRequest(2, 10)

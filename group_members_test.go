@@ -441,7 +441,7 @@ func TestGetGroupMemberAll(t *testing.T) {
 	require.Equal(t, want, pm)
 
 	member, resp, err := client.GroupMembers.GetInheritedGroupMember(1.01, 2, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, member)
 

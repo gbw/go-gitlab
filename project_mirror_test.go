@@ -47,7 +47,7 @@ func TestProjectMirrorService_ListProjectMirror(t *testing.T) {
 	require.Equal(t, want, pms)
 
 	pms, resp, err = client.ProjectMirrors.ListProjectMirror(42.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 42.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pms)
 
@@ -165,7 +165,7 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 	require.Equal(t, want, pm)
 
 	pm, resp, err = client.ProjectMirrors.AddProjectMirror(42.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 42.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -217,7 +217,7 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 	require.Equal(t, want, pm)
 
 	pm, resp, err = client.ProjectMirrors.EditProjectMirror(42.01, 101486, nil, nil)
-	require.EqualError(t, err, "invalid ID type 42.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 

@@ -46,7 +46,7 @@ func TestMilestonesService_ListMilestones(t *testing.T) {
 	require.Equal(t, want, ms)
 
 	ms, resp, err = client.Milestones.ListMilestones(5.01, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ms)
 
@@ -97,7 +97,7 @@ func TestMilestonesService_GetMilestone(t *testing.T) {
 	require.Equal(t, want, m)
 
 	m, resp, err = client.Milestones.GetMilestone(5.01, 12, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, m)
 
@@ -148,7 +148,7 @@ func TestMilestonesService_CreateMilestone(t *testing.T) {
 	require.Equal(t, want, m)
 
 	m, resp, err = client.Milestones.CreateMilestone(5.01, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, m)
 
@@ -199,7 +199,7 @@ func TestMilestonesService_UpdateMilestone(t *testing.T) {
 	require.Equal(t, want, m)
 
 	m, resp, err = client.Milestones.UpdateMilestone(5.01, 12, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, m)
 
@@ -227,7 +227,7 @@ func TestMilestonesService_DeleteMilestone(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Milestones.DeleteMilestone(5.01, 12, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Milestones.DeleteMilestone(5, 12, nil, errorOption)
@@ -344,7 +344,7 @@ func TestMilestonesService_GetMilestoneIssues(t *testing.T) {
 	require.Equal(t, want, is)
 
 	is, resp, err = client.Milestones.GetMilestoneIssues(5.01, 12, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -551,7 +551,7 @@ func TestMilestonesService_GetMilestoneMergeRequests(t *testing.T) {
 	require.Equal(t, want, mrs)
 
 	mrs, resp, err = client.Milestones.GetMilestoneMergeRequests(3.01, 12, nil)
-	require.EqualError(t, err, "invalid ID type 3.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, mrs)
 
