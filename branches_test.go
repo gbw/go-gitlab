@@ -108,7 +108,7 @@ func TestBranchesService_ListBranches(t *testing.T) {
 	require.Equal(t, want, b)
 
 	b, resp, err = client.Branches.ListBranches(5.01, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -163,7 +163,7 @@ func TestBranchesService_ProtectBranch(t *testing.T) {
 	require.Equal(t, want, b)
 
 	b, resp, err = client.Branches.ProtectBranch(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -218,7 +218,7 @@ func TestBranchesService_UnprotectBranch(t *testing.T) {
 	require.Equal(t, want, b)
 
 	b, resp, err = client.Branches.UnprotectBranch(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -273,7 +273,7 @@ func TestBranchesService_CreateBranch(t *testing.T) {
 	require.Equal(t, want, b)
 
 	b, resp, err = client.Branches.CreateBranch(1.01, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -301,7 +301,7 @@ func TestBranchesService_DeleteBranch(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Branches.DeleteBranch(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteBranch(1, "master", nil, errorOption)
@@ -326,7 +326,7 @@ func TestBranchesService_DeleteMergedBranches(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Branches.DeleteMergedBranches(1.01, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteMergedBranches(1, nil, errorOption)

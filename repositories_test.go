@@ -51,7 +51,7 @@ func TestRepositoriesService_ListTree(t *testing.T) {
 	require.Equal(t, want, tns)
 
 	tns, resp, err = client.Repositories.ListTree(1.01, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, tns)
 
@@ -95,7 +95,7 @@ func TestRepositoriesService_Blob(t *testing.T) {
 	require.Equal(t, want, b)
 
 	b, resp, err = client.Repositories.Blob(1.01, "2dc6aa325a317eda67812f05600bdf0fcdc70ab0", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -134,7 +134,7 @@ func TestRepositoriesService_RawBlobContent(t *testing.T) {
 	require.Equal(t, want, b)
 
 	b, resp, err = client.Repositories.RawBlobContent(1.01, "2dc6aa325a317eda67812f05600bdf0fcdc70ab0", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -174,7 +174,7 @@ func TestRepositoriesService_Archive(t *testing.T) {
 	require.Equal(t, want, b)
 
 	b, resp, err = client.Repositories.Archive(1.01, opt, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -205,7 +205,7 @@ func TestRepositoriesService_StreamArchive(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Repositories.StreamArchive(1.01, w, opt, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Repositories.StreamArchive(1, w, opt, nil, errorOption)
@@ -296,7 +296,7 @@ func TestRepositoriesService_Compare(t *testing.T) {
 	require.Equal(t, want, c)
 
 	c, resp, err = client.Repositories.Compare(1.01, opt, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, c)
 
@@ -342,7 +342,7 @@ func TestRepositoriesService_Contributors(t *testing.T) {
 	require.Equal(t, want, cs)
 
 	cs, resp, err = client.Repositories.Contributors(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, cs)
 
@@ -396,7 +396,7 @@ func TestRepositoriesService_MergeBase(t *testing.T) {
 	require.Equal(t, want, c)
 
 	c, resp, err = client.Repositories.MergeBase(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, c)
 

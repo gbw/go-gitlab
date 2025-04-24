@@ -61,7 +61,7 @@ func TestPagesDomainsService_ListPagesDomains(t *testing.T) {
 	require.Equal(t, want, pds)
 
 	pds, resp, err = client.PagesDomains.ListPagesDomains(5.01, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pds)
 
@@ -193,7 +193,7 @@ func TestPagesDomainsService_GetPagesDomain(t *testing.T) {
 	require.Equal(t, want, pd)
 
 	pd, resp, err = client.PagesDomains.GetPagesDomain(5.01, "www.domain.example", nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pd)
 
@@ -258,7 +258,7 @@ func TestPagesDomainsService_CreatePagesDomain(t *testing.T) {
 	require.Equal(t, want, pd)
 
 	pd, resp, err = client.PagesDomains.CreatePagesDomain(5.01, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pd)
 
@@ -323,7 +323,7 @@ func TestPagesDomainsService_UpdatePagesDomain(t *testing.T) {
 	require.Equal(t, want, pd)
 
 	pd, resp, err = client.PagesDomains.UpdatePagesDomain(5.01, "ssl.domain.example", nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pd)
 
@@ -351,7 +351,7 @@ func TestPagesDomainsService_DeletePagesDomain(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.PagesDomains.DeletePagesDomain(5.01, "ssl.domain.example", nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.PagesDomains.DeletePagesDomain(5, "ssl.domain.example", nil, errorOption)

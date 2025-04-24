@@ -76,7 +76,7 @@ func TestUsersService_ListUserContributionEvents(t *testing.T) {
 	require.Equal(t, want, ces)
 
 	ces, resp, err = client.Users.ListUserContributionEvents(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ces)
 
@@ -320,7 +320,7 @@ func TestEventsService_ListProjectVisibleEvents(t *testing.T) {
 	require.Equal(t, want, ces)
 
 	ces, resp, err = client.Events.ListProjectVisibleEvents(15.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 15.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ces)
 

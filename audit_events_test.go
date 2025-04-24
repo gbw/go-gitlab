@@ -195,7 +195,7 @@ func TestAuditEventsService_ListGroupAuditEvents(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AuditEvents.ListGroupAuditEvents(6.01, nil)
-	require.EqualError(t, err, "invalid ID type 6.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -261,7 +261,7 @@ func TestAuditEventsService_GetGroupAuditEvent(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AuditEvents.GetGroupAuditEvent(6.01, 1, nil)
-	require.EqualError(t, err, "invalid ID type 6.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -329,7 +329,7 @@ func TestAuditEventsService_ListProjectAuditEvents(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AuditEvents.ListProjectAuditEvents(6.01, nil)
-	require.EqualError(t, err, "invalid ID type 6.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -395,7 +395,7 @@ func TestAuditEventsService_GetProjectAuditEvent(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AuditEvents.GetProjectAuditEvent(6.01, 1, nil)
-	require.EqualError(t, err, "invalid ID type 6.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 

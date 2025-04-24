@@ -328,7 +328,7 @@ func TestCommitsService_ListCommits(t *testing.T) {
 	require.Equal(t, want, cs)
 
 	cs, resp, err = client.Commits.ListCommits(1.01, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, cs)
 
@@ -384,7 +384,7 @@ func TestCommitsService_GetCommitRefs(t *testing.T) {
 	require.Equal(t, want, crs)
 
 	crs, resp, err = client.Commits.GetCommitRefs(1.01, "5937ac0a7beb003549fc5fd26fc247adbce4a52e", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, crs)
 
@@ -470,7 +470,7 @@ func TestCommitsService_CreateCommit(t *testing.T) {
 	require.Equal(t, want, c)
 
 	c, resp, err = client.Commits.CreateCommit(1.01, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, c)
 
@@ -520,7 +520,7 @@ func TestCommitsService_GetCommitDiff(t *testing.T) {
 	require.Equal(t, want, ds)
 
 	ds, resp, err = client.Commits.GetCommitDiff(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
@@ -574,7 +574,7 @@ func TestCommitsService_GetCommitComments(t *testing.T) {
 	require.Equal(t, want, ccs)
 
 	ccs, resp, err = client.Commits.GetCommitComments(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ccs)
 
@@ -626,7 +626,7 @@ func TestCommitsService_PostCommitComment(t *testing.T) {
 	require.Equal(t, want, cc)
 
 	cc, resp, err = client.Commits.PostCommitComment(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, cc)
 
@@ -833,7 +833,7 @@ func TestCommitsService_ListMergeRequestsByCommit(t *testing.T) {
 	require.Equal(t, want, mrs)
 
 	mrs, resp, err = client.Commits.ListMergeRequestsByCommit(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, mrs)
 
@@ -919,7 +919,7 @@ func TestCommitsService_CherryPickCommit(t *testing.T) {
 	require.Equal(t, want, c)
 
 	c, resp, err = client.Commits.CherryPickCommit(1.01, "master", nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, c)
 

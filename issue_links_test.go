@@ -82,7 +82,7 @@ func TestIssueLinksService_ListIssueRelations(t *testing.T) {
 	require.Equal(t, want, is)
 
 	is, resp, err = client.IssueLinks.ListIssueRelations(4.01, 14, nil)
-	require.EqualError(t, err, "invalid ID type 4.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -238,7 +238,7 @@ func TestIssueLinksService_CreateIssueLink(t *testing.T) {
 	require.Equal(t, want, i)
 
 	i, resp, err = client.IssueLinks.CreateIssueLink(4.01, 1, nil)
-	require.EqualError(t, err, "invalid ID type 4.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, i)
 
@@ -394,7 +394,7 @@ func TestIssueLinksService_DeleteIssueLink(t *testing.T) {
 	require.Equal(t, want, i)
 
 	i, resp, err = client.IssueLinks.DeleteIssueLink(4.01, 1, 83, nil)
-	require.EqualError(t, err, "invalid ID type 4.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, i)
 

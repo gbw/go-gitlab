@@ -64,7 +64,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmoji(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AwardEmoji.ListMergeRequestAwardEmoji(1.01, 80, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -135,7 +135,7 @@ func TestAwardEmojiService_ListIssueAwardEmoji(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AwardEmoji.ListIssueAwardEmoji(1.01, 80, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -206,7 +206,7 @@ func TestAwardEmojiService_ListSnippetAwardEmoji(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AwardEmoji.ListSnippetAwardEmoji(1.01, 80, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -275,7 +275,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmoji(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.GetMergeRequestAwardEmoji(1.01, 80, 4, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -344,7 +344,7 @@ func TestAwardEmojiService_GetIssueAwardEmoji(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.GetIssueAwardEmoji(1.01, 80, 4, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -413,7 +413,7 @@ func TestAwardEmojiService_GetSnippetAwardEmoji(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.GetSnippetAwardEmoji(1.01, 80, 4, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -482,7 +482,7 @@ func TestAwardEmojiService_CreateMergeRequestAwardEmoji(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateMergeRequestAwardEmoji(1.01, 80, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -551,7 +551,7 @@ func TestAwardEmojiService_CreateIssueAwardEmoji(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateIssueAwardEmoji(1.01, 80, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -620,7 +620,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmoji(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateSnippetAwardEmoji(1.01, 80, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -648,7 +648,7 @@ func TestAwardEmojiService_DeleteMergeRequestAwardEmoji(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmoji(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmoji(1, 80, 1, nil, errorOption)
@@ -673,7 +673,7 @@ func TestAwardEmojiService_DeleteIssueAwardEmoji(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssueAwardEmoji(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssueAwardEmoji(1, 80, 1, nil, errorOption)
@@ -698,7 +698,7 @@ func TestAwardEmojiService_DeleteSnippetAwardEmoji(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmoji(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmoji(1, 80, 1, nil, errorOption)
@@ -766,7 +766,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AwardEmoji.ListMergeRequestAwardEmojiOnNote(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -837,7 +837,7 @@ func TestAwardEmojiService_ListIssuesAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AwardEmoji.ListIssuesAwardEmojiOnNote(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -908,7 +908,7 @@ func TestAwardEmojiService_ListSnippetAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AwardEmoji.ListSnippetAwardEmojiOnNote(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -977,7 +977,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.GetMergeRequestAwardEmojiOnNote(1.01, 80, 1, 4, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1046,7 +1046,7 @@ func TestAwardEmojiService_GetIssuesAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.GetIssuesAwardEmojiOnNote(1.01, 80, 1, 4, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1115,7 +1115,7 @@ func TestAwardEmojiService_GetSnippetAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.GetSnippetAwardEmojiOnNote(1.01, 80, 1, 4, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1184,7 +1184,7 @@ func TestAwardEmojiService_CCreateMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateMergeRequestAwardEmojiOnNote(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1253,7 +1253,7 @@ func TestAwardEmojiService_CreateIssuesAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateIssuesAwardEmojiOnNote(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1322,7 +1322,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmojiOnNote(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateSnippetAwardEmojiOnNote(1.01, 80, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1350,7 +1350,7 @@ func TestAwardEmojiService_DeleteMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmojiOnNote(1.01, 80, 1, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmojiOnNote(1, 80, 1, 1, nil, errorOption)
@@ -1375,7 +1375,7 @@ func TestAwardEmojiService_DeleteIssuesAwardEmojiOnNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssuesAwardEmojiOnNote(1.01, 80, 1, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssuesAwardEmojiOnNote(1, 80, 1, 1, nil, errorOption)
@@ -1400,7 +1400,7 @@ func TestAwardEmojiService_DeleteSnippetAwardEmojiOnNote(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmojiOnNote(1.01, 80, 1, 1, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmojiOnNote(1, 80, 1, 1, nil, errorOption)

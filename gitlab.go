@@ -985,16 +985,22 @@ func (c *Client) requestOAuthToken(ctx context.Context, token string) (string, e
 	return c.token, nil
 }
 
+// ErrInvalidIDType is returned when a function expecting an ID as either an integer
+// or string receives a different type. This error commonly occurs when working with
+// GitLab resources like groups and projects which support both numeric IDs and
+// path-based string identifiers.
+var ErrInvalidIDType = errors.New("the ID must be an int or a string")
+
 // Helper function to accept and format both the project ID or name as project
 // identifier for all API calls.
-func parseID(id interface{}) (string, error) {
+func parseID(id any) (string, error) {
 	switch v := id.(type) {
 	case int:
 		return strconv.Itoa(v), nil
 	case string:
 		return v, nil
 	default:
-		return "", fmt.Errorf("invalid ID type %#v, the ID must be an int or a string", id)
+		return "", fmt.Errorf("invalid ID type %#v, %w", id, ErrInvalidIDType)
 	}
 }
 

@@ -70,7 +70,7 @@ func TestPackagesService_ListProjectPackages(t *testing.T) {
 	require.Equal(t, want, ps)
 
 	ps, resp, err = client.Packages.ListProjectPackages(3.01, nil)
-	require.EqualError(t, err, "invalid ID type 3.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ps)
 
@@ -122,7 +122,7 @@ func TestPackagesService_ListPackageFiles(t *testing.T) {
 	require.Equal(t, want, ps)
 
 	ps, resp, err = client.Packages.ListPackageFiles(3.01, 4, nil)
-	require.EqualError(t, err, "invalid ID type 3.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ps)
 
@@ -150,7 +150,7 @@ func TestPackagesService_DeleteProjectPackage(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Packages.DeleteProjectPackage(3.01, 4, nil)
-	require.EqualError(t, err, "invalid ID type 3.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.Packages.DeleteProjectPackage(3, 4, nil, errorOption)

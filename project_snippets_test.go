@@ -67,7 +67,7 @@ func TestProjectSnippetsService_ListSnippets(t *testing.T) {
 	require.Equal(t, want, ss)
 
 	ss, resp, err = client.ProjectSnippets.ListSnippets(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ss)
 
@@ -138,7 +138,7 @@ func TestProjectSnippetsService_GetSnippet(t *testing.T) {
 	require.Equal(t, want, s)
 
 	s, resp, err = client.ProjectSnippets.GetSnippet(1.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 
@@ -224,7 +224,7 @@ func TestProjectSnippetsService_CreateSnippet(t *testing.T) {
 	require.Equal(t, want, s)
 
 	s, resp, err = client.ProjectSnippets.CreateSnippet(1.01, nil, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 
@@ -295,7 +295,7 @@ func TestProjectSnippetsService_UpdateSnippet(t *testing.T) {
 	require.Equal(t, want, s)
 
 	s, resp, err = client.ProjectSnippets.UpdateSnippet(1.01, 1, nil, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 
@@ -341,7 +341,7 @@ func TestProjectSnippetsService_DeleteSnippet(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.ProjectSnippets.DeleteSnippet(1.01, 1, nil, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectSnippets.DeleteSnippet(1, 1, nil, nil, nil, errorOption)
@@ -384,7 +384,7 @@ func TestProjectSnippetsService_SnippetContent(t *testing.T) {
 	require.Equal(t, want, s)
 
 	s, resp, err = client.ProjectSnippets.SnippetContent(1.01, 1, nil, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 

@@ -50,7 +50,7 @@ func TestProjectMembersService_ListProjectMembers(t *testing.T) {
 	require.Equal(t, want, pms)
 
 	pms, resp, err = client.ProjectMembers.ListProjectMembers(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pms)
 
@@ -104,7 +104,7 @@ func TestProjectMembersService_ListAllProjectMembers(t *testing.T) {
 	require.Equal(t, want, pms)
 
 	pms, resp, err = client.ProjectMembers.ListAllProjectMembers(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pms)
 
@@ -159,7 +159,7 @@ func TestProjectMembersService_GetProjectMember(t *testing.T) {
 	require.Equal(t, want, pm)
 
 	pm, resp, err = client.ProjectMembers.GetProjectMember(1.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -214,7 +214,7 @@ func TestProjectMembersService_GetInheritedProjectMember(t *testing.T) {
 	require.Equal(t, want, pm)
 
 	pm, resp, err = client.ProjectMembers.GetInheritedProjectMember(1.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -285,7 +285,7 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 	require.Equal(t, "venkatesh_thalluri", *requestOpts.Username)
 
 	pm, resp, err = client.ProjectMembers.AddProjectMember(1.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -340,7 +340,7 @@ func TestProjectMembersService_EditProjectMember(t *testing.T) {
 	require.Equal(t, want, pm)
 
 	pm, resp, err = client.ProjectMembers.EditProjectMember(1.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -382,7 +382,7 @@ func TestProjectMembersService_DeleteProjectMember(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.ProjectMembers.DeleteProjectMember(1.01, 1, nil, nil)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectMembers.DeleteProjectMember(1, 1, nil, errorOption)

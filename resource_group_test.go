@@ -42,7 +42,7 @@ func TestResourceGroups_GetAllResourceGroupsForAProject(t *testing.T) {
 	require.ElementsMatch(t, want, rgs)
 
 	rgs, resp, err = client.ResourceGroup.GetAllResourceGroupsForAProject(1.01)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, rgs)
 
@@ -90,7 +90,7 @@ func TestResourceGroups_GetASpecificResourceGroup(t *testing.T) {
 	require.Equal(t, want, rg)
 
 	rg, resp, err = client.ResourceGroup.GetASpecificResourceGroup(1.01, "production")
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, rg)
 
@@ -128,7 +128,7 @@ func TestResourceGroups_ListUpcomingJobsForASpecificResourceGroup(t *testing.T) 
 	require.ElementsMatch(t, want, jobs)
 
 	jobs, resp, err = client.ResourceGroup.ListUpcomingJobsForASpecificResourceGroup(1.01, "production")
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, jobs)
 
@@ -178,7 +178,7 @@ func TestResourceGroup_EditAnExistingResourceGroup(t *testing.T) {
 	require.Equal(t, want, rg)
 
 	rg, resp, err = client.ResourceGroup.EditAnExistingResourceGroup(1.01, "production", opts)
-	require.EqualError(t, err, "invalid ID type 1.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, rg)
 

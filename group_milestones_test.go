@@ -46,7 +46,7 @@ func TestGroupMilestonesService_ListGroupMilestones(t *testing.T) {
 	require.Equal(t, want, gms)
 
 	gms, resp, err = client.GroupMilestones.ListGroupMilestones(5.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gms)
 
@@ -97,7 +97,7 @@ func TestGroupMilestonesService_GetGroupMilestone(t *testing.T) {
 	require.Equal(t, want, gm)
 
 	gm, resp, err = client.GroupMilestones.GetGroupMilestone(5.01, 12, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gm)
 
@@ -148,7 +148,7 @@ func TestGroupMilestonesService_CreateGroupMilestone(t *testing.T) {
 	require.Equal(t, want, gm)
 
 	gm, resp, err = client.GroupMilestones.CreateGroupMilestone(5.01, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gm)
 
@@ -199,7 +199,7 @@ func TestGroupMilestonesService_UpdateGroupMilestone(t *testing.T) {
 	require.Equal(t, want, gm)
 
 	gm, resp, err = client.GroupMilestones.UpdateGroupMilestone(5.01, 12, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, gm)
 
@@ -227,7 +227,7 @@ func TestGroupMilestonesService_DeleteGroupMilestone(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.GroupMilestones.DeleteGroupMilestone(5.01, 12, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 
 	resp, err = client.GroupMilestones.DeleteGroupMilestone(5, 12, nil, errorOption)
@@ -344,7 +344,7 @@ func TestGroupMilestonesService_GetGroupMilestoneIssues(t *testing.T) {
 	require.Equal(t, want, is)
 
 	is, resp, err = client.GroupMilestones.GetGroupMilestoneIssues(5.01, 12, nil, nil)
-	require.EqualError(t, err, "invalid ID type 5.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -551,7 +551,7 @@ func TestGroupMilestonesService_GetGroupMilestoneMergeRequests(t *testing.T) {
 	require.Equal(t, want, mrs)
 
 	mrs, resp, err = client.GroupMilestones.GetGroupMilestoneMergeRequests(3.01, 12, nil, nil)
-	require.EqualError(t, err, "invalid ID type 3.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, mrs)
 
@@ -593,7 +593,7 @@ func TestGroupMilestonesService_GetGroupMilestoneBurndownChartEvents(t *testing.
 	require.Equal(t, want, bces)
 
 	bces, resp, err = client.GroupMilestones.GetGroupMilestoneBurndownChartEvents(3.01, 12, nil, nil)
-	require.EqualError(t, err, "invalid ID type 3.01, the ID must be an int or a string")
+	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, bces)
 
