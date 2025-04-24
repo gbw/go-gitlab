@@ -1775,9 +1775,9 @@ func (c *MockUsersServiceInterfaceGetUserMembershipsCall) DoAndReturn(f func(int
 }
 
 // GetUserStatus mocks base method.
-func (m *MockUsersServiceInterface) GetUserStatus(user int, options ...gitlab.RequestOptionFunc) (*gitlab.UserStatus, *gitlab.Response, error) {
+func (m *MockUsersServiceInterface) GetUserStatus(uid any, options ...gitlab.RequestOptionFunc) (*gitlab.UserStatus, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
-	varargs := []any{user}
+	varargs := []any{uid}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
@@ -1789,9 +1789,9 @@ func (m *MockUsersServiceInterface) GetUserStatus(user int, options ...gitlab.Re
 }
 
 // GetUserStatus indicates an expected call of GetUserStatus.
-func (mr *MockUsersServiceInterfaceMockRecorder) GetUserStatus(user any, options ...any) *MockUsersServiceInterfaceGetUserStatusCall {
+func (mr *MockUsersServiceInterfaceMockRecorder) GetUserStatus(uid any, options ...any) *MockUsersServiceInterfaceGetUserStatusCall {
 	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{user}, options...)
+	varargs := append([]any{uid}, options...)
 	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserStatus", reflect.TypeOf((*MockUsersServiceInterface)(nil).GetUserStatus), varargs...)
 	return &MockUsersServiceInterfaceGetUserStatusCall{Call: call}
 }
@@ -1808,13 +1808,13 @@ func (c *MockUsersServiceInterfaceGetUserStatusCall) Return(arg0 *gitlab.UserSta
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceGetUserStatusCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.UserStatus, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserStatusCall {
+func (c *MockUsersServiceInterfaceGetUserStatusCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.UserStatus, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserStatusCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceGetUserStatusCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.UserStatus, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserStatusCall {
+func (c *MockUsersServiceInterfaceGetUserStatusCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.UserStatus, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserStatusCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

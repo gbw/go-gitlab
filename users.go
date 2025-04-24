@@ -23,6 +23,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
@@ -37,7 +38,7 @@ type (
 		DeleteUser(user int, options ...RequestOptionFunc) (*Response, error)
 		CurrentUser(options ...RequestOptionFunc) (*User, *Response, error)
 		CurrentUserStatus(options ...RequestOptionFunc) (*UserStatus, *Response, error)
-		GetUserStatus(user int, options ...RequestOptionFunc) (*UserStatus, *Response, error)
+		GetUserStatus(uid any, options ...RequestOptionFunc) (*UserStatus, *Response, error)
 		SetUserStatus(opt *UserStatusOptions, options ...RequestOptionFunc) (*UserStatus, *Response, error)
 		GetUserAssociationsCount(user int, options ...RequestOptionFunc) (*UserAssociationsCount, *Response, error)
 		ListSSHKeys(opt *ListSSHKeysOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error)
@@ -482,12 +483,20 @@ func (s *UsersService) CurrentUserStatus(options ...RequestOptionFunc) (*UserSta
 	return status, resp, nil
 }
 
-// GetUserStatus retrieves a user's status
+// GetUserStatus retrieves a user's status.
+//
+// uid can be either a user ID (int) or a username (string); will trim one "@" character off the username, if present.
+// Other types will cause an error to be returned.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/users/#get-the-status-of-a-user
-func (s *UsersService) GetUserStatus(user int, options ...RequestOptionFunc) (*UserStatus, *Response, error) {
-	u := fmt.Sprintf("users/%d/status", user)
+func (s *UsersService) GetUserStatus(uid any, options ...RequestOptionFunc) (*UserStatus, *Response, error) {
+	user, err := parseID(uid)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	u := fmt.Sprintf("users/%s/status", strings.TrimPrefix(user, "@"))
 
 	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
 	if err != nil {

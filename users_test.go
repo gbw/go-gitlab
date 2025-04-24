@@ -1047,3 +1047,63 @@ func TestDeleteUserIdentity(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
+
+func TestGetUserStatus(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		uid     any
+		path    string
+		wantErr error
+	}{
+		{
+			name: "numeric user ID",
+			uid:  1,
+			path: "/api/v4/users/1/status",
+		},
+		{
+			name: "user name",
+			uid:  "johndoe",
+			path: "/api/v4/users/johndoe/status",
+		},
+		{
+			name: "user name with @ prefix",
+			uid:  "@johndoe",
+			path: "/api/v4/users/johndoe/status",
+		},
+		{
+			name:    "invalid uid type",
+			uid:     User{ID: 1},
+			path:    "/unused",
+			wantErr: ErrInvalidIDType,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			mux, client := setup(t)
+
+			mux.HandleFunc(tt.path, func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				mustWriteHTTPResponse(t, w, "testdata/get_user_status.json")
+			})
+
+			user, _, err := client.Users.GetUserStatus(tt.uid)
+			require.ErrorIs(t, err, tt.wantErr)
+			if tt.wantErr != nil {
+				return
+			}
+
+			want := &UserStatus{
+				Emoji:        "red_circle",
+				Message:      "Duly swamped",
+				Availability: "busy",
+				MessageHTML:  "Duly swamped",
+			}
+			require.Equal(t, want, user)
+		})
+	}
+}
