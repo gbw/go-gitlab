@@ -950,7 +950,7 @@ func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
 				t.Fatalf("Failed to read the request body. Error: %v", err)
 			}
 
-			var bodyJson map[string]interface{}
+			var bodyJson map[string]any
 			err = json.Unmarshal(body, &bodyJson)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
@@ -1035,7 +1035,7 @@ func TestCreateGroupWithEmailsEnabled(t *testing.T) {
 			}
 
 			// unmarshal into generic JSON since we don't want to test CreateGroupOptions using itself to validate.
-			var bodyJson map[string]interface{}
+			var bodyJson map[string]any
 			err = json.Unmarshal(body, &bodyJson)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
@@ -1070,7 +1070,7 @@ func TestUpdateGroupWithEmailsEnabled(t *testing.T) {
 			}
 
 			// unmarshal into generic JSON since we don't want to test UpdateGroupOptions using itself to validate.
-			var bodyJson map[string]interface{}
+			var bodyJson map[string]any
 			err = json.Unmarshal(body, &bodyJson)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
@@ -1290,7 +1290,7 @@ func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
 				t.Fatalf("Failed to read the request body. Error: %v", err)
 			}
 
-			var bodyJson map[string]interface{}
+			var bodyJson map[string]any
 			err = json.Unmarshal(body, &bodyJson)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)

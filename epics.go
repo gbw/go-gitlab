@@ -27,17 +27,17 @@ type (
 	// Deprecated: will be removed in v5 of the API, use Work Items API instead
 	EpicsServiceInterface interface {
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		ListGroupEpics(gid interface{}, opt *ListGroupEpicsOptions, options ...RequestOptionFunc) ([]*Epic, *Response, error)
+		ListGroupEpics(gid any, opt *ListGroupEpicsOptions, options ...RequestOptionFunc) ([]*Epic, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		GetEpic(gid interface{}, epic int, options ...RequestOptionFunc) (*Epic, *Response, error)
+		GetEpic(gid any, epic int, options ...RequestOptionFunc) (*Epic, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		GetEpicLinks(gid interface{}, epic int, options ...RequestOptionFunc) ([]*Epic, *Response, error)
+		GetEpicLinks(gid any, epic int, options ...RequestOptionFunc) ([]*Epic, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		CreateEpic(gid interface{}, opt *CreateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error)
+		CreateEpic(gid any, opt *CreateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		UpdateEpic(gid interface{}, epic int, opt *UpdateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error)
+		UpdateEpic(gid any, epic int, opt *UpdateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		DeleteEpic(gid interface{}, epic int, options ...RequestOptionFunc) (*Response, error)
+		DeleteEpic(gid any, epic int, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// EpicsService handles communication with the epic related methods
@@ -129,7 +129,7 @@ type ListGroupEpicsOptions struct {
 // Deprecated: will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epics/#list-epics-for-a-group
-func (s *EpicsService) ListGroupEpics(gid interface{}, opt *ListGroupEpicsOptions, options ...RequestOptionFunc) ([]*Epic, *Response, error) {
+func (s *EpicsService) ListGroupEpics(gid any, opt *ListGroupEpicsOptions, options ...RequestOptionFunc) ([]*Epic, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -154,7 +154,7 @@ func (s *EpicsService) ListGroupEpics(gid interface{}, opt *ListGroupEpicsOption
 // Deprecated: will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epics/#single-epic
-func (s *EpicsService) GetEpic(gid interface{}, epic int, options ...RequestOptionFunc) (*Epic, *Response, error) {
+func (s *EpicsService) GetEpic(gid any, epic int, options ...RequestOptionFunc) (*Epic, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -179,7 +179,7 @@ func (s *EpicsService) GetEpic(gid interface{}, epic int, options ...RequestOpti
 // Deprecated: will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epic_links/
-func (s *EpicsService) GetEpicLinks(gid interface{}, epic int, options ...RequestOptionFunc) ([]*Epic, *Response, error) {
+func (s *EpicsService) GetEpicLinks(gid any, epic int, options ...RequestOptionFunc) ([]*Epic, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -222,7 +222,7 @@ type CreateEpicOptions struct {
 // Deprecated: will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epics/#new-epic
-func (s *EpicsService) CreateEpic(gid interface{}, opt *CreateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error) {
+func (s *EpicsService) CreateEpic(gid any, opt *CreateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -269,7 +269,7 @@ type UpdateEpicOptions struct {
 // Deprecated: will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epics/#update-epic
-func (s *EpicsService) UpdateEpic(gid interface{}, epic int, opt *UpdateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error) {
+func (s *EpicsService) UpdateEpic(gid any, epic int, opt *UpdateEpicOptions, options ...RequestOptionFunc) (*Epic, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -294,7 +294,7 @@ func (s *EpicsService) UpdateEpic(gid interface{}, epic int, opt *UpdateEpicOpti
 // Deprecated: will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epics/#delete-epic
-func (s *EpicsService) DeleteEpic(gid interface{}, epic int, options ...RequestOptionFunc) (*Response, error) {
+func (s *EpicsService) DeleteEpic(gid any, epic int, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err

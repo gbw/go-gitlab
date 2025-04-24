@@ -514,7 +514,7 @@ func TestGetJiraService(t *testing.T) {
 		},
 	}
 
-	for testcase := 0; testcase < len(want); testcase++ {
+	for testcase := range want {
 		service, _, err := client.Services.GetJiraService(testcase)
 		if err != nil {
 			t.Fatalf("Services.GetJiraService returns an error: %v", err)

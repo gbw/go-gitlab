@@ -132,7 +132,7 @@ func TestGetPipelineTestReport(t *testing.T) {
 						Name:          "Error testcase 2",
 						Classname:     "MyClass",
 						ExecutionTime: 19.984,
-						SystemOutput: map[string]interface{}{
+						SystemOutput: map[string]any{
 							"message": "Failed test",
 							"type":    "MultipleExceptionError",
 						},
@@ -141,7 +141,7 @@ func TestGetPipelineTestReport(t *testing.T) {
 						Status:    "error",
 						Name:      "Error testcase 3",
 						Classname: "MyClass",
-						SystemOutput: []interface{}{
+						SystemOutput: []any{
 							"Failed test a",
 							"Failed test b",
 						},

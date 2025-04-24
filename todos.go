@@ -68,7 +68,7 @@ type TodoTarget struct {
 	CreatedAt            *time.Time             `json:"created_at"`
 	Description          string                 `json:"description"`
 	Downvotes            int                    `json:"downvotes"`
-	ID                   interface{}            `json:"id"`
+	ID                   any                    `json:"id"`
 	IID                  int                    `json:"iid"`
 	Labels               []string               `json:"labels"`
 	Milestone            *Milestone             `json:"milestone"`

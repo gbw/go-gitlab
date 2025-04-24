@@ -24,6 +24,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"math"
 	"math/rand"
 	"mime/multipart"
@@ -647,7 +648,7 @@ func (c *Client) setBaseURL(urlStr string) error {
 // Relative URL paths should always be specified without a preceding slash.
 // If specified, the value pointed to by body is JSON encoded and included
 // as the request body.
-func (c *Client) NewRequest(method, path string, opt interface{}, options []RequestOptionFunc) (*retryablehttp.Request, error) {
+func (c *Client) NewRequest(method, path string, opt any, options []RequestOptionFunc) (*retryablehttp.Request, error) {
 	u := *c.baseURL
 	unescaped, err := url.PathUnescape(path)
 	if err != nil {
@@ -666,7 +667,7 @@ func (c *Client) NewRequest(method, path string, opt interface{}, options []Requ
 		reqHeaders.Set("User-Agent", c.UserAgent)
 	}
 
-	var body interface{}
+	var body any
 	switch {
 	case method == http.MethodPatch || method == http.MethodPost || method == http.MethodPut:
 		reqHeaders.Set("Content-Type", "application/json")
@@ -700,9 +701,7 @@ func (c *Client) NewRequest(method, path string, opt interface{}, options []Requ
 	}
 
 	// Set the request specific headers.
-	for k, v := range reqHeaders {
-		req.Header[k] = v
-	}
+	maps.Copy(req.Header, reqHeaders)
 
 	return req, nil
 }
@@ -712,7 +711,7 @@ func (c *Client) NewRequest(method, path string, opt interface{}, options []Requ
 // URL of the Client. Relative URL paths should always be specified without
 // a preceding slash. If specified, the value pointed to by body is JSON
 // encoded and included as the request body.
-func (c *Client) UploadRequest(method, path string, content io.Reader, filename string, uploadType UploadType, opt interface{}, options []RequestOptionFunc) (*retryablehttp.Request, error) {
+func (c *Client) UploadRequest(method, path string, content io.Reader, filename string, uploadType UploadType, opt any, options []RequestOptionFunc) (*retryablehttp.Request, error) {
 	u := *c.baseURL
 	unescaped, err := url.PathUnescape(path)
 	if err != nil {
@@ -776,9 +775,7 @@ func (c *Client) UploadRequest(method, path string, content io.Reader, filename 
 	}
 
 	// Set the request specific headers.
-	for k, v := range reqHeaders {
-		req.Header[k] = v
-	}
+	maps.Copy(req.Header, reqHeaders)
 
 	return req, nil
 }
@@ -881,7 +878,7 @@ func (r *Response) populateLinkValues() {
 // error if an API error has occurred. If v implements the io.Writer
 // interface, the raw response body will be written to v, without attempting to
 // first decode it.
-func (c *Client) Do(req *retryablehttp.Request, v interface{}) (*Response, error) {
+func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 	// Wait will block until the limiter can obtain a new token.
 	err := c.limiter.Wait(req.Context())
 	if err != nil {
@@ -1048,7 +1045,7 @@ func CheckResponse(r *http.Response) error {
 	if err == nil && strings.TrimSpace(string(data)) != "" {
 		errorResponse.Body = data
 
-		var raw interface{}
+		var raw any
 		if err := json.Unmarshal(data, &raw); err != nil {
 			errorResponse.Message = fmt.Sprintf("failed to parse unknown error format: %s", data)
 		} else {
@@ -1078,19 +1075,19 @@ func CheckResponse(r *http.Response) error {
 //	    },
 //	    "error": "<error-message>"
 //	}
-func parseError(raw interface{}) string {
+func parseError(raw any) string {
 	switch raw := raw.(type) {
 	case string:
 		return raw
 
-	case []interface{}:
+	case []any:
 		var errs []string
 		for _, v := range raw {
 			errs = append(errs, parseError(v))
 		}
 		return fmt.Sprintf("[%s]", strings.Join(errs, ", "))
 
-	case map[string]interface{}:
+	case map[string]any:
 		var errs []string
 		for k, v := range raw {
 			errs = append(errs, fmt.Sprintf("{%s: %s}", k, parseError(v)))

@@ -23,7 +23,7 @@ func TestServiceMethodsInInterface(t *testing.T) {
 
 		// Get all exported methods from the concrete service struct
 		concreteMethodMap := make(map[string]struct{})
-		for i := 0; i < concreteType.NumMethod(); i++ {
+		for i := range concreteType.NumMethod() {
 			method := concreteType.Method(i)
 			if method.IsExported() {
 				concreteMethodMap[method.Name] = struct{}{}
@@ -32,7 +32,7 @@ func TestServiceMethodsInInterface(t *testing.T) {
 
 		// Get all methods from the interface
 		interfaceMethodMap := make(map[string]struct{})
-		for i := 0; i < interfaceTyp.NumMethod(); i++ {
+		for i := range interfaceTyp.NumMethod() {
 			method := interfaceTyp.Method(i)
 			interfaceMethodMap[method.Name] = struct{}{}
 		}
