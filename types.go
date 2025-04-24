@@ -223,6 +223,24 @@ const (
 	Busy   AvailabilityValue = "busy"
 )
 
+// ClearStatusAfterValue represents the time period after which the user's status will be cleared.
+//
+// The duration is specified using one of the constants defined in this package.
+type ClearStatusAfterValue string
+
+// List of available clear status after values.
+//
+// https://docs.gitlab.com/api/users/#set-your-user-status:~:text=clear_status_after
+const (
+	ClearStatusAfter30Minutes ClearStatusAfterValue = "30_minutes"
+	ClearStatusAfter3Hours    ClearStatusAfterValue = "3_hours"
+	ClearStatusAfter8Hours    ClearStatusAfterValue = "8_hours"
+	ClearStatusAfter1Day      ClearStatusAfterValue = "1_day"
+	ClearStatusAfter3Days     ClearStatusAfterValue = "3_days"
+	ClearStatusAfter7Days     ClearStatusAfterValue = "7_days"
+	ClearStatusAfter30Days    ClearStatusAfterValue = "30_days"
+)
+
 // Availability is a helper routine that allocates a new AvailabilityValue
 // to store v and returns a pointer to it.
 //
