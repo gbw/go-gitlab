@@ -1039,7 +1039,7 @@ func TestDeleteUserIdentity(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/users/1/identities/google", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/users/1/identities/google", func(_ http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
@@ -1091,19 +1091,64 @@ func TestGetUserStatus(t *testing.T) {
 				mustWriteHTTPResponse(t, w, "testdata/get_user_status.json")
 			})
 
-			user, _, err := client.Users.GetUserStatus(tt.uid)
+			got, _, err := client.Users.GetUserStatus(tt.uid)
 			require.ErrorIs(t, err, tt.wantErr)
 			if tt.wantErr != nil {
 				return
 			}
 
 			want := &UserStatus{
-				Emoji:        "red_circle",
-				Message:      "Duly swamped",
-				Availability: "busy",
-				MessageHTML:  "Duly swamped",
+				Emoji:         "red_circle",
+				Message:       "Duly swamped",
+				Availability:  "busy",
+				MessageHTML:   "Duly swamped",
+				ClearStatusAt: Ptr(time.Date(2025, time.April, 24, 16, 56, 35, 0, time.UTC)),
 			}
-			require.Equal(t, want, user)
+			require.Equal(t, want, got)
 		})
 	}
+}
+
+func TestSetUserStatus(t *testing.T) {
+	t.Parallel()
+
+	mux, client := setup(t)
+
+	opts := UserStatusOptions{
+		Emoji:            Ptr("red_circle"),
+		Message:          Ptr("Duly swamped"),
+		Availability:     Ptr(Busy),
+		ClearStatusAfter: Ptr(ClearStatusAfter30Minutes),
+	}
+
+	mux.HandleFunc("/api/v4/user/status", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		testJSONBody(t, r, `
+		{
+			"emoji": "red_circle",
+			"message": "Duly swamped",
+			"availability": "busy",
+			"clear_status_after": "30_minutes"
+		}`)
+
+		fmt.Fprint(w, `
+		{
+			"emoji": "red_circle",
+			"message": "Duly swamped",
+			"availability": "busy",
+			"clear_status_at": "2025-04-24T15:02:02.000Z"
+		}`)
+	})
+
+	got, _, err := client.Users.SetUserStatus(&opts)
+	require.NoError(t, err)
+
+	want := &UserStatus{
+		Emoji:         "red_circle",
+		Message:       "Duly swamped",
+		Availability:  "busy",
+		ClearStatusAt: Ptr(time.Date(2025, time.April, 24, 15, 2, 2, 0, time.UTC)),
+	}
+	require.Equal(t, 0, want.ClearStatusAt.Nanosecond())
+	require.Equal(t, want, got)
 }

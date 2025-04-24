@@ -458,10 +458,11 @@ func (s *UsersService) CurrentUser(options ...RequestOptionFunc) (*User, *Respon
 // GitLab API docs:
 // https://docs.gitlab.com/api/users/#get-your-user-status
 type UserStatus struct {
-	Emoji        string            `json:"emoji"`
-	Availability AvailabilityValue `json:"availability"`
-	Message      string            `json:"message"`
-	MessageHTML  string            `json:"message_html"`
+	Emoji         string            `json:"emoji"`
+	Availability  AvailabilityValue `json:"availability"`
+	Message       string            `json:"message"`
+	MessageHTML   string            `json:"message_html"`
+	ClearStatusAt *time.Time        `json:"clear_status_at"`
 }
 
 // CurrentUserStatus retrieves the user status
@@ -517,9 +518,10 @@ func (s *UsersService) GetUserStatus(uid any, options ...RequestOptionFunc) (*Us
 // GitLab API docs:
 // https://docs.gitlab.com/api/users/#set-your-user-status
 type UserStatusOptions struct {
-	Emoji        *string            `url:"emoji,omitempty" json:"emoji,omitempty"`
-	Availability *AvailabilityValue `url:"availability,omitempty" json:"availability,omitempty"`
-	Message      *string            `url:"message,omitempty" json:"message,omitempty"`
+	Emoji            *string                `url:"emoji,omitempty" json:"emoji,omitempty"`
+	Availability     *AvailabilityValue     `url:"availability,omitempty" json:"availability,omitempty"`
+	Message          *string                `url:"message,omitempty" json:"message,omitempty"`
+	ClearStatusAfter *ClearStatusAfterValue `url:"clear_status_after,omitempty" json:"clear_status_after,omitempty"`
 }
 
 // SetUserStatus sets the user's status
