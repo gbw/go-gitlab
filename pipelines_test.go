@@ -52,7 +52,7 @@ func TestGetPipeline(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `{"id":1,"status":"success"}`)
+		fmt.Fprint(w, `{"id":1,"status":"success", "source":"api"}`)
 	})
 
 	pipeline, _, err := client.Pipelines.GetPipeline(1, 5949167)
@@ -60,7 +60,7 @@ func TestGetPipeline(t *testing.T) {
 		t.Errorf("Pipelines.GetPipeline returned error: %v", err)
 	}
 
-	want := &Pipeline{ID: 1, Status: "success"}
+	want := &Pipeline{ID: 1, Status: "success", Source: "api"}
 	if !reflect.DeepEqual(want, pipeline) {
 		t.Errorf("Pipelines.GetPipeline returned %+v, want %+v", pipeline, want)
 	}

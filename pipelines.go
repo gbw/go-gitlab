@@ -22,6 +22,28 @@ import (
 	"time"
 )
 
+type PipelineSource string
+
+// PipelineSource is the source of a pipeline.
+// GitLab API docs: https://docs.gitlab.com/ci/jobs/job_rules/#ci_pipeline_source-predefined-variable
+const (
+	PipelineSourceAPI                         PipelineSource = "api"
+	PipelineSourceChat                        PipelineSource = "chat"
+	PipelineSourceExternal                    PipelineSource = "external"
+	PipelineSourceExternalPullRequestEvent    PipelineSource = "external_pull_request_event"
+	PipelineSourceMergeRequestEvent           PipelineSource = "merge_request_event"
+	PipelineSourceOndemandDastScan            PipelineSource = "ondemand_dast_scan"
+	PipelineSourceOndemandDastValidation      PipelineSource = "ondemand_dast_validation"
+	PipelineSourceParentPipeline              PipelineSource = "parent_pipeline"
+	PipelineSourcePipeline                    PipelineSource = "pipeline"
+	PipelineSourcePush                        PipelineSource = "push"
+	PipelineSourceSchedule                    PipelineSource = "schedule"
+	PipelineSourceSecurityOrchestrationPolicy PipelineSource = "security_orchestration_policy"
+	PipelineSourceTrigger                     PipelineSource = "trigger"
+	PipelineSourceWeb                         PipelineSource = "web"
+	PipelineSourceWebIDE                      PipelineSource = "webide"
+)
+
 type (
 	PipelinesServiceInterface interface {
 		ListProjectPipelines(pid interface{}, opt *ListProjectPipelinesOptions, options ...RequestOptionFunc) ([]*PipelineInfo, *Response, error)
@@ -64,7 +86,7 @@ type Pipeline struct {
 	IID            int             `json:"iid"`
 	ProjectID      int             `json:"project_id"`
 	Status         string          `json:"status"`
-	Source         string          `json:"source"`
+	Source         PipelineSource  `json:"source"`
 	Ref            string          `json:"ref"`
 	Name           string          `json:"name"`
 	SHA            string          `json:"sha"`
