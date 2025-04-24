@@ -26,15 +26,15 @@ type (
 	// Deprecated: in GitLab 14.5
 	GroupClustersServiceInterface interface {
 		// Deprecated: in GitLab 14.5
-		ListClusters(pid interface{}, options ...RequestOptionFunc) ([]*GroupCluster, *Response, error)
+		ListClusters(pid any, options ...RequestOptionFunc) ([]*GroupCluster, *Response, error)
 		// Deprecated: in GitLab 14.5
-		GetCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*GroupCluster, *Response, error)
+		GetCluster(pid any, cluster int, options ...RequestOptionFunc) (*GroupCluster, *Response, error)
 		// Deprecated: in GitLab 14.5
-		AddCluster(pid interface{}, opt *AddGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error)
+		AddCluster(pid any, opt *AddGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error)
 		// Deprecated: in GitLab 14.5
-		EditCluster(pid interface{}, cluster int, opt *EditGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error)
+		EditCluster(pid any, cluster int, opt *EditGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error)
 		// Deprecated: in GitLab 14.5
-		DeleteCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*Response, error)
+		DeleteCluster(pid any, cluster int, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// GroupClustersService handles communication with the
@@ -82,7 +82,7 @@ func (v GroupCluster) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_clusters/#list-group-clusters
-func (s *GroupClustersService) ListClusters(pid interface{}, options ...RequestOptionFunc) ([]*GroupCluster, *Response, error) {
+func (s *GroupClustersService) ListClusters(pid any, options ...RequestOptionFunc) ([]*GroupCluster, *Response, error) {
 	group, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -108,7 +108,7 @@ func (s *GroupClustersService) ListClusters(pid interface{}, options ...RequestO
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_clusters/#get-a-single-group-cluster
-func (s *GroupClustersService) GetCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*GroupCluster, *Response, error) {
+func (s *GroupClustersService) GetCluster(pid any, cluster int, options ...RequestOptionFunc) (*GroupCluster, *Response, error) {
 	group, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -159,7 +159,7 @@ type AddGroupPlatformKubernetesOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_clusters/#add-existing-cluster-to-group
-func (s *GroupClustersService) AddCluster(pid interface{}, opt *AddGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error) {
+func (s *GroupClustersService) AddCluster(pid any, opt *AddGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error) {
 	group, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -206,7 +206,7 @@ type EditGroupPlatformKubernetesOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_clusters/#edit-group-cluster
-func (s *GroupClustersService) EditCluster(pid interface{}, cluster int, opt *EditGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error) {
+func (s *GroupClustersService) EditCluster(pid any, cluster int, opt *EditGroupClusterOptions, options ...RequestOptionFunc) (*GroupCluster, *Response, error) {
 	group, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -232,7 +232,7 @@ func (s *GroupClustersService) EditCluster(pid interface{}, cluster int, opt *Ed
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_clusters/#delete-group-cluster
-func (s *GroupClustersService) DeleteCluster(pid interface{}, cluster int, options ...RequestOptionFunc) (*Response, error) {
+func (s *GroupClustersService) DeleteCluster(pid any, cluster int, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(pid)
 	if err != nil {
 		return nil, err

@@ -45,7 +45,7 @@ func TestRender(t *testing.T) {
 			mux.HandleFunc("/api/v4/markdown", func(w http.ResponseWriter, r *http.Request) {
 				testMethod(t, r, http.MethodPost)
 
-				var body map[string]interface{}
+				var body map[string]any
 				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 					t.Fatalf("Failed to decode request body: %v", err)
 				}

@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"slices"
 	"strings"
 	"time"
 
@@ -63,7 +64,7 @@ func (hook webhook) ServeHTTP(writer http.ResponseWriter, request *http.Request)
 	writer.WriteHeader(204)
 }
 
-func (hook webhook) handle(event interface{}) error {
+func (hook webhook) handle(event any) error {
 	str, err := json.Marshal(event)
 	if err != nil {
 		return fmt.Errorf("could not marshal json event for logging: %v", err)
@@ -77,7 +78,7 @@ func (hook webhook) handle(event interface{}) error {
 
 // parse verifies and parses the events specified in the request and
 // returns the parsed event or an error.
-func (hook webhook) parse(r *http.Request) (interface{}, error) {
+func (hook webhook) parse(r *http.Request) (any, error) {
 	defer func() {
 		if _, err := io.Copy(io.Discard, r.Body); err != nil {
 			log.Printf("could discard request body: %v", err)
@@ -118,10 +119,5 @@ func (hook webhook) parse(r *http.Request) (interface{}, error) {
 }
 
 func isEventSubscribed(event gitlab.EventType, events []gitlab.EventType) bool {
-	for _, e := range events {
-		if event == e {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(events, event)
 }

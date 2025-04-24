@@ -42,7 +42,7 @@ type (
 		SetUserStatus(opt *UserStatusOptions, options ...RequestOptionFunc) (*UserStatus, *Response, error)
 		GetUserAssociationsCount(user int, options ...RequestOptionFunc) (*UserAssociationsCount, *Response, error)
 		ListSSHKeys(opt *ListSSHKeysOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error)
-		ListSSHKeysForUser(uid interface{}, opt *ListSSHKeysForUserOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error)
+		ListSSHKeysForUser(uid any, opt *ListSSHKeysForUserOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error)
 		GetSSHKey(key int, options ...RequestOptionFunc) (*SSHKey, *Response, error)
 		GetSSHKeyForUser(user int, key int, options ...RequestOptionFunc) (*SSHKey, *Response, error)
 		AddSSHKey(opt *AddSSHKeyOptions, options ...RequestOptionFunc) (*SSHKey, *Response, error)
@@ -88,7 +88,7 @@ type (
 		DeleteUserIdentity(user int, provider string, options ...RequestOptionFunc) (*Response, error)
 
 		// events.go
-		ListUserContributionEvents(uid interface{}, opt *ListContributionEventsOptions, options ...RequestOptionFunc) ([]*ContributionEvent, *Response, error)
+		ListUserContributionEvents(uid any, opt *ListContributionEventsOptions, options ...RequestOptionFunc) ([]*ContributionEvent, *Response, error)
 	}
 
 	// UsersService handles communication with the user related methods of
@@ -618,7 +618,7 @@ type ListSSHKeysForUserOptions ListOptions
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys-for-a-user
-func (s *UsersService) ListSSHKeysForUser(uid interface{}, opt *ListSSHKeysForUserOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error) {
+func (s *UsersService) ListSSHKeysForUser(uid any, opt *ListSSHKeysForUserOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error) {
 	user, err := parseID(uid)
 	if err != nil {
 		return nil, nil, err

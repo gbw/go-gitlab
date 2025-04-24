@@ -404,7 +404,7 @@ func TestTriggerTestGroupHook(t *testing.T) {
 
 	tests := []struct {
 		name       string
-		groupID    interface{}
+		groupID    any
 		hookID     int
 		trigger    GroupHookTrigger
 		wantErr    bool
@@ -462,7 +462,7 @@ func TestTriggerTestGroupHook(t *testing.T) {
 func TestSetGroupWebhookHeader(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	var bodyJson map[string]interface{}
+	var bodyJson map[string]any
 
 	// Removed most of the arguments to keep test slim
 	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {

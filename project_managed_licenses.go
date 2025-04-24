@@ -25,15 +25,15 @@ type (
 	// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
 	ManagedLicensesServiceInterface interface {
 		// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-		ListManagedLicenses(pid interface{}, options ...RequestOptionFunc) ([]*ManagedLicense, *Response, error)
+		ListManagedLicenses(pid any, options ...RequestOptionFunc) ([]*ManagedLicense, *Response, error)
 		// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-		GetManagedLicense(pid, mlid interface{}, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
+		GetManagedLicense(pid, mlid any, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
 		// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-		AddManagedLicense(pid interface{}, opt *AddManagedLicenseOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
+		AddManagedLicense(pid any, opt *AddManagedLicenseOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
 		// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-		DeleteManagedLicense(pid, mlid interface{}, options ...RequestOptionFunc) (*Response, error)
+		DeleteManagedLicense(pid, mlid any, options ...RequestOptionFunc) (*Response, error)
 		// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-		EditManagedLicense(pid, mlid interface{}, opt *EditManagedLicenceOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
+		EditManagedLicense(pid, mlid any, opt *EditManagedLicenceOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error)
 	}
 
 	// ManagedLicensesService handles communication with the managed licenses
@@ -57,7 +57,7 @@ type ManagedLicense struct {
 
 // ListManagedLicenses returns a list of managed licenses from a project.
 // Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-func (s *ManagedLicensesService) ListManagedLicenses(pid interface{}, options ...RequestOptionFunc) ([]*ManagedLicense, *Response, error) {
+func (s *ManagedLicensesService) ListManagedLicenses(pid any, options ...RequestOptionFunc) ([]*ManagedLicense, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -80,7 +80,7 @@ func (s *ManagedLicensesService) ListManagedLicenses(pid interface{}, options ..
 
 // GetManagedLicense returns an existing managed license.
 // Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-func (s *ManagedLicensesService) GetManagedLicense(pid, mlid interface{}, options ...RequestOptionFunc) (*ManagedLicense, *Response, error) {
+func (s *ManagedLicensesService) GetManagedLicense(pid, mlid any, options ...RequestOptionFunc) (*ManagedLicense, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -114,7 +114,7 @@ type AddManagedLicenseOptions struct {
 
 // AddManagedLicense adds a managed license to a project.
 // Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-func (s *ManagedLicensesService) AddManagedLicense(pid interface{}, opt *AddManagedLicenseOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error) {
+func (s *ManagedLicensesService) AddManagedLicense(pid any, opt *AddManagedLicenseOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -137,7 +137,7 @@ func (s *ManagedLicensesService) AddManagedLicense(pid interface{}, opt *AddMana
 
 // DeleteManagedLicense deletes a managed license with a given ID.
 // Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-func (s *ManagedLicensesService) DeleteManagedLicense(pid, mlid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ManagedLicensesService) DeleteManagedLicense(pid, mlid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -165,7 +165,7 @@ type EditManagedLicenceOptions struct {
 // EditManagedLicense updates an existing managed license with a new approval
 // status.
 // Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-func (s *ManagedLicensesService) EditManagedLicense(pid, mlid interface{}, opt *EditManagedLicenceOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error) {
+func (s *ManagedLicensesService) EditManagedLicense(pid, mlid any, opt *EditManagedLicenceOptions, options ...RequestOptionFunc) (*ManagedLicense, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err

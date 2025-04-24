@@ -24,8 +24,8 @@ import (
 type (
 	// DORAMetricsServiceInterface defines all the API methods for the DORAMetricsService
 	DORAMetricsServiceInterface interface {
-		GetProjectDORAMetrics(pid interface{}, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error)
-		GetGroupDORAMetrics(gid interface{}, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error)
+		GetProjectDORAMetrics(pid any, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error)
+		GetGroupDORAMetrics(gid any, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error)
 	}
 
 	// DORAMetricsService handles communication with the DORA metrics related methods
@@ -73,7 +73,7 @@ type GetDORAMetricsOptions struct {
 //
 // GitLab API Docs:
 // https://docs.gitlab.com/api/dora/metrics/#get-project-level-dora-metrics
-func (s *DORAMetricsService) GetProjectDORAMetrics(pid interface{}, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error) {
+func (s *DORAMetricsService) GetProjectDORAMetrics(pid any, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -98,7 +98,7 @@ func (s *DORAMetricsService) GetProjectDORAMetrics(pid interface{}, opt GetDORAM
 //
 // GitLab API Docs:
 // https://docs.gitlab.com/api/dora/metrics/#get-group-level-dora-metrics
-func (s *DORAMetricsService) GetGroupDORAMetrics(gid interface{}, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error) {
+func (s *DORAMetricsService) GetGroupDORAMetrics(gid any, opt GetDORAMetricsOptions, options ...RequestOptionFunc) ([]DORAMetric, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err

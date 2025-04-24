@@ -26,74 +26,74 @@ import (
 
 type (
 	ServicesServiceInterface interface {
-		ListServices(pid interface{}, options ...RequestOptionFunc) ([]*Service, *Response, error)
-		GetCustomIssueTrackerService(pid interface{}, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error)
-		SetCustomIssueTrackerService(pid interface{}, opt *SetCustomIssueTrackerServiceOptions, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error)
-		DeleteCustomIssueTrackerService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetDataDogService(pid interface{}, options ...RequestOptionFunc) (*DataDogService, *Response, error)
-		SetDataDogService(pid interface{}, opt *SetDataDogServiceOptions, options ...RequestOptionFunc) (*DataDogService, *Response, error)
-		DeleteDataDogService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetDiscordService(pid interface{}, options ...RequestOptionFunc) (*DiscordService, *Response, error)
-		SetDiscordService(pid interface{}, opt *SetDiscordServiceOptions, options ...RequestOptionFunc) (*DiscordService, *Response, error)
-		DeleteDiscordService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetDroneCIService(pid interface{}, options ...RequestOptionFunc) (*DroneCIService, *Response, error)
-		SetDroneCIService(pid interface{}, opt *SetDroneCIServiceOptions, options ...RequestOptionFunc) (*DroneCIService, *Response, error)
-		DeleteDroneCIService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetEmailsOnPushService(pid interface{}, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error)
-		SetEmailsOnPushService(pid interface{}, opt *SetEmailsOnPushServiceOptions, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error)
-		DeleteEmailsOnPushService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetExternalWikiService(pid interface{}, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error)
-		SetExternalWikiService(pid interface{}, opt *SetExternalWikiServiceOptions, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error)
-		DeleteExternalWikiService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetGithubService(pid interface{}, options ...RequestOptionFunc) (*GithubService, *Response, error)
-		SetGithubService(pid interface{}, opt *SetGithubServiceOptions, options ...RequestOptionFunc) (*GithubService, *Response, error)
-		DeleteGithubService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetHarborService(pid interface{}, options ...RequestOptionFunc) (*HarborService, *Response, error)
-		SetHarborService(pid interface{}, opt *SetHarborServiceOptions, options ...RequestOptionFunc) (*HarborService, *Response, error)
-		DeleteHarborService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetSlackApplication(pid interface{}, options ...RequestOptionFunc) (*SlackApplication, *Response, error)
-		SetSlackApplication(pid interface{}, opt *SetSlackApplicationOptions, options ...RequestOptionFunc) (*SlackApplication, *Response, error)
-		DisableSlackApplication(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		SetGitLabCIService(pid interface{}, opt *SetGitLabCIServiceOptions, options ...RequestOptionFunc) (*Response, error)
-		DeleteGitLabCIService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		SetHipChatService(pid interface{}, opt *SetHipChatServiceOptions, options ...RequestOptionFunc) (*Response, error)
-		DeleteHipChatService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetJenkinsCIService(pid interface{}, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error)
-		SetJenkinsCIService(pid interface{}, opt *SetJenkinsCIServiceOptions, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error)
-		DeleteJenkinsCIService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetJiraService(pid interface{}, options ...RequestOptionFunc) (*JiraService, *Response, error)
-		SetJiraService(pid interface{}, opt *SetJiraServiceOptions, options ...RequestOptionFunc) (*JiraService, *Response, error)
-		DeleteJiraService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetMattermostService(pid interface{}, options ...RequestOptionFunc) (*MattermostService, *Response, error)
-		SetMattermostService(pid interface{}, opt *SetMattermostServiceOptions, options ...RequestOptionFunc) (*MattermostService, *Response, error)
-		DeleteMattermostService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetMattermostSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error)
-		SetMattermostSlashCommandsService(pid interface{}, opt *SetMattermostSlashCommandsServiceOptions, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error)
-		DeleteMattermostSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetMicrosoftTeamsService(pid interface{}, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error)
-		SetMicrosoftTeamsService(pid interface{}, opt *SetMicrosoftTeamsServiceOptions, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error)
-		DeleteMicrosoftTeamsService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetPipelinesEmailService(pid interface{}, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error)
-		SetPipelinesEmailService(pid interface{}, opt *SetPipelinesEmailServiceOptions, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error)
-		DeletePipelinesEmailService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetPrometheusService(pid interface{}, options ...RequestOptionFunc) (*PrometheusService, *Response, error)
-		SetPrometheusService(pid interface{}, opt *SetPrometheusServiceOptions, options ...RequestOptionFunc) (*PrometheusService, *Response, error)
-		DeletePrometheusService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetRedmineService(pid interface{}, options ...RequestOptionFunc) (*RedmineService, *Response, error)
-		SetRedmineService(pid interface{}, opt *SetRedmineServiceOptions, options ...RequestOptionFunc) (*RedmineService, *Response, error)
-		DeleteRedmineService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetSlackService(pid interface{}, options ...RequestOptionFunc) (*SlackService, *Response, error)
-		SetSlackService(pid interface{}, opt *SetSlackServiceOptions, options ...RequestOptionFunc) (*SlackService, *Response, error)
-		DeleteSlackService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetSlackSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error)
-		SetSlackSlashCommandsService(pid interface{}, opt *SetSlackSlashCommandsServiceOptions, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error)
-		DeleteSlackSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetTelegramService(pid interface{}, options ...RequestOptionFunc) (*TelegramService, *Response, error)
-		SetTelegramService(pid interface{}, opt *SetTelegramServiceOptions, options ...RequestOptionFunc) (*TelegramService, *Response, error)
-		DeleteTelegramService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
-		GetYouTrackService(pid interface{}, options ...RequestOptionFunc) (*YouTrackService, *Response, error)
-		SetYouTrackService(pid interface{}, opt *SetYouTrackServiceOptions, options ...RequestOptionFunc) (*YouTrackService, *Response, error)
-		DeleteYouTrackService(pid interface{}, options ...RequestOptionFunc) (*Response, error)
+		ListServices(pid any, options ...RequestOptionFunc) ([]*Service, *Response, error)
+		GetCustomIssueTrackerService(pid any, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error)
+		SetCustomIssueTrackerService(pid any, opt *SetCustomIssueTrackerServiceOptions, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error)
+		DeleteCustomIssueTrackerService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetDataDogService(pid any, options ...RequestOptionFunc) (*DataDogService, *Response, error)
+		SetDataDogService(pid any, opt *SetDataDogServiceOptions, options ...RequestOptionFunc) (*DataDogService, *Response, error)
+		DeleteDataDogService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetDiscordService(pid any, options ...RequestOptionFunc) (*DiscordService, *Response, error)
+		SetDiscordService(pid any, opt *SetDiscordServiceOptions, options ...RequestOptionFunc) (*DiscordService, *Response, error)
+		DeleteDiscordService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetDroneCIService(pid any, options ...RequestOptionFunc) (*DroneCIService, *Response, error)
+		SetDroneCIService(pid any, opt *SetDroneCIServiceOptions, options ...RequestOptionFunc) (*DroneCIService, *Response, error)
+		DeleteDroneCIService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetEmailsOnPushService(pid any, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error)
+		SetEmailsOnPushService(pid any, opt *SetEmailsOnPushServiceOptions, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error)
+		DeleteEmailsOnPushService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetExternalWikiService(pid any, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error)
+		SetExternalWikiService(pid any, opt *SetExternalWikiServiceOptions, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error)
+		DeleteExternalWikiService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetGithubService(pid any, options ...RequestOptionFunc) (*GithubService, *Response, error)
+		SetGithubService(pid any, opt *SetGithubServiceOptions, options ...RequestOptionFunc) (*GithubService, *Response, error)
+		DeleteGithubService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetHarborService(pid any, options ...RequestOptionFunc) (*HarborService, *Response, error)
+		SetHarborService(pid any, opt *SetHarborServiceOptions, options ...RequestOptionFunc) (*HarborService, *Response, error)
+		DeleteHarborService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetSlackApplication(pid any, options ...RequestOptionFunc) (*SlackApplication, *Response, error)
+		SetSlackApplication(pid any, opt *SetSlackApplicationOptions, options ...RequestOptionFunc) (*SlackApplication, *Response, error)
+		DisableSlackApplication(pid any, options ...RequestOptionFunc) (*Response, error)
+		SetGitLabCIService(pid any, opt *SetGitLabCIServiceOptions, options ...RequestOptionFunc) (*Response, error)
+		DeleteGitLabCIService(pid any, options ...RequestOptionFunc) (*Response, error)
+		SetHipChatService(pid any, opt *SetHipChatServiceOptions, options ...RequestOptionFunc) (*Response, error)
+		DeleteHipChatService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetJenkinsCIService(pid any, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error)
+		SetJenkinsCIService(pid any, opt *SetJenkinsCIServiceOptions, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error)
+		DeleteJenkinsCIService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetJiraService(pid any, options ...RequestOptionFunc) (*JiraService, *Response, error)
+		SetJiraService(pid any, opt *SetJiraServiceOptions, options ...RequestOptionFunc) (*JiraService, *Response, error)
+		DeleteJiraService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetMattermostService(pid any, options ...RequestOptionFunc) (*MattermostService, *Response, error)
+		SetMattermostService(pid any, opt *SetMattermostServiceOptions, options ...RequestOptionFunc) (*MattermostService, *Response, error)
+		DeleteMattermostService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetMattermostSlashCommandsService(pid any, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error)
+		SetMattermostSlashCommandsService(pid any, opt *SetMattermostSlashCommandsServiceOptions, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error)
+		DeleteMattermostSlashCommandsService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetMicrosoftTeamsService(pid any, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error)
+		SetMicrosoftTeamsService(pid any, opt *SetMicrosoftTeamsServiceOptions, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error)
+		DeleteMicrosoftTeamsService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetPipelinesEmailService(pid any, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error)
+		SetPipelinesEmailService(pid any, opt *SetPipelinesEmailServiceOptions, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error)
+		DeletePipelinesEmailService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetPrometheusService(pid any, options ...RequestOptionFunc) (*PrometheusService, *Response, error)
+		SetPrometheusService(pid any, opt *SetPrometheusServiceOptions, options ...RequestOptionFunc) (*PrometheusService, *Response, error)
+		DeletePrometheusService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetRedmineService(pid any, options ...RequestOptionFunc) (*RedmineService, *Response, error)
+		SetRedmineService(pid any, opt *SetRedmineServiceOptions, options ...RequestOptionFunc) (*RedmineService, *Response, error)
+		DeleteRedmineService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetSlackService(pid any, options ...RequestOptionFunc) (*SlackService, *Response, error)
+		SetSlackService(pid any, opt *SetSlackServiceOptions, options ...RequestOptionFunc) (*SlackService, *Response, error)
+		DeleteSlackService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetSlackSlashCommandsService(pid any, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error)
+		SetSlackSlashCommandsService(pid any, opt *SetSlackSlashCommandsServiceOptions, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error)
+		DeleteSlackSlashCommandsService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetTelegramService(pid any, options ...RequestOptionFunc) (*TelegramService, *Response, error)
+		SetTelegramService(pid any, opt *SetTelegramServiceOptions, options ...RequestOptionFunc) (*TelegramService, *Response, error)
+		DeleteTelegramService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetYouTrackService(pid any, options ...RequestOptionFunc) (*YouTrackService, *Response, error)
+		SetYouTrackService(pid any, opt *SetYouTrackServiceOptions, options ...RequestOptionFunc) (*YouTrackService, *Response, error)
+		DeleteYouTrackService(pid any, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// ServicesService handles communication with the services related methods of
@@ -141,7 +141,7 @@ type Service struct {
 // ListServices gets a list of all active services.
 //
 // GitLab API docs: https://docs.gitlab.com/api/project_integrations/#list-all-active-integrations
-func (s *ServicesService) ListServices(pid interface{}, options ...RequestOptionFunc) ([]*Service, *Response, error) {
+func (s *ServicesService) ListServices(pid any, options ...RequestOptionFunc) ([]*Service, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -185,7 +185,7 @@ type CustomIssueTrackerServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-custom-issue-tracker-settings
-func (s *ServicesService) GetCustomIssueTrackerService(pid interface{}, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error) {
+func (s *ServicesService) GetCustomIssueTrackerService(pid any, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -221,7 +221,7 @@ type SetCustomIssueTrackerServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-a-custom-issue-tracker
-func (s *ServicesService) SetCustomIssueTrackerService(pid interface{}, opt *SetCustomIssueTrackerServiceOptions, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error) {
+func (s *ServicesService) SetCustomIssueTrackerService(pid any, opt *SetCustomIssueTrackerServiceOptions, options ...RequestOptionFunc) (*CustomIssueTrackerService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -246,7 +246,7 @@ func (s *ServicesService) SetCustomIssueTrackerService(pid interface{}, opt *Set
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-a-custom-issue-tracker
-func (s *ServicesService) DeleteCustomIssueTrackerService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteCustomIssueTrackerService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -287,7 +287,7 @@ type DataDogServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-datadog-settings
-func (s *ServicesService) GetDataDogService(pid interface{}, options ...RequestOptionFunc) (*DataDogService, *Response, error) {
+func (s *ServicesService) GetDataDogService(pid any, options ...RequestOptionFunc) (*DataDogService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -327,7 +327,7 @@ type SetDataDogServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-datadog
-func (s *ServicesService) SetDataDogService(pid interface{}, opt *SetDataDogServiceOptions, options ...RequestOptionFunc) (*DataDogService, *Response, error) {
+func (s *ServicesService) SetDataDogService(pid any, opt *SetDataDogServiceOptions, options ...RequestOptionFunc) (*DataDogService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -352,7 +352,7 @@ func (s *ServicesService) SetDataDogService(pid interface{}, opt *SetDataDogServ
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-datadog
-func (s *ServicesService) DeleteDataDogService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteDataDogService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -389,7 +389,7 @@ type DiscordServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-discord-notifications-settings
-func (s *ServicesService) GetDiscordService(pid interface{}, options ...RequestOptionFunc) (*DiscordService, *Response, error) {
+func (s *ServicesService) GetDiscordService(pid any, options ...RequestOptionFunc) (*DiscordService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -449,7 +449,7 @@ type SetDiscordServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-discord-notifications
-func (s *ServicesService) SetDiscordService(pid interface{}, opt *SetDiscordServiceOptions, options ...RequestOptionFunc) (*DiscordService, *Response, error) {
+func (s *ServicesService) SetDiscordService(pid any, opt *SetDiscordServiceOptions, options ...RequestOptionFunc) (*DiscordService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -474,7 +474,7 @@ func (s *ServicesService) SetDiscordService(pid interface{}, opt *SetDiscordServ
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-discord-notifications
-func (s *ServicesService) DeleteDiscordService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteDiscordService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -511,7 +511,7 @@ type DroneCIServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-drone-settings
-func (s *ServicesService) GetDroneCIService(pid interface{}, options ...RequestOptionFunc) (*DroneCIService, *Response, error) {
+func (s *ServicesService) GetDroneCIService(pid any, options ...RequestOptionFunc) (*DroneCIService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -550,7 +550,7 @@ type SetDroneCIServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-drone
-func (s *ServicesService) SetDroneCIService(pid interface{}, opt *SetDroneCIServiceOptions, options ...RequestOptionFunc) (*DroneCIService, *Response, error) {
+func (s *ServicesService) SetDroneCIService(pid any, opt *SetDroneCIServiceOptions, options ...RequestOptionFunc) (*DroneCIService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -575,7 +575,7 @@ func (s *ServicesService) SetDroneCIService(pid interface{}, opt *SetDroneCIServ
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-drone
-func (s *ServicesService) DeleteDroneCIService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteDroneCIService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -616,7 +616,7 @@ type EmailsOnPushServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-emails-on-push-settings
-func (s *ServicesService) GetEmailsOnPushService(pid interface{}, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error) {
+func (s *ServicesService) GetEmailsOnPushService(pid any, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -655,7 +655,7 @@ type SetEmailsOnPushServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-emails-on-push
-func (s *ServicesService) SetEmailsOnPushService(pid interface{}, opt *SetEmailsOnPushServiceOptions, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error) {
+func (s *ServicesService) SetEmailsOnPushService(pid any, opt *SetEmailsOnPushServiceOptions, options ...RequestOptionFunc) (*EmailsOnPushService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -680,7 +680,7 @@ func (s *ServicesService) SetEmailsOnPushService(pid interface{}, opt *SetEmails
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-emails-on-push
-func (s *ServicesService) DeleteEmailsOnPushService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteEmailsOnPushService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -716,7 +716,7 @@ type ExternalWikiServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-external-wiki-settings
-func (s *ServicesService) GetExternalWikiService(pid interface{}, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error) {
+func (s *ServicesService) GetExternalWikiService(pid any, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -750,7 +750,7 @@ type SetExternalWikiServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-an-external-wiki
-func (s *ServicesService) SetExternalWikiService(pid interface{}, opt *SetExternalWikiServiceOptions, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error) {
+func (s *ServicesService) SetExternalWikiService(pid any, opt *SetExternalWikiServiceOptions, options ...RequestOptionFunc) (*ExternalWikiService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -775,7 +775,7 @@ func (s *ServicesService) SetExternalWikiService(pid interface{}, opt *SetExtern
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-an-external-wiki
-func (s *ServicesService) DeleteExternalWikiService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteExternalWikiService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -812,7 +812,7 @@ type GithubServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-github-settings
-func (s *ServicesService) GetGithubService(pid interface{}, options ...RequestOptionFunc) (*GithubService, *Response, error) {
+func (s *ServicesService) GetGithubService(pid any, options ...RequestOptionFunc) (*GithubService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -848,7 +848,7 @@ type SetGithubServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-github
-func (s *ServicesService) SetGithubService(pid interface{}, opt *SetGithubServiceOptions, options ...RequestOptionFunc) (*GithubService, *Response, error) {
+func (s *ServicesService) SetGithubService(pid any, opt *SetGithubServiceOptions, options ...RequestOptionFunc) (*GithubService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -873,7 +873,7 @@ func (s *ServicesService) SetGithubService(pid interface{}, opt *SetGithubServic
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-github
-func (s *ServicesService) DeleteGithubService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteGithubService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -913,7 +913,7 @@ type HarborServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-harbor-settings
-func (s *ServicesService) GetHarborService(pid interface{}, options ...RequestOptionFunc) (*HarborService, *Response, error) {
+func (s *ServicesService) GetHarborService(pid any, options ...RequestOptionFunc) (*HarborService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -951,7 +951,7 @@ type SetHarborServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-harbor
-func (s *ServicesService) SetHarborService(pid interface{}, opt *SetHarborServiceOptions, options ...RequestOptionFunc) (*HarborService, *Response, error) {
+func (s *ServicesService) SetHarborService(pid any, opt *SetHarborServiceOptions, options ...RequestOptionFunc) (*HarborService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -976,7 +976,7 @@ func (s *ServicesService) SetHarborService(pid interface{}, opt *SetHarborServic
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-harbor
-func (s *ServicesService) DeleteHarborService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteHarborService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1033,7 +1033,7 @@ type SlackApplicationProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-gitlab-for-slack-app-settings
-func (s *ServicesService) GetSlackApplication(pid interface{}, options ...RequestOptionFunc) (*SlackApplication, *Response, error) {
+func (s *ServicesService) GetSlackApplication(pid any, options ...RequestOptionFunc) (*SlackApplication, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1101,7 +1101,7 @@ type SetSlackApplicationOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-gitlab-for-slack-app
-func (s *ServicesService) SetSlackApplication(pid interface{}, opt *SetSlackApplicationOptions, options ...RequestOptionFunc) (*SlackApplication, *Response, error) {
+func (s *ServicesService) SetSlackApplication(pid any, opt *SetSlackApplicationOptions, options ...RequestOptionFunc) (*SlackApplication, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1126,7 +1126,7 @@ func (s *ServicesService) SetSlackApplication(pid interface{}, opt *SetSlackAppl
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-gitlab-for-slack-app
-func (s *ServicesService) DisableSlackApplication(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DisableSlackApplication(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1153,7 +1153,7 @@ type SetGitLabCIServiceOptions struct {
 // SetGitLabCIService sets GitLab CI service for a project.
 //
 // Deprecated: Related docs not found
-func (s *ServicesService) SetGitLabCIService(pid interface{}, opt *SetGitLabCIServiceOptions, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) SetGitLabCIService(pid any, opt *SetGitLabCIServiceOptions, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1171,7 +1171,7 @@ func (s *ServicesService) SetGitLabCIService(pid interface{}, opt *SetGitLabCISe
 // DeleteGitLabCIService deletes GitLab CI service settings for a project.
 //
 // Deprecated: Related docs not found
-func (s *ServicesService) DeleteGitLabCIService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteGitLabCIService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1196,7 +1196,7 @@ type SetHipChatServiceOptions struct {
 
 // SetHipChatService sets HipChat service for a project
 // Deprecated: removed in GitLab 13.11
-func (s *ServicesService) SetHipChatService(pid interface{}, opt *SetHipChatServiceOptions, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) SetHipChatService(pid any, opt *SetHipChatServiceOptions, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1213,7 +1213,7 @@ func (s *ServicesService) SetHipChatService(pid interface{}, opt *SetHipChatServ
 
 // DeleteHipChatService deletes HipChat service for project.
 // Deprecated: removed in GitLab 13.11
-func (s *ServicesService) DeleteHipChatService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteHipChatService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1252,7 +1252,7 @@ type JenkinsCIServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-jenkins-settings
-func (s *ServicesService) GetJenkinsCIService(pid interface{}, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error) {
+func (s *ServicesService) GetJenkinsCIService(pid any, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1293,7 +1293,7 @@ type SetJenkinsCIServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-jenkins
-func (s *ServicesService) SetJenkinsCIService(pid interface{}, opt *SetJenkinsCIServiceOptions, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error) {
+func (s *ServicesService) SetJenkinsCIService(pid any, opt *SetJenkinsCIServiceOptions, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1318,7 +1318,7 @@ func (s *ServicesService) SetJenkinsCIService(pid interface{}, opt *SetJenkinsCI
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-jenkins
-func (s *ServicesService) DeleteJenkinsCIService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteJenkinsCIService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1375,7 +1375,7 @@ func (p *JiraServiceProperties) UnmarshalJSON(b []byte) error {
 	type Alias JiraServiceProperties
 	raw := struct {
 		*Alias
-		JiraIssueTransitionID interface{} `json:"jira_issue_transition_id"`
+		JiraIssueTransitionID any `json:"jira_issue_transition_id"`
 	}{
 		Alias: (*Alias)(p),
 	}
@@ -1402,7 +1402,7 @@ func (p *JiraServiceProperties) UnmarshalJSON(b []byte) error {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-jira-settings
-func (s *ServicesService) GetJiraService(pid interface{}, options ...RequestOptionFunc) (*JiraService, *Response, error) {
+func (s *ServicesService) GetJiraService(pid any, options ...RequestOptionFunc) (*JiraService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1454,7 +1454,7 @@ type SetJiraServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-jira-issues
-func (s *ServicesService) SetJiraService(pid interface{}, opt *SetJiraServiceOptions, options ...RequestOptionFunc) (*JiraService, *Response, error) {
+func (s *ServicesService) SetJiraService(pid any, opt *SetJiraServiceOptions, options ...RequestOptionFunc) (*JiraService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1479,7 +1479,7 @@ func (s *ServicesService) SetJiraService(pid interface{}, opt *SetJiraServiceOpt
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-jira
-func (s *ServicesService) DeleteJiraService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteJiraService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1529,7 +1529,7 @@ type MattermostServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-mattermost-notifications-settings
-func (s *ServicesService) GetMattermostService(pid interface{}, options ...RequestOptionFunc) (*MattermostService, *Response, error) {
+func (s *ServicesService) GetMattermostService(pid any, options ...RequestOptionFunc) (*MattermostService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1585,7 +1585,7 @@ type SetMattermostServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-mattermost-notifications
-func (s *ServicesService) SetMattermostService(pid interface{}, opt *SetMattermostServiceOptions, options ...RequestOptionFunc) (*MattermostService, *Response, error) {
+func (s *ServicesService) SetMattermostService(pid any, opt *SetMattermostServiceOptions, options ...RequestOptionFunc) (*MattermostService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1610,7 +1610,7 @@ func (s *ServicesService) SetMattermostService(pid interface{}, opt *SetMattermo
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-mattermost-notifications
-func (s *ServicesService) DeleteMattermostService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteMattermostService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1647,7 +1647,7 @@ type MattermostSlashCommandsProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-mattermost-slash-commands-settings
-func (s *ServicesService) GetMattermostSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error) {
+func (s *ServicesService) GetMattermostSlashCommandsService(pid any, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1682,7 +1682,7 @@ type SetMattermostSlashCommandsServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-mattermost-slash-commands
-func (s *ServicesService) SetMattermostSlashCommandsService(pid interface{}, opt *SetMattermostSlashCommandsServiceOptions, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error) {
+func (s *ServicesService) SetMattermostSlashCommandsService(pid any, opt *SetMattermostSlashCommandsServiceOptions, options ...RequestOptionFunc) (*MattermostSlashCommandsService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1707,7 +1707,7 @@ func (s *ServicesService) SetMattermostSlashCommandsService(pid interface{}, opt
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-mattermost-slash-commands
-func (s *ServicesService) DeleteMattermostSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteMattermostSlashCommandsService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1753,7 +1753,7 @@ type MicrosoftTeamsServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-microsoft-teams-notifications-settings
-func (s *ServicesService) GetMicrosoftTeamsService(pid interface{}, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error) {
+func (s *ServicesService) GetMicrosoftTeamsService(pid any, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1798,7 +1798,7 @@ type SetMicrosoftTeamsServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-microsoft-teams-notifications
-func (s *ServicesService) SetMicrosoftTeamsService(pid interface{}, opt *SetMicrosoftTeamsServiceOptions, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error) {
+func (s *ServicesService) SetMicrosoftTeamsService(pid any, opt *SetMicrosoftTeamsServiceOptions, options ...RequestOptionFunc) (*MicrosoftTeamsService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1823,7 +1823,7 @@ func (s *ServicesService) SetMicrosoftTeamsService(pid interface{}, opt *SetMicr
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-microsoft-teams-notifications
-func (s *ServicesService) DeleteMicrosoftTeamsService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteMicrosoftTeamsService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1862,7 +1862,7 @@ type PipelinesEmailProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-pipeline-status-emails-settings
-func (s *ServicesService) GetPipelinesEmailService(pid interface{}, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error) {
+func (s *ServicesService) GetPipelinesEmailService(pid any, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1901,7 +1901,7 @@ type SetPipelinesEmailServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-pipeline-status-emails
-func (s *ServicesService) SetPipelinesEmailService(pid interface{}, opt *SetPipelinesEmailServiceOptions, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error) {
+func (s *ServicesService) SetPipelinesEmailService(pid any, opt *SetPipelinesEmailServiceOptions, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1926,7 +1926,7 @@ func (s *ServicesService) SetPipelinesEmailService(pid interface{}, opt *SetPipe
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-pipeline-status-emails
-func (s *ServicesService) DeletePipelinesEmailService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeletePipelinesEmailService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1961,7 +1961,7 @@ type PrometheusServiceProperties struct {
 // GetPrometheusService gets Prometheus service settings for a project.
 //
 // Deprecated: Removed in GitLab 17.2
-func (s *ServicesService) GetPrometheusService(pid interface{}, options ...RequestOptionFunc) (*PrometheusService, *Response, error) {
+func (s *ServicesService) GetPrometheusService(pid any, options ...RequestOptionFunc) (*PrometheusService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1995,7 +1995,7 @@ type SetPrometheusServiceOptions struct {
 // SetPrometheusService sets Prometheus service for a project.
 //
 // Deprecated: Removed in GitLab 17.2
-func (s *ServicesService) SetPrometheusService(pid interface{}, opt *SetPrometheusServiceOptions, options ...RequestOptionFunc) (*PrometheusService, *Response, error) {
+func (s *ServicesService) SetPrometheusService(pid any, opt *SetPrometheusServiceOptions, options ...RequestOptionFunc) (*PrometheusService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2019,7 +2019,7 @@ func (s *ServicesService) SetPrometheusService(pid interface{}, opt *SetPromethe
 // DeletePrometheusService deletes Prometheus service settings for a project.
 //
 // Deprecated: Removed in GitLab 17.2
-func (s *ServicesService) DeletePrometheusService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeletePrometheusService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -2058,7 +2058,7 @@ type RedmineServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-redmine-settings
-func (s *ServicesService) GetRedmineService(pid interface{}, options ...RequestOptionFunc) (*RedmineService, *Response, error) {
+func (s *ServicesService) GetRedmineService(pid any, options ...RequestOptionFunc) (*RedmineService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2095,7 +2095,7 @@ type SetRedmineServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-redmine
-func (s *ServicesService) SetRedmineService(pid interface{}, opt *SetRedmineServiceOptions, options ...RequestOptionFunc) (*RedmineService, *Response, error) {
+func (s *ServicesService) SetRedmineService(pid any, opt *SetRedmineServiceOptions, options ...RequestOptionFunc) (*RedmineService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2120,7 +2120,7 @@ func (s *ServicesService) SetRedmineService(pid interface{}, opt *SetRedmineServ
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-redmine
-func (s *ServicesService) DeleteRedmineService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteRedmineService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -2173,7 +2173,7 @@ type SlackServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-slack-notifications-settings
-func (s *ServicesService) GetSlackService(pid interface{}, options ...RequestOptionFunc) (*SlackService, *Response, error) {
+func (s *ServicesService) GetSlackService(pid any, options ...RequestOptionFunc) (*SlackService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2234,7 +2234,7 @@ type SetSlackServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-slack-notifications
-func (s *ServicesService) SetSlackService(pid interface{}, opt *SetSlackServiceOptions, options ...RequestOptionFunc) (*SlackService, *Response, error) {
+func (s *ServicesService) SetSlackService(pid any, opt *SetSlackServiceOptions, options ...RequestOptionFunc) (*SlackService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2259,7 +2259,7 @@ func (s *ServicesService) SetSlackService(pid interface{}, opt *SetSlackServiceO
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-slack-notifications
-func (s *ServicesService) DeleteSlackService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteSlackService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -2295,7 +2295,7 @@ type SlackSlashCommandsProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-slack-slash-commands-settings
-func (s *ServicesService) GetSlackSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error) {
+func (s *ServicesService) GetSlackSlashCommandsService(pid any, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2329,7 +2329,7 @@ type SetSlackSlashCommandsServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-slack-slash-commands
-func (s *ServicesService) SetSlackSlashCommandsService(pid interface{}, opt *SetSlackSlashCommandsServiceOptions, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error) {
+func (s *ServicesService) SetSlackSlashCommandsService(pid any, opt *SetSlackSlashCommandsServiceOptions, options ...RequestOptionFunc) (*SlackSlashCommandsService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2354,7 +2354,7 @@ func (s *ServicesService) SetSlackSlashCommandsService(pid interface{}, opt *Set
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-slack-slash-commands
-func (s *ServicesService) DeleteSlackSlashCommandsService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteSlackSlashCommandsService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -2392,7 +2392,7 @@ type TelegramServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-telegram-settings
-func (s *ServicesService) GetTelegramService(pid interface{}, options ...RequestOptionFunc) (*TelegramService, *Response, error) {
+func (s *ServicesService) GetTelegramService(pid any, options ...RequestOptionFunc) (*TelegramService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2438,7 +2438,7 @@ type SetTelegramServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-telegram
-func (s *ServicesService) SetTelegramService(pid interface{}, opt *SetTelegramServiceOptions, options ...RequestOptionFunc) (*TelegramService, *Response, error) {
+func (s *ServicesService) SetTelegramService(pid any, opt *SetTelegramServiceOptions, options ...RequestOptionFunc) (*TelegramService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2463,7 +2463,7 @@ func (s *ServicesService) SetTelegramService(pid interface{}, opt *SetTelegramSe
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-telegram
-func (s *ServicesService) DeleteTelegramService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteTelegramService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -2502,7 +2502,7 @@ type YouTrackServiceProperties struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#get-youtrack-settings
-func (s *ServicesService) GetYouTrackService(pid interface{}, options ...RequestOptionFunc) (*YouTrackService, *Response, error) {
+func (s *ServicesService) GetYouTrackService(pid any, options ...RequestOptionFunc) (*YouTrackService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2539,7 +2539,7 @@ type SetYouTrackServiceOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-youtrack
-func (s *ServicesService) SetYouTrackService(pid interface{}, opt *SetYouTrackServiceOptions, options ...RequestOptionFunc) (*YouTrackService, *Response, error) {
+func (s *ServicesService) SetYouTrackService(pid any, opt *SetYouTrackServiceOptions, options ...RequestOptionFunc) (*YouTrackService, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2564,7 +2564,7 @@ func (s *ServicesService) SetYouTrackService(pid interface{}, opt *SetYouTrackSe
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#disable-youtrack
-func (s *ServicesService) DeleteYouTrackService(pid interface{}, options ...RequestOptionFunc) (*Response, error) {
+func (s *ServicesService) DeleteYouTrackService(pid any, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err

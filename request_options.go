@@ -88,7 +88,7 @@ func WithOffsetPaginationParameters(page int) RequestOptionFunc {
 }
 
 // WithSudo takes either a username or user ID and sets the SUDO request header.
-func WithSudo(uid interface{}) RequestOptionFunc {
+func WithSudo(uid any) RequestOptionFunc {
 	return func(req *retryablehttp.Request) error {
 		user, err := parseID(uid)
 		if err != nil {

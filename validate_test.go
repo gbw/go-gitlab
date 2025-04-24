@@ -128,7 +128,7 @@ func TestValidateProjectNamespace(t *testing.T) {
 						Location: "template/pipeline.yml",
 						Blob:     "https://gitlab.com/namespace/project/-/blob/abcd1234/template/pipeline.yml",
 						Raw:      "https://gitlab.com/namespace/project/-/raw/abcd1234/template/pipeline.yml",
-						Extra: map[string]interface{}{
+						Extra: map[string]any{
 							"project": "namespace/project",
 							"ref":     "1.2.3",
 						},
@@ -222,7 +222,7 @@ func TestValidateProjectLint(t *testing.T) {
 						Location: "template/pipeline.yml",
 						Blob:     "https://gitlab.com/namespace/project/-/blob/abcd1234/template/pipeline.yml",
 						Raw:      "https://gitlab.com/namespace/project/-/raw/abcd1234/template/pipeline.yml",
-						Extra: map[string]interface{}{
+						Extra: map[string]any{
 							"project": "namespace/project",
 							"ref":     "1.2.3",
 						},

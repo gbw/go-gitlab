@@ -101,11 +101,11 @@ const (
 
 // ApproverIDsValue represents an approver ID value within GitLab.
 type ApproverIDsValue struct {
-	value interface{}
+	value any
 }
 
 // ApproverIDs is a helper routine that creates a new ApproverIDsValue.
-func ApproverIDs(v interface{}) *ApproverIDsValue {
+func ApproverIDs(v any) *ApproverIDsValue {
 	switch v.(type) {
 	case UserIDValue, []int:
 		return &ApproverIDsValue{value: v}
@@ -141,11 +141,11 @@ func (a *ApproverIDsValue) UnmarshalJSON(bytes []byte) error {
 
 // AssigneeIDValue represents an assignee ID value within GitLab.
 type AssigneeIDValue struct {
-	value interface{}
+	value any
 }
 
 // AssigneeID is a helper routine that creates a new AssigneeIDValue.
-func AssigneeID(v interface{}) *AssigneeIDValue {
+func AssigneeID(v any) *AssigneeIDValue {
 	switch v.(type) {
 	case UserIDValue, int:
 		return &AssigneeIDValue{value: v}
@@ -177,11 +177,11 @@ func (a *AssigneeIDValue) UnmarshalJSON(bytes []byte) error {
 
 // ReviewerIDValue represents a reviewer ID value within GitLab.
 type ReviewerIDValue struct {
-	value interface{}
+	value any
 }
 
 // ReviewerID is a helper routine that creates a new ReviewerIDValue.
-func ReviewerID(v interface{}) *ReviewerIDValue {
+func ReviewerID(v any) *ReviewerIDValue {
 	switch v.(type) {
 	case UserIDValue, int:
 		return &ReviewerIDValue{value: v}
@@ -549,7 +549,7 @@ func (l *LabelOptions) MarshalJSON() ([]byte, error) {
 func (l *LabelOptions) UnmarshalJSON(data []byte) error {
 	type alias LabelOptions
 	if !bytes.HasPrefix(data, []byte("[")) {
-		data = []byte(fmt.Sprintf("[%s]", string(data)))
+		data = fmt.Appendf(nil, "[%s]", string(data))
 	}
 	return json.Unmarshal(data, (*alias)(l))
 }
@@ -659,7 +659,7 @@ func (l NotificationLevelValue) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (l *NotificationLevelValue) UnmarshalJSON(data []byte) error {
-	var raw interface{}
+	var raw any
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}

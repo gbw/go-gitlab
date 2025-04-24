@@ -484,7 +484,7 @@ type Settings struct {
 func (s *Settings) UnmarshalJSON(data []byte) error {
 	type Alias Settings
 
-	raw := make(map[string]interface{})
+	raw := make(map[string]any)
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
 		return err

@@ -26,13 +26,13 @@ type (
 	// Deprecated: will be removed in v5 of the API, use Work Items API instead
 	EpicIssuesServiceInterface interface {
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		ListEpicIssues(gid interface{}, epic int, opt *ListOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error)
+		ListEpicIssues(gid any, epic int, opt *ListOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		AssignEpicIssue(gid interface{}, epic, issue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error)
+		AssignEpicIssue(gid any, epic, issue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		RemoveEpicIssue(gid interface{}, epic, epicIssue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error)
+		RemoveEpicIssue(gid any, epic, epicIssue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error)
 		// Deprecated: will be removed in v5 of the API, use Work Items API instead
-		UpdateEpicIssueAssignment(gid interface{}, epic, epicIssue int, opt *UpdateEpicIsssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error)
+		UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *UpdateEpicIsssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error)
 	}
 
 	// EpicIssuesService handles communication with the epic issue related methods
@@ -64,7 +64,7 @@ type EpicIssueAssignment struct {
 //
 // Gitlab API docs:
 // https://docs.gitlab.com/api/epic_issues/#list-issues-for-an-epic
-func (s *EpicIssuesService) ListEpicIssues(gid interface{}, epic int, opt *ListOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
+func (s *EpicIssuesService) ListEpicIssues(gid any, epic int, opt *ListOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -90,7 +90,7 @@ func (s *EpicIssuesService) ListEpicIssues(gid interface{}, epic int, opt *ListO
 //
 // Gitlab API Docs:
 // https://docs.gitlab.com/api/epic_issues/#assign-an-issue-to-the-epic
-func (s *EpicIssuesService) AssignEpicIssue(gid interface{}, epic, issue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error) {
+func (s *EpicIssuesService) AssignEpicIssue(gid any, epic, issue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -116,7 +116,7 @@ func (s *EpicIssuesService) AssignEpicIssue(gid interface{}, epic, issue int, op
 //
 // Gitlab API Docs:
 // https://docs.gitlab.com/api/epic_issues/#remove-an-issue-from-the-epic
-func (s *EpicIssuesService) RemoveEpicIssue(gid interface{}, epic, epicIssue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error) {
+func (s *EpicIssuesService) RemoveEpicIssue(gid any, epic, epicIssue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -155,7 +155,7 @@ type UpdateEpicIsssueAssignmentOptions struct {
 //
 // Gitlab API Docs:
 // https://docs.gitlab.com/api/epic_issues/#update-epic---issue-association
-func (s *EpicIssuesService) UpdateEpicIssueAssignment(gid interface{}, epic, epicIssue int, opt *UpdateEpicIsssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
+func (s *EpicIssuesService) UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *UpdateEpicIsssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err

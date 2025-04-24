@@ -74,7 +74,7 @@ func TestListProjectAccessRequests(t *testing.T) {
 
 	tests := []struct {
 		name        string
-		projectID   interface{}
+		projectID   any
 		expectedErr string
 		expectedRes []*AccessRequest
 		statusCode  int

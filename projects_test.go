@@ -2101,7 +2101,7 @@ func TestGetProjectWebhookHeader(t *testing.T) {
 func TestSetProjectWebhookHeader(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	var bodyJson map[string]interface{}
+	var bodyJson map[string]any
 
 	// Removed most of the arguments to keep test slim
 	mux.HandleFunc("/api/v4/projects/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {

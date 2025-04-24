@@ -26,7 +26,7 @@ type (
 	// FeaturesServiceInterface defines all the API methods for the FeaturesService
 	FeaturesServiceInterface interface {
 		ListFeatures(options ...RequestOptionFunc) ([]*Feature, *Response, error)
-		SetFeatureFlag(name string, value interface{}, options ...RequestOptionFunc) (*Feature, *Response, error)
+		SetFeatureFlag(name string, value any, options ...RequestOptionFunc) (*Feature, *Response, error)
 	}
 
 	// FeaturesService handles the communication with the application FeaturesService
@@ -53,8 +53,8 @@ type Feature struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/features/
 type Gate struct {
-	Key   string      `json:"key"`
-	Value interface{} `json:"value"`
+	Key   string `json:"key"`
+	Value any    `json:"value"`
 }
 
 func (f Feature) String() string {
@@ -83,11 +83,11 @@ func (s *FeaturesService) ListFeatures(options ...RequestOptionFunc) ([]*Feature
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/features/#set-or-create-a-feature
-func (s *FeaturesService) SetFeatureFlag(name string, value interface{}, options ...RequestOptionFunc) (*Feature, *Response, error) {
+func (s *FeaturesService) SetFeatureFlag(name string, value any, options ...RequestOptionFunc) (*Feature, *Response, error) {
 	u := fmt.Sprintf("features/%s", url.PathEscape(name))
 
 	opt := struct {
-		Value interface{} `url:"value" json:"value"`
+		Value any `url:"value" json:"value"`
 	}{
 		value,
 	}
