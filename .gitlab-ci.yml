@@ -75,7 +75,7 @@ golangci-lint:
   needs: []
   variables:
     REPORT_FILENAME: 'gl-code-quality-report.json'
-  image: golangci/golangci-lint:v2.1.2
+  image: golangci/golangci-lint:v2.1.4
   script:
     - golangci-lint run
   artifacts:
