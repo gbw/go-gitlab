@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProtectedEnvironments(t *testing.T) {
@@ -112,7 +113,7 @@ func TestListProtectedEnvironments(t *testing.T) {
 
 	opt := &ListProtectedEnvironmentsOptions{}
 	environments, _, err := client.ProtectedEnvironments.ListProtectedEnvironments(1, opt)
-	assert.NoError(t, err, "failed to get response")
+	require.NoError(t, err, "failed to get response")
 	assert.Equal(t, expected, environments)
 }
 
@@ -198,7 +199,7 @@ func TestGetProtectedEnvironment(t *testing.T) {
 	}
 
 	environment, _, err = client.ProtectedEnvironments.GetProtectedEnvironment(2, environmentName)
-	assert.NoError(t, err, "failed to get response")
+	require.NoError(t, err, "failed to get response")
 	assert.Equal(t, expected, environment)
 }
 
@@ -269,7 +270,7 @@ func TestProtectRepositoryEnvironments(t *testing.T) {
 	}
 
 	environment, _, err := client.ProtectedEnvironments.ProtectRepositoryEnvironments(1, opt)
-	assert.NoError(t, err, "failed to get response")
+	require.NoError(t, err, "failed to get response")
 	assert.Equal(t, expected, environment)
 
 	// Test without RequiredApprovalCount nor ApprovalRules
@@ -303,7 +304,7 @@ func TestProtectRepositoryEnvironments(t *testing.T) {
 		},
 	}
 	environment, _, err = client.ProtectedEnvironments.ProtectRepositoryEnvironments(2, opt)
-	assert.NoError(t, err, "failed to get response")
+	require.NoError(t, err, "failed to get response")
 	assert.Equal(t, expected, environment)
 }
 
@@ -419,7 +420,7 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 		},
 	}
 	environment, _, err = client.ProtectedEnvironments.UpdateProtectedEnvironments(2, environmentName, opt)
-	assert.NoError(t, err, "failed to get response")
+	require.NoError(t, err, "failed to get response")
 	assert.Equal(t, expected, environment)
 
 	// Test update to DeployAccessLevel
@@ -524,7 +525,7 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 	}
 
 	environment, _, err = client.ProtectedEnvironments.UpdateProtectedEnvironments(4, environmentName, opt)
-	assert.NoError(t, err, "failed to get response")
+	require.NoError(t, err, "failed to get response")
 	assert.Equal(t, expected, environment)
 
 	// Test destroy ApprovalRule
@@ -569,7 +570,7 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 	}
 
 	environment, _, err = client.ProtectedEnvironments.UpdateProtectedEnvironments(5, environmentName, opt)
-	assert.NoError(t, err, "failed to get response")
+	require.NoError(t, err, "failed to get response")
 	assert.Equal(t, expected, environment)
 }
 
