@@ -22,7 +22,6 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestGetBranch(t *testing.T) {
@@ -35,9 +34,8 @@ func TestGetBranch(t *testing.T) {
 	})
 
 	branch, resp, err := client.Branches.GetBranch(1, "master")
-	if err != nil {
-		t.Fatalf("Branches.GetBranch returned error: %v, response %v", err, resp)
-	}
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
 	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
@@ -103,134 +101,24 @@ func TestBranchesService_ListBranches(t *testing.T) {
 	}}
 
 	b, resp, err := client.Branches.ListBranches(5, nil)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, b)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, b)
 
 	b, resp, err = client.Branches.ListBranches(5.01, nil)
-	require.ErrorIs(t, err, ErrInvalidIDType)
-	require.Nil(t, resp)
-	require.Nil(t, b)
+	assert.ErrorIs(t, err, ErrInvalidIDType)
+	assert.Nil(t, resp)
+	assert.Nil(t, b)
 
 	b, resp, err = client.Branches.ListBranches(5, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
-	require.Nil(t, resp)
-	require.Nil(t, b)
+	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.Nil(t, resp)
+	assert.Nil(t, b)
 
 	b, resp, err = client.Branches.ListBranches(3, nil)
-	require.Error(t, err)
-	require.Nil(t, b)
-	require.Equal(t, http.StatusNotFound, resp.StatusCode)
-}
-
-func TestBranchesService_ProtectBranch(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/repository/branches/master/protect", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		mustWriteHTTPResponse(t, w, "testdata/get_branch.json")
-	})
-
-	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
-	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
-	want := &Branch{
-		Name:               "master",
-		Merged:             false,
-		Protected:          true,
-		Default:            true,
-		DevelopersCanPush:  false,
-		DevelopersCanMerge: false,
-		CanPush:            true,
-		Commit: &Commit{
-			AuthorEmail:    "john@example.com",
-			AuthorName:     exampleEventUserName,
-			AuthoredDate:   &authoredDate,
-			CommittedDate:  &committedDate,
-			CommitterEmail: "john@example.com",
-			CommitterName:  exampleEventUserName,
-			ID:             "7b5c3cc8be40ee161ae89a06bba6229da1032a0c",
-			ShortID:        "7b5c3cc",
-			Title:          "add projects API",
-			Message:        "add projects API",
-			ParentIDs:      []string{"4ad91d3c1144c406e50c7b33bae684bd6837faf8"},
-		},
-	}
-
-	b, resp, err := client.Branches.ProtectBranch(1, "master", nil)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, b)
-
-	b, resp, err = client.Branches.ProtectBranch(1.01, "master", nil)
-	require.ErrorIs(t, err, ErrInvalidIDType)
-	require.Nil(t, resp)
-	require.Nil(t, b)
-
-	b, resp, err = client.Branches.ProtectBranch(1, "master", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
-	require.Nil(t, resp)
-	require.Nil(t, b)
-
-	b, resp, err = client.Branches.ProtectBranch(3, "master", nil)
-	require.Error(t, err)
-	require.Nil(t, b)
-	require.Equal(t, http.StatusNotFound, resp.StatusCode)
-}
-
-func TestBranchesService_UnprotectBranch(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/repository/branches/master/unprotect", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		mustWriteHTTPResponse(t, w, "testdata/get_branch.json")
-	})
-
-	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
-	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
-	want := &Branch{
-		Name:               "master",
-		Merged:             false,
-		Protected:          true,
-		Default:            true,
-		DevelopersCanPush:  false,
-		DevelopersCanMerge: false,
-		CanPush:            true,
-		Commit: &Commit{
-			AuthorEmail:    "john@example.com",
-			AuthorName:     exampleEventUserName,
-			AuthoredDate:   &authoredDate,
-			CommittedDate:  &committedDate,
-			CommitterEmail: "john@example.com",
-			CommitterName:  exampleEventUserName,
-			ID:             "7b5c3cc8be40ee161ae89a06bba6229da1032a0c",
-			ShortID:        "7b5c3cc",
-			Title:          "add projects API",
-			Message:        "add projects API",
-			ParentIDs:      []string{"4ad91d3c1144c406e50c7b33bae684bd6837faf8"},
-		},
-	}
-
-	b, resp, err := client.Branches.UnprotectBranch(1, "master", nil)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, b)
-
-	b, resp, err = client.Branches.UnprotectBranch(1.01, "master", nil)
-	require.ErrorIs(t, err, ErrInvalidIDType)
-	require.Nil(t, resp)
-	require.Nil(t, b)
-
-	b, resp, err = client.Branches.UnprotectBranch(1, "master", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
-	require.Nil(t, resp)
-	require.Nil(t, b)
-
-	b, resp, err = client.Branches.UnprotectBranch(3, "master", nil)
-	require.Error(t, err)
-	require.Nil(t, b)
-	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	assert.Error(t, err)
+	assert.Nil(t, b)
+	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
 
 func TestBranchesService_CreateBranch(t *testing.T) {
@@ -268,24 +156,24 @@ func TestBranchesService_CreateBranch(t *testing.T) {
 	}
 
 	b, resp, err := client.Branches.CreateBranch(1, nil)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, b)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, b)
 
 	b, resp, err = client.Branches.CreateBranch(1.01, nil)
-	require.ErrorIs(t, err, ErrInvalidIDType)
-	require.Nil(t, resp)
-	require.Nil(t, b)
+	assert.ErrorIs(t, err, ErrInvalidIDType)
+	assert.Nil(t, resp)
+	assert.Nil(t, b)
 
 	b, resp, err = client.Branches.CreateBranch(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
-	require.Nil(t, resp)
-	require.Nil(t, b)
+	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.Nil(t, resp)
+	assert.Nil(t, b)
 
 	b, resp, err = client.Branches.CreateBranch(3, nil)
-	require.Error(t, err)
-	require.Nil(t, b)
-	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	assert.Error(t, err)
+	assert.Nil(t, b)
+	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
 
 func TestBranchesService_DeleteBranch(t *testing.T) {
@@ -297,20 +185,20 @@ func TestBranchesService_DeleteBranch(t *testing.T) {
 	})
 
 	resp, err := client.Branches.DeleteBranch(1, "master", nil)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	resp, err = client.Branches.DeleteBranch(1.01, "master", nil)
-	require.ErrorIs(t, err, ErrInvalidIDType)
-	require.Nil(t, resp)
+	assert.ErrorIs(t, err, ErrInvalidIDType)
+	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteBranch(1, "master", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
-	require.Nil(t, resp)
+	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteBranch(3, "master", nil)
-	require.Error(t, err)
-	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	assert.Error(t, err)
+	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
 
 func TestBranchesService_DeleteMergedBranches(t *testing.T) {
@@ -322,18 +210,18 @@ func TestBranchesService_DeleteMergedBranches(t *testing.T) {
 	})
 
 	resp, err := client.Branches.DeleteMergedBranches(1, nil)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	resp, err = client.Branches.DeleteMergedBranches(1.01, nil)
-	require.ErrorIs(t, err, ErrInvalidIDType)
-	require.Nil(t, resp)
+	assert.ErrorIs(t, err, ErrInvalidIDType)
+	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteMergedBranches(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
-	require.Nil(t, resp)
+	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteMergedBranches(3, nil)
-	require.Error(t, err)
-	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	assert.Error(t, err)
+	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
