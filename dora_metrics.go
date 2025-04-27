@@ -64,9 +64,6 @@ type GetDORAMetricsOptions struct {
 	EnvironmentTiers *[]string           `url:"environment_tiers,comma,omitempty" json:"environment_tiers,omitempty"`
 	Interval         *DORAMetricInterval `url:"interval,omitempty" json:"interval,omitempty"`
 	StartDate        *ISOTime            `url:"start_date,omitempty" json:"start_date,omitempty"`
-
-	// Deprecated, use environment tiers instead
-	EnvironmentTier *string `url:"environment_tier,omitempty" json:"environment_tier,omitempty"`
 }
 
 // GetProjectDORAMetrics gets the DORA metrics for a project.
