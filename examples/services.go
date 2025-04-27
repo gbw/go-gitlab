@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"log"
 
-	"gitlab.com/gitlab-org/api/client-go"
+	gitlab "gitlab.com/gitlab-org/api/client-go"
 )
 
 func dataDogExample() {
@@ -31,12 +31,12 @@ func dataDogExample() {
 
 	// Create new DataDog integration
 	opts := &gitlab.SetDataDogServiceOptions{
-		APIKey:             gitlab.String("testing"),
-		DataDogEnv:         gitlab.String("sandbox"),
-		DataDogService:     gitlab.String("test"),
-		DataDogSite:        gitlab.String("datadoghq.com"),
-		DataDogTags:        gitlab.String("country:canada\nprovince:ontario"),
-		ArchiveTraceEvents: gitlab.Bool(true),
+		APIKey:             gitlab.Ptr("testing"),
+		DataDogEnv:         gitlab.Ptr("sandbox"),
+		DataDogService:     gitlab.Ptr("test"),
+		DataDogSite:        gitlab.Ptr("datadoghq.com"),
+		DataDogTags:        gitlab.Ptr("country:canada\nprovince:ontario"),
+		ArchiveTraceEvents: gitlab.Ptr(true),
 	}
 
 	svc, _, err := git.Services.SetDataDogService(1, opts)

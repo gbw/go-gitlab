@@ -212,9 +212,9 @@ func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
 
 	opts := ListProjectMergeRequestsOptions{
 		AssigneeID:             AssigneeID(UserIDAny),
-		AuthorUsername:         String("hfyngvason"),
-		WithLabelsDetails:      Bool(true),
-		WithMergeStatusRecheck: Bool(true),
+		AuthorUsername:         Ptr("hfyngvason"),
+		WithLabelsDetails:      Ptr(true),
+		WithMergeStatusRecheck: Ptr(true),
 	}
 
 	mergeRequests, _, err := client.MergeRequests.ListProjectMergeRequests(278964, &opts)
@@ -266,9 +266,9 @@ func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
 
 	opts := ListProjectMergeRequestsOptions{
 		AssigneeID:             AssigneeID(UserIDAny),
-		NotAuthorUsername:      String("hfyngvason"),
-		WithLabelsDetails:      Bool(true),
-		WithMergeStatusRecheck: Bool(true),
+		NotAuthorUsername:      Ptr("hfyngvason"),
+		WithLabelsDetails:      Ptr(true),
+		WithMergeStatusRecheck: Ptr(true),
 	}
 
 	mergeRequests, _, err := client.MergeRequests.ListProjectMergeRequests(278964, &opts)

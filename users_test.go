@@ -794,7 +794,7 @@ func TestCreatePersonalAccessTokenForCurrentUser(t *testing.T) {
 	scopes := []string{"k8s_proxy"}
 	expiresAt := ISOTime(time.Date(2020, time.October, 15, 0, 0, 0, 0, time.UTC))
 	user, _, err := client.Users.CreatePersonalAccessTokenForCurrentUser(&CreatePersonalAccessTokenForCurrentUserOptions{
-		Name:      String("mytoken"),
+		Name:      Ptr("mytoken"),
 		Scopes:    &scopes,
 		ExpiresAt: &expiresAt,
 	})
