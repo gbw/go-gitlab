@@ -125,12 +125,12 @@ func TestListUserContributedProjects(t *testing.T) {
 
 	opt := &ListProjectsOptions{
 		ListOptions: ListOptions{Page: 2, PerPage: 3},
-		Archived:    Bool(true),
-		OrderBy:     String("name"),
-		Sort:        String("asc"),
-		Search:      String("query"),
-		Simple:      Bool(true),
-		Visibility:  Visibility(PublicVisibility),
+		Archived:    Ptr(true),
+		OrderBy:     Ptr("name"),
+		Sort:        Ptr("asc"),
+		Search:      Ptr("query"),
+		Simple:      Ptr(true),
+		Visibility:  Ptr(PublicVisibility),
 	}
 
 	projects, _, err := client.Projects.ListUserContributedProjects(1, opt)
@@ -1406,7 +1406,7 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 		ApprovalsRequired: Ptr(3),
 		UserIDs:           &[]int{5, 50},
 		GroupIDs:          &[]int{5},
-		ReportType:        String("code_coverage"),
+		ReportType:        Ptr("code_coverage"),
 		Usernames:         &([]string{"some-cool-user"}),
 	}
 

@@ -124,9 +124,9 @@ func TestUpdateProjectSettings(t *testing.T) {
 	customLevel := notificationLevelTypes["custom"]
 	options := NotificationSettingsOptions{
 		Level:        &customLevel,
-		NewEpic:      Bool(true),
-		MovedProject: Bool(true),
-		CloseIssue:   Bool(true),
+		NewEpic:      Ptr(true),
+		MovedProject: Ptr(true),
+		CloseIssue:   Ptr(true),
 	}
 
 	// Handle the request on the server, and return a fully hydrated response

@@ -30,8 +30,8 @@ func repositoryArchiveExample() {
 
 	// Get repository archive
 	opt := &gitlab.ArchiveOptions{
-		Format: gitlab.String("tar.gz"),
-		Path:   gitlab.String("mydir"),
+		Format: gitlab.Ptr("tar.gz"),
+		Path:   gitlab.Ptr("mydir"),
 	}
 	content, _, err := git.Repositories.Archive("mygroup/myproject", opt, nil)
 	if err != nil {

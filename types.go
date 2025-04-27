@@ -49,14 +49,6 @@ const (
 	PublicAccessControl   AccessControlValue = "public"
 )
 
-// AccessControl is a helper routine that allocates a new AccessControlValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func AccessControl(v AccessControlValue) *AccessControlValue {
-	return Ptr(v)
-}
-
 // AccessLevelValue represents a permission level within GitLab.
 //
 // GitLab API docs: https://docs.gitlab.com/user/permissions/#roles
@@ -76,14 +68,6 @@ const (
 	OwnerPermissions         AccessLevelValue = 50
 	AdminPermissions         AccessLevelValue = 60
 )
-
-// AccessLevel is a helper routine that allocates a new AccessLevelValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func AccessLevel(v AccessLevelValue) *AccessLevelValue {
-	return Ptr(v)
-}
 
 type AccessLevelDetails struct {
 	IntegerValue AccessLevelValue `json:"integer_value"`
@@ -241,14 +225,6 @@ const (
 	ClearStatusAfter30Days    ClearStatusAfterValue = "30_days"
 )
 
-// Availability is a helper routine that allocates a new AvailabilityValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func Availability(v AvailabilityValue) *AvailabilityValue {
-	return Ptr(v)
-}
-
 // BuildStateValue represents a GitLab build state.
 type BuildStateValue string
 
@@ -266,14 +242,6 @@ const (
 	Manual             BuildStateValue = "manual"
 	Scheduled          BuildStateValue = "scheduled"
 )
-
-// BuildState is a helper routine that allocates a new BuildStateValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func BuildState(v BuildStateValue) *BuildStateValue {
-	return Ptr(v)
-}
 
 // CommentEventAction identifies if a comment has been newly created or updated.
 //
@@ -339,14 +307,6 @@ const (
 	DeploymentStatusFailed   DeploymentStatusValue = "failed"
 	DeploymentStatusCanceled DeploymentStatusValue = "canceled"
 )
-
-// DeploymentStatus is a helper routine that allocates a new
-// DeploymentStatusValue to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func DeploymentStatus(v DeploymentStatusValue) *DeploymentStatusValue {
-	return Ptr(v)
-}
 
 // DORAMetricType represents all valid DORA metrics types.
 //
@@ -430,14 +390,6 @@ const (
 	FileChmod  FileActionValue = "chmod"
 )
 
-// FileAction is a helper routine that allocates a new FileActionValue value
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func FileAction(v FileActionValue) *FileActionValue {
-	return Ptr(v)
-}
-
 // GenericPackageSelectValue represents a generic package select value.
 type GenericPackageSelectValue string
 
@@ -445,14 +397,6 @@ type GenericPackageSelectValue string
 const (
 	SelectPackageFile GenericPackageSelectValue = "package_file"
 )
-
-// GenericPackageSelect is a helper routine that allocates a new
-// GenericPackageSelectValue value to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func GenericPackageSelect(v GenericPackageSelectValue) *GenericPackageSelectValue {
-	return Ptr(v)
-}
 
 // GenericPackageStatusValue represents a generic package status.
 type GenericPackageStatusValue string
@@ -462,14 +406,6 @@ const (
 	PackageDefault GenericPackageStatusValue = "default"
 	PackageHidden  GenericPackageStatusValue = "hidden"
 )
-
-// GenericPackageStatus is a helper routine that allocates a new
-// GenericPackageStatusValue value to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func GenericPackageStatus(v GenericPackageStatusValue) *GenericPackageStatusValue {
-	return Ptr(v)
-}
 
 // GroupHookTrigger represents the type of event to trigger for a group
 // hook test.
@@ -592,14 +528,6 @@ const (
 	RunbookLinkType LinkTypeValue = "runbook"
 )
 
-// LinkType is a helper routine that allocates a new LinkType value
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func LinkType(v LinkTypeValue) *LinkTypeValue {
-	return Ptr(v)
-}
-
 // LicenseApprovalStatusValue describe the approval statuses of a license.
 // Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
 type LicenseApprovalStatusValue string
@@ -612,14 +540,6 @@ const (
 	LicenseAllowed     LicenseApprovalStatusValue = "allowed"
 	LicenseDenied      LicenseApprovalStatusValue = "denied"
 )
-
-// LicenseApprovalStatus is a helper routine that allocates a new license
-// approval status value to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func LicenseApprovalStatus(v LicenseApprovalStatusValue) *LicenseApprovalStatusValue {
-	return Ptr(v)
-}
 
 // MergeMethodValue represents a project merge type within GitLab.
 //
@@ -635,14 +555,6 @@ const (
 	RebaseMerge        MergeMethodValue = "rebase_merge"
 )
 
-// MergeMethod is a helper routine that allocates a new MergeMethod
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func MergeMethod(v MergeMethodValue) *MergeMethodValue {
-	return Ptr(v)
-}
-
 // NoteTypeValue represents the type of a Note.
 type NoteTypeValue string
 
@@ -653,14 +565,6 @@ const (
 	GenericNote    NoteTypeValue = "Note"
 	LegacyDiffNote NoteTypeValue = "LegacyDiffNote"
 )
-
-// NoteType is a helper routine that allocates a new NoteTypeValue to
-// store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func NoteType(v NoteTypeValue) *NoteTypeValue {
-	return Ptr(v)
-}
 
 // NotificationLevelValue represents a notification level.
 type NotificationLevelValue int
@@ -724,14 +628,6 @@ var notificationLevelTypes = map[string]NotificationLevelValue{
 	"custom":        CustomNotificationLevel,
 }
 
-// NotificationLevel is a helper routine that allocates a new NotificationLevelValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func NotificationLevel(v NotificationLevelValue) *NotificationLevelValue {
-	return Ptr(v)
-}
-
 // DependencyPackageManagerValue represents a dependency package manager.
 //
 // GitLab API docs: https://docs.gitlab.com/api/dependencies/
@@ -771,13 +667,6 @@ const (
 	DeveloperProjectCreation  ProjectCreationLevelValue = "developer"
 	OwnerProjectCreation      ProjectCreationLevelValue = "owner"
 )
-
-// ProjectCreationLevel is a helper routine that allocates a new ProjectCreationLevelValue
-// to store v and returns a pointer to it.
-// Deprecated: Please use Ptr instead.
-func ProjectCreationLevel(v ProjectCreationLevelValue) *ProjectCreationLevelValue {
-	return Ptr(v)
-}
 
 // ProjectHookEvent represents a project hook event.
 //
@@ -840,14 +729,6 @@ const (
 	DisabledWithOverrideSharedRunnersSettingValue SharedRunnersSettingValue = "disabled_with_override"
 )
 
-// SharedRunnersSetting is a helper routine that allocates a new SharedRunnersSettingValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func SharedRunnersSetting(v SharedRunnersSettingValue) *SharedRunnersSettingValue {
-	return Ptr(v)
-}
-
 // SubGroupCreationLevelValue represents a sub group creation level within GitLab.
 //
 // GitLab API docs: https://docs.gitlab.com/api/groups/
@@ -860,14 +741,6 @@ const (
 	OwnerSubGroupCreationLevelValue      SubGroupCreationLevelValue = "owner"
 	MaintainerSubGroupCreationLevelValue SubGroupCreationLevelValue = "maintainer"
 )
-
-// SubGroupCreationLevel is a helper routine that allocates a new SubGroupCreationLevelValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func SubGroupCreationLevel(v SubGroupCreationLevelValue) *SubGroupCreationLevelValue {
-	return Ptr(v)
-}
 
 // SquashOptionValue represents a squash optional level within GitLab.
 //
@@ -883,14 +756,6 @@ const (
 	SquashOptionDefaultOff SquashOptionValue = "default_off"
 	SquashOptionDefaultOn  SquashOptionValue = "default_on"
 )
-
-// SquashOption is a helper routine that allocates a new SquashOptionValue
-// to store s and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func SquashOption(s SquashOptionValue) *SquashOptionValue {
-	return Ptr(s)
-}
 
 // TasksCompletionStatus represents tasks of the issue/merge request.
 type TasksCompletionStatus struct {
@@ -947,14 +812,6 @@ const (
 	FileVariableType VariableTypeValue = "file"
 )
 
-// VariableType is a helper routine that allocates a new VariableTypeValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func VariableType(v VariableTypeValue) *VariableTypeValue {
-	return Ptr(v)
-}
-
 // VisibilityValue represents a visibility level within GitLab.
 //
 // GitLab API docs: https://docs.gitlab.com/api/groups/
@@ -969,14 +826,6 @@ const (
 	PublicVisibility   VisibilityValue = "public"
 )
 
-// Visibility is a helper routine that allocates a new VisibilityValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func Visibility(v VisibilityValue) *VisibilityValue {
-	return Ptr(v)
-}
-
 // WikiFormatValue represents the available wiki formats.
 //
 // GitLab API docs: https://docs.gitlab.com/api/wikis/
@@ -989,46 +838,6 @@ const (
 	WikiFormatASCIIDoc WikiFormatValue = "asciidoc"
 	WikiFormatOrg      WikiFormatValue = "org"
 )
-
-// WikiFormat is a helper routine that allocates a new WikiFormatValue
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func WikiFormat(v WikiFormatValue) *WikiFormatValue {
-	return Ptr(v)
-}
-
-// Bool is a helper routine that allocates a new bool value
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func Bool(v bool) *bool {
-	return Ptr(v)
-}
-
-// Int is a helper routine that allocates a new int value
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func Int(v int) *int {
-	return Ptr(v)
-}
-
-// String is a helper routine that allocates a new string value
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func String(v string) *string {
-	return Ptr(v)
-}
-
-// Time is a helper routine that allocates a new time.Time value
-// to store v and returns a pointer to it.
-//
-// Deprecated: Please use Ptr instead.
-func Time(v time.Time) *time.Time {
-	return Ptr(v)
-}
 
 // BoolValue is a boolean value with advanced json unmarshaling features.
 type BoolValue bool

@@ -32,7 +32,7 @@ func TestUsageDataService_GetServicePing(t *testing.T) {
 	require.NoError(t, err)
 
 	want := &ServicePingData{
-		RecordedAt: Time(time.Date(2024, time.January, 15, 23, 33, 50, 387000000, time.UTC)),
+		RecordedAt: Ptr(time.Date(2024, time.January, 15, 23, 33, 50, 387000000, time.UTC)),
 		License:    map[string]string{},
 		Counts: map[string]int{
 			"assignee_lists":        int(0),
@@ -123,7 +123,7 @@ func TestUsageDataService_GetQueries(t *testing.T) {
 	require.NoError(t, err)
 
 	want := &ServicePingQueries{
-		RecordedAt:         Time(time.Date(2021, time.March, 23, 6, 31, 21, 267000000, time.UTC)),
+		RecordedAt:         Ptr(time.Date(2021, time.March, 23, 6, 31, 21, 267000000, time.UTC)),
 		UUID:               "123",
 		Hostname:           "localhost",
 		Version:            "13.11.0-pre",

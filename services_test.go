@@ -167,13 +167,13 @@ func TestSetDataDogService(t *testing.T) {
 	})
 
 	opt := &SetDataDogServiceOptions{
-		APIKey:             String("secret"),
-		APIURL:             String("https://some-api.com"),
-		DataDogEnv:         String("sandbox"),
-		DataDogService:     String("source-code"),
-		DataDogSite:        String("datadoghq.eu"),
-		DataDogTags:        String("country=france"),
-		ArchiveTraceEvents: Bool(false),
+		APIKey:             Ptr("secret"),
+		APIURL:             Ptr("https://some-api.com"),
+		DataDogEnv:         Ptr("sandbox"),
+		DataDogService:     Ptr("source-code"),
+		DataDogSite:        Ptr("datadoghq.eu"),
+		DataDogTags:        Ptr("country=france"),
+		ArchiveTraceEvents: Ptr(false),
 	}
 
 	_, _, err := client.Services.SetDataDogService(1, opt)
