@@ -14,6 +14,13 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to manage OAuth applications using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Create a new OAuth application with a name, redirect URI, and scope.
+// 3. List all existing OAuth applications and log their details.
+// 4. Delete the created OAuth application and log the response status.
+
 package main
 
 import (

@@ -14,6 +14,14 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to manage repository files in GitLab using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Create a new file in a repository by specifying its branch, content, and commit message.
+// 3. Update an existing file in the repository with new content and a commit message.
+// 4. Retrieve the contents of a file from the repository for a specific branch.
+// 5. Retrieve the blame information for a file, including the number of blame ranges.
+
 package main
 
 import (

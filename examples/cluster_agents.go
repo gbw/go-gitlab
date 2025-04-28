@@ -14,6 +14,12 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to manage Cluster Agents in GitLab using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Register a new Cluster Agent for a specific project by providing its name.
+// 3. List all Cluster Agents associated with the specified project and log their details.
+
 package main
 
 import (

@@ -14,6 +14,14 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to manage topics in GitLab using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Create a new topic by specifying its name and description.
+// 3. Set an avatar for the topic by uploading an image file.
+// 4. Remove the avatar from the topic.
+// 5. Log the details of the topic at each step to verify the changes.
+
 package main
 
 import (
