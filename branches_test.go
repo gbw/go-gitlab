@@ -24,6 +24,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const DefaultBranch = "master"
+
 func TestGetBranch(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -40,7 +42,7 @@ func TestGetBranch(t *testing.T) {
 	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
 	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
 	want := &Branch{
-		Name:               "master",
+		Name:               DefaultBranch,
 		Merged:             false,
 		Protected:          true,
 		Default:            true,
@@ -77,7 +79,7 @@ func TestBranchesService_ListBranches(t *testing.T) {
 	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
 	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
 	want := []*Branch{{
-		Name:               "master",
+		Name:               DefaultBranch,
 		Merged:             false,
 		Protected:          true,
 		Default:            true,

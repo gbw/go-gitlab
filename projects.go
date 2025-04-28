@@ -2299,12 +2299,7 @@ func (s *ProjectsService) StartMirroringProject(pid any, options ...RequestOptio
 		return nil, err
 	}
 
-	resp, err := s.client.Do(req, nil)
-	if err != nil {
-		return resp, err
-	}
-
-	return resp, nil
+	return s.client.Do(req, nil)
 }
 
 // TransferProjectOptions represents the available TransferProject() options.
