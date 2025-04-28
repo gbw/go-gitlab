@@ -79,7 +79,6 @@ var serviceMap = map[any]any{
 	&LabelsService{}:                           (*LabelsServiceInterface)(nil),
 	&LicenseService{}:                          (*LicenseServiceInterface)(nil),
 	&LicenseTemplatesService{}:                 (*LicenseTemplatesServiceInterface)(nil),
-	&ManagedLicensesService{}:                  (*ManagedLicensesServiceInterface)(nil),
 	&MarkdownService{}:                         (*MarkdownServiceInterface)(nil),
 	&MemberRolesService{}:                      (*MemberRolesServiceInterface)(nil),
 	&MergeRequestApprovalSettingsService{}:     (*MergeRequestApprovalSettingsServiceInterface)(nil),

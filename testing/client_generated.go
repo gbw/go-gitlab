@@ -86,7 +86,6 @@ type testClientMocks struct {
 	MockLabels                           *MockLabelsServiceInterface
 	MockLicense                          *MockLicenseServiceInterface
 	MockLicenseTemplates                 *MockLicenseTemplatesServiceInterface
-	MockManagedLicenses                  *MockManagedLicensesServiceInterface
 	MockMarkdown                         *MockMarkdownServiceInterface
 	MockMemberRolesService               *MockMemberRolesServiceInterface
 	MockMergeRequestApprovals            *MockMergeRequestApprovalsServiceInterface
@@ -234,7 +233,6 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockLabels := NewMockLabelsServiceInterface(ctrl)
 	mockLicense := NewMockLicenseServiceInterface(ctrl)
 	mockLicenseTemplates := NewMockLicenseTemplatesServiceInterface(ctrl)
-	mockManagedLicenses := NewMockManagedLicensesServiceInterface(ctrl)
 	mockMarkdown := NewMockMarkdownServiceInterface(ctrl)
 	mockMemberRolesService := NewMockMemberRolesServiceInterface(ctrl)
 	mockMergeRequestApprovals := NewMockMergeRequestApprovalsServiceInterface(ctrl)
@@ -382,7 +380,6 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			Labels:                           mockLabels,
 			License:                          mockLicense,
 			LicenseTemplates:                 mockLicenseTemplates,
-			ManagedLicenses:                  mockManagedLicenses,
 			Markdown:                         mockMarkdown,
 			MemberRolesService:               mockMemberRolesService,
 			MergeRequestApprovals:            mockMergeRequestApprovals,
@@ -529,7 +526,6 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockLabels:                           mockLabels,
 			MockLicense:                          mockLicense,
 			MockLicenseTemplates:                 mockLicenseTemplates,
-			MockManagedLicenses:                  mockManagedLicenses,
 			MockMarkdown:                         mockMarkdown,
 			MockMemberRolesService:               mockMemberRolesService,
 			MockMergeRequestApprovals:            mockMergeRequestApprovals,
