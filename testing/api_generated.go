@@ -104,7 +104,6 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=project_feature_flags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectFeatureFlagServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=project_import_export_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectImportExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=project_iterations_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectIterationsServiceInterface
-//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=project_managed_licenses_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ManagedLicensesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=project_markdown_uploads_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectMarkdownUploadsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=project_members_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectMembersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=project_mirror_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectMirrorServiceInterface

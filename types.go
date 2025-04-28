@@ -528,19 +528,6 @@ const (
 	RunbookLinkType LinkTypeValue = "runbook"
 )
 
-// LicenseApprovalStatusValue describe the approval statuses of a license.
-// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-type LicenseApprovalStatusValue string
-
-// List of available license approval statuses.
-// Deprecated: Removed in 17.0; use License Approval Policies instead - https://docs.gitlab.com/user/compliance/license_approval_policies/
-const (
-	LicenseApproved    LicenseApprovalStatusValue = "approved"
-	LicenseBlacklisted LicenseApprovalStatusValue = "blacklisted"
-	LicenseAllowed     LicenseApprovalStatusValue = "allowed"
-	LicenseDenied      LicenseApprovalStatusValue = "denied"
-)
-
 // MergeMethodValue represents a project merge type within GitLab.
 //
 // GitLab API docs: https://docs.gitlab.com/api/projects/#project-merge-method
