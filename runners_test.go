@@ -64,7 +64,7 @@ func TestListRunnersJobs(t *testing.T) {
 	}{
 		ID:        8777,
 		ProjectID: 3252,
-		Ref:       "master",
+		Ref:       DefaultBranch,
 		Sha:       "6c016b801a88f4bd31f927fc045b5c746a6f823e",
 		Status:    "failed",
 	}
@@ -75,7 +75,7 @@ func TestListRunnersJobs(t *testing.T) {
 			Status:         "failed",
 			Stage:          "test",
 			Name:           "run_tests",
-			Ref:            "master",
+			Ref:            DefaultBranch,
 			CreatedAt:      Ptr(time.Date(2021, time.October, 22, 11, 59, 25, 201000000, time.UTC)),
 			StartedAt:      Ptr(time.Date(2021, time.October, 22, 11, 59, 33, 660000000, time.UTC)),
 			FinishedAt:     Ptr(time.Date(2021, time.October, 22, 15, 59, 25, 201000000, time.UTC)),

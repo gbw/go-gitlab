@@ -463,7 +463,7 @@ func TestGroupMilestonesService_GetGroupMilestoneMergeRequests(t *testing.T) {
 	want := []*BasicMergeRequest{{
 		ID:           1,
 		IID:          1,
-		TargetBranch: "master",
+		TargetBranch: DefaultBranch,
 		SourceBranch: "test1",
 		ProjectID:    3,
 		Title:        "test1",

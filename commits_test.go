@@ -62,7 +62,7 @@ func TestGetCommit(t *testing.T) {
 		Status:         Ptr(Running),
 		LastPipeline: &PipelineInfo{
 			ID:        8,
-			Ref:       "master",
+			Ref:       DefaultBranch,
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
@@ -454,7 +454,7 @@ func TestCommitsService_CreateCommit(t *testing.T) {
 		Status:         Ptr(Running),
 		LastPipeline: &PipelineInfo{
 			ID:        8,
-			Ref:       "master",
+			Ref:       DefaultBranch,
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
@@ -514,22 +514,22 @@ func TestCommitsService_GetCommitDiff(t *testing.T) {
 		BMode:   "100644",
 	}}
 
-	ds, resp, err := client.Commits.GetCommitDiff(1, "master", nil)
+	ds, resp, err := client.Commits.GetCommitDiff(1, DefaultBranch, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, ds)
 
-	ds, resp, err = client.Commits.GetCommitDiff(1.01, "master", nil)
+	ds, resp, err = client.Commits.GetCommitDiff(1.01, DefaultBranch, nil)
 	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
-	ds, resp, err = client.Commits.GetCommitDiff(1, "master", nil, errorOption)
+	ds, resp, err = client.Commits.GetCommitDiff(1, DefaultBranch, nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
-	ds, resp, err = client.Commits.GetCommitDiff(3, "master", nil)
+	ds, resp, err = client.Commits.GetCommitDiff(3, DefaultBranch, nil)
 	require.Error(t, err)
 	require.Nil(t, ds)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -568,22 +568,22 @@ func TestCommitsService_GetCommitComments(t *testing.T) {
 		},
 	}}
 
-	ccs, resp, err := client.Commits.GetCommitComments(1, "master", nil)
+	ccs, resp, err := client.Commits.GetCommitComments(1, DefaultBranch, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, ccs)
 
-	ccs, resp, err = client.Commits.GetCommitComments(1.01, "master", nil)
+	ccs, resp, err = client.Commits.GetCommitComments(1.01, DefaultBranch, nil)
 	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, ccs)
 
-	ccs, resp, err = client.Commits.GetCommitComments(1, "master", nil, errorOption)
+	ccs, resp, err = client.Commits.GetCommitComments(1, DefaultBranch, nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, ccs)
 
-	ccs, resp, err = client.Commits.GetCommitComments(3, "master", nil)
+	ccs, resp, err = client.Commits.GetCommitComments(3, DefaultBranch, nil)
 	require.Error(t, err)
 	require.Nil(t, ccs)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -620,22 +620,22 @@ func TestCommitsService_PostCommitComment(t *testing.T) {
 		},
 	}
 
-	cc, resp, err := client.Commits.PostCommitComment(1, "master", nil)
+	cc, resp, err := client.Commits.PostCommitComment(1, DefaultBranch, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, cc)
 
-	cc, resp, err = client.Commits.PostCommitComment(1.01, "master", nil)
+	cc, resp, err = client.Commits.PostCommitComment(1.01, DefaultBranch, nil)
 	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, cc)
 
-	cc, resp, err = client.Commits.PostCommitComment(1, "master", nil, errorOption)
+	cc, resp, err = client.Commits.PostCommitComment(1, DefaultBranch, nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, cc)
 
-	cc, resp, err = client.Commits.PostCommitComment(3, "master", nil)
+	cc, resp, err = client.Commits.PostCommitComment(3, DefaultBranch, nil)
 	require.Error(t, err)
 	require.Nil(t, cc)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -827,22 +827,22 @@ func TestCommitsService_ListMergeRequestsByCommit(t *testing.T) {
 		BlockingDiscussionsResolved: false,
 	}}
 
-	mrs, resp, err := client.Commits.ListMergeRequestsByCommit(1, "master", nil)
+	mrs, resp, err := client.Commits.ListMergeRequestsByCommit(1, DefaultBranch, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, mrs)
 
-	mrs, resp, err = client.Commits.ListMergeRequestsByCommit(1.01, "master", nil)
+	mrs, resp, err = client.Commits.ListMergeRequestsByCommit(1.01, DefaultBranch, nil)
 	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, mrs)
 
-	mrs, resp, err = client.Commits.ListMergeRequestsByCommit(1, "master", nil, errorOption)
+	mrs, resp, err = client.Commits.ListMergeRequestsByCommit(1, DefaultBranch, nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, mrs)
 
-	mrs, resp, err = client.Commits.ListMergeRequestsByCommit(3, "master", nil)
+	mrs, resp, err = client.Commits.ListMergeRequestsByCommit(3, DefaultBranch, nil)
 	require.Error(t, err)
 	require.Nil(t, mrs)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -903,7 +903,7 @@ func TestCommitsService_CherryPickCommit(t *testing.T) {
 		Status:         Ptr(Running),
 		LastPipeline: &PipelineInfo{
 			ID:        8,
-			Ref:       "master",
+			Ref:       DefaultBranch,
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
@@ -913,22 +913,22 @@ func TestCommitsService_CherryPickCommit(t *testing.T) {
 		ProjectID: 13083,
 	}
 
-	c, resp, err := client.Commits.CherryPickCommit(1, "master", nil)
+	c, resp, err := client.Commits.CherryPickCommit(1, DefaultBranch, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, c)
 
-	c, resp, err = client.Commits.CherryPickCommit(1.01, "master", nil)
+	c, resp, err = client.Commits.CherryPickCommit(1.01, DefaultBranch, nil)
 	require.ErrorIs(t, err, ErrInvalidIDType)
 	require.Nil(t, resp)
 	require.Nil(t, c)
 
-	c, resp, err = client.Commits.CherryPickCommit(1, "master", nil, errorOption)
+	c, resp, err = client.Commits.CherryPickCommit(1, DefaultBranch, nil, errorOption)
 	require.EqualError(t, err, "RequestOptionFunc returns an error")
 	require.Nil(t, resp)
 	require.Nil(t, c)
 
-	c, resp, err = client.Commits.CherryPickCommit(3, "master", nil)
+	c, resp, err = client.Commits.CherryPickCommit(3, DefaultBranch, nil)
 	require.Error(t, err)
 	require.Nil(t, c)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
