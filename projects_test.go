@@ -851,23 +851,21 @@ func TestForkProject(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/fork", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testBody(t, r, fmt.Sprintf(`{"name":"%s","namespace_id":%d,"path":"%s"}`, name, namespaceID, path))
+		testBody(t, r, fmt.Sprintf(`{"branches":"main","name":"%s","namespace_id":%d,"path":"%s"}`, name, namespaceID, path))
 		fmt.Fprint(w, `{"id":2}`)
 	})
 
-	project, _, err := client.Projects.ForkProject(1, &ForkProjectOptions{
+	project, resp, err := client.Projects.ForkProject(1, &ForkProjectOptions{
+		Branches:    Ptr("main"),
 		NamespaceID: Ptr(namespaceID),
 		Name:        Ptr(name),
 		Path:        Ptr(path),
 	})
-	if err != nil {
-		t.Errorf("Projects.ForkProject returned error: %v", err)
-	}
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &Project{ID: 2}
-	if !reflect.DeepEqual(want, project) {
-		t.Errorf("Projects.ForProject returned %+v, want %+v", project, want)
-	}
+	assert.Equal(t, want, project)
 }
 
 func TestGetProjectApprovalRules(t *testing.T) {
