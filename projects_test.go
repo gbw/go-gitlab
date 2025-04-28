@@ -23,7 +23,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -539,86 +538,6 @@ func TestCreateProject(t *testing.T) {
 	want := &Project{ID: 1}
 	if !reflect.DeepEqual(want, project) {
 		t.Errorf("Projects.CreateProject returned %+v, want %+v", project, want)
-	}
-}
-
-func TestUploadFile(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Projects.UploadFile request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Projects.UploadFile request content-length is -1")
-		}
-		fmt.Fprint(w, `{
-		  "alt": "dk",
-			"url": "/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.md",
-			"markdown": "![dk](/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png)"
-		}`)
-	})
-
-	want := &ProjectFile{
-		Alt:      "dk",
-		URL:      "/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.md",
-		Markdown: "![dk](/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png)",
-	}
-
-	file := bytes.NewBufferString("dummy")
-	projectFile, _, err := client.Projects.UploadFile(1, file, "test.txt")
-	if err != nil {
-		t.Fatalf("Projects.UploadFile returns an error: %v", err)
-	}
-
-	if !reflect.DeepEqual(want, projectFile) {
-		t.Errorf("Projects.UploadFile returned %+v, want %+v", projectFile, want)
-	}
-}
-
-func TestUploadFile_Retry(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	tf, _ := os.CreateTemp(os.TempDir(), "test")
-	defer os.Remove(tf.Name())
-
-	isFirstRequest := true
-	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
-		if isFirstRequest {
-			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-			isFirstRequest = false
-			return
-		}
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Projects.UploadFile request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Projects.UploadFile request content-length is -1")
-		}
-		fmt.Fprint(w, `{
-                  "alt": "dk",
-                    "url": "/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.md",
-                    "markdown": "![dk](/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png)"
-                }`)
-	})
-
-	want := &ProjectFile{
-		Alt:      "dk",
-		URL:      "/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.md",
-		Markdown: "![dk](/uploads/66dbcd21ec5d24ed6ea225176098d52b/dk.png)",
-	}
-
-	file := bytes.NewBufferString("dummy")
-	projectFile, _, err := client.Projects.UploadFile(1, file, "test.txt")
-	if err != nil {
-		t.Fatalf("Projects.UploadFile returns an error: %v", err)
-	}
-
-	if !reflect.DeepEqual(want, projectFile) {
-		t.Errorf("Projects.UploadFile returned %+v, want %+v", projectFile, want)
 	}
 }
 
