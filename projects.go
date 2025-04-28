@@ -63,7 +63,6 @@ type (
 		DeleteProjectCustomHeader(pid any, hook int, key string, options ...RequestOptionFunc) (*Response, error)
 		CreateProjectForkRelation(pid any, fork int, options ...RequestOptionFunc) (*ProjectForkRelation, *Response, error)
 		DeleteProjectForkRelation(pid any, options ...RequestOptionFunc) (*Response, error)
-		UploadFile(pid any, content io.Reader, filename string, options ...RequestOptionFunc) (*ProjectFile, *Response, error)
 		UploadAvatar(pid any, avatar io.Reader, filename string, options ...RequestOptionFunc) (*Project, *Response, error)
 		DownloadAvatar(pid any, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
 		ListProjectForks(pid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error)
@@ -1679,52 +1678,6 @@ func (s *ProjectsService) DeleteProjectForkRelation(pid any, options ...RequestO
 	}
 
 	return s.client.Do(req, nil)
-}
-
-// ProjectFile represents an uploaded project file.
-//
-// GitLab API docs: https://docs.gitlab.com/api/project_markdown_uploads/#upload-a-file
-type ProjectFile struct {
-	Alt      string `json:"alt"`
-	URL      string `json:"url"`
-	FullPath string `json:"full_path"`
-	Markdown string `json:"markdown"`
-}
-
-// UploadFile uploads a file.
-//
-// Deprecated: UploadFile is deprecated and will be removed in a future release.
-// Use [ProjectMarkdownUploadsService.UploadProjectMarkdown] instead for uploading
-// markdown files to a project.
-//
-// GitLab API docs: https://docs.gitlab.com/api/project_markdown_uploads/#upload-a-file
-func (s *ProjectsService) UploadFile(pid any, content io.Reader, filename string, options ...RequestOptionFunc) (*ProjectFile, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/uploads", PathEscape(project))
-
-	req, err := s.client.UploadRequest(
-		http.MethodPost,
-		u,
-		content,
-		filename,
-		UploadFile,
-		nil,
-		options,
-	)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	pf := new(ProjectFile)
-	resp, err := s.client.Do(req, pf)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return pf, resp, nil
 }
 
 // UploadAvatar uploads an avatar.
