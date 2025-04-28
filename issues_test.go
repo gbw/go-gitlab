@@ -523,14 +523,15 @@ func TestListGroupIssues(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/groups/1/issues", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testURL(t, r, "/api/v4/groups/1/issues?assignee_id=2&author_id=1&state=Open")
+		testURL(t, r, "/api/v4/groups/1/issues?assignee_id=2&author_id=1&confidential=false&state=Open")
 		fmt.Fprint(w, `[{"id":1, "description": "This is test project", "author" : {"id" : 1, "name": "snehal"}, "assignees":[{"id":1}]}]`)
 	})
 
 	listGroupIssue := &ListGroupIssuesOptions{
-		State:      Ptr("Open"),
-		AuthorID:   Ptr(0o1),
-		AssigneeID: AssigneeID(0o2),
+		State:        Ptr("Open"),
+		AuthorID:     Ptr(0o1),
+		AssigneeID:   AssigneeID(0o2),
+		Confidential: Ptr(false),
 	}
 
 	issues, _, err := client.Issues.ListGroupIssues("1", listGroupIssue)

@@ -301,6 +301,7 @@ type ListGroupIssuesOptions struct {
 	DueDate             *string          `url:"due_date,omitempty" json:"due_date,omitempty"`
 	UpdatedAfter        *time.Time       `url:"updated_after,omitempty" json:"updated_after,omitempty"`
 	UpdatedBefore       *time.Time       `url:"updated_before,omitempty" json:"updated_before,omitempty"`
+	Confidential        *bool            `url:"confidential,omitempty" json:"confidential,omitempty"`
 	IssueType           *string          `url:"issue_type,omitempty" json:"issue_type,omitempty"`
 	IterationID         *int             `url:"iteration_id,omitempty" json:"iteration_id,omitempty"`
 }
