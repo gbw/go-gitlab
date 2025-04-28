@@ -14,6 +14,12 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to authenticate with GitLab using basic authentication (username and password).
+// It covers the following steps:
+// 1. Initialize the GitLab client with a username, password, and optional base URL.
+// 2. List all projects accessible to the authenticated user.
+// 3. Log the total number of projects found.
+
 package main
 
 import (

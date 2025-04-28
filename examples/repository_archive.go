@@ -14,6 +14,12 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to download a repository archive in GitLab using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Specify the archive options, such as format (e.g., tar.gz) and path.
+// 3. Download the repository archive for a specific project and log the size of the downloaded content.
+
 package main
 
 import (

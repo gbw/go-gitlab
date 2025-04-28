@@ -14,6 +14,12 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to manage labels in GitLab using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Create a new label for a specific project by specifying its name and color.
+// 3. List all labels associated with the specified project and log their details.
+
 package main
 
 import (

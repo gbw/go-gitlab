@@ -14,6 +14,12 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to list merge requests associated with a deployment in GitLab using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Use the `ListDeploymentMergeRequests` method to retrieve merge requests for a specific deployment and environment.
+// 3. Iterate through the retrieved merge requests and log their details.
+
 package main
 
 import (

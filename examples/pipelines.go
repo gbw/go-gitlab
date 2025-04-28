@@ -14,6 +14,13 @@
 // limitations under the License.
 //
 
+// This example demonstrates how to manage pipelines in GitLab using the GitLab API client.
+// It covers the following steps:
+// 1. Initialize the GitLab client with a personal access token.
+// 2. Specify filtering options to list project pipelines, such as scope, status, branch, and date range.
+// 3. Retrieve a list of pipelines for a specific project based on the provided filters.
+// 4. Iterate through the retrieved pipelines and log their details.
+
 package main
 
 import (
