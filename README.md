@@ -2,6 +2,11 @@
 
 A GitLab API client enabling Go programs to interact with GitLab in a simple and uniform way.
 
+
+## Table of Contents
+
+[[_TOC_]]
+
 ## Usage
 
 ```go
@@ -88,6 +93,14 @@ func main() {
 ```
 
 For complete usage of go-gitlab, see the full [package docs](https://godoc.org/gitlab.com/gitlab-org/api/client-go).
+
+## Installation
+
+To install the library, use the following command:
+
+```go
+go get gitlab.com/gitlab-org/api/client-go
+```
 
 ## Testing
 
