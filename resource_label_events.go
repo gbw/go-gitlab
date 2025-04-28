@@ -29,9 +29,9 @@ type (
 		ListMergeRequestsLabelEvents(pid any, request int, opt *ListLabelEventsOptions, options ...RequestOptionFunc) ([]*LabelEvent, *Response, error)
 		GetMergeRequestLabelEvent(pid any, request int, event int, options ...RequestOptionFunc) (*LabelEvent, *Response, error)
 
-		// Deprecated: for removal in v5 of the API, use Work Items API instead
+		// Will be removed in v5, use Work Items API instead
 		ListGroupEpicLabelEvents(gid any, epic int, opt *ListLabelEventsOptions, options ...RequestOptionFunc) ([]*LabelEvent, *Response, error)
-		// Deprecated: for removal in v5 of the API, use Work Items API instead
+		// Will be removed in v5, use Work Items API instead
 		GetGroupEpicLabelEvent(gid any, epic int, event int, options ...RequestOptionFunc) (*LabelEvent, *Response, error)
 	}
 
@@ -135,7 +135,7 @@ func (s *ResourceLabelEventsService) GetIssueLabelEvent(pid any, issue int, even
 
 // ListGroupEpicLabelEvents retrieves resource label events for the specified
 // group and epic.
-// Deprecated: for removal in v5 of the API, use Work Items API instead
+// Will be removed in v5, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/resource_label_events/#list-group-epic-label-events
@@ -161,7 +161,7 @@ func (s *ResourceLabelEventsService) ListGroupEpicLabelEvents(gid any, epic int,
 }
 
 // GetGroupEpicLabelEvent gets a single group epic label event.
-// Deprecated: for removal in v5 of the API, use Work Items API instead
+// Will be removed in v5, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/resource_label_events/#get-single-epic-label-event

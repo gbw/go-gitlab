@@ -592,7 +592,7 @@ func (s *NotesService) DeleteMergeRequestNote(pid any, mergeRequest, note int, o
 }
 
 // ListEpicNotesOptions represents the available ListEpicNotes() options.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/notes/#list-all-epic-notes
@@ -603,7 +603,7 @@ type ListEpicNotesOptions struct {
 }
 
 // ListEpicNotes gets a list of all notes for a single epic.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/notes/#list-all-epic-notes
@@ -629,7 +629,7 @@ func (s *NotesService) ListEpicNotes(gid any, epic int, opt *ListEpicNotesOption
 }
 
 // GetEpicNote returns a single note for an epic.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/notes/#get-single-epic-note
@@ -655,7 +655,7 @@ func (s *NotesService) GetEpicNote(gid any, epic, note int, options ...RequestOp
 }
 
 // CreateEpicNoteOptions represents the available CreateEpicNote() options.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/notes/#create-new-epic-note
@@ -664,7 +664,7 @@ type CreateEpicNoteOptions struct {
 }
 
 // CreateEpicNote creates a new note for a single merge request.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/notes/#create-new-epic-note
@@ -690,7 +690,7 @@ func (s *NotesService) CreateEpicNote(gid any, epic int, opt *CreateEpicNoteOpti
 }
 
 // UpdateEpicNoteOptions represents the available UpdateEpicNote() options.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/notes/#modify-existing-epic-note
@@ -699,7 +699,7 @@ type UpdateEpicNoteOptions struct {
 }
 
 // UpdateEpicNote modifies existing note of an epic.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // https://docs.gitlab.com/api/notes/#modify-existing-epic-note
 func (s *NotesService) UpdateEpicNote(gid any, epic, note int, opt *UpdateEpicNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
@@ -724,7 +724,7 @@ func (s *NotesService) UpdateEpicNote(gid any, epic, note int, opt *UpdateEpicNo
 }
 
 // DeleteEpicNote deletes an existing note of a merge request.
-// Deprecated: use Work Items API instead.
+// Will be removed in v5 of the API, use Work Items API instead
 //
 // https://docs.gitlab.com/api/notes/#delete-an-epic-note
 func (s *NotesService) DeleteEpicNote(gid any, epic, note int, options ...RequestOptionFunc) (*Response, error) {
