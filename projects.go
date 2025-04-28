@@ -1074,8 +1074,10 @@ func (s *ProjectsService) EditProject(pid any, opt *EditProjectOptions, options 
 
 // ForkProjectOptions represents the available ForkProject() options.
 //
-// GitLab API docs: https://docs.gitlab.com/api/project_forks/#fork-a-project
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_forks/#fork-a-project
 type ForkProjectOptions struct {
+	Branches                      *string          `url:"branches,omitempty" json:"branches,omitempty"`
 	Description                   *string          `url:"description,omitempty" json:"description,omitempty"`
 	MergeRequestDefaultTargetSelf *bool            `url:"mr_default_target_self,omitempty" json:"mr_default_target_self,omitempty"`
 	Name                          *string          `url:"name,omitempty" json:"name,omitempty"`
@@ -1091,7 +1093,8 @@ type ForkProjectOptions struct {
 // ForkProject forks a project into the user namespace of the authenticated
 // user.
 //
-// GitLab API docs: https://docs.gitlab.com/api/project_forks/#fork-a-project
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_forks/#fork-a-project
 func (s *ProjectsService) ForkProject(pid any, opt *ForkProjectOptions, options ...RequestOptionFunc) (*Project, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
