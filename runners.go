@@ -79,7 +79,7 @@ type Runner struct {
 	// Deprecated: for removal in v5 of the API, use Paused instead
 	Active bool `json:"active"`
 
-	// Deprecated: returns an empty string from 17.0 onwards, see GraphQL resource CiRunnerManager instead
+	// Deprecated: for removal in v5 of the API, returns an empty string from 17.0 onwards, see GraphQL resource CiRunnerManager instead
 	IPAddress string `json:"ip_address"`
 }
 
@@ -119,7 +119,7 @@ type RunnerDetails struct {
 	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
 	Architecture string `json:"architecture"`
 
-	// Deprecated: returns an empty string from 17.0 onwards, see GraphQL resource CiRunnerManager instead
+	// Deprecated: for removal in v5 of the API, returns an empty string from 17.0 onwards, see GraphQL resource CiRunnerManager instead
 	IPAddress string `json:"ip_address"`
 
 	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
@@ -131,7 +131,7 @@ type RunnerDetails struct {
 	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
 	Version string `json:"version"`
 
-	// Deprecated: Use Paused instead. (Deprecated in GitLab 14.8)
+	// Deprecated: for removal in v5 of the API, use Paused instead
 	Active bool `json:"active"`
 }
 
@@ -228,7 +228,7 @@ type UpdateRunnerDetailsOptions struct {
 	MaximumTimeout  *int      `url:"maximum_timeout,omitempty" json:"maximum_timeout,omitempty"`
 	MaintenanceNote *string   `url:"maintenance_note,omitempty" json:"maintenance_note,omitempty"`
 
-	// Deprecated: Use Paused instead. (Deprecated in GitLab 14.8)
+	// Deprecated: for removal in v5 of the API, use Paused instead
 	Active *bool `url:"active,omitempty" json:"active,omitempty"`
 }
 
