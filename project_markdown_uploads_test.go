@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/assert"
 )
 
-func TestProjectMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
+func TestMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -44,12 +44,12 @@ func TestProjectMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
 
 	b := strings.NewReader("dummy")
 	upload, resp, err := client.ProjectMarkdownUploads.UploadProjectMarkdown(1, b, "test.txt")
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, upload)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, upload)
 }
 
-func TestProjectMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
+func TestMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -90,12 +90,12 @@ func TestProjectMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
 
 	b := strings.NewReader("dummy")
 	upload, resp, err := client.ProjectMarkdownUploads.UploadProjectMarkdown(1, b, "test.txt")
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, upload)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, upload)
 }
 
-func TestProjectMarkdownUploads_ListProjectMarkdownUploads(t *testing.T) {
+func TestMarkdownUploads_ListProjectMarkdownUploads(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -148,12 +148,12 @@ func TestProjectMarkdownUploads_ListProjectMarkdownUploads(t *testing.T) {
 	}
 
 	uploads, resp, err := client.ProjectMarkdownUploads.ListProjectMarkdownUploads(1)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, uploads)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, uploads)
 }
 
-func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadByID(t *testing.T) {
+func TestMarkdownUploads_DownloadProjectMarkdownUploadByID(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -167,12 +167,12 @@ func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadByID(t *testing.T) 
 	want := []byte("bar = baz")
 
 	bytes, resp, err := client.ProjectMarkdownUploads.DownloadProjectMarkdownUploadByID(1, 2)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, bytes)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, bytes)
 }
 
-func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadBySecretAndFilename(t *testing.T) {
+func TestMarkdownUploads_DownloadProjectMarkdownUploadBySecretAndFilename(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -186,12 +186,12 @@ func TestProjectMarkdownUploads_DownloadProjectMarkdownUploadBySecretAndFilename
 	want := []byte("bar = baz")
 
 	bytes, resp, err := client.ProjectMarkdownUploads.DownloadProjectMarkdownUploadBySecretAndFilename(1, "secret", "filename")
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, want, bytes)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, bytes)
 }
 
-func TestProjectMarkdownUploads_DeleteProjectMarkdownUploadByID(t *testing.T) {
+func TestMarkdownUploads_DeleteProjectMarkdownUploadByID(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -201,12 +201,12 @@ func TestProjectMarkdownUploads_DeleteProjectMarkdownUploadByID(t *testing.T) {
 	})
 
 	resp, err := client.ProjectMarkdownUploads.DeleteProjectMarkdownUploadByID(1, 2)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, 204, resp.StatusCode)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, 204, resp.StatusCode)
 }
 
-func TestProjectMarkdownUploads_DeleteProjectMarkdownUploadBySecretAndFilename(t *testing.T) {
+func TestMarkdownUploads_DeleteProjectMarkdownUploadBySecretAndFilename(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -216,7 +216,7 @@ func TestProjectMarkdownUploads_DeleteProjectMarkdownUploadBySecretAndFilename(t
 	})
 
 	resp, err := client.ProjectMarkdownUploads.DeleteProjectMarkdownUploadBySecretAndFilename(1, "secret", "filename")
-	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, 204, resp.StatusCode)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, 204, resp.StatusCode)
 }

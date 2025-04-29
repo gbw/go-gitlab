@@ -62,6 +62,7 @@ type testClientMocks struct {
 	MockGroupIssueBoards                 *MockGroupIssueBoardsServiceInterface
 	MockGroupIterations                  *MockGroupIterationsServiceInterface
 	MockGroupLabels                      *MockGroupLabelsServiceInterface
+	MockGroupMarkdownUploads             *MockGroupMarkdownUploadsServiceInterface
 	MockGroupMembers                     *MockGroupMembersServiceInterface
 	MockGroupMilestones                  *MockGroupMilestonesServiceInterface
 	MockGroupProtectedEnvironments       *MockGroupProtectedEnvironmentsServiceInterface
@@ -209,6 +210,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockGroupIssueBoards := NewMockGroupIssueBoardsServiceInterface(ctrl)
 	mockGroupIterations := NewMockGroupIterationsServiceInterface(ctrl)
 	mockGroupLabels := NewMockGroupLabelsServiceInterface(ctrl)
+	mockGroupMarkdownUploads := NewMockGroupMarkdownUploadsServiceInterface(ctrl)
 	mockGroupMembers := NewMockGroupMembersServiceInterface(ctrl)
 	mockGroupMilestones := NewMockGroupMilestonesServiceInterface(ctrl)
 	mockGroupProtectedEnvironments := NewMockGroupProtectedEnvironmentsServiceInterface(ctrl)
@@ -356,6 +358,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			GroupIssueBoards:                 mockGroupIssueBoards,
 			GroupIterations:                  mockGroupIterations,
 			GroupLabels:                      mockGroupLabels,
+			GroupMarkdownUploads:             mockGroupMarkdownUploads,
 			GroupMembers:                     mockGroupMembers,
 			GroupMilestones:                  mockGroupMilestones,
 			GroupProtectedEnvironments:       mockGroupProtectedEnvironments,
@@ -502,6 +505,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockGroupIssueBoards:                 mockGroupIssueBoards,
 			MockGroupIterations:                  mockGroupIterations,
 			MockGroupLabels:                      mockGroupLabels,
+			MockGroupMarkdownUploads:             mockGroupMarkdownUploads,
 			MockGroupMembers:                     mockGroupMembers,
 			MockGroupMilestones:                  mockGroupMilestones,
 			MockGroupProtectedEnvironments:       mockGroupProtectedEnvironments,
