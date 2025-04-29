@@ -54,6 +54,7 @@ var serviceMap = map[any]any{
 	&GroupIssueBoardsService{}:                 (*GroupIssueBoardsServiceInterface)(nil),
 	&GroupIterationsService{}:                  (*GroupIterationsServiceInterface)(nil),
 	&GroupLabelsService{}:                      (*GroupLabelsServiceInterface)(nil),
+	&GroupMarkdownUploadsService{}:             (*GroupMarkdownUploadsServiceInterface)(nil),
 	&GroupMembersService{}:                     (*GroupMembersServiceInterface)(nil),
 	&GroupMilestonesService{}:                  (*GroupMilestonesServiceInterface)(nil),
 	&GroupProtectedEnvironmentsService{}:       (*GroupProtectedEnvironmentsServiceInterface)(nil),

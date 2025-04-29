@@ -55,6 +55,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_import_export_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupImportExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_iterations_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupIterationsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_labels_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupLabelsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_markdown_uploads_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupMarkdownUploadsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_members_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupMembersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_milestones_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupMilestonesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=group_protected_environments_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupProtectedEnvironmentsServiceInterface

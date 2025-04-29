@@ -220,14 +220,14 @@ func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUpload
 }
 
 // ListProjectMarkdownUploads mocks base method.
-func (m *MockProjectMarkdownUploadsServiceInterface) ListProjectMarkdownUploads(pid any, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectMarkdownUpload, *gitlab.Response, error) {
+func (m *MockProjectMarkdownUploadsServiceInterface) ListProjectMarkdownUploads(pid any, options ...gitlab.RequestOptionFunc) ([]*gitlab.MarkdownUpload, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ListProjectMarkdownUploads", varargs...)
-	ret0, _ := ret[0].([]*gitlab.ProjectMarkdownUpload)
+	ret0, _ := ret[0].([]*gitlab.MarkdownUpload)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -247,32 +247,32 @@ type MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall st
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall) Return(arg0 []*gitlab.ProjectMarkdownUpload, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall) Return(arg0 []*gitlab.MarkdownUpload, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall) Do(f func(any, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectMarkdownUpload, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall) Do(f func(any, ...gitlab.RequestOptionFunc) ([]*gitlab.MarkdownUpload, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectMarkdownUpload, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) ([]*gitlab.MarkdownUpload, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UploadProjectMarkdown mocks base method.
-func (m *MockProjectMarkdownUploadsServiceInterface) UploadProjectMarkdown(pid any, content io.Reader, filename string, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMarkdownUploadedFile, *gitlab.Response, error) {
+func (m *MockProjectMarkdownUploadsServiceInterface) UploadProjectMarkdown(pid any, content io.Reader, filename string, options ...gitlab.RequestOptionFunc) (*gitlab.MarkdownUploadedFile, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, content, filename}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "UploadProjectMarkdown", varargs...)
-	ret0, _ := ret[0].(*gitlab.ProjectMarkdownUploadedFile)
+	ret0, _ := ret[0].(*gitlab.MarkdownUploadedFile)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -292,19 +292,19 @@ type MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall struct 
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall) Return(arg0 *gitlab.ProjectMarkdownUploadedFile, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall) Return(arg0 *gitlab.MarkdownUploadedFile, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall) Do(f func(any, io.Reader, string, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMarkdownUploadedFile, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall) Do(f func(any, io.Reader, string, ...gitlab.RequestOptionFunc) (*gitlab.MarkdownUploadedFile, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall) DoAndReturn(f func(any, io.Reader, string, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMarkdownUploadedFile, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall) DoAndReturn(f func(any, io.Reader, string, ...gitlab.RequestOptionFunc) (*gitlab.MarkdownUploadedFile, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceUploadProjectMarkdownCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

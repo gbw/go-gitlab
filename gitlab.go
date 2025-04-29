@@ -165,6 +165,7 @@ type Client struct {
 	GroupIssueBoards                 GroupIssueBoardsServiceInterface
 	GroupIterations                  GroupIterationsServiceInterface
 	GroupLabels                      GroupLabelsServiceInterface
+	GroupMarkdownUploads             GroupMarkdownUploadsServiceInterface
 	GroupMembers                     GroupMembersServiceInterface
 	GroupMilestones                  GroupMilestonesServiceInterface
 	GroupProtectedEnvironments       GroupProtectedEnvironmentsServiceInterface
@@ -425,6 +426,7 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	c.GroupIssueBoards = &GroupIssueBoardsService{client: c}
 	c.GroupIterations = &GroupIterationsService{client: c}
 	c.GroupLabels = &GroupLabelsService{client: c}
+	c.GroupMarkdownUploads = &GroupMarkdownUploadsService{client: c}
 	c.GroupMembers = &GroupMembersService{client: c}
 	c.GroupMilestones = &GroupMilestonesService{client: c}
 	c.GroupProtectedEnvironments = &GroupProtectedEnvironmentsService{client: c}
