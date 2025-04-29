@@ -2147,3 +2147,64 @@ func TestDeleteProjectWebhookHeader(t *testing.T) {
 
 	assert.Equal(t, http.StatusNoContent, req.StatusCode)
 }
+
+func TestStartHousekeepingProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/housekeeping", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusAccepted)
+	})
+
+	resp, err := client.Projects.StartHousekeepingProject(1)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
+}
+
+func TestGetRepositoryStorage(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/storage", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"project_id":1,"disk_path":"path/to/repo","repository_storage":"default"}`)
+	})
+
+	storage, _, err := client.Projects.GetRepositoryStorage(1)
+
+	assert.NoError(t, err)
+	assert.NotNil(t, storage, "Expected storage to be non-nil")
+	assert.Equal(t, "default", storage.RepositoryStorage)
+	assert.Equal(t, "path/to/repo", storage.DiskPath)
+}
+
+func TestTransferProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/transfer", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		testBody(t, r, `{"namespace":"new-namespace"}`)
+		fmt.Fprint(w, `{"id":1}`)
+	})
+
+	opt := &TransferProjectOptions{Namespace: Ptr("new-namespace")}
+	project, _, err := client.Projects.TransferProject(1, opt)
+	assert.NoError(t, err)
+	assert.Equal(t, 1, project.ID)
+}
+
+func TestDeleteProjectPushRule(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/push_rule", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	resp, err := client.Projects.DeleteProjectPushRule(1)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
