@@ -30,6 +30,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProjects(t *testing.T) {
@@ -653,7 +654,7 @@ func TestDeleteProject(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1", func(_ http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
@@ -672,7 +673,7 @@ func TestShareProjectWithGroup(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/share", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/share", func(_ http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 	})
 
@@ -746,7 +747,9 @@ func TestChangeApprovalConfiguration(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/approvals", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testBody(t, r, `{"approvals_before_merge":3}`)
+		testBodyJSON(t, r, map[string]int{
+			"approvals_before_merge": 3,
+		})
 		fmt.Fprint(w, `{
 			"approvers": [],
 			"approver_groups": [],
@@ -790,7 +793,10 @@ func TestChangeAllowedApprovers(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/approvers", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		testBody(t, r, `{"approver_group_ids":[1],"approver_ids":[2]}`)
+		testBodyJSON(t, r, map[string][]int{
+			"approver_group_ids": {1},
+			"approver_ids":       {2},
+		})
 		fmt.Fprint(w, `{
 			"approver_groups": [{"group":{"id":1}}],
 			"approvers": [{"user":{"id":2}}]
@@ -851,7 +857,12 @@ func TestForkProject(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/fork", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testBody(t, r, fmt.Sprintf(`{"branches":"main","name":"%s","namespace_id":%d,"path":"%s"}`, name, namespaceID, path))
+		testBodyJSON(t, r, struct {
+			Branches    string `json:"branches"`
+			Name        string `json:"name"`
+			NamespaceID int    `json:"namespace_id"`
+			Path        string `json:"path"`
+		}{"main", name, namespaceID, path})
 		fmt.Fprint(w, `{"id":2}`)
 	})
 
@@ -2091,7 +2102,7 @@ func TestGetRepositoryStorage(t *testing.T) {
 	storage, _, err := client.Projects.GetRepositoryStorage(1)
 
 	assert.NoError(t, err)
-	assert.NotNil(t, storage, "Expected storage to be non-nil")
+	require.NotNil(t, storage, "Expected storage to be non-nil")
 	assert.Equal(t, "default", storage.RepositoryStorage)
 	assert.Equal(t, "path/to/repo", storage.DiskPath)
 }
@@ -2102,7 +2113,9 @@ func TestTransferProject(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/transfer", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		testBody(t, r, `{"namespace":"new-namespace"}`)
+		testBodyJSON(t, r, map[string]string{
+			"namespace": "new-namespace",
+		})
 		fmt.Fprint(w, `{"id":1}`)
 	})
 

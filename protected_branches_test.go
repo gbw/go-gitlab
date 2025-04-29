@@ -223,7 +223,9 @@ func TestUpdateRepositoryBranches(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/protected_branches/master", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPatch)
-		testBody(t, r, `{"code_owner_approval_required":true}`)
+		testBodyJSON(t, r, map[string]bool{
+			"code_owner_approval_required": true,
+		})
 		fmt.Fprintf(w, `{
 			"name": "master",
 			"code_owner_approval_required": true

@@ -827,7 +827,10 @@ func TestAddSpentTime(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/issues/5/add_spent_time", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		testURL(t, r, "/api/v4/projects/1/issues/5/add_spent_time")
-		testBody(t, r, `{"duration":"1h","summary":"test"}`)
+		testBodyJSON(t, r, map[string]string{
+			"duration": "1h",
+			"summary":  "test",
+		})
 		fmt.Fprint(w, `{"human_time_estimate": null, "human_total_time_spent": "1h", "time_estimate": 0, "total_time_spent": 3600}`)
 	})
 	addSpentTimeOpt := &AddSpentTimeOptions{

@@ -189,7 +189,9 @@ func TestRevertCommit_WithOptions(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/repository/commits/b0b3a907f41409829b307a28b82fdbd552ee5a27/revert", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testBody(t, r, `{"branch":"release"}`)
+		testBodyJSON(t, r, map[string]string{
+			"branch": "release",
+		})
 		mustWriteHTTPResponse(t, w, "testdata/get_commit.json")
 	})
 
