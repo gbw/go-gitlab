@@ -116,7 +116,9 @@ func TestProjectVariablesService_CreateVariable(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/variables", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testBody(t, r, `{"description":"new variable"}`)
+		testBodyJSON(t, r, map[string]string{
+			"description": "new variable",
+		})
 		fmt.Fprintf(w, `
 			{
 				"key": "NEW_VARIABLE",
@@ -169,7 +171,9 @@ func TestProjectVariablesService_CreateVariable_MaskedAndHidden(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/variables", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testBody(t, r, `{"description":"new variable"}`)
+		testBodyJSON(t, r, map[string]string{
+			"description": "new variable",
+		})
 		fmt.Fprintf(w, `
 			{
 				"key": "NEW_VARIABLE",
@@ -220,7 +224,10 @@ func TestProjectVariablesService_UpdateVariable(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		testBody(t, r, `{"description":"updated description","filter":{"environment_scope":"prod"}}`)
+		testBodyJSON(t, r, map[string]any{
+			"description": "updated description",
+			"filter":      map[string]any{"environment_scope": "prod"},
+		})
 		fmt.Fprintf(w, `
 			{
 				"key": "NEW_VARIABLE",
@@ -275,7 +282,10 @@ func TestProjectVariablesService_UpdateVariable_MaskedAndHidden(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		testBody(t, r, `{"description":"updated description","filter":{"environment_scope":"prod"}}`)
+		testBodyJSON(t, r, map[string]any{
+			"description": "updated description",
+			"filter":      map[string]any{"environment_scope": "prod"},
+		})
 		fmt.Fprintf(w, `
 			{
 				"key": "NEW_VARIABLE",
@@ -328,7 +338,7 @@ func TestProjectVariablesService_RemoveVariable(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/variables/VARIABLE_1", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/variables/VARIABLE_1", func(_ http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
 		testParams(t, r, "filter%5Benvironment_scope%5D=prod")
 	})

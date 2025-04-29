@@ -17,8 +17,8 @@
 package gitlab
 
 import (
-	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -83,16 +83,25 @@ func testFormBody(t *testing.T, r *http.Request, key string, want string) {
 	}
 }
 
-func testBody(t *testing.T, r *http.Request, want string) {
-	buffer := new(bytes.Buffer)
-	_, err := buffer.ReadFrom(r.Body)
-	if err != nil {
-		t.Fatalf("Failed to Read Body: %v", err)
+// testBodyJSON tests that the JSON request body is what we expect. The want
+// argument is typically either a struct, a map[string]string, or a
+// map[string]any, though other types are handled as well.
+//
+// Calls t.Fatal if decoding the request body fails, failing the test
+// immediately.
+//
+// When the request body is not equal to "want", the error is reported but the
+// test is allowed to continue. You can use the return value to end the test on
+// error: returns true if the decoded body is identical to want, false
+// otherwise.
+func testBodyJSON[T any](t *testing.T, r *http.Request, want T) bool {
+	var got T
+
+	if err := json.NewDecoder(r.Body).Decode(&got); err != nil {
+		t.Fatalf("Failed to decode JSON from request body: %v", err)
 	}
 
-	if got := buffer.String(); got != want {
-		t.Errorf("Request body: %s, want %s", got, want)
-	}
+	return assert.Equal(t, want, got)
 }
 
 func testParams(t *testing.T, r *http.Request, want string) {
