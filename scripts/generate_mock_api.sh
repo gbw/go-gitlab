@@ -28,7 +28,7 @@ grep -E '^\s[A-Z][a-zA-Z0-9]+Interface interface {$' -- *.go | awk '{ print $1 $
   filename=${filename%.go}
   interface=$(echo "$line" | cut -d: -f2)
 
-  echo "//go:generate go run go.uber.org/mock/mockgen@v0.5.0 -typed -destination=${filename}_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ${interface}"
+  echo "//go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=${filename}_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ${interface}"
 done
 ) | LC_ALL=C sort >> "$api_file"
 

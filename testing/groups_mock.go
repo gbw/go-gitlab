@@ -1563,7 +1563,7 @@ func (c *MockGroupsServiceInterfaceListGroupsCall) DoAndReturn(f func(*gitlab.Li
 }
 
 // ListMembershipsForBillableGroupMember mocks base method.
-func (m *MockGroupsServiceInterface) ListMembershipsForBillableGroupMember(gid any, user int, opt *gitlab.ListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BillableUserMembership, *gitlab.Response, error) {
+func (m *MockGroupsServiceInterface) ListMembershipsForBillableGroupMember(gid any, user int, opt *gitlab.ListMembershipsForBillableGroupMemberOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BillableUserMembership, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, user, opt}
 	for _, a := range options {
@@ -1596,13 +1596,13 @@ func (c *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall) Do(f func(any, int, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BillableUserMembership, *gitlab.Response, error)) *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall {
+func (c *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall) Do(f func(any, int, *gitlab.ListMembershipsForBillableGroupMemberOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BillableUserMembership, *gitlab.Response, error)) *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall) DoAndReturn(f func(any, int, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BillableUserMembership, *gitlab.Response, error)) *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall {
+func (c *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall) DoAndReturn(f func(any, int, *gitlab.ListMembershipsForBillableGroupMemberOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BillableUserMembership, *gitlab.Response, error)) *MockGroupsServiceInterfaceListMembershipsForBillableGroupMemberCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
