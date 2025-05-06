@@ -20,7 +20,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSearchService_Users(t *testing.T) {
@@ -36,9 +36,10 @@ func TestSearchService_Users(t *testing.T) {
 		})
 
 		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 2}}
-		users, _, err := client.Search.Users("doe", opts)
+		users, resp, err := client.Search.Users("doe", opts)
+		assert.NoError(t, err)
+		assert.NotNil(t, resp)
 
-		require.NoError(t, err)
 		want := []*User{{
 			ID:        1,
 			Username:  "user1",
@@ -47,7 +48,7 @@ func TestSearchService_Users(t *testing.T) {
 			AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon",
 			WebURL:    "http://localhost/user1",
 		}}
-		require.Equal(t, want, users)
+		assert.Equal(t, want, users)
 	})
 
 	t.Run("error handling", func(t *testing.T) {
@@ -63,9 +64,9 @@ func TestSearchService_Users(t *testing.T) {
 		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 20}}
 		users, resp, err := client.Search.Users("doe", opts)
 
-		require.Error(t, err)
-		require.Nil(t, users)
-		require.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		assert.Error(t, err)
+		assert.Nil(t, users)
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 	})
 
 	t.Run("empty search term", func(t *testing.T) {
@@ -79,9 +80,10 @@ func TestSearchService_Users(t *testing.T) {
 		})
 
 		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 20}}
-		users, _, err := client.Search.Users("", opts)
-		require.NoError(t, err)
-		require.Empty(t, users)
+		users, resp, err := client.Search.Users("", opts)
+		assert.NoError(t, err)
+		assert.NotNil(t, resp)
+		assert.Empty(t, users)
 	})
 }
 
@@ -95,9 +97,9 @@ func TestSearchService_UsersByGroup(t *testing.T) {
 	})
 
 	opts := &SearchOptions{ListOptions: ListOptions{PerPage: 2}}
-	users, _, err := client.Search.UsersByGroup("3", "doe", opts)
-
-	require.NoError(t, err)
+	users, resp, err := client.Search.UsersByGroup("3", "doe", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*User{{
 		ID:        1,
@@ -107,7 +109,7 @@ func TestSearchService_UsersByGroup(t *testing.T) {
 		AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon",
 		WebURL:    "http://localhost/user1",
 	}}
-	require.Equal(t, want, users)
+	assert.Equal(t, want, users)
 }
 
 func TestSearchService_UsersByProject(t *testing.T) {
@@ -120,9 +122,9 @@ func TestSearchService_UsersByProject(t *testing.T) {
 	})
 
 	opts := &SearchOptions{ListOptions: ListOptions{PerPage: 2}}
-	users, _, err := client.Search.UsersByProject("6", "doe", opts)
-
-	require.NoError(t, err)
+	users, resp, err := client.Search.UsersByProject("6", "doe", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*User{{
 		ID:        1,
@@ -132,5 +134,5 @@ func TestSearchService_UsersByProject(t *testing.T) {
 		AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon",
 		WebURL:    "http://localhost/user1",
 	}}
-	require.Equal(t, want, users)
+	assert.Equal(t, want, users)
 }
