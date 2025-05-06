@@ -35,7 +35,6 @@ type (
 		MilestonesByGroup(gid any, query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Milestone, *Response, error)
 		MilestonesByProject(pid any, query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Milestone, *Response, error)
 		SnippetTitles(query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Snippet, *Response, error)
-		SnippetBlobs(query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Snippet, *Response, error)
 		NotesByProject(pid any, query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Note, *Response, error)
 		WikiBlobs(query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Wiki, *Response, error)
 		WikiBlobsByGroup(gid any, query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Wiki, *Response, error)
@@ -192,17 +191,6 @@ func (s *SearchService) MilestonesByProject(pid any, query string, opt *SearchOp
 func (s *SearchService) SnippetTitles(query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Snippet, *Response, error) {
 	var ss []*Snippet
 	resp, err := s.search("snippet_titles", query, &ss, opt, options...)
-	return ss, resp, err
-}
-
-// SnippetBlobs searches the expression within snippet blobs
-// Deprecated: no references to this in the documentation
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/search/#scope-snippet_blobs
-func (s *SearchService) SnippetBlobs(query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Snippet, *Response, error) {
-	var ss []*Snippet
-	resp, err := s.search("snippet_blobs", query, &ss, opt, options...)
 	return ss, resp, err
 }
 

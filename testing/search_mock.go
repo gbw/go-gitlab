@@ -850,51 +850,6 @@ func (c *MockSearchServiceInterfaceProjectsByGroupCall) DoAndReturn(f func(any, 
 	return c
 }
 
-// SnippetBlobs mocks base method.
-func (m *MockSearchServiceInterface) SnippetBlobs(query string, opt *gitlab.SearchOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Snippet, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{query, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "SnippetBlobs", varargs...)
-	ret0, _ := ret[0].([]*gitlab.Snippet)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// SnippetBlobs indicates an expected call of SnippetBlobs.
-func (mr *MockSearchServiceInterfaceMockRecorder) SnippetBlobs(query, opt any, options ...any) *MockSearchServiceInterfaceSnippetBlobsCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{query, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SnippetBlobs", reflect.TypeOf((*MockSearchServiceInterface)(nil).SnippetBlobs), varargs...)
-	return &MockSearchServiceInterfaceSnippetBlobsCall{Call: call}
-}
-
-// MockSearchServiceInterfaceSnippetBlobsCall wrap *gomock.Call
-type MockSearchServiceInterfaceSnippetBlobsCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockSearchServiceInterfaceSnippetBlobsCall) Return(arg0 []*gitlab.Snippet, arg1 *gitlab.Response, arg2 error) *MockSearchServiceInterfaceSnippetBlobsCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockSearchServiceInterfaceSnippetBlobsCall) Do(f func(string, *gitlab.SearchOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Snippet, *gitlab.Response, error)) *MockSearchServiceInterfaceSnippetBlobsCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSearchServiceInterfaceSnippetBlobsCall) DoAndReturn(f func(string, *gitlab.SearchOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Snippet, *gitlab.Response, error)) *MockSearchServiceInterfaceSnippetBlobsCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // SnippetTitles mocks base method.
 func (m *MockSearchServiceInterface) SnippetTitles(query string, opt *gitlab.SearchOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Snippet, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
