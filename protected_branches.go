@@ -29,7 +29,6 @@ type (
 		ProtectRepositoryBranches(pid any, opt *ProtectRepositoryBranchesOptions, options ...RequestOptionFunc) (*ProtectedBranch, *Response, error)
 		UnprotectRepositoryBranches(pid any, branch string, options ...RequestOptionFunc) (*Response, error)
 		UpdateProtectedBranch(pid any, branch string, opt *UpdateProtectedBranchOptions, options ...RequestOptionFunc) (*ProtectedBranch, *Response, error)
-		RequireCodeOwnerApprovals(pid any, branch string, opt *RequireCodeOwnerApprovalsOptions, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// ProtectedBranchesService handles communication with the protected branch
@@ -245,27 +244,4 @@ func (s *ProtectedBranchesService) UpdateProtectedBranch(pid any, branch string,
 	}
 
 	return p, resp, nil
-}
-
-// RequireCodeOwnerApprovalsOptions represents the available
-// RequireCodeOwnerApprovals() options.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/protected_branches/#update-a-protected-branch
-type RequireCodeOwnerApprovalsOptions struct {
-	CodeOwnerApprovalRequired *bool `url:"code_owner_approval_required,omitempty" json:"code_owner_approval_required,omitempty"`
-}
-
-// RequireCodeOwnerApprovals updates the code owner approval option.
-//
-// Deprecated: Use UpdateProtectedBranch() instead.
-//
-// Gitlab API docs:
-// https://docs.gitlab.com/api/protected_branches/#update-a-protected-branch
-func (s *ProtectedBranchesService) RequireCodeOwnerApprovals(pid any, branch string, opt *RequireCodeOwnerApprovalsOptions, options ...RequestOptionFunc) (*Response, error) {
-	updateOptions := &UpdateProtectedBranchOptions{
-		CodeOwnerApprovalRequired: opt.CodeOwnerApprovalRequired,
-	}
-	_, req, err := s.UpdateProtectedBranch(pid, branch, updateOptions, options...)
-	return req, err
 }
