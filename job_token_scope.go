@@ -46,9 +46,6 @@ var _ JobTokenScopeServiceInterface = (*JobTokenScopeService)(nil)
 // GitLab API docs: https://docs.gitlab.com/api/project_job_token_scopes/
 type JobTokenAccessSettings struct {
 	InboundEnabled bool `json:"inbound_enabled"`
-
-	// Deprecated: will be removed in GitLab 18.0
-	OutboundEnabled bool `json:"outbound_enabled"`
 }
 
 // GetProjectJobTokenAccessSettings fetch the CI/CD job token access settings (job token scope) of a project.
