@@ -28,7 +28,6 @@ type (
 		GetPipelineTrigger(pid any, trigger int, options ...RequestOptionFunc) (*PipelineTrigger, *Response, error)
 		AddPipelineTrigger(pid any, opt *AddPipelineTriggerOptions, options ...RequestOptionFunc) (*PipelineTrigger, *Response, error)
 		EditPipelineTrigger(pid any, trigger int, opt *EditPipelineTriggerOptions, options ...RequestOptionFunc) (*PipelineTrigger, *Response, error)
-		TakeOwnershipOfPipelineTrigger(pid any, trigger int, options ...RequestOptionFunc) (*PipelineTrigger, *Response, error)
 		DeletePipelineTrigger(pid any, trigger int, options ...RequestOptionFunc) (*Response, error)
 		RunPipelineTrigger(pid any, opt *RunPipelineTriggerOptions, options ...RequestOptionFunc) (*Pipeline, *Response, error)
 	}
@@ -168,33 +167,6 @@ func (s *PipelineTriggersService) EditPipelineTrigger(pid any, trigger int, opt 
 	u := fmt.Sprintf("projects/%s/triggers/%d", PathEscape(project), trigger)
 
 	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	pt := new(PipelineTrigger)
-	resp, err := s.client.Do(req, pt)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return pt, resp, nil
-}
-
-// TakeOwnershipOfPipelineTrigger sets the owner of the specified
-// pipeline trigger to the user issuing the request.
-// Deprecated: endpoint does not appear to exist anymore
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/pipeline_triggers/#take-ownership-of-a-project-trigger
-func (s *PipelineTriggersService) TakeOwnershipOfPipelineTrigger(pid any, trigger int, options ...RequestOptionFunc) (*PipelineTrigger, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/triggers/%d/take_ownership", PathEscape(project), trigger)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
 	if err != nil {
 		return nil, nil, err
 	}
