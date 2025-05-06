@@ -19,9 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListServices(t *testing.T) {
@@ -34,13 +35,10 @@ func TestListServices(t *testing.T) {
 	})
 	want := []*Service{{ID: 1}, {ID: 2}}
 
-	services, _, err := client.Services.ListServices(1)
-	if err != nil {
-		t.Fatalf("Services.ListServices returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, services) {
-		t.Errorf("Services.ListServices returned %+v, want %+v", services, want)
-	}
+	services, resp, err := client.Services.ListServices(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, services)
 }
 
 func TestCustomIssueTrackerService(t *testing.T) {
@@ -73,13 +71,10 @@ func TestCustomIssueTrackerService(t *testing.T) {
 		},
 	}
 
-	service, _, err := client.Services.GetCustomIssueTrackerService(1)
-	if err != nil {
-		t.Fatalf("Services.GetCustomIssueTrackerService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetCustomIssueTrackerService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetCustomIssueTrackerService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetCustomIssueTrackerService(t *testing.T) {
@@ -97,10 +92,9 @@ func TestSetCustomIssueTrackerService(t *testing.T) {
 		ProjectURL:  Ptr("3"),
 	}
 
-	_, _, err := client.Services.SetCustomIssueTrackerService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetCustomIssueTrackerService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetCustomIssueTrackerService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteCustomIssueTrackerService(t *testing.T) {
@@ -111,10 +105,9 @@ func TestDeleteCustomIssueTrackerService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteCustomIssueTrackerService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteCustomIssueTrackerService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteCustomIssueTrackerService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetDataDogService(t *testing.T) {
@@ -148,13 +141,10 @@ func TestGetDataDogService(t *testing.T) {
 		},
 	}
 
-	service, _, err := client.Services.GetDataDogService(1)
-	if err != nil {
-		t.Fatalf("Services.GetDataDogService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetDataDogService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetDataDogService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetDataDogService(t *testing.T) {
@@ -176,10 +166,9 @@ func TestSetDataDogService(t *testing.T) {
 		ArchiveTraceEvents: Ptr(false),
 	}
 
-	_, _, err := client.Services.SetDataDogService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetDataDogService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetDataDogService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteDataDogService(t *testing.T) {
@@ -190,10 +179,9 @@ func TestDeleteDataDogService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteDataDogService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteDataDogService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteDataDogService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetDiscordService(t *testing.T) {
@@ -206,13 +194,10 @@ func TestGetDiscordService(t *testing.T) {
 	})
 	want := &DiscordService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetDiscordService(1)
-	if err != nil {
-		t.Fatalf("Services.GetDiscordService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetDiscordService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetDiscordService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetDiscordService(t *testing.T) {
@@ -228,10 +213,9 @@ func TestSetDiscordService(t *testing.T) {
 		WebHook: Ptr("webhook_uri"),
 	}
 
-	_, _, err := client.Services.SetDiscordService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetDiscordService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetDiscordService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteDiscordService(t *testing.T) {
@@ -242,10 +226,9 @@ func TestDeleteDiscordService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteDiscordService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteDiscordService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteDiscordService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetDroneCIService(t *testing.T) {
@@ -258,13 +241,10 @@ func TestGetDroneCIService(t *testing.T) {
 	})
 	want := &DroneCIService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetDroneCIService(1)
-	if err != nil {
-		t.Fatalf("Services.GetDroneCIService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetDroneCIService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetDroneCIService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetDroneCIService(t *testing.T) {
@@ -278,10 +258,9 @@ func TestSetDroneCIService(t *testing.T) {
 
 	opt := &SetDroneCIServiceOptions{Ptr("token"), Ptr("drone-url"), Ptr(true), nil, nil, nil}
 
-	_, _, err := client.Services.SetDroneCIService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetDroneCIService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetDroneCIService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteDroneCIService(t *testing.T) {
@@ -292,10 +271,9 @@ func TestDeleteDroneCIService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteDroneCIService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteDroneCIService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteDroneCIService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetEmailsOnPushService(t *testing.T) {
@@ -308,13 +286,10 @@ func TestGetEmailsOnPushService(t *testing.T) {
 	})
 	want := &EmailsOnPushService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetEmailsOnPushService(1)
-	if err != nil {
-		t.Fatalf("Services.GetEmailsOnPushService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetEmailsOnPushService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetEmailsOnPushService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetEmailsOnPushService(t *testing.T) {
@@ -328,10 +303,9 @@ func TestSetEmailsOnPushService(t *testing.T) {
 
 	opt := &SetEmailsOnPushServiceOptions{Ptr("t"), Ptr(true), Ptr(true), Ptr(true), Ptr(true), Ptr("t")}
 
-	_, _, err := client.Services.SetEmailsOnPushService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetEmailsOnPushService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetEmailsOnPushService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteEmailsOnPushService(t *testing.T) {
@@ -342,10 +316,9 @@ func TestDeleteEmailsOnPushService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteEmailsOnPushService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteEmailsOnPushService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteEmailsOnPushService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetHarborService(t *testing.T) {
@@ -358,13 +331,10 @@ func TestGetHarborService(t *testing.T) {
 	})
 	want := &HarborService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetHarborService(1)
-	if err != nil {
-		t.Fatalf("Services.GetHarborService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetHarborService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetHarborService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetHarborService(t *testing.T) {
@@ -384,10 +354,9 @@ func TestSetHarborService(t *testing.T) {
 		UseInheritedSettings: Ptr(false),
 	}
 
-	_, _, err := client.Services.SetHarborService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetHarborService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetHarborService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteHarborService(t *testing.T) {
@@ -398,10 +367,9 @@ func TestDeleteHarborService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteHarborService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteHarborService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteHarborService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetSlackApplication(t *testing.T) {
@@ -414,13 +382,10 @@ func TestGetSlackApplication(t *testing.T) {
 	})
 	want := &SlackApplication{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetSlackApplication(1)
-	if err != nil {
-		t.Fatalf("Services.GetSlackApplication returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetSlackApplication returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetSlackApplication(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetSlackApplication(t *testing.T) {
@@ -434,10 +399,9 @@ func TestSetSlackApplication(t *testing.T) {
 
 	opt := &SetSlackApplicationOptions{Channel: Ptr("#channel1"), NoteEvents: Ptr(true), AlertEvents: Ptr(true)}
 
-	_, _, err := client.Services.SetSlackApplication(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetSlackApplication returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetSlackApplication(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDisableSlackApplication(t *testing.T) {
@@ -448,10 +412,9 @@ func TestDisableSlackApplication(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DisableSlackApplication(1)
-	if err != nil {
-		t.Fatalf("Services.DisableSlackApplication returns an error: %v", err)
-	}
+	resp, err := client.Services.DisableSlackApplication(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetJiraService(t *testing.T) {
@@ -515,14 +478,10 @@ func TestGetJiraService(t *testing.T) {
 	}
 
 	for testcase := range want {
-		service, _, err := client.Services.GetJiraService(testcase)
-		if err != nil {
-			t.Fatalf("Services.GetJiraService returns an error: %v", err)
-		}
-
-		if !reflect.DeepEqual(want[testcase], service) {
-			t.Errorf("Services.GetJiraService returned %+v, want %+v", service, want[testcase])
-		}
+		service, resp, err := client.Services.GetJiraService(testcase)
+		assert.NoError(t, err)
+		assert.NotNil(t, resp)
+		assert.Equal(t, want[testcase], service)
 	}
 }
 
@@ -538,7 +497,6 @@ func TestSetJiraService(t *testing.T) {
 	opt := &SetJiraServiceOptions{
 		URL:                          Ptr("asd"),
 		APIURL:                       Ptr("asd"),
-		ProjectKey:                   Ptr("as"),
 		Username:                     Ptr("aas"),
 		Password:                     Ptr("asd"),
 		Active:                       Ptr(true),
@@ -553,10 +511,9 @@ func TestSetJiraService(t *testing.T) {
 		UseInheritedSettings:         Ptr(true),
 	}
 
-	_, _, err := client.Services.SetJiraService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetJiraService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetJiraService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestSetJiraServiceProjecKeys(t *testing.T) {
@@ -586,10 +543,9 @@ func TestSetJiraServiceProjecKeys(t *testing.T) {
 		UseInheritedSettings:         Ptr(true),
 	}
 
-	_, _, err := client.Services.SetJiraService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetJiraService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetJiraService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestSetJiraServiceAuthTypeBasicAuth(t *testing.T) {
@@ -608,10 +564,9 @@ func TestSetJiraServiceAuthTypeBasicAuth(t *testing.T) {
 		JiraAuthType: Ptr(0),
 	}
 
-	_, _, err := client.Services.SetJiraService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetJiraService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetJiraService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestSetJiraServiceAuthTypeTokenAuth(t *testing.T) {
@@ -629,10 +584,9 @@ func TestSetJiraServiceAuthTypeTokenAuth(t *testing.T) {
 		JiraAuthType: Ptr(1),
 	}
 
-	_, _, err := client.Services.SetJiraService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetJiraService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetJiraService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteJiraService(t *testing.T) {
@@ -643,10 +597,9 @@ func TestDeleteJiraService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteJiraService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteJiraService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteJiraService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetMattermostService(t *testing.T) {
@@ -659,13 +612,10 @@ func TestGetMattermostService(t *testing.T) {
 	})
 	want := &MattermostService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetMattermostService(1)
-	if err != nil {
-		t.Fatalf("Services.GetMattermostService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetMattermostService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetMattermostService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetMattermostService(t *testing.T) {
@@ -683,10 +633,9 @@ func TestSetMattermostService(t *testing.T) {
 		Channel:  Ptr("#development"),
 	}
 
-	_, _, err := client.Services.SetMattermostService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetMasttermostService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetMattermostService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteMattermostService(t *testing.T) {
@@ -697,10 +646,9 @@ func TestDeleteMattermostService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteMattermostService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteMattermostService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteMattermostService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetMattermostSlashCommandsService(t *testing.T) {
@@ -713,13 +661,10 @@ func TestGetMattermostSlashCommandsService(t *testing.T) {
 	})
 	want := &MattermostSlashCommandsService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetMattermostSlashCommandsService(1)
-	if err != nil {
-		t.Fatalf("Services.mattermost-slash-commands returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.mattermost-slash-commands returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetMattermostSlashCommandsService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetMattermostSlashCommandsService(t *testing.T) {
@@ -736,10 +681,9 @@ func TestSetMattermostSlashCommandsService(t *testing.T) {
 		Username: Ptr("username"),
 	}
 
-	_, _, err := client.Services.SetMattermostSlashCommandsService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetMattermostSlashCommandsService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetMattermostSlashCommandsService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteMattermostSlashCommandsService(t *testing.T) {
@@ -750,10 +694,9 @@ func TestDeleteMattermostSlashCommandsService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteMattermostSlashCommandsService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteMattermostSlashCommandsService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteMattermostSlashCommandsService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetPipelinesEmailService(t *testing.T) {
@@ -766,13 +709,10 @@ func TestGetPipelinesEmailService(t *testing.T) {
 	})
 	want := &PipelinesEmailService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetPipelinesEmailService(1)
-	if err != nil {
-		t.Fatalf("Services.GetPipelinesEmailService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetPipelinesEmailService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetPipelinesEmailService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetPipelinesEmailService(t *testing.T) {
@@ -793,10 +733,9 @@ func TestSetPipelinesEmailService(t *testing.T) {
 		PipelineEvents:            nil,
 	}
 
-	_, _, err := client.Services.SetPipelinesEmailService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetPipelinesEmailService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetPipelinesEmailService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeletePipelinesEmailService(t *testing.T) {
@@ -807,60 +746,9 @@ func TestDeletePipelinesEmailService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeletePipelinesEmailService(1)
-	if err != nil {
-		t.Fatalf("Services.DeletePipelinesEmailService returns an error: %v", err)
-	}
-}
-
-func TestGetPrometheusService(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/services/prometheus", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `{"id":1}`)
-	})
-	want := &PrometheusService{Service: Service{ID: 1}}
-
-	service, _, err := client.Services.GetPrometheusService(1)
-	if err != nil {
-		t.Fatalf("Services.GetPrometheusService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetPrometheusService returned %+v, want %+v", service, want)
-	}
-}
-
-func TestSetPrometheusService(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/services/prometheus", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		fmt.Fprint(w, `{"id":1, "properties": {}}`)
-	})
-
-	opt := &SetPrometheusServiceOptions{Ptr("t"), Ptr("u"), Ptr("a")}
-
-	_, _, err := client.Services.SetPrometheusService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetDroneCIService returns an error: %v", err)
-	}
-}
-
-func TestDeletePrometheusService(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/services/prometheus", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-	})
-
-	_, err := client.Services.DeletePrometheusService(1)
-	if err != nil {
-		t.Fatalf("Services.DeletePrometheusService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeletePipelinesEmailService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetRedmineService(t *testing.T) {
@@ -873,13 +761,10 @@ func TestGetRedmineService(t *testing.T) {
 	})
 	want := &RedmineService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetRedmineService(1)
-	if err != nil {
-		t.Fatalf("Services.GetRedmineService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetRedmineService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetRedmineService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetRedmineService(t *testing.T) {
@@ -893,10 +778,9 @@ func TestSetRedmineService(t *testing.T) {
 
 	opt := &SetRedmineServiceOptions{Ptr("t"), Ptr("u"), Ptr("a"), Ptr(false)}
 
-	_, _, err := client.Services.SetRedmineService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetRedmineService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetRedmineService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteRedmineService(t *testing.T) {
@@ -907,10 +791,9 @@ func TestDeleteRedmineService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteRedmineService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteRedmineService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteRedmineService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetSlackService(t *testing.T) {
@@ -923,13 +806,10 @@ func TestGetSlackService(t *testing.T) {
 	})
 	want := &SlackService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetSlackService(1)
-	if err != nil {
-		t.Fatalf("Services.GetSlackService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetSlackService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetSlackService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetSlackService(t *testing.T) {
@@ -947,10 +827,9 @@ func TestSetSlackService(t *testing.T) {
 		Channel:  Ptr("#development"),
 	}
 
-	_, _, err := client.Services.SetSlackService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetSlackService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetSlackService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteSlackService(t *testing.T) {
@@ -961,10 +840,9 @@ func TestDeleteSlackService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteSlackService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteSlackService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteSlackService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetSlackSlashCommandsService(t *testing.T) {
@@ -977,13 +855,10 @@ func TestGetSlackSlashCommandsService(t *testing.T) {
 	})
 	want := &SlackSlashCommandsService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetSlackSlashCommandsService(1)
-	if err != nil {
-		t.Fatalf("Services.GetSlackSlashCommandsService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetSlackSlashCommandsService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetSlackSlashCommandsService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetSlackSlashCommandsService(t *testing.T) {
@@ -999,10 +874,9 @@ func TestSetSlackSlashCommandsService(t *testing.T) {
 		Token: Ptr("token"),
 	}
 
-	_, _, err := client.Services.SetSlackSlashCommandsService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetSlackSlashCommandsService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetSlackSlashCommandsService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteSlackSlashCommandsService(t *testing.T) {
@@ -1013,10 +887,9 @@ func TestDeleteSlackSlashCommandsService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteSlackSlashCommandsService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteSlackSlashCommandsService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteSlackSlashCommandsService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetTelegramService(t *testing.T) {
@@ -1090,13 +963,10 @@ func TestGetTelegramService(t *testing.T) {
 		},
 	}
 
-	service, _, err := client.Services.GetTelegramService(1)
-	if err != nil {
-		t.Fatalf("Services.GetTelegramService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetTelegramService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetTelegramService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetTelegramService(t *testing.T) {
@@ -1124,10 +994,9 @@ func TestSetTelegramService(t *testing.T) {
 		WikiPageEvents:            Ptr(true),
 	}
 
-	_, _, err := client.Services.SetTelegramService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetTelegramService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetTelegramService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteTelegramService(t *testing.T) {
@@ -1138,10 +1007,9 @@ func TestDeleteTelegramService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteTelegramService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteTelegramService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteTelegramService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetYouTrackService(t *testing.T) {
@@ -1154,13 +1022,10 @@ func TestGetYouTrackService(t *testing.T) {
 	})
 	want := &YouTrackService{Service: Service{ID: 1}}
 
-	service, _, err := client.Services.GetYouTrackService(1)
-	if err != nil {
-		t.Fatalf("Services.GetYouTrackService returns an error: %v", err)
-	}
-	if !reflect.DeepEqual(want, service) {
-		t.Errorf("Services.GetYouTrackService returned %+v, want %+v", service, want)
-	}
+	service, resp, err := client.Services.GetYouTrackService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
 }
 
 func TestSetYouTrackService(t *testing.T) {
@@ -1179,10 +1044,9 @@ func TestSetYouTrackService(t *testing.T) {
 		PushEvents:  Ptr(true),
 	}
 
-	_, _, err := client.Services.SetYouTrackService(1, opt)
-	if err != nil {
-		t.Fatalf("Services.SetYouTrackService returns an error: %v", err)
-	}
+	_, resp, err := client.Services.SetYouTrackService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteYouTrackService(t *testing.T) {
@@ -1193,8 +1057,7 @@ func TestDeleteYouTrackService(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Services.DeleteYouTrackService(1)
-	if err != nil {
-		t.Fatalf("Services.DeleteYouTrackService returns an error: %v", err)
-	}
+	resp, err := client.Services.DeleteYouTrackService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }

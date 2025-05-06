@@ -304,50 +304,6 @@ func (c *MockServicesServiceInterfaceDeleteExternalWikiServiceCall) DoAndReturn(
 	return c
 }
 
-// DeleteGitLabCIService mocks base method.
-func (m *MockServicesServiceInterface) DeleteGitLabCIService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DeleteGitLabCIService", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeleteGitLabCIService indicates an expected call of DeleteGitLabCIService.
-func (mr *MockServicesServiceInterfaceMockRecorder) DeleteGitLabCIService(pid any, options ...any) *MockServicesServiceInterfaceDeleteGitLabCIServiceCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteGitLabCIService", reflect.TypeOf((*MockServicesServiceInterface)(nil).DeleteGitLabCIService), varargs...)
-	return &MockServicesServiceInterfaceDeleteGitLabCIServiceCall{Call: call}
-}
-
-// MockServicesServiceInterfaceDeleteGitLabCIServiceCall wrap *gomock.Call
-type MockServicesServiceInterfaceDeleteGitLabCIServiceCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockServicesServiceInterfaceDeleteGitLabCIServiceCall) Return(arg0 *gitlab.Response, arg1 error) *MockServicesServiceInterfaceDeleteGitLabCIServiceCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockServicesServiceInterfaceDeleteGitLabCIServiceCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeleteGitLabCIServiceCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockServicesServiceInterfaceDeleteGitLabCIServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeleteGitLabCIServiceCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // DeleteGithubService mocks base method.
 func (m *MockServicesServiceInterface) DeleteGithubService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -432,50 +388,6 @@ func (c *MockServicesServiceInterfaceDeleteHarborServiceCall) Do(f func(any, ...
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockServicesServiceInterfaceDeleteHarborServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeleteHarborServiceCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
-// DeleteHipChatService mocks base method.
-func (m *MockServicesServiceInterface) DeleteHipChatService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DeleteHipChatService", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeleteHipChatService indicates an expected call of DeleteHipChatService.
-func (mr *MockServicesServiceInterfaceMockRecorder) DeleteHipChatService(pid any, options ...any) *MockServicesServiceInterfaceDeleteHipChatServiceCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteHipChatService", reflect.TypeOf((*MockServicesServiceInterface)(nil).DeleteHipChatService), varargs...)
-	return &MockServicesServiceInterfaceDeleteHipChatServiceCall{Call: call}
-}
-
-// MockServicesServiceInterfaceDeleteHipChatServiceCall wrap *gomock.Call
-type MockServicesServiceInterfaceDeleteHipChatServiceCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockServicesServiceInterfaceDeleteHipChatServiceCall) Return(arg0 *gitlab.Response, arg1 error) *MockServicesServiceInterfaceDeleteHipChatServiceCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockServicesServiceInterfaceDeleteHipChatServiceCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeleteHipChatServiceCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockServicesServiceInterfaceDeleteHipChatServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeleteHipChatServiceCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -740,50 +652,6 @@ func (c *MockServicesServiceInterfaceDeletePipelinesEmailServiceCall) Do(f func(
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockServicesServiceInterfaceDeletePipelinesEmailServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeletePipelinesEmailServiceCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
-// DeletePrometheusService mocks base method.
-func (m *MockServicesServiceInterface) DeletePrometheusService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DeletePrometheusService", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeletePrometheusService indicates an expected call of DeletePrometheusService.
-func (mr *MockServicesServiceInterfaceMockRecorder) DeletePrometheusService(pid any, options ...any) *MockServicesServiceInterfaceDeletePrometheusServiceCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePrometheusService", reflect.TypeOf((*MockServicesServiceInterface)(nil).DeletePrometheusService), varargs...)
-	return &MockServicesServiceInterfaceDeletePrometheusServiceCall{Call: call}
-}
-
-// MockServicesServiceInterfaceDeletePrometheusServiceCall wrap *gomock.Call
-type MockServicesServiceInterfaceDeletePrometheusServiceCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockServicesServiceInterfaceDeletePrometheusServiceCall) Return(arg0 *gitlab.Response, arg1 error) *MockServicesServiceInterfaceDeletePrometheusServiceCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockServicesServiceInterfaceDeletePrometheusServiceCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeletePrometheusServiceCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockServicesServiceInterfaceDeletePrometheusServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeletePrometheusServiceCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1682,51 +1550,6 @@ func (c *MockServicesServiceInterfaceGetPipelinesEmailServiceCall) DoAndReturn(f
 	return c
 }
 
-// GetPrometheusService mocks base method.
-func (m *MockServicesServiceInterface) GetPrometheusService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.PrometheusService, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetPrometheusService", varargs...)
-	ret0, _ := ret[0].(*gitlab.PrometheusService)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// GetPrometheusService indicates an expected call of GetPrometheusService.
-func (mr *MockServicesServiceInterfaceMockRecorder) GetPrometheusService(pid any, options ...any) *MockServicesServiceInterfaceGetPrometheusServiceCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPrometheusService", reflect.TypeOf((*MockServicesServiceInterface)(nil).GetPrometheusService), varargs...)
-	return &MockServicesServiceInterfaceGetPrometheusServiceCall{Call: call}
-}
-
-// MockServicesServiceInterfaceGetPrometheusServiceCall wrap *gomock.Call
-type MockServicesServiceInterfaceGetPrometheusServiceCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockServicesServiceInterfaceGetPrometheusServiceCall) Return(arg0 *gitlab.PrometheusService, arg1 *gitlab.Response, arg2 error) *MockServicesServiceInterfaceGetPrometheusServiceCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockServicesServiceInterfaceGetPrometheusServiceCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.PrometheusService, *gitlab.Response, error)) *MockServicesServiceInterfaceGetPrometheusServiceCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockServicesServiceInterfaceGetPrometheusServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.PrometheusService, *gitlab.Response, error)) *MockServicesServiceInterfaceGetPrometheusServiceCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // GetRedmineService mocks base method.
 func (m *MockServicesServiceInterface) GetRedmineService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.RedmineService, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -2312,50 +2135,6 @@ func (c *MockServicesServiceInterfaceSetExternalWikiServiceCall) DoAndReturn(f f
 	return c
 }
 
-// SetGitLabCIService mocks base method.
-func (m *MockServicesServiceInterface) SetGitLabCIService(pid any, opt *gitlab.SetGitLabCIServiceOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "SetGitLabCIService", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SetGitLabCIService indicates an expected call of SetGitLabCIService.
-func (mr *MockServicesServiceInterfaceMockRecorder) SetGitLabCIService(pid, opt any, options ...any) *MockServicesServiceInterfaceSetGitLabCIServiceCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGitLabCIService", reflect.TypeOf((*MockServicesServiceInterface)(nil).SetGitLabCIService), varargs...)
-	return &MockServicesServiceInterfaceSetGitLabCIServiceCall{Call: call}
-}
-
-// MockServicesServiceInterfaceSetGitLabCIServiceCall wrap *gomock.Call
-type MockServicesServiceInterfaceSetGitLabCIServiceCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockServicesServiceInterfaceSetGitLabCIServiceCall) Return(arg0 *gitlab.Response, arg1 error) *MockServicesServiceInterfaceSetGitLabCIServiceCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockServicesServiceInterfaceSetGitLabCIServiceCall) Do(f func(any, *gitlab.SetGitLabCIServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceSetGitLabCIServiceCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockServicesServiceInterfaceSetGitLabCIServiceCall) DoAndReturn(f func(any, *gitlab.SetGitLabCIServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceSetGitLabCIServiceCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // SetGithubService mocks base method.
 func (m *MockServicesServiceInterface) SetGithubService(pid any, opt *gitlab.SetGithubServiceOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GithubService, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -2442,50 +2221,6 @@ func (c *MockServicesServiceInterfaceSetHarborServiceCall) Do(f func(any, *gitla
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockServicesServiceInterfaceSetHarborServiceCall) DoAndReturn(f func(any, *gitlab.SetHarborServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.HarborService, *gitlab.Response, error)) *MockServicesServiceInterfaceSetHarborServiceCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
-// SetHipChatService mocks base method.
-func (m *MockServicesServiceInterface) SetHipChatService(pid any, opt *gitlab.SetHipChatServiceOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "SetHipChatService", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SetHipChatService indicates an expected call of SetHipChatService.
-func (mr *MockServicesServiceInterfaceMockRecorder) SetHipChatService(pid, opt any, options ...any) *MockServicesServiceInterfaceSetHipChatServiceCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHipChatService", reflect.TypeOf((*MockServicesServiceInterface)(nil).SetHipChatService), varargs...)
-	return &MockServicesServiceInterfaceSetHipChatServiceCall{Call: call}
-}
-
-// MockServicesServiceInterfaceSetHipChatServiceCall wrap *gomock.Call
-type MockServicesServiceInterfaceSetHipChatServiceCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockServicesServiceInterfaceSetHipChatServiceCall) Return(arg0 *gitlab.Response, arg1 error) *MockServicesServiceInterfaceSetHipChatServiceCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockServicesServiceInterfaceSetHipChatServiceCall) Do(f func(any, *gitlab.SetHipChatServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceSetHipChatServiceCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockServicesServiceInterfaceSetHipChatServiceCall) DoAndReturn(f func(any, *gitlab.SetHipChatServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceSetHipChatServiceCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2756,51 +2491,6 @@ func (c *MockServicesServiceInterfaceSetPipelinesEmailServiceCall) Do(f func(any
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockServicesServiceInterfaceSetPipelinesEmailServiceCall) DoAndReturn(f func(any, *gitlab.SetPipelinesEmailServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelinesEmailService, *gitlab.Response, error)) *MockServicesServiceInterfaceSetPipelinesEmailServiceCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
-// SetPrometheusService mocks base method.
-func (m *MockServicesServiceInterface) SetPrometheusService(pid any, opt *gitlab.SetPrometheusServiceOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PrometheusService, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "SetPrometheusService", varargs...)
-	ret0, _ := ret[0].(*gitlab.PrometheusService)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// SetPrometheusService indicates an expected call of SetPrometheusService.
-func (mr *MockServicesServiceInterfaceMockRecorder) SetPrometheusService(pid, opt any, options ...any) *MockServicesServiceInterfaceSetPrometheusServiceCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetPrometheusService", reflect.TypeOf((*MockServicesServiceInterface)(nil).SetPrometheusService), varargs...)
-	return &MockServicesServiceInterfaceSetPrometheusServiceCall{Call: call}
-}
-
-// MockServicesServiceInterfaceSetPrometheusServiceCall wrap *gomock.Call
-type MockServicesServiceInterfaceSetPrometheusServiceCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockServicesServiceInterfaceSetPrometheusServiceCall) Return(arg0 *gitlab.PrometheusService, arg1 *gitlab.Response, arg2 error) *MockServicesServiceInterfaceSetPrometheusServiceCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockServicesServiceInterfaceSetPrometheusServiceCall) Do(f func(any, *gitlab.SetPrometheusServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.PrometheusService, *gitlab.Response, error)) *MockServicesServiceInterfaceSetPrometheusServiceCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockServicesServiceInterfaceSetPrometheusServiceCall) DoAndReturn(f func(any, *gitlab.SetPrometheusServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.PrometheusService, *gitlab.Response, error)) *MockServicesServiceInterfaceSetPrometheusServiceCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
