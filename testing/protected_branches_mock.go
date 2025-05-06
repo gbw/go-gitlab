@@ -175,50 +175,6 @@ func (c *MockProtectedBranchesServiceInterfaceProtectRepositoryBranchesCall) DoA
 	return c
 }
 
-// RequireCodeOwnerApprovals mocks base method.
-func (m *MockProtectedBranchesServiceInterface) RequireCodeOwnerApprovals(pid any, branch string, opt *gitlab.RequireCodeOwnerApprovalsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, branch, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "RequireCodeOwnerApprovals", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// RequireCodeOwnerApprovals indicates an expected call of RequireCodeOwnerApprovals.
-func (mr *MockProtectedBranchesServiceInterfaceMockRecorder) RequireCodeOwnerApprovals(pid, branch, opt any, options ...any) *MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, branch, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RequireCodeOwnerApprovals", reflect.TypeOf((*MockProtectedBranchesServiceInterface)(nil).RequireCodeOwnerApprovals), varargs...)
-	return &MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall{Call: call}
-}
-
-// MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall wrap *gomock.Call
-type MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall) Return(arg0 *gitlab.Response, arg1 error) *MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall) Do(f func(any, string, *gitlab.RequireCodeOwnerApprovalsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall) DoAndReturn(f func(any, string, *gitlab.RequireCodeOwnerApprovalsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProtectedBranchesServiceInterfaceRequireCodeOwnerApprovalsCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // UnprotectRepositoryBranches mocks base method.
 func (m *MockProtectedBranchesServiceInterface) UnprotectRepositoryBranches(pid any, branch string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()

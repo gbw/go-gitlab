@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListProtectedBranches(t *testing.T) {
@@ -67,10 +68,9 @@ func TestListProtectedBranches(t *testing.T) {
 ]`)
 	})
 	opt := &ListProtectedBranchesOptions{}
-	protectedBranches, _, err := client.ProtectedBranches.ListProtectedBranches("1", opt)
-	if err != nil {
-		t.Errorf("ProtectedBranches.ListProtectedBranches returned error: %v", err)
-	}
+	protectedBranches, resp, err := client.ProtectedBranches.ListProtectedBranches("1", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 	want := []*ProtectedBranch{
 		{
 			ID:   1,
@@ -105,12 +105,10 @@ func TestListProtectedBranches(t *testing.T) {
 			CodeOwnerApprovalRequired: false,
 		},
 	}
-	if !reflect.DeepEqual(want, protectedBranches) {
-		t.Errorf("ProtectedBranches.ListProtectedBranches returned %+v, want %+v", protectedBranches, want)
-	}
+	assert.Equal(t, want, protectedBranches)
 }
 
-func TestListProtectedBranchesWithoutCodeOwnerApproval(t *testing.T) {
+func TestListProtectedBranches_WithoutCodeOwnerApproval(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -132,10 +130,9 @@ func TestListProtectedBranchesWithoutCodeOwnerApproval(t *testing.T) {
 ]`)
 	})
 	opt := &ListProtectedBranchesOptions{}
-	protectedBranches, _, err := client.ProtectedBranches.ListProtectedBranches("1", opt)
-	if err != nil {
-		t.Errorf("ProtectedBranches.ListProtectedBranches returned error: %v", err)
-	}
+	protectedBranches, resp, err := client.ProtectedBranches.ListProtectedBranches("1", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 	want := []*ProtectedBranch{
 		{
 			ID:   1,
@@ -156,9 +153,86 @@ func TestListProtectedBranchesWithoutCodeOwnerApproval(t *testing.T) {
 			CodeOwnerApprovalRequired: false,
 		},
 	}
-	if !reflect.DeepEqual(want, protectedBranches) {
-		t.Errorf("Projects.ListProjects returned %+v, want %+v", protectedBranches, want)
+	assert.Equal(t, want, protectedBranches)
+}
+
+func TestGetProtectedBranch(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/protected_branches/main", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id":1,
+			"name":"main",
+			"push_access_levels":[{
+				"id":1,
+				"access_level":40,
+				"access_level_description":"Maintainers",
+				"deploy_key_id":null,
+				"user_id":null,
+				"group_id":null
+			},{
+				"id":2,
+				"access_level":30,
+				"access_level_description":"User name",
+				"deploy_key_id":null,
+				"user_id":123,
+				"group_id":null
+			},{
+				"id":3,
+				"access_level":40,
+				"access_level_description":"deploy key",
+				"deploy_key_id":456,
+				"user_id":null,
+				"group_id":null
+			}],
+			"merge_access_levels":[{
+				"id":1,
+				"access_level":40,
+				"access_level_description":"Maintainers",
+				"user_id":null,
+				"group_id":null
+			}],
+			"code_owner_approval_required":false
+		}`)
+	})
+	protectedBranch, resp, err := client.ProtectedBranches.GetProtectedBranch(1, "main")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	want := &ProtectedBranch{
+		ID:   1,
+		Name: "main",
+		PushAccessLevels: []*BranchAccessDescription{
+			{
+				ID:                     1,
+				AccessLevel:            40,
+				AccessLevelDescription: "Maintainers",
+			},
+			{
+				ID:                     2,
+				AccessLevel:            30,
+				AccessLevelDescription: "User name",
+				UserID:                 123,
+			},
+			{
+				ID:                     3,
+				AccessLevel:            40,
+				AccessLevelDescription: "deploy key",
+				DeployKeyID:            456,
+			},
+		},
+		MergeAccessLevels: []*BranchAccessDescription{
+			{
+				ID:                     1,
+				AccessLevel:            40,
+				AccessLevelDescription: "Maintainers",
+			},
+		},
+		AllowForcePush:            false,
+		CodeOwnerApprovalRequired: false,
 	}
+	assert.Equal(t, want, protectedBranch)
 }
 
 func TestProtectRepositoryBranches(t *testing.T) {
@@ -190,10 +264,9 @@ func TestProtectRepositoryBranches(t *testing.T) {
 		AllowForcePush:            Ptr(true),
 		CodeOwnerApprovalRequired: Ptr(true),
 	}
-	projects, _, err := client.ProtectedBranches.ProtectRepositoryBranches("1", opt)
-	if err != nil {
-		t.Errorf("ProtectedBranches.ProtectRepositoryBranches returned error: %v", err)
-	}
+	protectedBranches, resp, err := client.ProtectedBranches.ProtectRepositoryBranches("1", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 	want := &ProtectedBranch{
 		ID:   1,
 		Name: "master",
@@ -212,9 +285,19 @@ func TestProtectRepositoryBranches(t *testing.T) {
 		AllowForcePush:            true,
 		CodeOwnerApprovalRequired: true,
 	}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, protectedBranches)
+}
+
+func TestUnprotectRepositoryBranches(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/protected_branches/main", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+	resp, err := client.ProtectedBranches.UnprotectRepositoryBranches("1", "main")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUpdateRepositoryBranches(t *testing.T) {
@@ -234,17 +317,13 @@ func TestUpdateRepositoryBranches(t *testing.T) {
 	opt := &UpdateProtectedBranchOptions{
 		CodeOwnerApprovalRequired: Ptr(true),
 	}
-	protectedBranch, _, err := client.ProtectedBranches.UpdateProtectedBranch("1", "master", opt)
-	if err != nil {
-		t.Errorf("ProtectedBranches.UpdateProtectedBranch returned error: %v", err)
-	}
+	protectedBranch, resp, err := client.ProtectedBranches.UpdateProtectedBranch("1", "master", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProtectedBranch{
 		Name:                      "master",
 		CodeOwnerApprovalRequired: true,
 	}
-
-	if !reflect.DeepEqual(want, protectedBranch) {
-		t.Errorf("ProtectedBranches.UpdateProtectedBranch returned %+v, want %+v", protectedBranch, want)
-	}
+	assert.Equal(t, want, protectedBranch)
 }
