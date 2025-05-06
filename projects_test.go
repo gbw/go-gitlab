@@ -23,14 +23,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"reflect"
 	"strconv"
 	"strings"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestListProjects(t *testing.T) {
@@ -72,14 +70,10 @@ func TestListProjects(t *testing.T) {
 				Visibility:  Ptr(PublicVisibility),
 			}
 
-			projects, _, err := client.Projects.ListProjects(opt)
-			if err != nil {
-				t.Errorf("Projects.ListProjects returned error: %v", err)
-			}
-
-			if !reflect.DeepEqual(testCase.want, projects) {
-				t.Errorf("Projects.ListProjects returned %+v, want %+v", projects, testCase.want)
-			}
+			projects, resp, err := client.Projects.ListProjects(opt)
+			assert.NoError(t, err)
+			assert.NotNil(t, resp)
+			assert.Equal(t, testCase.want, projects)
 		})
 	}
 }
@@ -103,15 +97,12 @@ func TestListUserProjects(t *testing.T) {
 		Visibility:  Ptr(PublicVisibility),
 	}
 
-	projects, _, err := client.Projects.ListUserProjects(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ListUserProjects returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListUserProjects(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListUserProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListUserContributedProjects(t *testing.T) {
@@ -133,15 +124,12 @@ func TestListUserContributedProjects(t *testing.T) {
 		Visibility:  Ptr(PublicVisibility),
 	}
 
-	projects, _, err := client.Projects.ListUserContributedProjects(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ListUserContributedProjects returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListUserContributedProjects(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListUserContributedProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListUserStarredProjects(t *testing.T) {
@@ -163,15 +151,12 @@ func TestListUserStarredProjects(t *testing.T) {
 		Visibility:  Ptr(PublicVisibility),
 	}
 
-	projects, _, err := client.Projects.ListUserStarredProjects(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ListUserStarredProjects returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListUserStarredProjects(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListUserStarredProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListProjectsUsersByID(t *testing.T) {
@@ -189,15 +174,12 @@ func TestListProjectsUsersByID(t *testing.T) {
 		Search:      Ptr("query"),
 	}
 
-	projects, _, err := client.Projects.ListProjectsUsers(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ListProjectsUsers returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListProjectsUsers(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*ProjectUser{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListProjectsUsers returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListProjectsUsersByName(t *testing.T) {
@@ -215,15 +197,12 @@ func TestListProjectsUsersByName(t *testing.T) {
 		Search:      Ptr("query"),
 	}
 
-	projects, _, err := client.Projects.ListProjectsUsers("namespace/name", opt)
-	if err != nil {
-		t.Errorf("Projects.ListProjectsUsers returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListProjectsUsers("namespace/name", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*ProjectUser{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListProjectsUsers returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListProjectsGroupsByID(t *testing.T) {
@@ -241,15 +220,12 @@ func TestListProjectsGroupsByID(t *testing.T) {
 		Search:      Ptr("query"),
 	}
 
-	groups, _, err := client.Projects.ListProjectsGroups(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ListProjectsGroups returned error: %v", err)
-	}
+	groups, resp, err := client.Projects.ListProjectsGroups(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*ProjectGroup{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, groups) {
-		t.Errorf("Projects.ListProjectsGroups returned %+v, want %+v", groups, want)
-	}
+	assert.Equal(t, want, groups)
 }
 
 func TestListProjectsGroupsByName(t *testing.T) {
@@ -267,15 +243,12 @@ func TestListProjectsGroupsByName(t *testing.T) {
 		Search:      Ptr("query"),
 	}
 
-	groups, _, err := client.Projects.ListProjectsGroups("namespace/name", opt)
-	if err != nil {
-		t.Errorf("Projects.ListProjectsGroups returned error: %v", err)
-	}
+	groups, resp, err := client.Projects.ListProjectsGroups("namespace/name", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*ProjectGroup{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, groups) {
-		t.Errorf("Projects.ListProjectsGroups returned %+v, want %+v", groups, want)
-	}
+	assert.Equal(t, want, groups)
 }
 
 func TestListOwnedProjects(t *testing.T) {
@@ -298,15 +271,12 @@ func TestListOwnedProjects(t *testing.T) {
 		Visibility:  Ptr(PublicVisibility),
 	}
 
-	projects, _, err := client.Projects.ListProjects(opt)
-	if err != nil {
-		t.Errorf("Projects.ListOwnedProjects returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListProjects(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListOwnedProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestEditProject(t *testing.T) {
@@ -384,15 +354,12 @@ func TestListStarredProjects(t *testing.T) {
 		Visibility:  Ptr(PublicVisibility),
 	}
 
-	projects, _, err := client.Projects.ListProjects(opt)
-	if err != nil {
-		t.Errorf("Projects.ListStarredProjects returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListProjects(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListStarredProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestGetProjectByID(t *testing.T) {
@@ -440,14 +407,10 @@ func TestGetProjectByID(t *testing.T) {
 		CIDeletePipelinesInSeconds:             14,
 	}
 
-	project, _, err := client.Projects.GetProject(1, nil)
-	if err != nil {
-		t.Fatalf("Projects.GetProject returns an error: %v", err)
-	}
-
-	if !reflect.DeepEqual(want, project) {
-		t.Errorf("Projects.GetProject returned %+v, want %+v", project, want)
-	}
+	project, resp, err := client.Projects.GetProject(1, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, project)
 }
 
 func TestGetProjectByName(t *testing.T) {
@@ -461,14 +424,10 @@ func TestGetProjectByName(t *testing.T) {
 	})
 	want := &Project{ID: 1}
 
-	project, _, err := client.Projects.GetProject("namespace/name", nil)
-	if err != nil {
-		t.Fatalf("Projects.GetProject returns an error: %v", err)
-	}
-
-	if !reflect.DeepEqual(want, project) {
-		t.Errorf("Projects.GetProject returned %+v, want %+v", project, want)
-	}
+	project, resp, err := client.Projects.GetProject("namespace/name", nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, project)
 }
 
 func TestGetProjectWithOptions(t *testing.T) {
@@ -507,14 +466,10 @@ func TestGetProjectWithOptions(t *testing.T) {
 		ContainerRegistrySize: 284453,
 	}}
 
-	project, _, err := client.Projects.GetProject(1, &GetProjectOptions{Statistics: Ptr(true)})
-	if err != nil {
-		t.Fatalf("Projects.GetProject returns an error: %v", err)
-	}
-
-	if !reflect.DeepEqual(want, project) {
-		t.Errorf("Projects.GetProject returned %+v, want %+v", project, want)
-	}
+	project, resp, err := client.Projects.GetProject(1, &GetProjectOptions{Statistics: Ptr(true)})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, project)
 }
 
 func TestCreateProject(t *testing.T) {
@@ -531,15 +486,12 @@ func TestCreateProject(t *testing.T) {
 		MergeMethod: Ptr(RebaseMerge),
 	}
 
-	project, _, err := client.Projects.CreateProject(opt)
-	if err != nil {
-		t.Errorf("Projects.CreateProject returned error: %v", err)
-	}
+	project, resp, err := client.Projects.CreateProject(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &Project{ID: 1}
-	if !reflect.DeepEqual(want, project) {
-		t.Errorf("Projects.CreateProject returned %+v, want %+v", project, want)
-	}
+	assert.Equal(t, want, project)
 }
 
 func TestUploadAvatar(t *testing.T) {
@@ -558,10 +510,9 @@ func TestUploadAvatar(t *testing.T) {
 	})
 
 	avatar := new(bytes.Buffer)
-	_, _, err := client.Projects.UploadAvatar(1, avatar, "avatar.png")
-	if err != nil {
-		t.Fatalf("Projects.UploadAvatar returns an error: %v", err)
-	}
+	_, resp, err := client.Projects.UploadAvatar(1, avatar, "avatar.png")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUploadAvatar_Retry(t *testing.T) {
@@ -585,10 +536,9 @@ func TestUploadAvatar_Retry(t *testing.T) {
 	})
 
 	avatar := new(bytes.Buffer)
-	_, _, err := client.Projects.UploadAvatar(1, avatar, "avatar.png")
-	if err != nil {
-		t.Fatalf("Projects.UploadAvatar returns an error: %v", err)
-	}
+	_, resp, err := client.Projects.UploadAvatar(1, avatar, "avatar.png")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDownloadAvatar(t *testing.T) {
@@ -607,17 +557,10 @@ func TestDownloadAvatar(t *testing.T) {
 	)
 
 	_, resp, err := client.Projects.DownloadAvatar(1)
-	if err != nil {
-		t.Fatalf("Projects.DownloadAvatar returned error: %v", err)
-	}
-
-	if resp.Status != "200 OK" {
-		t.Fatalf("Projects.DownloadAvatar returned wrong status code: %v", resp.Status)
-	}
-
-	if int(resp.ContentLength) != len(ico) {
-		t.Fatalf("Projects.DownloadAvatar returned wrong content length: %v", resp.ContentLength)
-	}
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "200 OK", resp.Status)
+	assert.Equal(t, len(ico), int(resp.ContentLength))
 }
 
 func TestListProjectForks(t *testing.T) {
@@ -639,15 +582,12 @@ func TestListProjectForks(t *testing.T) {
 	opt.Simple = Ptr(true)
 	opt.Visibility = Ptr(PublicVisibility)
 
-	projects, _, err := client.Projects.ListProjectForks("namespace/name", opt)
-	if err != nil {
-		t.Errorf("Projects.ListProjectForks returned error: %v", err)
-	}
+	projects, resp, err := client.Projects.ListProjectForks("namespace/name", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Projects.ListProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestDeleteProject(t *testing.T) {
@@ -663,10 +603,9 @@ func TestDeleteProject(t *testing.T) {
 		PermanentlyRemove: Ptr(true),
 	}
 
-	_, err := client.Projects.DeleteProject(1, opt)
-	if err != nil {
-		t.Errorf("Projects.DeleteProject returned error: %v", err)
-	}
+	resp, err := client.Projects.DeleteProject(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestShareProjectWithGroup(t *testing.T) {
@@ -682,10 +621,9 @@ func TestShareProjectWithGroup(t *testing.T) {
 		GroupAccess: Ptr(AccessLevelValue(50)),
 	}
 
-	_, err := client.Projects.ShareProjectWithGroup(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ShareProjectWithGroup returned error: %v", err)
-	}
+	resp, err := client.Projects.ShareProjectWithGroup(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeleteSharedProjectFromGroup(t *testing.T) {
@@ -696,10 +634,9 @@ func TestDeleteSharedProjectFromGroup(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.Projects.DeleteSharedProjectFromGroup(1, 2)
-	if err != nil {
-		t.Errorf("Projects.DeleteSharedProjectFromGroup returned error: %v", err)
-	}
+	resp, err := client.Projects.DeleteSharedProjectFromGroup(1, 2)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetApprovalConfiguration(t *testing.T) {
@@ -720,10 +657,9 @@ func TestGetApprovalConfiguration(t *testing.T) {
 		}`)
 	})
 
-	approvals, _, err := client.Projects.GetApprovalConfiguration(1)
-	if err != nil {
-		t.Errorf("Projects.GetApprovalConfiguration returned error: %v", err)
-	}
+	approvals, resp, err := client.Projects.GetApprovalConfiguration(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectApprovals{
 		Approvers:            []*MergeRequestApproverUser{},
@@ -736,9 +672,7 @@ func TestGetApprovalConfiguration(t *testing.T) {
 		RequirePasswordToApprove:                  true,
 	}
 
-	if !reflect.DeepEqual(want, approvals) {
-		t.Errorf("Projects.GetApprovalConfiguration returned %+v, want %+v", approvals, want)
-	}
+	assert.Equal(t, want, approvals)
 }
 
 func TestChangeApprovalConfiguration(t *testing.T) {
@@ -766,10 +700,9 @@ func TestChangeApprovalConfiguration(t *testing.T) {
 		ApprovalsBeforeMerge: Ptr(3),
 	}
 
-	approvals, _, err := client.Projects.ChangeApprovalConfiguration(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ChangeApprovalConfigurationOptions returned error: %v", err)
-	}
+	approvals, resp, err := client.Projects.ChangeApprovalConfiguration(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectApprovals{
 		Approvers:            []*MergeRequestApproverUser{},
@@ -782,69 +715,7 @@ func TestChangeApprovalConfiguration(t *testing.T) {
 		RequirePasswordToApprove:                  true,
 	}
 
-	if !reflect.DeepEqual(want, approvals) {
-		t.Errorf("Projects.ChangeApprovalConfigurationOptions  returned %+v, want %+v", approvals, want)
-	}
-}
-
-func TestChangeAllowedApprovers(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/approvers", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		testBodyJSON(t, r, map[string][]int{
-			"approver_group_ids": {1},
-			"approver_ids":       {2},
-		})
-		fmt.Fprint(w, `{
-			"approver_groups": [{"group":{"id":1}}],
-			"approvers": [{"user":{"id":2}}]
-		}`)
-	})
-
-	opt := &ChangeAllowedApproversOptions{
-		ApproverGroupIDs: &[]int{1},
-		ApproverIDs:      &[]int{2},
-	}
-
-	approvals, _, err := client.Projects.ChangeAllowedApprovers(1, opt)
-	if err != nil {
-		t.Errorf("Projects.ChangeApproversConfigurationOptions returned error: %v", err)
-	}
-
-	want := &ProjectApprovals{
-		ApproverGroups: []*MergeRequestApproverGroup{
-			{
-				Group: struct {
-					ID                   int    `json:"id"`
-					Name                 string `json:"name"`
-					Path                 string `json:"path"`
-					Description          string `json:"description"`
-					Visibility           string `json:"visibility"`
-					AvatarURL            string `json:"avatar_url"`
-					WebURL               string `json:"web_url"`
-					FullName             string `json:"full_name"`
-					FullPath             string `json:"full_path"`
-					LFSEnabled           bool   `json:"lfs_enabled"`
-					RequestAccessEnabled bool   `json:"request_access_enabled"`
-				}{
-					ID: 1,
-				},
-			},
-		},
-		Approvers: []*MergeRequestApproverUser{
-			{
-				User: &BasicUser{
-					ID: 2,
-				},
-			},
-		},
-	}
-
-	if !reflect.DeepEqual(want, approvals) {
-		t.Errorf("Projects.ChangeAllowedApprovers returned %+v, want %+v", approvals, want)
-	}
+	assert.Equal(t, want, approvals)
 }
 
 func TestForkProject(t *testing.T) {
@@ -967,10 +838,9 @@ func TestGetProjectApprovalRules(t *testing.T) {
 		]`)
 	})
 
-	approvals, _, err := client.Projects.GetProjectApprovalRules(1, nil)
-	if err != nil {
-		t.Errorf("Projects.GetProjectApprovalRules returned error: %v", err)
-	}
+	approvals, resp, err := client.Projects.GetProjectApprovalRules(1, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*ProjectApprovalRule{
 		{
@@ -1050,9 +920,7 @@ func TestGetProjectApprovalRules(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, approvals) {
-		t.Errorf("Projects.GetProjectApprovalRules returned %+v, want %+v", approvals, want)
-	}
+	assert.Equal(t, want, approvals)
 }
 
 func TestGetProjectApprovalRule(t *testing.T) {
@@ -1141,10 +1009,9 @@ func TestGetProjectApprovalRule(t *testing.T) {
 		}`)
 	})
 
-	approvals, _, err := client.Projects.GetProjectApprovalRule(1, 1)
-	if err != nil {
-		t.Errorf("Projects.GetProjectApprovalRule returned error: %v", err)
-	}
+	approvals, resp, err := client.Projects.GetProjectApprovalRule(1, 1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectApprovalRule{
 		ID:       1,
@@ -1222,9 +1089,7 @@ func TestGetProjectApprovalRule(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, approvals) {
-		t.Errorf("Projects.GetProjectApprovalRule returned %+v, want %+v", approvals, want)
-	}
+	assert.Equal(t, want, approvals)
 }
 
 func TestCreateProjectApprovalRule(t *testing.T) {
@@ -1338,10 +1203,9 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 		Usernames:         &([]string{"some-cool-user"}),
 	}
 
-	rule, _, err := client.Projects.CreateProjectApprovalRule(1, opt)
-	if err != nil {
-		t.Errorf("Projects.CreateProjectApprovalRule returned error: %v", err)
-	}
+	rule, resp, err := client.Projects.CreateProjectApprovalRule(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectApprovalRule{
 		ID:       1,
@@ -1435,9 +1299,7 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Projects.CreateProjectApprovalRule returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestGetProjectPullMirrorDetails(t *testing.T) {
@@ -1562,10 +1424,9 @@ func TestCreateProjectApprovalRuleEligibleApprovers(t *testing.T) {
 		ApprovalsRequired: Ptr(1),
 	}
 
-	rule, _, err := client.Projects.CreateProjectApprovalRule(1, opt)
-	if err != nil {
-		t.Errorf("Projects.CreateProjectApprovalRule returned error: %v", err)
-	}
+	rule, resp, err := client.Projects.CreateProjectApprovalRule(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectApprovalRule{
 		ID:                1,
@@ -1578,9 +1439,7 @@ func TestCreateProjectApprovalRuleEligibleApprovers(t *testing.T) {
 		ProtectedBranches: []*ProtectedBranch{},
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Projects.CreateProjectApprovalRule returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestProjectModelsOptionalMergeAttribute(t *testing.T) {
@@ -1589,18 +1448,14 @@ func TestProjectModelsOptionalMergeAttribute(t *testing.T) {
 	jsonString, err := json.Marshal(&CreateProjectOptions{
 		Name: Ptr("testProject"),
 	})
-	if err != nil {
-		t.Fatal("Failed to marshal object", err)
-	}
+	assert.NoError(t, err)
 	assert.False(t, strings.Contains(string(jsonString), "only_allow_merge_if_all_status_checks_passed"))
 
 	// Test the same thing but for `EditProjectOptions` struct
 	jsonString, err = json.Marshal(&EditProjectOptions{
 		Name: Ptr("testProject"),
 	})
-	if err != nil {
-		t.Fatal("Failed to marshal object", err)
-	}
+	assert.NoError(t, err)
 	assert.False(t, strings.Contains(string(jsonString), "only_allow_merge_if_all_status_checks_passed"))
 }
 
@@ -1643,10 +1498,9 @@ func TestListProjectHooks(t *testing.T) {
 ]`)
 	})
 
-	hooks, _, err := client.Projects.ListProjectHooks(1, nil)
-	if err != nil {
-		t.Errorf("Projects.ListProjectHooks returned error: %v", err)
-	}
+	hooks, resp, err := client.Projects.ListProjectHooks(1, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	createdAt := time.Date(2024, 10, 13, 13, 37, 0, 0, time.UTC)
 	want := []*ProjectHook{{
@@ -1683,9 +1537,7 @@ func TestListProjectHooks(t *testing.T) {
 		},
 	}}
 
-	if !reflect.DeepEqual(hooks, want) {
-		t.Errorf("Projects.ListProjectHooks returned \ngot:\n%v\nwant:\n%v", Stringify(hooks), Stringify(want))
-	}
+	assert.Equal(t, want, hooks)
 }
 
 // Test that the "CustomWebhookTemplate" serializes properly
@@ -1821,10 +1673,9 @@ func TestGetProjectPushRules(t *testing.T) {
 		  }`)
 	})
 
-	rule, _, err := client.Projects.GetProjectPushRules(1)
-	if err != nil {
-		t.Errorf("Projects.GetProjectPushRules returned error: %v", err)
-	}
+	rule, resp, err := client.Projects.GetProjectPushRules(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectPushRules{
 		ID:                         1,
@@ -1843,9 +1694,7 @@ func TestGetProjectPushRules(t *testing.T) {
 		RejectNonDCOCommits:        false,
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Projects.GetProjectPushRules returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestAddProjectPushRules(t *testing.T) {
@@ -1888,10 +1737,9 @@ func TestAddProjectPushRules(t *testing.T) {
 		RejectNonDCOCommits:        Ptr(false),
 	}
 
-	rule, _, err := client.Projects.AddProjectPushRule(1, opt)
-	if err != nil {
-		t.Errorf("Projects.AddProjectPushRule returned error: %v", err)
-	}
+	rule, resp, err := client.Projects.AddProjectPushRule(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectPushRules{
 		ID:                         1,
@@ -1910,9 +1758,7 @@ func TestAddProjectPushRules(t *testing.T) {
 		RejectNonDCOCommits:        false,
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Projects.AddProjectPushRule returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestEditProjectPushRules(t *testing.T) {
@@ -1955,10 +1801,9 @@ func TestEditProjectPushRules(t *testing.T) {
 		RejectNonDCOCommits:        Ptr(false),
 	}
 
-	rule, _, err := client.Projects.EditProjectPushRule(1, opt)
-	if err != nil {
-		t.Errorf("Projects.EditProjectPushRule returned error: %v", err)
-	}
+	rule, resp, err := client.Projects.EditProjectPushRule(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectPushRules{
 		ID:                         1,
@@ -1977,9 +1822,7 @@ func TestEditProjectPushRules(t *testing.T) {
 		RejectNonDCOCommits:        false,
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Projects.EditProjectPushRule returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestGetProjectWebhookHeader(t *testing.T) {
@@ -2003,10 +1846,9 @@ func TestGetProjectWebhookHeader(t *testing.T) {
 		  }`)
 	})
 
-	hook, _, err := client.Projects.GetProjectHook(1, 1)
-	if err != nil {
-		t.Errorf("Projects.GetProjectHook returned error: %v", err)
-	}
+	hook, resp, err := client.Projects.GetProjectHook(1, 1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectHook{
 		ID:                    1,
@@ -2021,9 +1863,7 @@ func TestGetProjectWebhookHeader(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, hook) {
-		t.Errorf("Projects.GetProjectHook returned %+v, want %+v", hook, want)
-	}
+	assert.Equal(t, want, hook)
 }
 
 func TestSetProjectWebhookHeader(t *testing.T) {
@@ -2048,13 +1888,11 @@ func TestSetProjectWebhookHeader(t *testing.T) {
 		fmt.Fprint(w, ``)
 	})
 
-	req, err := client.Projects.SetProjectCustomHeader(1, 1, "Authorization", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
-	if err != nil {
-		t.Errorf("Projects.SetProjectCustomHeader returned error: %v", err)
-	}
-
+	resp, err := client.Projects.SetProjectCustomHeader(1, 1, "Authorization", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 	assert.Equal(t, bodyJson["value"], "testValue")
-	assert.Equal(t, http.StatusNoContent, req.StatusCode)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
 func TestDeleteProjectWebhookHeader(t *testing.T) {
@@ -2068,12 +1906,10 @@ func TestDeleteProjectWebhookHeader(t *testing.T) {
 		fmt.Fprint(w, ``)
 	})
 
-	req, err := client.Projects.DeleteProjectCustomHeader(1, 1, "Authorization")
-	if err != nil {
-		t.Errorf("Projects.DeleteProjectCustomHeader returned error: %v", err)
-	}
-
-	assert.Equal(t, http.StatusNoContent, req.StatusCode)
+	resp, err := client.Projects.DeleteProjectCustomHeader(1, 1, "Authorization")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
 func TestStartHousekeepingProject(t *testing.T) {
@@ -2102,7 +1938,7 @@ func TestGetRepositoryStorage(t *testing.T) {
 	storage, _, err := client.Projects.GetRepositoryStorage(1)
 
 	assert.NoError(t, err)
-	require.NotNil(t, storage, "Expected storage to be non-nil")
+	assert.NotNil(t, storage, "Expected storage to be non-nil")
 	assert.Equal(t, "default", storage.RepositoryStorage)
 	assert.Equal(t, "path/to/repo", storage.DiskPath)
 }
