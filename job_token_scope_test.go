@@ -32,12 +32,11 @@ func TestGetProjectTokenAccessSettings(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 
 		// Print on the response
-		fmt.Fprint(w, `{"inbound_enabled":true,"outbound_enabled":false}`)
+		fmt.Fprint(w, `{"inbound_enabled":true}`)
 	})
 
 	want := &JobTokenAccessSettings{
-		InboundEnabled:  true,
-		OutboundEnabled: false,
+		InboundEnabled: true,
 	}
 
 	settings, _, err := client.JobTokenScope.GetProjectJobTokenAccessSettings(1)
