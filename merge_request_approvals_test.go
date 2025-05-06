@@ -19,9 +19,134 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
+
+func TestGetApprovalRules(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approval_rules", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[
+			{
+				"id": 1,
+				"name": "security",
+				"rule_type": "regular",
+				"eligible_approvers": [
+					{
+						"id": 5,
+						"name": "John Doe",
+						"username": "jdoe",
+						"state": "active",
+						"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+						"web_url": "http://localhost/jdoe"
+					},
+					{
+						"id": 50,
+						"name": "Group Member 1",
+						"username": "group_member_1",
+						"state": "active",
+						"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+						"web_url": "http://localhost/group_member_1"
+					}
+				],
+				"approvals_required": 3,
+				"source_rule": null,
+				"users": [
+					{
+						"id": 5,
+						"name": "John Doe",
+						"username": "jdoe",
+						"state": "active",
+						"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+						"web_url": "http://localhost/jdoe"
+					}
+				],
+				"groups": [
+					{
+						"id": 5,
+						"name": "group1",
+						"path": "group1",
+						"description": "",
+						"visibility": "public",
+						"lfs_enabled": false,
+						"avatar_url": null,
+						"web_url": "http://localhost/groups/group1",
+						"request_access_enabled": false,
+						"full_name": "group1",
+						"full_path": "group1",
+						"parent_id": null,
+						"ldap_cn": null,
+						"ldap_access": null
+					}
+				],
+				"contains_hidden_groups": false,
+				"section": "test"
+			}
+		]`)
+	})
+
+	approvals, resp, err := client.MergeRequestApprovals.GetApprovalRules(1, 1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := []*MergeRequestApprovalRule{
+		{
+			ID:       1,
+			Name:     "security",
+			RuleType: "regular",
+			EligibleApprovers: []*BasicUser{
+				{
+					ID:        5,
+					Name:      "John Doe",
+					Username:  "jdoe",
+					State:     "active",
+					AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+					WebURL:    "http://localhost/jdoe",
+				},
+				{
+					ID:        50,
+					Name:      "Group Member 1",
+					Username:  "group_member_1",
+					State:     "active",
+					AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+					WebURL:    "http://localhost/group_member_1",
+				},
+			},
+			ApprovalsRequired: 3,
+			Users: []*BasicUser{
+				{
+					ID:        5,
+					Name:      "John Doe",
+					Username:  "jdoe",
+					State:     "active",
+					AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
+					WebURL:    "http://localhost/jdoe",
+				},
+			},
+			Groups: []*Group{
+				{
+					ID:                   5,
+					Name:                 "group1",
+					Path:                 "group1",
+					Description:          "",
+					Visibility:           PublicVisibility,
+					LFSEnabled:           false,
+					AvatarURL:            "",
+					WebURL:               "http://localhost/groups/group1",
+					RequestAccessEnabled: false,
+					FullName:             "group1",
+					FullPath:             "group1",
+				},
+			},
+			Section: "test",
+		},
+	}
+	assert.Equal(t, want, approvals)
+}
 
 func TestGetApprovalState(t *testing.T) {
 	t.Parallel()
@@ -102,10 +227,9 @@ func TestGetApprovalState(t *testing.T) {
 		}`)
 	})
 
-	approvals, _, err := client.MergeRequestApprovals.GetApprovalState(1, 1)
-	if err != nil {
-		t.Errorf("MergeRequestApprovals.GetApprovalState returned error: %v", err)
-	}
+	approvals, resp, err := client.MergeRequestApprovals.GetApprovalState(1, 1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &MergeRequestApprovalState{
 		ApprovalRulesOverwritten: true,
@@ -173,138 +297,7 @@ func TestGetApprovalState(t *testing.T) {
 			},
 		},
 	}
-
-	if !reflect.DeepEqual(want, approvals) {
-		t.Errorf("MergeRequestApprovals.GetApprovalState returned %+v, want %+v", approvals, want)
-	}
-}
-
-func TestGetApprovalRules(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approval_rules", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `[
-			{
-				"id": 1,
-				"name": "security",
-				"rule_type": "regular",
-				"eligible_approvers": [
-					{
-						"id": 5,
-						"name": "John Doe",
-						"username": "jdoe",
-						"state": "active",
-						"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
-						"web_url": "http://localhost/jdoe"
-					},
-					{
-						"id": 50,
-						"name": "Group Member 1",
-						"username": "group_member_1",
-						"state": "active",
-						"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
-						"web_url": "http://localhost/group_member_1"
-					}
-				],
-				"approvals_required": 3,
-				"source_rule": null,
-				"users": [
-					{
-						"id": 5,
-						"name": "John Doe",
-						"username": "jdoe",
-						"state": "active",
-						"avatar_url": "https://www.gravatar.com/avatar/0?s=80&d=identicon",
-						"web_url": "http://localhost/jdoe"
-					}
-				],
-				"groups": [
-					{
-						"id": 5,
-						"name": "group1",
-						"path": "group1",
-						"description": "",
-						"visibility": "public",
-						"lfs_enabled": false,
-						"avatar_url": null,
-						"web_url": "http://localhost/groups/group1",
-						"request_access_enabled": false,
-						"full_name": "group1",
-						"full_path": "group1",
-						"parent_id": null,
-						"ldap_cn": null,
-						"ldap_access": null
-					}
-				],
-				"contains_hidden_groups": false,
-				"section": "test"
-			}
-		]`)
-	})
-
-	approvals, _, err := client.MergeRequestApprovals.GetApprovalRules(1, 1)
-	if err != nil {
-		t.Errorf("MergeRequestApprovals.GetApprovalRules returned error: %v", err)
-	}
-
-	want := []*MergeRequestApprovalRule{
-		{
-			ID:       1,
-			Name:     "security",
-			RuleType: "regular",
-			EligibleApprovers: []*BasicUser{
-				{
-					ID:        5,
-					Name:      "John Doe",
-					Username:  "jdoe",
-					State:     "active",
-					AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
-					WebURL:    "http://localhost/jdoe",
-				},
-				{
-					ID:        50,
-					Name:      "Group Member 1",
-					Username:  "group_member_1",
-					State:     "active",
-					AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
-					WebURL:    "http://localhost/group_member_1",
-				},
-			},
-			ApprovalsRequired: 3,
-			Users: []*BasicUser{
-				{
-					ID:        5,
-					Name:      "John Doe",
-					Username:  "jdoe",
-					State:     "active",
-					AvatarURL: "https://www.gravatar.com/avatar/0?s=80&d=identicon",
-					WebURL:    "http://localhost/jdoe",
-				},
-			},
-			Groups: []*Group{
-				{
-					ID:                   5,
-					Name:                 "group1",
-					Path:                 "group1",
-					Description:          "",
-					Visibility:           PublicVisibility,
-					LFSEnabled:           false,
-					AvatarURL:            "",
-					WebURL:               "http://localhost/groups/group1",
-					RequestAccessEnabled: false,
-					FullName:             "group1",
-					FullPath:             "group1",
-				},
-			},
-			Section: "test",
-		},
-	}
-
-	if !reflect.DeepEqual(want, approvals) {
-		t.Errorf("MergeRequestApprovals.GetApprovalRules returned %+v, want %+v", approvals, want)
-	}
+	assert.Equal(t, want, approvals)
 }
 
 func TestCreateApprovalRules(t *testing.T) {
@@ -376,10 +369,9 @@ func TestCreateApprovalRules(t *testing.T) {
 		GroupIDs:          &[]int{5},
 	}
 
-	rule, _, err := client.MergeRequestApprovals.CreateApprovalRule(1, 1, opt)
-	if err != nil {
-		t.Errorf("MergeRequestApprovals.CreateApprovalRule returned error: %v", err)
-	}
+	rule, resp, err := client.MergeRequestApprovals.CreateApprovalRule(1, 1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &MergeRequestApprovalRule{
 		ID:       1,
@@ -430,8 +422,5 @@ func TestCreateApprovalRules(t *testing.T) {
 			},
 		},
 	}
-
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("MergeRequestApprovals.CreateApprovalRule returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
