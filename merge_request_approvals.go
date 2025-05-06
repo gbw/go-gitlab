@@ -29,7 +29,6 @@ type (
 		ResetApprovalsOfMergeRequest(pid any, mr int, options ...RequestOptionFunc) (*Response, error)
 		GetConfiguration(pid any, mr int, options ...RequestOptionFunc) (*MergeRequestApprovals, *Response, error)
 		ChangeApprovalConfiguration(pid any, mergeRequest int, opt *ChangeMergeRequestApprovalConfigurationOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error)
-		ChangeAllowedApprovers(pid any, mergeRequest int, opt *ChangeMergeRequestAllowedApproversOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error)
 		GetApprovalRules(pid any, mergeRequest int, options ...RequestOptionFunc) ([]*MergeRequestApprovalRule, *Response, error)
 		GetApprovalState(pid any, mergeRequest int, options ...RequestOptionFunc) (*MergeRequestApprovalState, *Response, error)
 		CreateApprovalRule(pid any, mergeRequest int, opt *CreateMergeRequestApprovalRuleOptions, options ...RequestOptionFunc) (*MergeRequestApprovalRule, *Response, error)
@@ -219,14 +218,6 @@ func (s *MergeRequestApprovalsService) ResetApprovalsOfMergeRequest(pid any, mr 
 	return s.client.Do(req, nil)
 }
 
-// ChangeMergeRequestApprovalConfigurationOptions represents the available
-// ChangeMergeRequestApprovalConfiguration() options.
-//
-// Deprecated: Removed at some point
-type ChangeMergeRequestApprovalConfigurationOptions struct {
-	ApprovalsRequired *int `url:"approvals_required,omitempty" json:"approvals_required,omitempty"`
-}
-
 // GetConfiguration shows information about single merge request approvals
 //
 // GitLab API docs:
@@ -252,9 +243,17 @@ func (s *MergeRequestApprovalsService) GetConfiguration(pid any, mr int, options
 	return m, resp, nil
 }
 
+// ChangeMergeRequestApprovalConfigurationOptions represents the available
+// ChangeMergeRequestApprovalConfiguration() options.
+//
+// Deprecated: in GitLab 16.0
+type ChangeMergeRequestApprovalConfigurationOptions struct {
+	ApprovalsRequired *int `url:"approvals_required,omitempty" json:"approvals_required,omitempty"`
+}
+
 // ChangeApprovalConfiguration updates the approval configuration of a merge request.
 //
-// Deprecated: Removed at some point
+// Deprecated: in GitLab 16.0
 func (s *MergeRequestApprovalsService) ChangeApprovalConfiguration(pid any, mergeRequest int, opt *ChangeMergeRequestApprovalConfigurationOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
@@ -263,39 +262,6 @@ func (s *MergeRequestApprovalsService) ChangeApprovalConfiguration(pid any, merg
 	u := fmt.Sprintf("projects/%s/merge_requests/%d/approvals", PathEscape(project), mergeRequest)
 
 	req, err := s.client.NewRequest(http.MethodPost, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
-}
-
-// ChangeMergeRequestAllowedApproversOptions represents the available
-// ChangeMergeRequestAllowedApprovers() options.
-//
-// Deprecated: Removed in GitLab 13.11
-type ChangeMergeRequestAllowedApproversOptions struct {
-	ApproverIDs      []int `url:"approver_ids" json:"approver_ids"`
-	ApproverGroupIDs []int `url:"approver_group_ids" json:"approver_group_ids"`
-}
-
-// ChangeAllowedApprovers updates the approvers for a merge request.
-//
-// Deprecated: Removed in GitLab 13.11
-func (s *MergeRequestApprovalsService) ChangeAllowedApprovers(pid any, mergeRequest int, opt *ChangeMergeRequestAllowedApproversOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/approvers", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
 	if err != nil {
 		return nil, nil, err
 	}
