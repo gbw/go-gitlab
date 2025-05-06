@@ -77,7 +77,6 @@ type (
 		CreateProjectApprovalRule(pid any, opt *CreateProjectLevelRuleOptions, options ...RequestOptionFunc) (*ProjectApprovalRule, *Response, error)
 		UpdateProjectApprovalRule(pid any, approvalRule int, opt *UpdateProjectLevelRuleOptions, options ...RequestOptionFunc) (*ProjectApprovalRule, *Response, error)
 		DeleteProjectApprovalRule(pid any, approvalRule int, options ...RequestOptionFunc) (*Response, error)
-		ChangeAllowedApprovers(pid any, opt *ChangeAllowedApproversOptions, options ...RequestOptionFunc) (*ProjectApprovals, *Response, error)
 		GetProjectPullMirrorDetails(pid any, options ...RequestOptionFunc) (*ProjectPullMirrorDetails, *Response, error)
 		ConfigureProjectPullMirror(pid any, opt *ConfigureProjectPullMirrorOptions, options ...RequestOptionFunc) (*ProjectPullMirrorDetails, *Response, error)
 		StartMirroringProject(pid any, options ...RequestOptionFunc) (*Response, error)
@@ -2168,39 +2167,6 @@ func (s *ProjectsService) DeleteProjectApprovalRule(pid any, approvalRule int, o
 	}
 
 	return s.client.Do(req, nil)
-}
-
-// ChangeAllowedApproversOptions represents the available ChangeAllowedApprovers()
-// options.
-//
-// Deprecated: Removed in GitLab 13.11
-type ChangeAllowedApproversOptions struct {
-	ApproverGroupIDs *[]int `url:"approver_group_ids,omitempty" json:"approver_group_ids,omitempty"`
-	ApproverIDs      *[]int `url:"approver_ids,omitempty" json:"approver_ids,omitempty"`
-}
-
-// ChangeAllowedApprovers updates the list of approvers and approver groups.
-//
-// Deprecated: Removed in GitLab 13.11 maybe
-func (s *ProjectsService) ChangeAllowedApprovers(pid any, opt *ChangeAllowedApproversOptions, options ...RequestOptionFunc) (*ProjectApprovals, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/approvers", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	pa := new(ProjectApprovals)
-	resp, err := s.client.Do(req, pa)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return pa, resp, nil
 }
 
 // ProjectPullMirrorDetails represent the details of the configuration pull

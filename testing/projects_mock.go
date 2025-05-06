@@ -177,51 +177,6 @@ func (c *MockProjectsServiceInterfaceArchiveProjectCall) DoAndReturn(f func(any,
 	return c
 }
 
-// ChangeAllowedApprovers mocks base method.
-func (m *MockProjectsServiceInterface) ChangeAllowedApprovers(pid any, opt *gitlab.ChangeAllowedApproversOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovals, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, opt}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ChangeAllowedApprovers", varargs...)
-	ret0, _ := ret[0].(*gitlab.ProjectApprovals)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// ChangeAllowedApprovers indicates an expected call of ChangeAllowedApprovers.
-func (mr *MockProjectsServiceInterfaceMockRecorder) ChangeAllowedApprovers(pid, opt any, options ...any) *MockProjectsServiceInterfaceChangeAllowedApproversCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, opt}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangeAllowedApprovers", reflect.TypeOf((*MockProjectsServiceInterface)(nil).ChangeAllowedApprovers), varargs...)
-	return &MockProjectsServiceInterfaceChangeAllowedApproversCall{Call: call}
-}
-
-// MockProjectsServiceInterfaceChangeAllowedApproversCall wrap *gomock.Call
-type MockProjectsServiceInterfaceChangeAllowedApproversCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockProjectsServiceInterfaceChangeAllowedApproversCall) Return(arg0 *gitlab.ProjectApprovals, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceChangeAllowedApproversCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceChangeAllowedApproversCall) Do(f func(any, *gitlab.ChangeAllowedApproversOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovals, *gitlab.Response, error)) *MockProjectsServiceInterfaceChangeAllowedApproversCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceChangeAllowedApproversCall) DoAndReturn(f func(any, *gitlab.ChangeAllowedApproversOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovals, *gitlab.Response, error)) *MockProjectsServiceInterfaceChangeAllowedApproversCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // ChangeApprovalConfiguration mocks base method.
 func (m *MockProjectsServiceInterface) ChangeApprovalConfiguration(pid any, opt *gitlab.ChangeApprovalConfigurationOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovals, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
