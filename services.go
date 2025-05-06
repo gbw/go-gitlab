@@ -54,10 +54,6 @@ type (
 		GetSlackApplication(pid any, options ...RequestOptionFunc) (*SlackApplication, *Response, error)
 		SetSlackApplication(pid any, opt *SetSlackApplicationOptions, options ...RequestOptionFunc) (*SlackApplication, *Response, error)
 		DisableSlackApplication(pid any, options ...RequestOptionFunc) (*Response, error)
-		SetGitLabCIService(pid any, opt *SetGitLabCIServiceOptions, options ...RequestOptionFunc) (*Response, error)
-		DeleteGitLabCIService(pid any, options ...RequestOptionFunc) (*Response, error)
-		SetHipChatService(pid any, opt *SetHipChatServiceOptions, options ...RequestOptionFunc) (*Response, error)
-		DeleteHipChatService(pid any, options ...RequestOptionFunc) (*Response, error)
 		GetJenkinsCIService(pid any, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error)
 		SetJenkinsCIService(pid any, opt *SetJenkinsCIServiceOptions, options ...RequestOptionFunc) (*JenkinsCIService, *Response, error)
 		DeleteJenkinsCIService(pid any, options ...RequestOptionFunc) (*Response, error)
@@ -76,9 +72,6 @@ type (
 		GetPipelinesEmailService(pid any, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error)
 		SetPipelinesEmailService(pid any, opt *SetPipelinesEmailServiceOptions, options ...RequestOptionFunc) (*PipelinesEmailService, *Response, error)
 		DeletePipelinesEmailService(pid any, options ...RequestOptionFunc) (*Response, error)
-		GetPrometheusService(pid any, options ...RequestOptionFunc) (*PrometheusService, *Response, error)
-		SetPrometheusService(pid any, opt *SetPrometheusServiceOptions, options ...RequestOptionFunc) (*PrometheusService, *Response, error)
-		DeletePrometheusService(pid any, options ...RequestOptionFunc) (*Response, error)
 		GetRedmineService(pid any, options ...RequestOptionFunc) (*RedmineService, *Response, error)
 		SetRedmineService(pid any, opt *SetRedmineServiceOptions, options ...RequestOptionFunc) (*RedmineService, *Response, error)
 		DeleteRedmineService(pid any, options ...RequestOptionFunc) (*Response, error)
@@ -1141,93 +1134,6 @@ func (s *ServicesService) DisableSlackApplication(pid any, options ...RequestOpt
 	return s.client.Do(req, nil)
 }
 
-// SetGitLabCIServiceOptions represents the available SetGitLabCIService()
-// options.
-//
-// Deprecated: Related docs not found
-type SetGitLabCIServiceOptions struct {
-	Token      *string `url:"token,omitempty" json:"token,omitempty"`
-	ProjectURL *string `url:"project_url,omitempty" json:"project_url,omitempty"`
-}
-
-// SetGitLabCIService sets GitLab CI service for a project.
-//
-// Deprecated: Related docs not found
-func (s *ServicesService) SetGitLabCIService(pid any, opt *SetGitLabCIServiceOptions, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/services/gitlab-ci", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
-}
-
-// DeleteGitLabCIService deletes GitLab CI service settings for a project.
-//
-// Deprecated: Related docs not found
-func (s *ServicesService) DeleteGitLabCIService(pid any, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/services/gitlab-ci", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
-}
-
-// SetHipChatServiceOptions represents the available SetHipChatService()
-// options.
-// Deprecated: removed in GitLab 13.11
-type SetHipChatServiceOptions struct {
-	Token *string `url:"token,omitempty" json:"token,omitempty" `
-	Room  *string `url:"room,omitempty" json:"room,omitempty"`
-}
-
-// SetHipChatService sets HipChat service for a project
-// Deprecated: removed in GitLab 13.11
-func (s *ServicesService) SetHipChatService(pid any, opt *SetHipChatServiceOptions, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/services/hipchat", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
-}
-
-// DeleteHipChatService deletes HipChat service for project.
-// Deprecated: removed in GitLab 13.11
-func (s *ServicesService) DeleteHipChatService(pid any, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/services/hipchat", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
-}
-
 // JenkinsCIService represents Jenkins CI service settings.
 //
 // GitLab API docs:
@@ -1363,9 +1269,6 @@ type JiraServiceProperties struct {
 	IssuesEnabled                bool     `json:"issues_enabled"`
 	ProjectKeys                  []string `json:"project_keys" `
 	UseInheritedSettings         bool     `json:"use_inherited_settings"`
-
-	// Deprecated: This parameter was removed in GitLab 17.0
-	ProjectKey string `json:"project_key" `
 }
 
 // UnmarshalJSON decodes the Jira Service Properties.
@@ -1445,9 +1348,6 @@ type SetJiraServiceOptions struct {
 	IssuesEnabled                *bool     `url:"issues_enabled,omitempty" json:"issues_enabled,omitempty"`
 	ProjectKeys                  *[]string `url:"project_keys,comma,omitempty" json:"project_keys,omitempty" `
 	UseInheritedSettings         *bool     `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
-
-	// Deprecated: This parameter was removed in GitLab 17.0
-	ProjectKey *string `url:"project_key,omitempty" json:"project_key,omitempty" `
 }
 
 // SetJiraService sets Jira service for a project
@@ -1932,99 +1832,6 @@ func (s *ServicesService) DeletePipelinesEmailService(pid any, options ...Reques
 		return nil, err
 	}
 	u := fmt.Sprintf("projects/%s/services/pipelines-email", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
-}
-
-// PrometheusService represents Prometheus service settings.
-//
-// Deprecated: Removed in GitLab 17.2
-type PrometheusService struct {
-	Service
-	Properties *PrometheusServiceProperties `json:"properties"`
-}
-
-// PrometheusServiceProperties represents Prometheus specific properties.
-//
-// Deprecated: Removed in GitLab 17.2
-type PrometheusServiceProperties struct {
-	APIURL                      string `json:"api_url"`
-	GoogleIAPAudienceClientID   string `json:"google_iap_audience_client_id"`
-	GoogleIAPServiceAccountJSON string `json:"google_iap_service_account_json"`
-}
-
-// GetPrometheusService gets Prometheus service settings for a project.
-//
-// Deprecated: Removed in GitLab 17.2
-func (s *ServicesService) GetPrometheusService(pid any, options ...RequestOptionFunc) (*PrometheusService, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/services/prometheus", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	svc := new(PrometheusService)
-	resp, err := s.client.Do(req, svc)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return svc, resp, nil
-}
-
-// SetPrometheusServiceOptions represents the available SetPrometheusService()
-// options.
-//
-// Deprecated: Removed in GitLab 17.2
-type SetPrometheusServiceOptions struct {
-	APIURL                      *string `url:"api_url,omitempty" json:"api_url,omitempty"`
-	GoogleIAPAudienceClientID   *string `url:"google_iap_audience_client_id,omitempty" json:"google_iap_audience_client_id,omitempty"`
-	GoogleIAPServiceAccountJSON *string `url:"google_iap_service_account_json,omitempty" json:"google_iap_service_account_json,omitempty"`
-}
-
-// SetPrometheusService sets Prometheus service for a project.
-//
-// Deprecated: Removed in GitLab 17.2
-func (s *ServicesService) SetPrometheusService(pid any, opt *SetPrometheusServiceOptions, options ...RequestOptionFunc) (*PrometheusService, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/services/prometheus", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	svc := new(PrometheusService)
-	resp, err := s.client.Do(req, svc)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return svc, resp, nil
-}
-
-// DeletePrometheusService deletes Prometheus service settings for a project.
-//
-// Deprecated: Removed in GitLab 17.2
-func (s *ServicesService) DeletePrometheusService(pid any, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/services/prometheus", PathEscape(project))
 
 	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
 	if err != nil {
