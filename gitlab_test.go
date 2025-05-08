@@ -25,6 +25,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"reflect"
 	"strings"
 	"testing"
 	"time"
@@ -468,6 +469,57 @@ func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
 			t.Errorf("For %s, expected %d, got %d", k, v, gotPageHeaders[k])
 		}
 	}
+}
+
+func TestNewRetryableHTTPClientWithRetryCheck(t *testing.T) {
+	t.Parallel()
+
+	_, client := setup(t)
+
+	logger := struct{}{}
+	retryWaitMin := 10 * time.Second
+	retryWaitMax := 20 * time.Second
+	retryMax := 30
+	requestLogHook := retryablehttp.RequestLogHook(func(logger retryablehttp.Logger, request *http.Request, i int) {
+	})
+	checkRetry := retryablehttp.CheckRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+		return false, nil
+	})
+	backoff := retryablehttp.Backoff(func(min, max time.Duration, attemptNum int, resp *http.Response) time.Duration {
+		return time.Second
+	})
+	errorHandler := retryablehttp.ErrorHandler(func(resp *http.Response, err error, numTries int) (*http.Response, error) {
+		return nil, nil
+	})
+	prepareRetry := retryablehttp.PrepareRetry(func(req *http.Request) error {
+		return nil
+	})
+
+	newCheckRetry := retryablehttp.CheckRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+		return false, nil
+	})
+
+	client.client.Logger = logger
+	client.client.RetryWaitMin = retryWaitMin
+	client.client.RetryWaitMax = retryWaitMax
+	client.client.RetryMax = retryMax
+	client.client.RequestLogHook = requestLogHook
+	client.client.CheckRetry = checkRetry
+	client.client.Backoff = backoff
+	client.client.ErrorHandler = errorHandler
+	client.client.PrepareRetry = prepareRetry
+
+	actual := client.newRetryableHTTPClientWithRetryCheck(newCheckRetry)
+
+	assert.Equal(t, logger, actual.Logger)
+	assert.Equal(t, retryWaitMin, actual.RetryWaitMin)
+	assert.Equal(t, retryWaitMax, actual.RetryWaitMax)
+	assert.Equal(t, retryMax, actual.RetryMax)
+	assert.Equal(t, reflect.ValueOf(requestLogHook).Pointer(), reflect.ValueOf(actual.RequestLogHook).Pointer())
+	assert.Equal(t, reflect.ValueOf(newCheckRetry).Pointer(), reflect.ValueOf(actual.CheckRetry).Pointer())
+	assert.Equal(t, reflect.ValueOf(backoff).Pointer(), reflect.ValueOf(actual.Backoff).Pointer())
+	assert.Equal(t, reflect.ValueOf(errorHandler).Pointer(), reflect.ValueOf(actual.ErrorHandler).Pointer())
+	assert.Equal(t, reflect.ValueOf(prepareRetry).Pointer(), reflect.ValueOf(actual.PrepareRetry).Pointer())
 }
 
 func TestExponentialBackoffLogic(t *testing.T) {

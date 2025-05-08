@@ -915,7 +915,14 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		}
 	}
 
-	resp, err := c.client.Do(req)
+	client := c.client
+
+	if cr := checkRetryFromContext(req.Context()); cr != nil {
+		// for avoid overwriting c.client. Use copy of c.client and apply checkRetry from request context
+		client = c.newRetryableHTTPClientWithRetryCheck(cr)
+	}
+
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1097,5 +1104,20 @@ func parseError(raw any) string {
 
 	default:
 		return fmt.Sprintf("failed to parse unexpected error type: %T", raw)
+	}
+}
+
+// newRetryableHTTPClientWithRetryCheck returns a `retryablehttp.Client` clone of itself with the given CheckRetry function
+func (c *Client) newRetryableHTTPClientWithRetryCheck(cr retryablehttp.CheckRetry) *retryablehttp.Client {
+	return &retryablehttp.Client{
+		Logger:         c.client.Logger,
+		RetryWaitMin:   c.client.RetryWaitMin,
+		RetryWaitMax:   c.client.RetryWaitMax,
+		RetryMax:       c.client.RetryMax,
+		RequestLogHook: c.client.RequestLogHook,
+		CheckRetry:     cr,
+		Backoff:        c.client.Backoff,
+		ErrorHandler:   c.client.ErrorHandler,
+		PrepareRetry:   c.client.PrepareRetry,
 	}
 }
