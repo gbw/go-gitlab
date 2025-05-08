@@ -14,14 +14,130 @@
 package gitlab
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"testing"
 	"time"
 
-	"github.com/hashicorp/go-retryablehttp"
+	retryablehttp "github.com/hashicorp/go-retryablehttp"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestWithContext(t *testing.T) {
+	t.Parallel()
+
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/ok", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	// WithContext is called once
+	ctx1 := contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+		if ctx.Err() != nil {
+			return false, ctx.Err()
+		}
+		if err != nil {
+			return false, err
+		}
+		if resp.StatusCode == http.StatusMethodNotAllowed {
+			return true, nil
+		}
+		return false, nil
+	})
+
+	req, err := client.NewRequest(
+		http.MethodGet,
+		"/ok",
+		nil,
+		[]RequestOptionFunc{WithContext(ctx1)},
+	)
+	assert.NoError(t, err)
+
+	_, err = client.Do(req, nil)
+	assert.NoError(t, err)
+
+	// WithContext is called twice
+	ctx1 = contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+		if ctx.Err() != nil {
+			return false, ctx.Err()
+		}
+		if err != nil {
+			return false, err
+		}
+		if resp.StatusCode == http.StatusTooManyRequests || resp.StatusCode == http.StatusNotFound {
+			return true, nil
+		}
+		return false, nil
+	})
+	ctx2 := contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+		if ctx.Err() != nil {
+			return false, ctx.Err()
+		}
+		if err != nil {
+			return false, err
+		}
+		if resp.StatusCode == http.StatusBadRequest {
+			return true, nil
+		}
+		return false, nil
+	})
+
+	req, err = client.NewRequest(
+		http.MethodGet,
+		"/ok",
+		nil,
+		[]RequestOptionFunc{WithContext(ctx1), WithContext(ctx2)},
+	)
+	assert.NoError(t, err)
+
+	_, err = client.Do(req, nil)
+	assert.NoError(t, err)
+}
+
+func TestWithContextAndWithRequestRetry(t *testing.T) {
+	t.Parallel()
+
+	retryCount := 0
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/success-on-3rd", func(w http.ResponseWriter, r *http.Request) {
+		retryCount += 1
+
+		if retryCount < 3 {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		} else {
+			w.WriteHeader(http.StatusOK)
+		}
+	})
+
+	// retryableStatusCodes in context is restored when WithContext is called
+	newCtx := context.Background()
+	req, err := client.NewRequest(
+		http.MethodGet,
+		"/success-on-3rd",
+		nil,
+		[]RequestOptionFunc{
+			WithRequestRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+				if ctx.Err() != nil {
+					return false, ctx.Err()
+				}
+				if err != nil {
+					return false, err
+				}
+				if resp.StatusCode == http.StatusMethodNotAllowed {
+					return true, nil
+				}
+				return false, nil
+			}),
+			WithContext(newCtx),
+		},
+	)
+	assert.NoError(t, err)
+
+	_, err = client.Do(req, nil)
+	assert.NoError(t, err)
+}
 
 func TestWithHeader(t *testing.T) {
 	t.Parallel()
@@ -184,4 +300,162 @@ func TestWithKeysetPaginationParameters(t *testing.T) {
 
 	// Ensure cursor gets properly pulled from "next link" header
 	assert.Equal(t, "eyJuYW1lIjoiRmxpZ2h0anMiLCJpZCI6IjI2IiwiX2tkIjoibiJ9", values.Get("cursor"))
+}
+
+func TestWithRequestRetry(t *testing.T) {
+	t.Parallel()
+
+	retryCount := 0
+
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/success-on-3rd", func(w http.ResponseWriter, r *http.Request) {
+		retryCount += 1
+		switch retryCount {
+		case 1:
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		case 2:
+			w.WriteHeader(http.StatusUnprocessableEntity)
+		default:
+			w.WriteHeader(http.StatusOK)
+		}
+	})
+
+	req, err := client.NewRequest(
+		http.MethodGet,
+		"/success-on-3rd",
+		nil,
+		[]RequestOptionFunc{
+			WithRequestRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+				if ctx.Err() != nil {
+					return false, ctx.Err()
+				}
+				if err != nil {
+					return false, err
+				}
+				if resp.StatusCode == http.StatusMethodNotAllowed || resp.StatusCode == http.StatusUnprocessableEntity {
+					return true, nil
+				}
+				return false, nil
+			}),
+		},
+	)
+	assert.NoError(t, err)
+
+	_, err = client.Do(req, nil)
+	assert.NoError(t, err)
+
+	// fails because it is retried only in case of StatusUnprocessableEntity error. (WithRetryForStatusCodes(StatusMethodNotAllowed) is overwritten)
+	retryCount = 0
+	req, err = client.NewRequest(
+		http.MethodGet,
+		"/success-on-3rd",
+		nil,
+		[]RequestOptionFunc{
+			WithRequestRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+				if ctx.Err() != nil {
+					return false, ctx.Err()
+				}
+				if err != nil {
+					return false, err
+				}
+				if resp.StatusCode == http.StatusMethodNotAllowed {
+					return true, nil
+				}
+				return false, nil
+			}),
+			WithRequestRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+				if ctx.Err() != nil {
+					return false, ctx.Err()
+				}
+				if err != nil {
+					return false, err
+				}
+				if resp.StatusCode == http.StatusUnprocessableEntity {
+					return true, nil
+				}
+				return false, nil
+			}),
+		},
+	)
+	assert.NoError(t, err)
+
+	_, err = client.Do(req, nil)
+	assert.ErrorContains(t, err, ": 405", "expect to returns StatusMethodNotAllowed error")
+
+	// fails because 422 error is not allow to retryable
+	retryCount = 0
+	req, err = client.NewRequest(
+		http.MethodGet,
+		"/success-on-3rd",
+		nil,
+		[]RequestOptionFunc{
+			WithRequestRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+				if ctx.Err() != nil {
+					return false, ctx.Err()
+				}
+				if err != nil {
+					return false, err
+				}
+				if resp.StatusCode == http.StatusMethodNotAllowed {
+					return true, nil
+				}
+				return false, nil
+			}),
+		},
+	)
+	assert.NoError(t, err)
+
+	_, err = client.Do(req, nil)
+	assert.ErrorContains(t, err, ": 422", "expect to returns StatusUnprocessableEntity error")
+}
+
+func ExampleWithRequestRetry_createMergeRequestAndSetAutoMerge() {
+	git, err := NewClient("yourtokengoeshere")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	projectName := "example/example"
+
+	// Create a new Merge Request
+	mr, _, err := git.MergeRequests.CreateMergeRequest(projectName, &CreateMergeRequestOptions{
+		SourceBranch:       Ptr("my-topic-branch"),
+		TargetBranch:       Ptr("main"),
+		Title:              Ptr("New MergeRequest"),
+		Description:        Ptr("New MergeRequest"),
+		RemoveSourceBranch: Ptr(true),
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Set auto-merge to created Merge Request
+	// c.f. https://docs.gitlab.com/user/project/merge_requests/auto_merge/
+	_, _, err = git.MergeRequests.AcceptMergeRequest(
+		projectName, mr.IID, &AcceptMergeRequestOptions{MergeWhenPipelineSucceeds: Ptr(true)},
+
+		// client-go provides retries on rate limit (429) and server (>= 500) errors by default.
+		//
+		// But Method Not Allowed (405) and Unprocessable Content (422) errors will be returned
+		// when AcceptMergeRequest is called immediately after CreateMergeRequest.
+		//
+		// c.f. https://docs.gitlab.com/api/merge_requests/#merge-a-merge-request
+		//
+		// Therefore, add a retryable status code only for AcceptMergeRequest calls
+		WithRequestRetry(func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+			if ctx.Err() != nil {
+				return false, ctx.Err()
+			}
+			if err != nil {
+				return false, err
+			}
+			if resp.StatusCode == http.StatusTooManyRequests || resp.StatusCode >= http.StatusInternalServerError || resp.StatusCode == http.StatusMethodNotAllowed || resp.StatusCode == http.StatusUnprocessableEntity {
+				return true, nil
+			}
+			return false, nil
+		}),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
