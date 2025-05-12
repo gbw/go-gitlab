@@ -189,7 +189,7 @@ type AddDeployKeyOptions struct {
 
 // AddDeployKey creates a new deploy key for a project. If deploy key already
 // exists in another project - it will be joined to project but only if
-// original one was is accessible by same user.
+// original one is accessible by the same user.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_keys/#add-deploy-key-for-a-project

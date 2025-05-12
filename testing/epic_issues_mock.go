@@ -176,7 +176,7 @@ func (c *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall) DoAndReturn(f func(a
 }
 
 // UpdateEpicIssueAssignment mocks base method.
-func (m *MockEpicIssuesServiceInterface) UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *gitlab.UpdateEpicIsssueAssignmentOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
+func (m *MockEpicIssuesServiceInterface) UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *gitlab.UpdateEpicIssueAssignmentOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, epicIssue, opt}
 	for _, a := range options {
@@ -209,13 +209,13 @@ func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) Do(f func(any, int, int, *gitlab.UpdateEpicIsssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
+func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) Do(f func(any, int, int, *gitlab.UpdateEpicIssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateEpicIsssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
+func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateEpicIssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

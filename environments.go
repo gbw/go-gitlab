@@ -147,10 +147,9 @@ type CreateEnvironmentOptions struct {
 	AutoStopSetting     *string `url:"auto_stop_setting,omitempty" json:"auto_stop_setting,omitempty"`
 }
 
-// CreateEnvironment adds an environment to a project. This is an idempotent
-// method and can be called multiple times with the same parameters. Createing
-// an environment that is already a environment does not affect the
-// existing environmentship.
+// CreateEnvironment adds an environment to a project. This method is idempotent
+// and can be called multiple times with the same parameters. Creating an environment
+// that already exists does not affect the existing association.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/environments/#create-a-new-environment
