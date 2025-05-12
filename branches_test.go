@@ -179,7 +179,7 @@ func TestBranchesService_ListBranchesWithRegex(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/5/repository/branches", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "regex=%5Efeature-.%2A")
+		testParam(t, r, "regex", "^feature-.*")
 		mustWriteHTTPResponse(t, w, "testdata/list_branches.json")
 	})
 

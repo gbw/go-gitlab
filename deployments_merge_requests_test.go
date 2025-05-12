@@ -15,7 +15,9 @@ func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests(t *testing.T
 
 	mux.HandleFunc("/api/v4/projects/278964/deployments/2/merge_requests", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "assignee_id=Any&with_labels_details=true&with_merge_status_recheck=true")
+		testParam(t, r, "assignee_id", "Any")
+		testParam(t, r, "with_labels_details", "true")
+		testParam(t, r, "with_merge_status_recheck", "true")
 		mustWriteHTTPResponse(t, w, "testdata/get_merge_requests.json")
 	})
 

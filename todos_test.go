@@ -17,6 +17,7 @@
 package gitlab
 
 import (
+	"errors"
 	"net/http"
 	"testing"
 
@@ -25,23 +26,120 @@ import (
 
 func TestListTodos(t *testing.T) {
 	t.Parallel()
-	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/todos", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		mustWriteHTTPResponse(t, w, "testdata/list_todos.json")
-	})
+	const testdataFile = "testdata/list_todos.json"
 
-	opts := &ListTodosOptions{ListOptions: ListOptions{PerPage: 2}}
-	todos, _, err := client.Todos.ListTodos(opts)
-
-	require.NoError(t, err)
-
-	want := []*Todo{
-		{ID: 1, State: "pending", Target: &TodoTarget{ID: float64(1), ApprovalsBeforeMerge: 2}},
-		{ID: 2, State: "pending", Target: &TodoTarget{ID: "1d76d1b2e3e886108f662765c97f4687f4134d8c"}},
+	tests := []struct {
+		name    string
+		opts    *ListTodosOptions
+		handler func(t *testing.T, w http.ResponseWriter, r *http.Request)
+		wantErr string
+	}{
+		{
+			name: "with action",
+			opts: &ListTodosOptions{
+				Action: Ptr(TodoMentioned),
+			},
+			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				testParam(t, r, "action", string(TodoMentioned))
+				mustWriteHTTPResponse(t, w, testdataFile)
+			},
+		},
+		{
+			name: "with author_id",
+			opts: &ListTodosOptions{
+				AuthorID: Ptr(1),
+			},
+			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				testParam(t, r, "author_id", "1")
+				mustWriteHTTPResponse(t, w, testdataFile)
+			},
+		},
+		{
+			name: "with project_id",
+			opts: &ListTodosOptions{
+				ProjectID: Ptr(1),
+			},
+			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				testParam(t, r, "project_id", "1")
+				mustWriteHTTPResponse(t, w, testdataFile)
+			},
+		},
+		{
+			name: "with group_id",
+			opts: &ListTodosOptions{
+				GroupID: Ptr(1),
+			},
+			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				testParam(t, r, "group_id", "1")
+				mustWriteHTTPResponse(t, w, testdataFile)
+			},
+		},
+		{
+			name: "with state",
+			opts: &ListTodosOptions{
+				State: Ptr("pending"),
+			},
+			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				testParam(t, r, "state", "pending")
+				mustWriteHTTPResponse(t, w, testdataFile)
+			},
+		},
+		{
+			name: "with type",
+			opts: &ListTodosOptions{
+				Type: Ptr("Issue"),
+			},
+			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				testParam(t, r, "type", "Issue")
+				mustWriteHTTPResponse(t, w, testdataFile)
+			},
+		},
+		{
+			name: "with server error",
+			opts: &ListTodosOptions{},
+			handler: func(t *testing.T, w http.ResponseWriter, _ *http.Request) {
+				w.WriteHeader(http.StatusInternalServerError)
+				mustWriteErrorResponse(t, w, errors.New("Internal Server Error"))
+			},
+			wantErr: "Internal Server Error",
+		},
 	}
-	require.Equal(t, want, todos)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			mux, client := setup(t)
+
+			// Create a closure that captures the correct t for this test case
+			mux.HandleFunc("/api/v4/todos", func(w http.ResponseWriter, r *http.Request) {
+				tt.handler(t, w, r)
+			})
+
+			todos, _, err := client.Todos.ListTodos(tt.opts)
+
+			if tt.wantErr != "" {
+				require.ErrorContains(t, err, tt.wantErr)
+				return
+			}
+
+			require.NoError(t, err)
+
+			want := []*Todo{
+				{ID: 1, State: "pending", Target: &TodoTarget{ID: float64(1), ApprovalsBeforeMerge: 2}},
+				{ID: 2, State: "pending", Target: &TodoTarget{ID: "1d76d1b2e3e886108f662765c97f4687f4134d8c"}},
+			}
+
+			require.Equal(t, want, todos)
+		})
+	}
 }
 
 func TestMarkAllTodosAsDone(t *testing.T) {

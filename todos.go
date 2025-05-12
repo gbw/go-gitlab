@@ -122,6 +122,7 @@ type ListTodosOptions struct {
 	Action    *TodoAction `url:"action,omitempty" json:"action,omitempty"`
 	AuthorID  *int        `url:"author_id,omitempty" json:"author_id,omitempty"`
 	ProjectID *int        `url:"project_id,omitempty" json:"project_id,omitempty"`
+	GroupID   *int        `url:"group_id,omitempty" json:"group_id,omitempty"`
 	State     *string     `url:"state,omitempty" json:"state,omitempty"`
 	Type      *string     `url:"type,omitempty" json:"type,omitempty"`
 }

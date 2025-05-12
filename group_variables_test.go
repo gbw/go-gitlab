@@ -17,7 +17,6 @@
 package gitlab
 
 import (
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -31,7 +30,15 @@ func TestListGroupVariabless(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/variables",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
-			fmt.Fprint(w, `[{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": true}]`)
+			mustWriteJSONResponse(t, w, []map[string]any{
+				{
+					"key":       "TEST_VARIABLE_1",
+					"value":     "test1",
+					"protected": false,
+					"masked":    true,
+					"hidden":    true,
+				},
+			})
 		})
 
 	variables, resp, err := client.GroupVariables.ListVariables(1, &ListGroupVariablesOptions{})
@@ -58,8 +65,14 @@ func TestGetGroupVariable(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
-			testParams(t, r, "filter%5Benvironment_scope%5D=prod")
-			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": false}`)
+			testParam(t, r, "filter[environment_scope]", "prod")
+			mustWriteJSONResponse(t, w, map[string]any{
+				"key":       "TEST_VARIABLE_1",
+				"value":     "test1",
+				"protected": false,
+				"masked":    true,
+				"hidden":    false,
+			})
 		})
 
 	variable, resp, err := client.GroupVariables.GetVariable(1, "TEST_VARIABLE_1", &GetGroupVariableOptions{Filter: &VariableFilter{EnvironmentScope: "prod"}})
@@ -77,7 +90,13 @@ func TestCreateGroupVariable(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/variables",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","value":"test1","protected": false,"masked": true,"hidden": false}`)
+			mustWriteJSONResponse(t, w, map[string]any{
+				"key":       "TEST_VARIABLE_1",
+				"value":     "test1",
+				"protected": false,
+				"masked":    true,
+				"hidden":    false,
+			})
 		})
 
 	opt := &CreateGroupVariableOptions{
@@ -103,7 +122,12 @@ func TestCreateGroupVariable_MaskedAndHidden(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/variables",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","protected": false,"masked": true,"hidden": true}`)
+			mustWriteJSONResponse(t, w, map[string]any{
+				"key":       "TEST_VARIABLE_1",
+				"protected": false,
+				"masked":    true,
+				"hidden":    true,
+			})
 		})
 
 	opt := &CreateGroupVariableOptions{
@@ -148,7 +172,13 @@ func TestUpdateGroupVariable(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": false}`)
+			mustWriteJSONResponse(t, w, map[string]any{
+				"key":       "TEST_VARIABLE_1",
+				"value":     "test1",
+				"protected": false,
+				"masked":    true,
+				"hidden":    false,
+			})
 		})
 
 	variable, resp, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{})
@@ -166,7 +196,13 @@ func TestUpdateGroupVariable_Filter(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","value": "test1","protected": false,"masked": true,"hidden": false}`)
+			mustWriteJSONResponse(t, w, map[string]any{
+				"key":       "TEST_VARIABLE_1",
+				"value":     "test1",
+				"protected": false,
+				"masked":    true,
+				"hidden":    false,
+			})
 		})
 
 	variable, resp, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{Filter: &VariableFilter{EnvironmentScope: "prod"}})
@@ -184,7 +220,12 @@ func TestUpdateGroupVariable_MaskedAndHidden(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/variables/TEST_VARIABLE_1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-			fmt.Fprint(w, `{"key": "TEST_VARIABLE_1","protected": false,"masked": true,"hidden": true}`)
+			mustWriteJSONResponse(t, w, map[string]any{
+				"key":       "TEST_VARIABLE_1",
+				"protected": false,
+				"masked":    true,
+				"hidden":    true,
+			})
 		})
 
 	variable, resp, err := client.GroupVariables.UpdateVariable(1, "TEST_VARIABLE_1", &UpdateGroupVariableOptions{})

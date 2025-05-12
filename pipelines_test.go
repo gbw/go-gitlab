@@ -17,7 +17,6 @@
 package gitlab
 
 import (
-	"fmt"
 	"net/http"
 	"reflect"
 	"testing"
@@ -31,7 +30,10 @@ func TestListProjectPipelines(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `[{"id":1, "name":"test"},{"id":2}]`)
+		mustWriteJSONResponse(t, w, []map[string]any{
+			{"id": 1, "name": "test"},
+			{"id": 2},
+		})
 	})
 
 	opt := &ListProjectPipelinesOptions{Ref: Ptr("master")}
@@ -52,7 +54,7 @@ func TestGetPipeline(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `{"id":1,"status":"success", "source":"api"}`)
+		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "success", "source": "api"})
 	})
 
 	pipeline, _, err := client.Pipelines.GetPipeline(1, 5949167)
@@ -72,7 +74,10 @@ func TestGetPipelineVariables(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167/variables", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `[{"key":"RUN_NIGHTLY_BUILD","variable_type":"env_var","value":"true"},{"key":"foo","value":"bar"}]`)
+		mustWriteJSONResponse(t, w, []*PipelineVariable{
+			{Key: "RUN_NIGHTLY_BUILD", Value: "true", VariableType: "env_var"},
+			{Key: "foo", Value: "bar"},
+		})
 	})
 
 	variables, _, err := client.Pipelines.GetPipelineVariables(1, 5949167)
@@ -179,8 +184,8 @@ func TestGetLatestPipeline(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/latest", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "")
-		fmt.Fprint(w, `{"id":1,"status":"success"}`)
+		assert.Equal(t, "", r.URL.RawQuery)
+		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "success"})
 	})
 
 	pipeline, _, err := client.Pipelines.GetLatestPipeline(1, nil)
@@ -195,8 +200,8 @@ func TestGetLatestPipeline_WithRef(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/latest", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "ref=abc")
-		fmt.Fprint(w, `{"id":1,"status":"success"}`)
+		testParam(t, r, "ref", "abc")
+		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "success"})
 	})
 
 	pipeline, _, err := client.Pipelines.GetLatestPipeline(1, &GetLatestPipelineOptions{
@@ -213,7 +218,7 @@ func TestCreatePipeline(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipeline", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		fmt.Fprint(w, `{"id":1, "status":"pending"}`)
+		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "pending"})
 	})
 
 	opt := &CreatePipelineOptions{Ref: Ptr("master")}
@@ -234,7 +239,7 @@ func TestRetryPipelineBuild(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167/retry", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		fmt.Fprintln(w, `{"id":1, "status":"pending"}`)
+		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "pending"})
 	})
 
 	pipeline, _, err := client.Pipelines.RetryPipelineBuild(1, 5949167)
@@ -254,7 +259,7 @@ func TestCancelPipelineBuild(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/5949167/cancel", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		fmt.Fprintln(w, `{"id":1, "status":"canceled"}`)
+		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "canceled"})
 	})
 
 	pipeline, _, err := client.Pipelines.CancelPipelineBuild(1, 5949167)
@@ -288,7 +293,7 @@ func TestUpdateMetadata(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/234/metadata", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		fmt.Fprint(w, `{"id":1, "status":"running"}`)
+		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "running"})
 	})
 
 	opt := &UpdatePipelineMetadataOptions{Name: Ptr("new pipeline title")}

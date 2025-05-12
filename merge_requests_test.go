@@ -153,7 +153,9 @@ func TestListProjectMergeRequests(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "assignee_id=Any&with_labels_details=true&with_merge_status_recheck=true")
+		testParam(t, r, "assignee_id", "Any")
+		testParam(t, r, "with_labels_details", "true")
+		testParam(t, r, "with_merge_status_recheck", "true")
 		mustWriteHTTPResponse(t, w, "testdata/get_merge_requests.json")
 	})
 
@@ -206,7 +208,10 @@ func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "assignee_id=Any&author_username=hfyngvason&with_labels_details=true&with_merge_status_recheck=true")
+		testParam(t, r, "assignee_id", "Any")
+		testParam(t, r, "author_username", "hfyngvason")
+		testParam(t, r, "with_labels_details", "true")
+		testParam(t, r, "with_merge_status_recheck", "true")
 		mustWriteHTTPResponse(t, w, "testdata/get_merge_requests_author_username.json")
 	})
 
@@ -260,7 +265,10 @@ func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "assignee_id=Any&not%5Bauthor_username%5D=hfyngvason&with_labels_details=true&with_merge_status_recheck=true")
+		testParam(t, r, "assignee_id", "Any")
+		testParam(t, r, "not[author_username]", "hfyngvason")
+		testParam(t, r, "with_labels_details", "true")
+		testParam(t, r, "with_merge_status_recheck", "true")
 		mustWriteHTTPResponse(t, w, "testdata/get_merge_requests_not_author_username.json")
 	})
 

@@ -105,10 +105,11 @@ func testBodyJSON[T any](t *testing.T, r *http.Request, want T) bool {
 	return assert.Equal(t, want, got)
 }
 
-func testParams(t *testing.T, r *http.Request, want string) {
-	if got := r.URL.RawQuery; got != want {
-		t.Errorf("Request query: %s, want %s", got, want)
-	}
+// testParam checks whether the given request contains the expected parameter and whether the parameter has the expected value.
+func testParam(t *testing.T, r *http.Request, key, value string) {
+	require.True(t, r.URL.Query().Has(key), "Request does not contain the %q parameter", key)
+	assert.Equal(t, 1, len(r.URL.Query()[key]), "Request contains multiple %q parameters when only one is expected", key)
+	require.Equal(t, value, r.URL.Query().Get(key))
 }
 
 func mustWriteHTTPResponse(t *testing.T, w io.Writer, fixturePath string) {
@@ -120,6 +121,24 @@ func mustWriteHTTPResponse(t *testing.T, w io.Writer, fixturePath string) {
 	if _, err = io.Copy(w, f); err != nil {
 		t.Fatalf("error writing response: %v", err)
 	}
+}
+
+// mustWriteJSONResponse writes a JSON response to w.
+// It uses t.Fatal to stop the test and report an error if encoding the response fails.
+// This helper is useful when implementing handlers in unit tests.
+func mustWriteJSONResponse(t *testing.T, w io.Writer, response any) {
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		t.Fatalf("Failed to write response: %v", err)
+	}
+}
+
+// mustWriteErrorResponse writes an error response to w in a format that CheckResponse can parse.
+// It uses t.Fatal to stop the test and report an error if encoding the response fails.
+// This is useful when testing error conditions.
+func mustWriteErrorResponse(t *testing.T, w io.Writer, err error) {
+	mustWriteJSONResponse(t, w, map[string]any{
+		"error": err.Error(),
+	})
 }
 
 func errorOption(*retryablehttp.Request) error {
