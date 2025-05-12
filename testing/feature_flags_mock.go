@@ -40,6 +40,94 @@ func (m *MockFeaturesServiceInterface) EXPECT() *MockFeaturesServiceInterfaceMoc
 	return m.recorder
 }
 
+// DeleteFeatureFlag mocks base method.
+func (m *MockFeaturesServiceInterface) DeleteFeatureFlag(name string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{name}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteFeatureFlag", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteFeatureFlag indicates an expected call of DeleteFeatureFlag.
+func (mr *MockFeaturesServiceInterfaceMockRecorder) DeleteFeatureFlag(name any, options ...any) *MockFeaturesServiceInterfaceDeleteFeatureFlagCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{name}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFeatureFlag", reflect.TypeOf((*MockFeaturesServiceInterface)(nil).DeleteFeatureFlag), varargs...)
+	return &MockFeaturesServiceInterfaceDeleteFeatureFlagCall{Call: call}
+}
+
+// MockFeaturesServiceInterfaceDeleteFeatureFlagCall wrap *gomock.Call
+type MockFeaturesServiceInterfaceDeleteFeatureFlagCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockFeaturesServiceInterfaceDeleteFeatureFlagCall) Return(arg0 *gitlab.Response, arg1 error) *MockFeaturesServiceInterfaceDeleteFeatureFlagCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockFeaturesServiceInterfaceDeleteFeatureFlagCall) Do(f func(string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFeaturesServiceInterfaceDeleteFeatureFlagCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockFeaturesServiceInterfaceDeleteFeatureFlagCall) DoAndReturn(f func(string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFeaturesServiceInterfaceDeleteFeatureFlagCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListFeatureDefinitions mocks base method.
+func (m *MockFeaturesServiceInterface) ListFeatureDefinitions(options ...gitlab.RequestOptionFunc) ([]*gitlab.FeatureDefinition, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListFeatureDefinitions", varargs...)
+	ret0, _ := ret[0].([]*gitlab.FeatureDefinition)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListFeatureDefinitions indicates an expected call of ListFeatureDefinitions.
+func (mr *MockFeaturesServiceInterfaceMockRecorder) ListFeatureDefinitions(options ...any) *MockFeaturesServiceInterfaceListFeatureDefinitionsCall {
+	mr.mock.ctrl.T.Helper()
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListFeatureDefinitions", reflect.TypeOf((*MockFeaturesServiceInterface)(nil).ListFeatureDefinitions), options...)
+	return &MockFeaturesServiceInterfaceListFeatureDefinitionsCall{Call: call}
+}
+
+// MockFeaturesServiceInterfaceListFeatureDefinitionsCall wrap *gomock.Call
+type MockFeaturesServiceInterfaceListFeatureDefinitionsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockFeaturesServiceInterfaceListFeatureDefinitionsCall) Return(arg0 []*gitlab.FeatureDefinition, arg1 *gitlab.Response, arg2 error) *MockFeaturesServiceInterfaceListFeatureDefinitionsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockFeaturesServiceInterfaceListFeatureDefinitionsCall) Do(f func(...gitlab.RequestOptionFunc) ([]*gitlab.FeatureDefinition, *gitlab.Response, error)) *MockFeaturesServiceInterfaceListFeatureDefinitionsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockFeaturesServiceInterfaceListFeatureDefinitionsCall) DoAndReturn(f func(...gitlab.RequestOptionFunc) ([]*gitlab.FeatureDefinition, *gitlab.Response, error)) *MockFeaturesServiceInterfaceListFeatureDefinitionsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListFeatures mocks base method.
 func (m *MockFeaturesServiceInterface) ListFeatures(options ...gitlab.RequestOptionFunc) ([]*gitlab.Feature, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -85,9 +173,9 @@ func (c *MockFeaturesServiceInterfaceListFeaturesCall) DoAndReturn(f func(...git
 }
 
 // SetFeatureFlag mocks base method.
-func (m *MockFeaturesServiceInterface) SetFeatureFlag(name string, value any, options ...gitlab.RequestOptionFunc) (*gitlab.Feature, *gitlab.Response, error) {
+func (m *MockFeaturesServiceInterface) SetFeatureFlag(name string, opt *gitlab.SetFeatureFlagOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Feature, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
-	varargs := []any{name, value}
+	varargs := []any{name, opt}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
@@ -99,9 +187,9 @@ func (m *MockFeaturesServiceInterface) SetFeatureFlag(name string, value any, op
 }
 
 // SetFeatureFlag indicates an expected call of SetFeatureFlag.
-func (mr *MockFeaturesServiceInterfaceMockRecorder) SetFeatureFlag(name, value any, options ...any) *MockFeaturesServiceInterfaceSetFeatureFlagCall {
+func (mr *MockFeaturesServiceInterfaceMockRecorder) SetFeatureFlag(name, opt any, options ...any) *MockFeaturesServiceInterfaceSetFeatureFlagCall {
 	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{name, value}, options...)
+	varargs := append([]any{name, opt}, options...)
 	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetFeatureFlag", reflect.TypeOf((*MockFeaturesServiceInterface)(nil).SetFeatureFlag), varargs...)
 	return &MockFeaturesServiceInterfaceSetFeatureFlagCall{Call: call}
 }
@@ -118,13 +206,13 @@ func (c *MockFeaturesServiceInterfaceSetFeatureFlagCall) Return(arg0 *gitlab.Fea
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockFeaturesServiceInterfaceSetFeatureFlagCall) Do(f func(string, any, ...gitlab.RequestOptionFunc) (*gitlab.Feature, *gitlab.Response, error)) *MockFeaturesServiceInterfaceSetFeatureFlagCall {
+func (c *MockFeaturesServiceInterfaceSetFeatureFlagCall) Do(f func(string, *gitlab.SetFeatureFlagOptions, ...gitlab.RequestOptionFunc) (*gitlab.Feature, *gitlab.Response, error)) *MockFeaturesServiceInterfaceSetFeatureFlagCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockFeaturesServiceInterfaceSetFeatureFlagCall) DoAndReturn(f func(string, any, ...gitlab.RequestOptionFunc) (*gitlab.Feature, *gitlab.Response, error)) *MockFeaturesServiceInterfaceSetFeatureFlagCall {
+func (c *MockFeaturesServiceInterfaceSetFeatureFlagCall) DoAndReturn(f func(string, *gitlab.SetFeatureFlagOptions, ...gitlab.RequestOptionFunc) (*gitlab.Feature, *gitlab.Response, error)) *MockFeaturesServiceInterfaceSetFeatureFlagCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
