@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListFeatureFlags(t *testing.T) {
@@ -49,10 +50,9 @@ func TestListFeatureFlags(t *testing.T) {
 	`)
 	})
 
-	features, _, err := client.Features.ListFeatures()
-	if err != nil {
-		t.Errorf("Features.ListFeatures returned error: %v", err)
-	}
+	features, resp, err := client.Features.ListFeatures()
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Feature{
 		{Name: "experimental_feature", State: "off", Gates: []Gate{
@@ -60,9 +60,48 @@ func TestListFeatureFlags(t *testing.T) {
 		}},
 		{Name: "new_library", State: "on"},
 	}
-	if !reflect.DeepEqual(want, features) {
-		t.Errorf("Features.ListFeatures returned %+v, want %+v", features, want)
+	assert.Equal(t, want, features)
+}
+
+func TestListFeatureDefinitions(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/features/definitions", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `
+		[
+			{
+				"name": "geo_pages_deployment_replication",
+				"introduced_by_url": "https://gitlab.com/gitlab-org/gitlab/-/merge_requests/68662",
+				"rollout_issue_url": "https://gitlab.com/gitlab-org/gitlab/-/issues/337676",
+				"milestone": "14.3",
+				"log_state_changes": null,
+				"type": "development",
+				"group": "group::geo",
+				"default_enabled": true
+			}
+		]
+		`)
+	})
+
+	definitions, resp, err := client.Features.ListFeatureDefinitions()
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := []*FeatureDefinition{
+		{
+			Name:            "geo_pages_deployment_replication",
+			IntroducedByURL: "https://gitlab.com/gitlab-org/gitlab/-/merge_requests/68662",
+			RolloutIssueURL: "https://gitlab.com/gitlab-org/gitlab/-/issues/337676",
+			Milestone:       "14.3",
+			Type:            "development",
+			Group:           "group::geo",
+			DefaultEnabled:  true,
+		},
 	}
+
+	assert.Equal(t, want, definitions)
 }
 
 func TestSetFeatureFlag(t *testing.T) {
@@ -89,10 +128,13 @@ func TestSetFeatureFlag(t *testing.T) {
 		`)
 	})
 
-	feature, _, err := client.Features.SetFeatureFlag("new_library", "30")
-	if err != nil {
-		t.Errorf("Features.SetFeatureFlag returned error: %v", err)
-	}
+	feature, resp, err := client.Features.SetFeatureFlag("new_library", &SetFeatureFlagOptions{
+		Value:        false,
+		Key:          "boolean",
+		FeatureGroup: "experiment",
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &Feature{
 		Name:  "new_library",
@@ -102,7 +144,18 @@ func TestSetFeatureFlag(t *testing.T) {
 			{Key: "percentage_of_time", Value: 30.0},
 		},
 	}
-	if !reflect.DeepEqual(want, feature) {
-		t.Errorf("Features.SetFeatureFlag returned %+v, want %+v", feature, want)
-	}
+	assert.Equal(t, want, feature)
+}
+
+func TestDeleteFeatureFlag(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/features/new_library", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Features.DeleteFeatureFlag("new_library")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
