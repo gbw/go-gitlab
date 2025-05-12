@@ -55,11 +55,20 @@ func (v GroupAccessToken) String() string {
 }
 
 // ListGroupAccessTokensOptions represents the available options for
-// listing variables in a group.
+// listing access tokens in a group.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_access_tokens/#list-all-group-access-tokens
-type ListGroupAccessTokensOptions ListOptions
+type ListGroupAccessTokensOptions struct {
+	ListOptions
+	CreatedAfter   *ISOTime          `url:"created_after,omitempty" json:"created_after,omitempty"`
+	CreatedBefore  *ISOTime          `url:"created_before,omitempty" json:"created_before,omitempty"`
+	LastUsedAfter  *ISOTime          `url:"last_used_after,omitempty" json:"last_used_after,omitempty"`
+	LastUsedBefore *ISOTime          `url:"last_used_before,omitempty" json:"last_used_before,omitempty"`
+	Revoked        *bool             `url:"revoked,omitempty" json:"revoked,omitempty"`
+	Search         *string           `url:"search,omitempty" json:"search,omitempty"`
+	State          *AccessTokenState `url:"state,omitempty" json:"state,omitempty"`
+}
 
 // ListGroupAccessTokens gets a list of all group access tokens in a group.
 //
