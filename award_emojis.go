@@ -88,7 +88,7 @@ const (
 )
 
 // ListAwardEmojiOptions represents the available options for listing emoji
-// for each resources
+// for each resource
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/emoji_reactions/

@@ -637,7 +637,7 @@ type UpdateEpicDiscussionNoteOptions struct {
 	CreatedAt *time.Time `url:"created_at,omitempty" json:"created_at,omitempty"`
 }
 
-// UpdateEpicDiscussionNote modifies existing discussion of a epic.
+// UpdateEpicDiscussionNote modifies existing discussion of an epic.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#modify-existing-epic-thread-note
@@ -1129,7 +1129,7 @@ type UpdateCommitDiscussionNoteOptions struct {
 	CreatedAt *time.Time `url:"created_at,omitempty" json:"created_at,omitempty"`
 }
 
-// UpdateCommitDiscussionNote modifies existing discussion of an commit.
+// UpdateCommitDiscussionNote modifies existing discussion of a commit.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#modify-an-existing-commit-thread-note

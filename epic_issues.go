@@ -32,7 +32,7 @@ type (
 		// Will be removed in v5 of the API, use Work Items API instead
 		RemoveEpicIssue(gid any, epic, epicIssue int, options ...RequestOptionFunc) (*EpicIssueAssignment, *Response, error)
 		// Will be removed in v5 of the API, use Work Items API instead
-		UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *UpdateEpicIsssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error)
+		UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *UpdateEpicIssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error)
 	}
 
 	// EpicIssuesService handles communication with the epic issue related methods
@@ -137,17 +137,21 @@ func (s *EpicIssuesService) RemoveEpicIssue(gid any, epic, epicIssue int, option
 	return a, resp, nil
 }
 
-// UpdateEpicIsssueAssignmentOptions describes the UpdateEpicIssueAssignment()
+// UpdateEpicIssueAssignmentOptions describes the UpdateEpicIssueAssignment()
 // options.
 // Will be removed in v5 of the API, use Work Items API instead
 //
 // Gitlab API Docs:
 // https://docs.gitlab.com/api/epic_issues/#update-epic---issue-association
-type UpdateEpicIsssueAssignmentOptions struct {
+type UpdateEpicIssueAssignmentOptions struct {
 	*ListOptions
 	MoveBeforeID *int `url:"move_before_id,omitempty" json:"move_before_id,omitempty"`
 	MoveAfterID  *int `url:"move_after_id,omitempty" json:"move_after_id,omitempty"`
 }
+
+// UpdateEpicIsssueAssignmentOptions is kept for backwards compatibility.
+// Deprecated: use UpdateEpicIssueAssignmentOptions instead.
+type UpdateEpicIsssueAssignmentOptions = UpdateEpicIssueAssignmentOptions
 
 // UpdateEpicIssueAssignment moves an issue before or after another issue in an
 // epic issue list.
@@ -155,7 +159,7 @@ type UpdateEpicIsssueAssignmentOptions struct {
 //
 // Gitlab API Docs:
 // https://docs.gitlab.com/api/epic_issues/#update-epic---issue-association
-func (s *EpicIssuesService) UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *UpdateEpicIsssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
+func (s *EpicIssuesService) UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *UpdateEpicIssueAssignmentOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err

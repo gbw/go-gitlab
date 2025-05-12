@@ -293,7 +293,7 @@ type GetCommitDiffOptions struct {
 	Unidiff *bool `url:"unidiff,omitempty" json:"unidiff,omitempty"`
 }
 
-// GetCommitDiff gets the diff of a commit in a project..
+// GetCommitDiff gets the diff of a commit in a project.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/commits/#get-the-diff-of-a-commit

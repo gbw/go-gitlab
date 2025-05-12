@@ -60,7 +60,7 @@ type FeatureFlagUserList struct {
 // https://docs.gitlab.com/api/feature_flag_user_lists/#list-all-feature-flag-user-lists-for-a-project
 type ListFeatureFlagUserListsOptions struct {
 	ListOptions
-	Search string `url:"search,omityempty" json:"search,omitempty"`
+	Search string `url:"search,omitempty" json:"search,omitempty"`
 }
 
 // ListFeatureFlagUserLists gets all feature flag user lists for the requested
