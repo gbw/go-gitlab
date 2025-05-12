@@ -74,6 +74,18 @@ type AccessLevelDetails struct {
 	StringValue  string           `json:"string_value"`
 }
 
+// AccessTokenState identifies if an access token is active or inactive.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_access_tokens/#list-all-group-access-tokens
+// https://docs.gitlab.com/api/project_access_tokens/#list-all-project-access-tokens
+type AccessTokenState string
+
+const (
+	AccessTokenStateActive   AccessTokenState = "active"
+	AccessTokenStateInactive AccessTokenState = "inactive"
+)
+
 // UserIDValue represents a user ID value within GitLab.
 type UserIDValue string
 

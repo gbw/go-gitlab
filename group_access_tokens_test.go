@@ -32,7 +32,7 @@ func TestListGroupAccessTokens(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/list_group_access_tokens.json")
 	})
 
-	groupAccessTokens, _, err := client.GroupAccessTokens.ListGroupAccessTokens(1, &ListGroupAccessTokensOptions{Page: 1, PerPage: 20})
+	groupAccessTokens, _, err := client.GroupAccessTokens.ListGroupAccessTokens(1, &ListGroupAccessTokensOptions{ListOptions: ListOptions{Page: 1, PerPage: 20}})
 	if err != nil {
 		t.Errorf("GroupAccessTokens.ListGroupAccessTokens returned error: %v", err)
 	}
