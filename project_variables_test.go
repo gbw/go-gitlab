@@ -1,7 +1,6 @@
 package gitlab
 
 import (
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -14,16 +13,14 @@ func TestProjectVariablesService_ListVariables(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/variables", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprintf(w, `
-			[
-				{
-					"key": "TEST_VARIABLE_1",
-					"variable_type": "env_var",
-					"value": "TEST_1",
-					"description": "test variable 1"
-				}
-			]
-		`)
+		mustWriteJSONResponse(t, w, []map[string]any{
+			{
+				"key":           "TEST_VARIABLE_1",
+				"variable_type": "env_var",
+				"value":         "TEST_1",
+				"description":   "test variable 1",
+			},
+		})
 	})
 
 	want := []*ProjectVariable{{
@@ -64,18 +61,16 @@ func TestProjectVariablesService_GetVariable(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/variables/TEST_VARIABLE_1", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testParams(t, r, "filter%5Benvironment_scope%5D=prod")
-		fmt.Fprintf(w, `
-			{
-				"key": "TEST_VARIABLE_1",
-				"variable_type": "env_var",
-				"value": "TEST_1",
-				"protected": false,
-				"masked": true,
-				"hidden": true,
-				"description": "test variable 1"
-			}
-		`)
+		testParam(t, r, "filter[environment_scope]", "prod")
+		mustWriteJSONResponse(t, w, map[string]any{
+			"key":           "TEST_VARIABLE_1",
+			"variable_type": "env_var",
+			"value":         "TEST_1",
+			"protected":     false,
+			"masked":        true,
+			"hidden":        true,
+			"description":   "test variable 1",
+		})
 	})
 
 	want := &ProjectVariable{
@@ -119,18 +114,16 @@ func TestProjectVariablesService_CreateVariable(t *testing.T) {
 		testBodyJSON(t, r, map[string]string{
 			"description": "new variable",
 		})
-		fmt.Fprintf(w, `
-			{
-				"key": "NEW_VARIABLE",
-				"value": "new value",
-				"protected": false,
-				"variable_type": "env_var",
-				"masked": false,
-				"masked_and_hidden": false,
-				"environment_scope": "*",
-				"description": "new variable"
-			}
-		`)
+		mustWriteJSONResponse(t, w, map[string]interface{}{
+			"key":               "NEW_VARIABLE",
+			"value":             "new value",
+			"protected":         false,
+			"variable_type":     "env_var",
+			"masked":            false,
+			"masked_and_hidden": false,
+			"environment_scope": "*",
+			"description":       "new variable",
+		})
 	})
 
 	want := &ProjectVariable{
@@ -174,17 +167,15 @@ func TestProjectVariablesService_CreateVariable_MaskedAndHidden(t *testing.T) {
 		testBodyJSON(t, r, map[string]string{
 			"description": "new variable",
 		})
-		fmt.Fprintf(w, `
-			{
-				"key": "NEW_VARIABLE",
-				"protected": false,
-				"variable_type": "env_var",
-				"masked": true,
-				"hidden": true,
-				"environment_scope": "*",
-				"description": "new variable"
-			}
-		`)
+		mustWriteJSONResponse(t, w, map[string]any{
+			"key":               "NEW_VARIABLE",
+			"protected":         false,
+			"variable_type":     "env_var",
+			"masked":            true,
+			"hidden":            true,
+			"environment_scope": "*",
+			"description":       "new variable",
+		})
 	})
 
 	want := &ProjectVariable{
@@ -228,17 +219,15 @@ func TestProjectVariablesService_UpdateVariable(t *testing.T) {
 			"description": "updated description",
 			"filter":      map[string]any{"environment_scope": "prod"},
 		})
-		fmt.Fprintf(w, `
-			{
-				"key": "NEW_VARIABLE",
-				"value": "updated value",
-				"protected": false,
-				"variable_type": "env_var",
-				"masked": false,
-				"environment_scope": "*",
-				"description": "updated description"
-			}
-		`)
+		mustWriteJSONResponse(t, w, map[string]any{
+			"key":               "NEW_VARIABLE",
+			"value":             "updated value",
+			"protected":         false,
+			"variable_type":     "env_var",
+			"masked":            false,
+			"environment_scope": "*",
+			"description":       "updated description",
+		})
 	})
 
 	want := &ProjectVariable{
@@ -286,18 +275,16 @@ func TestProjectVariablesService_UpdateVariable_MaskedAndHidden(t *testing.T) {
 			"description": "updated description",
 			"filter":      map[string]any{"environment_scope": "prod"},
 		})
-		fmt.Fprintf(w, `
-			{
-				"key": "NEW_VARIABLE",
-				"value": null,
-				"protected": false,
-				"variable_type": "env_var",
-				"masked": true,
-				"hidden": true,
-				"environment_scope": "*",
-				"description": "updated description"
-			}
-		`)
+		mustWriteJSONResponse(t, w, map[string]any{
+			"key":               "NEW_VARIABLE",
+			"value":             nil,
+			"protected":         false,
+			"variable_type":     "env_var",
+			"masked":            true,
+			"hidden":            true,
+			"environment_scope": "*",
+			"description":       "updated description",
+		})
 	})
 
 	want := &ProjectVariable{
@@ -340,7 +327,7 @@ func TestProjectVariablesService_RemoveVariable(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/variables/VARIABLE_1", func(_ http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		testParams(t, r, "filter%5Benvironment_scope%5D=prod")
+		testParam(t, r, "filter[environment_scope]", "prod")
 	})
 
 	resp, err := client.ProjectVariables.RemoveVariable(1, "VARIABLE_1", &RemoveProjectVariableOptions{Filter: &VariableFilter{EnvironmentScope: "prod"}}, nil)
