@@ -652,6 +652,21 @@ const (
 	Setuptools DependencyPackageManagerValue = "setuptools"
 )
 
+// PipelineScheduleScopeValue represents a pipeline schedule scope within GitLab.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/pipeline_schedules/#get-all-pipeline-schedules
+type PipelineScheduleScopeValue string
+
+// List of available pipeline schedule scope values.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/pipeline_schedules/#get-all-pipeline-schedules
+const (
+	PipelineScheduleActive   PipelineScheduleScopeValue = "active"
+	PipelineScheduleInactive PipelineScheduleScopeValue = "inactive"
+)
+
 // ProjectCreationLevelValue represents a project creation level within GitLab.
 //
 // GitLab API docs: https://docs.gitlab.com/api/groups/

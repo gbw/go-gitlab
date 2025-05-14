@@ -65,6 +65,7 @@ type PipelineSchedule struct {
 	Owner        *User               `json:"owner"`
 	LastPipeline *LastPipeline       `json:"last_pipeline"`
 	Variables    []*PipelineVariable `json:"variables"`
+	Inputs       []*PipelineInput    `json:"inputs"`
 }
 
 // LastPipeline represents the last pipeline ran by schedule
@@ -81,7 +82,10 @@ type LastPipeline struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipeline_schedules/#get-all-pipeline-schedules
-type ListPipelineSchedulesOptions ListOptions
+type ListPipelineSchedulesOptions struct {
+	ListOptions
+	Scope *PipelineScheduleScopeValue `url:"scope,omitempty"`
+}
 
 // ListPipelineSchedules gets a list of project triggers.
 //
@@ -172,11 +176,12 @@ func (s *PipelineSchedulesService) ListPipelinesTriggeredBySchedule(pid any, sch
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipeline_schedules/#create-a-new-pipeline-schedule
 type CreatePipelineScheduleOptions struct {
-	Description  *string `url:"description" json:"description"`
-	Ref          *string `url:"ref" json:"ref"`
-	Cron         *string `url:"cron" json:"cron"`
-	CronTimezone *string `url:"cron_timezone,omitempty" json:"cron_timezone,omitempty"`
-	Active       *bool   `url:"active,omitempty" json:"active,omitempty"`
+	Description  *string          `url:"description" json:"description"`
+	Ref          *string          `url:"ref" json:"ref"`
+	Cron         *string          `url:"cron" json:"cron"`
+	CronTimezone *string          `url:"cron_timezone,omitempty" json:"cron_timezone,omitempty"`
+	Active       *bool            `url:"active,omitempty" json:"active,omitempty"`
+	Inputs       []*PipelineInput `url:"inputs,omitempty" json:"inputs,omitempty"`
 }
 
 // CreatePipelineSchedule creates a pipeline schedule.
@@ -210,11 +215,12 @@ func (s *PipelineSchedulesService) CreatePipelineSchedule(pid any, opt *CreatePi
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipeline_schedules/#edit-a-pipeline-schedule
 type EditPipelineScheduleOptions struct {
-	Description  *string `url:"description,omitempty" json:"description,omitempty"`
-	Ref          *string `url:"ref,omitempty" json:"ref,omitempty"`
-	Cron         *string `url:"cron,omitempty" json:"cron,omitempty"`
-	CronTimezone *string `url:"cron_timezone,omitempty" json:"cron_timezone,omitempty"`
-	Active       *bool   `url:"active,omitempty" json:"active,omitempty"`
+	Description  *string          `url:"description,omitempty" json:"description,omitempty"`
+	Ref          *string          `url:"ref,omitempty" json:"ref,omitempty"`
+	Cron         *string          `url:"cron,omitempty" json:"cron,omitempty"`
+	CronTimezone *string          `url:"cron_timezone,omitempty" json:"cron_timezone,omitempty"`
+	Active       *bool            `url:"active,omitempty" json:"active,omitempty"`
+	Inputs       []*PipelineInput `url:"inputs,omitempty" json:"inputs,omitempty"`
 }
 
 // EditPipelineSchedule edits a pipeline schedule.
