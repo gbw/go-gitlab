@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
+	"strings"
 	"time"
 )
 
@@ -484,6 +485,9 @@ func (s *IssuesService) CreateIssue(pid any, opt *CreateIssueOptions, options ..
 
 // UpdateIssueOptions represents the available UpdateIssue() options.
 //
+// To reset the due date, epic, milestone, or weight of the issue, set the
+// ResetDueDate, ResetEpic, ResetMilestone, or ResetWeight field to true.
+//
 // GitLab API docs: https://docs.gitlab.com/api/issues/#edit-an-issue
 type UpdateIssueOptions struct {
 	Title            *string       `url:"title,omitempty" json:"title,omitempty"`
@@ -501,6 +505,63 @@ type UpdateIssueOptions struct {
 	Weight           *int          `url:"weight,omitempty" json:"weight,omitempty"`
 	DiscussionLocked *bool         `url:"discussion_locked,omitempty" json:"discussion_locked,omitempty"`
 	IssueType        *string       `url:"issue_type,omitempty" json:"issue_type,omitempty"`
+
+	ResetDueDate     bool `url:"-" json:"-"`
+	ResetEpicID      bool `url:"-" json:"-"`
+	ResetMilestoneID bool `url:"-" json:"-"`
+	ResetWeight      bool `url:"-" json:"-"`
+}
+
+// MarshalJSON implements custom JSON marshaling for UpdateIssueOptions.
+// This is needed to support emitting a literal `null` when the field needs to be removed.
+func (o UpdateIssueOptions) MarshalJSON() ([]byte, error) {
+	data := map[string]any{}
+
+	// Use reflection to copy all fields from o to data
+	val := reflect.ValueOf(o)
+	typ := val.Type()
+
+	for i := range val.NumField() {
+		field := val.Field(i)
+		fieldName := typ.Field(i).Name
+
+		if field.IsZero() {
+			continue
+		}
+
+		name := fieldName
+
+		if tag := typ.Field(i).Tag.Get("json"); tag != "" {
+			tagFields := strings.Split(tag, ",")
+			name = tagFields[0]
+		}
+
+		// Skip unexported fields.
+		if name == "-" {
+			continue
+		}
+
+		data[name] = field.Interface()
+	}
+
+	// Emit a literal `null` when the field needs to be removed
+	if o.ResetDueDate {
+		data["due_date"] = nil
+	}
+
+	if o.ResetEpicID {
+		data["epic_id"] = nil
+	}
+
+	if o.ResetMilestoneID {
+		data["milestone_id"] = nil
+	}
+
+	if o.ResetWeight {
+		data["weight"] = nil
+	}
+
+	return json.Marshal(data)
 }
 
 // UpdateIssue updates an existing project issue. This function is also used
