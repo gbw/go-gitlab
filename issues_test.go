@@ -21,8 +21,10 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetIssue(t *testing.T) {
@@ -643,7 +645,22 @@ func TestUpdateIssue(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/issues/5", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		fmt.Fprint(w, `{"id":1, "title" : "Title of issue", "description": "This is description of an issue", "author" : {"id" : 1, "name": "snehal"}, "assignees":[{"id":1}]}`)
+		testBodyJSON(t, r, map[string]any{
+			"title":       "Title of issue",
+			"description": "This is description of an issue",
+		})
+		mustWriteJSONResponse(t, w, map[string]any{
+			"id":          1,
+			"title":       "Title of issue",
+			"description": "This is description of an issue",
+			"author": map[string]any{
+				"id":   1,
+				"name": "snehal",
+			},
+			"assignees": []map[string]any{
+				{"id": 1},
+			},
+		})
 	})
 
 	updateIssueOpt := &UpdateIssueOptions{
@@ -665,6 +682,75 @@ func TestUpdateIssue(t *testing.T) {
 
 	if !reflect.DeepEqual(want, issue) {
 		t.Errorf("Issues.UpdateIssue returned %+v, want %+v", issue, want)
+	}
+}
+
+func TestUpdateIssue_ResetFields(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name     string
+		opts     UpdateIssueOptions
+		wantBody map[string]any
+	}{
+		{
+			name:     "set due date",
+			opts:     UpdateIssueOptions{DueDate: Ptr(ISOTime(time.Date(2025, time.May, 12, 0, 0, 0, 0, time.UTC)))},
+			wantBody: map[string]any{"due_date": "2025-05-12"},
+		},
+		{
+			name:     "unset due date",
+			opts:     UpdateIssueOptions{ResetDueDate: true},
+			wantBody: map[string]any{"due_date": nil},
+		},
+		{
+			name:     "set epic",
+			opts:     UpdateIssueOptions{EpicID: Ptr(42)},
+			wantBody: map[string]any{"epic_id": float64(42)},
+		},
+		{
+			name:     "unset epic",
+			opts:     UpdateIssueOptions{ResetEpicID: true},
+			wantBody: map[string]any{"epic_id": nil},
+		},
+		{
+			name:     "set milestone",
+			opts:     UpdateIssueOptions{MilestoneID: Ptr(42)},
+			wantBody: map[string]any{"milestone_id": float64(42)},
+		},
+		{
+			name:     "unset milestone",
+			opts:     UpdateIssueOptions{ResetMilestoneID: true},
+			wantBody: map[string]any{"milestone_id": nil},
+		},
+		{
+			name:     "set weight",
+			opts:     UpdateIssueOptions{Weight: Ptr(42)},
+			wantBody: map[string]any{"weight": float64(42)},
+		},
+		{
+			name:     "unset weight",
+			opts:     UpdateIssueOptions{ResetWeight: true},
+			wantBody: map[string]any{"weight": nil},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/v4/projects/1/issues/5", func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodPut)
+				testBodyJSON(t, r, tt.wantBody)
+				mustWriteJSONResponse(t, w, map[string]any{"id": 5})
+			})
+
+			issue, _, err := client.Issues.UpdateIssue(1, 5, &tt.opts)
+			require.NoError(t, err)
+			assert.Equal(t, 5, issue.ID)
+		})
 	}
 }
 
