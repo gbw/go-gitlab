@@ -9,6 +9,7 @@ import (
 )
 
 func TestGroupActivityAnalytics_GetRecentlyCreatedIssuesCount(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/analytics/group_activity/issues_count", func(w http.ResponseWriter, r *http.Request) {
@@ -26,6 +27,7 @@ func TestGroupActivityAnalytics_GetRecentlyCreatedIssuesCount(t *testing.T) {
 }
 
 func TestGroupActivityAnalytics_GetRecentlyCreatedMergeRequestsCount(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/analytics/group_activity/merge_requests_count", func(w http.ResponseWriter, r *http.Request) {
