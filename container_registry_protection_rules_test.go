@@ -9,6 +9,7 @@ import (
 )
 
 func TestListContainerRegistryProtectionRules(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/7/registry/protection/repository/rules", func(w http.ResponseWriter, r *http.Request) {
@@ -55,6 +56,7 @@ func TestListContainerRegistryProtectionRules(t *testing.T) {
 }
 
 func TestCreateContainerRegistryProtectionRule(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/7/registry/protection/repository/rules", func(w http.ResponseWriter, r *http.Request) {
@@ -123,6 +125,7 @@ func TestUpdateContainerRegistryProtectionRule(t *testing.T) {
 }
 
 func TestDeleteContainerRegistryProtectionRule(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/7/registry/protection/repository/rules/1", func(w http.ResponseWriter, r *http.Request) {
