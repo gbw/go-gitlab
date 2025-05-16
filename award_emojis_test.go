@@ -1,9 +1,12 @@
 package gitlab
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -1410,4 +1413,233 @@ func TestAwardEmojiService_DeleteSnippetAwardEmojiOnNote(t *testing.T) {
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmojiOnNote(3, 80, 1, 1, nil)
 	require.Error(t, err)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+}
+
+func TestAwardEmojiService_Timeout(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/80/award_emoji", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		time.Sleep(3 * time.Second) // simulate a slow response
+		fmt.Fprintf(w, `[]`)
+	})
+
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
+
+	opt := &ListAwardEmojiOptions{
+		Page:    1,
+		PerPage: 20,
+	}
+
+	aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, 80, opt, WithContext(ctx))
+	require.Error(t, err)
+	require.Nil(t, aes)
+	require.Nil(t, resp)
+	require.True(t, errors.Is(err, context.DeadlineExceeded))
+}
+
+func TestAwardEmojiService_EdgeCases(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		handler http.HandlerFunc
+		check   func(t *testing.T, aes []*AwardEmoji, resp *Response, err error)
+	}{
+		{
+			name: "empty response",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				fmt.Fprintf(w, `[]`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.NoError(t, err)
+				require.NotNil(t, resp)
+				require.Empty(t, aes)
+			},
+		},
+		{
+			name: "malformed JSON response",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				fmt.Fprintf(w, `{invalid json}`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.Error(t, err)
+				require.Nil(t, aes)
+				require.NotNil(t, resp)
+			},
+		},
+		{
+			name: "empty name in award emoji",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				fmt.Fprintf(w, `
+					[
+					  {
+						"id": 4,
+						"name": "",
+						"user": {
+						  "name": "Venkatesh Thalluri",
+						  "username": "venky333",
+						  "id": 1,
+						  "state": "active",
+						  "avatar_url": "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+						  "web_url": "http://gitlab.example.com/venky333"
+						},
+						"awardable_id": 80,
+						"awardable_type": "Merge request"
+					  }
+					]
+				`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.NoError(t, err)
+				require.NotNil(t, resp)
+				require.Len(t, aes, 1)
+				require.Empty(t, aes[0].Name)
+			},
+		},
+		{
+			name: "missing required fields",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				fmt.Fprintf(w, `
+					[
+					  {
+						"id": 4,
+						"name": "1234",
+						"user": {
+						  "name": "Venkatesh Thalluri",
+						  "username": "venky333",
+						  "id": 1,
+						  "state": "active",
+						  "avatar_url": "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+						  "web_url": "http://gitlab.example.com/venky333"
+						}
+					  }
+					]
+				`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.NoError(t, err)
+				require.NotNil(t, resp)
+				require.Len(t, aes, 1)
+				require.Equal(t, 0, aes[0].AwardableID)
+				require.Empty(t, aes[0].AwardableType)
+			},
+		},
+		{
+			name: "invalid user data",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				fmt.Fprintf(w, `
+					[
+					  {
+						"id": 4,
+						"name": "1234",
+						"user": {
+						  "name": "",
+						  "username": "",
+						  "id": 0,
+						  "state": "",
+						  "avatar_url": "",
+						  "web_url": ""
+						},
+						"awardable_id": 80,
+						"awardable_type": "Merge request"
+					  }
+					]
+				`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.NoError(t, err)
+				require.NotNil(t, resp)
+				require.Len(t, aes, 1)
+				require.Empty(t, aes[0].User.Name)
+			},
+		},
+		{
+			name: "server error response",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				w.WriteHeader(http.StatusInternalServerError)
+				fmt.Fprintf(w, `{"message": "Internal Server Error"}`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.Error(t, err)
+				require.Nil(t, aes)
+				require.NotNil(t, resp)
+				require.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			},
+		},
+		{
+			name: "unauthorized response",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				w.WriteHeader(http.StatusUnauthorized)
+				fmt.Fprintf(w, `{"message": "Unauthorized"}`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.Error(t, err)
+				require.Nil(t, aes)
+				require.NotNil(t, resp)
+				require.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+			},
+		},
+		{
+			name: "rate limit response",
+			handler: func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodGet)
+				w.Header().Set("Retry-After", "60")
+				w.WriteHeader(http.StatusTooManyRequests)
+				fmt.Fprintf(w, `{"message": "Too Many Requests"}`)
+			},
+			check: func(t *testing.T, aes []*AwardEmoji, resp *Response, err error) {
+				require.Error(t, err)
+				require.Nil(t, aes)
+				require.NotNil(t, resp)
+				require.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
+				require.Equal(t, "60", resp.Header.Get("Retry-After"))
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			mux, client := setup(t)
+			mux.HandleFunc("/api/v4/projects/1/merge_requests/80/award_emoji", tt.handler)
+			aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, 80, nil)
+			tt.check(t, aes, resp, err)
+		})
+	}
+
+	t.Run("invalid project ID format", func(t *testing.T) {
+		_, client := setup(t)
+		aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji("invalid-project-id", 80, nil)
+		require.Error(t, err)
+		require.Nil(t, aes)
+		require.NotNil(t, resp)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
+
+	t.Run("negative merge request IID", func(t *testing.T) {
+		_, client := setup(t)
+		aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, -80, nil)
+		require.Error(t, err)
+		require.Nil(t, aes)
+		require.NotNil(t, resp)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
+
+	t.Run("zero merge request IID", func(t *testing.T) {
+		_, client := setup(t)
+		aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, 0, nil)
+		require.Error(t, err)
+		require.Nil(t, aes)
+		require.NotNil(t, resp)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
 }
