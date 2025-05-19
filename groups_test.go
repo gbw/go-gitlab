@@ -1,6 +1,7 @@
 package gitlab
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -10,6 +11,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/google/go-querystring/query"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -1314,4 +1316,181 @@ func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
 	if !reflect.DeepEqual(want, group) {
 		t.Errorf("Groups.UpdatedGroup returned %+v, want %+v", group, want)
 	}
+}
+
+func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+
+			testFormBody(t, r, "name", "g")
+			testFormBody(t, r, "path", "g")
+			testFormBody(t, r, "default_branch_protection_defaults[allowed_to_push][][access_level]", "40")
+			testFormBody(t, r, "default_branch_protection_defaults[allowed_to_merge][][access_level]", "40")
+
+			fmt.Fprint(w, `
+			{
+				"id": 1,
+				"name": "g",
+				"path": "g",
+				"default_branch_protection_defaults": {
+					"allowed_to_push": [
+						{
+							"access_level": 40
+						}
+					],
+					"allow_force_push": false,
+					"allowed_to_merge": [
+						{
+							"access_level": 40
+						}
+					]
+				},
+				"avatar_url":"http://localhost/uploads/-/system/group/avatar/999/avatar.png"
+			}
+			`)
+		})
+
+	avatar := new(bytes.Buffer)
+	groupAvatar := &GroupAvatar{
+		Image:    avatar,
+		Filename: "avatar.png",
+	}
+	opt := &CreateGroupOptions{
+		Name:   Ptr("g"),
+		Path:   Ptr("g"),
+		Avatar: groupAvatar,
+		DefaultBranchProtectionDefaults: &DefaultBranchProtectionDefaultsOptions{
+			AllowedToPush: &[]*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(AccessLevelValue(40)),
+				},
+			},
+			AllowedToMerge: &[]*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(AccessLevelValue(40)),
+				},
+			},
+		},
+	}
+
+	var _ query.Encoder = &DefaultBranchProtectionDefaultsOptions{}
+
+	group, _, err := client.Groups.CreateGroup(opt, nil)
+	if err != nil {
+		t.Errorf("Groups.CreateGroup returned error: %v", err)
+	}
+
+	// Create the group that we want to get back
+	want := &Group{
+		ID:        1,
+		Name:      "g",
+		Path:      "g",
+		AvatarURL: "http://localhost/uploads/-/system/group/avatar/999/avatar.png",
+		DefaultBranchProtectionDefaults: &BranchProtectionDefaults{
+			AllowedToMerge: []*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(MaintainerPermissions),
+				},
+			},
+			AllowedToPush: []*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(MaintainerPermissions),
+				},
+			},
+		},
+	}
+
+	if !reflect.DeepEqual(want, group) {
+		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
+	}
+}
+
+// Test to ensure an error occurs when providing an avatar and multiple
+// allowed to push / allowed to merge access levels during group creation
+func TestCreateGroupMultipleDefaultBranchSettingsWithAvatarShouldError(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	avatar := new(bytes.Buffer)
+	groupAvatar := &GroupAvatar{
+		Image:    avatar,
+		Filename: "avatar.png",
+	}
+	opt := &CreateGroupOptions{
+		Name:   Ptr("g"),
+		Path:   Ptr("g"),
+		Avatar: groupAvatar,
+		DefaultBranchProtectionDefaults: &DefaultBranchProtectionDefaultsOptions{
+			AllowedToPush: &[]*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(AccessLevelValue(40)),
+				},
+				{
+					AccessLevel: Ptr(AccessLevelValue(30)),
+				},
+			},
+			AllowedToMerge: &[]*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(AccessLevelValue(40)),
+				},
+				{
+					AccessLevel: Ptr(AccessLevelValue(30)),
+				},
+			},
+		},
+	}
+
+	var _ query.Encoder = &DefaultBranchProtectionDefaultsOptions{}
+
+	group, _, err := client.Groups.CreateGroup(opt, nil)
+	assert.Error(t, err)
+	assert.Equal(t, "multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior", err.Error())
+	assert.Nil(t, group)
+}
+
+// Test to ensure an error occurs when providing an avatar and multiple
+// allowed to push / allowed to merge access levels during group update
+func TestUpdateGroupMultipleDefaultBranchSettingsWithAvatarShouldError(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	avatar := new(bytes.Buffer)
+	groupAvatar := &GroupAvatar{
+		Image:    avatar,
+		Filename: "avatar.png",
+	}
+	opt := &UpdateGroupOptions{
+		Name:   Ptr("g"),
+		Path:   Ptr("g"),
+		Avatar: groupAvatar,
+		DefaultBranchProtectionDefaults: &DefaultBranchProtectionDefaultsOptions{
+			AllowedToPush: &[]*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(AccessLevelValue(40)),
+				},
+				{
+					AccessLevel: Ptr(AccessLevelValue(30)),
+				},
+			},
+			AllowedToMerge: &[]*GroupAccessLevel{
+				{
+					AccessLevel: Ptr(AccessLevelValue(40)),
+				},
+				{
+					AccessLevel: Ptr(AccessLevelValue(30)),
+				},
+			},
+		},
+	}
+
+	var _ query.Encoder = &DefaultBranchProtectionDefaultsOptions{}
+
+	group, _, err := client.Groups.UpdateGroup(1, opt)
+	assert.Error(t, err)
+	assert.Equal(t, "multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior", err.Error())
+	assert.Nil(t, group)
 }
