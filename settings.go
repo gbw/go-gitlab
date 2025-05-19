@@ -187,6 +187,7 @@ type Settings struct {
 	EmailRestrictionsEnabled                              bool                      `json:"email_restrictions_enabled"`
 	EnableArtifactExternalRedirectWarningPage             bool                      `json:"enable_artifact_external_redirect_warning_page"`
 	EnabledGitAccessProtocol                              string                    `json:"enabled_git_access_protocol"`
+	EnforceCIInboundJobTokenScopeEnabled                  bool                      `json:"enforce_ci_inbound_job_token_scope_enabled"`
 	EnforceNamespaceStorageLimit                          bool                      `json:"enforce_namespace_storage_limit"`
 	EnforcePATExpiration                                  bool                      `json:"enforce_pat_expiration"`
 	EnforceSSHKeyExpiration                               bool                      `json:"enforce_ssh_key_expiration"`
@@ -671,6 +672,7 @@ type UpdateSettingsOptions struct {
 	EmailRestrictionsEnabled                              *bool                                   `url:"email_restrictions_enabled,omitempty" json:"email_restrictions_enabled,omitempty"`
 	EnableArtifactExternalRedirectWarningPage             *bool                                   `url:"enable_artifact_external_redirect_warning_page,omitempty" json:"enable_artifact_external_redirect_warning_page,omitempty"`
 	EnabledGitAccessProtocol                              *string                                 `url:"enabled_git_access_protocol,omitempty" json:"enabled_git_access_protocol,omitempty"`
+	EnforceCIInboundJobTokenScopeEnabled                  *bool                                   `url:"enforce_ci_inbound_job_token_scope_enabled,omitempty" json:"enforce_ci_inbound_job_token_scope_enabled,omitempty"`
 	EnforceNamespaceStorageLimit                          *bool                                   `url:"enforce_namespace_storage_limit,omitempty" json:"enforce_namespace_storage_limit,omitempty"`
 	EnforcePATExpiration                                  *bool                                   `url:"enforce_pat_expiration,omitempty" json:"enforce_pat_expiration,omitempty"`
 	EnforceSSHKeyExpiration                               *bool                                   `url:"enforce_ssh_key_expiration,omitempty" json:"enforce_ssh_key_expiration,omitempty"`
