@@ -129,3 +129,35 @@ func TestSettingsDefaultBranchProtectionDefaults(t *testing.T) {
 
 	assert.Equal(t, want["default_branch_protection_defaults"], requestBody["default_branch_protection_defaults"])
 }
+
+func TestSettings_RequestBody(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	var requestBody map[string]any
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		// Read the request body into `requestBody` by unmarshalling it
+		err := json.NewDecoder(r.Body).Decode(&requestBody)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		fmt.Fprint(w, `{"id":1, "default_projects_limit" : 100000, "enforce_ci_inbound_job_token_scope_enabled": true}`)
+	})
+
+	_, _, err := client.Settings.UpdateSettings(&UpdateSettingsOptions{
+		EnforceCIInboundJobTokenScopeEnabled: Ptr(true),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// This is the payload that should be produced. This allows us to test that the request produced matches our options input.
+	want := map[string]any{
+		"enforce_ci_inbound_job_token_scope_enabled": true,
+	}
+
+	assert.Equal(t, want["enforce_ci_inbound_job_token_scope_enabled"], requestBody["enforce_ci_inbound_job_token_scope_enabled"])
+}
