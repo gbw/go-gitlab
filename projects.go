@@ -228,6 +228,7 @@ type Project struct {
 	ModelExperimentsAccessLevel              AccessControlValue                          `json:"model_experiments_access_level"`
 	ModelRegistryAccessLevel                 AccessControlValue                          `json:"model_registry_access_level"`
 	PreReceiveSecretDetectionEnabled         bool                                        `json:"pre_receive_secret_detection_enabled"`
+	AutoDuoCodeReviewEnabled                 bool                                        `json:"auto_duo_code_review_enabled"`
 
 	// Deprecated: use Topics instead
 	TagList []string `json:"tag_list"`
@@ -924,6 +925,7 @@ type EditProjectOptions struct {
 	AutoCancelPendingPipelines                *string                                      `url:"auto_cancel_pending_pipelines,omitempty" json:"auto_cancel_pending_pipelines,omitempty"`
 	AutoDevopsDeployStrategy                  *string                                      `url:"auto_devops_deploy_strategy,omitempty" json:"auto_devops_deploy_strategy,omitempty"`
 	AutoDevopsEnabled                         *bool                                        `url:"auto_devops_enabled,omitempty" json:"auto_devops_enabled,omitempty"`
+	AutoDuoCodeReviewEnabled                  *bool                                        `url:"auto_duo_code_review_enabled,omitempty" json:"auto_duo_code_review_enabled,omitempty"`
 	AutocloseReferencedIssues                 *bool                                        `url:"autoclose_referenced_issues,omitempty" json:"autoclose_referenced_issues,omitempty"`
 	Avatar                                    *ProjectAvatar                               `url:"-" json:"avatar,omitempty"`
 	BuildCoverageRegex                        *string                                      `url:"build_coverage_regex,omitempty" json:"build_coverage_regex,omitempty"`
