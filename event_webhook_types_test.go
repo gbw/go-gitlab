@@ -681,6 +681,10 @@ func TestMergeCommentEventUnmarshal(t *testing.T) {
 	if event.MergeRequest.DetailedMergeStatus != "checking" {
 		t.Errorf("MergeRequest.DetailedMergeStatus is %v, want %v", event.MergeRequest.DetailedMergeStatus, "checking")
 	}
+
+	if event.MergeRequest.URL != "http://example.com/gitlab-org/gitlab-test/-/merge_requests/1" {
+		t.Errorf("MergeRequest.URL is %v, want %v", event.MergeRequest.URL, "http://example.com/gitlab-org/gitlab-test/-/merge_requests/1")
+	}
 }
 
 func TestMergeEventUnmarshal(t *testing.T) {
