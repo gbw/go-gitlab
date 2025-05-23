@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -33,18 +34,29 @@ func TestListProjectPipelines(t *testing.T) {
 		mustWriteJSONResponse(t, w, []map[string]any{
 			{"id": 1, "name": "test"},
 			{"id": 2},
+			{"id": 3, "status": "success", "ref": "master", "created_at": "2023-05-02T12:00:00Z"},
 		})
 	})
 
-	opt := &ListProjectPipelinesOptions{Ref: Ptr("master")}
-	piplines, _, err := client.Pipelines.ListProjectPipelines(1, opt)
+	createdAfter, err := time.Parse(timeLayout, "2023-05-01T15:00:00Z")
+	if err != nil {
+		t.Errorf("Error parsing created_after time: %v", err)
+	}
+
+	opt := &ListProjectPipelinesOptions{Ref: Ptr("master"), CreatedAfter: &createdAfter}
+	pipelines, _, err := client.Pipelines.ListProjectPipelines(1, opt)
 	if err != nil {
 		t.Errorf("Pipelines.ListProjectPipelines returned error: %v", err)
 	}
 
-	want := []*PipelineInfo{{ID: 1, Name: "test"}, {ID: 2}}
-	if !reflect.DeepEqual(want, piplines) {
-		t.Errorf("Pipelines.ListProjectPipelines returned %+v, want %+v", piplines, want)
+	createdAt, err := time.Parse(timeLayout, "2023-05-02T12:00:00Z")
+	if err != nil {
+		t.Errorf("Error parsing created_at time: %v", err)
+	}
+
+	want := []*PipelineInfo{{ID: 1, Name: "test"}, {ID: 2}, {ID: 3, Status: "success", Ref: "master", CreatedAt: &createdAt}}
+	if !reflect.DeepEqual(want, pipelines) {
+		t.Errorf("Pipelines.ListProjectPipelines returned %+v, want %+v", pipelines, want)
 	}
 }
 
