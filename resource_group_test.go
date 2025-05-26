@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
+
+var testDate = mustParseTime("2021-09-01T08:04:59.650Z")
 
 func TestResourceGroups_GetAllResourceGroupsForAProject(t *testing.T) {
 	t.Parallel()
@@ -26,14 +27,12 @@ func TestResourceGroups_GetAllResourceGroupsForAProject(t *testing.T) {
 		]`)
 	})
 
-	date, _ := time.Parse(timeLayout, "2021-09-01T08:04:59.650Z")
-
 	want := []*ResourceGroup{{
 		ID:          3,
 		Key:         "production",
 		ProcessMode: "unordered",
-		CreatedAt:   &date,
-		UpdatedAt:   &date,
+		CreatedAt:   testDate,
+		UpdatedAt:   testDate,
 	}}
 
 	rgs, resp, err := client.ResourceGroup.GetAllResourceGroupsForAProject(1)
@@ -74,14 +73,12 @@ func TestResourceGroups_GetASpecificResourceGroup(t *testing.T) {
 		`)
 	})
 
-	date, _ := time.Parse(timeLayout, "2021-09-01T08:04:59.650Z")
-
 	want := &ResourceGroup{
 		ID:          3,
 		Key:         "production",
 		ProcessMode: "unordered",
-		CreatedAt:   &date,
-		UpdatedAt:   &date,
+		CreatedAt:   testDate,
+		UpdatedAt:   testDate,
 	}
 
 	rg, resp, err := client.ResourceGroup.GetASpecificResourceGroup(1, "production")
@@ -160,14 +157,12 @@ func TestResourceGroup_EditAnExistingResourceGroup(t *testing.T) {
 		`)
 	})
 
-	date, _ := time.Parse(timeLayout, "2021-09-01T08:04:59.650Z")
-
 	want := &ResourceGroup{
 		ID:          3,
 		Key:         "production",
 		ProcessMode: "unordered",
-		CreatedAt:   &date,
-		UpdatedAt:   &date,
+		CreatedAt:   testDate,
+		UpdatedAt:   testDate,
 	}
 
 	opts := &EditAnExistingResourceGroupOptions{ProcessMode: Ptr(OldestFirst)}

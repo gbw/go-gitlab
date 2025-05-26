@@ -21,15 +21,14 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-	"time"
 )
 
 func TestListNamespaces(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	trialEndsOn, _ := time.Parse(time.RFC3339, "2022-05-08T00:00:00Z")
-	trialEndsOnISOTime := ISOTime(trialEndsOn)
+	trialEndsOn := mustParseTime("2022-05-08T00:00:00Z")
+	trialEndsOnISOTime := ISOTime(*trialEndsOn)
 
 	mux.HandleFunc("/api/v4/namespaces", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)

@@ -21,7 +21,6 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -58,10 +57,8 @@ func TestListBillableGroupMembers(t *testing.T) {
 		t.Errorf("Groups.ListBillableGroupMembers returned error: %v", err)
 	}
 
-	createdAt, _ := time.Parse(time.RFC3339, "2017-10-23T11:41:28.793Z")
-	lastLoginAt, _ := time.Parse(time.RFC3339, "2022-12-12T09:22:51.581Z")
-	lastActivityOn, _ := time.Parse(time.RFC3339, "2021-01-27T00:00:00Z")
-	lastActivityOnISOTime := ISOTime(lastActivityOn)
+	lastActivityOn := mustParseTime("2021-01-27T00:00:00Z")
+	lastActivityOnISOTime := ISOTime(*lastActivityOn)
 
 	want := []*BillableGroupMember{
 		{
@@ -74,9 +71,9 @@ func TestListBillableGroupMembers(t *testing.T) {
 			LastActivityOn: &lastActivityOnISOTime,
 			MembershipType: "group_member",
 			Removable:      true,
-			CreatedAt:      &createdAt,
+			CreatedAt:      mustParseTime("2017-10-23T11:41:28.793Z"),
 			IsLastOwner:    false,
-			LastLoginAt:    &lastLoginAt,
+			LastLoginAt:    mustParseTime("2022-12-12T09:22:51.581Z"),
 		},
 	}
 	assert.Equal(t, want, billableMembers, "Expected returned Groups.ListBillableGroupMembers to equal")
@@ -109,15 +106,13 @@ func TestListMembershipsForBillableGroupMember(t *testing.T) {
 		t.Errorf("Groups.ListMembershipsForBillableGroupMember returned error: %v", err)
 	}
 
-	createdAt, _ := time.Parse(time.RFC3339, "2021-03-31T17:28:44.812Z")
-
 	want := []*BillableUserMembership{
 		{
 			ID:               21,
 			SourceID:         36,
 			SourceFullName:   "Root Group / Test Group",
 			SourceMembersURL: "https://gitlab.example.com/groups/root-group/test-group/-/group_members",
-			CreatedAt:        &createdAt,
+			CreatedAt:        mustParseTime("2021-03-31T17:28:44.812Z"),
 			AccessLevel: &AccessLevelDetails{
 				IntegerValue: 30,
 				StringValue:  "Developer",
@@ -156,9 +151,8 @@ func TestListGroupMembersWithoutEmail(t *testing.T) {
 		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
 	}
 
-	createdAt, _ := time.Parse(time.RFC3339, "2012-10-21T14:13:35Z")
-	expiresAt, _ := time.Parse(time.RFC3339, "2012-10-22T00:00:00Z")
-	expiresAtISOTime := ISOTime(expiresAt)
+	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
+	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
 			ID:          1,
@@ -167,7 +161,7 @@ func TestListGroupMembersWithoutEmail(t *testing.T) {
 			State:       "active",
 			AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 			WebURL:      "http://192.168.1.8:3000/root",
-			CreatedAt:   &createdAt,
+			CreatedAt:   mustParseTime("2012-10-21T14:13:35Z"),
 			ExpiresAt:   &expiresAtISOTime,
 			AccessLevel: 30,
 		},
@@ -207,9 +201,8 @@ func TestListGroupMembersWithEmail(t *testing.T) {
 		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
 	}
 
-	createdAt, _ := time.Parse(time.RFC3339, "2012-10-21T14:13:35Z")
-	expiresAt, _ := time.Parse(time.RFC3339, "2012-10-22T00:00:00Z")
-	expiresAtISOTime := ISOTime(expiresAt)
+	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
+	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
 			ID:          1,
@@ -218,7 +211,7 @@ func TestListGroupMembersWithEmail(t *testing.T) {
 			State:       "active",
 			AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 			WebURL:      "http://192.168.1.8:3000/root",
-			CreatedAt:   &createdAt,
+			CreatedAt:   mustParseTime("2012-10-21T14:13:35Z"),
 			ExpiresAt:   &expiresAtISOTime,
 			AccessLevel: 30,
 			Email:       "john@example.com",
@@ -258,9 +251,8 @@ func TestListGroupMembersWithoutSAML(t *testing.T) {
 		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
 	}
 
-	createdAt, _ := time.Parse(time.RFC3339, "2012-10-21T14:13:35Z")
-	expiresAt, _ := time.Parse(time.RFC3339, "2012-10-22T00:00:00Z")
-	expiresAtISOTime := ISOTime(expiresAt)
+	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
+	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
 			ID:                1,
@@ -269,7 +261,7 @@ func TestListGroupMembersWithoutSAML(t *testing.T) {
 			State:             "active",
 			AvatarURL:         "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 			WebURL:            "http://192.168.1.8:3000/root",
-			CreatedAt:         &createdAt,
+			CreatedAt:         mustParseTime("2012-10-21T14:13:35Z"),
 			ExpiresAt:         &expiresAtISOTime,
 			AccessLevel:       30,
 			GroupSAMLIdentity: nil,
@@ -313,9 +305,8 @@ func TestListGroupMembersWithSAML(t *testing.T) {
 		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
 	}
 
-	createdAt, _ := time.Parse(time.RFC3339, "2012-10-21T14:13:35Z")
-	expiresAt, _ := time.Parse(time.RFC3339, "2012-10-22T00:00:00Z")
-	expiresAtISOTime := ISOTime(expiresAt)
+	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
+	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
 			ID:          2,
@@ -324,7 +315,7 @@ func TestListGroupMembersWithSAML(t *testing.T) {
 			State:       "active",
 			AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 			WebURL:      "http://192.168.1.8:3000/root",
-			CreatedAt:   &createdAt,
+			CreatedAt:   mustParseTime("2012-10-21T14:13:35Z"),
 			ExpiresAt:   &expiresAtISOTime,
 			AccessLevel: 30,
 			GroupSAMLIdentity: &GroupMemberSAMLIdentity{
@@ -422,8 +413,6 @@ func TestGetGroupMemberAll(t *testing.T) {
 		`)
 	})
 
-	createAt, _ := time.Parse(time.RFC3339, "2024-06-19T07:14:02.793Z")
-
 	want := &GroupMember{
 		ID:          2,
 		Name:        "aaa",
@@ -432,7 +421,7 @@ func TestGetGroupMemberAll(t *testing.T) {
 		AvatarURL:   "https://secure.gravatar.com/avatar/e547676d82f1e16954b2280a5b4cbe79?s=80&d=identicon",
 		WebURL:      "https://gitlab.example.cn/aaa",
 		AccessLevel: AccessLevelValue(30),
-		CreatedAt:   &createAt,
+		CreatedAt:   mustParseTime("2024-06-19T07:14:02.793Z"),
 	}
 
 	pm, resp, err := client.GroupMembers.GetInheritedGroupMember(1, 2, nil, nil)

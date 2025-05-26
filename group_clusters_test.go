@@ -21,7 +21,6 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-	"time"
 )
 
 func TestGroupListClusters(t *testing.T) {
@@ -80,22 +79,12 @@ func TestGroupListClusters(t *testing.T) {
 		t.Errorf("GroupCluster.ListClusters returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2019-01-02T20:18:12.563Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
-	createdAt2, err := time.Parse(timeLayout, "2019-10-11T02:55:54.138Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := []*GroupCluster{
 		{
 			ID:               18,
 			Name:             "cluster-1",
 			Domain:           "example.com",
-			CreatedAt:        &createdAt,
+			CreatedAt:        mustParseTime("2019-01-02T20:18:12.563Z"),
 			Managed:          true,
 			Enabled:          true,
 			ProviderType:     "user",
@@ -122,7 +111,7 @@ func TestGroupListClusters(t *testing.T) {
 				NameWithNamespace: "John Doe8 / project2",
 				Path:              "project2",
 				PathWithNamespace: "namespace2/project2",
-				CreatedAt:         &createdAt2,
+				CreatedAt:         mustParseTime("2019-10-11T02:55:54.138Z"),
 			},
 		},
 		{
@@ -191,21 +180,11 @@ func TestGetGroupCluster(t *testing.T) {
 		t.Errorf("GroupCluster.GetCluster returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2019-01-02T20:18:12.563Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
-	createdAt2, err := time.Parse(timeLayout, "2019-10-11T02:55:54.138Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := &GroupCluster{
 		ID:               18,
 		Name:             "cluster-1",
 		Domain:           "example.com",
-		CreatedAt:        &createdAt,
+		CreatedAt:        mustParseTime("2019-01-02T20:18:12.563Z"),
 		Managed:          true,
 		Enabled:          true,
 		ProviderType:     "user",
@@ -232,7 +211,7 @@ func TestGetGroupCluster(t *testing.T) {
 			NameWithNamespace: "John Doe8 / project2",
 			Path:              "project2",
 			PathWithNamespace: "namespace2/project2",
-			CreatedAt:         &createdAt2,
+			CreatedAt:         mustParseTime("2019-10-11T02:55:54.138Z"),
 		},
 		Group: &Group{
 			ID:     26,
@@ -291,15 +270,10 @@ func TestAddGroupCluster(t *testing.T) {
 		t.Errorf("GroupCluster.AddCluster returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2019-01-03T21:53:40.610Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := &GroupCluster{
 		ID:               24,
 		Name:             "cluster-5",
-		CreatedAt:        &createdAt,
+		CreatedAt:        mustParseTime("2019-01-03T21:53:40.610Z"),
 		Managed:          true,
 		Enabled:          true,
 		ProviderType:     "user",
@@ -398,21 +372,11 @@ func TestEditGroupCluster(t *testing.T) {
 		t.Errorf("GroupCluster.EditCluster returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2019-01-03T21:53:40.610Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
-	createdAt2, err := time.Parse(timeLayout, "2019-10-11T02:55:54.138Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := &GroupCluster{
 		ID:               24,
 		Name:             "new-cluster-name",
 		Domain:           "new-domain.com",
-		CreatedAt:        &createdAt,
+		CreatedAt:        mustParseTime("2019-01-03T21:53:40.610Z"),
 		Managed:          true,
 		Enabled:          true,
 		ProviderType:     "user",
@@ -438,7 +402,7 @@ func TestEditGroupCluster(t *testing.T) {
 			NameWithNamespace: "John Doe8 / project2",
 			Path:              "project2",
 			PathWithNamespace: "namespace2/project2",
-			CreatedAt:         &createdAt2,
+			CreatedAt:         mustParseTime("2019-10-11T02:55:54.138Z"),
 		},
 		Group: &Group{
 			ID:     26,

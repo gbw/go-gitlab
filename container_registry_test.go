@@ -21,7 +21,6 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-	"time"
 )
 
 func TestListProjectRegistryRepositories(t *testing.T) {
@@ -57,26 +56,6 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 		t.Errorf("ContainerRegistry.ListProjectRegistryRepositories returned error: %v", err)
 	}
 
-	createdAt1, err := time.Parse(time.RFC3339, "2019-01-10T13:38:57.391Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListProjectRegistryRepositories error while parsing time: %v", err)
-	}
-
-	createdAt2, err := time.Parse(time.RFC3339, "2019-01-10T13:39:08.229Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListProjectRegistryRepositories error while parsing time: %v", err)
-	}
-
-	cleanupPolicyStartedAt1, err := time.Parse(time.RFC3339, "2020-01-10T15:40:57.391Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListProjectRegistryRepositories error while parsing time: %v", err)
-	}
-
-	cleanupPolicyStartedAt2, err := time.Parse(time.RFC3339, "2020-08-17T03:12:35.489Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListProjectRegistryRepositories error while parsing time: %v", err)
-	}
-
 	want := []*RegistryRepository{
 		{
 			ID:                     1,
@@ -84,8 +63,8 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 			Path:                   "group/project",
 			ProjectID:              9,
 			Location:               "gitlab.example.com:5000/group/project",
-			CreatedAt:              &createdAt1,
-			CleanupPolicyStartedAt: &cleanupPolicyStartedAt1,
+			CreatedAt:              mustParseTime("2019-01-10T13:38:57.391Z"),
+			CleanupPolicyStartedAt: mustParseTime("2020-01-10T15:40:57.391Z"),
 		},
 		{
 			ID:                     2,
@@ -93,8 +72,8 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 			Path:                   "group/project/releases",
 			ProjectID:              9,
 			Location:               "gitlab.example.com:5000/group/project/releases",
-			CreatedAt:              &createdAt2,
-			CleanupPolicyStartedAt: &cleanupPolicyStartedAt2,
+			CreatedAt:              mustParseTime("2019-01-10T13:39:08.229Z"),
+			CleanupPolicyStartedAt: mustParseTime("2020-08-17T03:12:35.489Z"),
 		},
 	}
 	if !reflect.DeepEqual(want, repositories) {
@@ -135,26 +114,6 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 		t.Errorf("ContainerRegistry.ListGroupRegistryRepositories returned error: %v", err)
 	}
 
-	createdAt1, err := time.Parse(time.RFC3339, "2019-01-10T13:38:57.391Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListGroupRegistryRepositories error while parsing time: %v", err)
-	}
-
-	createdAt2, err := time.Parse(time.RFC3339, "2019-01-10T13:39:08.229Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListGroupRegistryRepositories error while parsing time: %v", err)
-	}
-
-	cleanupPolicyStartedAt1, err := time.Parse(time.RFC3339, "2020-01-10T15:40:57.391Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListGroupRegistryRepositories error while parsing time: %v", err)
-	}
-
-	cleanupPolicyStartedAt2, err := time.Parse(time.RFC3339, "2020-08-17T03:12:35.489Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListGroupRegistryRepositories error while parsing time: %v", err)
-	}
-
 	want := []*RegistryRepository{
 		{
 			ID:                     1,
@@ -162,8 +121,8 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 			Path:                   "group/project",
 			ProjectID:              9,
 			Location:               "gitlab.example.com:5000/group/project",
-			CreatedAt:              &createdAt1,
-			CleanupPolicyStartedAt: &cleanupPolicyStartedAt1,
+			CreatedAt:              mustParseTime("2019-01-10T13:38:57.391Z"),
+			CleanupPolicyStartedAt: mustParseTime("2020-01-10T15:40:57.391Z"),
 		},
 		{
 			ID:                     2,
@@ -171,8 +130,8 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 			Path:                   "group/project/releases",
 			ProjectID:              9,
 			Location:               "gitlab.example.com:5000/group/project/releases",
-			CreatedAt:              &createdAt2,
-			CleanupPolicyStartedAt: &cleanupPolicyStartedAt2,
+			CreatedAt:              mustParseTime("2019-01-10T13:39:08.229Z"),
+			CleanupPolicyStartedAt: mustParseTime("2020-08-17T03:12:35.489Z"),
 		},
 	}
 	if !reflect.DeepEqual(want, repositories) {
@@ -202,23 +161,14 @@ func TestGetSingleRegistryRepository(t *testing.T) {
 		t.Errorf("ContainerRegistry.GetSingleRegistryRepository returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(time.RFC3339, "2019-01-10T13:38:57.391Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.GetSingleRegistryRepository error while parsing time: %v", err)
-	}
-	cleanupPolicyStartedAt, err := time.Parse(time.RFC3339, "2020-01-10T15:40:57.391Z")
-	if err != nil {
-		t.Errorf("ContainerRepository.GetSingleRegistryRepository error while parsing time: %v", err)
-	}
-
 	want := &RegistryRepository{
 		ID:                     1,
 		Name:                   "",
 		Path:                   "group/project",
 		ProjectID:              9,
 		Location:               "gitlab.example.com:5000/group/project",
-		CreatedAt:              &createdAt,
-		CleanupPolicyStartedAt: &cleanupPolicyStartedAt,
+		CreatedAt:              mustParseTime("2019-01-10T13:38:57.391Z"),
+		CleanupPolicyStartedAt: mustParseTime("2020-01-10T15:40:57.391Z"),
 	}
 	if !reflect.DeepEqual(want, repository) {
 		t.Errorf("ContainerRepository.GetSingleRegistryRepository returned %+v, want %+v", repository, want)
@@ -305,11 +255,6 @@ func TestGetRegistryRepositoryTagDetail(t *testing.T) {
 		t.Errorf("ContainerRegistry.GetRegistryRepositoryTagDetail returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2019-01-06T16:49:51.272+00:00")
-	if err != nil {
-		t.Errorf("ContainerRepository.ListRegistryRepositories error while parsing time: %v", err)
-	}
-
 	want := &RegistryRepositoryTag{
 		Name:          "v10.0.0",
 		Path:          "group/project:latest",
@@ -317,7 +262,7 @@ func TestGetRegistryRepositoryTagDetail(t *testing.T) {
 		Revision:      "e9ed9d87c881d8c2fd3a31b41904d01ba0b836e7fd15240d774d811a1c248181",
 		ShortRevision: "e9ed9d87c",
 		Digest:        "sha256:c3490dcf10ffb6530c1303522a1405dfaf7daecd8f38d3e6a1ba19ea1f8a1751",
-		CreatedAt:     &createdAt,
+		CreatedAt:     mustParseTime("2019-01-06T16:49:51.272+00:00"),
 		TotalSize:     350224384,
 	}
 	if !reflect.DeepEqual(want, repositoryTag) {
