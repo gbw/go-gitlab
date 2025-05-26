@@ -279,6 +279,47 @@ func TestListOwnedProjects(t *testing.T) {
 	assert.Equal(t, want, projects)
 }
 
+func TestListProjectsActiveFlag(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query()
+		assert.Equal(t, "true", query.Get("active"))
+		assert.Equal(t, "2", query.Get("page"))
+		assert.Equal(t, "3", query.Get("per_page"))
+		assert.Equal(t, "true", query.Get("archived"))
+		assert.Equal(t, "name", query.Get("order_by"))
+		assert.Equal(t, "asc", query.Get("sort"))
+		assert.Equal(t, "query", query.Get("search"))
+		assert.Equal(t, "true", query.Get("simple"))
+		assert.Equal(t, "true", query.Get("owned"))
+		assert.Equal(t, "public", query.Get("visibility"))
+
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[{"id":1},{"id":2}]`)
+	})
+
+	opt := &ListProjectsOptions{
+		ListOptions: ListOptions{Page: 2, PerPage: 3},
+		Archived:    Ptr(true),
+		OrderBy:     Ptr("name"),
+		Sort:        Ptr("asc"),
+		Search:      Ptr("query"),
+		Simple:      Ptr(true),
+		Owned:       Ptr(true),
+		Visibility:  Ptr(PublicVisibility),
+		Active:      Ptr(true),
+	}
+
+	projects, resp, err := client.Projects.ListProjects(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := []*Project{{ID: 1}, {ID: 2}}
+	assert.Equal(t, want, projects)
+}
+
 func TestEditProject(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

@@ -409,6 +409,7 @@ func (s ProjectApprovalRule) String() string {
 // GitLab API docs: https://docs.gitlab.com/api/projects/#list-all-projects
 type ListProjectsOptions struct {
 	ListOptions
+	Active                   *bool             `url:"active,omitempty" json:"active,omitempty"`
 	Archived                 *bool             `url:"archived,omitempty" json:"archived,omitempty"`
 	IDAfter                  *int              `url:"id_after,omitempty" json:"id_after,omitempty"`
 	IDBefore                 *int              `url:"id_before,omitempty" json:"id_before,omitempty"`
