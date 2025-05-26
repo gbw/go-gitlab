@@ -37,19 +37,6 @@ func TestListGroupAccessTokens(t *testing.T) {
 		t.Errorf("GroupAccessTokens.ListGroupAccessTokens returned error: %v", err)
 	}
 
-	time1, err := time.Parse(time.RFC3339, "2021-03-09T21:11:47.271Z")
-	if err != nil {
-		t.Errorf("GroupAccessTokens.ListGroupAccessTokens returned error: %v", err)
-	}
-	time2, err := time.Parse(time.RFC3339, "2021-03-09T21:11:47.340Z")
-	if err != nil {
-		t.Errorf("GroupAccessTokens.ListGroupAccessTokens returned error: %v", err)
-	}
-	time3, err := time.Parse(time.RFC3339, "2021-03-10T21:11:47.271Z")
-	if err != nil {
-		t.Errorf("GroupAccessTokens.ListGroupAccessTokens returned error: %v", err)
-	}
-
 	want := []*GroupAccessToken{
 		{
 			PersonalAccessToken: PersonalAccessToken{
@@ -59,8 +46,8 @@ func TestListGroupAccessTokens(t *testing.T) {
 				Name:        "token 10",
 				Description: "Describe token 10",
 				Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-				CreatedAt:   &time1,
-				LastUsedAt:  &time3,
+				CreatedAt:   mustParseTime("2021-03-09T21:11:47.271Z"),
+				LastUsedAt:  mustParseTime("2021-03-10T21:11:47.271Z"),
 				Revoked:     false,
 			},
 			AccessLevel: AccessLevelValue(40),
@@ -73,7 +60,7 @@ func TestListGroupAccessTokens(t *testing.T) {
 				Name:        "token 8",
 				Description: "Describe token 8",
 				Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-				CreatedAt:   &time2,
+				CreatedAt:   mustParseTime("2021-03-09T21:11:47.340Z"),
 				Revoked:     false,
 			},
 			AccessLevel: AccessLevelValue(30),
@@ -99,11 +86,6 @@ func TestGetGroupAccessToken(t *testing.T) {
 		t.Errorf("GroupAccessTokens.GetGroupAccessToken returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(time.RFC3339, "2021-03-09T21:11:47.271Z")
-	if err != nil {
-		t.Errorf("GroupAccessTokens.GetGroupAccessToken returned error: %v", err)
-	}
-
 	want := &GroupAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
 			ID:          1,
@@ -112,7 +94,7 @@ func TestGetGroupAccessToken(t *testing.T) {
 			Name:        "token 10",
 			Description: "Describe token 10",
 			Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-			CreatedAt:   &createdAt,
+			CreatedAt:   mustParseTime("2021-03-09T21:11:47.271Z"),
 			Revoked:     false,
 		},
 		AccessLevel: AccessLevelValue(40),
@@ -137,10 +119,6 @@ func TestCreateGroupAccessToken(t *testing.T) {
 		t.Errorf("GroupAccessTokens.CreateGroupAccessToken returned error: %v", err)
 	}
 
-	time1, err := time.Parse(time.RFC3339, "2021-03-09T21:11:47.271Z")
-	if err != nil {
-		t.Errorf("GroupAccessTokens.CreateGroupAccessToken returned error: %v", err)
-	}
 	want := &GroupAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
 			ID:          1876,
@@ -149,7 +127,7 @@ func TestCreateGroupAccessToken(t *testing.T) {
 			Name:        "token 10",
 			Description: "Describe token 10",
 			Scopes:      []string{"api", "read_api", "read_repository", "write_repository"},
-			CreatedAt:   &time1,
+			CreatedAt:   mustParseTime("2021-03-09T21:11:47.271Z"),
 			Revoked:     false,
 			Token:       "2UsevZE1x1ZdFZW4MNzH",
 			ExpiresAt:   nil,
@@ -170,7 +148,6 @@ func TestRotateGroupAccessToken(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/rotate_group_access_token.json")
 	})
 
-	createdAt, _ := time.Parse(time.RFC3339, "2023-08-01T15:00:00.00Z")
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotateGroupAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.GroupAccessTokens.RotateGroupAccessToken(1, 42, opts)
@@ -187,7 +164,7 @@ func TestRotateGroupAccessToken(t *testing.T) {
 			Description: "Describe rotated token",
 			Scopes:      []string{"api"},
 			ExpiresAt:   &expiration,
-			CreatedAt:   &createdAt,
+			CreatedAt:   mustParseTime("2023-08-01T15:00:00.00Z"),
 			Revoked:     false,
 			Token:       "s3cr3t",
 		},
@@ -207,7 +184,6 @@ func TestRotateGroupAccessTokenSelf(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/rotate_group_access_token.json")
 	})
 
-	createdAt, _ := time.Parse(time.RFC3339, "2023-08-01T15:00:00.00Z")
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotateGroupAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.GroupAccessTokens.RotateGroupAccessTokenSelf(1, opts)
@@ -224,7 +200,7 @@ func TestRotateGroupAccessTokenSelf(t *testing.T) {
 			Description: "Describe rotated token",
 			Scopes:      []string{"api"},
 			ExpiresAt:   &expiration,
-			CreatedAt:   &createdAt,
+			CreatedAt:   mustParseTime("2023-08-01T15:00:00.00Z"),
 			Revoked:     false,
 			Token:       "s3cr3t",
 		},

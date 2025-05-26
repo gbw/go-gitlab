@@ -21,7 +21,6 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-	"time"
 )
 
 func TestListAllDeployKeys(t *testing.T) {
@@ -74,17 +73,12 @@ func TestListAllDeployKeys(t *testing.T) {
 		t.Errorf("DeployKeys.ListAllDeployKeys returned error: %v", err)
 	}
 
-	createdAtKey1, _ := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
-	createdAtKey1Enable1, _ := time.Parse(timeLayout, "2021-10-25T18:33:17.550Z")
-	createdAtKey1Enable2, _ := time.Parse(timeLayout, "2021-10-25T18:33:17.666Z")
-	createdAtKey2, _ := time.Parse(timeLayout, "2013-10-02T11:12:29Z")
-
 	want := []*InstanceDeployKey{
 		{
 			ID:          1,
 			Title:       "Public key",
 			Key:         "ssh-rsa AAAA...",
-			CreatedAt:   &createdAtKey1,
+			CreatedAt:   mustParseTime("2013-10-02T10:12:29Z"),
 			Fingerprint: "7f:72:08:7d:0e:47:48:ec:37:79:b2:76:68:b5:87:65",
 			ProjectsWithWriteAccess: []*DeployKeyProject{
 				{
@@ -94,7 +88,7 @@ func TestListAllDeployKeys(t *testing.T) {
 					NameWithNamespace: "Sidney Jones / project2",
 					Path:              "project2",
 					PathWithNamespace: "sidney_jones/project2",
-					CreatedAt:         &createdAtKey1Enable1,
+					CreatedAt:         mustParseTime("2021-10-25T18:33:17.550Z"),
 				},
 				{
 					ID:                74,
@@ -103,7 +97,7 @@ func TestListAllDeployKeys(t *testing.T) {
 					NameWithNamespace: "Sidney Jones / project3",
 					Path:              "project3",
 					PathWithNamespace: "sidney_jones/project3",
-					CreatedAt:         &createdAtKey1Enable2,
+					CreatedAt:         mustParseTime("2021-10-25T18:33:17.666Z"),
 				},
 			},
 		},
@@ -112,7 +106,7 @@ func TestListAllDeployKeys(t *testing.T) {
 			Title:                   "Another Public key",
 			Key:                     "ssh-rsa AAAA...",
 			Fingerprint:             "64:d3:73:d4:83:70:ab:41:96:68:d5:3d:a5:b0:34:ea",
-			CreatedAt:               &createdAtKey2,
+			CreatedAt:               mustParseTime("2013-10-02T11:12:29Z"),
 			ProjectsWithWriteAccess: []*DeployKeyProject{},
 		},
 	}
@@ -154,16 +148,6 @@ func TestListProjectDeployKeys(t *testing.T) {
 		t.Errorf("DeployKeys.ListProjectDeployKeys returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
-	createdAt2, err := time.Parse(timeLayout, "2013-10-02T11:12:29Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := []*ProjectDeployKey{
 		{
 			ID:                1,
@@ -171,7 +155,7 @@ func TestListProjectDeployKeys(t *testing.T) {
 			Key:               "ssh-rsa AAAA...",
 			Fingerprint:       "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
 			FingerprintSHA256: "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
-			CreatedAt:         &createdAt,
+			CreatedAt:         mustParseTime("2013-10-02T10:12:29Z"),
 			CanPush:           false,
 		},
 		{
@@ -180,7 +164,7 @@ func TestListProjectDeployKeys(t *testing.T) {
 			Key:               "ssh-rsa AAAA...",
 			Fingerprint:       "0b:cf:58:40:b9:23:96:c7:ba:44:df:0e:9e:87:5e:75",
 			FingerprintSHA256: "SHA256:lGI/Ys/Wx7PfMhUO1iuBH92JQKYN+3mhJZvWO4Q5ims",
-			CreatedAt:         &createdAt2,
+			CreatedAt:         mustParseTime("2013-10-02T11:12:29Z"),
 			CanPush:           false,
 		},
 	}
@@ -211,18 +195,13 @@ func TestGetDeployKey(t *testing.T) {
 		t.Errorf("DeployKeys.GetDeployKey returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := &ProjectDeployKey{
 		ID:                1,
 		Title:             "Public key",
 		Key:               "ssh-rsa AAAA...",
 		Fingerprint:       "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
 		FingerprintSHA256: "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
-		CreatedAt:         &createdAt,
+		CreatedAt:         mustParseTime("2013-10-02T10:12:29Z"),
 		CanPush:           false,
 	}
 	if !reflect.DeepEqual(want, deployKey) {
@@ -256,16 +235,11 @@ func TestAddDeployKey(t *testing.T) {
 		t.Errorf("DeployKey.AddDeployKey returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2015-08-29T12:44:31.550Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := &ProjectDeployKey{
 		Title:     "My deploy key",
 		ID:        12,
 		Key:       "ssh-rsa AAAA...",
-		CreatedAt: &createdAt,
+		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
 		CanPush:   true,
 	}
 	if !reflect.DeepEqual(want, deployKey) {
@@ -289,34 +263,24 @@ func TestAddDeployKey_withExpiresAt(t *testing.T) {
 		 }`)
 	})
 
-	expiresAt, err := time.Parse(timeLayout, "2999-03-01T00:00:00.000Z")
-	if err != nil {
-		t.Errorf("DeployKeys.AddDeployKey returned an error while parsing time: %v", err)
-	}
-
 	opt := &AddDeployKeyOptions{
 		Key:       Ptr("ssh-rsa AAAA..."),
 		Title:     Ptr("My deploy key"),
 		CanPush:   Ptr(true),
-		ExpiresAt: &expiresAt,
+		ExpiresAt: mustParseTime("2999-03-01T00:00:00.000Z"),
 	}
 	deployKey, _, err := client.DeployKeys.AddDeployKey(5, opt)
 	if err != nil {
 		t.Errorf("DeployKey.AddDeployKey returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2015-08-29T12:44:31.550Z")
-	if err != nil {
-		t.Errorf("DeployKeys.AddDeployKey returned an error while parsing time: %v", err)
-	}
-
 	want := &ProjectDeployKey{
 		Title:     "My deploy key",
 		ID:        12,
 		Key:       "ssh-rsa AAAA...",
-		CreatedAt: &createdAt,
+		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
 		CanPush:   true,
-		ExpiresAt: &expiresAt,
+		ExpiresAt: mustParseTime("2999-03-01T00:00:00.000Z"),
 	}
 	if !reflect.DeepEqual(want, deployKey) {
 		t.Errorf("DeployKeys.AddDeployKey returned %+v, want %+v", deployKey, want)
@@ -356,16 +320,11 @@ func TestEnableDeployKey(t *testing.T) {
 		t.Errorf("DeployKeys.EnableDeployKey returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2015-08-29T12:44:31.550Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := &ProjectDeployKey{
 		ID:        12,
 		Title:     "My deploy key",
 		Key:       "ssh-rsa AAAA...",
-		CreatedAt: &createdAt,
+		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
 	}
 	if !reflect.DeepEqual(want, deployKey) {
 		t.Errorf("DeployKeys.EnableDeployKey returned %+v, want %+v", deployKey, want)
@@ -396,16 +355,11 @@ func TestUpdateDeployKey(t *testing.T) {
 		t.Errorf("DeployKeys.UpdateDeployKey returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(timeLayout, "2015-08-29T12:44:31.550Z")
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned an error while parsing time: %v", err)
-	}
-
 	want := &ProjectDeployKey{
 		ID:        11,
 		Title:     "New deploy key",
 		Key:       "ssh-rsa AAAA...",
-		CreatedAt: &createdAt,
+		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
 		CanPush:   true,
 	}
 	if !reflect.DeepEqual(want, deployKey) {

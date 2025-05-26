@@ -22,7 +22,6 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -70,8 +69,7 @@ func TestListEnvironments(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	createdAtWant, _ := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
-	updatedAtWant, _ := time.Parse(timeLayout, "2013-12-02T10:12:29Z")
+	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := []*Environment{{
 		ID:          1,
 		Name:        "review/fix-foo",
@@ -79,8 +77,8 @@ func TestListEnvironments(t *testing.T) {
 		Description: "test",
 		ExternalURL: "https://review-fix-foo-dfjre3.example.gitlab.com",
 		State:       "stopped",
-		CreatedAt:   &createdAtWant,
-		UpdatedAt:   &updatedAtWant,
+		CreatedAt:   createdAtWant,
+		UpdatedAt:   mustParseTime("2013-12-02T10:12:29Z"),
 		ClusterAgent: &Agent{
 			ID:   1,
 			Name: "agent-1",
@@ -90,9 +88,9 @@ func TestListEnvironments(t *testing.T) {
 				NameWithNamespace: "Administrator / test",
 				Path:              "test",
 				PathWithNamespace: "root/test",
-				CreatedAt:         &createdAtWant,
+				CreatedAt:         createdAtWant,
 			},
-			CreatedAt:       &createdAtWant,
+			CreatedAt:       createdAtWant,
 			CreatedByUserID: 42,
 		},
 		KubernetesNamespace: "flux-system",
@@ -145,9 +143,7 @@ func TestGetEnvironment(t *testing.T) {
 		t.Errorf("Environemtns.GetEnvironment returned error: %v", err)
 	}
 
-	createdAtWant, _ := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
-	updatedAtWant, _ := time.Parse(timeLayout, "2013-12-02T10:12:29Z")
-	autoStopAtWant, _ := time.Parse(timeLayout, "2025-01-25T15:08:29Z")
+	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := &Environment{
 		ID:          1,
 		Name:        "review/fix-foo",
@@ -155,8 +151,8 @@ func TestGetEnvironment(t *testing.T) {
 		Description: "test",
 		ExternalURL: "https://review-fix-foo-dfjre3.example.gitlab.com",
 		State:       "stopped",
-		CreatedAt:   &createdAtWant,
-		UpdatedAt:   &updatedAtWant,
+		CreatedAt:   createdAtWant,
+		UpdatedAt:   mustParseTime("2013-12-02T10:12:29Z"),
 		ClusterAgent: &Agent{
 			ID:   1,
 			Name: "agent-1",
@@ -166,14 +162,14 @@ func TestGetEnvironment(t *testing.T) {
 				NameWithNamespace: "Administrator / test",
 				Path:              "test",
 				PathWithNamespace: "root/test",
-				CreatedAt:         &createdAtWant,
+				CreatedAt:         createdAtWant,
 			},
-			CreatedAt:       &createdAtWant,
+			CreatedAt:       createdAtWant,
 			CreatedByUserID: 42,
 		},
 		KubernetesNamespace: "flux-system",
 		FluxResourcePath:    "HelmRelease/flux-system",
-		AutoStopAt:          &autoStopAtWant,
+		AutoStopAt:          mustParseTime("2025-01-25T15:08:29Z"),
 		AutoStopSetting:     "always",
 	}
 	if !reflect.DeepEqual(want, env) {
@@ -230,7 +226,7 @@ func TestCreateEnvironment(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	createdAtWant, _ := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
+	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := &Environment{
 		ID:          1,
 		Name:        "deploy",
@@ -247,9 +243,9 @@ func TestCreateEnvironment(t *testing.T) {
 				NameWithNamespace: "Administrator / test",
 				Path:              "test",
 				PathWithNamespace: "root/test",
-				CreatedAt:         &createdAtWant,
+				CreatedAt:         createdAtWant,
 			},
-			CreatedAt:       &createdAtWant,
+			CreatedAt:       createdAtWant,
 			CreatedByUserID: 42,
 		},
 		KubernetesNamespace: "flux-system",
@@ -310,7 +306,7 @@ func TestEditEnvironment(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	createdAtWant, _ := time.Parse(timeLayout, "2013-10-02T10:12:29Z")
+	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := &Environment{
 		ID:          1,
 		Name:        "staging",
@@ -327,9 +323,9 @@ func TestEditEnvironment(t *testing.T) {
 				NameWithNamespace: "Administrator / test",
 				Path:              "test",
 				PathWithNamespace: "root/test",
-				CreatedAt:         &createdAtWant,
+				CreatedAt:         createdAtWant,
 			},
-			CreatedAt:       &createdAtWant,
+			CreatedAt:       createdAtWant,
 			CreatedByUserID: 42,
 		},
 		KubernetesNamespace: "flux-system",
@@ -418,7 +414,7 @@ func TestUnmarshal(t *testing.T) {
         "state": "available",
         "auto_stop_setting": "always",
         "kubernetes_namespace": "flux-system",
-        "flux_resource_path": "HelmRelease/flux-system"	
+        "flux_resource_path": "HelmRelease/flux-system"
     }`
 
 	var env Environment

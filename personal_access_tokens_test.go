@@ -39,23 +39,7 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
 	}
 
-	createdAt1, err := time.Parse(time.RFC3339, "2020-02-20T14:58:56.238Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
-	lastUsedAt1, err := time.Parse(time.RFC3339, "2021-04-20T16:31:39.105Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
 	expiresAt1 := ISOTime(time.Date(2022, time.March, 21, 0, 0, 0, 0, time.UTC))
-
-	createdAt2, err := time.Parse(time.RFC3339, "2022-03-20T03:56:18.968Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
 	expiresAt2 := ISOTime(time.Date(2022, time.March, 20, 0, 0, 0, 0, time.UTC))
 
 	want := []*PersonalAccessToken{
@@ -64,10 +48,10 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 			Name:        "test 1",
 			Description: "Describe test 1",
 			Revoked:     true,
-			CreatedAt:   &createdAt1,
+			CreatedAt:   mustParseTime("2020-02-20T14:58:56.238Z"),
 			Scopes:      []string{"api"},
 			UserID:      1,
-			LastUsedAt:  &lastUsedAt1,
+			LastUsedAt:  mustParseTime("2021-04-20T16:31:39.105Z"),
 			Active:      false,
 			ExpiresAt:   &expiresAt1,
 		},
@@ -76,7 +60,7 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 			Name:        "test 2",
 			Description: "Describe test 2",
 			Revoked:     false,
-			CreatedAt:   &createdAt2,
+			CreatedAt:   mustParseTime("2022-03-20T03:56:18.968Z"),
 			Scopes:      []string{"api", "read_user"},
 			UserID:      1,
 			LastUsedAt:  nil,
@@ -108,23 +92,7 @@ func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
 		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
 	}
 
-	createdAt1, err := time.Parse(time.RFC3339, "2020-02-20T14:58:56.238Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
-	lastUsedAt1, err := time.Parse(time.RFC3339, "2021-04-20T16:31:39.105Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
 	expiresAt1 := ISOTime(time.Date(2022, time.March, 21, 0, 0, 0, 0, time.UTC))
-
-	createdAt2, err := time.Parse(time.RFC3339, "2022-03-20T03:56:18.968Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
 	expiresAt2 := ISOTime(time.Date(2022, time.March, 20, 0, 0, 0, 0, time.UTC))
 
 	want := []*PersonalAccessToken{
@@ -133,10 +101,10 @@ func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
 			Name:        "test 1",
 			Description: "Describe test 1",
 			Revoked:     true,
-			CreatedAt:   &createdAt1,
+			CreatedAt:   mustParseTime("2020-02-20T14:58:56.238Z"),
 			Scopes:      []string{"api"},
 			UserID:      1,
-			LastUsedAt:  &lastUsedAt1,
+			LastUsedAt:  mustParseTime("2021-04-20T16:31:39.105Z"),
 			Active:      false,
 			ExpiresAt:   &expiresAt1,
 		},
@@ -145,7 +113,7 @@ func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
 			Name:        "test 2",
 			Description: "Describe test 2",
 			Revoked:     false,
-			CreatedAt:   &createdAt2,
+			CreatedAt:   mustParseTime("2022-03-20T03:56:18.968Z"),
 			Scopes:      []string{"api", "read_user"},
 			UserID:      2,
 			LastUsedAt:  nil,
@@ -175,25 +143,15 @@ func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
 		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(time.RFC3339, "2020-07-23T14:31:47.729Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
-	lastUsedAt, err := time.Parse(time.RFC3339, "2021-10-06T17:58:37.550Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
 	want := &PersonalAccessToken{
 		ID:          1,
 		Name:        "Test Token",
 		Description: "Describe test token",
 		Revoked:     false,
-		CreatedAt:   &createdAt,
+		CreatedAt:   mustParseTime("2020-07-23T14:31:47.729Z"),
 		Scopes:      []string{"api"},
 		UserID:      1,
-		LastUsedAt:  &lastUsedAt,
+		LastUsedAt:  mustParseTime("2021-10-06T17:58:37.550Z"),
 		Active:      true,
 	}
 
@@ -216,25 +174,15 @@ func TestGetSinglePersonalAccessToken(t *testing.T) {
 		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
 	}
 
-	createdAt, err := time.Parse(time.RFC3339, "2020-07-23T14:31:47.729Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
-	lastUsedAt, err := time.Parse(time.RFC3339, "2021-10-06T17:58:37.550Z")
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
-
 	want := &PersonalAccessToken{
 		ID:          1,
 		Name:        "Test Token",
 		Description: "Describe test token",
 		Revoked:     false,
-		CreatedAt:   &createdAt,
+		CreatedAt:   mustParseTime("2020-07-23T14:31:47.729Z"),
 		Scopes:      []string{"api"},
 		UserID:      1,
-		LastUsedAt:  &lastUsedAt,
+		LastUsedAt:  mustParseTime("2021-10-06T17:58:37.550Z"),
 		Active:      true,
 	}
 
@@ -251,7 +199,6 @@ func TestRotatePersonalAccessToken(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/rotate_personal_access_token.json")
 	})
 
-	createdAt, _ := time.Parse(time.RFC3339, "2023-08-01T15:00:00.000Z")
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotatePersonalAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.PersonalAccessTokens.RotatePersonalAccessToken(42, opts)
@@ -266,7 +213,7 @@ func TestRotatePersonalAccessToken(t *testing.T) {
 		Description: "Describe rotated token",
 		Scopes:      []string{"api"},
 		ExpiresAt:   &expiration,
-		CreatedAt:   &createdAt,
+		CreatedAt:   mustParseTime("2023-08-01T15:00:00.000Z"),
 		Active:      true,
 		Revoked:     false,
 		Token:       "s3cr3t",
@@ -287,7 +234,6 @@ func TestRotatePersonalAccessTokenByID(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/rotate_personal_access_token.json")
 	})
 
-	createdAt, _ := time.Parse(time.RFC3339, "2023-08-01T15:00:00.000Z")
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotatePersonalAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.PersonalAccessTokens.RotatePersonalAccessTokenByID(42, opts)
@@ -302,7 +248,7 @@ func TestRotatePersonalAccessTokenByID(t *testing.T) {
 		Description: "Describe rotated token",
 		Scopes:      []string{"api"},
 		ExpiresAt:   &expiration,
-		CreatedAt:   &createdAt,
+		CreatedAt:   mustParseTime("2023-08-01T15:00:00.000Z"),
 		Active:      true,
 		Revoked:     false,
 		Token:       "s3cr3t",
@@ -323,7 +269,6 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/rotate_personal_access_token.json")
 	})
 
-	createdAt, _ := time.Parse(time.RFC3339, "2023-08-01T15:00:00.000Z")
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotatePersonalAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.PersonalAccessTokens.RotatePersonalAccessTokenSelf(opts)
@@ -338,7 +283,7 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 		Description: "Describe rotated token",
 		Scopes:      []string{"api"},
 		ExpiresAt:   &expiration,
-		CreatedAt:   &createdAt,
+		CreatedAt:   mustParseTime("2023-08-01T15:00:00.000Z"),
 		Active:      true,
 		Revoked:     false,
 		Token:       "s3cr3t",

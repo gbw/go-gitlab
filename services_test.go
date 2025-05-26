@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -930,15 +929,14 @@ func TestGetTelegramService(t *testing.T) {
 			}
 		`)
 	})
-	wantCreatedAt, _ := time.Parse(time.RFC3339, "2023-12-16T20:21:03.117Z")
-	wantUpdatedAt, _ := time.Parse(time.RFC3339, "2023-12-16T20:22:19.140Z")
+
 	want := &TelegramService{
 		Service: Service{
 			ID:                       1,
 			Title:                    "Telegram",
 			Slug:                     "telegram",
-			CreatedAt:                &wantCreatedAt,
-			UpdatedAt:                &wantUpdatedAt,
+			CreatedAt:                mustParseTime("2023-12-16T20:21:03.117Z"),
+			UpdatedAt:                mustParseTime("2023-12-16T20:22:19.140Z"),
 			Active:                   true,
 			CommitEvents:             true,
 			PushEvents:               false,

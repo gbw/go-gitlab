@@ -18,8 +18,20 @@ package gitlab
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
+	"time"
 )
+
+// mustParseTime is a helper that returns a time.Time pointer to v
+func mustParseTime(v string) *time.Time {
+	t, err := time.Parse(timeLayout, v)
+	if err != nil {
+		panic(fmt.Sprintf("invalid time string %q: %v", v, err))
+	}
+
+	return &t
+}
 
 func TestBoolValue(t *testing.T) {
 	t.Parallel()

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -55,11 +54,6 @@ func TestListProjectStatusChecks(t *testing.T) {
 		t.Fatalf("ExternalStatusChecks.ListProjectStatusChecks returns an error: %v", err)
 	}
 
-	time1, err := time.Parse(time.RFC3339, "2020-10-12T14:04:50.787Z")
-	if err != nil {
-		t.Errorf("ExternalStatusChecks.ListProjectStatusChecks returns an error: %v", err)
-	}
-
 	expectedProjectStatusChecks := []*ProjectStatusCheck{
 		{
 			ID:          1,
@@ -71,8 +65,8 @@ func TestListProjectStatusChecks(t *testing.T) {
 					ID:                        14,
 					ProjectID:                 6,
 					Name:                      "master",
-					CreatedAt:                 &time1,
-					UpdatedAt:                 &time1,
+					CreatedAt:                 mustParseTime("2020-10-12T14:04:50.787Z"),
+					UpdatedAt:                 mustParseTime("2020-10-12T14:04:50.787Z"),
 					CodeOwnerApprovalRequired: false,
 				},
 			},
