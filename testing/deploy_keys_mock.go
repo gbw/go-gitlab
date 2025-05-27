@@ -85,6 +85,51 @@ func (c *MockDeployKeysServiceInterfaceAddDeployKeyCall) DoAndReturn(f func(any,
 	return c
 }
 
+// AddInstanceDeployKey mocks base method.
+func (m *MockDeployKeysServiceInterface) AddInstanceDeployKey(opt *gitlab.AddInstanceDeployKeyOptions, options ...gitlab.RequestOptionFunc) (*gitlab.InstanceDeployKey, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddInstanceDeployKey", varargs...)
+	ret0, _ := ret[0].(*gitlab.InstanceDeployKey)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// AddInstanceDeployKey indicates an expected call of AddInstanceDeployKey.
+func (mr *MockDeployKeysServiceInterfaceMockRecorder) AddInstanceDeployKey(opt any, options ...any) *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddInstanceDeployKey", reflect.TypeOf((*MockDeployKeysServiceInterface)(nil).AddInstanceDeployKey), varargs...)
+	return &MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall{Call: call}
+}
+
+// MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall wrap *gomock.Call
+type MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall) Return(arg0 *gitlab.InstanceDeployKey, arg1 *gitlab.Response, arg2 error) *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall) Do(f func(*gitlab.AddInstanceDeployKeyOptions, ...gitlab.RequestOptionFunc) (*gitlab.InstanceDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall) DoAndReturn(f func(*gitlab.AddInstanceDeployKeyOptions, ...gitlab.RequestOptionFunc) (*gitlab.InstanceDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteDeployKey mocks base method.
 func (m *MockDeployKeysServiceInterface) DeleteDeployKey(pid any, deployKey int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -305,6 +350,51 @@ func (c *MockDeployKeysServiceInterfaceListProjectDeployKeysCall) Do(f func(any,
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockDeployKeysServiceInterfaceListProjectDeployKeysCall) DoAndReturn(f func(any, *gitlab.ListProjectDeployKeysOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceListProjectDeployKeysCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListUserProjectDeployKeys mocks base method.
+func (m *MockDeployKeysServiceInterface) ListUserProjectDeployKeys(uid any, opt *gitlab.ListUserProjectDeployKeysOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectDeployKey, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{uid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListUserProjectDeployKeys", varargs...)
+	ret0, _ := ret[0].([]*gitlab.ProjectDeployKey)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListUserProjectDeployKeys indicates an expected call of ListUserProjectDeployKeys.
+func (mr *MockDeployKeysServiceInterfaceMockRecorder) ListUserProjectDeployKeys(uid, opt any, options ...any) *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{uid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListUserProjectDeployKeys", reflect.TypeOf((*MockDeployKeysServiceInterface)(nil).ListUserProjectDeployKeys), varargs...)
+	return &MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall{Call: call}
+}
+
+// MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall wrap *gomock.Call
+type MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall) Return(arg0 []*gitlab.ProjectDeployKey, arg1 *gitlab.Response, arg2 error) *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall) Do(f func(any, *gitlab.ListUserProjectDeployKeysOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall) DoAndReturn(f func(any, *gitlab.ListUserProjectDeployKeysOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

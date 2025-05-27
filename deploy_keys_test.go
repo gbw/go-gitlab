@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListAllDeployKeys(t *testing.T) {
@@ -68,10 +69,9 @@ func TestListAllDeployKeys(t *testing.T) {
 		  ]`)
 	})
 
-	deployKeys, _, err := client.DeployKeys.ListAllDeployKeys(&ListInstanceDeployKeysOptions{})
-	if err != nil {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned error: %v", err)
-	}
+	deployKeys, resp, err := client.DeployKeys.ListAllDeployKeys(&ListInstanceDeployKeysOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*InstanceDeployKey{
 		{
@@ -110,9 +110,40 @@ func TestListAllDeployKeys(t *testing.T) {
 			ProjectsWithWriteAccess: []*DeployKeyProject{},
 		},
 	}
-	if !reflect.DeepEqual(want, deployKeys) {
-		t.Errorf("DeployKeys.ListAllDeployKeys returned %+v, want %+v", deployKeys, want)
+	assert.Equal(t, want, deployKeys)
+}
+
+func TestAddInstanceDeployKey(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/deploy_keys", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprintf(w, `{
+			"key" : "ssh-rsa AAAA...",
+			"id" : 12,
+			"title" : "My deploy key",
+			"can_push": true,
+			"created_at" : "2015-08-29T12:44:31.550Z",
+			"expires_at": null
+		 }`)
+	})
+
+	opt := &AddInstanceDeployKeyOptions{
+		Key:   Ptr("ssh-rsa AAAA..."),
+		Title: Ptr("My deploy key"),
 	}
+	deployKey, resp, err := client.DeployKeys.AddInstanceDeployKey(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := &InstanceDeployKey{
+		Title:     "My deploy key",
+		ID:        12,
+		Key:       "ssh-rsa AAAA...",
+		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
+	}
+	assert.Equal(t, want, deployKey)
 }
 
 func TestListProjectDeployKeys(t *testing.T) {
@@ -143,10 +174,9 @@ func TestListProjectDeployKeys(t *testing.T) {
 		  ]`)
 	})
 
-	deployKeys, _, err := client.DeployKeys.ListProjectDeployKeys(5, &ListProjectDeployKeysOptions{})
-	if err != nil {
-		t.Errorf("DeployKeys.ListProjectDeployKeys returned error: %v", err)
-	}
+	deployKeys, resp, err := client.DeployKeys.ListProjectDeployKeys(5, &ListProjectDeployKeysOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*ProjectDeployKey{
 		{
@@ -168,9 +198,62 @@ func TestListProjectDeployKeys(t *testing.T) {
 			CanPush:           false,
 		},
 	}
-	if !reflect.DeepEqual(want, deployKeys) {
-		t.Errorf("DeployKeys.ListProjectDeployKeys returned %+v, want %+v", deployKeys, want)
+	assert.Equal(t, want, deployKeys)
+}
+
+func TestListUserProjectDeployKeys(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/users/5/project_deploy_keys", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `[
+			{
+			  "id": 1,
+			  "title": "Public key",
+			  "key": "ssh-rsa AAAA...",
+			  "fingerprint": "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
+			  "fingerprint_sha256": "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
+			  "created_at": "2013-10-02T10:12:29Z",
+			  "can_push": false
+			},
+			{
+			  "id": 3,
+			  "title": "Another Public key",
+			  "key": "ssh-rsa AAAA...",
+			  "fingerprint": "0b:cf:58:40:b9:23:96:c7:ba:44:df:0e:9e:87:5e:75",
+			  "fingerprint_sha256": "SHA256:lGI/Ys/Wx7PfMhUO1iuBH92JQKYN+3mhJZvWO4Q5ims",
+			  "created_at": "2013-10-02T11:12:29Z",
+			  "can_push": false
+			}
+		  ]`)
+	})
+
+	deployKeys, resp, err := client.DeployKeys.ListUserProjectDeployKeys(5, &ListUserProjectDeployKeysOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := []*ProjectDeployKey{
+		{
+			ID:                1,
+			Title:             "Public key",
+			Key:               "ssh-rsa AAAA...",
+			Fingerprint:       "4a:9d:64:15:ed:3a:e6:07:6e:89:36:b3:3b:03:05:d9",
+			FingerprintSHA256: "SHA256:Jrs3LD1Ji30xNLtTVf9NDCj7kkBgPBb2pjvTZ3HfIgU",
+			CreatedAt:         mustParseTime("2013-10-02T10:12:29Z"),
+			CanPush:           false,
+		},
+		{
+			ID:                3,
+			Title:             "Another Public key",
+			Key:               "ssh-rsa AAAA...",
+			Fingerprint:       "0b:cf:58:40:b9:23:96:c7:ba:44:df:0e:9e:87:5e:75",
+			FingerprintSHA256: "SHA256:lGI/Ys/Wx7PfMhUO1iuBH92JQKYN+3mhJZvWO4Q5ims",
+			CreatedAt:         mustParseTime("2013-10-02T11:12:29Z"),
+			CanPush:           false,
+		},
 	}
+	assert.Equal(t, want, deployKeys)
 }
 
 func TestGetDeployKey(t *testing.T) {
@@ -190,10 +273,9 @@ func TestGetDeployKey(t *testing.T) {
 		  }`)
 	})
 
-	deployKey, _, err := client.DeployKeys.GetDeployKey(5, 11)
-	if err != nil {
-		t.Errorf("DeployKeys.GetDeployKey returned error: %v", err)
-	}
+	deployKey, resp, err := client.DeployKeys.GetDeployKey(5, 11)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectDeployKey{
 		ID:                1,
@@ -204,9 +286,7 @@ func TestGetDeployKey(t *testing.T) {
 		CreatedAt:         mustParseTime("2013-10-02T10:12:29Z"),
 		CanPush:           false,
 	}
-	if !reflect.DeepEqual(want, deployKey) {
-		t.Errorf("DeployKeys.GetDeployKey returned %+v, want %+v", deployKey, want)
-	}
+	assert.Equal(t, want, deployKey)
 }
 
 func TestAddDeployKey(t *testing.T) {
@@ -230,10 +310,9 @@ func TestAddDeployKey(t *testing.T) {
 		Title:   Ptr("My deploy key"),
 		CanPush: Ptr(true),
 	}
-	deployKey, _, err := client.DeployKeys.AddDeployKey(5, opt)
-	if err != nil {
-		t.Errorf("DeployKey.AddDeployKey returned error: %v", err)
-	}
+	deployKey, resp, err := client.DeployKeys.AddDeployKey(5, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectDeployKey{
 		Title:     "My deploy key",
@@ -242,9 +321,7 @@ func TestAddDeployKey(t *testing.T) {
 		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
 		CanPush:   true,
 	}
-	if !reflect.DeepEqual(want, deployKey) {
-		t.Errorf("DeployKeys.AddDeployKey returned %+v, want %+v", deployKey, want)
-	}
+	assert.Equal(t, want, deployKey)
 }
 
 func TestAddDeployKey_withExpiresAt(t *testing.T) {
@@ -269,10 +346,9 @@ func TestAddDeployKey_withExpiresAt(t *testing.T) {
 		CanPush:   Ptr(true),
 		ExpiresAt: mustParseTime("2999-03-01T00:00:00.000Z"),
 	}
-	deployKey, _, err := client.DeployKeys.AddDeployKey(5, opt)
-	if err != nil {
-		t.Errorf("DeployKey.AddDeployKey returned error: %v", err)
-	}
+	deployKey, resp, err := client.DeployKeys.AddDeployKey(5, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectDeployKey{
 		Title:     "My deploy key",
@@ -282,9 +358,7 @@ func TestAddDeployKey_withExpiresAt(t *testing.T) {
 		CanPush:   true,
 		ExpiresAt: mustParseTime("2999-03-01T00:00:00.000Z"),
 	}
-	if !reflect.DeepEqual(want, deployKey) {
-		t.Errorf("DeployKeys.AddDeployKey returned %+v, want %+v", deployKey, want)
-	}
+	assert.Equal(t, want, deployKey)
 }
 
 func TestDeleteDeployKey(t *testing.T) {
@@ -295,10 +369,9 @@ func TestDeleteDeployKey(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.DeployKeys.DeleteDeployKey(5, 13)
-	if err != nil {
-		t.Errorf("Deploykeys.DeleteDeployKey returned error: %v", err)
-	}
+	resp, err := client.DeployKeys.DeleteDeployKey(5, 13)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestEnableDeployKey(t *testing.T) {
@@ -315,10 +388,9 @@ func TestEnableDeployKey(t *testing.T) {
 		 }`)
 	})
 
-	deployKey, _, err := client.DeployKeys.EnableDeployKey(5, 13)
-	if err != nil {
-		t.Errorf("DeployKeys.EnableDeployKey returned error: %v", err)
-	}
+	deployKey, resp, err := client.DeployKeys.EnableDeployKey(5, 13)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectDeployKey{
 		ID:        12,
@@ -326,9 +398,7 @@ func TestEnableDeployKey(t *testing.T) {
 		Key:       "ssh-rsa AAAA...",
 		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
 	}
-	if !reflect.DeepEqual(want, deployKey) {
-		t.Errorf("DeployKeys.EnableDeployKey returned %+v, want %+v", deployKey, want)
-	}
+	assert.Equal(t, want, deployKey)
 }
 
 func TestUpdateDeployKey(t *testing.T) {
@@ -350,10 +420,9 @@ func TestUpdateDeployKey(t *testing.T) {
 		Title:   Ptr("New deploy key"),
 		CanPush: Ptr(true),
 	}
-	deployKey, _, err := client.DeployKeys.UpdateDeployKey(5, 11, opt)
-	if err != nil {
-		t.Errorf("DeployKeys.UpdateDeployKey returned error: %v", err)
-	}
+	deployKey, resp, err := client.DeployKeys.UpdateDeployKey(5, 11, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &ProjectDeployKey{
 		ID:        11,
@@ -362,7 +431,5 @@ func TestUpdateDeployKey(t *testing.T) {
 		CreatedAt: mustParseTime("2015-08-29T12:44:31.550Z"),
 		CanPush:   true,
 	}
-	if !reflect.DeepEqual(want, deployKey) {
-		t.Errorf("DeployKeys.UpdateDeployKey returned %+v, want %+v", deployKey, want)
-	}
+	assert.Equal(t, want, deployKey)
 }
