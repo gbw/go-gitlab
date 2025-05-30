@@ -495,6 +495,7 @@ func TestNewRetryableHTTPClientWithRetryCheck(t *testing.T) {
 
 	_, client := setup(t)
 
+	httpClient := &http.Client{}
 	logger := struct{}{}
 	retryWaitMin := 10 * time.Second
 	retryWaitMax := 20 * time.Second
@@ -518,6 +519,7 @@ func TestNewRetryableHTTPClientWithRetryCheck(t *testing.T) {
 		return false, nil
 	})
 
+	client.client.HTTPClient = httpClient
 	client.client.Logger = logger
 	client.client.RetryWaitMin = retryWaitMin
 	client.client.RetryWaitMax = retryWaitMax
@@ -530,6 +532,7 @@ func TestNewRetryableHTTPClientWithRetryCheck(t *testing.T) {
 
 	actual := client.newRetryableHTTPClientWithRetryCheck(newCheckRetry)
 
+	assert.Equal(t, httpClient, actual.HTTPClient)
 	assert.Equal(t, logger, actual.Logger)
 	assert.Equal(t, retryWaitMin, actual.RetryWaitMin)
 	assert.Equal(t, retryWaitMax, actual.RetryWaitMax)

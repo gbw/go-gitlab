@@ -1110,6 +1110,7 @@ func parseError(raw any) string {
 // newRetryableHTTPClientWithRetryCheck returns a `retryablehttp.Client` clone of itself with the given CheckRetry function
 func (c *Client) newRetryableHTTPClientWithRetryCheck(cr retryablehttp.CheckRetry) *retryablehttp.Client {
 	return &retryablehttp.Client{
+		HTTPClient:     c.client.HTTPClient,
 		Logger:         c.client.Logger,
 		RetryWaitMin:   c.client.RetryWaitMin,
 		RetryWaitMax:   c.client.RetryWaitMax,
