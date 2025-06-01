@@ -157,6 +157,8 @@ release:
   rules:
     - if: '$CI_SERVER_HOST != "gitlab.com" || $CI_PROJECT_PATH != "gitlab-org/api/client-go"'
       when: never
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 # Update rules on SAST to ensure the jobs show up in the pipeline
