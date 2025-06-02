@@ -99,6 +99,10 @@ type Client struct {
 	// Token used to make authenticated API calls.
 	token string
 
+	// tokenSource is used to obtain and refresh OAuth access tokens. If non-nil,
+	// tokenSource will override the token field.
+	tokenSource oauth2.TokenSource
+
 	// Protects the token field from concurrent read/write accesses.
 	tokenLock sync.RWMutex
 
@@ -907,7 +911,12 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		}
 	case OAuthToken:
 		if values := req.Header.Values("Authorization"); len(values) == 0 {
-			req.Header.Set("Authorization", "Bearer "+c.token)
+			token, err := c.oauthToken()
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Authorization", "Bearer "+token)
 		}
 	case PrivateToken:
 		if values := req.Header.Values("PRIVATE-TOKEN"); len(values) == 0 {
@@ -987,6 +996,21 @@ func (c *Client) requestOAuthToken(ctx context.Context, token string) (string, e
 	c.token = t.AccessToken
 
 	return c.token, nil
+}
+
+// oauthToken returns the the access token from a token source. If no token
+// source is set, it falls back to the statically provided token.
+func (c *Client) oauthToken() (string, error) {
+	if c.tokenSource == nil {
+		return c.token, nil
+	}
+
+	t, err := c.tokenSource.Token()
+	if err != nil {
+		return "", fmt.Errorf("TokenSource.Token: %w", err)
+	}
+
+	return t.AccessToken, nil
 }
 
 // ErrInvalidIDType is returned when a function expecting an ID as either an integer

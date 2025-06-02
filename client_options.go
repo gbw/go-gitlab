@@ -21,6 +21,7 @@ import (
 	"time"
 
 	retryablehttp "github.com/hashicorp/go-retryablehttp"
+	"golang.org/x/oauth2"
 )
 
 // ClientOptionFunc can be used to customize a new GitLab API client.
@@ -137,6 +138,26 @@ func WithoutRetries() ClientOptionFunc {
 func WithRequestOptions(options ...RequestOptionFunc) ClientOptionFunc {
 	return func(c *Client) error {
 		c.defaultRequestOptions = append(c.defaultRequestOptions, options...)
+		return nil
+	}
+}
+
+// WithTokenSource can be used to configure a custom token source for automatic
+// token refresh and expiration handling. The TokenSource will be called on every
+// API request to obtain a token. For caching behavior, wrap your TokenSource with
+// oauth2.ReuseTokenSource to avoid unnecessary token requests.
+//
+// This option is only effective when used with NewOAuthClient.
+// If used, it will override the token field and any statically provided token
+// will be ignored in favor of tokens provided by the TokenSource.
+//
+// Example with caching:
+//
+//	cachedSource := oauth2.ReuseTokenSource(initialToken, refreshTokenSource)
+//	client, err := gitlab.NewOAuthClient("", gitlab.WithTokenSource(cachedSource))
+func WithTokenSource(ts oauth2.TokenSource) ClientOptionFunc {
+	return func(c *Client) error {
+		c.tokenSource = ts
 		return nil
 	}
 }
