@@ -3,6 +3,7 @@ package gitlab_test
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -43,7 +44,7 @@ func ExampleWithTokenSource() {
 	// Exchange the authorization code for a token using the code verifier
 	token, err := config.Exchange(ctx, authCode, oauth2.VerifierOption(verifier))
 	if err != nil {
-		panic(err)
+		log.Fatal("Token exchange failed: ", err)
 	}
 
 	// Wrap the token in a token source to refresh it when needed
@@ -52,13 +53,13 @@ func ExampleWithTokenSource() {
 	// Create a client with the token
 	client, err := gitlab.NewOAuthClient("", gitlab.WithTokenSource(ts))
 	if err != nil {
-		panic(err)
+		log.Fatal("Creating OAuth client failed: ", err)
 	}
 
 	// Use the client to make API requests
 	user, _, err := client.Users.CurrentUser(gitlab.WithContext(ctx))
 	if err != nil {
-		panic(err)
+		log.Fatal("Retrieving current user failed: ", err)
 	}
 
 	fmt.Printf("Hello, %s!\n", user.Name)
