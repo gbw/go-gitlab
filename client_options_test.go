@@ -3,7 +3,11 @@ package gitlab_test
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"testing"
 
+	"github.com/stretchr/testify/assert"
 	gitlab "gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/endpoints"
@@ -58,4 +62,43 @@ func ExampleWithTokenSource() {
 	}
 
 	fmt.Printf("Hello, %s!\n", user.Name)
+}
+
+func TestWithTokenSource(t *testing.T) {
+	t.Parallel()
+
+	token := &oauth2.Token{
+		AccessToken: "0123456789abcdefg",
+	}
+	ts := oauth2.StaticTokenSource(token)
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		if got, want := r.Header.Get("Authorization"), "Bearer 0123456789abcdefg"; got != want {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
+			return
+		}
+
+		fmt.Fprint(w, "[]")
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	t.Cleanup(server.Close)
+
+	client, err := gitlab.NewOAuthClient("unused",
+		gitlab.WithBaseURL(server.URL),
+		gitlab.WithHTTPClient(server.Client()),
+		gitlab.WithTokenSource(ts),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+
+	projects, resp, err := client.Projects.ListProjects(&gitlab.ListProjectsOptions{})
+	if err != nil {
+		t.Fatalf("HTTP request failed: %v", err)
+	}
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, []*gitlab.Project{}, projects)
 }
