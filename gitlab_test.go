@@ -24,6 +24,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"os"
 	"reflect"
 	"strings"
@@ -31,6 +32,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
+	"golang.org/x/oauth2"
 
 	retryablehttp "github.com/hashicorp/go-retryablehttp"
 	"github.com/stretchr/testify/assert"
@@ -610,4 +612,183 @@ func TestErrorResponsePreservesURLEncoding(t *testing.T) {
 
 	unescapedPath := fmt.Sprintf("/api/v4/projects/%s/repository/files/%s", projectID, fileName)
 	assert.NotContains(t, errorResponse.Error(), unescapedPath)
+}
+
+func TestNewClient_auth(t *testing.T) {
+	t.Parallel()
+
+	const token = "glpat-0123456789abcdefg"
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		if got, want := r.Header.Get("PRIVATE-TOKEN"), token; got != want {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
+			return
+		}
+
+		fmt.Fprint(w, "[]")
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	t.Cleanup(server.Close)
+
+	client, err := NewClient(token,
+		WithBaseURL(server.URL),
+		WithHTTPClient(server.Client()),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+
+	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
+	if err != nil {
+		t.Fatalf("HTTP request failed: %v", err)
+	}
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, []*Project{}, projects)
+}
+
+func TestNewJobClient_auth(t *testing.T) {
+	t.Parallel()
+
+	const token = "glcbt-0123456789abcdefg"
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		if got, want := r.Header.Get("JOB-TOKEN"), token; got != want {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
+			return
+		}
+
+		fmt.Fprint(w, "[]")
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	t.Cleanup(server.Close)
+
+	client, err := NewJobClient(token,
+		WithBaseURL(server.URL),
+		WithHTTPClient(server.Client()),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+
+	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
+	if err != nil {
+		t.Fatalf("HTTP request failed: %v", err)
+	}
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, []*Project{}, projects)
+}
+
+func TestNewBasicAuthClient_auth(t *testing.T) {
+	t.Parallel()
+
+	const (
+		username = "test-username"
+		password = "test-p4ssw0rd"
+		token    = "test-token"
+	)
+
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/oauth/token", func(w http.ResponseWriter, r *http.Request) {
+		if err := r.ParseForm(); err != nil {
+			http.Error(w, "r.ParseForm: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if got, want := r.Form.Get("grant_type"), "password"; got != want {
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintf(w, "grant_type = %q, want %q", got, want)
+			return
+		}
+
+		if gotUsername, gotPassword := r.Form.Get("username"), r.Form.Get("password"); gotUsername != username || gotPassword != password {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "username is %q, want %q", gotUsername, username)
+			fmt.Fprintf(w, "password is %q, want %q", gotPassword, password)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		fmt.Fprint(w, url.Values{
+			"access_token": {token},
+			"token_type":   {"bearer"},
+			"expires_in":   {"1800"},
+		}.Encode())
+	})
+	mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
+		if got, want := r.Header.Get("Authorization"), "Bearer "+token; got != want {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
+			return
+		}
+
+		fmt.Fprint(w, "[]")
+	})
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Unexpected %s request to %s", r.Method, r.URL.String())
+	})
+
+	server := httptest.NewServer(mux)
+	t.Cleanup(server.Close)
+
+	client, err := NewBasicAuthClient(username, password,
+		WithBaseURL(server.URL),
+		WithHTTPClient(server.Client()),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+
+	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
+	if err != nil {
+		t.Fatalf("HTTP request failed: %v", err)
+	}
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, []*Project{}, projects)
+}
+
+func TestNewTokenClient(t *testing.T) {
+	t.Parallel()
+
+	token := &oauth2.Token{
+		AccessToken: "0123456789abcdefg",
+	}
+	ts := oauth2.StaticTokenSource(token)
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		if got, want := r.Header.Get("Authorization"), "Bearer 0123456789abcdefg"; got != want {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
+			return
+		}
+
+		fmt.Fprint(w, "[]")
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	t.Cleanup(server.Close)
+
+	client, err := NewTokenClient(OAuthTokenSource{ts},
+		WithBaseURL(server.URL),
+		WithHTTPClient(server.Client()),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+
+	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
+	if err != nil {
+		t.Fatalf("HTTP request failed: %v", err)
+	}
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, []*Project{}, projects)
 }

@@ -90,21 +90,13 @@ type Client struct {
 	// Limiter is used to limit API calls and prevent 429 responses.
 	limiter RateLimiter
 
-	// Token type used to make authenticated API calls.
-	authType AuthType
+	// tokenSource is used to obtain access tokens.
+	// If non-nil, tokenSource will override the token field.
+	tokenSource TokenSource
 
-	// Username and password used for basic authentication.
-	username, password string
-
-	// Token used to make authenticated API calls.
-	token string
-
-	// tokenSource is used to obtain and refresh OAuth access tokens. If non-nil,
-	// tokenSource will override the token field.
-	tokenSource oauth2.TokenSource
-
-	// Protects the token field from concurrent read/write accesses.
-	tokenLock sync.RWMutex
+	// tokenSourceInit is used to ensure that token sources are initialized only
+	// once.
+	tokenSourceInit sync.Once
 
 	// Default request options applied to every request.
 	defaultRequestOptions []RequestOptionFunc
@@ -287,56 +279,52 @@ type RateLimiter interface {
 // NewClient returns a new GitLab API client. To use API methods which require
 // authentication, provide a valid private or personal token.
 func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
-	client, err := newClient(options...)
-	if err != nil {
-		return nil, err
+	ts := staticTokenSource{
+		token:    token,
+		authType: PrivateToken,
 	}
-	client.authType = PrivateToken
-	client.token = token
-	return client, nil
+
+	return NewTokenClient(ts, options...)
 }
 
 // NewBasicAuthClient returns a new GitLab API client. To use API methods which
 // require authentication, provide a valid username and password.
 func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
-	client, err := newClient(options...)
-	if err != nil {
-		return nil, err
+	ts := &passwordCredentialsTokenSource{
+		username: username,
+		password: password,
 	}
 
-	client.authType = BasicAuth
-	client.username = username
-	client.password = password
-
-	return client, nil
+	return NewTokenClient(ts, options...)
 }
 
 // NewJobClient returns a new GitLab API client. To use API methods which require
 // authentication, provide a valid job token.
 func NewJobClient(token string, options ...ClientOptionFunc) (*Client, error) {
-	client, err := newClient(options...)
-	if err != nil {
-		return nil, err
+	ts := staticTokenSource{
+		token:    token,
+		authType: JobToken,
 	}
-	client.authType = JobToken
-	client.token = token
-	return client, nil
+
+	return NewTokenClient(ts, options...)
 }
 
 // NewOAuthClient returns a new GitLab API client. To use API methods which
 // require authentication, provide a valid oauth token.
 func NewOAuthClient(token string, options ...ClientOptionFunc) (*Client, error) {
-	client, err := newClient(options...)
-	if err != nil {
-		return nil, err
+	ts := OAuthTokenSource{
+		TokenSource: oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token}),
 	}
-	client.authType = OAuthToken
-	client.token = token
-	return client, nil
+
+	return NewTokenClient(ts, options...)
 }
 
-func newClient(options ...ClientOptionFunc) (*Client, error) {
-	c := &Client{UserAgent: userAgent}
+// NewTokenClient returns a new GitLab API client that uses TokenSouce for authentication.
+func NewTokenClient(ts TokenSource, options ...ClientOptionFunc) (*Client, error) {
+	c := &Client{
+		UserAgent:   userAgent,
+		tokenSource: ts,
+	}
 
 	// Configure the HTTP client.
 	c.client = &retryablehttp.Client{
@@ -889,39 +877,20 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		return nil, err
 	}
 
-	// Set the correct authentication header. If using basic auth, then check
-	// if we already have a token and if not first authenticate and get one.
-	var basicAuthToken string
-	switch c.authType {
-	case BasicAuth:
-		c.tokenLock.RLock()
-		basicAuthToken = c.token
-		c.tokenLock.RUnlock()
-		if basicAuthToken == "" {
-			// If we don't have a token yet, we first need to request one.
-			basicAuthToken, err = c.requestOAuthToken(req.Context(), basicAuthToken)
-			if err != nil {
-				return nil, err
-			}
-		}
-		req.Header.Set("Authorization", "Bearer "+basicAuthToken)
-	case JobToken:
-		if values := req.Header.Values("JOB-TOKEN"); len(values) == 0 {
-			req.Header.Set("JOB-TOKEN", c.token)
-		}
-	case OAuthToken:
-		if values := req.Header.Values("Authorization"); len(values) == 0 {
-			token, err := c.oauthToken()
-			if err != nil {
-				return nil, err
-			}
+	c.tokenSourceInit.Do(func() {
+		err = c.tokenSource.Init(req.Context(), c)
+	})
+	if err != nil {
+		return nil, fmt.Errorf("initializing token source failed: %w", err)
+	}
 
-			req.Header.Set("Authorization", "Bearer "+token)
-		}
-	case PrivateToken:
-		if values := req.Header.Values("PRIVATE-TOKEN"); len(values) == 0 {
-			req.Header.Set("PRIVATE-TOKEN", c.token)
-		}
+	authKey, authValue, err := c.tokenSource.Header(req.Context())
+	if err != nil {
+		return nil, err
+	}
+
+	if v := req.Header.Values(authKey); len(v) == 0 {
+		req.Header.Set(authKey, authValue)
 	}
 
 	client := c.client
@@ -936,16 +905,10 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		return nil, err
 	}
 
-	if resp.StatusCode == http.StatusUnauthorized && c.authType == BasicAuth {
+	defer func() {
+		io.Copy(io.Discard, resp.Body)
 		resp.Body.Close()
-		// The token most likely expired, so we need to request a new one and try again.
-		if _, err := c.requestOAuthToken(req.Context(), basicAuthToken); err != nil {
-			return nil, err
-		}
-		return c.Do(req, v)
-	}
-	defer resp.Body.Close()
-	defer io.Copy(io.Discard, resp.Body)
+	}()
 
 	// If not yet configured, try to configure the rate limiter
 	// using the response headers we just received. Fail silently
@@ -972,45 +935,14 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 	return response, err
 }
 
-func (c *Client) requestOAuthToken(ctx context.Context, token string) (string, error) {
-	c.tokenLock.Lock()
-	defer c.tokenLock.Unlock()
+func (c *Client) endpoint() oauth2.Endpoint {
+	baseURL := strings.TrimSuffix(c.baseURL.String(), apiVersionPath)
 
-	// Return early if the token was updated while waiting for the lock.
-	if c.token != token {
-		return c.token, nil
+	return oauth2.Endpoint{
+		AuthURL:       baseURL + "oauth/authorize",
+		TokenURL:      baseURL + "oauth/token",
+		DeviceAuthURL: baseURL + "oauth/authorize_device",
 	}
-
-	config := &oauth2.Config{
-		Endpoint: oauth2.Endpoint{
-			AuthURL:  strings.TrimSuffix(c.baseURL.String(), apiVersionPath) + "oauth/authorize",
-			TokenURL: strings.TrimSuffix(c.baseURL.String(), apiVersionPath) + "oauth/token",
-		},
-	}
-
-	ctx = context.WithValue(ctx, oauth2.HTTPClient, c.client.HTTPClient)
-	t, err := config.PasswordCredentialsToken(ctx, c.username, c.password)
-	if err != nil {
-		return "", err
-	}
-	c.token = t.AccessToken
-
-	return c.token, nil
-}
-
-// oauthToken returns the the access token from a token source. If no token
-// source is set, it falls back to the statically provided token.
-func (c *Client) oauthToken() (string, error) {
-	if c.tokenSource == nil {
-		return c.token, nil
-	}
-
-	t, err := c.tokenSource.Token()
-	if err != nil {
-		return "", fmt.Errorf("TokenSource.Token: %w", err)
-	}
-
-	return t.AccessToken, nil
 }
 
 // ErrInvalidIDType is returned when a function expecting an ID as either an integer
@@ -1145,4 +1077,88 @@ func (c *Client) newRetryableHTTPClientWithRetryCheck(cr retryablehttp.CheckRetr
 		ErrorHandler:   c.client.ErrorHandler,
 		PrepareRetry:   c.client.PrepareRetry,
 	}
+}
+
+// TokenSource is used to obtain access tokens.
+type TokenSource interface {
+	// Init is called once before making any requests.
+	// If the token source needs access to client to initialize itself, it should do so here.
+	Init(context.Context, *Client) error
+
+	// Header returns an authentication header. When no error is returned, the
+	// key and value should never be empty.
+	Header(ctx context.Context) (key, value string, err error)
+}
+
+// OAuthTokenSource is a wrapper around an oauth2.TokenSource. The type will
+// always be OAuthToken.
+type OAuthTokenSource struct {
+	TokenSource oauth2.TokenSource
+}
+
+func (OAuthTokenSource) Init(context.Context, *Client) error {
+	return nil
+}
+
+func (ts OAuthTokenSource) Header(_ context.Context) (string, string, error) {
+	t, err := ts.TokenSource.Token()
+	if err != nil {
+		return "", "", err
+	}
+
+	return "Authorization", "Bearer " + t.AccessToken, nil
+}
+
+var _ TokenSource = OAuthTokenSource{}
+
+// staticTokenSource implements the TokenSource interface for static tokens.
+type staticTokenSource struct {
+	token    string
+	authType AuthType
+}
+
+func (staticTokenSource) Init(context.Context, *Client) error {
+	return nil
+}
+
+func (s staticTokenSource) Header(_ context.Context) (string, string, error) {
+	switch s.authType {
+	case PrivateToken:
+		return "PRIVATE-TOKEN", s.token, nil
+
+	case JobToken:
+		return "JOB-TOKEN", s.token, nil
+
+	default:
+		return "", "", fmt.Errorf("invalid auth type: %v", s.authType)
+	}
+}
+
+var _ TokenSource = staticTokenSource{}
+
+// passwordTokenSource implements the OAuth 2.0 password grant token source.
+type passwordCredentialsTokenSource struct {
+	username string
+	password string
+
+	TokenSource
+}
+
+func (t *passwordCredentialsTokenSource) Init(ctx context.Context, client *Client) error {
+	ctx = context.WithValue(ctx, oauth2.HTTPClient, client.client.HTTPClient)
+
+	config := &oauth2.Config{
+		Endpoint: client.endpoint(),
+	}
+
+	pct, err := config.PasswordCredentialsToken(ctx, t.username, t.password)
+	if err != nil {
+		return fmt.Errorf("PasswordCredentialsToken(%q, ******): %w", t.username, err)
+	}
+
+	t.TokenSource = OAuthTokenSource{
+		config.TokenSource(ctx, pct),
+	}
+
+	return nil
 }
