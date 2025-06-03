@@ -117,6 +117,7 @@ func mustWriteHTTPResponse(t *testing.T, w io.Writer, fixturePath string) {
 	if err != nil {
 		t.Fatalf("error opening fixture file: %v", err)
 	}
+	defer f.Close()
 
 	if _, err = io.Copy(w, f); err != nil {
 		t.Fatalf("error writing response: %v", err)
