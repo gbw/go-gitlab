@@ -287,8 +287,18 @@ func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
 	return NewTokenClient(ts, options...)
 }
 
-// NewBasicAuthClient returns a new GitLab API client. To use API methods which
-// require authentication, provide a valid username and password.
+// NewBasicAuthClient returns a new GitLab API client using the OAuth 2.0 Resource Owner Password Credentials flow.
+// The provided username and password are used to obtain an OAuth access token
+// from GitLab's token endpoint on the first API request. The token is then
+// cached, reused for subsequent requests, and refreshed when expired.
+//
+// The Resource Owner Password Credentials flow is only suitable for trusted,
+// first-party applications and does not work for users who have two-factor
+// authentication enabled.
+//
+// Note: This method uses OAuth tokens with Bearer authentication, not HTTP Basic Auth.
+//
+// Deprecated: GitLab recommends against using this authentication method.
 func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
 	ts := &passwordCredentialsTokenSource{
 		username: username,
