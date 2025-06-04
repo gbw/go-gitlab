@@ -193,6 +193,7 @@ type Project struct {
 	CIDeletePipelinesInSeconds               int                                         `json:"ci_delete_pipelines_in_seconds,omitempty"`
 	CIForwardDeploymentEnabled               bool                                        `json:"ci_forward_deployment_enabled"`
 	CIForwardDeploymentRollbackAllowed       bool                                        `json:"ci_forward_deployment_rollback_allowed"`
+	CIPushRepositoryForJobTokenAllowed       bool                                        `json:"ci_push_repository_for_job_token_allowed"`
 	CIIdTokenSubClaimComponents              []string                                    `json:"ci_id_token_sub_claim_components"`
 	CISeperateCache                          bool                                        `json:"ci_separated_caches"`
 	CIJobTokenScopeEnabled                   bool                                        `json:"ci_job_token_scope_enabled"`
@@ -940,6 +941,7 @@ type EditProjectOptions struct {
 	CIDeletePipelinesInSeconds                *int                                         `url:"ci_delete_pipelines_in_seconds,omitempty" json:"ci_delete_pipelines_in_seconds,omitempty"`
 	CIForwardDeploymentEnabled                *bool                                        `url:"ci_forward_deployment_enabled,omitempty" json:"ci_forward_deployment_enabled,omitempty"`
 	CIForwardDeploymentRollbackAllowed        *bool                                        `url:"ci_forward_deployment_rollback_allowed,omitempty" json:"ci_forward_deployment_rollback_allowed,omitempty"`
+	CIPushRepositoryForJobTokenAllowed        *bool                                        `url:"ci_push_repository_for_job_token_allowed,omitempty" json:"ci_push_repository_for_job_token_allowed,omitempty"`
 	CIIdTokenSubClaimComponents               *[]string                                    `url:"ci_id_token_sub_claim_components,omitempty" json:"ci_id_token_sub_claim_components,omitempty"`
 	CISeperateCache                           *bool                                        `url:"ci_separated_caches,omitempty" json:"ci_separated_caches,omitempty"`
 	CIRestrictPipelineCancellationRole        *AccessControlValue                          `url:"ci_restrict_pipeline_cancellation_role,omitempty" json:"ci_restrict_pipeline_cancellation_role,omitempty"`
