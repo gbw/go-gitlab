@@ -1105,8 +1105,7 @@ type AuthSource interface {
 	Header(ctx context.Context) (key, value string, err error)
 }
 
-// OAuthTokenSource is a wrapper around an oauth2.TokenSource. The type will
-// always be OAuthToken.
+// OAuthTokenSource wraps an oauth2.TokenSource to implement the AuthSource interface.
 type OAuthTokenSource struct {
 	TokenSource oauth2.TokenSource
 }
@@ -1126,7 +1125,7 @@ func (as OAuthTokenSource) Header(_ context.Context) (string, string, error) {
 
 var _ AuthSource = OAuthTokenSource{}
 
-// staticAuthSource implements the TokenSource interface for static tokens.
+// staticAuthSource implements the AuthSource interface for static tokens.
 type staticAuthSource struct {
 	token    string
 	authType AuthType
@@ -1151,7 +1150,8 @@ func (as staticAuthSource) Header(_ context.Context) (string, string, error) {
 
 var _ AuthSource = staticAuthSource{}
 
-// passwordTokenSource implements the OAuth 2.0 password grant token source.
+// passwordTokenSource implements the AuthSource interface for the OAuth 2.0
+// resource owner password credentials flow.
 type passwordCredentialsAuthSource struct {
 	username string
 	password string
