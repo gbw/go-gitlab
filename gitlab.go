@@ -90,13 +90,12 @@ type Client struct {
 	// Limiter is used to limit API calls and prevent 429 responses.
 	limiter RateLimiter
 
-	// tokenSource is used to obtain access tokens.
-	// If non-nil, tokenSource will override the token field.
-	tokenSource AuthSource
+	// authSource is used to obtain authentication headers.
+	authSource AuthSource
 
-	// tokenSourceInit is used to ensure that token sources are initialized only
+	// authSourceInit is used to ensure that AuthSources are initialized only
 	// once.
-	tokenSourceInit sync.Once
+	authSourceInit sync.Once
 
 	// Default request options applied to every request.
 	defaultRequestOptions []RequestOptionFunc
@@ -338,8 +337,8 @@ func NewOAuthClient(token string, options ...ClientOptionFunc) (*Client, error) 
 // NewAuthSourceClient returns a new GitLab API client that uses the AuthSouce for authentication.
 func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, error) {
 	c := &Client{
-		UserAgent:   userAgent,
-		tokenSource: as,
+		UserAgent:  userAgent,
+		authSource: as,
 	}
 
 	// Configure the HTTP client.
@@ -893,14 +892,14 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		return nil, err
 	}
 
-	c.tokenSourceInit.Do(func() {
-		err = c.tokenSource.Init(req.Context(), c)
+	c.authSourceInit.Do(func() {
+		err = c.authSource.Init(req.Context(), c)
 	})
 	if err != nil {
 		return nil, fmt.Errorf("initializing token source failed: %w", err)
 	}
 
-	authKey, authValue, err := c.tokenSource.Header(req.Context())
+	authKey, authValue, err := c.authSource.Header(req.Context())
 	if err != nil {
 		return nil, err
 	}
