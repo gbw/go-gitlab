@@ -1177,3 +1177,5 @@ func (as *passwordCredentialsAuthSource) Init(ctx context.Context, client *Clien
 
 	return nil
 }
+
+var _ AuthSource = (*passwordCredentialsAuthSource)(nil)
