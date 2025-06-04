@@ -792,3 +792,10 @@ func TestNewAuthSourceClient(t *testing.T) {
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, []*Project{}, projects)
 }
+
+// Interface implementation checks.
+var (
+	_ AuthSource = OAuthTokenSource{}
+	_ AuthSource = staticAuthSource{}
+	_ AuthSource = (*passwordCredentialsAuthSource)(nil)
+)

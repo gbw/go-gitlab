@@ -1123,8 +1123,6 @@ func (as OAuthTokenSource) Header(_ context.Context) (string, string, error) {
 	return "Authorization", "Bearer " + t.AccessToken, nil
 }
 
-var _ AuthSource = OAuthTokenSource{}
-
 // staticAuthSource implements the AuthSource interface for static tokens.
 type staticAuthSource struct {
 	token    string
@@ -1147,8 +1145,6 @@ func (as staticAuthSource) Header(_ context.Context) (string, string, error) {
 		return "", "", fmt.Errorf("invalid auth type: %v", as.authType)
 	}
 }
-
-var _ AuthSource = staticAuthSource{}
 
 // passwordTokenSource implements the AuthSource interface for the OAuth 2.0
 // resource owner password credentials flow.
@@ -1177,5 +1173,3 @@ func (as *passwordCredentialsAuthSource) Init(ctx context.Context, client *Clien
 
 	return nil
 }
-
-var _ AuthSource = (*passwordCredentialsAuthSource)(nil)
