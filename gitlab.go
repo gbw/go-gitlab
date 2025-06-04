@@ -319,8 +319,14 @@ func NewJobClient(token string, options ...ClientOptionFunc) (*Client, error) {
 	return NewTokenClient(ts, options...)
 }
 
-// NewOAuthClient returns a new GitLab API client. To use API methods which
-// require authentication, provide a valid oauth token.
+// NewOAuthClient returns a new GitLab API client using a static OAuth bearer token for authentication.
+//
+// Deprecated: use NewTokenClient with a StaticTokenSource instead. For example:
+//
+//	ts := oauth2.StaticTokenSource(
+//	    &oauth2.Token{AccessToken: "YOUR TOKEN"},
+//	)
+//	c, err := gitlab.NewTokenClient(gitlab.OAuthTokenSource{TokenSource: ts})
 func NewOAuthClient(token string, options ...ClientOptionFunc) (*Client, error) {
 	ts := OAuthTokenSource{
 		TokenSource: oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token}),
