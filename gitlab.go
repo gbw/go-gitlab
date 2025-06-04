@@ -92,7 +92,7 @@ type Client struct {
 
 	// tokenSource is used to obtain access tokens.
 	// If non-nil, tokenSource will override the token field.
-	tokenSource TokenSource
+	tokenSource AuthSource
 
 	// tokenSourceInit is used to ensure that token sources are initialized only
 	// once.
@@ -279,12 +279,12 @@ type RateLimiter interface {
 // NewClient returns a new GitLab API client. To use API methods which require
 // authentication, provide a valid private or personal token.
 func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
-	ts := staticTokenSource{
+	as := staticAuthSource{
 		token:    token,
 		authType: PrivateToken,
 	}
 
-	return NewTokenClient(ts, options...)
+	return NewAuthSourceClient(as, options...)
 }
 
 // NewBasicAuthClient returns a new GitLab API client using the OAuth 2.0 Resource Owner Password Credentials flow.
@@ -300,46 +300,46 @@ func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
 //
 // Deprecated: GitLab recommends against using this authentication method.
 func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
-	ts := &passwordCredentialsTokenSource{
+	as := &passwordCredentialsAuthSource{
 		username: username,
 		password: password,
 	}
 
-	return NewTokenClient(ts, options...)
+	return NewAuthSourceClient(as, options...)
 }
 
 // NewJobClient returns a new GitLab API client. To use API methods which require
 // authentication, provide a valid job token.
 func NewJobClient(token string, options ...ClientOptionFunc) (*Client, error) {
-	ts := staticTokenSource{
+	as := staticAuthSource{
 		token:    token,
 		authType: JobToken,
 	}
 
-	return NewTokenClient(ts, options...)
+	return NewAuthSourceClient(as, options...)
 }
 
 // NewOAuthClient returns a new GitLab API client using a static OAuth bearer token for authentication.
 //
-// Deprecated: use NewTokenClient with a StaticTokenSource instead. For example:
+// Deprecated: use NewAuthSourceClient with a StaticTokenSource instead. For example:
 //
 //	ts := oauth2.StaticTokenSource(
-//	    &oauth2.Token{AccessToken: "YOUR TOKEN"},
+//	    &oauth2.Token{AccessToken: "YOUR STATIC TOKEN"},
 //	)
-//	c, err := gitlab.NewTokenClient(gitlab.OAuthTokenSource{TokenSource: ts})
+//	c, err := gitlab.NewAuthSourceClient(gitlab.OAuthTokenSource{ts})
 func NewOAuthClient(token string, options ...ClientOptionFunc) (*Client, error) {
-	ts := OAuthTokenSource{
+	as := OAuthTokenSource{
 		TokenSource: oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token}),
 	}
 
-	return NewTokenClient(ts, options...)
+	return NewAuthSourceClient(as, options...)
 }
 
-// NewTokenClient returns a new GitLab API client that uses TokenSouce for authentication.
-func NewTokenClient(ts TokenSource, options ...ClientOptionFunc) (*Client, error) {
+// NewAuthSourceClient returns a new GitLab API client that uses the AuthSouce for authentication.
+func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, error) {
 	c := &Client{
 		UserAgent:   userAgent,
-		tokenSource: ts,
+		tokenSource: as,
 	}
 
 	// Configure the HTTP client.
@@ -1095,8 +1095,8 @@ func (c *Client) newRetryableHTTPClientWithRetryCheck(cr retryablehttp.CheckRetr
 	}
 }
 
-// TokenSource is used to obtain access tokens.
-type TokenSource interface {
+// AuthSource is used to obtain access tokens.
+type AuthSource interface {
 	// Init is called once before making any requests.
 	// If the token source needs access to client to initialize itself, it should do so here.
 	Init(context.Context, *Client) error
@@ -1116,8 +1116,8 @@ func (OAuthTokenSource) Init(context.Context, *Client) error {
 	return nil
 }
 
-func (ts OAuthTokenSource) Header(_ context.Context) (string, string, error) {
-	t, err := ts.TokenSource.Token()
+func (as OAuthTokenSource) Header(_ context.Context) (string, string, error) {
+	t, err := as.TokenSource.Token()
 	if err != nil {
 		return "", "", err
 	}
@@ -1125,54 +1125,54 @@ func (ts OAuthTokenSource) Header(_ context.Context) (string, string, error) {
 	return "Authorization", "Bearer " + t.AccessToken, nil
 }
 
-var _ TokenSource = OAuthTokenSource{}
+var _ AuthSource = OAuthTokenSource{}
 
-// staticTokenSource implements the TokenSource interface for static tokens.
-type staticTokenSource struct {
+// staticAuthSource implements the TokenSource interface for static tokens.
+type staticAuthSource struct {
 	token    string
 	authType AuthType
 }
 
-func (staticTokenSource) Init(context.Context, *Client) error {
+func (staticAuthSource) Init(context.Context, *Client) error {
 	return nil
 }
 
-func (s staticTokenSource) Header(_ context.Context) (string, string, error) {
-	switch s.authType {
+func (as staticAuthSource) Header(_ context.Context) (string, string, error) {
+	switch as.authType {
 	case PrivateToken:
-		return "PRIVATE-TOKEN", s.token, nil
+		return "PRIVATE-TOKEN", as.token, nil
 
 	case JobToken:
-		return "JOB-TOKEN", s.token, nil
+		return "JOB-TOKEN", as.token, nil
 
 	default:
-		return "", "", fmt.Errorf("invalid auth type: %v", s.authType)
+		return "", "", fmt.Errorf("invalid auth type: %v", as.authType)
 	}
 }
 
-var _ TokenSource = staticTokenSource{}
+var _ AuthSource = staticAuthSource{}
 
 // passwordTokenSource implements the OAuth 2.0 password grant token source.
-type passwordCredentialsTokenSource struct {
+type passwordCredentialsAuthSource struct {
 	username string
 	password string
 
-	TokenSource
+	AuthSource
 }
 
-func (t *passwordCredentialsTokenSource) Init(ctx context.Context, client *Client) error {
+func (as *passwordCredentialsAuthSource) Init(ctx context.Context, client *Client) error {
 	ctx = context.WithValue(ctx, oauth2.HTTPClient, client.client.HTTPClient)
 
 	config := &oauth2.Config{
 		Endpoint: client.endpoint(),
 	}
 
-	pct, err := config.PasswordCredentialsToken(ctx, t.username, t.password)
+	pct, err := config.PasswordCredentialsToken(ctx, as.username, as.password)
 	if err != nil {
-		return fmt.Errorf("PasswordCredentialsToken(%q, ******): %w", t.username, err)
+		return fmt.Errorf("PasswordCredentialsToken(%q, ******): %w", as.username, err)
 	}
 
-	t.TokenSource = OAuthTokenSource{
+	as.AuthSource = OAuthTokenSource{
 		config.TokenSource(ctx, pct),
 	}
 

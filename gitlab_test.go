@@ -755,7 +755,7 @@ func TestNewBasicAuthClient_auth(t *testing.T) {
 	assert.Equal(t, []*Project{}, projects)
 }
 
-func TestNewTokenClient(t *testing.T) {
+func TestNewAuthSourceClient(t *testing.T) {
 	t.Parallel()
 
 	token := &oauth2.Token{
@@ -776,7 +776,7 @@ func TestNewTokenClient(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	t.Cleanup(server.Close)
 
-	client, err := NewTokenClient(OAuthTokenSource{ts},
+	client, err := NewAuthSourceClient(OAuthTokenSource{ts},
 		WithBaseURL(server.URL),
 		WithHTTPClient(server.Client()),
 	)
