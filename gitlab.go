@@ -244,6 +244,7 @@ type Client struct {
 	Snippets                         SnippetsServiceInterface
 	SystemHooks                      SystemHooksServiceInterface
 	Tags                             TagsServiceInterface
+	TerraformStates                  TerraformStatesServiceInterface
 	Todos                            TodosServiceInterface
 	Topics                           TopicsServiceInterface
 	UsageData                        UsageDataServiceInterface
@@ -517,6 +518,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.SnippetRepositoryStorageMove = &SnippetRepositoryStorageMoveService{client: c}
 	c.SystemHooks = &SystemHooksService{client: c}
 	c.Tags = &TagsService{client: c}
+	c.TerraformStates = &TerraformStatesService{client: c}
 	c.Todos = &TodosService{client: c}
 	c.Topics = &TopicsService{client: c}
 	c.UsageData = &UsageDataService{client: c}

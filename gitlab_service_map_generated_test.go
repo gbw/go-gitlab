@@ -139,6 +139,7 @@ var serviceMap = map[any]any{
 	&SnippetsService{}:                         (*SnippetsServiceInterface)(nil),
 	&SystemHooksService{}:                      (*SystemHooksServiceInterface)(nil),
 	&TagsService{}:                             (*TagsServiceInterface)(nil),
+	&TerraformStatesService{}:                  (*TerraformStatesServiceInterface)(nil),
 	&TodosService{}:                            (*TodosServiceInterface)(nil),
 	&TopicsService{}:                           (*TopicsServiceInterface)(nil),
 	&UsageDataService{}:                        (*UsageDataServiceInterface)(nil),
