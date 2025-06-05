@@ -1,7 +1,6 @@
 package gitlab
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"testing"
@@ -36,7 +35,7 @@ func TestGraphQL_Do_Success(t *testing.T) {
 			} `json:"project"`
 		} `json:"data"`
 	}
-	_, err := client.GraphQL.Do(context.Background(), GraphQLQuery{Query: `query { project(fullPath: "gitlab-org/gitlab") { id } }`}, &response)
+	_, err := client.GraphQL.Do(GraphQLQuery{Query: `query { project(fullPath: "gitlab-org/gitlab") { id } }`}, &response)
 
 	// THEN
 	require.NoError(t, err)
@@ -62,7 +61,7 @@ func TestGraphQL_Do_ErrorWithMessages(t *testing.T) {
 			} `json:"project"`
 		} `json:"data"`
 	}
-	_, err := client.GraphQL.Do(context.Background(), GraphQLQuery{Query: `query { project(fullPath: "gitlab-org/gitlab") { id } }`}, &response)
+	_, err := client.GraphQL.Do(GraphQLQuery{Query: `query { project(fullPath: "gitlab-org/gitlab") { id } }`}, &response)
 
 	// THEN
 	assert.ErrorContains(t, err, "GraphQL errors: bad request")
@@ -87,7 +86,7 @@ func TestGraphQL_Do_ErrorNoMessages(t *testing.T) {
 			} `json:"project"`
 		} `json:"data"`
 	}
-	_, err := client.GraphQL.Do(context.Background(), GraphQLQuery{Query: `query { project(fullPath: "gitlab-org/gitlab") { id } }`}, &response)
+	_, err := client.GraphQL.Do(GraphQLQuery{Query: `query { project(fullPath: "gitlab-org/gitlab") { id } }`}, &response)
 
 	// THEN
 	assert.ErrorContains(t, err, `{key: whuat} (no additional error messages)`)

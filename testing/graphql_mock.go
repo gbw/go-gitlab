@@ -10,7 +10,6 @@
 package testing
 
 import (
-	context "context"
 	reflect "reflect"
 
 	gitlab "gitlab.com/gitlab-org/api/client-go"
@@ -42,18 +41,23 @@ func (m *MockGraphQLInterface) EXPECT() *MockGraphQLInterfaceMockRecorder {
 }
 
 // Do mocks base method.
-func (m *MockGraphQLInterface) Do(ctx context.Context, query gitlab.GraphQLQuery, response any) (*gitlab.Response, error) {
+func (m *MockGraphQLInterface) Do(query gitlab.GraphQLQuery, response any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Do", ctx, query, response)
+	varargs := []any{query, response}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Do", varargs...)
 	ret0, _ := ret[0].(*gitlab.Response)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Do indicates an expected call of Do.
-func (mr *MockGraphQLInterfaceMockRecorder) Do(ctx, query, response any) *MockGraphQLInterfaceDoCall {
+func (mr *MockGraphQLInterfaceMockRecorder) Do(query, response any, options ...any) *MockGraphQLInterfaceDoCall {
 	mr.mock.ctrl.T.Helper()
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Do", reflect.TypeOf((*MockGraphQLInterface)(nil).Do), ctx, query, response)
+	varargs := append([]any{query, response}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Do", reflect.TypeOf((*MockGraphQLInterface)(nil).Do), varargs...)
 	return &MockGraphQLInterfaceDoCall{Call: call}
 }
 
@@ -69,13 +73,13 @@ func (c *MockGraphQLInterfaceDoCall) Return(arg0 *gitlab.Response, arg1 error) *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGraphQLInterfaceDoCall) Do(f func(context.Context, gitlab.GraphQLQuery, any) (*gitlab.Response, error)) *MockGraphQLInterfaceDoCall {
+func (c *MockGraphQLInterfaceDoCall) Do(f func(gitlab.GraphQLQuery, any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGraphQLInterfaceDoCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGraphQLInterfaceDoCall) DoAndReturn(f func(context.Context, gitlab.GraphQLQuery, any) (*gitlab.Response, error)) *MockGraphQLInterfaceDoCall {
+func (c *MockGraphQLInterfaceDoCall) DoAndReturn(f func(gitlab.GraphQLQuery, any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGraphQLInterfaceDoCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
