@@ -5,8 +5,9 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGroupScheduleExport(t *testing.T) {
@@ -19,37 +20,30 @@ func TestGroupScheduleExport(t *testing.T) {
 			fmt.Fprint(w, `{"message": "202 Accepted"}`)
 		})
 
-	_, err := client.GroupImportExport.ScheduleExport(1)
-	if err != nil {
-		t.Errorf("GroupImportExport.ScheduleExport returned error: %v", err)
-	}
+	resp, err := client.GroupImportExport.ScheduleExport(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGroupExportDownload(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	content := []byte("fake content")
 
 	mux.HandleFunc("/api/v4/groups/1/export/download",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
-			w.Write(content)
+			fmt.Fprint(w, `fake content`)
 		})
 
-	export, _, err := client.GroupImportExport.ExportDownload(1)
-	if err != nil {
-		t.Errorf("GroupImportExport.ExportDownload returned error: %v", err)
-	}
+	export, resp, err := client.GroupImportExport.ExportDownload(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	data, err := io.ReadAll(export)
-	if err != nil {
-		t.Errorf("Error reading export: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := []byte("fake content")
-	if !reflect.DeepEqual(want, data) {
-		t.Errorf("GroupImportExport.GroupExportDownload returned %+v, want %+v", data, want)
-	}
+	assert.Equal(t, want, data)
 }
 
 func TestGroupImport(t *testing.T) {
@@ -84,8 +78,7 @@ func TestGroupImport(t *testing.T) {
 		ParentID: Ptr(1),
 	}
 
-	_, err = client.GroupImportExport.ImportFile(opt)
-	if err != nil {
-		t.Errorf("GroupImportExport.ImportFile returned error: %v", err)
-	}
+	resp, err := client.GroupImportExport.ImportFile(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }

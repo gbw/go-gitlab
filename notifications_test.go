@@ -17,12 +17,11 @@
 package gitlab
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetGlobalSettings(t *testing.T) {
@@ -37,18 +36,15 @@ func TestGetGlobalSettings(t *testing.T) {
 		  }`)
 	})
 
-	settings, _, err := client.NotificationSettings.GetGlobalSettings()
-	if err != nil {
-		t.Errorf("NotifcationSettings.GetGlobalSettings returned error: %v", err)
-	}
+	settings, resp, err := client.NotificationSettings.GetGlobalSettings()
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &NotificationSettings{
 		Level:             1,
 		NotificationEmail: "admin@example.com",
 	}
-	if !reflect.DeepEqual(settings, want) {
-		t.Errorf("NotificationSettings.GetGlobalSettings returned %+v, want %+v", settings, want)
-	}
+	assert.Equal(t, want, settings)
 }
 
 func TestGetProjectSettings(t *testing.T) {
@@ -82,10 +78,9 @@ func TestGetProjectSettings(t *testing.T) {
 		}`)
 	})
 
-	settings, _, err := client.NotificationSettings.GetSettingsForProject(1)
-	if err != nil {
-		t.Errorf("NotifcationSettings.GetSettingsForProject returned error: %v", err)
-	}
+	settings, resp, err := client.NotificationSettings.GetSettingsForProject(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := &NotificationSettings{
 		Level: 5, // custom
@@ -110,17 +105,13 @@ func TestGetProjectSettings(t *testing.T) {
 			MergeWhenPipelineSucceeds: true,
 		},
 	}
-	if !reflect.DeepEqual(settings, want) {
-		t.Errorf("NotificationSettings.GetSettingsForProject returned %+v, want %+v", settings, want)
-	}
+	assert.Equal(t, want, settings)
 }
 
 func TestUpdateProjectSettings(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	// Create the request to send
-	var reqBody NotificationSettingsOptions
 	customLevel := notificationLevelTypes["custom"]
 	options := NotificationSettingsOptions{
 		Level:        &customLevel,
@@ -132,11 +123,6 @@ func TestUpdateProjectSettings(t *testing.T) {
 	// Handle the request on the server, and return a fully hydrated response
 	mux.HandleFunc("/api/v4/projects/1/notification_settings", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-
-		// Store the body for later, so we can check only some values are marshaled properly for update
-		body, _ := io.ReadAll(r.Body)
-		json.Unmarshal(body, &reqBody)
-
 		fmt.Fprintf(w, `{
 		"level":"custom",
 		"events":{
@@ -163,10 +149,9 @@ func TestUpdateProjectSettings(t *testing.T) {
 	})
 
 	// Make the actual request
-	settings, _, err := client.NotificationSettings.UpdateSettingsForProject(1, &options)
-	if err != nil {
-		t.Errorf("NotifcationSettings.UpdateSettingsForProject returned error: %v", err)
-	}
+	settings, resp, err := client.NotificationSettings.UpdateSettingsForProject(1, &options)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	// Test the response and the request
 	wantResponse := &NotificationSettings{
@@ -193,10 +178,5 @@ func TestUpdateProjectSettings(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(settings, wantResponse) {
-		t.Errorf("NotificationSettings.UpdateSettingsForProject returned for the response %+v, want %+v", settings, wantResponse)
-	}
-	if !reflect.DeepEqual(settings, wantResponse) {
-		t.Errorf("NotificationSettings.UpdateSettingsForProject send for the request %+v, want %+v", reqBody, options)
-	}
+	assert.Equal(t, wantResponse, settings)
 }

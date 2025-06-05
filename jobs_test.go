@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,15 +34,12 @@ func TestListPipelineJobs(t *testing.T) {
 		fmt.Fprint(w, `[{"id":1},{"id":2}]`)
 	})
 
-	jobs, _, err := client.Jobs.ListPipelineJobs(1, 1, nil)
-	if err != nil {
-		t.Errorf("Jobs.ListPipelineJobs returned error: %v", err)
-	}
+	jobs, resp, err := client.Jobs.ListPipelineJobs(1, 1, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Job{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, jobs) {
-		t.Errorf("Jobs.ListPipelineJobs returned %+v, want %+v", jobs, want)
-	}
+	assert.Equal(t, want, jobs)
 }
 
 func TestJobsService_ListProjectJobs(t *testing.T) {
@@ -116,10 +112,9 @@ func TestJobsService_ListProjectJobs(t *testing.T) {
 ]`)
 	})
 
-	jobs, _, err := client.Jobs.ListProjectJobs(1, nil, nil)
-	if err != nil {
-		t.Errorf("Jobs.ListProjectJobs returned error: %v", err)
-	}
+	jobs, resp, err := client.Jobs.ListProjectJobs(1, nil, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 
 	want := []*Job{
 		{
@@ -199,25 +194,15 @@ func TestDownloadSingleArtifactsFileByTagOrBranch(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/9/jobs/artifacts/abranch/raw/foo/bar.pdf", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		w.WriteHeader(http.StatusOK)
-		w.Write(wantContent)
+		fmt.Fprint(w, `This is the file content`)
 	})
 
 	opt := &DownloadArtifactsFileOptions{Job: Ptr("publish")}
 	reader, resp, err := client.Jobs.DownloadSingleArtifactsFileByTagOrBranch(9, "abranch", "foo/bar.pdf", opt)
-	if err != nil {
-		t.Fatalf("Jobs.DownloadSingleArtifactsFileByTagOrBranch returns an error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	content, err := io.ReadAll(reader)
-	if err != nil {
-		t.Fatalf("Jobs.DownloadSingleArtifactsFileByTagOrBranch error reading: %v", err)
-	}
-	if !reflect.DeepEqual(content, wantContent) {
-		t.Errorf("Jobs.DownloadSingleArtifactsFileByTagOrBranch returned %+v, want %+v", content, wantContent)
-	}
-
-	wantCode := 200
-	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Jobs.DownloadSingleArtifactsFileByTagOrBranch returned returned status code  %+v, want %+v", resp.StatusCode, wantCode)
-	}
+	assert.NoError(t, err)
+	assert.Equal(t, wantContent, content)
+	assert.Equal(t, 200, resp.StatusCode)
 }

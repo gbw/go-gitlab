@@ -17,11 +17,11 @@
 package gitlab
 
 import (
+	"fmt"
 	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestSearchService_Users(t *testing.T) {
@@ -59,7 +59,7 @@ func TestSearchService_Users(t *testing.T) {
 		mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(`{"message": "Internal Server Error"}`))
+			fmt.Fprint(w, `{"message": "Internal Server Error"}`)
 		})
 
 		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 20}}
@@ -77,7 +77,7 @@ func TestSearchService_Users(t *testing.T) {
 		mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte("[]"))
+			fmt.Fprint(w, `[]`)
 		})
 
 		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 20}}
@@ -100,9 +100,9 @@ func TestSearchService_Users(t *testing.T) {
 		opts := &SearchOptions{ListOptions: ListOptions{Page: 2, PerPage: 1}}
 		users, _, err := client.Search.Users("doe", opts)
 
-		require.NoError(t, err)
-		require.Len(t, users, 1)
-		require.Equal(t, 2, users[0].ID)
+		assert.NoError(t, err)
+		assert.Len(t, users, 1)
+		assert.Equal(t, 2, users[0].ID)
 	})
 }
 
@@ -126,7 +126,7 @@ func TestSearchService_UsersByGroup(t *testing.T) {
 
 		users, _, err := client.Search.UsersByGroup("3", "doe", nil)
 
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		want := []*User{{
 			ID:        1,
@@ -136,7 +136,7 @@ func TestSearchService_UsersByGroup(t *testing.T) {
 			AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon",
 			WebURL:    "http://localhost/user1",
 		}}
-		require.Equal(t, want, users)
+		assert.Equal(t, want, users)
 	})
 
 	t.Run("invalid group ID - returns 404", func(t *testing.T) {
@@ -145,13 +145,13 @@ func TestSearchService_UsersByGroup(t *testing.T) {
 
 		mux.HandleFunc("/api/v4/groups/invalid/-/search", func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message": "404 Group Not Found"}`))
+			fmt.Fprint(w, `{"message": "404 Group Not Found"}`)
 		})
 
 		users, resp, err := client.Search.UsersByGroup("invalid", "doe", &SearchOptions{})
-		require.Error(t, err)
-		require.Nil(t, users)
-		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+		assert.Error(t, err)
+		assert.Nil(t, users)
+		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 	})
 }
 
@@ -171,7 +171,7 @@ func TestSearchService_UsersByProject(t *testing.T) {
 		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 2}}
 		users, _, err := client.Search.UsersByProject("6", "doe", opts)
 
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		want := []*User{{
 			ID:        1,
@@ -181,7 +181,7 @@ func TestSearchService_UsersByProject(t *testing.T) {
 			AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon",
 			WebURL:    "http://localhost/user1",
 		}}
-		require.Equal(t, want, users)
+		assert.Equal(t, want, users)
 	})
 
 	t.Run("invalid project ID", func(t *testing.T) {
@@ -191,14 +191,14 @@ func TestSearchService_UsersByProject(t *testing.T) {
 		mux.HandleFunc("/api/v4/projects/invalid/-/search", func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message": "404 Project Not Found"}`))
+			fmt.Fprint(w, `{"message": "404 Project Not Found"}`)
 		})
 
 		opts := &SearchOptions{ListOptions: ListOptions{PerPage: 2}}
 		users, resp, err := client.Search.UsersByProject("invalid", "doe", opts)
 
-		require.Error(t, err)
-		require.Nil(t, users)
-		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+		assert.Error(t, err)
+		assert.Nil(t, users)
+		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 	})
 }
