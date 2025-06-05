@@ -18,17 +18,14 @@ package gitlab
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"net"
 	"net/http"
-	"reflect"
 	"strings"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestGetUser(t *testing.T) {
@@ -43,7 +40,7 @@ func TestGetUser(t *testing.T) {
 	})
 
 	user, _, err := client.Users.GetUser(1, GetUsersOptions{})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	want := &User{
 		ID:           1,
@@ -63,7 +60,7 @@ func TestGetUser(t *testing.T) {
 		JobTitle:     "Operations Specialist",
 		AvatarURL:    "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 	}
-	require.Equal(t, want, user)
+	assert.Equal(t, want, user)
 }
 
 func TestGetUserAdmin(t *testing.T) {
@@ -78,7 +75,7 @@ func TestGetUserAdmin(t *testing.T) {
 	})
 
 	user, _, err := client.Users.GetUser(1, GetUsersOptions{})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	lastActivityOn := ISOTime(time.Date(2012, time.May, 23, 0, 0, 0, 0, time.UTC))
 	currentSignInIP := net.ParseIP("8.8.8.8")
@@ -120,7 +117,7 @@ func TestGetUserAdmin(t *testing.T) {
 		Identities:       []*UserIdentity{{Provider: "github", ExternUID: "2435223452345"}},
 		NamespaceID:      42,
 	}
-	require.Equal(t, want, user)
+	assert.Equal(t, want, user)
 }
 
 func TestCreatedBy(t *testing.T) {
@@ -135,7 +132,7 @@ func TestCreatedBy(t *testing.T) {
 	})
 
 	user, _, err := client.Users.GetUser(2, GetUsersOptions{})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	lastActivityOn := ISOTime(time.Date(2012, time.May, 23, 0, 0, 0, 0, time.UTC))
 
@@ -176,7 +173,7 @@ func TestCreatedBy(t *testing.T) {
 			AvatarURL: "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 		},
 	}
-	require.Equal(t, want, user)
+	assert.Equal(t, want, user)
 }
 
 func TestBlockUser(t *testing.T) {
@@ -190,9 +187,7 @@ func TestBlockUser(t *testing.T) {
 	})
 
 	err := client.Users.BlockUser(1)
-	if err != nil {
-		t.Errorf("Users.BlockUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestBlockUser_UserNotFound(t *testing.T) {
@@ -206,9 +201,7 @@ func TestBlockUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.BlockUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.BlockUser error.\nExpected: %+v\nGot: %+v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestBlockUser_BlockPrevented(t *testing.T) {
@@ -222,9 +215,7 @@ func TestBlockUser_BlockPrevented(t *testing.T) {
 	})
 
 	err := client.Users.BlockUser(1)
-	if !errors.Is(err, ErrUserBlockPrevented) {
-		t.Errorf("Users.BlockUser error.\nExpected: %+v\nGot: %+v", ErrUserBlockPrevented, err)
-	}
+	assert.ErrorIs(t, err, ErrUserBlockPrevented)
 }
 
 func TestBlockUser_UnknownError(t *testing.T) {
@@ -240,9 +231,7 @@ func TestBlockUser_UnknownError(t *testing.T) {
 	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.BlockUser(1)
-	if err.Error() != want {
-		t.Errorf("Users.BlockUser error.\nExpected: %s\nGot: %v", want, err)
-	}
+	assert.EqualError(t, err, want)
 }
 
 func TestUnblockUser(t *testing.T) {
@@ -256,9 +245,7 @@ func TestUnblockUser(t *testing.T) {
 	})
 
 	err := client.Users.UnblockUser(1)
-	if err != nil {
-		t.Errorf("Users.UnblockUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestUnblockUser_UserNotFound(t *testing.T) {
@@ -272,9 +259,7 @@ func TestUnblockUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.UnblockUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.UnblockUser error.\nExpected: %v\nGot: %v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestUnblockUser_UnblockPrevented(t *testing.T) {
@@ -288,9 +273,7 @@ func TestUnblockUser_UnblockPrevented(t *testing.T) {
 	})
 
 	err := client.Users.UnblockUser(1)
-	if !errors.Is(err, ErrUserUnblockPrevented) {
-		t.Errorf("Users.UnblockUser error.\nExpected: %v\nGot: %v", ErrUserUnblockPrevented, err)
-	}
+	assert.ErrorIs(t, err, ErrUserUnblockPrevented)
 }
 
 func TestUnblockUser_UnknownError(t *testing.T) {
@@ -306,9 +289,7 @@ func TestUnblockUser_UnknownError(t *testing.T) {
 	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.UnblockUser(1)
-	if err.Error() != want {
-		t.Errorf("Users.UnblockUser error.\nExpected: %s\n\tGot: %v", want, err)
-	}
+	assert.EqualError(t, err, want)
 }
 
 func TestBanUser(t *testing.T) {
@@ -322,9 +303,7 @@ func TestBanUser(t *testing.T) {
 	})
 
 	err := client.Users.BlockUser(1)
-	if err != nil {
-		t.Errorf("Users.BlockUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestBanUser_UserNotFound(t *testing.T) {
@@ -338,9 +317,7 @@ func TestBanUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.BanUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.BanUser error.\nExpected: %+v\nGot: %+v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestBanUser_UnknownError(t *testing.T) {
@@ -356,9 +333,7 @@ func TestBanUser_UnknownError(t *testing.T) {
 	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.BanUser(1)
-	if err.Error() != want {
-		t.Errorf("Users.BanUSer error.\nExpected: %s\nGot: %v", want, err)
-	}
+	assert.EqualError(t, err, want)
 }
 
 func TestUnbanUser(t *testing.T) {
@@ -372,9 +347,7 @@ func TestUnbanUser(t *testing.T) {
 	})
 
 	err := client.Users.UnbanUser(1)
-	if err != nil {
-		t.Errorf("Users.UnbanUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestUnbanUser_UserNotFound(t *testing.T) {
@@ -388,9 +361,7 @@ func TestUnbanUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.UnbanUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.UnbanUser error.\nExpected: %v\nGot: %v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestUnbanUser_UnknownError(t *testing.T) {
@@ -406,9 +377,7 @@ func TestUnbanUser_UnknownError(t *testing.T) {
 	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.UnbanUser(1)
-	if err.Error() != want {
-		t.Errorf("Users.UnbanUser error.\nExpected: %s\n\tGot: %v", want, err)
-	}
+	assert.EqualError(t, err, want)
 }
 
 func TestDeactivateUser(t *testing.T) {
@@ -422,9 +391,7 @@ func TestDeactivateUser(t *testing.T) {
 	})
 
 	err := client.Users.DeactivateUser(1)
-	if err != nil {
-		t.Errorf("Users.DeactivateUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestDeactivateUser_UserNotFound(t *testing.T) {
@@ -438,9 +405,7 @@ func TestDeactivateUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.DeactivateUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.DeactivateUser error.\nExpected: %+v\n\tGot: %+v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestDeactivateUser_DeactivatePrevented(t *testing.T) {
@@ -454,9 +419,7 @@ func TestDeactivateUser_DeactivatePrevented(t *testing.T) {
 	})
 
 	err := client.Users.DeactivateUser(1)
-	if !errors.Is(err, ErrUserDeactivatePrevented) {
-		t.Errorf("Users.DeactivateUser error.\nExpected: %+v\n\tGot: %+v", ErrUserDeactivatePrevented, err)
-	}
+	assert.ErrorIs(t, err, ErrUserDeactivatePrevented)
 }
 
 func TestActivateUser(t *testing.T) {
@@ -470,9 +433,7 @@ func TestActivateUser(t *testing.T) {
 	})
 
 	err := client.Users.ActivateUser(1)
-	if err != nil {
-		t.Errorf("Users.ActivateUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestActivateUser_ActivatePrevented(t *testing.T) {
@@ -486,9 +447,7 @@ func TestActivateUser_ActivatePrevented(t *testing.T) {
 	})
 
 	err := client.Users.ActivateUser(1)
-	if !errors.Is(err, ErrUserActivatePrevented) {
-		t.Errorf("Users.ActivateUser error.\nExpected: %+v\n\tGot: %+v", ErrUserActivatePrevented, err)
-	}
+	assert.ErrorIs(t, err, ErrUserActivatePrevented)
 }
 
 func TestActivateUser_UserNotFound(t *testing.T) {
@@ -502,9 +461,7 @@ func TestActivateUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.ActivateUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.ActivateUser error.\nExpected: %+v\n\tGot: %+v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestApproveUser(t *testing.T) {
@@ -518,9 +475,7 @@ func TestApproveUser(t *testing.T) {
 	})
 
 	err := client.Users.ApproveUser(1)
-	if err != nil {
-		t.Errorf("Users.ApproveUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestApproveUser_UserNotFound(t *testing.T) {
@@ -534,9 +489,7 @@ func TestApproveUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.ApproveUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.ApproveUser error.\nExpected: %v\nGot: %v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestApproveUser_ApprovePrevented(t *testing.T) {
@@ -550,9 +503,7 @@ func TestApproveUser_ApprovePrevented(t *testing.T) {
 	})
 
 	err := client.Users.ApproveUser(1)
-	if !errors.Is(err, ErrUserApprovePrevented) {
-		t.Errorf("Users.ApproveUser error.\nExpected: %v\nGot: %v", ErrUserApprovePrevented, err)
-	}
+	assert.ErrorIs(t, err, ErrUserApprovePrevented)
 }
 
 func TestApproveUser_UnknownError(t *testing.T) {
@@ -568,9 +519,7 @@ func TestApproveUser_UnknownError(t *testing.T) {
 	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.ApproveUser(1)
-	if err.Error() != want {
-		t.Errorf("Users.ApproveUser error.\nExpected: %s\n\tGot: %v", want, err)
-	}
+	assert.EqualError(t, err, want)
 }
 
 func TestRejectUser(t *testing.T) {
@@ -584,9 +533,7 @@ func TestRejectUser(t *testing.T) {
 	})
 
 	err := client.Users.RejectUser(1)
-	if err != nil {
-		t.Errorf("Users.RejectUser returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestRejectUser_UserNotFound(t *testing.T) {
@@ -600,9 +547,7 @@ func TestRejectUser_UserNotFound(t *testing.T) {
 	})
 
 	err := client.Users.RejectUser(1)
-	if !errors.Is(err, ErrUserNotFound) {
-		t.Errorf("Users.RejectUser error.\nExpected: %v\nGot: %v", ErrUserNotFound, err)
-	}
+	assert.ErrorIs(t, err, ErrUserNotFound)
 }
 
 func TestRejectUser_RejectPrevented(t *testing.T) {
@@ -616,9 +561,7 @@ func TestRejectUser_RejectPrevented(t *testing.T) {
 	})
 
 	err := client.Users.RejectUser(1)
-	if !errors.Is(err, ErrUserRejectPrevented) {
-		t.Errorf("Users.RejectUser error.\nExpected: %v\nGot: %v", ErrUserRejectPrevented, err)
-	}
+	assert.ErrorIs(t, err, ErrUserRejectPrevented)
 }
 
 func TestRejectUser_Conflict(t *testing.T) {
@@ -632,9 +575,7 @@ func TestRejectUser_Conflict(t *testing.T) {
 	})
 
 	err := client.Users.RejectUser(1)
-	if !errors.Is(err, ErrUserConflict) {
-		t.Errorf("Users.RejectUser error.\nExpected: %v\nGot: %v", ErrUserConflict, err)
-	}
+	assert.ErrorIs(t, err, ErrUserConflict)
 }
 
 func TestRejectUser_UnknownError(t *testing.T) {
@@ -650,9 +591,7 @@ func TestRejectUser_UnknownError(t *testing.T) {
 	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
 
 	err := client.Users.RejectUser(1)
-	if err.Error() != want {
-		t.Errorf("Users.RejectUser error.\nExpected: %s\n\tGot: %v", want, err)
-	}
+	assert.EqualError(t, err, want)
 }
 
 func TestGetMemberships(t *testing.T) {
@@ -668,7 +607,7 @@ func TestGetMemberships(t *testing.T) {
 	opt := new(GetUserMembershipOptions)
 
 	memberships, _, err := client.Users.GetUserMemberships(1, opt)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	want := []*UserMembership{{SourceID: 1, SourceName: "Project one", SourceType: "Project", AccessLevel: 20}, {SourceID: 3, SourceName: "Group three", SourceType: "Namespace", AccessLevel: 20}}
 	assert.Equal(t, want, memberships)
@@ -686,7 +625,7 @@ func TestGetUserAssociationsCount(t *testing.T) {
 	})
 
 	userAssociationsCount, _, err := client.Users.GetUserAssociationsCount(1)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	want := &UserAssociationsCount{
 		GroupsCount:        1,
@@ -694,7 +633,7 @@ func TestGetUserAssociationsCount(t *testing.T) {
 		IssuesCount:        3,
 		MergeRequestsCount: 4,
 	}
-	require.Equal(t, want, userAssociationsCount)
+	assert.Equal(t, want, userAssociationsCount)
 }
 
 func TestGetSingleSSHKeyForUser(t *testing.T) {
@@ -714,9 +653,7 @@ func TestGetSingleSSHKeyForUser(t *testing.T) {
 	})
 
 	sshKey, _, err := client.Users.GetSSHKeyForUser(1, 1)
-	if err != nil {
-		t.Errorf("Users.GetSSHKeyForUser returned an error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	wantCreatedAt := time.Date(2014, 8, 1, 14, 47, 39, 80000000, time.UTC)
 
@@ -727,10 +664,7 @@ func TestGetSingleSSHKeyForUser(t *testing.T) {
 		UsageType: "auth",
 		CreatedAt: &wantCreatedAt,
 	}
-
-	if !reflect.DeepEqual(want, sshKey) {
-		t.Errorf("Users.GetSSHKeyForUser returned %+v, want %+v", sshKey, want)
-	}
+	assert.Equal(t, want, sshKey)
 }
 
 func TestDisableUser2FA(t *testing.T) {
@@ -744,9 +678,7 @@ func TestDisableUser2FA(t *testing.T) {
 	})
 
 	err := client.Users.DisableTwoFactor(1)
-	if err != nil {
-		t.Errorf("Users.DisableTwoFactor returned error: %v", err)
-	}
+	assert.NoError(t, err)
 }
 
 func TestCreateUserRunner(t *testing.T) {
@@ -757,12 +689,12 @@ func TestCreateUserRunner(t *testing.T) {
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(`
-    {
-      "id": 1234,
-      "token": "glrt-1234567890ABCD",
-      "token_expires_at":null
-    }`))
+		fmt.Fprint(w, `
+		{
+			"id": 1234,
+			"token": "glrt-1234567890ABCD",
+			"token_expires_at":null
+		}`)
 	})
 
 	createRunnerOpts := &CreateUserRunnerOptions{
@@ -771,13 +703,10 @@ func TestCreateUserRunner(t *testing.T) {
 	}
 
 	response, _, err := client.Users.CreateUserRunner(createRunnerOpts)
-	if err != nil {
-		t.Errorf("Users.CreateUserRunner returned an error: %v", err)
-	}
-
-	require.Equal(t, 1234, response.ID)
-	require.Equal(t, "glrt-1234567890ABCD", response.Token)
-	require.Equal(t, (*time.Time)(nil), response.TokenExpiresAt)
+	assert.NoError(t, err)
+	assert.Equal(t, 1234, response.ID)
+	assert.Equal(t, "glrt-1234567890ABCD", response.Token)
+	assert.Equal(t, (*time.Time)(nil), response.TokenExpiresAt)
 }
 
 func TestCreatePersonalAccessTokenForCurrentUser(t *testing.T) {
@@ -798,7 +727,7 @@ func TestCreatePersonalAccessTokenForCurrentUser(t *testing.T) {
 		Scopes:    &scopes,
 		ExpiresAt: &expiresAt,
 	})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	createdAt := time.Date(2020, time.October, 14, 11, 58, 53, 526000000, time.UTC)
 	want := &PersonalAccessToken{
@@ -813,7 +742,7 @@ func TestCreatePersonalAccessTokenForCurrentUser(t *testing.T) {
 		ExpiresAt:   &expiresAt,
 		Token:       "glpat-aaaaaaaa-bbbbbbbbb",
 	}
-	require.Equal(t, want, user)
+	assert.Equal(t, want, user)
 }
 
 func TestCreateServiceAccountUser(t *testing.T) {
@@ -838,7 +767,7 @@ func TestCreateServiceAccountUser(t *testing.T) {
 		Username: Ptr("serviceaccount"),
 		Email:    Ptr("serviceaccount@test.com"),
 	})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	want := &User{
 		ID:        999,
@@ -850,7 +779,7 @@ func TestCreateServiceAccountUser(t *testing.T) {
 		AvatarURL: "http://localhost:3000/uploads/user/avatar/999/cd8.jpeg",
 		WebURL:    "http://localhost:3000/serviceaccount",
 	}
-	require.Equal(t, want, user)
+	assert.Equal(t, want, user)
 }
 
 func TestCreateUser(t *testing.T) {
@@ -868,13 +797,13 @@ func TestCreateUser(t *testing.T) {
 			t.Fatalf("Users.CreateUser request content-length is -1")
 		}
 		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(`
-    {
-      "email": "user999@example.com",
-      "id": 999,
-      "name":"Firstname Lastname",
-      "username":"user"
-    }`))
+		fmt.Fprint(w, `
+		{
+			"email": "user999@example.com",
+			"id": 999,
+			"name":"Firstname Lastname",
+			"username":"user"
+		}`)
 	})
 
 	user, _, err := client.Users.CreateUser(&CreateUserOptions{
@@ -882,7 +811,7 @@ func TestCreateUser(t *testing.T) {
 		Name:     Ptr("Firstname Lastname"),
 		Username: Ptr("user"),
 	})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	want := &User{
 		Email:    "user999@example.com",
@@ -890,7 +819,7 @@ func TestCreateUser(t *testing.T) {
 		Name:     "Firstname Lastname",
 		Username: "user",
 	}
-	require.Equal(t, want, user)
+	assert.Equal(t, want, user)
 }
 
 func TestCreateUserAvatar(t *testing.T) {
@@ -908,14 +837,14 @@ func TestCreateUserAvatar(t *testing.T) {
 			t.Fatalf("Users.CreateUser request content-length is -1")
 		}
 		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(`
-    {
-      "avatar_url":"http://localhost:3000/uploads/-/system/user/avatar/999/avatar.png",
-      "email": "user999@example.com",
-      "id": 999,
-      "name":"Firstname Lastname",
-      "username":"user"
-    }`))
+		fmt.Fprint(w, `
+		{
+			"avatar_url":"http://localhost:3000/uploads/-/system/user/avatar/999/avatar.png",
+			"email": "user999@example.com",
+			"id": 999,
+			"name":"Firstname Lastname",
+			"username":"user"
+		}`)
 	})
 	avatar := new(bytes.Buffer)
 	userAvatar := &UserAvatar{
@@ -928,7 +857,7 @@ func TestCreateUserAvatar(t *testing.T) {
 		Name:     Ptr("Firstname Lastname"),
 		Username: Ptr("user"),
 	})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	want := &User{
 		AvatarURL: "http://localhost:3000/uploads/-/system/user/avatar/999/avatar.png",
@@ -937,7 +866,7 @@ func TestCreateUserAvatar(t *testing.T) {
 		Name:      "Firstname Lastname",
 		Username:  "user",
 	}
-	require.Equal(t, want, user)
+	assert.Equal(t, want, user)
 }
 
 func TestModifyUser(t *testing.T) {
@@ -957,7 +886,7 @@ func TestModifyUser(t *testing.T) {
 		fmt.Fprint(w, `{}`)
 	})
 	_, _, err := client.Users.ModifyUser(1, &ModifyUserOptions{})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }
 
 func TestModifyUserAvatar(t *testing.T) {
@@ -982,7 +911,7 @@ func TestModifyUserAvatar(t *testing.T) {
 		Filename: "avatar.png",
 	}
 	_, _, err := client.Users.ModifyUser(1, &ModifyUserOptions{Avatar: userAvatar})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 }
 
 func TestUploadAvatarUser(t *testing.T) {
@@ -1019,7 +948,7 @@ func TestListServiceAccounts(t *testing.T) {
 	})
 
 	serviceaccounts, _, err := client.Users.ListServiceAccounts(&ListServiceAccountsOptions{})
-	require.NoError(t, err)
+	assert.NoError(t, err)
 	want := []*ServiceAccount{
 		{
 			ID:       114,
@@ -1032,7 +961,7 @@ func TestListServiceAccounts(t *testing.T) {
 			Name:     "john doe",
 		},
 	}
-	require.Equal(t, want, serviceaccounts)
+	assert.Equal(t, want, serviceaccounts)
 }
 
 func TestDeleteUserIdentity(t *testing.T) {
@@ -1092,7 +1021,7 @@ func TestGetUserStatus(t *testing.T) {
 			})
 
 			got, _, err := client.Users.GetUserStatus(tt.uid)
-			require.ErrorIs(t, err, tt.wantErr)
+			assert.ErrorIs(t, err, tt.wantErr)
 			if tt.wantErr != nil {
 				return
 			}
@@ -1104,7 +1033,7 @@ func TestGetUserStatus(t *testing.T) {
 				MessageHTML:   "Duly swamped",
 				ClearStatusAt: Ptr(time.Date(2025, time.April, 24, 16, 56, 35, 0, time.UTC)),
 			}
-			require.Equal(t, want, got)
+			assert.Equal(t, want, got)
 		})
 	}
 }
@@ -1141,7 +1070,7 @@ func TestSetUserStatus(t *testing.T) {
 	})
 
 	got, _, err := client.Users.SetUserStatus(&opts)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 
 	want := &UserStatus{
 		Emoji:         "red_circle",
@@ -1149,6 +1078,6 @@ func TestSetUserStatus(t *testing.T) {
 		Availability:  "busy",
 		ClearStatusAt: Ptr(time.Date(2025, time.April, 24, 15, 2, 2, 0, time.UTC)),
 	}
-	require.Equal(t, 0, want.ClearStatusAt.Nanosecond())
-	require.Equal(t, want, got)
+	assert.Equal(t, 0, want.ClearStatusAt.Nanosecond())
+	assert.Equal(t, want, got)
 }
