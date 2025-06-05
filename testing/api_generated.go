@@ -139,6 +139,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=snippets_mock.go -package=testing gitlab.com/gitlab-org/api/client-go SnippetsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=system_hooks_mock.go -package=testing gitlab.com/gitlab-org/api/client-go SystemHooksServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=tags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go TagsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=terraform_states_mock.go -package=testing gitlab.com/gitlab-org/api/client-go TerraformStatesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=todos_mock.go -package=testing gitlab.com/gitlab-org/api/client-go TodosServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=topics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go TopicsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=usage_data_mock.go -package=testing gitlab.com/gitlab-org/api/client-go UsageDataServiceInterface

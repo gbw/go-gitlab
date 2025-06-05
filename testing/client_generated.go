@@ -146,6 +146,7 @@ type testClientMocks struct {
 	MockSnippets                         *MockSnippetsServiceInterface
 	MockSystemHooks                      *MockSystemHooksServiceInterface
 	MockTags                             *MockTagsServiceInterface
+	MockTerraformStates                  *MockTerraformStatesServiceInterface
 	MockTodos                            *MockTodosServiceInterface
 	MockTopics                           *MockTopicsServiceInterface
 	MockUsageData                        *MockUsageDataServiceInterface
@@ -294,6 +295,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 	mockSnippets := NewMockSnippetsServiceInterface(ctrl)
 	mockSystemHooks := NewMockSystemHooksServiceInterface(ctrl)
 	mockTags := NewMockTagsServiceInterface(ctrl)
+	mockTerraformStates := NewMockTerraformStatesServiceInterface(ctrl)
 	mockTodos := NewMockTodosServiceInterface(ctrl)
 	mockTopics := NewMockTopicsServiceInterface(ctrl)
 	mockUsageData := NewMockUsageDataServiceInterface(ctrl)
@@ -442,6 +444,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			Snippets:                         mockSnippets,
 			SystemHooks:                      mockSystemHooks,
 			Tags:                             mockTags,
+			TerraformStates:                  mockTerraformStates,
 			Todos:                            mockTodos,
 			Topics:                           mockTopics,
 			UsageData:                        mockUsageData,
@@ -589,6 +592,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
 			MockSnippets:                         mockSnippets,
 			MockSystemHooks:                      mockSystemHooks,
 			MockTags:                             mockTags,
+			MockTerraformStates:                  mockTerraformStates,
 			MockTodos:                            mockTodos,
 			MockTopics:                           mockTopics,
 			MockUsageData:                        mockUsageData,
