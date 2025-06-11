@@ -1494,3 +1494,53 @@ func TestUpdateGroupMultipleDefaultBranchSettingsWithAvatarShouldError(t *testin
 	assert.Equal(t, "multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior", err.Error())
 	assert.Nil(t, group)
 }
+
+func TestCreateGroupWithAvatar(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+
+			testFormBody(t, r, "name", "g")
+			testFormBody(t, r, "path", "g")
+
+			fmt.Fprint(w, `
+			{
+				"id": 1,
+				"name": "g",
+				"path": "g",
+				"avatar_url":"http://localhost/uploads/-/system/group/avatar/999/avatar.png"
+			}
+			`)
+		})
+
+	avatar := new(bytes.Buffer)
+	groupAvatar := &GroupAvatar{
+		Image:    avatar,
+		Filename: "avatar.png",
+	}
+	opt := &CreateGroupOptions{
+		Name:   Ptr("g"),
+		Path:   Ptr("g"),
+		Avatar: groupAvatar,
+	}
+
+	group, _, err := client.Groups.CreateGroup(opt, nil)
+	if err != nil {
+		t.Errorf("Groups.CreateGroup returned error: %v", err)
+	}
+
+	// Create the group that we want to get back
+	want := &Group{
+		ID:        1,
+		Name:      "g",
+		Path:      "g",
+		AvatarURL: "http://localhost/uploads/-/system/group/avatar/999/avatar.png",
+	}
+
+	if !reflect.DeepEqual(want, group) {
+		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
+	}
+}
