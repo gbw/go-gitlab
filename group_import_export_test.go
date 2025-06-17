@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -51,19 +52,10 @@ func TestGroupImport(t *testing.T) {
 	mux, client := setup(t)
 
 	content := []byte("temporary file's content")
-	tmpfile, err := os.CreateTemp(os.TempDir(), "example.*.tar.gz")
-	if err != nil {
-		tmpfile.Close()
+	tmpfile := filepath.Join(t.TempDir(), "example.tar.gz")
+	if err := os.WriteFile(tmpfile, content, os.ModePerm); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := tmpfile.Write(content); err != nil {
-		tmpfile.Close()
-		t.Fatal(err)
-	}
-	if err := tmpfile.Close(); err != nil {
-		t.Fatal(err)
-	}
-	defer os.Remove(tmpfile.Name()) // clean up
 
 	mux.HandleFunc("/api/v4/groups/import",
 		func(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +66,7 @@ func TestGroupImport(t *testing.T) {
 	opt := &GroupImportFileOptions{
 		Name:     Ptr("test"),
 		Path:     Ptr("path"),
-		File:     Ptr(tmpfile.Name()),
+		File:     Ptr(tmpfile),
 		ParentID: Ptr(1),
 	}
 
