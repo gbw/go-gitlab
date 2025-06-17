@@ -3,7 +3,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 	"testing"
 	"time"
@@ -52,9 +51,6 @@ func TestMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
 func TestMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-
-	tf, _ := os.CreateTemp(os.TempDir(), "test")
-	defer os.Remove(tf.Name())
 
 	isFirstRequest := true
 	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
