@@ -38,7 +38,8 @@ linters:
       enable-all-rules: false
       rules:
         - name: deep-exit
-  
+        - name: get-return
+
   # List of regexps of issue texts to exclude.
   exclusions:
     generated: lax

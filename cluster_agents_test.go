@@ -24,7 +24,7 @@ import (
 	"time"
 )
 
-func ListClusterAgents(t *testing.T) {
+func TestListClusterAgents(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents", func(w http.ResponseWriter, r *http.Request) {
@@ -109,7 +109,7 @@ func ListClusterAgents(t *testing.T) {
 	}
 }
 
-func GetClusterAgent(t *testing.T) {
+func TestGetClusterAgent(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/1", func(w http.ResponseWriter, r *http.Request) {
@@ -158,7 +158,7 @@ func GetClusterAgent(t *testing.T) {
 	}
 }
 
-func RegisterClusterAgent(t *testing.T) {
+func TestRegisterClusterAgent(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents", func(w http.ResponseWriter, r *http.Request) {
@@ -208,7 +208,7 @@ func RegisterClusterAgent(t *testing.T) {
 	}
 }
 
-func ListAgentTokens(t *testing.T) {
+func TestListAgentTokens(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/5/tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -269,7 +269,7 @@ func ListAgentTokens(t *testing.T) {
 	}
 }
 
-func GetAgentToken(t *testing.T) {
+func TestGetAgentToken(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/5/tokens/1", func(w http.ResponseWriter, r *http.Request) {
@@ -308,7 +308,7 @@ func GetAgentToken(t *testing.T) {
 	}
 }
 
-func RegisterAgentToken(t *testing.T) {
+func TestRegisterAgentToken(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/5/tokens", func(w http.ResponseWriter, r *http.Request) {
