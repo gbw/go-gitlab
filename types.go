@@ -212,7 +212,7 @@ type AvailabilityValue string
 
 // List of available availability values.
 //
-// Undocummented, see code at:
+// Undocumented, see code at:
 // https://gitlab.com/gitlab-org/gitlab-foss/-/blob/master/app/models/user_status.rb#L22
 const (
 	NotSet AvailabilityValue = "not_set"

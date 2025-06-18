@@ -118,7 +118,7 @@ func TestSettingsDefaultBranchProtectionDefaults(t *testing.T) {
 	}
 
 	// This is the payload that should be produced. Float vs int won't matter when converted to a JSON string, so don't bother investigating why
-	// it uses float insead of int when unmarshalled.
+	// it uses float instead of int when unmarshalled.
 	want := map[string]any{
 		"default_branch_protection_defaults": map[string]any{
 			"allowed_to_push": []any{
