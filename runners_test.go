@@ -351,7 +351,7 @@ func TestDeleteRegisteredRunner(t *testing.T) {
 
 	want := 204
 	if !reflect.DeepEqual(want, resp.StatusCode) {
-		t.Errorf("Runners.DeleteRegisteredRunner returned returned status code  %+v, want %+v", resp.StatusCode, want)
+		t.Errorf("Runners.DeleteRegisteredRunner returned status code  %+v, want %+v", resp.StatusCode, want)
 	}
 }
 
@@ -373,7 +373,7 @@ func TestDeleteRegisteredRunnerByID(t *testing.T) {
 
 	want := 204
 	if !reflect.DeepEqual(want, resp.StatusCode) {
-		t.Errorf("Runners.DeleteRegisteredRunnerByID returned returned status code  %+v, want %+v", resp.StatusCode, want)
+		t.Errorf("Runners.DeleteRegisteredRunnerByID returned status code  %+v, want %+v", resp.StatusCode, want)
 	}
 }
 
@@ -395,7 +395,7 @@ func TestVerifyRegisteredRunner(t *testing.T) {
 
 	want := 200
 	if !reflect.DeepEqual(want, resp.StatusCode) {
-		t.Errorf("Runners.VerifyRegisteredRunner returned returned status code  %+v, want %+v", resp.StatusCode, want)
+		t.Errorf("Runners.VerifyRegisteredRunner returned status code  %+v, want %+v", resp.StatusCode, want)
 	}
 }
 
@@ -427,7 +427,7 @@ func TestResetInstanceRunnerRegistrationToken(t *testing.T) {
 
 	wantCode := 201
 	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetInstanceRunnerRegistrationToken returned returned status code  %+v, want %+v", resp.StatusCode, wantCode)
+		t.Errorf("Runners.ResetInstanceRunnerRegistrationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
 	}
 }
 
@@ -459,7 +459,7 @@ func TestResetGroupRunnerRegistrationToken(t *testing.T) {
 
 	wantCode := 201
 	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetGroupRunnerRegistrationToken returned returned status code  %+v, want %+v", resp.StatusCode, wantCode)
+		t.Errorf("Runners.ResetGroupRunnerRegistrationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
 	}
 }
 
@@ -491,7 +491,7 @@ func TestResetProjectRunnerRegistrationToken(t *testing.T) {
 
 	wantCode := 201
 	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetProjectRunnerRegistrationToken returned returned status code  %+v, want %+v", resp.StatusCode, wantCode)
+		t.Errorf("Runners.ResetProjectRunnerRegistrationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
 	}
 }
 
@@ -523,6 +523,6 @@ func TestResetRunnerAuthenticationToken(t *testing.T) {
 
 	wantCode := 201
 	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetRunnerAuthenticationToken returned returned status code  %+v, want %+v", resp.StatusCode, wantCode)
+		t.Errorf("Runners.ResetRunnerAuthenticationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
 	}
 }

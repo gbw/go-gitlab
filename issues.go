@@ -282,7 +282,7 @@ type ListGroupIssuesOptions struct {
 	AuthorUsername    *string       `url:"author_username,omitempty" json:"author_username,omitempty"`
 	NotAuthorUsername *string       `url:"not[author_username],omitempty" json:"not[author_username],omitempty"`
 
-	// AssigneeID is defined as an int the the documentation, however, the field
+	// AssigneeID is defined as an int in the documentation, however, the field
 	// must be able to accept Assignee IDs and the words 'None' and 'Any'.  Use
 	// *AssigneeIDValue instead of *int.
 	AssigneeID          *AssigneeIDValue `url:"assignee_id,omitempty" json:"assignee_id,omitempty"`
