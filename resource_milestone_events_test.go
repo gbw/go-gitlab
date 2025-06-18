@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func ListIssueMilestoneEvents(t *testing.T) {
+func TestListIssueMilestoneEvents(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/issues/11/resource_milestone_events", func(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +71,7 @@ func ListIssueMilestoneEvents(t *testing.T) {
 	require.Equal(t, want, mes)
 }
 
-func GetIssueMilestoneEvent(t *testing.T) {
+func TestGetIssueMilestoneEvent(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/issues/11/resource_milestone_events/143", func(w http.ResponseWriter, r *http.Request) {
@@ -132,7 +132,7 @@ func GetIssueMilestoneEvent(t *testing.T) {
 	require.Equal(t, want, me)
 }
 
-func ListMergeMilestoneEvents(t *testing.T) {
+func TestListMergeMilestoneEvents(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/merge_requests/11/resource_milestone_events", func(w http.ResponseWriter, r *http.Request) {
@@ -195,7 +195,7 @@ func ListMergeMilestoneEvents(t *testing.T) {
 	require.Equal(t, want, ses)
 }
 
-func GetMergeRequestMilestoneEvent(t *testing.T) {
+func TestGetMergeRequestMilestoneEvent(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/5/merge_requests/11/resource_milestone_events/120", func(w http.ResponseWriter, r *http.Request) {
