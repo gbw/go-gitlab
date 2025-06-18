@@ -84,7 +84,7 @@ func TestPatchProjectJobTokenAccessSettings(t *testing.T) {
 
 // This tests that when calling the GetProjectJobTokenInboundAllowList, we get a
 // list of projects back properly. There isn't a "deep" test with every attribute
-// specifieid, because the object returned is a *Project object, which is already
+// specified, because the object returned is a *Project object, which is already
 // tested in project.go.
 func TestGetProjectJobTokenInboundAllowList(t *testing.T) {
 	t.Parallel()
