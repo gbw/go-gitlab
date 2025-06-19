@@ -75,7 +75,7 @@ func TestGetCommit(t *testing.T) {
 	assert.Equal(t, want, commit)
 }
 
-func TestGetCommitStatuses(t *testing.T) {
+func TestGetCommitStatuses_NoOptions(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -84,12 +84,43 @@ func TestGetCommitStatuses(t *testing.T) {
 		fmt.Fprint(w, `[{"id":1}]`)
 	})
 
-	opt := &GetCommitStatusesOptions{
-		Ref:   Ptr("master"),
-		Stage: Ptr("test"),
-		Name:  Ptr("ci/jenkins"),
-		All:   Ptr(true),
+	statuses, _, err := client.Commits.GetCommitStatuses("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", nil)
+	if err != nil {
+		t.Errorf("Commits.GetCommitStatuses returned error: %v", err)
 	}
+
+	want := []*CommitStatus{{ID: 1}}
+	if !reflect.DeepEqual(want, statuses) {
+		t.Errorf("Commits.GetCommitStatuses returned %+v, want %+v", statuses, want)
+	}
+}
+
+func TestGetCommitStatuses_WithOptions(t *testing.T) {
+	t.Parallel()
+
+	opt := &GetCommitStatusesOptions{
+		Ref:        Ptr("master"),
+		Stage:      Ptr("test"),
+		Name:       Ptr("ci"),
+		PipelineID: Ptr(1),
+		All:        Ptr(true),
+	}
+
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/repository/commits/b0b3a907f41409829b307a28b82fdbd552ee5a27/statuses", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		query := r.URL.Query()
+		assert.Equal(t, *opt.Ref, query.Get("ref"))
+		assert.Equal(t, *opt.Stage, query.Get("stage"))
+		assert.Equal(t, *opt.Name, query.Get("name"))
+		assert.Equal(t, fmt.Sprintf("%d", *opt.PipelineID), query.Get("pipeline_id"))
+		assert.Equal(t, fmt.Sprintf("%t", *opt.All), query.Get("all"))
+
+		fmt.Fprint(w, `[{"id":1}]`)
+	})
+
 	statuses, _, err := client.Commits.GetCommitStatuses("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", opt)
 	if err != nil {
 		t.Errorf("Commits.GetCommitStatuses returned error: %v", err)
