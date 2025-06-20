@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"iter"
 	"net/http"
-	"reflect"
 	"slices"
 	"testing"
 
@@ -29,9 +28,7 @@ func TestPagination_Scan_OffsetBased(t *testing.T) {
 	require.NoError(t, hasErr())
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Scan returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestPagination_Scan_KeysetBased(t *testing.T) {
@@ -52,9 +49,7 @@ func TestPagination_Scan_KeysetBased(t *testing.T) {
 	require.NoError(t, hasErr())
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Scan returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestPagination_Scan_Error(t *testing.T) {
@@ -70,9 +65,7 @@ func TestPagination_Scan_Error(t *testing.T) {
 	require.Error(t, hasErr())
 
 	want := []*Project{{ID: 1}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Scan returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestPagination_Scan_ExhaustedError(t *testing.T) {
@@ -105,9 +98,7 @@ func TestPagination_Scan2(t *testing.T) {
 	}
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Scan returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestPagination_Scan2_Error(t *testing.T) {
@@ -135,9 +126,7 @@ func TestPagination_Scan2_Error(t *testing.T) {
 	require.Error(t, err)
 
 	want := []*Project{{ID: 1}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Scan returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestPagination_Must(t *testing.T) {
@@ -153,6 +142,31 @@ func TestPagination_Must_Error(t *testing.T) {
 		it := Must(func(yield func(int, error) bool) { yield(0, errors.New("sentinel")) })
 		slices.Collect(it)
 	})
+}
+
+func TestPagination_ScanAndCollect(t *testing.T) {
+	mux, client := setup(t)
+	handleTwoPagesSuccessfully(t, mux)
+
+	opt := &ListProjectsOptions{}
+	projects, err := ScanAndCollect(func(p PaginationOptionFunc) ([]*Project, *Response, error) {
+		return client.Projects.ListProjects(opt, p)
+	})
+	require.NoError(t, err)
+	want := []*Project{{ID: 1}, {ID: 2}}
+	assert.Equal(t, want, projects)
+}
+
+func TestPagination_ScanAndCollect_Error(t *testing.T) {
+	mux, client := setup(t)
+	handleTwoPagesWithFailure(t, mux)
+
+	opt := &ListProjectsOptions{}
+	projects, err := ScanAndCollect(func(p PaginationOptionFunc) ([]*Project, *Response, error) {
+		return client.Projects.ListProjects(opt, p)
+	})
+	require.Error(t, err)
+	require.Nil(t, projects)
 }
 
 func handleTwoPagesSuccessfully(t *testing.T, mux *http.ServeMux) {
