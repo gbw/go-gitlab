@@ -458,7 +458,7 @@ func (t ISOTime) MarshalJSON() ([]byte, error) {
 	}
 
 	if y := time.Time(t).Year(); y < 0 || y >= 10000 {
-		// ISO 8901 uses 4 digits for the years.
+		// ISO 8601 uses 4 digits for the years.
 		return nil, errors.New("json: ISOTime year outside of range [0,9999]")
 	}
 

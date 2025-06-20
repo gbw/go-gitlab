@@ -49,7 +49,7 @@ func (hook webhook) ServeHTTP(writer http.ResponseWriter, request *http.Request)
 	event, err := hook.parse(request)
 	if err != nil {
 		writer.WriteHeader(500)
-		fmt.Fprintf(writer, "could parse the webhook event: %v", err)
+		fmt.Fprintf(writer, "could not parse the webhook event: %v", err)
 		return
 	}
 
