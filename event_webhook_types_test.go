@@ -26,7 +26,7 @@ import (
 
 const (
 	ExpectedGroup     = "webhook-test"
-	excpectedAvatar   = "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=40\u0026d=identicon"
+	expectedAvatar    = "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=40\u0026d=identicon"
 	expectedEmail     = "user1@example.com"
 	expectedEventName = "user_add_to_group"
 	expectedID        = 1
@@ -789,8 +789,8 @@ func TestMergeEventUnmarshal(t *testing.T) {
 		t.Errorf("Assignees[0].Username is %v, want %v", event.Assignees[0].Username, expectedName)
 	}
 
-	if event.Assignees[0].AvatarURL != excpectedAvatar {
-		t.Errorf("Assignees[0].AvatarURL is %v, want %v", event.Assignees[0].AvatarURL, excpectedAvatar)
+	if event.Assignees[0].AvatarURL != expectedAvatar {
+		t.Errorf("Assignees[0].AvatarURL is %v, want %v", event.Assignees[0].AvatarURL, expectedAvatar)
 	}
 
 	if len(event.Reviewers) < 1 {
@@ -805,8 +805,8 @@ func TestMergeEventUnmarshal(t *testing.T) {
 		t.Errorf("Reviewer[0].Username is %v, want %v", event.Reviewers[0].Username, expectedUsername)
 	}
 
-	if event.Reviewers[0].AvatarURL != excpectedAvatar {
-		t.Errorf("Reviewers[0].AvatarURL is %v, want %v", event.Reviewers[0].AvatarURL, excpectedAvatar)
+	if event.Reviewers[0].AvatarURL != expectedAvatar {
+		t.Errorf("Reviewers[0].AvatarURL is %v, want %v", event.Reviewers[0].AvatarURL, expectedAvatar)
 	}
 
 	if event.ObjectAttributes.DetailedMergeStatus != "mergeable" {
@@ -1084,15 +1084,15 @@ func TestPipelineEventUnmarshal(t *testing.T) {
 	}
 
 	if event.SourcePipeline.PipelineID != 30 {
-		t.Errorf("Source Pipline ID is %v, want %v", event.SourcePipeline.PipelineID, 30)
+		t.Errorf("Source Pipeline ID is %v, want %v", event.SourcePipeline.PipelineID, 30)
 	}
 
 	if event.SourcePipeline.JobID != 3401 {
-		t.Errorf("Source Pipline JobID is %v, want %v", event.SourcePipeline.JobID, 3401)
+		t.Errorf("Source Pipeline JobID is %v, want %v", event.SourcePipeline.JobID, 3401)
 	}
 
 	if event.SourcePipeline.Project.ID != 41 {
-		t.Errorf("Source Pipline Project ID is %v, want %v", event.SourcePipeline.Project.ID, 41)
+		t.Errorf("Source Pipeline Project ID is %v, want %v", event.SourcePipeline.Project.ID, 41)
 	}
 
 	if event.MergeRequest.DetailedMergeStatus != "mergeable" {

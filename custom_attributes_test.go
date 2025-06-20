@@ -103,7 +103,7 @@ func TestGetCustomUserAttribute(t *testing.T) {
 	}
 }
 
-func TestGetCustomGropupAttribute(t *testing.T) {
+func TestGetCustomGroupAttribute(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 

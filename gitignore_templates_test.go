@@ -219,7 +219,7 @@ func TestGetTemplates(t *testing.T) {
 
 	template, _, err := client.GitIgnoreTemplates.GetTemplate("Ruby")
 	if err != nil {
-		t.Errorf("GitIgnoreTempaltes.GetTemplate returned an error: %v", err)
+		t.Errorf("GitIgnoreTemplates.GetTemplate returned an error: %v", err)
 	}
 
 	want := &GitIgnoreTemplate{

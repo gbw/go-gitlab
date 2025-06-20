@@ -140,7 +140,7 @@ func TestGetEnvironment(t *testing.T) {
 
 	env, _, err := client.Environments.GetEnvironment(1, 5949167)
 	if err != nil {
-		t.Errorf("Environemtns.GetEnvironment returned error: %v", err)
+		t.Errorf("Environments.GetEnvironment returned error: %v", err)
 	}
 
 	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")

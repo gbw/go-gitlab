@@ -154,20 +154,20 @@ func TestGetPipelineTestReport(t *testing.T) {
 					},
 					{
 						Status:        "success",
-						Name:          "Succes full testcase",
+						Name:          "Success full testcase",
 						Classname:     "MyClass",
 						ExecutionTime: 19.7799999999999985,
 					},
 				},
 			},
 			{
-				Name:         "Succes suite",
+				Name:         "Success suite",
 				TotalTime:    1.008,
 				TotalCount:   1,
 				SuccessCount: 1,
 				TestCases: []*PipelineTestCases{{
 					Status:        "success",
-					Name:          "Succesfull testcase",
+					Name:          "Successful testcase",
 					Classname:     "MyClass",
 					ExecutionTime: 1.008,
 				}},

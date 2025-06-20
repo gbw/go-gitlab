@@ -54,7 +54,7 @@
         },
         {
           "status": "success",
-          "name": "Succes full testcase",
+          "name": "Success full testcase",
           "classname": "MyClass",
           "file": null,
           "execution_time": 19.7799999999999985,
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "name": "Succes suite",
+      "name": "Success suite",
       "total_time": 1.008,
       "total_count": 1,
       "success_count": 1,
@@ -75,7 +75,7 @@
       "test_cases": [
         {
           "status": "success",
-          "name": "Succesfull testcase",
+          "name": "Successful testcase",
           "classname": "MyClass",
           "file": null,
           "execution_time": 1.008,
