@@ -357,12 +357,12 @@ func TestEditGroupCluster(t *testing.T) {
 
 	name := "new-cluster-name"
 	domain := "new-domain.com"
-	enviromentScope := "*"
+	environmentScope := "*"
 	apiURL := "https://new-api-url.com"
 	opt := &EditGroupClusterOptions{
 		Name:             &name,
 		Domain:           &domain,
-		EnvironmentScope: &enviromentScope,
+		EnvironmentScope: &environmentScope,
 		PlatformKubernetes: &EditGroupPlatformKubernetesOptions{
 			APIURL: &apiURL,
 		},

@@ -515,7 +515,7 @@ func TestSetJiraService(t *testing.T) {
 	assert.NotNil(t, resp)
 }
 
-func TestSetJiraServiceProjecKeys(t *testing.T) {
+func TestSetJiraServiceProjectKeys(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
