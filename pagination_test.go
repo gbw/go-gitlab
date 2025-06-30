@@ -140,7 +140,7 @@ func TestPagination_Must(t *testing.T) {
 func TestPagination_Must_Error(t *testing.T) {
 	assert.Panics(t, func() {
 		it := Must(func(yield func(int, error) bool) { yield(0, errors.New("sentinel")) })
-		slices.Collect(it)
+		_ = slices.Collect(it)
 	})
 }
 
