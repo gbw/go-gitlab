@@ -797,6 +797,7 @@ func TestNewAuthSourceClient(t *testing.T) {
 // Interface implementation checks.
 var (
 	_ AuthSource = OAuthTokenSource{}
-	_ AuthSource = staticAuthSource{}
+	_ AuthSource = JobTokenAuthSource{}
+	_ AuthSource = AccessTokenAuthSource{}
 	_ AuthSource = (*passwordCredentialsAuthSource)(nil)
 )
