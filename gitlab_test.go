@@ -168,6 +168,23 @@ func TestNewClient(t *testing.T) {
 		}
 	})
 
+	t.Run("Custom UserAgent", func(t *testing.T) {
+		t.Parallel()
+		c, err := NewClient("", WithUserAgent("any-custom-user-agent"))
+		if err != nil {
+			t.Fatalf("Failed to create client: %v", err)
+		}
+
+		expectedBaseURL := defaultBaseURL + apiVersionPath
+
+		if c.BaseURL().String() != expectedBaseURL {
+			t.Errorf("NewClient BaseURL is %s, want %s", c.BaseURL().String(), expectedBaseURL)
+		}
+		if c.UserAgent != "any-custom-user-agent" {
+			t.Errorf("NewClient UserAgent is %s, want any-custom-user-agent", c.UserAgent)
+		}
+	})
+
 	t.Run("Custom Base URL", func(t *testing.T) {
 		t.Parallel()
 		customURL := "https://custom.gitlab.com/api/v4"
