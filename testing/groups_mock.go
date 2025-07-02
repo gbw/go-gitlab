@@ -1652,6 +1652,51 @@ func (c *MockGroupsServiceInterfaceListProvisionedUsersCall) DoAndReturn(f func(
 	return c
 }
 
+// ListServiceAccountPersonalAccessTokens mocks base method.
+func (m *MockGroupsServiceInterface) ListServiceAccountPersonalAccessTokens(gid any, serviceAccount int, opt *gitlab.ListServiceAccountPersonalAccessTokensOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.PersonalAccessToken, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, serviceAccount, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListServiceAccountPersonalAccessTokens", varargs...)
+	ret0, _ := ret[0].([]*gitlab.PersonalAccessToken)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListServiceAccountPersonalAccessTokens indicates an expected call of ListServiceAccountPersonalAccessTokens.
+func (mr *MockGroupsServiceInterfaceMockRecorder) ListServiceAccountPersonalAccessTokens(gid, serviceAccount, opt any, options ...any) *MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, serviceAccount, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListServiceAccountPersonalAccessTokens", reflect.TypeOf((*MockGroupsServiceInterface)(nil).ListServiceAccountPersonalAccessTokens), varargs...)
+	return &MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall wrap *gomock.Call
+type MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall) Return(arg0 []*gitlab.PersonalAccessToken, arg1 *gitlab.Response, arg2 error) *MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall) Do(f func(any, int, *gitlab.ListServiceAccountPersonalAccessTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall) DoAndReturn(f func(any, int, *gitlab.ListServiceAccountPersonalAccessTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockGroupsServiceInterfaceListServiceAccountPersonalAccessTokensCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListServiceAccounts mocks base method.
 func (m *MockGroupsServiceInterface) ListServiceAccounts(gid any, opt *gitlab.ListServiceAccountsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.GroupServiceAccount, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -1871,6 +1916,50 @@ func (c *MockGroupsServiceInterfaceRestoreGroupCall) Do(f func(any, ...gitlab.Re
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockGroupsServiceInterfaceRestoreGroupCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceRestoreGroupCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// RevokeServiceAccountPersonalAccessToken mocks base method.
+func (m *MockGroupsServiceInterface) RevokeServiceAccountPersonalAccessToken(gid any, serviceAccount, token int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, serviceAccount, token}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RevokeServiceAccountPersonalAccessToken", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RevokeServiceAccountPersonalAccessToken indicates an expected call of RevokeServiceAccountPersonalAccessToken.
+func (mr *MockGroupsServiceInterfaceMockRecorder) RevokeServiceAccountPersonalAccessToken(gid, serviceAccount, token any, options ...any) *MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, serviceAccount, token}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeServiceAccountPersonalAccessToken", reflect.TypeOf((*MockGroupsServiceInterface)(nil).RevokeServiceAccountPersonalAccessToken), varargs...)
+	return &MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall wrap *gomock.Call
+type MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall) Return(arg0 *gitlab.Response, arg1 error) *MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceRevokeServiceAccountPersonalAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2317,6 +2406,51 @@ func (c *MockGroupsServiceInterfaceUpdateGroupCall) Do(f func(any, *gitlab.Updat
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockGroupsServiceInterfaceUpdateGroupCall) DoAndReturn(f func(any, *gitlab.UpdateGroupOptions, ...gitlab.RequestOptionFunc) (*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceUpdateGroupCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// UpdateServiceAccount mocks base method.
+func (m *MockGroupsServiceInterface) UpdateServiceAccount(gid any, serviceAccount int, opt *gitlab.UpdateServiceAccountOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupServiceAccount, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, serviceAccount, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateServiceAccount", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupServiceAccount)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// UpdateServiceAccount indicates an expected call of UpdateServiceAccount.
+func (mr *MockGroupsServiceInterfaceMockRecorder) UpdateServiceAccount(gid, serviceAccount, opt any, options ...any) *MockGroupsServiceInterfaceUpdateServiceAccountCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, serviceAccount, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateServiceAccount", reflect.TypeOf((*MockGroupsServiceInterface)(nil).UpdateServiceAccount), varargs...)
+	return &MockGroupsServiceInterfaceUpdateServiceAccountCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceUpdateServiceAccountCall wrap *gomock.Call
+type MockGroupsServiceInterfaceUpdateServiceAccountCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceUpdateServiceAccountCall) Return(arg0 *gitlab.GroupServiceAccount, arg1 *gitlab.Response, arg2 error) *MockGroupsServiceInterfaceUpdateServiceAccountCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceUpdateServiceAccountCall) Do(f func(any, int, *gitlab.UpdateServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupServiceAccount, *gitlab.Response, error)) *MockGroupsServiceInterfaceUpdateServiceAccountCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceUpdateServiceAccountCall) DoAndReturn(f func(any, int, *gitlab.UpdateServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupServiceAccount, *gitlab.Response, error)) *MockGroupsServiceInterfaceUpdateServiceAccountCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
