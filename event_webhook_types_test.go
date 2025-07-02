@@ -1178,6 +1178,10 @@ func TestPushEventUnmarshal(t *testing.T) {
 		t.Errorf("Project.ID is %v, want %v", event.Project.ID, 15)
 	}
 
+	if !event.RefProtected {
+		t.Errorf("RefProtected is %v, want %v", event.RefProtected, true)
+	}
+
 	if event.Commits[0] == nil || event.Commits[0].Timestamp == nil {
 		t.Errorf("Commit Timestamp isn't nil")
 	}
