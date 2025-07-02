@@ -204,6 +204,30 @@ func TestNewClient(t *testing.T) {
 	})
 }
 
+func TestSendingUserAgent_Default(t *testing.T) {
+	t.Parallel()
+
+	c, err := NewClient("")
+	require.NoError(t, err)
+
+	req, err := c.NewRequest(http.MethodGet, "test", nil, nil)
+	require.NoError(t, err)
+
+	assert.Equal(t, userAgent, req.Header.Get("User-Agent"))
+}
+
+func TestSendingUserAgent_Custom(t *testing.T) {
+	t.Parallel()
+
+	c, err := NewClient("", WithUserAgent("any-custom-user-agent"))
+	require.NoError(t, err)
+
+	req, err := c.NewRequest(http.MethodGet, "test", nil, nil)
+	require.NoError(t, err)
+
+	assert.Equal(t, "any-custom-user-agent", req.Header.Get("User-Agent"))
+}
+
 func TestCheckResponse(t *testing.T) {
 	t.Parallel()
 	c, err := NewClient("")
