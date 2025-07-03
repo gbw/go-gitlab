@@ -34,9 +34,9 @@ type TestClient struct {
 //	    assert.NoError(t, err)
 //	    assert.Len(t, agents, 1)
 //	}
-func NewTestClient(t *testing.T) *TestClient {
+func NewTestClient(t *testing.T, options ...gitlab.ClientOptionFunc) *TestClient {
 	ctrl := gomock.NewController(t)
-	return NewTestClientWithCtrl(ctrl)
+	return NewTestClientWithCtrl(ctrl, options...)
 }
 
 // NewTestClientWithCtrl creates a new TestClient with mocked services using
@@ -63,6 +63,6 @@ func NewTestClient(t *testing.T) *TestClient {
 //
 //	    // Use both clients in your test
 //	}
-func NewTestClientWithCtrl(ctrl *gomock.Controller) *TestClient {
-	return newTestClientWithCtrl(ctrl)
+func NewTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOptionFunc) *TestClient {
+	return newTestClientWithCtrl(ctrl, options...)
 }
