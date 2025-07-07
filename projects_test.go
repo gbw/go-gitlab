@@ -1981,9 +1981,12 @@ func TestGetRepositoryStorage(t *testing.T) {
 	storage, _, err := client.Projects.GetRepositoryStorage(1)
 
 	assert.NoError(t, err)
-	assert.NotNil(t, storage, "Expected storage to be non-nil")
-	assert.Equal(t, "default", storage.RepositoryStorage)
-	assert.Equal(t, "path/to/repo", storage.DiskPath)
+	assert.Equal(t, &ProjectReposityStorage{
+		ProjectID:         1,
+		DiskPath:          "path/to/repo",
+		CreatedAt:         nil,
+		RepositoryStorage: "default",
+	}, storage)
 }
 
 func TestTransferProject(t *testing.T) {
