@@ -646,3 +646,38 @@ func TestDeleteMergeRequestDependency(t *testing.T) {
 		}
 	}
 }
+
+func TestAcceptMergeRequest(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+	const project = "12345"
+	const mergeRequest = 1
+
+	path := fmt.Sprintf("/%sprojects/%s/merge_requests/%d/merge", apiVersionPath, project, mergeRequest)
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{"id":1,"iid":1,"state":"merged","title":"Test MR","merge_commit_sha":"abc123"}`)
+	})
+
+	opts := &AcceptMergeRequestOptions{
+		MergeCommitMessage: Ptr("Custom merge message"),
+		Squash:             Ptr(true),
+		AutoMerge:          Ptr(true),
+	}
+
+	mr, resp, err := client.MergeRequests.AcceptMergeRequest(project, mergeRequest, opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := &MergeRequest{
+		BasicMergeRequest: BasicMergeRequest{
+			ID:             1,
+			IID:            1,
+			State:          "merged",
+			Title:          "Test MR",
+			MergeCommitSHA: "abc123",
+		},
+	}
+
+	assert.Equal(t, want, mr)
+}

@@ -31,7 +31,7 @@ func createMergeRequestAndSetAutoMerge() {
 	// Set auto-merge to created Merge Request
 	// c.f. https://docs.gitlab.com/user/project/merge_requests/auto_merge/
 	_, _, err = git.MergeRequests.AcceptMergeRequest(
-		projectName, mr.IID, &gitlab.AcceptMergeRequestOptions{MergeWhenPipelineSucceeds: gitlab.Ptr(true)},
+		projectName, mr.IID, &gitlab.AcceptMergeRequestOptions{AutoMerge: gitlab.Ptr(true)},
 
 		// client-go provides retries on rate limit (429) and server (>= 500) errors by default.
 		//
