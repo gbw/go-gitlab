@@ -61,6 +61,7 @@ type testClientMocks struct {
 	MockGroupCluster                     *MockGroupClustersServiceInterface
 	MockGroupEpicBoards                  *MockGroupEpicBoardsServiceInterface
 	MockGroupImportExport                *MockGroupImportExportServiceInterface
+	MockIntegrations                     *MockIntegrationsServiceInterface
 	MockGroupIssueBoards                 *MockGroupIssueBoardsServiceInterface
 	MockGroupIterations                  *MockGroupIterationsServiceInterface
 	MockGroupLabels                      *MockGroupLabelsServiceInterface
@@ -210,6 +211,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockGroupCluster := NewMockGroupClustersServiceInterface(ctrl)
 	mockGroupEpicBoards := NewMockGroupEpicBoardsServiceInterface(ctrl)
 	mockGroupImportExport := NewMockGroupImportExportServiceInterface(ctrl)
+	mockIntegrations := NewMockIntegrationsServiceInterface(ctrl)
 	mockGroupIssueBoards := NewMockGroupIssueBoardsServiceInterface(ctrl)
 	mockGroupIterations := NewMockGroupIterationsServiceInterface(ctrl)
 	mockGroupLabels := NewMockGroupLabelsServiceInterface(ctrl)
@@ -358,6 +360,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		GroupCluster:                     mockGroupCluster,
 		GroupEpicBoards:                  mockGroupEpicBoards,
 		GroupImportExport:                mockGroupImportExport,
+		Integrations:                     mockIntegrations,
 		GroupIssueBoards:                 mockGroupIssueBoards,
 		GroupIterations:                  mockGroupIterations,
 		GroupLabels:                      mockGroupLabels,
@@ -518,6 +521,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockGroupCluster:                     mockGroupCluster,
 			MockGroupEpicBoards:                  mockGroupEpicBoards,
 			MockGroupImportExport:                mockGroupImportExport,
+			MockIntegrations:                     mockIntegrations,
 			MockGroupIssueBoards:                 mockGroupIssueBoards,
 			MockGroupIterations:                  mockGroupIterations,
 			MockGroupLabels:                      mockGroupLabels,
