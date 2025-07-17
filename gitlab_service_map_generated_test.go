@@ -69,6 +69,7 @@ var serviceMap = map[any]any{
 	&ImportService{}:                           (*ImportServiceInterface)(nil),
 	&InstanceClustersService{}:                 (*InstanceClustersServiceInterface)(nil),
 	&InstanceVariablesService{}:                (*InstanceVariablesServiceInterface)(nil),
+	&IntegrationsService{}:                     (*IntegrationsServiceInterface)(nil),
 	&InvitesService{}:                          (*InvitesServiceInterface)(nil),
 	&IssueBoardsService{}:                      (*IssueBoardsServiceInterface)(nil),
 	&IssueLinksService{}:                       (*IssueLinksServiceInterface)(nil),

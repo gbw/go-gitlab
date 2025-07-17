@@ -70,6 +70,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=import_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ImportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=instance_clusters_mock.go -package=testing gitlab.com/gitlab-org/api/client-go InstanceClustersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=instance_variables_mock.go -package=testing gitlab.com/gitlab-org/api/client-go InstanceVariablesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=integrations_mock.go -package=testing gitlab.com/gitlab-org/api/client-go IntegrationsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=invites_mock.go -package=testing gitlab.com/gitlab-org/api/client-go InvitesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=issue_links_mock.go -package=testing gitlab.com/gitlab-org/api/client-go IssueLinksServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.5.2 -typed -destination=issues_mock.go -package=testing gitlab.com/gitlab-org/api/client-go IssuesServiceInterface

@@ -160,6 +160,7 @@ type Client struct {
 	GroupCluster                     GroupClustersServiceInterface
 	GroupEpicBoards                  GroupEpicBoardsServiceInterface
 	GroupImportExport                GroupImportExportServiceInterface
+	Integrations                     IntegrationsServiceInterface
 	GroupIssueBoards                 GroupIssueBoardsServiceInterface
 	GroupIterations                  GroupIterationsServiceInterface
 	GroupLabels                      GroupLabelsServiceInterface
@@ -426,6 +427,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.GroupCluster = &GroupClustersService{client: c}
 	c.GroupEpicBoards = &GroupEpicBoardsService{client: c}
 	c.GroupImportExport = &GroupImportExportService{client: c}
+	c.Integrations = &IntegrationsService{client: c}
 	c.GroupIssueBoards = &GroupIssueBoardsService{client: c}
 	c.GroupIterations = &GroupIterationsService{client: c}
 	c.GroupLabels = &GroupLabelsService{client: c}
