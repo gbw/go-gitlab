@@ -840,5 +840,5 @@ var (
 	_ AuthSource = OAuthTokenSource{}
 	_ AuthSource = JobTokenAuthSource{}
 	_ AuthSource = AccessTokenAuthSource{}
-	_ AuthSource = (*passwordCredentialsAuthSource)(nil)
+	_ AuthSource = (*PasswordCredentialsAuthSource)(nil)
 )
