@@ -300,9 +300,9 @@ func NewClient(token string, options ...ClientOptionFunc) (*Client, error) {
 //
 // Deprecated: GitLab recommends against using this authentication method.
 func NewBasicAuthClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
-	as := &passwordCredentialsAuthSource{
-		username: username,
-		password: password,
+	as := &PasswordCredentialsAuthSource{
+		Username: username,
+		Password: password,
 	}
 
 	return NewAuthSourceClient(as, options...)
@@ -1151,23 +1151,23 @@ func (s AccessTokenAuthSource) Header(_ context.Context) (string, string, error)
 
 // passwordTokenSource implements the AuthSource interface for the OAuth 2.0
 // resource owner password credentials flow.
-type passwordCredentialsAuthSource struct {
-	username string
-	password string
+type PasswordCredentialsAuthSource struct {
+	Username string
+	Password string
 
 	AuthSource
 }
 
-func (as *passwordCredentialsAuthSource) Init(ctx context.Context, client *Client) error {
+func (as *PasswordCredentialsAuthSource) Init(ctx context.Context, client *Client) error {
 	ctx = context.WithValue(ctx, oauth2.HTTPClient, client.client.HTTPClient)
 
 	config := &oauth2.Config{
 		Endpoint: client.endpoint(),
 	}
 
-	pct, err := config.PasswordCredentialsToken(ctx, as.username, as.password)
+	pct, err := config.PasswordCredentialsToken(ctx, as.Username, as.Password)
 	if err != nil {
-		return fmt.Errorf("PasswordCredentialsToken(%q, ******): %w", as.username, err)
+		return fmt.Errorf("PasswordCredentialsToken(%q, ******): %w", as.Username, err)
 	}
 
 	as.AuthSource = OAuthTokenSource{
