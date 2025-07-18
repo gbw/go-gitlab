@@ -5,8 +5,8 @@ go 1.23.0
 toolchain go1.23.8
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250425153114-8976f5be98c1.1
-	buf.build/go/protovalidate v0.11.0
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250717165733-d22d418d82d8.1
+	buf.build/go/protovalidate v0.14.0
 	buf.build/go/protoyaml v0.6.0
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
 	github.com/google/go-querystring v1.1.0
@@ -18,6 +18,7 @@ require (
 	golang.org/x/oauth2 v0.30.0
 	golang.org/x/time v0.12.0
 	google.golang.org/protobuf v1.36.6
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -35,5 +36,4 @@ require (
 	golang.org/x/text v0.23.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240826202546-f6391c0de4c7 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
