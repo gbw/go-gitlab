@@ -58,8 +58,8 @@ message Config {
   // current_context specifies the active context
   string current_context = 7 [json_name = "current-context"];
 
-  // custom specifies arbitrary custom configuration
-  google.protobuf.Struct custom = 8 [json_name = "custom"];
+  // extensions specifies arbitrary custom configuration
+  map<string, google.protobuf.Struct> extensions = 8 [json_name = "extensions"];
 }
 
 // Preferences contains global client configuration preferences
@@ -134,6 +134,9 @@ message Instance {
 
   // rate_limit contains rate limiting configuration
   RateLimit rate_limit = 11 [json_name = "rate-limit"];
+
+  // extensions specifies arbitrary custom configuration
+  map<string, google.protobuf.Struct> extensions = 12 [json_name = "extensions"];
 }
 
 // RateLimit contains rate limiting configuration

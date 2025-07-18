@@ -1083,24 +1083,6 @@ func TestConfig_NilConfig_Methods(t *testing.T) {
 	assert.Nil(t, c.Auth("test"))
 }
 
-func TestConfig_Custom(t *testing.T) {
-	// WHEN
-	c, err := NewFromString(heredoc.Doc(`
-	  custom:
-	    gitlab-cli:
-	      last-updated-at: yesterday
-	      pager: less
-	`))
-
-	// THEN
-	require.NoError(t, err)
-	custom := c.Custom()
-	assert.Len(t, custom.Fields, 1)
-	assert.Len(t, custom.Fields["gitlab-cli"].GetStructValue().Fields, 2)
-	assert.Equal(t, "yesterday", custom.Fields["gitlab-cli"].GetStructValue().Fields["last-updated-at"].GetStringValue())
-	assert.Equal(t, "less", custom.Fields["gitlab-cli"].GetStructValue().Fields["pager"].GetStringValue())
-}
-
 func TestConfig_NewClientForContext_Success_PersonalAccessToken(t *testing.T) {
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`

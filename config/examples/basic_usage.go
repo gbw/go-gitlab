@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/MakeNowJust/heredoc/v2"
 	"gitlab.com/gitlab-org/api/client-go"
 	"gitlab.com/gitlab-org/api/client-go/config"
 )
@@ -16,7 +17,10 @@ func main() {
 	basicConfigExample()
 
 	// Example 2: auto CI support
-	autoCISupportExample()
+	// autoCISupportExample()
+
+	// Example 3: extensions
+	extensions()
 }
 
 func basicConfigExample() {
@@ -80,6 +84,66 @@ func autoCISupportExample() {
 	if err != nil {
 		log.Fatalf("Failed to get current user: %v", err)
 	}
+
+	fmt.Printf("Authenticated as: %s (%s)\n", user.Name, user.Username)
+}
+
+type demoExtension struct {
+	Browser   string `yaml:"browser"`
+	Telemetry bool   `yaml:"telemetry"`
+}
+
+func extensions() {
+	fmt.Println("=== Extensions ===")
+
+	cfg, err := config.NewFromString(heredoc.Doc(`
+		version: gitlab.com/config/v1beta1
+
+		current-context: gitlab-com
+
+		contexts:
+		  - name: gitlab-com
+		    instance: gitlab-com
+		    auth: token-env
+
+		instances:
+		  - name: gitlab-com
+		    server: https://gitlab.com
+
+		auths:
+		  - name: token-env
+		    auth-info:
+		      personal-access-token:
+		        token-source:
+		          env_var: GITLAB_TOKEN
+
+		extensions:
+		  my-app:
+		    browser: firefox
+		    telemetry: true
+	`))
+	if err != nil {
+		log.Fatalf("Failed to create config: %v", err)
+	}
+
+	client, err := cfg.NewClient(gitlab.WithUserAgent("my-app"))
+	if err != nil {
+		log.Fatalf("Failed to create client: %v", err)
+	}
+
+	// Use the client
+	user, _, err := client.Users.CurrentUser()
+	if err != nil {
+		log.Fatalf("Failed to get current user: %v", err)
+	}
+
+	ext := config.NewExtension[demoExtension]("my-app", cfg)
+	data, err := ext.Unmarshal()
+	if err != nil {
+		log.Fatalf("Failed to unmarshal extension: %v", err)
+	}
+
+	fmt.Printf("Browser from extension is: %q\n", data.Browser)
 
 	fmt.Printf("Authenticated as: %s (%s)\n", user.Name, user.Username)
 }

@@ -41,8 +41,8 @@ type Config struct {
 	Contexts []*Context `protobuf:"bytes,6,rep,name=contexts" json:"contexts,omitempty"`
 	// current_context specifies the active context
 	CurrentContext *string `protobuf:"bytes,7,opt,name=current_context,json=current-context" json:"current_context,omitempty"`
-	// custom specifies arbitrary custom configuration
-	Custom        *structpb.Struct `protobuf:"bytes,8,opt,name=custom" json:"custom,omitempty"`
+	// extensions specifies arbitrary custom configuration
+	Extensions    map[string]*structpb.Struct `protobuf:"bytes,8,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -119,9 +119,9 @@ func (x *Config) GetCurrentContext() string {
 	return ""
 }
 
-func (x *Config) GetCustom() *structpb.Struct {
+func (x *Config) GetExtensions() map[string]*structpb.Struct {
 	if x != nil {
-		return x.Custom
+		return x.Extensions
 	}
 	return nil
 }
@@ -217,7 +217,9 @@ type Instance struct {
 	// insecure_skip_tls_verify skips TLS certificate verification
 	InsecureSkipTlsVerify *bool `protobuf:"varint,10,opt,name=insecure_skip_tls_verify,json=insecure-skip-tls-verify" json:"insecure_skip_tls_verify,omitempty"`
 	// rate_limit contains rate limiting configuration
-	RateLimit     *RateLimit `protobuf:"bytes,11,opt,name=rate_limit,json=rate-limit" json:"rate_limit,omitempty"`
+	RateLimit *RateLimit `protobuf:"bytes,11,opt,name=rate_limit,json=rate-limit" json:"rate_limit,omitempty"`
+	// extensions specifies arbitrary custom configuration
+	Extensions    map[string]*structpb.Struct `protobuf:"bytes,12,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -358,6 +360,13 @@ func (x *Instance) GetInsecureSkipTlsVerify() bool {
 func (x *Instance) GetRateLimit() *RateLimit {
 	if x != nil {
 		return x.RateLimit
+	}
+	return nil
+}
+
+func (x *Instance) GetExtensions() map[string]*structpb.Struct {
+	if x != nil {
+		return x.Extensions
 	}
 	return nil
 }
@@ -1489,7 +1498,7 @@ var File_config_v1beta1_config_proto protoreflect.FileDescriptor
 
 const file_config_v1beta1_config_proto_rawDesc = "" +
 	"\n" +
-	"\x1bconfig/v1beta1/config.proto\x12\x0econfig.v1beta1\x1a\x1bbuf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x94\a\n" +
+	"\x1bconfig/v1beta1/config.proto\x12\x0econfig.v1beta1\x1a\x1bbuf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x83\b\n" +
 	"\x06Config\x12:\n" +
 	"\aversion\x18\x01 \x01(\tB \xbaH\x1dr\x1b\n" +
 	"\x19gitlab.com/config/v1beta1R\aversion\x12=\n" +
@@ -1497,8 +1506,13 @@ const file_config_v1beta1_config_proto_rawDesc = "" +
 	"\tinstances\x18\x04 \x03(\v2\x18.config.v1beta1.InstanceB\f\xbaH\t\x92\x01\x06\xd0\u0096\xb1\x02\x01R\tinstances\x128\n" +
 	"\x05auths\x18\x05 \x03(\v2\x14.config.v1beta1.AuthB\f\xbaH\t\x92\x01\x06\xd0\u0096\xb1\x02\x01R\x05auths\x12A\n" +
 	"\bcontexts\x18\x06 \x03(\v2\x17.config.v1beta1.ContextB\f\xbaH\t\x92\x01\x06\xd0\u0096\xb1\x02\x01R\bcontexts\x12(\n" +
-	"\x0fcurrent_context\x18\a \x01(\tR\x0fcurrent-context\x12/\n" +
-	"\x06custom\x18\b \x01(\v2\x17.google.protobuf.StructR\x06custom:\xf0\x03\xbaH\xec\x03\x1a\xa5\x01\n" +
+	"\x0fcurrent_context\x18\a \x01(\tR\x0fcurrent-context\x12F\n" +
+	"\n" +
+	"extensions\x18\b \x03(\v2&.config.v1beta1.Config.ExtensionsEntryR\n" +
+	"extensions\x1aV\n" +
+	"\x0fExtensionsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12-\n" +
+	"\x05value\x18\x02 \x01(\v2\x17.google.protobuf.StructR\x05value:\x028\x01:\xf0\x03\xbaH\xec\x03\x1a\xa5\x01\n" +
 	"\x16current_context_exists\x127current_context must reference an existing context name\x1aRthis.current_context == '' || this.current_context in this.contexts.map(c, c.name)\x1a\xab\x01\n" +
 	"\x17context_instance_exists\x129context.instance must reference an existing instance name\x1aUthis.contexts.all(c, c.instance == '' || c.instance in this.instances.map(i, i.name))\x1a\x93\x01\n" +
 	"\x13context_auth_exists\x121context.auth must reference an existing auth name\x1aIthis.contexts.all(c, c.auth == '' || c.auth in this.auths.map(a, a.name))\"\xd9\x02\n" +
@@ -1506,7 +1520,7 @@ const file_config_v1beta1_config_proto_rawDesc = "" +
 	"\tretry_max\x18\x02 \x01(\x05R\tretry-max\x12A\n" +
 	"\x0eretry_wait_min\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\x0eretry-wait-min\x12A\n" +
 	"\x0eretry_wait_max\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\x0eretry-wait-max:\xa5\x01\xbaH\xa1\x01\x1a\x9e\x01\n" +
-	"\x1aretry_wait_both_or_neither\x12Jretry_wait_min and retry_wait_max must both be provided or both be omitted\x1a4has(this.retry_wait_min) == has(this.retry_wait_max)\"\xf0\x05\n" +
+	"\x1aretry_wait_both_or_neither\x12Jretry_wait_min and retry_wait_max must both be provided or both be omitted\x1a4has(this.retry_wait_min) == has(this.retry_wait_max)\"\x92\a\n" +
 	"\bInstance\x12\x1e\n" +
 	"\x04name\x18\x01 \x01(\tB\n" +
 	"\xbaH\a\xc8\x01\x01r\x02\x10\x03R\x04name\x12V\n" +
@@ -1525,7 +1539,13 @@ const file_config_v1beta1_config_proto_rawDesc = "" +
 	" \x01(\bR\x18insecure-skip-tls-verify\x129\n" +
 	"\n" +
 	"rate_limit\x18\v \x01(\v2\x19.config.v1beta1.RateLimitR\n" +
-	"rate-limitB\r\n" +
+	"rate-limit\x12H\n" +
+	"\n" +
+	"extensions\x18\f \x03(\v2(.config.v1beta1.Instance.ExtensionsEntryR\n" +
+	"extensions\x1aV\n" +
+	"\x0fExtensionsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12-\n" +
+	"\x05value\x18\x02 \x01(\v2\x17.google.protobuf.StructR\x05value:\x028\x01B\r\n" +
 	"\vinstance_caB\x16\n" +
 	"\x14instance_client_certB\x15\n" +
 	"\x13instance_client_key\"l\n" +
@@ -1617,7 +1637,7 @@ func file_config_v1beta1_config_proto_rawDescGZIP() []byte {
 	return file_config_v1beta1_config_proto_rawDescData
 }
 
-var file_config_v1beta1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_config_v1beta1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_config_v1beta1_config_proto_goTypes = []any{
 	(*Config)(nil),                 // 0: config.v1beta1.Config
 	(*Preferences)(nil),            // 1: config.v1beta1.Preferences
@@ -1633,47 +1653,52 @@ var file_config_v1beta1_config_proto_goTypes = []any{
 	(*ExecCredential)(nil),         // 11: config.v1beta1.ExecCredential
 	(*CredentialSource)(nil),       // 12: config.v1beta1.CredentialSource
 	(*KeyringSource)(nil),          // 13: config.v1beta1.KeyringSource
-	nil,                            // 14: config.v1beta1.ExecCredential.EnvEntry
-	(*structpb.Struct)(nil),        // 15: google.protobuf.Struct
-	(*durationpb.Duration)(nil),    // 16: google.protobuf.Duration
-	(*timestamppb.Timestamp)(nil),  // 17: google.protobuf.Timestamp
-	(*validate.RepeatedRules)(nil), // 18: buf.validate.RepeatedRules
+	nil,                            // 14: config.v1beta1.Config.ExtensionsEntry
+	nil,                            // 15: config.v1beta1.Instance.ExtensionsEntry
+	nil,                            // 16: config.v1beta1.ExecCredential.EnvEntry
+	(*durationpb.Duration)(nil),    // 17: google.protobuf.Duration
+	(*timestamppb.Timestamp)(nil),  // 18: google.protobuf.Timestamp
+	(*structpb.Struct)(nil),        // 19: google.protobuf.Struct
+	(*validate.RepeatedRules)(nil), // 20: buf.validate.RepeatedRules
 }
 var file_config_v1beta1_config_proto_depIdxs = []int32{
 	1,  // 0: config.v1beta1.Config.preferences:type_name -> config.v1beta1.Preferences
 	2,  // 1: config.v1beta1.Config.instances:type_name -> config.v1beta1.Instance
 	5,  // 2: config.v1beta1.Config.auths:type_name -> config.v1beta1.Auth
 	4,  // 3: config.v1beta1.Config.contexts:type_name -> config.v1beta1.Context
-	15, // 4: config.v1beta1.Config.custom:type_name -> google.protobuf.Struct
-	16, // 5: config.v1beta1.Preferences.retry_wait_min:type_name -> google.protobuf.Duration
-	16, // 6: config.v1beta1.Preferences.retry_wait_max:type_name -> google.protobuf.Duration
+	14, // 4: config.v1beta1.Config.extensions:type_name -> config.v1beta1.Config.ExtensionsEntry
+	17, // 5: config.v1beta1.Preferences.retry_wait_min:type_name -> google.protobuf.Duration
+	17, // 6: config.v1beta1.Preferences.retry_wait_max:type_name -> google.protobuf.Duration
 	12, // 7: config.v1beta1.Instance.certificate_authority_source:type_name -> config.v1beta1.CredentialSource
 	12, // 8: config.v1beta1.Instance.client_cert_source:type_name -> config.v1beta1.CredentialSource
 	12, // 9: config.v1beta1.Instance.client_key_source:type_name -> config.v1beta1.CredentialSource
 	3,  // 10: config.v1beta1.Instance.rate_limit:type_name -> config.v1beta1.RateLimit
-	6,  // 11: config.v1beta1.Auth.auth_info:type_name -> config.v1beta1.AuthInfo
-	7,  // 12: config.v1beta1.AuthInfo.personal_access_token:type_name -> config.v1beta1.PersonalAccessToken
-	8,  // 13: config.v1beta1.AuthInfo.job_token:type_name -> config.v1beta1.JobToken
-	9,  // 14: config.v1beta1.AuthInfo.oauth2:type_name -> config.v1beta1.OAuth2
-	10, // 15: config.v1beta1.AuthInfo.basic_auth:type_name -> config.v1beta1.BasicAuth
-	12, // 16: config.v1beta1.PersonalAccessToken.token_source:type_name -> config.v1beta1.CredentialSource
-	12, // 17: config.v1beta1.JobToken.token_source:type_name -> config.v1beta1.CredentialSource
-	12, // 18: config.v1beta1.OAuth2.client_secret_source:type_name -> config.v1beta1.CredentialSource
-	12, // 19: config.v1beta1.OAuth2.access_token_source:type_name -> config.v1beta1.CredentialSource
-	12, // 20: config.v1beta1.OAuth2.refresh_token_source:type_name -> config.v1beta1.CredentialSource
-	17, // 21: config.v1beta1.OAuth2.expires_at:type_name -> google.protobuf.Timestamp
-	12, // 22: config.v1beta1.BasicAuth.username_source:type_name -> config.v1beta1.CredentialSource
-	12, // 23: config.v1beta1.BasicAuth.password_source:type_name -> config.v1beta1.CredentialSource
-	14, // 24: config.v1beta1.ExecCredential.env:type_name -> config.v1beta1.ExecCredential.EnvEntry
-	16, // 25: config.v1beta1.ExecCredential.timeout:type_name -> google.protobuf.Duration
-	11, // 26: config.v1beta1.CredentialSource.exec:type_name -> config.v1beta1.ExecCredential
-	13, // 27: config.v1beta1.CredentialSource.keyring:type_name -> config.v1beta1.KeyringSource
-	18, // 28: config.v1beta1.unique_names:extendee -> buf.validate.RepeatedRules
-	29, // [29:29] is the sub-list for method output_type
-	29, // [29:29] is the sub-list for method input_type
-	29, // [29:29] is the sub-list for extension type_name
-	28, // [28:29] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	15, // 11: config.v1beta1.Instance.extensions:type_name -> config.v1beta1.Instance.ExtensionsEntry
+	6,  // 12: config.v1beta1.Auth.auth_info:type_name -> config.v1beta1.AuthInfo
+	7,  // 13: config.v1beta1.AuthInfo.personal_access_token:type_name -> config.v1beta1.PersonalAccessToken
+	8,  // 14: config.v1beta1.AuthInfo.job_token:type_name -> config.v1beta1.JobToken
+	9,  // 15: config.v1beta1.AuthInfo.oauth2:type_name -> config.v1beta1.OAuth2
+	10, // 16: config.v1beta1.AuthInfo.basic_auth:type_name -> config.v1beta1.BasicAuth
+	12, // 17: config.v1beta1.PersonalAccessToken.token_source:type_name -> config.v1beta1.CredentialSource
+	12, // 18: config.v1beta1.JobToken.token_source:type_name -> config.v1beta1.CredentialSource
+	12, // 19: config.v1beta1.OAuth2.client_secret_source:type_name -> config.v1beta1.CredentialSource
+	12, // 20: config.v1beta1.OAuth2.access_token_source:type_name -> config.v1beta1.CredentialSource
+	12, // 21: config.v1beta1.OAuth2.refresh_token_source:type_name -> config.v1beta1.CredentialSource
+	18, // 22: config.v1beta1.OAuth2.expires_at:type_name -> google.protobuf.Timestamp
+	12, // 23: config.v1beta1.BasicAuth.username_source:type_name -> config.v1beta1.CredentialSource
+	12, // 24: config.v1beta1.BasicAuth.password_source:type_name -> config.v1beta1.CredentialSource
+	16, // 25: config.v1beta1.ExecCredential.env:type_name -> config.v1beta1.ExecCredential.EnvEntry
+	17, // 26: config.v1beta1.ExecCredential.timeout:type_name -> google.protobuf.Duration
+	11, // 27: config.v1beta1.CredentialSource.exec:type_name -> config.v1beta1.ExecCredential
+	13, // 28: config.v1beta1.CredentialSource.keyring:type_name -> config.v1beta1.KeyringSource
+	19, // 29: config.v1beta1.Config.ExtensionsEntry.value:type_name -> google.protobuf.Struct
+	19, // 30: config.v1beta1.Instance.ExtensionsEntry.value:type_name -> google.protobuf.Struct
+	20, // 31: config.v1beta1.unique_names:extendee -> buf.validate.RepeatedRules
+	32, // [32:32] is the sub-list for method output_type
+	32, // [32:32] is the sub-list for method input_type
+	32, // [32:32] is the sub-list for extension type_name
+	31, // [31:32] is the sub-list for extension extendee
+	0,  // [0:31] is the sub-list for field type_name
 }
 
 func init() { file_config_v1beta1_config_proto_init() }
@@ -1730,7 +1755,7 @@ func file_config_v1beta1_config_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_config_v1beta1_config_proto_rawDesc), len(file_config_v1beta1_config_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   17,
 			NumExtensions: 1,
 			NumServices:   0,
 		},

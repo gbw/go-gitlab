@@ -410,17 +410,17 @@ func (c *Config) CurrentContext() *v1beta1.Context {
 	}
 
 	if ctxFromEnv := os.Getenv(EnvVarGitLabContext); ctxFromEnv != "" {
-		return c.context(ctxFromEnv)
+		return c.Context(ctxFromEnv)
 	}
 
 	if c.config.CurrentContext != nil {
-		return c.context(*c.config.CurrentContext)
+		return c.Context(*c.config.CurrentContext)
 	}
 
 	return nil
 }
 
-func (c *Config) context(name string) *v1beta1.Context {
+func (c *Config) Context(name string) *v1beta1.Context {
 	if c.config.Contexts == nil {
 		return nil
 	}
@@ -467,9 +467,9 @@ func (c *Config) Instance(name string) *v1beta1.Instance {
 	return c.config.Instances[idx]
 }
 
-// Custom returns the custom configuration data.
-func (c *Config) Custom() *structpb.Struct {
-	return c.config.Custom
+// Extensions returns the custom configuration data.
+func (c *Config) Extensions() map[string]*structpb.Struct {
+	return c.config.Extensions
 }
 
 // NewClient creates a new GitLab API client using the current context.
@@ -485,7 +485,7 @@ func (c *Config) NewClient(options ...gitlab.ClientOptionFunc) (*gitlab.Client, 
 // NewClientForContext creates a new GitLab API client using the specified context.
 // Returns an error if the context cannot be resolved or the client cannot be created.
 func (c *Config) NewClientForContext(name string, options ...gitlab.ClientOptionFunc) (*gitlab.Client, error) {
-	configContext := c.context(name)
+	configContext := c.Context(name)
 	if configContext == nil {
 		return nil, fmt.Errorf("unable to resolve context %s for new client", name)
 	}
