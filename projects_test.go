@@ -2021,6 +2021,84 @@ func TestDeleteProjectPushRule(t *testing.T) {
 	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
+func TestRestoreProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/restore", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"name": "test-project",
+			"path": "test-project",
+			"name_with_namespace": "namespace/test-project",
+			"path_with_namespace": "namespace/test-project",
+			"description": "Test project that was marked for deletion",
+			"default_branch": "main",
+			"visibility": "private",
+			"ssh_url_to_repo": "git@gitlab.com:namespace/test-project.git",
+			"http_url_to_repo": "https://example.gitlab.com/namespace/test-project.git",
+			"web_url": "https://example.gitlab.com/namespace/test-project",
+			"marked_for_deletion_on": null
+		}`)
+	})
+
+	project, resp, err := client.Projects.RestoreProject(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+	want := &Project{
+		ID:                  1,
+		Name:                "test-project",
+		Path:                "test-project",
+		NameWithNamespace:   "namespace/test-project",
+		PathWithNamespace:   "namespace/test-project",
+		Description:         "Test project that was marked for deletion",
+		DefaultBranch:       "main",
+		Visibility:          PrivateVisibility,
+		SSHURLToRepo:        "git@gitlab.com:namespace/test-project.git",
+		HTTPURLToRepo:       "https://example.gitlab.com/namespace/test-project.git",
+		WebURL:              "https://example.gitlab.com/namespace/test-project",
+		MarkedForDeletionOn: nil,
+	}
+
+	assert.Equal(t, want, project)
+}
+
+func TestRestoreProjectByName(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/", func(w http.ResponseWriter, r *http.Request) {
+		testURL(t, r, "/api/v4/projects/namespace%2Ftest-project/restore")
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{
+			"id": 2,
+			"name": "test-project",
+			"path": "test-project",
+			"name_with_namespace": "namespace/test-project",
+			"path_with_namespace": "namespace/test-project",
+			"marked_for_deletion_on": null
+		}`)
+	})
+
+	project, resp, err := client.Projects.RestoreProject("namespace/test-project")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := &Project{
+		ID:                  2,
+		Name:                "test-project",
+		Path:                "test-project",
+		NameWithNamespace:   "namespace/test-project",
+		PathWithNamespace:   "namespace/test-project",
+		MarkedForDeletionOn: nil,
+	}
+
+	assert.Equal(t, want, project)
+}
+
 func TestEditProject_DuoReviewEnabledSetting(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
