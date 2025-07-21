@@ -527,6 +527,10 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	return c, nil
 }
 
+func (c *Client) HTTPClient() *http.Client {
+	return c.client.HTTPClient
+}
+
 // retryHTTPCheck provides a callback for Client.CheckRetry which
 // will retry both rate limit (429) and server (>= 500) errors.
 func (c *Client) retryHTTPCheck(ctx context.Context, resp *http.Response, err error) (bool, error) {
@@ -665,6 +669,14 @@ func (c *Client) NewRequest(method, path string, opt any, options []RequestOptio
 	u.RawPath = c.baseURL.Path + path
 	u.Path = c.baseURL.Path + unescaped
 
+	return c.NewRequestToURL(method, &u, opt, options)
+}
+
+func (c *Client) NewRequestToURL(method string, u *url.URL, opt any, options []RequestOptionFunc) (*retryablehttp.Request, error) {
+	if u.Scheme != c.baseURL.Scheme || u.Host != c.baseURL.Host {
+		return nil, fmt.Errorf("client only allows requests to URLs matching the clients configured base URL. Got %q, base URL is %q", u.String(), c.baseURL.String())
+	}
+
 	// Create a request specific headers map.
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("Accept", "application/json")
@@ -679,10 +691,11 @@ func (c *Client) NewRequest(method, path string, opt any, options []RequestOptio
 		reqHeaders.Set("Content-Type", "application/json")
 
 		if opt != nil {
-			body, err = json.Marshal(opt)
+			b, err := json.Marshal(opt)
 			if err != nil {
 				return nil, err
 			}
+			body = b
 		}
 	case opt != nil:
 		q, err := query.Values(opt)
@@ -1007,6 +1020,10 @@ func (e *ErrorResponse) Error() string {
 	}
 }
 
+func (e *ErrorResponse) HasStatusCode(statusCode int) bool {
+	return e != nil && e.Response != nil && e.Response.StatusCode == statusCode
+}
+
 // CheckResponse checks the API response for errors, and returns them if present.
 func CheckResponse(r *http.Response) error {
 	switch r.StatusCode {
@@ -1075,6 +1092,15 @@ func parseError(raw any) string {
 	default:
 		return fmt.Sprintf("failed to parse unexpected error type: %T", raw)
 	}
+}
+
+func HasStatusCode(err error, statusCode int) bool {
+	var errResponse *ErrorResponse
+	if !errors.As(err, &errResponse) {
+		return false
+	}
+
+	return errResponse.HasStatusCode(statusCode)
 }
 
 // newRetryableHTTPClientWithRetryCheck returns a `retryablehttp.Client` clone of itself with the given CheckRetry function
