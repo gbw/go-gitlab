@@ -1,3 +1,10 @@
+# [0.137.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.136.0...v0.137.0) (2025-07-21)
+
+
+### Features
+
+* **integrations:** add group harbor integration ([220e4cb](https://gitlab.com/gitlab-org/api/client-go/commit/220e4cb524d9303d36384043f29f96f43e4d9387))
+
 # [0.136.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.135.0...v0.136.0) (2025-07-21)
 
 
