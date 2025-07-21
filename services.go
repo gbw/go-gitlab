@@ -905,13 +905,7 @@ func (s *ServicesService) GetHarborService(pid any, options ...RequestOptionFunc
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_integrations/#set-up-harbor
-type SetHarborServiceOptions struct {
-	URL                  *string `url:"url,omitempty" json:"url,omitempty"`
-	ProjectName          *string `url:"project_name,omitempty" json:"project_name,omitempty"`
-	Username             *string `url:"username,omitempty" json:"username,omitempty"`
-	Password             *string `url:"password,omitempty" json:"password,omitempty"`
-	UseInheritedSettings *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
-}
+type SetHarborServiceOptions = SetUpHarborOptions
 
 // SetHarborService sets Harbor service for a project.
 //
