@@ -12,7 +12,7 @@ fmt: ## Format code
 	@buf format -w
 	@gofumpt -l -w *.go testing/*.go examples/*.go
 
-lint: Run linter
+lint: ## Run linter
 	@golangci-lint run
 	@buf format --exit-code
 	@buf lint

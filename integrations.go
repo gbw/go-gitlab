@@ -22,6 +22,9 @@ import (
 type (
 	IntegrationsServiceInterface interface {
 		ListActiveGroupIntegrations(gid any, opt *ListActiveIntegrationsOptions, options ...RequestOptionFunc) ([]*Integration, *Response, error)
+		SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
+		DisableGroupHarbor(gid any, options ...RequestOptionFunc) (*Response, error)
+		GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
 		SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
 		DisableGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*Response, error)
 		GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
@@ -104,6 +107,91 @@ func (s *IntegrationsService) ListActiveGroupIntegrations(gid any, opt *ListActi
 	}
 
 	return integrations, resp, nil
+}
+
+// SetUpHarborOptions represents the available SetUpGroupHarbor()
+// options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#set-up-harbor
+type SetUpHarborOptions struct {
+	URL                  *string `url:"url,omitempty" json:"url,omitempty"`
+	ProjectName          *string `url:"project_name,omitempty" json:"project_name,omitempty"`
+	Username             *string `url:"username,omitempty" json:"username,omitempty"`
+	Password             *string `url:"password,omitempty" json:"password,omitempty"`
+	UseInheritedSettings *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
+}
+
+// SetUpGroupHarbor sets up the Harbor integration for a group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#set-up-harbor
+func (s *IntegrationsService) SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*Integration, *Response, error) {
+	group, err := parseID(gid)
+	if err != nil {
+		return nil, nil, err
+	}
+	u := fmt.Sprintf("groups/%s/integrations/harbor", PathEscape(group))
+
+	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	integration := new(Integration)
+	resp, err := s.client.Do(req, integration)
+	if err != nil {
+		return nil, resp, err
+	}
+	return integration, resp, nil
+}
+
+// DisableGroupHarbor disables the Harbor integration for a group.
+// Integration settings are reset.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#disable-harbor
+func (s *IntegrationsService) DisableGroupHarbor(gid any, options ...RequestOptionFunc) (*Response, error) {
+	group, err := parseID(gid)
+	if err != nil {
+		return nil, err
+	}
+	u := fmt.Sprintf("groups/%s/integrations/harbor", PathEscape(group))
+
+	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := s.client.Do(req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// GetGroupHarborSettings gets the Harbor integration for a group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-harbor-settings
+func (s *IntegrationsService) GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error) {
+	group, err := parseID(gid)
+	if err != nil {
+		return nil, nil, err
+	}
+	u := fmt.Sprintf("groups/%s/integrations/harbor", PathEscape(group))
+
+	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	integration := new(Integration)
+	resp, err := s.client.Do(req, integration)
+	if err != nil {
+		return nil, nil, err
+	}
+	return integration, resp, nil
 }
 
 // SetMicrosoftTeamsNotificationsOptions represents the available

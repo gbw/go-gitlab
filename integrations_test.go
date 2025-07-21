@@ -130,6 +130,145 @@ func TestListActiveGroupIntegrations(t *testing.T) {
 	assert.NotNil(t, resp)
 }
 
+func TestSetUpGroupHarbor(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Harbor",
+			"slug": "harbor",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"commit_events": true,
+			"push_events": true,
+			"issues_events": true,
+			"alert_events": false,
+			"confidential_issues_events": false,
+			"merge_requests_events": true,
+			"tag_push_events": true,
+			"deployment_events": false,
+			"note_events": true,
+			"confidential_note_events": false,
+			"pipeline_events": true,
+			"wiki_page_events": false,
+			"job_events": false,
+			"comment_on_event_enabled": true,
+			"inherited": false,
+			"vulnerability_events": false
+		}`)
+	})
+	integration, resp, err := client.Integrations.SetUpGroupHarbor(1, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
+	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
+	want := &Integration{
+		ID:                       1,
+		Title:                    "Harbor",
+		Slug:                     "harbor",
+		CreatedAt:                &createdAt,
+		UpdatedAt:                &updatedAt,
+		Active:                   true,
+		CommitEvents:             true,
+		PushEvents:               true,
+		IssuesEvents:             true,
+		AlertEvents:              false,
+		ConfidentialIssuesEvents: false,
+		MergeRequestsEvents:      true,
+		TagPushEvents:            true,
+		DeploymentEvents:         false,
+		NoteEvents:               true,
+		ConfidentialNoteEvents:   false,
+		PipelineEvents:           true,
+		WikiPageEvents:           false,
+		JobEvents:                false,
+		CommentOnEventEnabled:    true,
+		Inherited:                false,
+		VulnerabilityEvents:      false,
+	}
+	assert.Equal(t, want, integration)
+}
+
+func TestDisableGroupHarbor(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+	resp, err := client.Integrations.DisableGroupHarbor(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestGetGroupHarborSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Harbor",
+			"slug": "harbor",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"commit_events": true,
+			"push_events": true,
+			"issues_events": true,
+			"alert_events": false,
+			"confidential_issues_events": false,
+			"merge_requests_events": true,
+			"tag_push_events": true,
+			"deployment_events": false,
+			"note_events": true,
+			"confidential_note_events": false,
+			"pipeline_events": true,
+			"wiki_page_events": false,
+			"job_events": false,
+			"comment_on_event_enabled": true,
+			"inherited": false,
+			"vulnerability_events": false
+		}`)
+	})
+	integration, resp, err := client.Integrations.GetGroupHarborSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
+	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
+	want := &Integration{
+		ID:                       1,
+		Title:                    "Harbor",
+		Slug:                     "harbor",
+		CreatedAt:                &createdAt,
+		UpdatedAt:                &updatedAt,
+		Active:                   true,
+		CommitEvents:             true,
+		PushEvents:               true,
+		IssuesEvents:             true,
+		AlertEvents:              false,
+		ConfidentialIssuesEvents: false,
+		MergeRequestsEvents:      true,
+		TagPushEvents:            true,
+		DeploymentEvents:         false,
+		NoteEvents:               true,
+		ConfidentialNoteEvents:   false,
+		PipelineEvents:           true,
+		WikiPageEvents:           false,
+		JobEvents:                false,
+		CommentOnEventEnabled:    true,
+		Inherited:                false,
+		VulnerabilityEvents:      false,
+	}
+	assert.Equal(t, want, integration)
+}
+
 func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
