@@ -125,6 +125,7 @@ func TestTagsService_GetTag(t *testing.T) {
 		},
 		Release:   nil,
 		Protected: false,
+		CreatedAt: &date,
 	}
 
 	assert.Equal(t, tag, want)
