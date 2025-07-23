@@ -78,6 +78,9 @@ stages:
         - go.sum
         - .gitlab-ci.yml
         - .gitlab/ci/*.yml
+        - buf.yaml
+        - buf.gen.yaml
+        - buf.lock
 
 golangci-lint:
   extends:
@@ -101,7 +104,7 @@ buf-lint:
   stage: lint
   needs: []
   script:
-    - buf format --exit-code
+    - buf format --diff --exit-code
     - buf lint
 
 verify-generated-code:
