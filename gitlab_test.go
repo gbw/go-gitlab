@@ -40,6 +40,14 @@ import (
 
 var timeLayout = "2006-01-02T15:04:05Z07:00"
 
+// Interface implementation checks.
+var (
+	_ AuthSource = OAuthTokenSource{}
+	_ AuthSource = JobTokenAuthSource{}
+	_ AuthSource = AccessTokenAuthSource{}
+	_ AuthSource = (*PasswordCredentialsAuthSource)(nil)
+)
+
 // setup sets up a test HTTP server along with a gitlab.Client that is
 // configured to talk to that test server.  Tests should register handlers on
 // mux which provide mock responses for the API method being tested.
@@ -835,10 +843,118 @@ func TestNewAuthSourceClient(t *testing.T) {
 	assert.Equal(t, []*Project{}, projects)
 }
 
-// Interface implementation checks.
-var (
-	_ AuthSource = OAuthTokenSource{}
-	_ AuthSource = JobTokenAuthSource{}
-	_ AuthSource = AccessTokenAuthSource{}
-	_ AuthSource = (*PasswordCredentialsAuthSource)(nil)
-)
+func TestHasStatusCode(t *testing.T) {
+	// GIVEN
+	tests := []struct {
+		name          string
+		err           error
+		hasStatusCode int
+		expect        bool
+	}{
+		{
+			name:          "error is nil",
+			err:           nil,
+			hasStatusCode: http.StatusOK,
+			expect:        false,
+		},
+		{
+			name:          "error is not a ErrorResponse",
+			err:           errors.New("dummy"),
+			hasStatusCode: http.StatusOK,
+			expect:        false,
+		},
+		{
+			name:          "error is a ErrorResponse, but has no http.Response",
+			err:           &ErrorResponse{},
+			hasStatusCode: http.StatusOK,
+			expect:        false,
+		},
+		{
+			name:          "error has different status code",
+			err:           &ErrorResponse{Response: &http.Response{StatusCode: http.StatusBadRequest}},
+			hasStatusCode: http.StatusOK,
+			expect:        false,
+		},
+		{
+			name:          "error has expected status code",
+			err:           &ErrorResponse{Response: &http.Response{StatusCode: http.StatusOK}},
+			hasStatusCode: http.StatusOK,
+			expect:        true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// WHEN
+			actual := HasStatusCode(tt.err, tt.hasStatusCode)
+
+			// THEN
+			assert.Equal(t, tt.expect, actual)
+		})
+	}
+}
+
+func TestNewRequestToURL_disallowedURL(t *testing.T) {
+	// GIVEN
+	tests := []struct {
+		name string
+		url  string
+	}{
+		{
+			name: "wrong scheme",
+			url:  "http://gitlab.example.com",
+		},
+		{
+			name: "wrong hostname",
+			url:  "https://gitlab2.example.com",
+		},
+		{
+			name: "wrong port",
+			url:  "https://gitlab.example.com:8080",
+		},
+	}
+	c, err := NewClient("",
+		WithBaseURL("https://gitlab.example.com"),
+	)
+	require.NoError(t, err)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			u, err := url.Parse(tt.url)
+			require.NoError(t, err)
+
+			// WHEN
+			_, err = c.NewRequestToURL(http.MethodGet, u, nil, nil)
+			assert.Error(t, err)
+		})
+	}
+}
+
+func TestNewRequestToURL_allowedURL(t *testing.T) {
+	// GIVEN
+	tests := []struct {
+		url string
+	}{
+		{
+			url: "https://gitlab.example.com",
+		},
+		{
+			url: "https://gitlab.example.com/api/v4",
+		},
+	}
+	c, err := NewClient("",
+		WithBaseURL("https://gitlab.example.com"),
+	)
+	require.NoError(t, err)
+
+	for _, tt := range tests {
+		t.Run(tt.url, func(t *testing.T) {
+			u, err := url.Parse(tt.url)
+			require.NoError(t, err)
+
+			// WHEN
+			_, err = c.NewRequestToURL(http.MethodGet, u, nil, nil)
+			assert.NoError(t, err)
+		})
+	}
+}
