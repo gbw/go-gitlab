@@ -113,7 +113,7 @@ func TestGetDataDogService(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/services/datadog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/integrations/datadog", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{
       "id": 1,
@@ -129,7 +129,7 @@ func TestGetDataDogService(t *testing.T) {
     }`)
 	})
 	want := &DataDogService{
-		Service: Service{ID: 1, Active: true},
+		Service: Integration{ID: 1, Active: true},
 		Properties: &DataDogServiceProperties{
 			APIURL:             "",
 			DataDogEnv:         "production",
@@ -150,7 +150,7 @@ func TestSetDataDogService(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/services/datadog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/integrations/datadog", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
 		fmt.Fprint(w, `{"id":1, "properties": {}}`)
 	})
@@ -174,7 +174,7 @@ func TestDeleteDataDogService(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/services/datadog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/integrations/datadog", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
