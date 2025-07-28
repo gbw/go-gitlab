@@ -57,8 +57,8 @@ func TestSecureFiles_ListProjectSecureFiles(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2022, 2, 22, 22, 22, 22, 0, time.UTC)
-	expiresAt := time.Date(2023, 9, 21, 14, 55, 59, 0, time.UTC)
+	createdAt := time.Date(2022, time.February, 22, 22, 22, 22, 0, time.UTC)
+	expiresAt := time.Date(2023, time.September, 21, 14, 55, 59, 0, time.UTC)
 	want := []*SecureFile{
 		{
 			ID:                1,
@@ -121,7 +121,7 @@ func TestSecureFiles_ShowSecureFileDetails(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2022, 2, 22, 22, 22, 22, 0, time.UTC)
+	createdAt := time.Date(2022, time.February, 22, 22, 22, 22, 0, time.UTC)
 	want := &SecureFile{
 		ID:                1,
 		Name:              "myfile.jks",
@@ -159,7 +159,7 @@ func TestSecureFiles_CreateSecureFile(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2022, 2, 22, 22, 22, 22, 0, time.UTC)
+	createdAt := time.Date(2022, time.February, 22, 22, 22, 22, 0, time.UTC)
 	want := &SecureFile{
 		ID:                1,
 		Name:              "myfile.jks",

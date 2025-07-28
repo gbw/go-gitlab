@@ -46,8 +46,8 @@ func TestGetCommit(t *testing.T) {
 		t.Fatalf("Commits.GetCommit returned error: %v, response: %v", err, resp)
 	}
 
-	updatedAt := time.Date(2019, 11, 4, 15, 39, 0o3, 935000000, time.UTC)
-	createdAt := time.Date(2019, 11, 4, 15, 38, 53, 154000000, time.UTC)
+	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
+	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -185,8 +185,8 @@ func TestRevertCommit_NoOptions(t *testing.T) {
 		t.Fatalf("Commits.RevertCommit returned error: %v, response: %v", err, resp)
 	}
 
-	updatedAt := time.Date(2019, 11, 4, 15, 39, 0o3, 935000000, time.UTC)
-	createdAt := time.Date(2019, 11, 4, 15, 38, 53, 154000000, time.UTC)
+	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
+	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -233,8 +233,8 @@ func TestRevertCommit_WithOptions(t *testing.T) {
 		t.Fatalf("Commits.RevertCommit returned error: %v, response: %v", err, resp)
 	}
 
-	updatedAt := time.Date(2019, 11, 4, 15, 39, 0o3, 935000000, time.UTC)
-	createdAt := time.Date(2019, 11, 4, 15, 38, 53, 154000000, time.UTC)
+	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
+	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -329,8 +329,8 @@ func TestCommitsService_ListCommits(t *testing.T) {
 		`)
 	})
 
-	updatedAt := time.Date(2019, 11, 4, 15, 39, 0o3, 935000000, time.UTC)
-	createdAt := time.Date(2019, 11, 4, 15, 38, 53, 154000000, time.UTC)
+	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
+	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := []*Commit{{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -471,8 +471,8 @@ func TestCommitsService_CreateCommit(t *testing.T) {
 		`)
 	})
 
-	updatedAt := time.Date(2019, 11, 4, 15, 39, 0o3, 935000000, time.UTC)
-	createdAt := time.Date(2019, 11, 4, 15, 38, 53, 154000000, time.UTC)
+	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
+	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -920,8 +920,8 @@ func TestCommitsService_CherryPickCommit(t *testing.T) {
 		`)
 	})
 
-	updatedAt := time.Date(2019, 11, 4, 15, 39, 0o3, 935000000, time.UTC)
-	createdAt := time.Date(2019, 11, 4, 15, 38, 53, 154000000, time.UTC)
+	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
+	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",

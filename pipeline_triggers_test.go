@@ -52,9 +52,9 @@ func TestListPipelineTriggers(t *testing.T) {
 		{
 			ID:          10,
 			Description: "my trigger",
-			CreatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+			CreatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 			Token:       "6d056f63e50fe6f8c5f8f4aa10edb7",
-			UpdatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+			UpdatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 		},
 	}
 	assert.Equal(t, want, pipelines)
@@ -84,9 +84,9 @@ func TestGetPipelineTrigger(t *testing.T) {
 	want := &PipelineTrigger{
 		ID:          10,
 		Description: "my trigger",
-		CreatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+		CreatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 		Token:       "6d056f63e50fe6f8c5f8f4aa10edb7",
-		UpdatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+		UpdatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 	}
 	assert.Equal(t, want, pipeline)
 }
@@ -116,9 +116,9 @@ func TestAddPipelineTrigger(t *testing.T) {
 	want := &PipelineTrigger{
 		ID:          10,
 		Description: "my trigger",
-		CreatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+		CreatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 		Token:       "6d056f63e50fe6f8c5f8f4aa10edb7",
-		UpdatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+		UpdatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 	}
 	assert.Equal(t, want, pipeline)
 }
@@ -148,9 +148,9 @@ func TestEditPipelineTrigger(t *testing.T) {
 	want := &PipelineTrigger{
 		ID:          10,
 		Description: "my trigger",
-		CreatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+		CreatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 		Token:       "6d056f63e50fe6f8c5f8f4aa10edb7",
-		UpdatedAt:   Ptr(time.Date(2016, 1, 7, 9, 53, 58, 235000000, time.UTC)),
+		UpdatedAt:   Ptr(time.Date(2016, time.January, 7, 9, 53, 58, 235000000, time.UTC)),
 	}
 	assert.Equal(t, want, pipeline)
 }

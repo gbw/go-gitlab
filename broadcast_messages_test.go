@@ -63,11 +63,11 @@ func TestListBroadcastMessages(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	wantedFirstStartsAt := time.Date(2017, 0o6, 26, 6, 0, 0, 0, time.UTC)
-	wantedFirstEndsAt := time.Date(2017, 0o6, 27, 12, 59, 0, 0, time.UTC)
+	wantedFirstStartsAt := time.Date(2017, time.June, 26, 6, 0, 0, 0, time.UTC)
+	wantedFirstEndsAt := time.Date(2017, time.June, 27, 12, 59, 0, 0, time.UTC)
 
-	wantedSecondStartsAt := time.Date(2015, 0o4, 27, 6, 43, 0, 0, time.UTC)
-	wantedSecondEndsAt := time.Date(2015, 0o4, 28, 20, 43, 0, 0, time.UTC)
+	wantedSecondStartsAt := time.Date(2015, time.April, 27, 6, 43, 0, 0, time.UTC)
+	wantedSecondEndsAt := time.Date(2015, time.April, 28, 20, 43, 0, 0, time.UTC)
 
 	want := []*BroadcastMessage{{
 		Message:            "Some Message",

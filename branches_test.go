@@ -40,8 +40,8 @@ func TestGetBranch(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
-	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
+	authoredDate := time.Date(2012, time.June, 27, 5, 51, 39, 0, time.UTC)
+	committedDate := time.Date(2012, time.June, 28, 3, 44, 20, 0, time.UTC)
 	want := &Branch{
 		Name:               DefaultBranch,
 		Merged:             false,
@@ -77,8 +77,8 @@ func TestBranchesService_ListBranches(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/list_branches.json")
 	})
 
-	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
-	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
+	authoredDate := time.Date(2012, time.June, 27, 5, 51, 39, 0, time.UTC)
+	committedDate := time.Date(2012, time.June, 28, 3, 44, 20, 0, time.UTC)
 	want := []*Branch{
 		{
 			Name:               DefaultBranch,
@@ -169,8 +169,8 @@ func TestBranchesService_ListBranchesWithSearch(t *testing.T) {
 	require.NotNil(t, b)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 
-	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
-	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
+	authoredDate := time.Date(2012, time.June, 27, 5, 51, 39, 0, time.UTC)
+	committedDate := time.Date(2012, time.June, 28, 3, 44, 20, 0, time.UTC)
 	expectedBranches := []*Branch{
 		{
 			Name:               DefaultBranch,
@@ -242,8 +242,8 @@ func TestBranchesService_ListBranchesWithRegex(t *testing.T) {
 	require.NotNil(t, b)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 
-	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
-	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
+	authoredDate := time.Date(2012, time.June, 27, 5, 51, 39, 0, time.UTC)
+	committedDate := time.Date(2012, time.June, 28, 3, 44, 20, 0, time.UTC)
 	expectedBranch := []*Branch{
 		{
 			Name:               DefaultBranch,
@@ -304,8 +304,8 @@ func TestBranchesService_CreateBranch(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/get_branch.json")
 	})
 
-	authoredDate := time.Date(2012, 6, 27, 5, 51, 39, 0, time.UTC)
-	committedDate := time.Date(2012, 6, 28, 3, 44, 20, 0, time.UTC)
+	authoredDate := time.Date(2012, time.June, 27, 5, 51, 39, 0, time.UTC)
+	committedDate := time.Date(2012, time.June, 28, 3, 44, 20, 0, time.UTC)
 	want := &Branch{
 		Name:               "master",
 		Merged:             false,

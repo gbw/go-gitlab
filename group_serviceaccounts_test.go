@@ -168,7 +168,7 @@ func TestListServiceAccountPersonalAccessTokens(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	datePointer := time.Date(2023, 0o6, 13, 0o7, 47, 13, 0, time.UTC)
+	datePointer := time.Date(2023, time.June, 13, 7, 47, 13, 0, time.UTC)
 	expiresAt := ISOTime(time.Date(2024, time.June, 12, 0, 0, 0, 0, time.UTC))
 
 	want := []*PersonalAccessToken{{
@@ -221,7 +221,7 @@ func TestCreateServiceAccountPersonalAccessToken(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	datePointer := time.Date(2023, 0o6, 13, 0o7, 47, 13, 0, time.UTC)
+	datePointer := time.Date(2023, time.June, 13, 7, 47, 13, 0, time.UTC)
 	expiresAt := ISOTime(time.Date(2024, time.June, 12, 0, 0, 0, 0, time.UTC))
 
 	want := &PersonalAccessToken{
@@ -274,7 +274,7 @@ func TestRotateServiceAccountPersonalAccessToken(t *testing.T) {
       }`)
 	})
 
-	datePointer := time.Date(2023, 0o6, 13, 0o7, 54, 49, 0, time.UTC)
+	datePointer := time.Date(2023, time.June, 13, 7, 54, 49, 0, time.UTC)
 	expiresAt := ISOTime(time.Date(2025, time.June, 20, 0, 0, 0, 0, time.UTC))
 	opts := &RotateServiceAccountPersonalAccessTokenOptions{ExpiresAt: &expiresAt}
 	pat, resp, err := client.Groups.RotateServiceAccountPersonalAccessToken(1, 57, 6, opts)

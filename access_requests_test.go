@@ -52,7 +52,7 @@ func TestListProjectAccessRequests(t *testing.T) {
         ]`)
 	})
 
-	created := time.Date(2012, 10, 22, 14, 13, 35, 0, time.UTC)
+	created := time.Date(2012, time.October, 22, 14, 13, 35, 0, time.UTC)
 	expected := []*AccessRequest{
 		{
 			ID:          1,
@@ -148,7 +148,7 @@ func TestListGroupAccessRequests(t *testing.T) {
 		]`)
 	})
 
-	created := time.Date(2012, 10, 22, 14, 13, 35, 0, time.UTC)
+	created := time.Date(2012, time.October, 22, 14, 13, 35, 0, time.UTC)
 	expected := []*AccessRequest{
 		{
 			ID:          1,
@@ -205,7 +205,7 @@ func TestRequestProjectAccess(t *testing.T) {
 			}`)
 	})
 
-	created := time.Date(2012, 10, 22, 14, 13, 35, 0, time.UTC)
+	created := time.Date(2012, time.October, 22, 14, 13, 35, 0, time.UTC)
 	expected := &AccessRequest{
 		ID:          1,
 		Username:    "raymond_smith",
@@ -252,7 +252,7 @@ func TestRequestGroupAccess(t *testing.T) {
 			}`)
 	})
 
-	created := time.Date(2012, 10, 22, 14, 13, 35, 0, time.UTC)
+	created := time.Date(2012, time.October, 22, 14, 13, 35, 0, time.UTC)
 	expected := &AccessRequest{
 		ID:          1,
 		Username:    "raymond_smith",
@@ -307,7 +307,7 @@ func TestApproveProjectAccessRequest(t *testing.T) {
 			*opt.AccessLevel)
 	})
 
-	created := time.Date(2012, 10, 22, 14, 13, 35, 0, time.UTC)
+	created := time.Date(2012, time.October, 22, 14, 13, 35, 0, time.UTC)
 	expected := &AccessRequest{
 		ID:          10,
 		Username:    "raymond_smith",
@@ -367,7 +367,7 @@ func TestApproveGroupAccessRequest(t *testing.T) {
 			*opt.AccessLevel)
 	})
 
-	created := time.Date(2012, 10, 22, 14, 13, 35, 0, time.UTC)
+	created := time.Date(2012, time.October, 22, 14, 13, 35, 0, time.UTC)
 	expected := &AccessRequest{
 		ID:          10,
 		Username:    "raymond_smith",

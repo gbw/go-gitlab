@@ -37,7 +37,7 @@ func TestFeatureFlagUserLists_ListFeatureFlagUserLists(t *testing.T) {
 		]`)
 	})
 
-	createdAt := time.Date(2020, 2, 4, 8, 13, 51, 0, time.UTC)
+	createdAt := time.Date(2020, time.February, 4, 8, 13, 51, 0, time.UTC)
 	want := []*FeatureFlagUserList{
 		{
 			Name:      "user_list",
@@ -84,7 +84,7 @@ func TestFeatureFlagUserLists_CreateFeatureFlagUserList(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2020, 2, 4, 8, 13, 51, 0, time.UTC)
+	createdAt := time.Date(2020, time.February, 4, 8, 13, 51, 0, time.UTC)
 	want := &FeatureFlagUserList{
 		Name:      "user_list",
 		UserXIDs:  "user1,user2",
@@ -123,7 +123,7 @@ func TestFeatureFlagUserLists_GetFeatureFlagUserList(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2020, 2, 4, 8, 13, 51, 0, time.UTC)
+	createdAt := time.Date(2020, time.February, 4, 8, 13, 51, 0, time.UTC)
 	want := &FeatureFlagUserList{
 		Name:      "user_list",
 		UserXIDs:  "user1,user2",
@@ -159,7 +159,7 @@ func TestFeatureFlagUserLists_UpdateFeatureFlagUserList(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2020, 2, 4, 8, 13, 51, 0, time.UTC)
+	createdAt := time.Date(2020, time.February, 4, 8, 13, 51, 0, time.UTC)
 	want := &FeatureFlagUserList{
 		Name:      "user_list",
 		UserXIDs:  "user1,user2",

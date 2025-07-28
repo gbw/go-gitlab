@@ -13,7 +13,7 @@ func TestProjectSecuritySettings_ListProjectSecuritySettings(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	createdAt := time.Date(2024, 10, 22, 14, 13, 35, 0, time.UTC)
+	createdAt := time.Date(2024, time.October, 22, 14, 13, 35, 0, time.UTC)
 
 	mux.HandleFunc("/api/v4/projects/1/security_settings", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
@@ -54,7 +54,7 @@ func TestProjectSecuritySettings_UpdateSecretPushProtectionEnabledSetting(t *tes
 	t.Parallel()
 	mux, client := setup(t)
 
-	createdAt := time.Date(2024, 10, 22, 14, 13, 35, 0, time.UTC)
+	createdAt := time.Date(2024, time.October, 22, 14, 13, 35, 0, time.UTC)
 
 	mux.HandleFunc("/api/v4/projects/1/security_settings", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)

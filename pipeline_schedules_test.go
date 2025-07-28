@@ -60,7 +60,7 @@ func TestPipelineSchedules_ListPipelineSchedules(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	testDate := time.Date(2017, 5, 19, 13, 41, 0, 0, time.UTC)
+	testDate := time.Date(2017, time.May, 19, 13, 41, 0, 0, time.UTC)
 	want := []*PipelineSchedule{
 		{
 			ID:           13,
@@ -118,7 +118,7 @@ func TestPipelineSchedules_GetPipelineSchedule(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	testDate := time.Date(2017, 5, 19, 13, 41, 0, 0, time.UTC)
+	testDate := time.Date(2017, time.May, 19, 13, 41, 0, 0, time.UTC)
 	want := &PipelineSchedule{
 		ID:           13,
 		Description:  "Test schedule pipeline",
@@ -181,7 +181,7 @@ func TestPipelineSchedules_ListPipelinesTriggeredBySchedule(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	testDate := time.Date(2017, 5, 19, 13, 41, 0, 0, time.UTC)
+	testDate := time.Date(2017, time.May, 19, 13, 41, 0, 0, time.UTC)
 	want := []*Pipeline{
 		{
 			ID:        47,
@@ -256,7 +256,7 @@ func TestPipelineSchedules_CreatePipelineSchedule(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	testDate := time.Date(2017, 5, 19, 13, 41, 0, 0, time.UTC)
+	testDate := time.Date(2017, time.May, 19, 13, 41, 0, 0, time.UTC)
 	want := &PipelineSchedule{
 		ID:           13,
 		Description:  "Test schedule pipeline",
@@ -324,7 +324,7 @@ func TestPipelineSchedules_EditPipelineSchedule(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	testDate := time.Date(2017, 5, 19, 13, 41, 0, 0, time.UTC)
+	testDate := time.Date(2017, time.May, 19, 13, 41, 0, 0, time.UTC)
 	want := &PipelineSchedule{
 		ID:           13,
 		Description:  "Test schedule pipeline",
@@ -380,7 +380,7 @@ func TestPipelineSchedules_TakeOwnershipOfPipelineSchedule(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	testDate := time.Date(2017, 5, 19, 13, 41, 0, 0, time.UTC)
+	testDate := time.Date(2017, time.May, 19, 13, 41, 0, 0, time.UTC)
 	want := &PipelineSchedule{
 		ID:           13,
 		Description:  "Test schedule pipeline",

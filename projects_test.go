@@ -432,7 +432,7 @@ func TestGetProjectByID(t *testing.T) {
 		  }`)
 	})
 
-	wantTimestamp := time.Date(2020, 0o1, 0o7, 21, 42, 58, 658000000, time.UTC)
+	wantTimestamp := time.Date(2020, time.January, 7, 21, 42, 58, 658000000, time.UTC)
 	want := &Project{
 		ID:                       1,
 		ContainerRegistryEnabled: true,
@@ -1366,9 +1366,9 @@ func TestGetProjectPullMirrorDetails(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	wantLastSuccessfulUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
-	wantLastUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
-	wantLastUpdateStartedAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 31, 55, 864000000, time.UTC)
+	wantLastSuccessfulUpdateAtTimestamp := time.Date(2020, time.January, 6, 17, 32, 2, 823000000, time.UTC)
+	wantLastUpdateAtTimestamp := time.Date(2020, time.January, 6, 17, 32, 2, 823000000, time.UTC)
+	wantLastUpdateStartedAtTimestamp := time.Date(2020, time.January, 6, 17, 31, 55, 864000000, time.UTC)
 	want := &ProjectPullMirrorDetails{
 		ID:                     101486,
 		LastError:              "",
@@ -1414,9 +1414,9 @@ func TestConfigureProjectPullMirror(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	wantLastSuccessfulUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
-	wantLastUpdateAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 32, 0o2, 823000000, time.UTC)
-	wantLastUpdateStartedAtTimestamp := time.Date(2020, 0o1, 0o6, 17, 31, 55, 864000000, time.UTC)
+	wantLastSuccessfulUpdateAtTimestamp := time.Date(2020, time.January, 6, 17, 32, 2, 823000000, time.UTC)
+	wantLastUpdateAtTimestamp := time.Date(2020, time.January, 6, 17, 32, 2, 823000000, time.UTC)
+	wantLastUpdateStartedAtTimestamp := time.Date(2020, time.January, 6, 17, 31, 55, 864000000, time.UTC)
 	want := &ProjectPullMirrorDetails{
 		ID:                     101486,
 		LastError:              "",
@@ -1545,7 +1545,7 @@ func TestListProjectHooks(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	createdAt := time.Date(2024, 10, 13, 13, 37, 0, 0, time.UTC)
+	createdAt := time.Date(2024, time.October, 13, 13, 37, 0, 0, time.UTC)
 	want := []*ProjectHook{{
 		ID:                        1,
 		URL:                       "http://example.com/hook",

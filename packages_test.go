@@ -42,7 +42,7 @@ func TestPackagesService_ListProjectPackages(t *testing.T) {
 		`)
 	})
 
-	timestamp := time.Date(2023, 1, 4, 20, 0, 0, 0, time.UTC)
+	timestamp := time.Date(2023, time.January, 4, 20, 0, 0, 0, time.UTC)
 	want := []*Package{{
 		ID:               3,
 		Name:             "Hello/0.1@mycompany/stable",

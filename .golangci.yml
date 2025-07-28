@@ -27,6 +27,7 @@ linters:
     - nolintlint
     - revive
     - unconvert
+    - usestdlibvars
     - whitespace
   disable:
     - errcheck
@@ -40,6 +41,11 @@ linters:
       rules:
         - name: deep-exit
         - name: get-return
+        - name: time-date
+    usestdlibvars:
+      http-method: false
+      http-status-code: false
+      time-date-month: true
 
   # List of regexps of issue texts to exclude.
   exclusions:

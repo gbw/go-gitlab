@@ -71,7 +71,7 @@ func TestListGroupHooks(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
+	datePointer := time.Date(2012, time.October, 12, 17, 4, 47, 0, time.UTC)
 	want := []*GroupHook{{
 		ID:                        1,
 		URL:                       "http://example.com/hook",
@@ -151,7 +151,7 @@ func TestGetGroupHook(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
+	datePointer := time.Date(2012, time.October, 12, 17, 4, 47, 0, time.UTC)
 	want := &GroupHook{
 		ID:                        1,
 		URL:                       "http://example.com/hook",
@@ -251,7 +251,7 @@ func TestAddGroupHook(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
+	datePointer := time.Date(2012, time.October, 12, 17, 4, 47, 0, time.UTC)
 	want := &GroupHook{
 		ID:                        1,
 		URL:                       "http://example.com/hook",
@@ -339,7 +339,7 @@ func TestEditGroupHook(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	datePointer := time.Date(2012, 10, 12, 17, 4, 47, 0, time.UTC)
+	datePointer := time.Date(2012, time.October, 12, 17, 4, 47, 0, time.UTC)
 	want := &GroupHook{
 		ID:                        1,
 		URL:                       "http://example.com/hook",

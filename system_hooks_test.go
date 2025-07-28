@@ -33,7 +33,7 @@ func TestSystemHooksService_ListHooks(t *testing.T) {
 	hooks, _, err := client.SystemHooks.ListHooks()
 	require.NoError(t, err)
 
-	createdAt := time.Date(2016, 10, 31, 12, 32, 15, 192000000, time.UTC)
+	createdAt := time.Date(2016, time.October, 31, 12, 32, 15, 192000000, time.UTC)
 	want := []*Hook{{
 		ID:                     1,
 		URL:                    "https://gitlab.example.com/hook",
@@ -69,7 +69,7 @@ func TestSystemHooksService_GetHook(t *testing.T) {
 	hooks, _, err := client.SystemHooks.GetHook(1)
 	require.NoError(t, err)
 
-	createdAt := time.Date(2016, 10, 31, 12, 32, 15, 192000000, time.UTC)
+	createdAt := time.Date(2016, time.October, 31, 12, 32, 15, 192000000, time.UTC)
 	want := &Hook{
 		ID:                     1,
 		URL:                    "https://gitlab.example.com/hook",

@@ -58,8 +58,8 @@ var (
 		"group::knowledge",
 		"missed:12.1",
 	}
-	pipelineCreation = time.Date(2019, 8, 19, 9, 50, 58, 157000000, time.UTC)
-	pipelineUpdate   = time.Date(2019, 8, 19, 19, 22, 29, 647000000, time.UTC)
+	pipelineCreation = time.Date(2019, time.August, 19, 9, 50, 58, 157000000, time.UTC)
+	pipelineUpdate   = time.Date(2019, time.August, 19, 19, 22, 29, 647000000, time.UTC)
 	pipelineBasic    = PipelineInfo{
 		ID:        77056819,
 		SHA:       "8e0b45049b6253b8984cde9241830d2851168142",
@@ -69,8 +69,8 @@ var (
 		CreatedAt: &pipelineCreation,
 		UpdatedAt: &pipelineUpdate,
 	}
-	pipelineStarted  = time.Date(2019, 8, 19, 9, 51, 6, 545000000, time.UTC)
-	pipelineFinished = time.Date(2019, 8, 19, 19, 22, 29, 632000000, time.UTC)
+	pipelineStarted  = time.Date(2019, time.August, 19, 9, 51, 6, 545000000, time.UTC)
+	pipelineFinished = time.Date(2019, time.August, 19, 19, 22, 29, 632000000, time.UTC)
 	pipelineDetailed = Pipeline{
 		ID:         77056819,
 		SHA:        "8e0b45049b6253b8984cde9241830d2851168142",
@@ -136,9 +136,9 @@ func TestGetMergeRequest(t *testing.T) {
 	require.Equal(t, mergeRequest.UserNotesCount, 245)
 	require.Equal(t, mergeRequest.Pipeline, &pipelineBasic)
 	require.Equal(t, mergeRequest.HeadPipeline, &pipelineDetailed)
-	mrCreation := time.Date(2019, 7, 11, 22, 34, 43, 500000000, time.UTC)
+	mrCreation := time.Date(2019, time.July, 11, 22, 34, 43, 500000000, time.UTC)
 	require.Equal(t, mergeRequest.CreatedAt, &mrCreation)
-	mrUpdate := time.Date(2019, 8, 20, 9, 9, 56, 690000000, time.UTC)
+	mrUpdate := time.Date(2019, time.August, 20, 9, 9, 56, 690000000, time.UTC)
 	require.Equal(t, mergeRequest.UpdatedAt, &mrUpdate)
 	require.Equal(t, mergeRequest.FirstContribution, true)
 	require.Equal(t, mergeRequest.HasConflicts, true)
@@ -186,8 +186,8 @@ func TestListProjectMergeRequests(t *testing.T) {
 		"policies_denied",
 		"unchecked",
 	}
-	allCreatedBefore := time.Date(2019, 8, 21, 0, 0, 0, 0, time.UTC)
-	allCreatedAfter := time.Date(2019, 8, 17, 0, 0, 0, 0, time.UTC)
+	allCreatedBefore := time.Date(2019, time.August, 21, 0, 0, 0, 0, time.UTC)
+	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
 		require.Equal(t, 278964, mr.ProjectID)
@@ -243,8 +243,8 @@ func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
 		"policies_denied",
 		"unchecked",
 	}
-	allCreatedBefore := time.Date(2019, 8, 21, 0, 0, 0, 0, time.UTC)
-	allCreatedAfter := time.Date(2019, 8, 17, 0, 0, 0, 0, time.UTC)
+	allCreatedBefore := time.Date(2019, time.August, 21, 0, 0, 0, 0, time.UTC)
+	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
 		require.Equal(t, 278964, mr.ProjectID)
@@ -300,8 +300,8 @@ func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
 		"policies_denied",
 		"unchecked",
 	}
-	allCreatedBefore := time.Date(2019, 8, 21, 0, 0, 0, 0, time.UTC)
-	allCreatedAfter := time.Date(2019, 8, 17, 0, 0, 0, 0, time.UTC)
+	allCreatedBefore := time.Date(2019, time.August, 21, 0, 0, 0, 0, time.UTC)
+	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
 		require.Equal(t, 278964, mr.ProjectID)
@@ -375,7 +375,7 @@ func TestGetMergeRequestReviewers(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	createdAt := time.Date(2022, 0o7, 27, 17, 3, 27, 684000000, time.UTC)
+	createdAt := time.Date(2022, time.July, 27, 17, 3, 27, 684000000, time.UTC)
 	user1 := BasicUser{ID: 1, Name: "John Doe1", Username: "user1", State: "active", AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon", WebURL: "http://localhost/user1"}
 	user2 := BasicUser{ID: 2, Name: "John Doe2", Username: "user2", State: "active", AvatarURL: "http://www.gravatar.com/avatar/10fc7f102be8de7657fb4d80898bbfe3?s=80&d=identicon", WebURL: "http://localhost/user2"}
 

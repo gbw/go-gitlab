@@ -24,11 +24,11 @@ func TestListProjectFeatureFlags(t *testing.T) {
 		return
 	}
 
-	createdAt1 := time.Date(2019, 11, 4, 8, 13, 51, 0, time.UTC)
-	updatedAt1 := time.Date(2019, 11, 4, 8, 13, 11, 0, time.UTC)
+	createdAt1 := time.Date(2019, time.November, 4, 8, 13, 51, 0, time.UTC)
+	updatedAt1 := time.Date(2019, time.November, 4, 8, 13, 11, 0, time.UTC)
 
-	createdAt2 := time.Date(2019, 11, 4, 8, 13, 10, 0, time.UTC)
-	updatedAt2 := time.Date(2019, 11, 4, 8, 13, 10, 0, time.UTC)
+	createdAt2 := time.Date(2019, time.November, 4, 8, 13, 10, 0, time.UTC)
+	updatedAt2 := time.Date(2019, time.November, 4, 8, 13, 10, 0, time.UTC)
 
 	expected := []*ProjectFeatureFlag{
 		{
@@ -99,7 +99,7 @@ func TestGetProjectFeatureFlag(t *testing.T) {
 		t.Fatalf("ProjectFeatureFlags.GetProjectFeatureFlag returned error: %v, response %v", err, resp)
 	}
 
-	date := time.Date(2020, 0o5, 13, 19, 56, 33, 0, time.UTC)
+	date := time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)
 	expected := &ProjectFeatureFlag{
 		Name:      "awesome_feature",
 		Active:    true,
@@ -155,8 +155,8 @@ func TestCreateProjectFeatureFlag(t *testing.T) {
 		return
 	}
 
-	createdAt := time.Date(2020, 5, 13, 19, 56, 33, 0, time.UTC)
-	updatedAt := time.Date(2020, 5, 13, 19, 56, 33, 0, time.UTC)
+	createdAt := time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)
+	updatedAt := time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)
 
 	expected := &ProjectFeatureFlag{
 		Name:      "awesome_feature",
@@ -198,8 +198,8 @@ func TestUpdateProjectFeatureFlag(t *testing.T) {
 		return
 	}
 
-	createdAt := time.Date(2020, 5, 13, 20, 10, 32, 0, time.UTC)
-	updatedAt := time.Date(2020, 5, 13, 20, 10, 32, 0, time.UTC)
+	createdAt := time.Date(2020, time.May, 13, 20, 10, 32, 0, time.UTC)
+	updatedAt := time.Date(2020, time.May, 13, 20, 10, 32, 0, time.UTC)
 
 	expected := &ProjectFeatureFlag{
 		Name:      "awesome_feature",

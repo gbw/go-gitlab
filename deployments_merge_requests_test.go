@@ -47,8 +47,8 @@ func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests(t *testing.T
 		"policies_denied",
 		"unchecked",
 	}
-	allCreatedBefore := time.Date(2019, 8, 21, 0, 0, 0, 0, time.UTC)
-	allCreatedAfter := time.Date(2019, 8, 17, 0, 0, 0, 0, time.UTC)
+	allCreatedBefore := time.Date(2019, time.August, 21, 0, 0, 0, 0, time.UTC)
+	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
 		require.Equal(t, 278964, mr.ProjectID)
