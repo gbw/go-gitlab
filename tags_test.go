@@ -104,7 +104,7 @@ func TestTagsService_GetTag(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	date := time.Date(2015, 2, 1, 21, 56, 31, 0, time.UTC)
+	date := time.Date(2015, time.February, 1, 21, 56, 31, 0, time.UTC)
 
 	want := &Tag{
 		Name:   "v5.0.0",
@@ -172,7 +172,7 @@ func TestTagsService_CreateTag(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
-	date := time.Date(2015, 2, 1, 21, 56, 31, 0, time.UTC)
+	date := time.Date(2015, time.February, 1, 21, 56, 31, 0, time.UTC)
 
 	want := &Tag{
 		Name:   "v1.0.0",

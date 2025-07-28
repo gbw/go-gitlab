@@ -28,7 +28,7 @@ func TestAlertManagement_UploadMetricImage(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2020, 11, 12, 20, 7, 58, 0, time.UTC)
+	createdAt := time.Date(2020, time.November, 12, 20, 7, 58, 0, time.UTC)
 	want := &MetricImage{
 		ID:        17,
 		CreatedAt: &createdAt,
@@ -75,7 +75,7 @@ func TestAlertManagement_ListMetricImages(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2020, 11, 12, 20, 7, 58, 0, time.UTC)
+	createdAt := time.Date(2020, time.November, 12, 20, 7, 58, 0, time.UTC)
 	want := []*MetricImage{
 		{
 			ID:        17,
@@ -119,7 +119,7 @@ func TestAlertManagement_UpdateMetricImage(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2020, 11, 12, 20, 7, 58, 0, time.UTC)
+	createdAt := time.Date(2020, time.November, 12, 20, 7, 58, 0, time.UTC)
 	want := &MetricImage{
 		ID:        17,
 		CreatedAt: &createdAt,

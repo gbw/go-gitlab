@@ -53,7 +53,7 @@ func TestListAllDeployTokens(t *testing.T) {
 		t.Errorf("DeployTokens.ListAllDeployTokens returned an error: %v", err)
 	}
 
-	wantExpiresAt := time.Date(2020, 0o2, 14, 0, 0, 0, 0, time.UTC)
+	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
 
 	want := []*DeployToken{
 		{
@@ -102,7 +102,7 @@ func TestListProjectDeployTokens(t *testing.T) {
 		t.Errorf("DeployTokens.ListProjectDeployTokens returned an error: %v", err)
 	}
 
-	wantExpiresAt := time.Date(2020, 0o2, 14, 0, 0, 0, 0, time.UTC)
+	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
 
 	want := []*DeployToken{
 		{
@@ -147,7 +147,7 @@ func TestGetProjectDeployTokens(t *testing.T) {
 		t.Errorf("DeployTokens.GetProjectDeployToken returned an error: %v", err)
 	}
 
-	wantExpiresAt := time.Date(2020, 0o2, 14, 0, 0, 0, 0, time.UTC)
+	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
 
 	want := &DeployToken{
 		ID:        1,
@@ -185,7 +185,7 @@ func TestCreateProjectDeployToken(t *testing.T) {
 `)
 	})
 
-	expiresAt := time.Date(2021, 0o1, 0o1, 0, 0, 0, 0, time.UTC)
+	expiresAt := time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)
 
 	deployToken, _, err := client.DeployTokens.CreateProjectDeployToken(5, &CreateProjectDeployTokenOptions{
 		Name:      Ptr("My deploy token"),
@@ -264,7 +264,7 @@ func TestListGroupDeployTokens(t *testing.T) {
 		t.Errorf("DeployTokens.ListGroupDeployTokens returned an error: %v", err)
 	}
 
-	wantExpiresAt := time.Date(2020, 0o2, 14, 0, 0, 0, 0, time.UTC)
+	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
 
 	want := []*DeployToken{
 		{
@@ -309,7 +309,7 @@ func TestGetGroupDeployTokens(t *testing.T) {
 		t.Errorf("DeployTokens.GetGroupDeployToken returned an error: %v", err)
 	}
 
-	wantExpiresAt := time.Date(2020, 0o2, 14, 0, 0, 0, 0, time.UTC)
+	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
 
 	want := &DeployToken{
 		ID:        1,
@@ -347,7 +347,7 @@ func TestCreateGroupDeployToken(t *testing.T) {
 `)
 	})
 
-	expiresAt := time.Date(2021, 0o1, 0o1, 0, 0, 0, 0, time.UTC)
+	expiresAt := time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)
 
 	deployToken, _, err := client.DeployTokens.CreateGroupDeployToken(5, &CreateGroupDeployTokenOptions{
 		Name:      Ptr("My deploy token"),

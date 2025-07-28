@@ -23,15 +23,15 @@ func TestListProjectMergeTrains(t *testing.T) {
 		t.Errorf("MergeTrains.ListProjectMergeTrains returned error: %v", err)
 	}
 
-	mergeRequestCreatedAt := time.Date(2020, 2, 6, 8, 39, 14, 883000000, time.UTC)
-	mergeRequestUpdatedAt := time.Date(2020, 0o2, 6, 8, 40, 57, 38000000, time.UTC)
+	mergeRequestCreatedAt := time.Date(2020, time.February, 6, 8, 39, 14, 883000000, time.UTC)
+	mergeRequestUpdatedAt := time.Date(2020, time.February, 6, 8, 40, 57, 38000000, time.UTC)
 
-	pipelineCreatedAt := time.Date(2020, 2, 6, 8, 40, 42, 410000000, time.UTC)
-	pipelineUpdatedAt := time.Date(2020, 2, 6, 8, 40, 46, 912000000, time.UTC)
+	pipelineCreatedAt := time.Date(2020, time.February, 6, 8, 40, 42, 410000000, time.UTC)
+	pipelineUpdatedAt := time.Date(2020, time.February, 6, 8, 40, 46, 912000000, time.UTC)
 
-	mergeTrainCreatedAt := time.Date(2020, 2, 6, 8, 39, 47, 217000000, time.UTC)
-	mergeTrainUpdatedAt := time.Date(2020, 2, 6, 8, 40, 57, 720000000, time.UTC)
-	mergeTrainMergedAt := time.Date(2020, 2, 6, 8, 40, 57, 719000000, time.UTC)
+	mergeTrainCreatedAt := time.Date(2020, time.February, 6, 8, 39, 47, 217000000, time.UTC)
+	mergeTrainUpdatedAt := time.Date(2020, time.February, 6, 8, 40, 57, 720000000, time.UTC)
+	mergeTrainMergedAt := time.Date(2020, time.February, 6, 8, 40, 57, 719000000, time.UTC)
 
 	want := []*MergeTrain{
 		{
@@ -94,14 +94,14 @@ func TestListMergeRequestInMergeTrain(t *testing.T) {
 		t.Errorf("MergeTrains.ListMergeRequestInMergeTrain returned error: %v", err)
 	}
 
-	mergeRequestCreatedAt := time.Date(2022, 10, 31, 19, 6, 5, 725000000, time.UTC)
-	mergeRequestUpdatedAt := time.Date(2022, 10, 31, 19, 6, 5, 725000000, time.UTC)
+	mergeRequestCreatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
+	mergeRequestUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
 
-	pipelineCreatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 231000000, time.UTC)
-	pipelineUpdatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 231000000, time.UTC)
+	pipelineCreatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 231000000, time.UTC)
+	pipelineUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 231000000, time.UTC)
 
-	mergeTrainCreatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 237000000, time.UTC)
-	mergeTrainUpdatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 237000000, time.UTC)
+	mergeTrainCreatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 237000000, time.UTC)
+	mergeTrainUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 237000000, time.UTC)
 
 	want := []*MergeTrain{
 		{
@@ -165,14 +165,14 @@ func TestGetMergeRequestOnAMergeTrain(t *testing.T) {
 		t.Errorf("MergeTrains.GetMergeRequestOnAMergeTrain returned error: %v", err)
 	}
 
-	mergeRequestCreatedAt := time.Date(2022, 10, 31, 19, 6, 5, 725000000, time.UTC)
-	mergeRequestUpdatedAt := time.Date(2022, 10, 31, 19, 6, 5, 725000000, time.UTC)
+	mergeRequestCreatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
+	mergeRequestUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
 
-	pipelineCreatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 231000000, time.UTC)
-	pipelineUpdatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 231000000, time.UTC)
+	pipelineCreatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 231000000, time.UTC)
+	pipelineUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 231000000, time.UTC)
 
-	mergeTrainCreatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 237000000, time.UTC)
-	mergeTrainUpdatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 237000000, time.UTC)
+	mergeTrainCreatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 237000000, time.UTC)
+	mergeTrainUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 237000000, time.UTC)
 
 	want := &MergeTrain{
 		ID: 267,
@@ -236,14 +236,14 @@ func TestAddMergeRequestToMergeTrain(t *testing.T) {
 		t.Errorf("MergeTrains.AddMergeRequestToMergeTrain returned error: %v", err)
 	}
 
-	mergeRequestCreatedAt := time.Date(2022, 10, 31, 19, 6, 5, 725000000, time.UTC)
-	mergeRequestUpdatedAt := time.Date(2022, 10, 31, 19, 6, 5, 725000000, time.UTC)
+	mergeRequestCreatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
+	mergeRequestUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
 
-	pipelineCreatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 231000000, time.UTC)
-	pipelineUpdatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 231000000, time.UTC)
+	pipelineCreatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 231000000, time.UTC)
+	pipelineUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 231000000, time.UTC)
 
-	mergeTrainCreatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 237000000, time.UTC)
-	mergeTrainUpdatedAt := time.Date(2022, 10, 31, 19, 0o6, 0o6, 237000000, time.UTC)
+	mergeTrainCreatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 237000000, time.UTC)
+	mergeTrainUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 6, 237000000, time.UTC)
 
 	want := []*MergeTrain{
 		{

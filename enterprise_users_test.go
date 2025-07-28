@@ -45,7 +45,7 @@ func TestEnterpriseUsers_ListEnterpriseUsers(t *testing.T) {
 		]`)
 	})
 
-	date := time.Date(2021, 9, 10, 12, 48, 22, 0, time.UTC)
+	date := time.Date(2021, time.September, 10, 12, 48, 22, 0, time.UTC)
 	want := []*User{
 		{
 			ID:            66,
@@ -116,7 +116,7 @@ func TestEnterpriseUsers_GetEnterpriseUser(t *testing.T) {
 		`)
 	})
 
-	date := time.Date(2021, 9, 10, 12, 48, 22, 0, time.UTC)
+	date := time.Date(2021, time.September, 10, 12, 48, 22, 0, time.UTC)
 	want := &User{
 		ID:            66,
 		Username:      "user22",

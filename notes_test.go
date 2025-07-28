@@ -82,7 +82,7 @@ func TestNotes_ListIssueNotes(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	createdAt := time.Date(2013, time.October, 2, 9, 56, 3, 0, time.UTC)
 	want := []*Note{
 		{
 			ID:         302,
@@ -168,7 +168,7 @@ func TestNotes_GetIssueNote(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	createdAt := time.Date(2013, time.October, 2, 9, 56, 3, 0, time.UTC)
 	want := &Note{
 		ID:         302,
 		Body:       "closed",
@@ -230,7 +230,7 @@ func TestNotes_CreateIssueNote(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	createdAt := time.Date(2013, time.October, 2, 9, 56, 3, 0, time.UTC)
 	want := &Note{
 		ID:         302,
 		Body:       "closed",
@@ -292,7 +292,7 @@ func TestNotes_UpdateIssueNote(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	createdAt := time.Date(2013, time.October, 2, 9, 56, 3, 0, time.UTC)
 	want := &Note{
 		ID:         302,
 		Body:       "closed2",
@@ -393,7 +393,7 @@ func TestNotes_ListSnippetNotes(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	createdAt := time.Date(2013, time.October, 2, 9, 56, 3, 0, time.UTC)
 	want := []*Note{
 		{
 			ID:         302,
@@ -479,7 +479,7 @@ func TestNotes_CreateSnippetNote(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	createdAt := time.Date(2013, time.October, 2, 9, 56, 3, 0, time.UTC)
 	want := &Note{
 		ID:         302,
 		Body:       "closed",
@@ -541,7 +541,7 @@ func TestNotes_UpdateSnippetNote(t *testing.T) {
 		`)
 	})
 
-	createdAt := time.Date(2013, 10, 2, 9, 56, 3, 0, time.UTC)
+	createdAt := time.Date(2013, time.October, 2, 9, 56, 3, 0, time.UTC)
 	want := &Note{
 		ID:         302,
 		Body:       "closed2",

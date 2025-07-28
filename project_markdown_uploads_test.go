@@ -121,8 +121,8 @@ func TestMarkdownUploads_ListProjectMarkdownUploads(t *testing.T) {
 		`)
 	})
 
-	created1 := time.Date(2024, 6, 20, 15, 53, 3, 0, time.UTC)
-	created2 := time.Date(2024, 6, 19, 15, 53, 3, 0, time.UTC)
+	created1 := time.Date(2024, time.June, 20, 15, 53, 3, 0, time.UTC)
+	created2 := time.Date(2024, time.June, 19, 15, 53, 3, 0, time.UTC)
 	want := []*ProjectMarkdownUpload{
 		{
 			ID:        1,

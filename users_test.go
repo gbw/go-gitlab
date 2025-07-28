@@ -48,7 +48,7 @@ func TestGetUser(t *testing.T) {
 		Name:         "John Smith",
 		State:        "active",
 		WebURL:       "http://localhost:3000/john_smith",
-		CreatedAt:    Ptr(time.Date(2012, time.May, 23, 8, 0o0, 58, 0, time.UTC)),
+		CreatedAt:    Ptr(time.Date(2012, time.May, 23, 8, 0, 58, 0, time.UTC)),
 		Bio:          "Bio of John Smith",
 		Location:     "USA",
 		PublicEmail:  "john@example.com",
@@ -111,7 +111,7 @@ func TestGetUserAdmin(t *testing.T) {
 		CurrentSignInIP:  &currentSignInIP,
 		LastSignInAt:     Ptr(time.Date(2012, time.June, 1, 11, 41, 1, 0, time.UTC)),
 		LastSignInIP:     &lastSignInIP,
-		ConfirmedAt:      Ptr(time.Date(2012, time.May, 23, 9, 0o5, 22, 0, time.UTC)),
+		ConfirmedAt:      Ptr(time.Date(2012, time.May, 23, 9, 5, 22, 0, time.UTC)),
 		TwoFactorEnabled: true,
 		Note:             "DMCA Request: 2018-11-05 | DMCA Violation | Abuse | https://gitlab.zendesk.com/agent/tickets/123",
 		Identities:       []*UserIdentity{{Provider: "github", ExternUID: "2435223452345"}},
@@ -143,7 +143,7 @@ func TestCreatedBy(t *testing.T) {
 		Name:      "John Bot",
 		State:     "active",
 		WebURL:    "http://localhost:3000/project_1_bot_3cca1d029554e372cf8f39df76bf507d",
-		CreatedAt: Ptr(time.Date(2012, time.May, 23, 8, 0o0, 58, 0, time.UTC)),
+		CreatedAt: Ptr(time.Date(2012, time.May, 23, 8, 0, 58, 0, time.UTC)),
 		Bot:       true,
 		// Bio:          "Bio of John Smith",
 		// Location:     "USA",
@@ -159,7 +159,7 @@ func TestCreatedBy(t *testing.T) {
 		ColorSchemeID:  1,
 		IsAdmin:        false,
 		AvatarURL:      "http://localhost:3000/uploads/user/avatar/2/index.jpg",
-		ConfirmedAt:    Ptr(time.Date(2012, time.May, 23, 8, 0o0, 58, 0, time.UTC)),
+		ConfirmedAt:    Ptr(time.Date(2012, time.May, 23, 8, 0, 58, 0, time.UTC)),
 		Identities:     []*UserIdentity{},
 		NamespaceID:    4,
 		Locked:         false,
@@ -655,7 +655,7 @@ func TestGetSingleSSHKeyForUser(t *testing.T) {
 	sshKey, _, err := client.Users.GetSSHKeyForUser(1, 1)
 	assert.NoError(t, err)
 
-	wantCreatedAt := time.Date(2014, 8, 1, 14, 47, 39, 80000000, time.UTC)
+	wantCreatedAt := time.Date(2014, time.August, 1, 14, 47, 39, 80000000, time.UTC)
 
 	want := &SSHKey{
 		ID:        1,
