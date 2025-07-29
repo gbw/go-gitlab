@@ -43,7 +43,7 @@ type ListServiceAccountsOptions struct {
 	Sort    *string `url:"sort,omitempty" json:"sort,omitempty"`
 }
 
-// ListServiceAccounts gets a list of service acxcounts.
+// ListServiceAccounts gets a list of service accounts.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#list-all-service-account-users

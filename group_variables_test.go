@@ -23,7 +23,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestListGroupVariabless(t *testing.T) {
+func TestListGroupVariables(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
