@@ -62,6 +62,8 @@ type (
 		TriggerTestProjectHook(pid any, hook int, event ProjectHookEvent, options ...RequestOptionFunc) (*Response, error)
 		SetProjectCustomHeader(pid any, hook int, key string, opt *SetHookCustomHeaderOptions, options ...RequestOptionFunc) (*Response, error)
 		DeleteProjectCustomHeader(pid any, hook int, key string, options ...RequestOptionFunc) (*Response, error)
+		SetProjectWebhookURLVariable(pid any, hook int, key string, opt *SetProjectWebhookURLVariableOptions, options ...RequestOptionFunc) (*Response, error)
+		DeleteProjectWebhookURLVariable(pid any, hook int, key string, options ...RequestOptionFunc) (*Response, error)
 		CreateProjectForkRelation(pid any, fork int, options ...RequestOptionFunc) (*ProjectForkRelation, *Response, error)
 		DeleteProjectForkRelation(pid any, options ...RequestOptionFunc) (*Response, error)
 		UploadAvatar(pid any, avatar io.Reader, filename string, options ...RequestOptionFunc) (*Project, *Response, error)
@@ -1372,6 +1374,12 @@ type HookCustomHeader struct {
 	Value string `json:"value"`
 }
 
+// HookURLVariable represents a project or group hook URL variable
+type HookURLVariable struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
 // ProjectHook represents a project hook.
 //
 // GitLab API docs:
@@ -1381,7 +1389,6 @@ type ProjectHook struct {
 	URL                       string              `json:"url"`
 	Name                      string              `json:"name"`
 	Description               string              `json:"description"`
-	ConfidentialNoteEvents    bool                `json:"confidential_note_events"`
 	ProjectID                 int                 `json:"project_id"`
 	PushEvents                bool                `json:"push_events"`
 	PushEventsBranchFilter    string              `json:"push_events_branch_filter"`
@@ -1390,13 +1397,19 @@ type ProjectHook struct {
 	MergeRequestsEvents       bool                `json:"merge_requests_events"`
 	TagPushEvents             bool                `json:"tag_push_events"`
 	NoteEvents                bool                `json:"note_events"`
+	ConfidentialNoteEvents    bool                `json:"confidential_note_events"`
 	JobEvents                 bool                `json:"job_events"`
 	PipelineEvents            bool                `json:"pipeline_events"`
 	WikiPageEvents            bool                `json:"wiki_page_events"`
 	DeploymentEvents          bool                `json:"deployment_events"`
 	ReleasesEvents            bool                `json:"releases_events"`
+	MilestoneEvents           bool                `json:"milestone_events"`
+	FeatureFlagEvents         bool                `json:"feature_flag_events"`
 	EnableSSLVerification     bool                `json:"enable_ssl_verification"`
+	RepositoryUpdateEvents    bool                `json:"repository_update_events"`
 	AlertStatus               string              `json:"alert_status"`
+	DisabledUntil             *time.Time          `json:"disabled_until"`
+	URLVariables              []HookURLVariable   `json:"url_variables"`
 	CreatedAt                 *time.Time          `json:"created_at"`
 	ResourceAccessTokenEvents bool                `json:"resource_access_token_events"`
 	CustomWebhookTemplate     string              `json:"custom_webhook_template"`
@@ -1650,6 +1663,53 @@ func (s *ProjectsService) DeleteProjectCustomHeader(pid any, hook int, key strin
 		return nil, err
 	}
 	u := fmt.Sprintf("projects/%s/hooks/%d/custom_headers/%s", PathEscape(project), hook, key)
+
+	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
+	if err != nil {
+		return nil, err
+	}
+
+	return s.client.Do(req, nil)
+}
+
+// SetProjectWebhookURLVariableOptions represents the available
+// SetProjectWebhookURLVariable() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_webhooks/#set-a-url-variable
+type SetProjectWebhookURLVariableOptions struct {
+	Value *string `json:"value,omitempty"`
+}
+
+// SetProjectWebhookURLVariable creates or updates a project webhook URL variable.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_webhooks/#set-a-url-variable
+func (s *ProjectsService) SetProjectWebhookURLVariable(pid any, hook int, key string, opt *SetProjectWebhookURLVariableOptions, options ...RequestOptionFunc) (*Response, error) {
+	project, err := parseID(pid)
+	if err != nil {
+		return nil, err
+	}
+	u := fmt.Sprintf("projects/%s/hooks/%d/url_variables/%s", PathEscape(project), hook, PathEscape(key))
+
+	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
+	if err != nil {
+		return nil, err
+	}
+
+	return s.client.Do(req, nil)
+}
+
+// DeleteProjectWebhookURLVariable deletes a project webhook URL variable.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_webhooks/#delete-a-url-variable
+func (s *ProjectsService) DeleteProjectWebhookURLVariable(pid any, hook int, key string, options ...RequestOptionFunc) (*Response, error) {
+	project, err := parseID(pid)
+	if err != nil {
+		return nil, err
+	}
+	u := fmt.Sprintf("projects/%s/hooks/%d/url_variables/%s", PathEscape(project), hook, PathEscape(key))
 
 	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
 	if err != nil {
