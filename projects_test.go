@@ -1692,6 +1692,35 @@ func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
 	assert.Equal(t, 2, len(hook.CustomHeaders))
 }
 
+func TestSetProjectWebhookURLVariable(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/hooks/2/url_variables/TEST_KEY", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+	})
+
+	opt := &SetProjectWebhookURLVariableOptions{
+		Value: Ptr("testValue"),
+	}
+	resp, err := client.Projects.SetProjectWebhookURLVariable(1, 2, "TEST_KEY", opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestDeleteProjectWebhookURLVariable(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/hooks/2/url_variables/TEST_KEY", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Projects.DeleteProjectWebhookURLVariable(1, 2, "TEST_KEY")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
 func TestGetProjectPushRules(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

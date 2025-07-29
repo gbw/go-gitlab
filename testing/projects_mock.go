@@ -711,6 +711,50 @@ func (c *MockProjectsServiceInterfaceDeleteProjectPushRuleCall) DoAndReturn(f fu
 	return c
 }
 
+// DeleteProjectWebhookURLVariable mocks base method.
+func (m *MockProjectsServiceInterface) DeleteProjectWebhookURLVariable(pid any, hook int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, hook, key}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteProjectWebhookURLVariable", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteProjectWebhookURLVariable indicates an expected call of DeleteProjectWebhookURLVariable.
+func (mr *MockProjectsServiceInterfaceMockRecorder) DeleteProjectWebhookURLVariable(pid, hook, key any, options ...any) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, hook, key}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProjectWebhookURLVariable", reflect.TypeOf((*MockProjectsServiceInterface)(nil).DeleteProjectWebhookURLVariable), varargs...)
+	return &MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall wrap *gomock.Call
+type MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) Do(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) DoAndReturn(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteSharedProjectFromGroup mocks base method.
 func (m *MockProjectsServiceInterface) DeleteSharedProjectFromGroup(pid any, groupID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -1875,6 +1919,50 @@ func (c *MockProjectsServiceInterfaceSetProjectCustomHeaderCall) Do(f func(any, 
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockProjectsServiceInterfaceSetProjectCustomHeaderCall) DoAndReturn(f func(any, int, string, *gitlab.SetHookCustomHeaderOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectCustomHeaderCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetProjectWebhookURLVariable mocks base method.
+func (m *MockProjectsServiceInterface) SetProjectWebhookURLVariable(pid any, hook int, key string, opt *gitlab.SetProjectWebhookURLVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, hook, key, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetProjectWebhookURLVariable", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetProjectWebhookURLVariable indicates an expected call of SetProjectWebhookURLVariable.
+func (mr *MockProjectsServiceInterfaceMockRecorder) SetProjectWebhookURLVariable(pid, hook, key, opt any, options ...any) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, hook, key, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetProjectWebhookURLVariable", reflect.TypeOf((*MockProjectsServiceInterface)(nil).SetProjectWebhookURLVariable), varargs...)
+	return &MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall wrap *gomock.Call
+type MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) Do(f func(any, int, string, *gitlab.SetProjectWebhookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) DoAndReturn(f func(any, int, string, *gitlab.SetProjectWebhookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
