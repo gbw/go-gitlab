@@ -1150,18 +1150,23 @@ func (s *ProjectsService) StarProject(pid any, options ...RequestOptionFunc) (*P
 	return p, resp, nil
 }
 
-// ListProjectInvidedGroupOptions represents the available
+// ListProjectInvitedGroupOptions represents the available
 // ListProjectsInvitedGroups() options.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#list-a-projects-invited-groups
-type ListProjectInvidedGroupOptions struct {
+type ListProjectInvitedGroupOptions struct {
 	ListOptions
 	Search               *string           `url:"search,omitempty" json:"search,omitempty"`
 	MinAccessLevel       *AccessLevelValue `url:"min_access_level,omitempty" json:"min_access_level,omitempty"`
 	Relation             *[]string         `url:"relation,omitempty" json:"relation,omitempty"`
 	WithCustomAttributes *bool             `url:"with_custom_attributes,omitempty" json:"with_custom_attributes,omitempty"`
 }
+
+// ListProjectInvidedGroupOptions is kept for backwards compatibility.
+//
+// Deprecated: use ListProjectInvitedGroupOptions instead. The ListProjectInvidedGroupOptions type will be removed in the next release.
+type ListProjectInvidedGroupOptions = ListProjectInvitedGroupOptions
 
 // ListProjectsInvitedGroups lists invited groups of a project
 //
