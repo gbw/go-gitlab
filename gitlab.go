@@ -991,7 +991,7 @@ func parseID(id any) (string, error) {
 	}
 }
 
-// Helper function to escape a project identifier.
+// PathEscape is a helper function to escape a project identifier.
 func PathEscape(s string) string {
 	return strings.ReplaceAll(url.PathEscape(s), ".", "%2E")
 }
@@ -1175,7 +1175,7 @@ func (s AccessTokenAuthSource) Header(_ context.Context) (string, string, error)
 	return AccessTokenHeaderName, s.Token, nil
 }
 
-// passwordTokenSource implements the AuthSource interface for the OAuth 2.0
+// PasswordCredentialsAuthSource implements the AuthSource interface for the OAuth 2.0
 // resource owner password credentials flow.
 type PasswordCredentialsAuthSource struct {
 	Username string

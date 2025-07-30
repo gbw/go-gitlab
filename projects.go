@@ -2418,7 +2418,7 @@ func (s *ProjectsService) StartHousekeepingProject(pid any, options ...RequestOp
 	return s.client.Do(req, nil)
 }
 
-// GetRepositoryStorage Get the path to repository storage.
+// ProjectRepositoryStorage represents the repository storage information for a project.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#get-the-path-to-repository-storage

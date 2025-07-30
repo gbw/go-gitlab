@@ -26,6 +26,7 @@ linters:
     - nakedret
     - nolintlint
     - revive
+    - staticcheck
     - unconvert
     - usestdlibvars
     - whitespace
@@ -42,6 +43,11 @@ linters:
         - name: deep-exit
         - name: get-return
         - name: time-date
+    staticcheck:
+      checks:
+        - ST1020
+        - ST1021
+        - ST1022
     usestdlibvars:
       http-method: false
       http-status-code: false
@@ -51,13 +57,18 @@ linters:
   exclusions:
     generated: lax
     presets:
-      - comments
       - common-false-positives
       - legacy
       - std-error-handling
     rules:
       - path: (.+)\.go$
         text: ^.*, make it a constant$
+      - source: "// Deprecated:"
+        linters:
+          - staticcheck
+      - source: "// GitLab API docs:"
+        linters:
+          - staticcheck
     paths:
       - third_party$
       - builtin$
