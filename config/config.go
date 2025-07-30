@@ -28,7 +28,7 @@ import (
 	"buf.build/go/protoyaml"
 	"github.com/zalando/go-keyring"
 	gitlab "gitlab.com/gitlab-org/api/client-go"
-	v1beta1 "gitlab.com/gitlab-org/api/client-go/config/v1beta1"
+	"gitlab.com/gitlab-org/api/client-go/config/v1beta1"
 	"gitlab.com/gitlab-org/api/client-go/gitlaboauth2"
 	"golang.org/x/oauth2"
 	"golang.org/x/time/rate"

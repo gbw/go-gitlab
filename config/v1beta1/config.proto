@@ -7,7 +7,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "gitlab.com/gitlab-org/api/client-go/config/v1beta";
+option go_package = "gitlab.com/gitlab-org/api/client-go/config/v1beta1";
 
 // Config represents the root configuration structure for GitLab SDK clients.
 // It follows a similar pattern to Kubernetes config with contexts and instances.

@@ -42,6 +42,7 @@ linters:
       rules:
         - name: deep-exit
         - name: get-return
+        - name: redundant-import-alias
         - name: time-date
     staticcheck:
       checks:

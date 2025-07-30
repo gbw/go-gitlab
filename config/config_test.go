@@ -6,7 +6,7 @@ import (
 	"github.com/MakeNowJust/heredoc/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	v1beta1 "gitlab.com/gitlab-org/api/client-go/config/v1beta1"
+	"gitlab.com/gitlab-org/api/client-go/config/v1beta1"
 )
 
 func TestConfig_EmptyConfig(t *testing.T) {
