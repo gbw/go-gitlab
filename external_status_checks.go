@@ -213,7 +213,7 @@ func (s *ExternalStatusChecksService) UpdateExternalStatusCheck(pid any, check i
 	return s.client.Do(req, nil)
 }
 
-// UpdateExternalStatusCheck updates an external status check.
+// RetryFailedStatusCheckForAMergeRequest retries the specified failed external status check.
 //
 // Gitlab API docs:
 // https://docs.gitlab.com/api/status_checks/#retry-failed-status-check-for-a-merge-request

@@ -486,6 +486,7 @@ type Settings struct {
 	UserEmailLookupLimit int `json:"user_email_lookup_limit"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface.
 // Settings requires a custom unmarshaller in order to properly unmarshal
 // `container_registry_import_created_before` which is either a time.Time or
 // an empty string if no value is set.
