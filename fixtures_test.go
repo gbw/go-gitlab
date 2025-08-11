@@ -151,13 +151,14 @@ const (
 	// exampleProjectName provides a fixture for a project name.
 	exampleProjectName = "example-project"
 
-	// exampleProjectStatusChecks provides a fixture for a project status checks.
-	exampleProjectStatusChecks = `[
+	// exampleProjectStatusChecksList provides a fixture for project external status checks.
+	exampleProjectStatusChecksList = `[
 		{
 			"id": 1,
 			"name": "Compliance Check",
 			"project_id": 6,
 			"external_url": "https://gitlab.com/example/test.json",
+			"hmac": false,
 			"protected_branches": [
 				{
 					"id": 14,
@@ -170,6 +171,25 @@ const (
 			]
 		}
 	]`
+
+	// exampleProjectStatusCheck provides a fixture for project external status checks.
+	exampleProjectStatusCheck = `{
+		"id": 1,
+		"name": "Compliance Check",
+		"project_id": 6,
+		"external_url": "https://gitlab.com/example/test.json",
+		"hmac": true,
+		"protected_branches": [
+			{
+				"id": 14,
+				"project_id": 6,
+				"name": "master",
+				"created_at": "2020-10-12T14:04:50.787Z",
+				"updated_at": "2020-10-12T14:04:50.787Z",
+				"code_owner_approval_required": false
+			}
+		]
+	}`
 
 	// exampleRegisterNewRunner provides fixture for Runners tests.
 	exampleRegisterNewRunner = `{
@@ -404,8 +424,8 @@ const (
 		}
 	}`
 
-	// exampleStatusChecks provides a fixture for status checks for a merge request.
-	exampleStatusChecks = `[
+	// exampleProjectMergeRequestStatusChecksList provides a fixture for status checks for a project merge request.
+	exampleProjectMergeRequestStatusChecksList = `[
     {
         "id": 2,
         "name": "Rule 1",

@@ -84,6 +84,51 @@ func (c *MockExternalStatusChecksServiceInterfaceCreateExternalStatusCheckCall) 
 	return c
 }
 
+// CreateProjectExternalStatusCheck mocks base method.
+func (m *MockExternalStatusChecksServiceInterface) CreateProjectExternalStatusCheck(pid any, opt *gitlab.CreateProjectExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CreateProjectExternalStatusCheck", varargs...)
+	ret0, _ := ret[0].(*gitlab.ProjectStatusCheck)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateProjectExternalStatusCheck indicates an expected call of CreateProjectExternalStatusCheck.
+func (mr *MockExternalStatusChecksServiceInterfaceMockRecorder) CreateProjectExternalStatusCheck(pid, opt any, options ...any) *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateProjectExternalStatusCheck", reflect.TypeOf((*MockExternalStatusChecksServiceInterface)(nil).CreateProjectExternalStatusCheck), varargs...)
+	return &MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall{Call: call}
+}
+
+// MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall wrap *gomock.Call
+type MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall) Return(arg0 *gitlab.ProjectStatusCheck, arg1 *gitlab.Response, arg2 error) *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall) Do(f func(any, *gitlab.CreateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall) DoAndReturn(f func(any, *gitlab.CreateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusCheckCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteExternalStatusCheck mocks base method.
 func (m *MockExternalStatusChecksServiceInterface) DeleteExternalStatusCheck(pid any, check int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -124,6 +169,50 @@ func (c *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall) 
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// DeleteProjectExternalStatusCheck mocks base method.
+func (m *MockExternalStatusChecksServiceInterface) DeleteProjectExternalStatusCheck(pid any, check int, opt *gitlab.DeleteProjectExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, check, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteProjectExternalStatusCheck", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteProjectExternalStatusCheck indicates an expected call of DeleteProjectExternalStatusCheck.
+func (mr *MockExternalStatusChecksServiceInterfaceMockRecorder) DeleteProjectExternalStatusCheck(pid, check, opt any, options ...any) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, check, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProjectExternalStatusCheck", reflect.TypeOf((*MockExternalStatusChecksServiceInterface)(nil).DeleteProjectExternalStatusCheck), varargs...)
+	return &MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall{Call: call}
+}
+
+// MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall wrap *gomock.Call
+type MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall) Return(arg0 *gitlab.Response, arg1 error) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall) Do(f func(any, int, *gitlab.DeleteProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall) DoAndReturn(f func(any, int, *gitlab.DeleteProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -173,6 +262,96 @@ func (c *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall) DoAn
 	return c
 }
 
+// ListProjectExternalStatusChecks mocks base method.
+func (m *MockExternalStatusChecksServiceInterface) ListProjectExternalStatusChecks(pid any, opt *gitlab.ListProjectExternalStatusChecksOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStatusCheck, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListProjectExternalStatusChecks", varargs...)
+	ret0, _ := ret[0].([]*gitlab.ProjectStatusCheck)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListProjectExternalStatusChecks indicates an expected call of ListProjectExternalStatusChecks.
+func (mr *MockExternalStatusChecksServiceInterfaceMockRecorder) ListProjectExternalStatusChecks(pid, opt any, options ...any) *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListProjectExternalStatusChecks", reflect.TypeOf((*MockExternalStatusChecksServiceInterface)(nil).ListProjectExternalStatusChecks), varargs...)
+	return &MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall{Call: call}
+}
+
+// MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall wrap *gomock.Call
+type MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall) Return(arg0 []*gitlab.ProjectStatusCheck, arg1 *gitlab.Response, arg2 error) *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall) Do(f func(any, *gitlab.ListProjectExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall) DoAndReturn(f func(any, *gitlab.ListProjectExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecksCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListProjectMergeRequestExternalStatusChecks mocks base method.
+func (m *MockExternalStatusChecksServiceInterface) ListProjectMergeRequestExternalStatusChecks(pid any, mr int, opt *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, mr, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListProjectMergeRequestExternalStatusChecks", varargs...)
+	ret0, _ := ret[0].([]*gitlab.MergeStatusCheck)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListProjectMergeRequestExternalStatusChecks indicates an expected call of ListProjectMergeRequestExternalStatusChecks.
+func (mr_2 *MockExternalStatusChecksServiceInterfaceMockRecorder) ListProjectMergeRequestExternalStatusChecks(pid, mr, opt any, options ...any) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
+	mr_2.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, mr, opt}, options...)
+	call := mr_2.mock.ctrl.RecordCallWithMethodType(mr_2.mock, "ListProjectMergeRequestExternalStatusChecks", reflect.TypeOf((*MockExternalStatusChecksServiceInterface)(nil).ListProjectMergeRequestExternalStatusChecks), varargs...)
+	return &MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall{Call: call}
+}
+
+// MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall wrap *gomock.Call
+type MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall) Return(arg0 []*gitlab.MergeStatusCheck, arg1 *gitlab.Response, arg2 error) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall) Do(f func(any, int, *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall) DoAndReturn(f func(any, int, *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListProjectStatusChecks mocks base method.
 func (m *MockExternalStatusChecksServiceInterface) ListProjectStatusChecks(pid any, opt *gitlab.ListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStatusCheck, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -214,6 +393,50 @@ func (c *MockExternalStatusChecksServiceInterfaceListProjectStatusChecksCall) Do
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockExternalStatusChecksServiceInterfaceListProjectStatusChecksCall) DoAndReturn(f func(any, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectStatusChecksCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// RetryFailedExternalStatusCheckForProjectMergeRequest mocks base method.
+func (m *MockExternalStatusChecksServiceInterface) RetryFailedExternalStatusCheckForProjectMergeRequest(pid any, mergeRequest, externalStatusCheck int, opt *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, mergeRequest, externalStatusCheck, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RetryFailedExternalStatusCheckForProjectMergeRequest", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RetryFailedExternalStatusCheckForProjectMergeRequest indicates an expected call of RetryFailedExternalStatusCheckForProjectMergeRequest.
+func (mr *MockExternalStatusChecksServiceInterfaceMockRecorder) RetryFailedExternalStatusCheckForProjectMergeRequest(pid, mergeRequest, externalStatusCheck, opt any, options ...any) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, mergeRequest, externalStatusCheck, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RetryFailedExternalStatusCheckForProjectMergeRequest", reflect.TypeOf((*MockExternalStatusChecksServiceInterface)(nil).RetryFailedExternalStatusCheckForProjectMergeRequest), varargs...)
+	return &MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall{Call: call}
+}
+
+// MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall wrap *gomock.Call
+type MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall) Return(arg0 *gitlab.Response, arg1 error) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall) Do(f func(any, int, int, *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall) DoAndReturn(f func(any, int, int, *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -306,6 +529,50 @@ func (c *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCal
 	return c
 }
 
+// SetProjectMergeRequestExternalStatusCheckStatus mocks base method.
+func (m *MockExternalStatusChecksServiceInterface) SetProjectMergeRequestExternalStatusCheckStatus(pid any, mergeRequest int, opt *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, mergeRequest, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetProjectMergeRequestExternalStatusCheckStatus", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetProjectMergeRequestExternalStatusCheckStatus indicates an expected call of SetProjectMergeRequestExternalStatusCheckStatus.
+func (mr *MockExternalStatusChecksServiceInterfaceMockRecorder) SetProjectMergeRequestExternalStatusCheckStatus(pid, mergeRequest, opt any, options ...any) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, mergeRequest, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetProjectMergeRequestExternalStatusCheckStatus", reflect.TypeOf((*MockExternalStatusChecksServiceInterface)(nil).SetProjectMergeRequestExternalStatusCheckStatus), varargs...)
+	return &MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall{Call: call}
+}
+
+// MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall wrap *gomock.Call
+type MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall) Return(arg0 *gitlab.Response, arg1 error) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall) Do(f func(any, int, *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall) DoAndReturn(f func(any, int, *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // UpdateExternalStatusCheck mocks base method.
 func (m *MockExternalStatusChecksServiceInterface) UpdateExternalStatusCheck(pid any, check int, opt *gitlab.UpdateExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -346,6 +613,51 @@ func (c *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall) 
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall) DoAndReturn(f func(any, int, *gitlab.UpdateExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// UpdateProjectExternalStatusCheck mocks base method.
+func (m *MockExternalStatusChecksServiceInterface) UpdateProjectExternalStatusCheck(pid any, check int, opt *gitlab.UpdateProjectExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, check, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateProjectExternalStatusCheck", varargs...)
+	ret0, _ := ret[0].(*gitlab.ProjectStatusCheck)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// UpdateProjectExternalStatusCheck indicates an expected call of UpdateProjectExternalStatusCheck.
+func (mr *MockExternalStatusChecksServiceInterfaceMockRecorder) UpdateProjectExternalStatusCheck(pid, check, opt any, options ...any) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, check, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateProjectExternalStatusCheck", reflect.TypeOf((*MockExternalStatusChecksServiceInterface)(nil).UpdateProjectExternalStatusCheck), varargs...)
+	return &MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall{Call: call}
+}
+
+// MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall wrap *gomock.Call
+type MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall) Return(arg0 *gitlab.ProjectStatusCheck, arg1 *gitlab.Response, arg2 error) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall) Do(f func(any, int, *gitlab.UpdateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall) DoAndReturn(f func(any, int, *gitlab.UpdateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
