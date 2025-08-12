@@ -1,3 +1,20 @@
+# [0.138.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.137.0...v0.138.0) (2025-08-12)
+
+
+### Bug Fixes
+
+* deprecate ListProjectInvidedGroupOptions due to a typo ([322496a](https://gitlab.com/gitlab-org/api/client-go/commit/322496a8a4c3fd7393b4b2c2b427c42fff243861))
+* Update config package name to v1beta1 ([f958e6b](https://gitlab.com/gitlab-org/api/client-go/commit/f958e6bd2935fddf4867d9992908e87288e89c20))
+
+
+### Features
+
+* add support for field "Created at" for Tags ([f363d57](https://gitlab.com/gitlab-org/api/client-go/commit/f363d57853f2e05c848e88946269c936f0b6bf76))
+* **app settings:** Add support for CanCreateOrganization ([1db661d](https://gitlab.com/gitlab-org/api/client-go/commit/1db661de26e0d3a78134c6bd1d31fb24d9a60677))
+* **hooks:** Add support for project webhook url variables ([efabed5](https://gitlab.com/gitlab-org/api/client-go/commit/efabed57d83eefe565aa2dbbb943d94212ec6167))
+* update datadog integration with new fields and API endpoints ([660ef31](https://gitlab.com/gitlab-org/api/client-go/commit/660ef31daf884bde545cfaa88432ac5ec7e3bfe7))
+* update external status checks to return the status check object ([2d78e8c](https://gitlab.com/gitlab-org/api/client-go/commit/2d78e8cc43971c4395c980672de7263c10401900))
+
 # [0.137.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.136.0...v0.137.0) (2025-07-21)
 
 
