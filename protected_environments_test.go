@@ -595,7 +595,7 @@ func TestUpdateRepositoryEnvironmentsEscapesURL(t *testing.T) {
 	_, resp, err := client.ProtectedEnvironments.UpdateProtectedEnvironments(1, "test/environment", &UpdateProtectedEnvironmentsOptions{})
 	assert.NoError(t, err, "failed to get response")
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Equal(t, rawRequest, "/api/v4/projects/1/protected_environments/test%2Fenvironment")
+	assert.Equal(t, "/api/v4/projects/1/protected_environments/test%2Fenvironment", rawRequest)
 }
 
 func TestUnprotectRepositoryEnvironments(t *testing.T) {

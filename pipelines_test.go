@@ -185,7 +185,7 @@ func TestGetLatestPipeline(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/pipelines/latest", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		assert.Equal(t, "", r.URL.RawQuery)
+		assert.Empty(t, r.URL.RawQuery)
 		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "success"})
 	})
 

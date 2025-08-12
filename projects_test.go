@@ -369,7 +369,7 @@ func TestEditProject(t *testing.T) {
 	project, resp, err := client.Projects.EditProject(1, opt)
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Equal(t, true, attributesFound)
+	assert.True(t, attributesFound)
 	assert.Equal(t, developerRole, project.CIRestrictPipelineCancellationRole)
 	assert.Equal(t, developerPipelineVariablesRole, project.CIPipelineVariablesMinimumOverrideRole)
 	assert.Equal(t, 14, project.CIDeletePipelinesInSeconds)
@@ -1492,14 +1492,14 @@ func TestProjectModelsOptionalMergeAttribute(t *testing.T) {
 		Name: Ptr("testProject"),
 	})
 	assert.NoError(t, err)
-	assert.False(t, strings.Contains(string(jsonString), "only_allow_merge_if_all_status_checks_passed"))
+	assert.NotContains(t, string(jsonString), "only_allow_merge_if_all_status_checks_passed")
 
 	// Test the same thing but for `EditProjectOptions` struct
 	jsonString, err = json.Marshal(&EditProjectOptions{
 		Name: Ptr("testProject"),
 	})
 	assert.NoError(t, err)
-	assert.False(t, strings.Contains(string(jsonString), "only_allow_merge_if_all_status_checks_passed"))
+	assert.NotContains(t, string(jsonString), "only_allow_merge_if_all_status_checks_passed")
 }
 
 func TestListProjectHooks(t *testing.T) {
@@ -1632,10 +1632,10 @@ func TestProjectAddWebhook_CustomTemplateStuff(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusCreated, resp.StatusCode)
-	assert.Equal(t, true, customWebhookSet)
-	assert.Equal(t, true, authValueSet)
+	assert.True(t, customWebhookSet)
+	assert.True(t, authValueSet)
 	assert.Equal(t, "testValue", hook.CustomWebhookTemplate)
-	assert.Equal(t, 2, len(hook.CustomHeaders))
+	assert.Len(t, hook.CustomHeaders, 2)
 }
 
 // Test that the "CustomWebhookTemplate" serializes properly when editing
@@ -1686,10 +1686,10 @@ func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Equal(t, true, customWebhookSet)
-	assert.Equal(t, true, authValueSet)
+	assert.True(t, customWebhookSet)
+	assert.True(t, authValueSet)
 	assert.Equal(t, "testValue", hook.CustomWebhookTemplate)
-	assert.Equal(t, 2, len(hook.CustomHeaders))
+	assert.Len(t, hook.CustomHeaders, 2)
 }
 
 func TestSetProjectWebhookURLVariable(t *testing.T) {
@@ -1963,7 +1963,7 @@ func TestSetProjectWebhookHeader(t *testing.T) {
 	resp, err := client.Projects.SetProjectCustomHeader(1, 1, "Authorization", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	assert.Equal(t, bodyJson["value"], "testValue")
+	assert.Equal(t, "testValue", bodyJson["value"])
 	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
@@ -2171,6 +2171,6 @@ func TestEditProject_DuoReviewEnabledSetting(t *testing.T) {
 	project, resp, err := client.Projects.EditProject(1, opt)
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Equal(t, true, attributeFound)
+	assert.True(t, attributeFound)
 	assert.True(t, project.AutoDuoCodeReviewEnabled)
 }

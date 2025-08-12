@@ -79,7 +79,7 @@ func TestListProjectFeatureFlags(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, len(expected), len(actual))
+	assert.Len(t, actual, len(expected))
 	for i := range expected {
 		assert.Equal(t, expected[i], actual[i])
 	}

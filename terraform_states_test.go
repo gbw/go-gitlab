@@ -154,7 +154,7 @@ func TestTerraformState_DownloadLatest(t *testing.T) {
 
 	data, err := io.ReadAll(r)
 	require.NoError(t, err)
-	assert.Equal(t, []byte(`{"some": "value"}`), data)
+	assert.JSONEq(t, `{"some": "value"}`, string(data))
 }
 
 func TestTerraformState_Download(t *testing.T) {
@@ -170,7 +170,7 @@ func TestTerraformState_Download(t *testing.T) {
 
 	data, err := io.ReadAll(r)
 	require.NoError(t, err)
-	assert.Equal(t, []byte(`{"some": "value"}`), data)
+	assert.JSONEq(t, `{"some": "value"}`, string(data))
 }
 
 func TestTerraformState_Delete(t *testing.T) {

@@ -315,5 +315,5 @@ func testJSONBody(t *testing.T, r *http.Request, want string) {
 	body, err := io.ReadAll(r.Body)
 	require.NoError(t, err)
 
-	require.JSONEq(t, string(body), want)
+	require.JSONEq(t, want, string(body))
 }

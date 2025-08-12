@@ -76,7 +76,7 @@ func TestValidateProject(t *testing.T) {
 			got, resp, err := client.Validate.ProjectLint(1, opt)
 			assert.NoError(t, err)
 			assert.NotNil(t, resp)
-			assert.Equal(t, got, tc.want)
+			assert.Equal(t, tc.want, got)
 		})
 	}
 }
@@ -171,7 +171,7 @@ func TestValidateProjectNamespace(t *testing.T) {
 			got, resp, err := client.Validate.ProjectNamespaceLint(1, tc.request)
 			assert.NoError(t, err)
 			assert.NotNil(t, resp)
-			assert.Equal(t, got, tc.want)
+			assert.Equal(t, tc.want, got)
 		})
 	}
 }
@@ -246,7 +246,7 @@ func TestValidateProjectLint(t *testing.T) {
 			got, resp, err := client.Validate.ProjectLint(1, tc.request)
 			assert.NoError(t, err)
 			assert.NotNil(t, resp)
-			assert.Equal(t, got, tc.want)
+			assert.Equal(t, tc.want, got)
 		})
 	}
 }

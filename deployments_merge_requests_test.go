@@ -29,7 +29,7 @@ func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests(t *testing.T
 
 	mergeRequests, _, err := client.DeploymentMergeRequests.ListDeploymentMergeRequests(278964, 2, &opts)
 	require.NoError(t, err)
-	require.Equal(t, 3, len(mergeRequests))
+	require.Len(t, mergeRequests, 3)
 
 	validStates := []string{"opened", "closed", "locked", "merged"}
 	detailedMergeStatuses := []string{
@@ -62,6 +62,6 @@ func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests(t *testing.T
 		// list requests do not provide these fields:
 		assert.Nil(t, mr.Pipeline)
 		assert.Nil(t, mr.HeadPipeline)
-		assert.Equal(t, "", mr.DiffRefs.HeadSha)
+		assert.Empty(t, mr.DiffRefs.HeadSha)
 	}
 }

@@ -94,7 +94,7 @@ func TestListBroadcastMessages(t *testing.T) {
 		Dismissable:        true,
 	}}
 
-	assert.Equal(t, got, want)
+	assert.Equal(t, want, got)
 }
 
 func TestGetBroadcastMessages(t *testing.T) {
@@ -139,7 +139,7 @@ func TestGetBroadcastMessages(t *testing.T) {
 		Dismissable:        false,
 		Theme:              "indigo",
 	}
-	assert.Equal(t, got, want)
+	assert.Equal(t, want, got)
 }
 
 func TestCreateBroadcastMessages(t *testing.T) {
@@ -197,7 +197,7 @@ func TestCreateBroadcastMessages(t *testing.T) {
 		Theme:              "indigo",
 	}
 
-	assert.Equal(t, got, want)
+	assert.Equal(t, want, got)
 }
 
 func TestUpdateBroadcastMessages(t *testing.T) {
@@ -255,7 +255,7 @@ func TestUpdateBroadcastMessages(t *testing.T) {
 		Theme:              "indigo",
 	}
 
-	assert.Equal(t, got, want)
+	assert.Equal(t, want, got)
 }
 
 func TestDeleteBroadcastMessages(t *testing.T) {

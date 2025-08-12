@@ -114,35 +114,33 @@ func TestGetMergeRequest(t *testing.T) {
 
 	require.NoError(t, err)
 
-	require.Equal(t, mergeRequest.ID, 33092005)
-	require.Equal(t, mergeRequest.SHA, "8e0b45049b6253b8984cde9241830d2851168142")
-	require.Equal(t, mergeRequest.IID, 14656)
-	require.Equal(t, mergeRequest.ProjectID, 278964)
-	require.Equal(t, mergeRequest.SourceBranch, "delete-designs-v2")
-	require.Equal(t, mergeRequest.TaskCompletionStatus.Count, 9)
-	require.Equal(t, mergeRequest.TaskCompletionStatus.CompletedCount, 8)
-	require.Equal(t, mergeRequest.Title, "Add deletion support for designs")
-	require.Equal(t, mergeRequest.Description,
-		"## What does this MR do?\r\n\r\nThis adds the capability to destroy/hide designs.")
-	require.Equal(t, mergeRequest.WebURL,
-		"https://gitlab.com/gitlab-org/gitlab-ee/merge_requests/14656")
-	require.Equal(t, mergeRequest.DetailedMergeStatus, "mergeable")
+	require.Equal(t, 33092005, mergeRequest.ID)
+	require.Equal(t, "8e0b45049b6253b8984cde9241830d2851168142", mergeRequest.SHA)
+	require.Equal(t, 14656, mergeRequest.IID)
+	require.Equal(t, 278964, mergeRequest.ProjectID)
+	require.Equal(t, "delete-designs-v2", mergeRequest.SourceBranch)
+	require.Equal(t, 9, mergeRequest.TaskCompletionStatus.Count)
+	require.Equal(t, 8, mergeRequest.TaskCompletionStatus.CompletedCount)
+	require.Equal(t, "Add deletion support for designs", mergeRequest.Title)
+	require.Equal(t, "## What does this MR do?\r\n\r\nThis adds the capability to destroy/hide designs.", mergeRequest.Description)
+	require.Equal(t, "https://gitlab.com/gitlab-org/gitlab-ee/merge_requests/14656", mergeRequest.WebURL)
+	require.Equal(t, "mergeable", mergeRequest.DetailedMergeStatus)
 	require.Equal(t, mergeRequest.Author, &ajk)
 	require.Equal(t, mergeRequest.Assignee, &tk)
-	require.Equal(t, mergeRequest.Assignees, []*BasicUser{&tk})
-	require.Equal(t, mergeRequest.Reviewers, []*BasicUser{&tk})
+	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Assignees)
+	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Reviewers)
 	require.Equal(t, mergeRequest.Labels, labels)
-	require.Equal(t, mergeRequest.Squash, true)
-	require.Equal(t, mergeRequest.UserNotesCount, 245)
+	require.True(t, mergeRequest.Squash)
+	require.Equal(t, 245, mergeRequest.UserNotesCount)
 	require.Equal(t, mergeRequest.Pipeline, &pipelineBasic)
 	require.Equal(t, mergeRequest.HeadPipeline, &pipelineDetailed)
 	mrCreation := time.Date(2019, time.July, 11, 22, 34, 43, 500000000, time.UTC)
 	require.Equal(t, mergeRequest.CreatedAt, &mrCreation)
 	mrUpdate := time.Date(2019, time.August, 20, 9, 9, 56, 690000000, time.UTC)
 	require.Equal(t, mergeRequest.UpdatedAt, &mrUpdate)
-	require.Equal(t, mergeRequest.FirstContribution, true)
-	require.Equal(t, mergeRequest.HasConflicts, true)
-	require.Equal(t, mergeRequest.Draft, true)
+	require.True(t, mergeRequest.FirstContribution)
+	require.True(t, mergeRequest.HasConflicts)
+	require.True(t, mergeRequest.Draft)
 }
 
 func TestListProjectMergeRequests(t *testing.T) {
@@ -168,7 +166,7 @@ func TestListProjectMergeRequests(t *testing.T) {
 	mergeRequests, _, err := client.MergeRequests.ListProjectMergeRequests(278964, &opts)
 
 	require.NoError(t, err)
-	require.Equal(t, 3, len(mergeRequests))
+	require.Len(t, mergeRequests, 3)
 
 	validStates := []string{"opened", "closed", "locked", "merged"}
 	detailedMergeStatuses := []string{
@@ -225,7 +223,7 @@ func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
 	mergeRequests, _, err := client.MergeRequests.ListProjectMergeRequests(278964, &opts)
 
 	require.NoError(t, err)
-	require.Equal(t, 1, len(mergeRequests))
+	require.Len(t, mergeRequests, 1)
 
 	validStates := []string{"opened", "closed", "locked", "merged"}
 	detailedMergeStatuses := []string{
@@ -282,7 +280,7 @@ func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
 	mergeRequests, _, err := client.MergeRequests.ListProjectMergeRequests(278964, &opts)
 
 	require.NoError(t, err)
-	require.Equal(t, 2, len(mergeRequests))
+	require.Len(t, mergeRequests, 2)
 
 	validStates := []string{"opened", "closed", "locked", "merged"}
 	detailedMergeStatuses := []string{
@@ -537,7 +535,7 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "Any", q.Get("assignee_id"))
 		js, _ := json.Marshal(opts)
-		assert.Equal(t, `{"assignee_id":"Any"}`, string(js))
+		assert.JSONEq(t, `{"assignee_id":"Any"}`, string(js))
 	})
 	t.Run("none", func(t *testing.T) {
 		opts := &ListMergeRequestsOptions{}
@@ -546,7 +544,7 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "None", q.Get("assignee_id"))
 		js, _ := json.Marshal(opts)
-		assert.Equal(t, `{"assignee_id":"None"}`, string(js))
+		assert.JSONEq(t, `{"assignee_id":"None"}`, string(js))
 	})
 	t.Run("id", func(t *testing.T) {
 		opts := &ListMergeRequestsOptions{}
