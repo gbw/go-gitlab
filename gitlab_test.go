@@ -118,7 +118,7 @@ func testBodyJSON[T any](t *testing.T, r *http.Request, want T) bool {
 // testParam checks whether the given request contains the expected parameter and whether the parameter has the expected value.
 func testParam(t *testing.T, r *http.Request, key, value string) {
 	require.True(t, r.URL.Query().Has(key), "Request does not contain the %q parameter", key)
-	assert.Equal(t, 1, len(r.URL.Query()[key]), "Request contains multiple %q parameters when only one is expected", key)
+	assert.Len(t, r.URL.Query()[key], 1, "Request contains multiple %q parameters when only one is expected", key)
 	require.Equal(t, value, r.URL.Query().Get(key))
 }
 

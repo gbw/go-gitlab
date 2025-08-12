@@ -27,6 +27,7 @@ linters:
     - nolintlint
     - revive
     - staticcheck
+    - testifylint
     - unconvert
     - usestdlibvars
     - whitespace
@@ -49,6 +50,25 @@ linters:
         - ST1020
         - ST1021
         - ST1022
+    testifylint:
+      disable-all: true
+      enable:
+        - blank-import
+        - bool-compare
+        - compares
+        - contains
+        - empty
+        - encoded-compare
+        - equal-values
+        - error-is-as
+        - error-nil
+        - expected-actual
+        - formatter
+        - len
+        - negative-positive
+        - nil-compare
+        - regexp
+        - useless-assert
     usestdlibvars:
       http-method: false
       http-status-code: false

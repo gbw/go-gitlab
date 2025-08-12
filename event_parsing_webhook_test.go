@@ -228,7 +228,7 @@ func TestParseIssueCommentHook(t *testing.T) {
 	if event.Issue.Title != "test_issue" {
 		t.Errorf("Issue title is %v, want %v", event.Issue.Title, "test_issue")
 	}
-	assert.Equal(t, 2, len(event.Issue.Labels))
+	assert.Len(t, event.Issue.Labels, 2)
 }
 
 func TestParseIssueHook(t *testing.T) {
@@ -260,14 +260,14 @@ func TestParseIssueHook(t *testing.T) {
 	if event.Assignee.Username != "user1" {
 		t.Errorf("Assignee username is %v, want %v", event.Assignee.Username, "user1")
 	}
-	assert.Equal(t, 1, len(event.Labels))
+	assert.Len(t, event.Labels, 1)
 	assert.Equal(t, 0, event.Changes.UpdatedByID.Previous)
 	assert.Equal(t, 1, event.Changes.UpdatedByID.Current)
-	assert.Equal(t, 1, len(event.Changes.Labels.Previous))
-	assert.Equal(t, 1, len(event.Changes.Labels.Current))
-	assert.Equal(t, "", event.Changes.Description.Previous)
+	assert.Len(t, event.Changes.Labels.Previous, 1)
+	assert.Len(t, event.Changes.Labels.Current, 1)
+	assert.Empty(t, event.Changes.Description.Previous)
 	assert.Equal(t, "New description", event.Changes.Description.Current)
-	assert.Equal(t, "", event.Changes.Title.Previous)
+	assert.Empty(t, event.Changes.Title.Previous)
 	assert.Equal(t, "New title", event.Changes.Title.Current)
 }
 
@@ -355,11 +355,11 @@ func TestParseMergeRequestHook(t *testing.T) {
 	if event.ObjectAttributes.WorkInProgress {
 		t.Errorf("WorkInProgress is %v, want %v", event.ObjectAttributes.WorkInProgress, false)
 	}
-	assert.Equal(t, 1, len(event.Labels))
+	assert.Len(t, event.Labels, 1)
 	assert.Equal(t, 0, event.Changes.UpdatedByID.Previous)
 	assert.Equal(t, 1, event.Changes.UpdatedByID.Current)
-	assert.Equal(t, 1, len(event.Changes.Labels.Previous))
-	assert.Equal(t, 1, len(event.Changes.Labels.Current))
+	assert.Len(t, event.Changes.Labels.Previous, 1)
+	assert.Len(t, event.Changes.Labels.Current, 1)
 }
 
 func TestParsePipelineHook(t *testing.T) {
@@ -485,16 +485,16 @@ func TestParseServiceWebHook(t *testing.T) {
 
 	switch event := parsedEvent.(type) {
 	case *MergeEvent:
-		assert.EqualValues(t, &EventUser{
+		assert.Equal(t, &EventUser{
 			ID:        2,
 			Name:      "the test",
 			Username:  "test",
 			Email:     "test@test.test",
 			AvatarURL: "https://www.gravatar.com/avatar/dd46a756faad4727fb679320751f6dea?s=80&d=identicon",
 		}, event.User)
-		assert.EqualValues(t, "unchecked", event.ObjectAttributes.MergeStatus)
-		assert.EqualValues(t, "next-feature", event.ObjectAttributes.SourceBranch)
-		assert.EqualValues(t, "master", event.ObjectAttributes.TargetBranch)
+		assert.Equal(t, "unchecked", event.ObjectAttributes.MergeStatus)
+		assert.Equal(t, "next-feature", event.ObjectAttributes.SourceBranch)
+		assert.Equal(t, "master", event.ObjectAttributes.TargetBranch)
 	default:
 		t.Errorf("unexpected event type: %s", reflect.TypeOf(parsedEvent))
 	}

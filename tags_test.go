@@ -63,7 +63,7 @@ func TestTagsService_ListTags(t *testing.T) {
 			Protected: true,
 		},
 	}
-	assert.Equal(t, tags, want)
+	assert.Equal(t, want, tags)
 }
 
 func TestTagsService_GetTag(t *testing.T) {
@@ -128,7 +128,7 @@ func TestTagsService_GetTag(t *testing.T) {
 		CreatedAt: &date,
 	}
 
-	assert.Equal(t, tag, want)
+	assert.Equal(t, want, tag)
 }
 
 func TestTagsService_CreateTag(t *testing.T) {
@@ -195,7 +195,7 @@ func TestTagsService_CreateTag(t *testing.T) {
 		Protected: false,
 	}
 
-	assert.Equal(t, tag, want)
+	assert.Equal(t, want, tag)
 }
 
 func TestTagsService_DeleteTag(t *testing.T) {
@@ -262,5 +262,5 @@ func TestTagsService_GetTagSignature(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, signature, want)
+	assert.Equal(t, want, signature)
 }

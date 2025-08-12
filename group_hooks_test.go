@@ -494,7 +494,7 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 		t.Errorf("Groups.SetGroupCustomHeader returned error: %v", err)
 	}
 
-	require.Equal(t, bodyJson["value"], "testValue")
+	require.Equal(t, "testValue", bodyJson["value"])
 	require.Equal(t, http.StatusNoContent, req.StatusCode)
 }
 

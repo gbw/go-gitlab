@@ -2,7 +2,6 @@ package gitlab
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"testing"
@@ -1437,7 +1436,7 @@ func TestAwardEmojiService_Timeout(t *testing.T) {
 	require.Error(t, err)
 	require.Nil(t, aes)
 	require.Nil(t, resp)
-	require.True(t, errors.Is(err, context.DeadlineExceeded))
+	require.ErrorIs(t, err, context.DeadlineExceeded)
 }
 
 func TestAwardEmojiService_EdgeCases(t *testing.T) {
