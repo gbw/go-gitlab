@@ -85,6 +85,50 @@ func (c *MockTerraformStatesServiceInterfaceDeleteCall) DoAndReturn(f func(any, 
 	return c
 }
 
+// DeleteVersion mocks base method.
+func (m *MockTerraformStatesServiceInterface) DeleteVersion(pid any, name string, serial uint64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, name, serial}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteVersion", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteVersion indicates an expected call of DeleteVersion.
+func (mr *MockTerraformStatesServiceInterfaceMockRecorder) DeleteVersion(pid, name, serial any, options ...any) *MockTerraformStatesServiceInterfaceDeleteVersionCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, name, serial}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteVersion", reflect.TypeOf((*MockTerraformStatesServiceInterface)(nil).DeleteVersion), varargs...)
+	return &MockTerraformStatesServiceInterfaceDeleteVersionCall{Call: call}
+}
+
+// MockTerraformStatesServiceInterfaceDeleteVersionCall wrap *gomock.Call
+type MockTerraformStatesServiceInterfaceDeleteVersionCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockTerraformStatesServiceInterfaceDeleteVersionCall) Return(arg0 *gitlab.Response, arg1 error) *MockTerraformStatesServiceInterfaceDeleteVersionCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockTerraformStatesServiceInterfaceDeleteVersionCall) Do(f func(any, string, uint64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDeleteVersionCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockTerraformStatesServiceInterfaceDeleteVersionCall) DoAndReturn(f func(any, string, uint64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDeleteVersionCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // Download mocks base method.
 func (m *MockTerraformStatesServiceInterface) Download(pid any, name string, serial uint64, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -176,9 +220,13 @@ func (c *MockTerraformStatesServiceInterfaceDownloadLatestCall) DoAndReturn(f fu
 }
 
 // Get mocks base method.
-func (m *MockTerraformStatesServiceInterface) Get(projectFullPath, name string) (*gitlab.TerraformState, *gitlab.Response, error) {
+func (m *MockTerraformStatesServiceInterface) Get(projectFullPath, name string, options ...gitlab.RequestOptionFunc) (*gitlab.TerraformState, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", projectFullPath, name)
+	varargs := []any{projectFullPath, name}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Get", varargs...)
 	ret0, _ := ret[0].(*gitlab.TerraformState)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
@@ -186,9 +234,10 @@ func (m *MockTerraformStatesServiceInterface) Get(projectFullPath, name string) 
 }
 
 // Get indicates an expected call of Get.
-func (mr *MockTerraformStatesServiceInterfaceMockRecorder) Get(projectFullPath, name any) *MockTerraformStatesServiceInterfaceGetCall {
+func (mr *MockTerraformStatesServiceInterfaceMockRecorder) Get(projectFullPath, name any, options ...any) *MockTerraformStatesServiceInterfaceGetCall {
 	mr.mock.ctrl.T.Helper()
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockTerraformStatesServiceInterface)(nil).Get), projectFullPath, name)
+	varargs := append([]any{projectFullPath, name}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockTerraformStatesServiceInterface)(nil).Get), varargs...)
 	return &MockTerraformStatesServiceInterfaceGetCall{Call: call}
 }
 
@@ -204,21 +253,25 @@ func (c *MockTerraformStatesServiceInterfaceGetCall) Return(arg0 *gitlab.Terrafo
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTerraformStatesServiceInterfaceGetCall) Do(f func(string, string) (*gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceGetCall {
+func (c *MockTerraformStatesServiceInterfaceGetCall) Do(f func(string, string, ...gitlab.RequestOptionFunc) (*gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceGetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTerraformStatesServiceInterfaceGetCall) DoAndReturn(f func(string, string) (*gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceGetCall {
+func (c *MockTerraformStatesServiceInterfaceGetCall) DoAndReturn(f func(string, string, ...gitlab.RequestOptionFunc) (*gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceGetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // List mocks base method.
-func (m *MockTerraformStatesServiceInterface) List(projectFullPath string) ([]gitlab.TerraformState, *gitlab.Response, error) {
+func (m *MockTerraformStatesServiceInterface) List(projectFullPath string, options ...gitlab.RequestOptionFunc) ([]gitlab.TerraformState, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", projectFullPath)
+	varargs := []any{projectFullPath}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "List", varargs...)
 	ret0, _ := ret[0].([]gitlab.TerraformState)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
@@ -226,9 +279,10 @@ func (m *MockTerraformStatesServiceInterface) List(projectFullPath string) ([]gi
 }
 
 // List indicates an expected call of List.
-func (mr *MockTerraformStatesServiceInterfaceMockRecorder) List(projectFullPath any) *MockTerraformStatesServiceInterfaceListCall {
+func (mr *MockTerraformStatesServiceInterfaceMockRecorder) List(projectFullPath any, options ...any) *MockTerraformStatesServiceInterfaceListCall {
 	mr.mock.ctrl.T.Helper()
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockTerraformStatesServiceInterface)(nil).List), projectFullPath)
+	varargs := append([]any{projectFullPath}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockTerraformStatesServiceInterface)(nil).List), varargs...)
 	return &MockTerraformStatesServiceInterfaceListCall{Call: call}
 }
 
@@ -244,13 +298,13 @@ func (c *MockTerraformStatesServiceInterfaceListCall) Return(arg0 []gitlab.Terra
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTerraformStatesServiceInterfaceListCall) Do(f func(string) ([]gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceListCall {
+func (c *MockTerraformStatesServiceInterfaceListCall) Do(f func(string, ...gitlab.RequestOptionFunc) ([]gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTerraformStatesServiceInterfaceListCall) DoAndReturn(f func(string) ([]gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceListCall {
+func (c *MockTerraformStatesServiceInterfaceListCall) DoAndReturn(f func(string, ...gitlab.RequestOptionFunc) ([]gitlab.TerraformState, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
