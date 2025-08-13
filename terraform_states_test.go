@@ -184,6 +184,17 @@ func TestTerraformState_Delete(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestTerraformState_DeleteVersion(t *testing.T) {
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/20/terraform/state/production/versions/42", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	_, err := client.TerraformStates.DeleteVersion(20, "production", uint64(42))
+	assert.NoError(t, err)
+}
+
 func TestTerraformState_Lock(t *testing.T) {
 	mux, client := setup(t)
 
