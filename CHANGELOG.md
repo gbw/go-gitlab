@@ -1,3 +1,10 @@
+# [0.139.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.138.0...v0.139.0) (2025-08-13)
+
+
+### Features
+
+* **terraform:** improve Terraform States service ([e08128b](https://gitlab.com/gitlab-org/api/client-go/commit/e08128bf87011455db06dc946e77b2a16ee36948))
+
 # [0.138.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.137.0...v0.138.0) (2025-08-12)
 
 
