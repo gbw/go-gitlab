@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/cookiejar"
 	"net/http/httptest"
 	"net/url"
 	"os"
@@ -957,4 +958,55 @@ func TestNewRequestToURL_allowedURL(t *testing.T) {
 			assert.NoError(t, err)
 		})
 	}
+}
+
+func TestClient_CookieJar(t *testing.T) {
+	t.Parallel()
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/api/v4/user", func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie("test-cookie")
+		require.NoError(t, err)
+
+		assert.Equal(t, "yummy", cookie.Value)
+
+		http.SetCookie(w, &http.Cookie{
+			Name:  "test-session-cookie",
+			Value: "another-yummy",
+			Path:  "/",
+		})
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintln(w, `{}`)
+	})
+
+	server := httptest.NewServer(mux)
+	t.Cleanup(server.Close)
+
+	jar, err := cookiejar.New(nil)
+	require.NoError(t, err)
+
+	u, err := url.Parse(server.URL)
+	require.NoError(t, err)
+	jar.SetCookies(u, []*http.Cookie{
+		{
+			Name:  "test-cookie",
+			Value: "yummy",
+			Path:  "/",
+		},
+	})
+
+	client, err := NewClient("", WithBaseURL(server.URL), WithHTTPClient(server.Client()), WithCookieJar(jar))
+	require.NoError(t, err)
+
+	_, resp, err := client.Users.CurrentUser()
+	require.NoError(t, err)
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+	cookiesInJar := client.HTTPClient().Jar.Cookies(u)
+	cookieMap := make(map[string]string, len(cookiesInJar))
+	for _, c := range cookiesInJar {
+		cookieMap[c.Name] = c.Value
+	}
+	assert.Equal(t, "another-yummy", cookieMap["test-session-cookie"])
 }
