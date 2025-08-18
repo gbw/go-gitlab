@@ -21,6 +21,9 @@ func main() {
 
 	// Example 3: extensions
 	extensions()
+
+	// Example 4: custom headers
+	customHeaders()
 }
 
 func basicConfigExample() {
@@ -144,6 +147,51 @@ func extensions() {
 	}
 
 	fmt.Printf("Browser from extension is: %q\n", data.Browser)
+
+	fmt.Printf("Authenticated as: %s (%s)\n", user.Name, user.Username)
+}
+
+func customHeaders() {
+	fmt.Println("=== Custom Headers ===")
+
+	cfg, err := config.NewFromString(heredoc.Doc(`
+		version: gitlab.com/config/v1beta1
+
+		current-context: gitlab-com
+
+		contexts:
+		  - name: gitlab-com
+		    instance: gitlab-com
+		    auth: token-env
+
+		instances:
+		  - name: gitlab-com
+		    server: https://gitlab.com
+		    custom_headers:
+		      - name: My-Custom-Header
+		        value: my-header-value
+
+		auths:
+		  - name: token-env
+		    auth-info:
+		      personal-access-token:
+		        token-source:
+		          env_var: GITLAB_TOKEN
+	`))
+	if err != nil {
+		log.Fatalf("Failed to create config: %v", err)
+	}
+
+	client, err := cfg.NewClient(gitlab.WithUserAgent("my-app"))
+	if err != nil {
+		log.Fatalf("Failed to create client: %v", err)
+	}
+
+	// Use the client
+	user, _, err := client.Users.CurrentUser()
+	if err != nil {
+		log.Fatalf("Failed to get current user: %v", err)
+	}
 
 	fmt.Printf("Authenticated as: %s (%s)\n", user.Name, user.Username)
 }

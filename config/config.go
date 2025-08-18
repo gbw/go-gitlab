@@ -498,9 +498,22 @@ func (c *Config) NewClientForContext(name string, options ...gitlab.ClientOption
 		return nil, err
 	}
 
+	defaultRequestOptions := []gitlab.RequestOptionFunc{
+		gitlab.WithContext(c.ctx),
+	}
+
+	// custom headers
+	customHeaders, err := c.resolveCustomHeaders(instance.CustomHeaders)
+	if err != nil {
+		return nil, err
+	}
+	if len(customHeaders) > 0 {
+		defaultRequestOptions = append(defaultRequestOptions, gitlab.WithHeaders(customHeaders))
+	}
+
 	configOptions := []gitlab.ClientOptionFunc{
 		gitlab.WithBaseURL(baseURL.String()),
-		gitlab.WithRequestOptions(gitlab.WithContext(c.ctx)),
+		gitlab.WithRequestOptions(defaultRequestOptions...),
 	}
 
 	if c.config.Preferences.RetryMax != nil {
@@ -840,6 +853,27 @@ func (c *Config) resolveOAuth2ClientSecret(o *v1beta1.OAuth2) (string, error) {
 	default:
 		panic(fmt.Sprintf("unexpected v1beta1.Oauth2ClientSecret type: %#v. Please report at https://gitlab.com/gitlab-org/api/client-go/-/issues", s))
 	}
+}
+
+func (c *Config) resolveCustomHeaders(headers []*v1beta1.Header) (map[string]string, error) {
+	hs := make(map[string]string, len(headers))
+
+	for _, header := range headers {
+		switch v := header.HeaderValue.(type) {
+		case *v1beta1.Header_Value:
+			hs[*header.Name] = v.Value
+		case *v1beta1.Header_ValueFrom:
+			csv, err := c.resolveCredentialSource(v.ValueFrom)
+			if err != nil {
+				return nil, err
+			}
+			hs[*header.Name] = csv
+		default:
+			panic(fmt.Sprintf("unexpected v1beta.HeaderValue type: %#v. Please report at https://gitlab.com/gitlab-org/api/client-go/-/issues", v))
+		}
+	}
+
+	return hs, nil
 }
 
 func (c *Config) resolveCredentialSource(cs *v1beta1.CredentialSource) (string, error) {

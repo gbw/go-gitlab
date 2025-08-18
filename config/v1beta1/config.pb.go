@@ -219,7 +219,9 @@ type Instance struct {
 	// rate_limit contains rate limiting configuration
 	RateLimit *RateLimit `protobuf:"bytes,11,opt,name=rate_limit,json=rate-limit" json:"rate_limit,omitempty"`
 	// extensions specifies arbitrary custom configuration
-	Extensions    map[string]*structpb.Struct `protobuf:"bytes,12,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions map[string]*structpb.Struct `protobuf:"bytes,12,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// custom_headers can contain a list of additional headers to add to every request.
+	CustomHeaders []*Header `protobuf:"bytes,13,rep,name=custom_headers,json=custom-headers" json:"custom_headers,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -371,6 +373,13 @@ func (x *Instance) GetExtensions() map[string]*structpb.Struct {
 	return nil
 }
 
+func (x *Instance) GetCustomHeaders() []*Header {
+	if x != nil {
+		return x.CustomHeaders
+	}
+	return nil
+}
+
 type isInstance_InstanceCa interface {
 	isInstance_InstanceCa()
 }
@@ -480,6 +489,100 @@ func (x *RateLimit) GetBurst() int32 {
 	return 0
 }
 
+// Header contains a single HTTP header definition
+type Header struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// name contains the name of the header
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	// Types that are valid to be assigned to HeaderValue:
+	//
+	//	*Header_Value
+	//	*Header_ValueFrom
+	HeaderValue   isHeader_HeaderValue `protobuf_oneof:"header_value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Header) Reset() {
+	*x = Header{}
+	mi := &file_config_v1beta1_config_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Header) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Header) ProtoMessage() {}
+
+func (x *Header) ProtoReflect() protoreflect.Message {
+	mi := &file_config_v1beta1_config_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Header.ProtoReflect.Descriptor instead.
+func (*Header) Descriptor() ([]byte, []int) {
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Header) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *Header) GetHeaderValue() isHeader_HeaderValue {
+	if x != nil {
+		return x.HeaderValue
+	}
+	return nil
+}
+
+func (x *Header) GetValue() string {
+	if x != nil {
+		if x, ok := x.HeaderValue.(*Header_Value); ok {
+			return x.Value
+		}
+	}
+	return ""
+}
+
+func (x *Header) GetValueFrom() *CredentialSource {
+	if x != nil {
+		if x, ok := x.HeaderValue.(*Header_ValueFrom); ok {
+			return x.ValueFrom
+		}
+	}
+	return nil
+}
+
+type isHeader_HeaderValue interface {
+	isHeader_HeaderValue()
+}
+
+type Header_Value struct {
+	// value contains the literal value of the header
+	Value string `protobuf:"bytes,2,opt,name=value,oneof"`
+}
+
+type Header_ValueFrom struct {
+	// value_from contains a source from where to retrieve the value from.
+	ValueFrom *CredentialSource `protobuf:"bytes,3,opt,name=value_from,json=value-from,oneof"`
+}
+
+func (*Header_Value) isHeader_HeaderValue() {}
+
+func (*Header_ValueFrom) isHeader_HeaderValue() {}
+
 // Context represents a combination of instance and auth
 type Context struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -495,7 +598,7 @@ type Context struct {
 
 func (x *Context) Reset() {
 	*x = Context{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[4]
+	mi := &file_config_v1beta1_config_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -507,7 +610,7 @@ func (x *Context) String() string {
 func (*Context) ProtoMessage() {}
 
 func (x *Context) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[4]
+	mi := &file_config_v1beta1_config_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -520,7 +623,7 @@ func (x *Context) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Context.ProtoReflect.Descriptor instead.
 func (*Context) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{4}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Context) GetName() string {
@@ -557,7 +660,7 @@ type Auth struct {
 
 func (x *Auth) Reset() {
 	*x = Auth{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[5]
+	mi := &file_config_v1beta1_config_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -569,7 +672,7 @@ func (x *Auth) String() string {
 func (*Auth) ProtoMessage() {}
 
 func (x *Auth) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[5]
+	mi := &file_config_v1beta1_config_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -582,7 +685,7 @@ func (x *Auth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Auth.ProtoReflect.Descriptor instead.
 func (*Auth) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{5}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Auth) GetName() string {
@@ -617,7 +720,7 @@ type AuthInfo struct {
 
 func (x *AuthInfo) Reset() {
 	*x = AuthInfo{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[6]
+	mi := &file_config_v1beta1_config_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -629,7 +732,7 @@ func (x *AuthInfo) String() string {
 func (*AuthInfo) ProtoMessage() {}
 
 func (x *AuthInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[6]
+	mi := &file_config_v1beta1_config_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -642,7 +745,7 @@ func (x *AuthInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthInfo.ProtoReflect.Descriptor instead.
 func (*AuthInfo) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{6}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *AuthInfo) GetAuthProvider() isAuthInfo_AuthProvider {
@@ -730,7 +833,7 @@ type PersonalAccessToken struct {
 
 func (x *PersonalAccessToken) Reset() {
 	*x = PersonalAccessToken{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[7]
+	mi := &file_config_v1beta1_config_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -742,7 +845,7 @@ func (x *PersonalAccessToken) String() string {
 func (*PersonalAccessToken) ProtoMessage() {}
 
 func (x *PersonalAccessToken) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[7]
+	mi := &file_config_v1beta1_config_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -755,7 +858,7 @@ func (x *PersonalAccessToken) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PersonalAccessToken.ProtoReflect.Descriptor instead.
 func (*PersonalAccessToken) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{7}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *PersonalAccessToken) GetPersonalAccessToken() isPersonalAccessToken_PersonalAccessToken {
@@ -815,7 +918,7 @@ type JobToken struct {
 
 func (x *JobToken) Reset() {
 	*x = JobToken{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[8]
+	mi := &file_config_v1beta1_config_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -827,7 +930,7 @@ func (x *JobToken) String() string {
 func (*JobToken) ProtoMessage() {}
 
 func (x *JobToken) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[8]
+	mi := &file_config_v1beta1_config_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -840,7 +943,7 @@ func (x *JobToken) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobToken.ProtoReflect.Descriptor instead.
 func (*JobToken) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{8}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *JobToken) GetJobToken() isJobToken_JobToken {
@@ -914,7 +1017,7 @@ type OAuth2 struct {
 
 func (x *OAuth2) Reset() {
 	*x = OAuth2{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[9]
+	mi := &file_config_v1beta1_config_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -926,7 +1029,7 @@ func (x *OAuth2) String() string {
 func (*OAuth2) ProtoMessage() {}
 
 func (x *OAuth2) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[9]
+	mi := &file_config_v1beta1_config_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -939,7 +1042,7 @@ func (x *OAuth2) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OAuth2.ProtoReflect.Descriptor instead.
 func (*OAuth2) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{9}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *OAuth2) GetClientId() string {
@@ -1103,7 +1206,7 @@ type BasicAuth struct {
 
 func (x *BasicAuth) Reset() {
 	*x = BasicAuth{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[10]
+	mi := &file_config_v1beta1_config_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1115,7 +1218,7 @@ func (x *BasicAuth) String() string {
 func (*BasicAuth) ProtoMessage() {}
 
 func (x *BasicAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[10]
+	mi := &file_config_v1beta1_config_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1128,7 +1231,7 @@ func (x *BasicAuth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BasicAuth.ProtoReflect.Descriptor instead.
 func (*BasicAuth) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{10}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *BasicAuth) GetBasicAuthUsername() isBasicAuth_BasicAuthUsername {
@@ -1230,7 +1333,7 @@ type ExecCredential struct {
 
 func (x *ExecCredential) Reset() {
 	*x = ExecCredential{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[11]
+	mi := &file_config_v1beta1_config_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1242,7 +1345,7 @@ func (x *ExecCredential) String() string {
 func (*ExecCredential) ProtoMessage() {}
 
 func (x *ExecCredential) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[11]
+	mi := &file_config_v1beta1_config_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1255,7 +1358,7 @@ func (x *ExecCredential) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecCredential.ProtoReflect.Descriptor instead.
 func (*ExecCredential) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{11}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ExecCredential) GetCommand() string {
@@ -1303,7 +1406,7 @@ type CredentialSource struct {
 
 func (x *CredentialSource) Reset() {
 	*x = CredentialSource{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[12]
+	mi := &file_config_v1beta1_config_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1315,7 +1418,7 @@ func (x *CredentialSource) String() string {
 func (*CredentialSource) ProtoMessage() {}
 
 func (x *CredentialSource) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[12]
+	mi := &file_config_v1beta1_config_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1328,7 +1431,7 @@ func (x *CredentialSource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CredentialSource.ProtoReflect.Descriptor instead.
 func (*CredentialSource) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{12}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CredentialSource) GetSource() isCredentialSource_Source {
@@ -1435,7 +1538,7 @@ type KeyringSource struct {
 
 func (x *KeyringSource) Reset() {
 	*x = KeyringSource{}
-	mi := &file_config_v1beta1_config_proto_msgTypes[13]
+	mi := &file_config_v1beta1_config_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1447,7 +1550,7 @@ func (x *KeyringSource) String() string {
 func (*KeyringSource) ProtoMessage() {}
 
 func (x *KeyringSource) ProtoReflect() protoreflect.Message {
-	mi := &file_config_v1beta1_config_proto_msgTypes[13]
+	mi := &file_config_v1beta1_config_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1460,7 +1563,7 @@ func (x *KeyringSource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use KeyringSource.ProtoReflect.Descriptor instead.
 func (*KeyringSource) Descriptor() ([]byte, []int) {
-	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{13}
+	return file_config_v1beta1_config_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *KeyringSource) GetService() string {
@@ -1520,7 +1623,7 @@ const file_config_v1beta1_config_proto_rawDesc = "" +
 	"\tretry_max\x18\x02 \x01(\x05R\tretry-max\x12A\n" +
 	"\x0eretry_wait_min\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\x0eretry-wait-min\x12A\n" +
 	"\x0eretry_wait_max\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\x0eretry-wait-max:\xa5\x01\xbaH\xa1\x01\x1a\x9e\x01\n" +
-	"\x1aretry_wait_both_or_neither\x12Jretry_wait_min and retry_wait_max must both be provided or both be omitted\x1a4has(this.retry_wait_min) == has(this.retry_wait_max)\"\x92\a\n" +
+	"\x1aretry_wait_both_or_neither\x12Jretry_wait_min and retry_wait_max must both be provided or both be omitted\x1a4has(this.retry_wait_min) == has(this.retry_wait_max)\"\xd2\a\n" +
 	"\bInstance\x12\x1e\n" +
 	"\x04name\x18\x01 \x01(\tB\n" +
 	"\xbaH\a\xc8\x01\x01r\x02\x10\x03R\x04name\x12V\n" +
@@ -1542,7 +1645,8 @@ const file_config_v1beta1_config_proto_rawDesc = "" +
 	"rate-limit\x12H\n" +
 	"\n" +
 	"extensions\x18\f \x03(\v2(.config.v1beta1.Instance.ExtensionsEntryR\n" +
-	"extensions\x1aV\n" +
+	"extensions\x12>\n" +
+	"\x0ecustom_headers\x18\r \x03(\v2\x16.config.v1beta1.HeaderR\x0ecustom-headers\x1aV\n" +
 	"\x0fExtensionsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12-\n" +
 	"\x05value\x18\x02 \x01(\v2\x17.google.protobuf.StructR\x05value:\x028\x01B\r\n" +
@@ -1551,7 +1655,15 @@ const file_config_v1beta1_config_proto_rawDesc = "" +
 	"\x13instance_client_key\"l\n" +
 	"\tRateLimit\x12@\n" +
 	"\x13requests_per_second\x18\x02 \x01(\x01B\x0e\xbaH\v\x12\t!\x00\x00\x00\x00\x00\x00\x00\x00R\x13requests-per-second\x12\x1d\n" +
-	"\x05burst\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02 \x00R\x05burst\"q\n" +
+	"\x05burst\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02 \x00R\x05burst\"\xa4\x01\n" +
+	"\x06Header\x12\x1e\n" +
+	"\x04name\x18\x01 \x01(\tB\n" +
+	"\xbaH\a\xc8\x01\x01r\x02\x10\x03R\x04name\x12\x1f\n" +
+	"\x05value\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01H\x00R\x05value\x12B\n" +
+	"\n" +
+	"value_from\x18\x03 \x01(\v2 .config.v1beta1.CredentialSourceH\x00R\n" +
+	"value-fromB\x15\n" +
+	"\fheader_value\x12\x05\xbaH\x02\b\x01\"q\n" +
 	"\aContext\x12\x1e\n" +
 	"\x04name\x18\x01 \x01(\tB\n" +
 	"\xbaH\a\xc8\x01\x01r\x02\x10\x03R\x04name\x12&\n" +
@@ -1637,68 +1749,71 @@ func file_config_v1beta1_config_proto_rawDescGZIP() []byte {
 	return file_config_v1beta1_config_proto_rawDescData
 }
 
-var file_config_v1beta1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_config_v1beta1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_config_v1beta1_config_proto_goTypes = []any{
 	(*Config)(nil),                 // 0: config.v1beta1.Config
 	(*Preferences)(nil),            // 1: config.v1beta1.Preferences
 	(*Instance)(nil),               // 2: config.v1beta1.Instance
 	(*RateLimit)(nil),              // 3: config.v1beta1.RateLimit
-	(*Context)(nil),                // 4: config.v1beta1.Context
-	(*Auth)(nil),                   // 5: config.v1beta1.Auth
-	(*AuthInfo)(nil),               // 6: config.v1beta1.AuthInfo
-	(*PersonalAccessToken)(nil),    // 7: config.v1beta1.PersonalAccessToken
-	(*JobToken)(nil),               // 8: config.v1beta1.JobToken
-	(*OAuth2)(nil),                 // 9: config.v1beta1.OAuth2
-	(*BasicAuth)(nil),              // 10: config.v1beta1.BasicAuth
-	(*ExecCredential)(nil),         // 11: config.v1beta1.ExecCredential
-	(*CredentialSource)(nil),       // 12: config.v1beta1.CredentialSource
-	(*KeyringSource)(nil),          // 13: config.v1beta1.KeyringSource
-	nil,                            // 14: config.v1beta1.Config.ExtensionsEntry
-	nil,                            // 15: config.v1beta1.Instance.ExtensionsEntry
-	nil,                            // 16: config.v1beta1.ExecCredential.EnvEntry
-	(*durationpb.Duration)(nil),    // 17: google.protobuf.Duration
-	(*timestamppb.Timestamp)(nil),  // 18: google.protobuf.Timestamp
-	(*structpb.Struct)(nil),        // 19: google.protobuf.Struct
-	(*validate.RepeatedRules)(nil), // 20: buf.validate.RepeatedRules
+	(*Header)(nil),                 // 4: config.v1beta1.Header
+	(*Context)(nil),                // 5: config.v1beta1.Context
+	(*Auth)(nil),                   // 6: config.v1beta1.Auth
+	(*AuthInfo)(nil),               // 7: config.v1beta1.AuthInfo
+	(*PersonalAccessToken)(nil),    // 8: config.v1beta1.PersonalAccessToken
+	(*JobToken)(nil),               // 9: config.v1beta1.JobToken
+	(*OAuth2)(nil),                 // 10: config.v1beta1.OAuth2
+	(*BasicAuth)(nil),              // 11: config.v1beta1.BasicAuth
+	(*ExecCredential)(nil),         // 12: config.v1beta1.ExecCredential
+	(*CredentialSource)(nil),       // 13: config.v1beta1.CredentialSource
+	(*KeyringSource)(nil),          // 14: config.v1beta1.KeyringSource
+	nil,                            // 15: config.v1beta1.Config.ExtensionsEntry
+	nil,                            // 16: config.v1beta1.Instance.ExtensionsEntry
+	nil,                            // 17: config.v1beta1.ExecCredential.EnvEntry
+	(*durationpb.Duration)(nil),    // 18: google.protobuf.Duration
+	(*timestamppb.Timestamp)(nil),  // 19: google.protobuf.Timestamp
+	(*structpb.Struct)(nil),        // 20: google.protobuf.Struct
+	(*validate.RepeatedRules)(nil), // 21: buf.validate.RepeatedRules
 }
 var file_config_v1beta1_config_proto_depIdxs = []int32{
 	1,  // 0: config.v1beta1.Config.preferences:type_name -> config.v1beta1.Preferences
 	2,  // 1: config.v1beta1.Config.instances:type_name -> config.v1beta1.Instance
-	5,  // 2: config.v1beta1.Config.auths:type_name -> config.v1beta1.Auth
-	4,  // 3: config.v1beta1.Config.contexts:type_name -> config.v1beta1.Context
-	14, // 4: config.v1beta1.Config.extensions:type_name -> config.v1beta1.Config.ExtensionsEntry
-	17, // 5: config.v1beta1.Preferences.retry_wait_min:type_name -> google.protobuf.Duration
-	17, // 6: config.v1beta1.Preferences.retry_wait_max:type_name -> google.protobuf.Duration
-	12, // 7: config.v1beta1.Instance.certificate_authority_source:type_name -> config.v1beta1.CredentialSource
-	12, // 8: config.v1beta1.Instance.client_cert_source:type_name -> config.v1beta1.CredentialSource
-	12, // 9: config.v1beta1.Instance.client_key_source:type_name -> config.v1beta1.CredentialSource
+	6,  // 2: config.v1beta1.Config.auths:type_name -> config.v1beta1.Auth
+	5,  // 3: config.v1beta1.Config.contexts:type_name -> config.v1beta1.Context
+	15, // 4: config.v1beta1.Config.extensions:type_name -> config.v1beta1.Config.ExtensionsEntry
+	18, // 5: config.v1beta1.Preferences.retry_wait_min:type_name -> google.protobuf.Duration
+	18, // 6: config.v1beta1.Preferences.retry_wait_max:type_name -> google.protobuf.Duration
+	13, // 7: config.v1beta1.Instance.certificate_authority_source:type_name -> config.v1beta1.CredentialSource
+	13, // 8: config.v1beta1.Instance.client_cert_source:type_name -> config.v1beta1.CredentialSource
+	13, // 9: config.v1beta1.Instance.client_key_source:type_name -> config.v1beta1.CredentialSource
 	3,  // 10: config.v1beta1.Instance.rate_limit:type_name -> config.v1beta1.RateLimit
-	15, // 11: config.v1beta1.Instance.extensions:type_name -> config.v1beta1.Instance.ExtensionsEntry
-	6,  // 12: config.v1beta1.Auth.auth_info:type_name -> config.v1beta1.AuthInfo
-	7,  // 13: config.v1beta1.AuthInfo.personal_access_token:type_name -> config.v1beta1.PersonalAccessToken
-	8,  // 14: config.v1beta1.AuthInfo.job_token:type_name -> config.v1beta1.JobToken
-	9,  // 15: config.v1beta1.AuthInfo.oauth2:type_name -> config.v1beta1.OAuth2
-	10, // 16: config.v1beta1.AuthInfo.basic_auth:type_name -> config.v1beta1.BasicAuth
-	12, // 17: config.v1beta1.PersonalAccessToken.token_source:type_name -> config.v1beta1.CredentialSource
-	12, // 18: config.v1beta1.JobToken.token_source:type_name -> config.v1beta1.CredentialSource
-	12, // 19: config.v1beta1.OAuth2.client_secret_source:type_name -> config.v1beta1.CredentialSource
-	12, // 20: config.v1beta1.OAuth2.access_token_source:type_name -> config.v1beta1.CredentialSource
-	12, // 21: config.v1beta1.OAuth2.refresh_token_source:type_name -> config.v1beta1.CredentialSource
-	18, // 22: config.v1beta1.OAuth2.expires_at:type_name -> google.protobuf.Timestamp
-	12, // 23: config.v1beta1.BasicAuth.username_source:type_name -> config.v1beta1.CredentialSource
-	12, // 24: config.v1beta1.BasicAuth.password_source:type_name -> config.v1beta1.CredentialSource
-	16, // 25: config.v1beta1.ExecCredential.env:type_name -> config.v1beta1.ExecCredential.EnvEntry
-	17, // 26: config.v1beta1.ExecCredential.timeout:type_name -> google.protobuf.Duration
-	11, // 27: config.v1beta1.CredentialSource.exec:type_name -> config.v1beta1.ExecCredential
-	13, // 28: config.v1beta1.CredentialSource.keyring:type_name -> config.v1beta1.KeyringSource
-	19, // 29: config.v1beta1.Config.ExtensionsEntry.value:type_name -> google.protobuf.Struct
-	19, // 30: config.v1beta1.Instance.ExtensionsEntry.value:type_name -> google.protobuf.Struct
-	20, // 31: config.v1beta1.unique_names:extendee -> buf.validate.RepeatedRules
-	32, // [32:32] is the sub-list for method output_type
-	32, // [32:32] is the sub-list for method input_type
-	32, // [32:32] is the sub-list for extension type_name
-	31, // [31:32] is the sub-list for extension extendee
-	0,  // [0:31] is the sub-list for field type_name
+	16, // 11: config.v1beta1.Instance.extensions:type_name -> config.v1beta1.Instance.ExtensionsEntry
+	4,  // 12: config.v1beta1.Instance.custom_headers:type_name -> config.v1beta1.Header
+	13, // 13: config.v1beta1.Header.value_from:type_name -> config.v1beta1.CredentialSource
+	7,  // 14: config.v1beta1.Auth.auth_info:type_name -> config.v1beta1.AuthInfo
+	8,  // 15: config.v1beta1.AuthInfo.personal_access_token:type_name -> config.v1beta1.PersonalAccessToken
+	9,  // 16: config.v1beta1.AuthInfo.job_token:type_name -> config.v1beta1.JobToken
+	10, // 17: config.v1beta1.AuthInfo.oauth2:type_name -> config.v1beta1.OAuth2
+	11, // 18: config.v1beta1.AuthInfo.basic_auth:type_name -> config.v1beta1.BasicAuth
+	13, // 19: config.v1beta1.PersonalAccessToken.token_source:type_name -> config.v1beta1.CredentialSource
+	13, // 20: config.v1beta1.JobToken.token_source:type_name -> config.v1beta1.CredentialSource
+	13, // 21: config.v1beta1.OAuth2.client_secret_source:type_name -> config.v1beta1.CredentialSource
+	13, // 22: config.v1beta1.OAuth2.access_token_source:type_name -> config.v1beta1.CredentialSource
+	13, // 23: config.v1beta1.OAuth2.refresh_token_source:type_name -> config.v1beta1.CredentialSource
+	19, // 24: config.v1beta1.OAuth2.expires_at:type_name -> google.protobuf.Timestamp
+	13, // 25: config.v1beta1.BasicAuth.username_source:type_name -> config.v1beta1.CredentialSource
+	13, // 26: config.v1beta1.BasicAuth.password_source:type_name -> config.v1beta1.CredentialSource
+	17, // 27: config.v1beta1.ExecCredential.env:type_name -> config.v1beta1.ExecCredential.EnvEntry
+	18, // 28: config.v1beta1.ExecCredential.timeout:type_name -> google.protobuf.Duration
+	12, // 29: config.v1beta1.CredentialSource.exec:type_name -> config.v1beta1.ExecCredential
+	14, // 30: config.v1beta1.CredentialSource.keyring:type_name -> config.v1beta1.KeyringSource
+	20, // 31: config.v1beta1.Config.ExtensionsEntry.value:type_name -> google.protobuf.Struct
+	20, // 32: config.v1beta1.Instance.ExtensionsEntry.value:type_name -> google.protobuf.Struct
+	21, // 33: config.v1beta1.unique_names:extendee -> buf.validate.RepeatedRules
+	34, // [34:34] is the sub-list for method output_type
+	34, // [34:34] is the sub-list for method input_type
+	34, // [34:34] is the sub-list for extension type_name
+	33, // [33:34] is the sub-list for extension extendee
+	0,  // [0:33] is the sub-list for field type_name
 }
 
 func init() { file_config_v1beta1_config_proto_init() }
@@ -1714,21 +1829,25 @@ func file_config_v1beta1_config_proto_init() {
 		(*Instance_ClientKey)(nil),
 		(*Instance_ClientKeySource)(nil),
 	}
-	file_config_v1beta1_config_proto_msgTypes[6].OneofWrappers = []any{
+	file_config_v1beta1_config_proto_msgTypes[4].OneofWrappers = []any{
+		(*Header_Value)(nil),
+		(*Header_ValueFrom)(nil),
+	}
+	file_config_v1beta1_config_proto_msgTypes[7].OneofWrappers = []any{
 		(*AuthInfo_PersonalAccessToken)(nil),
 		(*AuthInfo_JobToken)(nil),
 		(*AuthInfo_Oauth2)(nil),
 		(*AuthInfo_BasicAuth)(nil),
 	}
-	file_config_v1beta1_config_proto_msgTypes[7].OneofWrappers = []any{
+	file_config_v1beta1_config_proto_msgTypes[8].OneofWrappers = []any{
 		(*PersonalAccessToken_Token)(nil),
 		(*PersonalAccessToken_TokenSource)(nil),
 	}
-	file_config_v1beta1_config_proto_msgTypes[8].OneofWrappers = []any{
+	file_config_v1beta1_config_proto_msgTypes[9].OneofWrappers = []any{
 		(*JobToken_Token)(nil),
 		(*JobToken_TokenSource)(nil),
 	}
-	file_config_v1beta1_config_proto_msgTypes[9].OneofWrappers = []any{
+	file_config_v1beta1_config_proto_msgTypes[10].OneofWrappers = []any{
 		(*OAuth2_ClientSecret)(nil),
 		(*OAuth2_ClientSecretSource)(nil),
 		(*OAuth2_AccessToken)(nil),
@@ -1736,13 +1855,13 @@ func file_config_v1beta1_config_proto_init() {
 		(*OAuth2_RefreshToken)(nil),
 		(*OAuth2_RefreshTokenSource)(nil),
 	}
-	file_config_v1beta1_config_proto_msgTypes[10].OneofWrappers = []any{
+	file_config_v1beta1_config_proto_msgTypes[11].OneofWrappers = []any{
 		(*BasicAuth_Username)(nil),
 		(*BasicAuth_UsernameSource)(nil),
 		(*BasicAuth_Password)(nil),
 		(*BasicAuth_PasswordSource)(nil),
 	}
-	file_config_v1beta1_config_proto_msgTypes[12].OneofWrappers = []any{
+	file_config_v1beta1_config_proto_msgTypes[13].OneofWrappers = []any{
 		(*CredentialSource_Value)(nil),
 		(*CredentialSource_EnvVar)(nil),
 		(*CredentialSource_File)(nil),
@@ -1755,7 +1874,7 @@ func file_config_v1beta1_config_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_config_v1beta1_config_proto_rawDesc), len(file_config_v1beta1_config_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   18,
 			NumExtensions: 1,
 			NumServices:   0,
 		},
