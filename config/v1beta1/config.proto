@@ -137,6 +137,9 @@ message Instance {
 
   // extensions specifies arbitrary custom configuration
   map<string, google.protobuf.Struct> extensions = 12 [json_name = "extensions"];
+
+  // custom_headers can contain a list of additional headers to add to every request.
+  repeated Header custom_headers = 13 [json_name = "custom-headers"];
 }
 
 // RateLimit contains rate limiting configuration
@@ -152,6 +155,29 @@ message RateLimit {
     json_name = "burst",
     (buf.validate.field).int32.gt = 0
   ];
+}
+
+// Header contains a single HTTP header definition
+message Header {
+  // name contains the name of the header
+  string name = 1 [
+    json_name = "name",
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.min_len = 3
+  ];
+
+  oneof header_value {
+    option (buf.validate.oneof).required = true;
+
+    // value contains the literal value of the header
+    string value = 2 [
+      json_name = "value",
+      (buf.validate.field).string.min_len = 1
+    ];
+
+    // value_from contains a source from where to retrieve the value from.
+    CredentialSource value_from = 3 [json_name = "value-from"];
+  }
 }
 
 // Context represents a combination of instance and auth

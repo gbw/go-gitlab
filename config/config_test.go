@@ -1,6 +1,7 @@
 package config
 
 import (
+	"net/http"
 	"testing"
 
 	"github.com/MakeNowJust/heredoc/v2"
@@ -1758,4 +1759,77 @@ func TestConfig_NewClientForContext_Error_MismatchedCertificateAndKey(t *testing
 	require.Error(t, err)
 	assert.Nil(t, client)
 	assert.Contains(t, err.Error(), "tls: private key does not match public key")
+}
+
+func TestConfig_NewClientForContext_Success_CustomHeaderLiteral(t *testing.T) {
+	// GIVEN
+	c, err := NewFromString(heredoc.Doc(`
+		instances:
+		  - name: example
+		    server: https://gitlab.example.com
+		    custom-headers:
+		      - name: My-Custom-Header
+		        value: my-custom-header-value
+
+		auths:
+		  - name: pat-value-user
+		    auth_info:
+		      personal-access-token:
+		        token-source:
+		          value: direct-token-value
+
+		contexts:
+		  - name: test-context
+		    instance: example
+		    auth: pat-value-user
+	`))
+	require.NoError(t, err)
+
+	// WHEN
+	client, err := c.NewClientForContext("test-context")
+	require.NoError(t, err)
+
+	req, err := client.NewRequest(http.MethodGet, "any-path", nil, nil)
+	require.NoError(t, err)
+
+	// THEN
+	assert.Equal(t, "my-custom-header-value", req.Header.Get("My-Custom-Header"))
+}
+
+func TestConfig_NewClientForContext_Success_CustomHeader_FromSource(t *testing.T) {
+	// GIVEN
+	c, err := NewFromString(heredoc.Doc(`
+		instances:
+		  - name: example
+		    server: https://gitlab.example.com
+		    custom-headers:
+		      - name: My-Custom-Header
+		        value-from:
+		          env-var: MY_CUSTOM_HEADER_VALUE
+
+		auths:
+		  - name: pat-value-user
+		    auth_info:
+		      personal-access-token:
+		        token-source:
+		          value: direct-token-value
+
+		contexts:
+		  - name: test-context
+		    instance: example
+		    auth: pat-value-user
+	`))
+	require.NoError(t, err)
+
+	t.Setenv("MY_CUSTOM_HEADER_VALUE", "my-custom-header-value")
+
+	// WHEN
+	client, err := c.NewClientForContext("test-context")
+	require.NoError(t, err)
+
+	req, err := client.NewRequest(http.MethodGet, "any-path", nil, nil)
+	require.NoError(t, err)
+
+	// THEN
+	assert.Equal(t, "my-custom-header-value", req.Header.Get("My-Custom-Header"))
 }
