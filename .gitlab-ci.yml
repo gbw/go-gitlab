@@ -43,8 +43,8 @@ stages:
   parallel:
     matrix:
       - GOLANG_IMAGE_VERSION:
-        - '1.23'
         - '1.24'
+        - '1.25'
 
 .go:base:
   extends:
@@ -150,7 +150,6 @@ commitlint:
 
 tests:unit:
   extends:
-    - .go:base
     - .go:versions
   stage: test
   needs: []

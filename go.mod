@@ -1,8 +1,6 @@
 module gitlab.com/gitlab-org/api/client-go
 
-go 1.23.0
-
-toolchain go1.23.8
+go 1.24
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.9-20250912141014-52f32327d4b0.1
