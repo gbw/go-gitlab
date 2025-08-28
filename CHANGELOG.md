@@ -1,3 +1,5 @@
+## [0.142.4](https://gitlab.com/gitlab-org/api/client-go/compare/v0.142.3...v0.142.4) (2025-08-28)
+
 ## [0.142.3](https://gitlab.com/gitlab-org/api/client-go/compare/v0.142.2...v0.142.3) (2025-08-28)
 
 ## [0.142.2](https://gitlab.com/gitlab-org/api/client-go/compare/v0.142.1...v0.142.2) (2025-08-26)
