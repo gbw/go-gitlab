@@ -435,7 +435,7 @@ func TestGetGroupMemberAll(t *testing.T) {
 	require.Nil(t, member)
 
 	member, resp, err = client.GroupMembers.GetInheritedGroupMember(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, member)
 

@@ -77,7 +77,7 @@ func TestGeoNodesService_CreateGeoNode(t *testing.T) {
 	require.Equal(t, want, g)
 
 	g, resp, err = client.GeoNodes.CreateGeoNode(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, g)
 }
@@ -170,7 +170,7 @@ func TestGeoNodesService_ListGeoNodes(t *testing.T) {
 	require.Equal(t, want, gs)
 
 	gs, resp, err = client.GeoNodes.ListGeoNodes(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gs)
 }
@@ -259,7 +259,7 @@ func TestGeoNodesService_GetGeoNode(t *testing.T) {
 	require.Equal(t, want, g)
 
 	g, resp, err = client.GeoNodes.GetGeoNode(3, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, g)
 
@@ -338,7 +338,7 @@ func TestGeoNodesService_EditGeoNode(t *testing.T) {
 	require.Equal(t, want, g)
 
 	g, resp, err = client.GeoNodes.EditGeoNode(3, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, g)
 
@@ -361,7 +361,7 @@ func TestGeoNodesService_DeleteGeoNode(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.GeoNodes.DeleteGeoNode(3, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.GeoNodes.DeleteGeoNode(5, nil)
@@ -438,7 +438,7 @@ func TestGeoNodesService_RepairGeoNode(t *testing.T) {
 	require.Equal(t, want, g)
 
 	g, resp, err = client.GeoNodes.RepairGeoNode(3, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, g)
 
@@ -551,7 +551,7 @@ func TestGeoNodesService_RetrieveStatusOfAllGeoNodes(t *testing.T) {
 	require.Equal(t, want, gnss)
 
 	gnss, resp, err = client.GeoNodes.RetrieveStatusOfAllGeoNodes(errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gnss)
 }
@@ -672,7 +672,7 @@ func TestGeoNodesService_RetrieveStatusOfGeoNode(t *testing.T) {
 	require.Equal(t, want, gns)
 
 	gns, resp, err = client.GeoNodes.RetrieveStatusOfGeoNode(1, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gns)
 

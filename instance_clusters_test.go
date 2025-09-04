@@ -81,7 +81,7 @@ func TestInstanceClustersService_ListClusters(t *testing.T) {
 	require.Equal(t, want, ics)
 
 	ics, resp, err = client.InstanceCluster.ListClusters(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ics)
 }
@@ -172,7 +172,7 @@ func TestInstanceClustersService_GetCluster(t *testing.T) {
 	require.Equal(t, want, ic)
 
 	ic, resp, err = client.InstanceCluster.GetCluster(9, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ic)
 
@@ -253,7 +253,7 @@ func TestInstanceClustersService_AddCluster(t *testing.T) {
 	require.Equal(t, want, ic)
 
 	ic, resp, err = client.InstanceCluster.AddCluster(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ic)
 }
@@ -344,7 +344,7 @@ func TestInstanceClustersService_EditCluster(t *testing.T) {
 	require.Equal(t, want, ic)
 
 	ic, resp, err = client.InstanceCluster.EditCluster(11, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ic)
 
@@ -367,7 +367,7 @@ func TestInstanceClustersService_DeleteCluster(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.InstanceCluster.DeleteCluster(11, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.InstanceCluster.DeleteCluster(12, nil, nil)

@@ -43,7 +43,7 @@ func TestInstanceVariablesService_ListVariables(t *testing.T) {
 	require.Equal(t, want, ivs)
 
 	ivs, resp, err = client.InstanceVariables.ListVariables(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ivs)
 }
@@ -96,7 +96,7 @@ func TestInstanceVariablesService_GetVariable(t *testing.T) {
 	require.Equal(t, want, iv)
 
 	iv, resp, err = client.InstanceVariables.GetVariable("TEST_VARIABLE_1", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, iv)
 
@@ -139,7 +139,7 @@ func TestInstanceVariablesService_CreateVariable(t *testing.T) {
 	require.Equal(t, want, iv)
 
 	iv, resp, err = client.InstanceVariables.CreateVariable(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, iv)
 }
@@ -192,7 +192,7 @@ func TestInstanceVariablesService_UpdateVariable(t *testing.T) {
 	require.Equal(t, want, iv)
 
 	iv, resp, err = client.InstanceVariables.UpdateVariable("NEW_VARIABLE", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, iv)
 
@@ -215,7 +215,7 @@ func TestInstanceVariablesService_RemoveVariable(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.InstanceVariables.RemoveVariable("NEW_VARIABLE", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.InstanceVariables.RemoveVariable("NEW_VARIABLE_1", nil)

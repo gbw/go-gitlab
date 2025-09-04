@@ -56,7 +56,7 @@ func TestRepositoriesService_ListTree(t *testing.T) {
 	require.Nil(t, tns)
 
 	tns, resp, err = client.Repositories.ListTree(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, tns)
 
@@ -100,7 +100,7 @@ func TestRepositoriesService_Blob(t *testing.T) {
 	require.Nil(t, b)
 
 	b, resp, err = client.Repositories.Blob(1, "2dc6aa325a317eda67812f05600bdf0fcdc70ab0", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -139,7 +139,7 @@ func TestRepositoriesService_RawBlobContent(t *testing.T) {
 	require.Nil(t, b)
 
 	b, resp, err = client.Repositories.RawBlobContent(1, "2dc6aa325a317eda67812f05600bdf0fcdc70ab0", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -179,7 +179,7 @@ func TestRepositoriesService_Archive(t *testing.T) {
 	require.Nil(t, b)
 
 	b, resp, err = client.Repositories.Archive(1, opt, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, b)
 
@@ -209,7 +209,7 @@ func TestRepositoriesService_StreamArchive(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.Repositories.StreamArchive(1, w, opt, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.Repositories.StreamArchive(2, w, opt, nil)
@@ -301,7 +301,7 @@ func TestRepositoriesService_Compare(t *testing.T) {
 	require.Nil(t, c)
 
 	c, resp, err = client.Repositories.Compare("12d65c8dd2b2676fa3ac47d955accc085a37a9c1", opt, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, c)
 
@@ -347,7 +347,7 @@ func TestRepositoriesService_Contributors(t *testing.T) {
 	require.Nil(t, cs)
 
 	cs, resp, err = client.Repositories.Contributors("12d65c8dd2b2676fa3ac47d955accc085a37a9c1", nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, cs)
 
@@ -401,7 +401,7 @@ func TestRepositoriesService_MergeBase(t *testing.T) {
 	require.Nil(t, c)
 
 	c, resp, err = client.Repositories.MergeBase("1a0b36b3cdad1d2ee32457c102a8c0b7056fa863", nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, c)
 

@@ -55,7 +55,7 @@ func TestProjectMembersService_ListProjectMembers(t *testing.T) {
 	require.Nil(t, pms)
 
 	pms, resp, err = client.ProjectMembers.ListProjectMembers(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pms)
 
@@ -109,7 +109,7 @@ func TestProjectMembersService_ListAllProjectMembers(t *testing.T) {
 	require.Nil(t, pms)
 
 	pms, resp, err = client.ProjectMembers.ListAllProjectMembers(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pms)
 
@@ -164,7 +164,7 @@ func TestProjectMembersService_GetProjectMember(t *testing.T) {
 	require.Nil(t, pm)
 
 	pm, resp, err = client.ProjectMembers.GetProjectMember(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -219,7 +219,7 @@ func TestProjectMembersService_GetInheritedProjectMember(t *testing.T) {
 	require.Nil(t, pm)
 
 	pm, resp, err = client.ProjectMembers.GetInheritedProjectMember(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -290,7 +290,7 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 	require.Nil(t, pm)
 
 	pm, resp, err = client.ProjectMembers.AddProjectMember(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -345,7 +345,7 @@ func TestProjectMembersService_EditProjectMember(t *testing.T) {
 	require.Nil(t, pm)
 
 	pm, resp, err = client.ProjectMembers.EditProjectMember(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -386,7 +386,7 @@ func TestProjectMembersService_DeleteProjectMember(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectMembers.DeleteProjectMember(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectMembers.DeleteProjectMember(2, 1, nil, nil)

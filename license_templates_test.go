@@ -65,7 +65,7 @@ func TestLicenseTemplatesService_ListLicenseTemplates(t *testing.T) {
 	require.Equal(t, want, lts)
 
 	lts, resp, err = client.LicenseTemplates.ListLicenseTemplates(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, lts)
 }
@@ -140,7 +140,7 @@ func TestLicenseTemplatesService_GetLicenseTemplate(t *testing.T) {
 	require.Equal(t, want, lt)
 
 	lt, resp, err = client.LicenseTemplates.GetLicenseTemplate("apache-2.0", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, lt)
 

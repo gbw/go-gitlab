@@ -197,7 +197,7 @@ func TestDeploymentsService_ListProjectDeployments(t *testing.T) {
 	require.Nil(t, ds)
 
 	ds, resp, err = client.Deployments.ListProjectDeployments(1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ds)
 
@@ -393,7 +393,7 @@ func TestDeploymentsService_GetProjectDeployment(t *testing.T) {
 	require.Nil(t, d)
 
 	d, resp, err = client.Deployments.GetProjectDeployment(1, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -589,7 +589,7 @@ func TestDeploymentsService_CreateProjectDeployment(t *testing.T) {
 	require.Nil(t, d)
 
 	d, resp, err = client.Deployments.CreateProjectDeployment(1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 
@@ -785,7 +785,7 @@ func TestDeploymentsService_UpdateProjectDeployment(t *testing.T) {
 	require.Nil(t, d)
 
 	d, resp, err = client.Deployments.UpdateProjectDeployment(1, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, d)
 

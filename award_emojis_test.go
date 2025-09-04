@@ -71,7 +71,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmoji(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AwardEmoji.ListMergeRequestAwardEmoji(1, 80, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -142,7 +142,7 @@ func TestAwardEmojiService_ListIssueAwardEmoji(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AwardEmoji.ListIssueAwardEmoji(1, 80, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -213,7 +213,7 @@ func TestAwardEmojiService_ListSnippetAwardEmoji(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AwardEmoji.ListSnippetAwardEmoji(1, 80, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -282,7 +282,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmoji(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.GetMergeRequestAwardEmoji(1, 80, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -351,7 +351,7 @@ func TestAwardEmojiService_GetIssueAwardEmoji(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.GetIssueAwardEmoji(1, 80, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -420,7 +420,7 @@ func TestAwardEmojiService_GetSnippetAwardEmoji(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.GetSnippetAwardEmoji(1, 80, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -489,7 +489,7 @@ func TestAwardEmojiService_CreateMergeRequestAwardEmoji(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateMergeRequestAwardEmoji(1, 80, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -558,7 +558,7 @@ func TestAwardEmojiService_CreateIssueAwardEmoji(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateIssueAwardEmoji(1, 80, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -627,7 +627,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmoji(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateSnippetAwardEmoji(1, 80, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -654,7 +654,7 @@ func TestAwardEmojiService_DeleteMergeRequestAwardEmoji(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmoji(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmoji(3, 80, 1, nil)
@@ -679,7 +679,7 @@ func TestAwardEmojiService_DeleteIssueAwardEmoji(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssueAwardEmoji(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssueAwardEmoji(3, 80, 1, nil)
@@ -704,7 +704,7 @@ func TestAwardEmojiService_DeleteSnippetAwardEmoji(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmoji(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmoji(3, 80, 1, nil)
@@ -773,7 +773,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AwardEmoji.ListMergeRequestAwardEmojiOnNote(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -844,7 +844,7 @@ func TestAwardEmojiService_ListIssuesAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AwardEmoji.ListIssuesAwardEmojiOnNote(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -915,7 +915,7 @@ func TestAwardEmojiService_ListSnippetAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AwardEmoji.ListSnippetAwardEmojiOnNote(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -984,7 +984,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.GetMergeRequestAwardEmojiOnNote(1, 80, 1, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1053,7 +1053,7 @@ func TestAwardEmojiService_GetIssuesAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.GetIssuesAwardEmojiOnNote(1, 80, 1, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1122,7 +1122,7 @@ func TestAwardEmojiService_GetSnippetAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.GetSnippetAwardEmojiOnNote(1, 80, 1, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1191,7 +1191,7 @@ func TestAwardEmojiService_CCreateMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateMergeRequestAwardEmojiOnNote(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1260,7 +1260,7 @@ func TestAwardEmojiService_CreateIssuesAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateIssuesAwardEmojiOnNote(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1329,7 +1329,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AwardEmoji.CreateSnippetAwardEmojiOnNote(1, 80, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -1356,7 +1356,7 @@ func TestAwardEmojiService_DeleteMergeRequestAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmojiOnNote(1, 80, 1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteMergeRequestAwardEmojiOnNote(3, 80, 1, 1, nil)
@@ -1381,7 +1381,7 @@ func TestAwardEmojiService_DeleteIssuesAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssuesAwardEmojiOnNote(1, 80, 1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteIssuesAwardEmojiOnNote(3, 80, 1, 1, nil)
@@ -1406,7 +1406,7 @@ func TestAwardEmojiService_DeleteSnippetAwardEmojiOnNote(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmojiOnNote(1, 80, 1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.AwardEmoji.DeleteSnippetAwardEmojiOnNote(3, 80, 1, 1, nil)

@@ -57,7 +57,7 @@ func TestRepositoryFilesService_GetFile(t *testing.T) {
 	assert.Nil(t, f)
 
 	f, resp, err = client.RepositoryFiles.GetFile(13083, "app/models/key.rb?ref=master", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, f)
 
@@ -109,7 +109,7 @@ func TestRepositoryFilesService_GetFileMetaData(t *testing.T) {
 	assert.Nil(t, f)
 
 	f, resp, err = client.RepositoryFiles.GetFileMetaData(13083, "app/models/key.rb?ref=master", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, f)
 
@@ -184,7 +184,7 @@ func TestRepositoryFilesService_GetFileBlame(t *testing.T) {
 	assert.Nil(t, fbr)
 
 	fbr, resp, err = client.RepositoryFiles.GetFileBlame(13083, "path/to/file.rb", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, fbr)
 
@@ -239,7 +239,7 @@ func TestRepositoryFilesService_GetRawFile(t *testing.T) {
 	assert.Nil(t, b)
 
 	b, resp, err = client.RepositoryFiles.GetRawFile(13083, "app/models/key.rb", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, b)
 
@@ -291,7 +291,7 @@ func TestRepositoryFilesService_GetRawFileMetaData(t *testing.T) {
 	assert.Nil(t, f)
 
 	f, resp, err = client.RepositoryFiles.GetRawFileMetaData(13083, "app/models/key.rb", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, f)
 
@@ -336,7 +336,7 @@ func TestRepositoryFilesService_CreateFile(t *testing.T) {
 	assert.Nil(t, fi)
 
 	fi, resp, err = client.RepositoryFiles.CreateFile(13083, "app/project.rb", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, fi)
 
@@ -381,7 +381,7 @@ func TestRepositoryFilesService_UpdateFile(t *testing.T) {
 	assert.Nil(t, fi)
 
 	fi, resp, err = client.RepositoryFiles.UpdateFile(13083, "app/project.rb", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, fi)
 
@@ -408,7 +408,7 @@ func TestRepositoryFilesService_DeleteFile(t *testing.T) {
 	assert.Nil(t, resp)
 
 	resp, err = client.RepositoryFiles.DeleteFile(13083, "app/project.rb", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 
 	resp, err = client.RepositoryFiles.DeleteFile(13084, "app/project.rb", nil)

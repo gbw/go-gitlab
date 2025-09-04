@@ -50,7 +50,7 @@ func TestProjectBadgesService_ListProjectBadges(t *testing.T) {
 	require.Nil(t, pbs)
 
 	pbs, resp, err = client.ProjectBadges.ListProjectBadges(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pbs)
 
@@ -100,7 +100,7 @@ func TestProjectBadgesService_GetProjectBadge(t *testing.T) {
 	require.Nil(t, pb)
 
 	pb, resp, err = client.ProjectBadges.GetProjectBadge(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pb)
 
@@ -150,7 +150,7 @@ func TestProjectBadgesService_AddProjectBadge(t *testing.T) {
 	require.Nil(t, pb)
 
 	pb, resp, err = client.ProjectBadges.AddProjectBadge(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pb)
 
@@ -200,7 +200,7 @@ func TestProjectBadgesService_EditProjectBadge(t *testing.T) {
 	require.Nil(t, pb)
 
 	pb, resp, err = client.ProjectBadges.EditProjectBadge(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pb)
 
@@ -227,7 +227,7 @@ func TestProjectBadgesService_DeleteProjectBadge(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectBadges.DeleteProjectBadge(1, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectBadges.DeleteProjectBadge(2, 1, nil, nil)
@@ -269,7 +269,7 @@ func TestProjectBadgesService_PreviewProjectBadge(t *testing.T) {
 	require.Nil(t, pb)
 
 	pb, resp, err = client.ProjectBadges.PreviewProjectBadge(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pb)
 

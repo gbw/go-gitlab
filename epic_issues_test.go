@@ -170,7 +170,7 @@ func TestEpicIssuesService_ListEpicIssues(t *testing.T) {
 	require.Nil(t, is)
 
 	is, resp, err = client.EpicIssues.ListEpicIssues(1, 5, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -363,7 +363,7 @@ func TestEpicIssuesService_AssignEpicIssue(t *testing.T) {
 	require.Nil(t, eia)
 
 	eia, resp, err = client.EpicIssues.AssignEpicIssue(1, 5, 55, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, eia)
 
@@ -556,7 +556,7 @@ func TestEpicIssuesService_RemoveEpicIssue(t *testing.T) {
 	require.Nil(t, eia)
 
 	eia, resp, err = client.EpicIssues.RemoveEpicIssue(1, 5, 55, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, eia)
 
@@ -728,7 +728,7 @@ func TestEpicIssuesService_UpdateEpicIssueAssignment(t *testing.T) {
 	require.Nil(t, is)
 
 	is, resp, err = client.EpicIssues.UpdateEpicIssueAssignment(1, 5, 2, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 

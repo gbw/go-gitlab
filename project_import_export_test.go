@@ -27,7 +27,7 @@ func TestProjectImportExportService_ScheduleExport(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectImportExport.ScheduleExport(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectImportExport.ScheduleExport(2, nil, nil)
@@ -87,7 +87,7 @@ func TestProjectImportExportService_ExportStatus(t *testing.T) {
 	require.Nil(t, es)
 
 	es, resp, err = client.ProjectImportExport.ExportStatus(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, es)
 
@@ -119,7 +119,7 @@ func TestProjectImportExportService_ExportDownload(t *testing.T) {
 	require.Nil(t, es)
 
 	es, resp, err = client.ProjectImportExport.ExportDownload(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, es)
 
@@ -167,7 +167,7 @@ func TestProjectImportExportService_ImportFile(t *testing.T) {
 	require.Equal(t, want, es)
 
 	es, resp, err = client.ProjectImportExport.ImportFromFile(file, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, es)
 }
@@ -214,7 +214,7 @@ func TestProjectImportExportService_ImportStatus(t *testing.T) {
 	require.Nil(t, es)
 
 	es, resp, err = client.ProjectImportExport.ImportStatus(1, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, es)
 

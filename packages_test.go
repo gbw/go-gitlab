@@ -75,7 +75,7 @@ func TestPackagesService_ListProjectPackages(t *testing.T) {
 	require.Nil(t, ps)
 
 	ps, resp, err = client.Packages.ListProjectPackages(3, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ps)
 
@@ -127,7 +127,7 @@ func TestPackagesService_ListPackageFiles(t *testing.T) {
 	require.Nil(t, ps)
 
 	ps, resp, err = client.Packages.ListPackageFiles(3, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ps)
 
@@ -154,7 +154,7 @@ func TestPackagesService_DeleteProjectPackage(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.Packages.DeleteProjectPackage(3, 4, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.Packages.DeleteProjectPackage(5, 4, nil)

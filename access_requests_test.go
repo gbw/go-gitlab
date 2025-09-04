@@ -75,28 +75,28 @@ func TestListProjectAccessRequests(t *testing.T) {
 	tests := []struct {
 		name        string
 		projectID   any
-		expectedErr string
+		expectedErr error
 		expectedRes []*AccessRequest
 		statusCode  int
 	}{
 		{
 			name:        "Valid Project ID",
 			projectID:   1,
-			expectedErr: "",
+			expectedErr: nil,
 			expectedRes: expected,
 			statusCode:  http.StatusOK,
 		},
 		{
 			name:        "Invalid Project ID Type",
 			projectID:   1.5,
-			expectedErr: "invalid ID type 1.5, the ID must be an int or a string",
+			expectedErr: ErrInvalidIDType,
 			expectedRes: nil,
 			statusCode:  0,
 		},
 		{
 			name:        "Non-Existent Project ID",
 			projectID:   2,
-			expectedErr: "404 Not Found",
+			expectedErr: ErrNotFound,
 			expectedRes: nil,
 			statusCode:  http.StatusNotFound,
 		},
@@ -106,8 +106,8 @@ func TestListProjectAccessRequests(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			requests, resp, err := client.AccessRequests.ListProjectAccessRequests(tt.projectID, nil)
 
-			if tt.expectedErr != "" {
-				assert.EqualError(t, err, tt.expectedErr)
+			if tt.expectedErr != nil {
+				assert.ErrorIs(t, err, tt.expectedErr)
 				assert.Nil(t, requests)
 			} else {
 				assert.NoError(t, err)
@@ -184,7 +184,7 @@ func TestListGroupAccessRequests(t *testing.T) {
 	assert.Nil(t, requests)
 
 	requests, resp, err = client.AccessRequests.ListGroupAccessRequests(1, nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, requests)
 }
@@ -231,7 +231,7 @@ func TestRequestProjectAccess(t *testing.T) {
 	assert.Nil(t, accessRequest)
 
 	accessRequest, resp, err = client.AccessRequests.RequestProjectAccess(1, nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, accessRequest)
 }
@@ -278,7 +278,7 @@ func TestRequestGroupAccess(t *testing.T) {
 	assert.Nil(t, accessRequest)
 
 	accessRequest, resp, err = client.AccessRequests.RequestGroupAccess(1, nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, accessRequest)
 }
@@ -338,7 +338,7 @@ func TestApproveProjectAccessRequest(t *testing.T) {
 	assert.Nil(t, request)
 
 	request, resp, err = client.AccessRequests.ApproveProjectAccessRequest(1, 10, opt, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, request)
 }
@@ -398,7 +398,7 @@ func TestApproveGroupAccessRequest(t *testing.T) {
 	assert.Nil(t, request)
 
 	request, resp, err = client.AccessRequests.ApproveGroupAccessRequest(1, 10, opt, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, request)
 }
@@ -424,7 +424,7 @@ func TestDenyProjectAccessRequest(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 
 	resp, err = client.AccessRequests.DenyProjectAccessRequest(1, 10, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 }
 
@@ -449,6 +449,6 @@ func TestDenyGroupAccessRequest(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 
 	resp, err = client.AccessRequests.DenyGroupAccessRequest(1, 10, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 }
