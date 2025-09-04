@@ -153,8 +153,10 @@ func mustWriteErrorResponse(t *testing.T, w io.Writer, err error) {
 	})
 }
 
+var errRequestOptionFunc = errors.New("RequestOptionFunc returns an error")
+
 func errorOption(*retryablehttp.Request) error {
-	return errors.New("RequestOptionFunc returns an error")
+	return errRequestOptionFunc
 }
 
 func TestNewClient(t *testing.T) {

@@ -66,7 +66,7 @@ func TestPagesDomainsService_ListPagesDomains(t *testing.T) {
 	require.Nil(t, pds)
 
 	pds, resp, err = client.PagesDomains.ListPagesDomains(5, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pds)
 
@@ -123,7 +123,7 @@ func TestPagesDomainsService_ListAllPagesDomains(t *testing.T) {
 	require.Equal(t, want, pds)
 
 	pds, resp, err = client.PagesDomains.ListAllPagesDomains(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pds)
 }
@@ -198,7 +198,7 @@ func TestPagesDomainsService_GetPagesDomain(t *testing.T) {
 	require.Nil(t, pd)
 
 	pd, resp, err = client.PagesDomains.GetPagesDomain(5, "www.domain.example", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pd)
 
@@ -263,7 +263,7 @@ func TestPagesDomainsService_CreatePagesDomain(t *testing.T) {
 	require.Nil(t, pd)
 
 	pd, resp, err = client.PagesDomains.CreatePagesDomain(5, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pd)
 
@@ -328,7 +328,7 @@ func TestPagesDomainsService_UpdatePagesDomain(t *testing.T) {
 	require.Nil(t, pd)
 
 	pd, resp, err = client.PagesDomains.UpdatePagesDomain(5, "ssl.domain.example", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pd)
 
@@ -355,7 +355,7 @@ func TestPagesDomainsService_DeletePagesDomain(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.PagesDomains.DeletePagesDomain(5, "ssl.domain.example", nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.PagesDomains.DeletePagesDomain(7, "ssl.domain.example", nil)

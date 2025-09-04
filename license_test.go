@@ -155,7 +155,7 @@ func TestLicenseService_AddLicense(t *testing.T) {
 	require.Equal(t, want, l)
 
 	l, resp, err = client.License.AddLicense(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, l)
 }

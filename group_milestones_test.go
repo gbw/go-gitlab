@@ -51,7 +51,7 @@ func TestGroupMilestonesService_ListGroupMilestones(t *testing.T) {
 	require.Nil(t, gms)
 
 	gms, resp, err = client.GroupMilestones.ListGroupMilestones(5, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gms)
 
@@ -102,7 +102,7 @@ func TestGroupMilestonesService_GetGroupMilestone(t *testing.T) {
 	require.Nil(t, gm)
 
 	gm, resp, err = client.GroupMilestones.GetGroupMilestone(5, 12, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gm)
 
@@ -153,7 +153,7 @@ func TestGroupMilestonesService_CreateGroupMilestone(t *testing.T) {
 	require.Nil(t, gm)
 
 	gm, resp, err = client.GroupMilestones.CreateGroupMilestone(5, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gm)
 
@@ -204,7 +204,7 @@ func TestGroupMilestonesService_UpdateGroupMilestone(t *testing.T) {
 	require.Nil(t, gm)
 
 	gm, resp, err = client.GroupMilestones.UpdateGroupMilestone(5, 12, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gm)
 
@@ -231,7 +231,7 @@ func TestGroupMilestonesService_DeleteGroupMilestone(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.GroupMilestones.DeleteGroupMilestone(5, 12, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.GroupMilestones.DeleteGroupMilestone(3, 12, nil)
@@ -349,7 +349,7 @@ func TestGroupMilestonesService_GetGroupMilestoneIssues(t *testing.T) {
 	require.Nil(t, is)
 
 	is, resp, err = client.GroupMilestones.GetGroupMilestoneIssues(5, 12, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -556,7 +556,7 @@ func TestGroupMilestonesService_GetGroupMilestoneMergeRequests(t *testing.T) {
 	require.Nil(t, mrs)
 
 	mrs, resp, err = client.GroupMilestones.GetGroupMilestoneMergeRequests(3, 12, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, mrs)
 
@@ -576,7 +576,7 @@ func TestGroupMilestonesService_GetGroupMilestoneBurndownChartEvents(t *testing.
 			[
 				{
 					"weight": 10,
-					"action": "update" 
+					"action": "update"
 				}
 			]
 		`)
@@ -598,7 +598,7 @@ func TestGroupMilestonesService_GetGroupMilestoneBurndownChartEvents(t *testing.
 	require.Nil(t, bces)
 
 	bces, resp, err = client.GroupMilestones.GetGroupMilestoneBurndownChartEvents(3, 12, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, bces)
 

@@ -81,7 +81,7 @@ func TestUsersService_ListUserContributionEvents(t *testing.T) {
 	require.Nil(t, ces)
 
 	ces, resp, err = client.Users.ListUserContributionEvents(1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ces)
 
@@ -159,7 +159,7 @@ func TestEventsService_ListCurrentUserContributionEvents(t *testing.T) {
 	require.Equal(t, want, ces)
 
 	ces, resp, err = client.Events.ListCurrentUserContributionEvents(nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ces)
 }
@@ -325,7 +325,7 @@ func TestEventsService_ListProjectVisibleEvents(t *testing.T) {
 	require.Nil(t, ces)
 
 	ces, resp, err = client.Events.ListProjectVisibleEvents(15, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ces)
 

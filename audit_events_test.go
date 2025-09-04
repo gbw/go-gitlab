@@ -61,7 +61,7 @@ func TestAuditEventsService_ListInstanceAuditEvents(t *testing.T) {
 	require.Equal(t, want, aes)
 
 	aes, resp, err = client.AuditEvents.ListInstanceAuditEvents(nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 }
@@ -132,7 +132,7 @@ func TestAuditEventsService_GetInstanceAuditEvent(t *testing.T) {
 	require.Equal(t, want, ae)
 
 	ae, resp, err = client.AuditEvents.GetInstanceAuditEvent(1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -200,7 +200,7 @@ func TestAuditEventsService_ListGroupAuditEvents(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AuditEvents.ListGroupAuditEvents(6, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -266,7 +266,7 @@ func TestAuditEventsService_GetGroupAuditEvent(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AuditEvents.GetGroupAuditEvent(6, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 
@@ -334,7 +334,7 @@ func TestAuditEventsService_ListProjectAuditEvents(t *testing.T) {
 	require.Nil(t, aes)
 
 	aes, resp, err = client.AuditEvents.ListProjectAuditEvents(6, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, aes)
 
@@ -400,7 +400,7 @@ func TestAuditEventsService_GetProjectAuditEvent(t *testing.T) {
 	require.Nil(t, ae)
 
 	ae, resp, err = client.AuditEvents.GetProjectAuditEvent(6, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ae)
 

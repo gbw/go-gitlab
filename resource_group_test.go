@@ -46,7 +46,7 @@ func TestResourceGroups_GetAllResourceGroupsForAProject(t *testing.T) {
 	require.Nil(t, rgs)
 
 	rgs, resp, err = client.ResourceGroup.GetAllResourceGroupsForAProject(1, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, rgs)
 
@@ -92,7 +92,7 @@ func TestResourceGroups_GetASpecificResourceGroup(t *testing.T) {
 	require.Nil(t, rg)
 
 	rg, resp, err = client.ResourceGroup.GetASpecificResourceGroup(1, "production", errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, rg)
 
@@ -130,7 +130,7 @@ func TestResourceGroups_ListUpcomingJobsForASpecificResourceGroup(t *testing.T) 
 	require.Nil(t, jobs)
 
 	jobs, resp, err = client.ResourceGroup.ListUpcomingJobsForASpecificResourceGroup(1, "production", errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, jobs)
 
@@ -178,7 +178,7 @@ func TestResourceGroup_EditAnExistingResourceGroup(t *testing.T) {
 	require.Nil(t, rg)
 
 	rg, resp, err = client.ResourceGroup.EditAnExistingResourceGroup(1, "production", opts, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, rg)
 

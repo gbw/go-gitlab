@@ -139,7 +139,7 @@ func TestBranchesService_ListBranches(t *testing.T) {
 	assert.Nil(t, b)
 
 	b, resp, err = client.Branches.ListBranches(5, nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, b)
 
@@ -340,7 +340,7 @@ func TestBranchesService_CreateBranch(t *testing.T) {
 	assert.Nil(t, b)
 
 	b, resp, err = client.Branches.CreateBranch(1, nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 	assert.Nil(t, b)
 
@@ -367,7 +367,7 @@ func TestBranchesService_DeleteBranch(t *testing.T) {
 	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteBranch(1, "master", nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteBranch(3, "master", nil)
@@ -392,7 +392,7 @@ func TestBranchesService_DeleteMergedBranches(t *testing.T) {
 	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteMergedBranches(1, nil, errorOption)
-	assert.EqualError(t, err, "RequestOptionFunc returns an error")
+	assert.ErrorIs(t, err, errRequestOptionFunc)
 	assert.Nil(t, resp)
 
 	resp, err = client.Branches.DeleteMergedBranches(3, nil)

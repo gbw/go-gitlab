@@ -46,7 +46,7 @@ func TestFreezePeriodsService_ListFreezePeriods(t *testing.T) {
 	require.Nil(t, fps)
 
 	fps, resp, err = client.FreezePeriods.ListFreezePeriods(19, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, fps)
 
@@ -90,7 +90,7 @@ func TestFreezePeriodsService_GetFreezePeriod(t *testing.T) {
 	require.Nil(t, fp)
 
 	fp, resp, err = client.FreezePeriods.GetFreezePeriod(19, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, fp)
 
@@ -134,7 +134,7 @@ func TestFreezePeriodsService_CreateFreezePeriodOptions(t *testing.T) {
 	require.Nil(t, fp)
 
 	fp, resp, err = client.FreezePeriods.CreateFreezePeriodOptions(19, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, fp)
 
@@ -178,7 +178,7 @@ func TestFreezePeriodsService_UpdateFreezePeriodOptions(t *testing.T) {
 	require.Nil(t, fp)
 
 	fp, resp, err = client.FreezePeriods.UpdateFreezePeriodOptions(19, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, fp)
 
@@ -205,7 +205,7 @@ func TestFreezePeriodsService_DeleteFreezePeriod(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.FreezePeriods.DeleteFreezePeriod(19, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.FreezePeriods.DeleteFreezePeriod(3, 1, nil, nil)

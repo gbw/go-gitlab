@@ -119,7 +119,7 @@ func TestGroupIssueBoardsService_ListGroupIssueBoards(t *testing.T) {
 	require.Nil(t, gibs)
 
 	gibs, resp, err = client.GroupIssueBoards.ListGroupIssueBoards(5, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gibs)
 
@@ -178,7 +178,7 @@ func TestGroupIssueBoardsService_CreateGroupIssueBoard(t *testing.T) {
 	require.Nil(t, gib)
 
 	gib, resp, err = client.GroupIssueBoards.CreateGroupIssueBoard(5, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 
@@ -329,7 +329,7 @@ func TestGroupIssueBoardsService_GetGroupIssueBoard(t *testing.T) {
 	require.Nil(t, gib)
 
 	gib, resp, err = client.GroupIssueBoards.GetGroupIssueBoard(5, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 
@@ -423,7 +423,7 @@ func TestGroupIssueBoardsService_UpdateIssueBoard(t *testing.T) {
 	require.Nil(t, gib)
 
 	gib, resp, err = client.GroupIssueBoards.UpdateIssueBoard(5, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 
@@ -450,7 +450,7 @@ func TestGroupIssueBoardsService_DeleteIssueBoard(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteIssueBoard(5, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteIssueBoard(3, 1, nil, nil)
@@ -538,7 +538,7 @@ func TestGroupIssueBoardsService_ListGroupIssueBoardLists(t *testing.T) {
 	require.Nil(t, bls)
 
 	bls, resp, err = client.GroupIssueBoards.ListGroupIssueBoardLists(5, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, bls)
 
@@ -588,7 +588,7 @@ func TestGroupIssueBoardsService_GetGroupIssueBoardList(t *testing.T) {
 	require.Nil(t, bl)
 
 	bl, resp, err = client.GroupIssueBoards.GetGroupIssueBoardList(5, 1, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, bl)
 
@@ -648,7 +648,7 @@ func TestGroupIssueBoardsService_CreateGroupIssueBoardList(t *testing.T) {
 	require.Nil(t, bl)
 
 	bl, resp, err = client.GroupIssueBoards.CreateGroupIssueBoardList(5, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, bl)
 
@@ -738,7 +738,7 @@ func TestGroupIssueBoardsService_UpdateIssueBoardList(t *testing.T) {
 	require.Nil(t, bl)
 
 	bl, resp, err = client.GroupIssueBoards.UpdateIssueBoardList(5, 1, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, bl)
 
@@ -765,7 +765,7 @@ func TestGroupIssueBoardsService_DeleteGroupIssueBoardList(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteGroupIssueBoardList(5, 1, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.GroupIssueBoards.DeleteGroupIssueBoardList(3, 1, 1, nil, nil)

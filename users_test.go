@@ -228,10 +228,8 @@ func TestBlockUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
-
 	err := client.Users.BlockUser(1)
-	assert.EqualError(t, err, want)
+	assert.ErrorIs(t, err, errUnexpectedResultCode)
 }
 
 func TestUnblockUser(t *testing.T) {
@@ -286,10 +284,8 @@ func TestUnblockUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
-
 	err := client.Users.UnblockUser(1)
-	assert.EqualError(t, err, want)
+	assert.ErrorIs(t, err, errUnexpectedResultCode)
 }
 
 func TestBanUser(t *testing.T) {
@@ -330,10 +326,8 @@ func TestBanUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
-
 	err := client.Users.BanUser(1)
-	assert.EqualError(t, err, want)
+	assert.ErrorIs(t, err, errUnexpectedResultCode)
 }
 
 func TestUnbanUser(t *testing.T) {
@@ -374,10 +368,8 @@ func TestUnbanUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
-
 	err := client.Users.UnbanUser(1)
-	assert.EqualError(t, err, want)
+	assert.ErrorIs(t, err, errUnexpectedResultCode)
 }
 
 func TestDeactivateUser(t *testing.T) {
@@ -516,10 +508,8 @@ func TestApproveUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
-
 	err := client.Users.ApproveUser(1)
-	assert.EqualError(t, err, want)
+	assert.ErrorIs(t, err, errUnexpectedResultCode)
 }
 
 func TestRejectUser(t *testing.T) {
@@ -588,10 +578,8 @@ func TestRejectUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	want := fmt.Sprintf("received unexpected result code: %d", http.StatusTeapot)
-
 	err := client.Users.RejectUser(1)
-	assert.EqualError(t, err, want)
+	assert.ErrorIs(t, err, errUnexpectedResultCode)
 }
 
 func TestGetMemberships(t *testing.T) {

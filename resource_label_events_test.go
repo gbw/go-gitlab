@@ -86,7 +86,7 @@ func TestResourceLabelEventsService_ListIssueLabelEvents(t *testing.T) {
 	require.Nil(t, les)
 
 	les, resp, err = client.ResourceLabelEvents.ListIssueLabelEvents(5, 11, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, les)
 
@@ -172,7 +172,7 @@ func TestResourceLabelEventsService_GetIssueLabelEvent(t *testing.T) {
 	require.Nil(t, le)
 
 	le, resp, err = client.ResourceLabelEvents.GetIssueLabelEvent(5, 11, 1, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, le)
 
@@ -260,7 +260,7 @@ func TestResourceLabelEventsService_ListGroupEpicLabelEvents(t *testing.T) {
 	require.Nil(t, les)
 
 	les, resp, err = client.ResourceLabelEvents.ListGroupEpicLabelEvents(1, 11, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, les)
 
@@ -346,7 +346,7 @@ func TestResourceLabelEventsService_GetGroupEpicLabelEvent(t *testing.T) {
 	require.Nil(t, le)
 
 	le, resp, err = client.ResourceLabelEvents.GetGroupEpicLabelEvent(1, 11, 107, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, le)
 
@@ -434,7 +434,7 @@ func TestResourceLabelEventsService_ListMergeRequestsLabelEvents(t *testing.T) {
 	require.Nil(t, les)
 
 	les, resp, err = client.ResourceLabelEvents.ListMergeRequestsLabelEvents(5, 11, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, les)
 
@@ -520,7 +520,7 @@ func TestResourceLabelEventsService_GetMergeRequestLabelEvent(t *testing.T) {
 	require.Nil(t, le)
 
 	le, resp, err = client.ResourceLabelEvents.GetMergeRequestLabelEvent(5, 11, 120, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, le)
 

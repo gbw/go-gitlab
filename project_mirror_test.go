@@ -52,7 +52,7 @@ func TestProjectMirrorService_ListProjectMirror(t *testing.T) {
 	require.Nil(t, pms)
 
 	pms, resp, err = client.ProjectMirrors.ListProjectMirror(42, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pms)
 
@@ -170,7 +170,7 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 	require.Nil(t, pm)
 
 	pm, resp, err = client.ProjectMirrors.AddProjectMirror(42, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 
@@ -222,7 +222,7 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 	require.Nil(t, pm)
 
 	pm, resp, err = client.ProjectMirrors.EditProjectMirror(42, 101486, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, pm)
 

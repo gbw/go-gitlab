@@ -71,7 +71,7 @@ func TestGroupEpicBoardsService_ListGroupEpicBoards(t *testing.T) {
 				}
 			  ]
 			}
-		  ]		  
+		  ]
 		`)
 	})
 
@@ -136,7 +136,7 @@ func TestGroupEpicBoardsService_ListGroupEpicBoards(t *testing.T) {
 	require.Nil(t, gibs)
 
 	gibs, resp, err = client.GroupEpicBoards.ListGroupEpicBoards(5, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gibs)
 
@@ -205,7 +205,7 @@ func TestGroupEpicBoardsService_GetGroupEpicBoard(t *testing.T) {
 				"list_type": "label"
 			  }
 			]
-		  }		
+		  }
 		`)
 	})
 
@@ -270,7 +270,7 @@ func TestGroupEpicBoardsService_GetGroupEpicBoard(t *testing.T) {
 	require.Nil(t, gib)
 
 	gib, resp, err = client.GroupEpicBoards.GetGroupEpicBoard(5, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gib)
 

@@ -72,7 +72,7 @@ func TestProjectSnippetsService_ListSnippets(t *testing.T) {
 	require.Nil(t, ss)
 
 	ss, resp, err = client.ProjectSnippets.ListSnippets(1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ss)
 
@@ -143,7 +143,7 @@ func TestProjectSnippetsService_GetSnippet(t *testing.T) {
 	require.Nil(t, s)
 
 	s, resp, err = client.ProjectSnippets.GetSnippet(1, 1, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 
@@ -229,7 +229,7 @@ func TestProjectSnippetsService_CreateSnippet(t *testing.T) {
 	require.Nil(t, s)
 
 	s, resp, err = client.ProjectSnippets.CreateSnippet(1, nil, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 
@@ -300,7 +300,7 @@ func TestProjectSnippetsService_UpdateSnippet(t *testing.T) {
 	require.Nil(t, s)
 
 	s, resp, err = client.ProjectSnippets.UpdateSnippet(1, 1, nil, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 
@@ -345,7 +345,7 @@ func TestProjectSnippetsService_DeleteSnippet(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectSnippets.DeleteSnippet(1, 1, nil, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.ProjectSnippets.DeleteSnippet(2, 1, nil, nil, nil)
@@ -389,7 +389,7 @@ func TestProjectSnippetsService_SnippetContent(t *testing.T) {
 	require.Nil(t, s)
 
 	s, resp, err = client.ProjectSnippets.SnippetContent(1, 1, nil, nil, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, s)
 

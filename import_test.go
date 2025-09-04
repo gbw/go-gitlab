@@ -55,7 +55,7 @@ func TestImportService_ImportRepositoryFromGitHub(t *testing.T) {
 	require.Equal(t, want, gi)
 
 	gi, resp, err = client.Import.ImportRepositoryFromGitHub(opt, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, gi)
 }
@@ -101,7 +101,7 @@ func TestImportService_CancelGitHubProjectImport(t *testing.T) {
 	require.Equal(t, want, cgi)
 
 	cgi, resp, err = client.Import.CancelGitHubProjectImport(opt, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, cgi)
 }
@@ -121,7 +121,7 @@ func TestImportService_ImportGitHubGistsIntoGitLabSnippets(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = client.Import.ImportGitHubGistsIntoGitLabSnippets(opt, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 }
 
@@ -167,7 +167,7 @@ func TestImportService_ImportRepositoryFromBitbucketServer(t *testing.T) {
 	require.Equal(t, want, bsi)
 
 	bsi, resp, err = client.Import.ImportRepositoryFromBitbucketServer(opt, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, bsi)
 }
@@ -221,7 +221,7 @@ func TestImportService_ImportRepositoryFromBitbucketCloud(t *testing.T) {
 	require.Equal(t, want, bci)
 
 	bci, resp, err = client.Import.ImportRepositoryFromBitbucketCloud(opt, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, bci)
 }

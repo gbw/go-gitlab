@@ -51,7 +51,7 @@ func TestMilestonesService_ListMilestones(t *testing.T) {
 	require.Nil(t, ms)
 
 	ms, resp, err = client.Milestones.ListMilestones(5, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, ms)
 
@@ -102,7 +102,7 @@ func TestMilestonesService_GetMilestone(t *testing.T) {
 	require.Nil(t, m)
 
 	m, resp, err = client.Milestones.GetMilestone(5, 12, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, m)
 
@@ -153,7 +153,7 @@ func TestMilestonesService_CreateMilestone(t *testing.T) {
 	require.Nil(t, m)
 
 	m, resp, err = client.Milestones.CreateMilestone(5, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, m)
 
@@ -204,7 +204,7 @@ func TestMilestonesService_UpdateMilestone(t *testing.T) {
 	require.Nil(t, m)
 
 	m, resp, err = client.Milestones.UpdateMilestone(5, 12, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, m)
 
@@ -231,7 +231,7 @@ func TestMilestonesService_DeleteMilestone(t *testing.T) {
 	require.Nil(t, resp)
 
 	resp, err = client.Milestones.DeleteMilestone(5, 12, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 
 	resp, err = client.Milestones.DeleteMilestone(3, 12, nil)
@@ -349,7 +349,7 @@ func TestMilestonesService_GetMilestoneIssues(t *testing.T) {
 	require.Nil(t, is)
 
 	is, resp, err = client.Milestones.GetMilestoneIssues(5, 12, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -556,7 +556,7 @@ func TestMilestonesService_GetMilestoneMergeRequests(t *testing.T) {
 	require.Nil(t, mrs)
 
 	mrs, resp, err = client.Milestones.GetMilestoneMergeRequests(3, 12, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, mrs)
 

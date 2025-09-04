@@ -87,7 +87,7 @@ func TestIssueLinksService_ListIssueRelations(t *testing.T) {
 	require.Nil(t, is)
 
 	is, resp, err = client.IssueLinks.ListIssueRelations(4, 14, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, is)
 
@@ -243,7 +243,7 @@ func TestIssueLinksService_CreateIssueLink(t *testing.T) {
 	require.Nil(t, i)
 
 	i, resp, err = client.IssueLinks.CreateIssueLink(4, 1, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, i)
 
@@ -399,7 +399,7 @@ func TestIssueLinksService_DeleteIssueLink(t *testing.T) {
 	require.Nil(t, i)
 
 	i, resp, err = client.IssueLinks.DeleteIssueLink(4, 1, 83, nil, errorOption)
-	require.EqualError(t, err, "RequestOptionFunc returns an error")
+	require.ErrorIs(t, err, errRequestOptionFunc)
 	require.Nil(t, resp)
 	require.Nil(t, i)
 
