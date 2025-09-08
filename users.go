@@ -220,13 +220,14 @@ func (a *UserAvatar) MarshalJSON() ([]byte, error) {
 // GitLab API docs: https://docs.gitlab.com/api/users/#list-users
 type ListUsersOptions struct {
 	ListOptions
-	Active          *bool `url:"active,omitempty" json:"active,omitempty"`
-	Blocked         *bool `url:"blocked,omitempty" json:"blocked,omitempty"`
-	Humans          *bool `url:"humans,omitempty" json:"humans,omitempty"`
-	ExcludeInternal *bool `url:"exclude_internal,omitempty" json:"exclude_internal,omitempty"`
-	ExcludeActive   *bool `url:"exclude_active,omitempty" json:"exclude_active,omitempty"`
-	ExcludeExternal *bool `url:"exclude_external,omitempty" json:"exclude_external,omitempty"`
-	ExcludeHumans   *bool `url:"exclude_humans,omitempty" json:"exclude_humans,omitempty"`
+	Active          *bool   `url:"active,omitempty" json:"active,omitempty"`
+	Blocked         *bool   `url:"blocked,omitempty" json:"blocked,omitempty"`
+	Humans          *bool   `url:"humans,omitempty" json:"humans,omitempty"`
+	ExcludeInternal *bool   `url:"exclude_internal,omitempty" json:"exclude_internal,omitempty"`
+	ExcludeActive   *bool   `url:"exclude_active,omitempty" json:"exclude_active,omitempty"`
+	ExcludeExternal *bool   `url:"exclude_external,omitempty" json:"exclude_external,omitempty"`
+	ExcludeHumans   *bool   `url:"exclude_humans,omitempty" json:"exclude_humans,omitempty"`
+	PublicEmail     *string `url:"public_email,omitempty" json:"public_email,omitempty"`
 
 	// The options below are only available for admins.
 	Search               *string    `url:"search,omitempty" json:"search,omitempty"`
