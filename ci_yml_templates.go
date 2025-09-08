@@ -61,7 +61,9 @@ type CIYMLTemplateListItem struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/templates/gitlab_ci_ymls/#list-gitlab-ci-yaml-templates
-type ListCIYMLTemplatesOptions ListOptions
+type ListCIYMLTemplatesOptions struct {
+	ListOptions
+}
 
 // ListAllTemplates get all GitLab CI YML templates.
 //

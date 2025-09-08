@@ -60,7 +60,9 @@ func (b GroupEpicBoard) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_epic_boards/#list-all-epic-boards-in-a-group
-type ListGroupEpicBoardsOptions ListOptions
+type ListGroupEpicBoardsOptions struct {
+	ListOptions
+}
 
 // ListGroupEpicBoards gets a list of all epic boards in a group.
 //

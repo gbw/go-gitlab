@@ -103,7 +103,9 @@ func (f SecureFile) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/secure_files/#list-project-secure-files
-type ListProjectSecureFilesOptions ListOptions
+type ListProjectSecureFilesOptions struct {
+	ListOptions
+}
 
 // ListProjectSecureFiles gets a list of secure files in a project.
 //

@@ -757,7 +757,9 @@ func (s *IssuesService) CreateTodo(pid any, issue int, options ...RequestOptionF
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#list-merge-requests-that-close-a-particular-issue-on-merge
-type ListMergeRequestsClosingIssueOptions ListOptions
+type ListMergeRequestsClosingIssueOptions struct {
+	ListOptions
+}
 
 // ListMergeRequestsClosingIssue gets all the merge requests that will close
 // issue when merged.
@@ -790,7 +792,9 @@ func (s *IssuesService) ListMergeRequestsClosingIssue(pid any, issue int, opt *L
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#list-merge-requests-related-to-issue
-type ListMergeRequestsRelatedToIssueOptions ListOptions
+type ListMergeRequestsRelatedToIssueOptions struct {
+	ListOptions
+}
 
 // ListMergeRequestsRelatedToIssue gets all the merge requests that are
 // related to the issue

@@ -80,7 +80,9 @@ func (s *ApplicationsService) CreateApplication(opt *CreateApplicationOptions, o
 
 // ListApplicationsOptions represents the available
 // ListApplications() options.
-type ListApplicationsOptions ListOptions
+type ListApplicationsOptions struct {
+	ListOptions
+}
 
 // ListApplications get a list of administrables applications by the authenticated user
 //

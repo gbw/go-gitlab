@@ -820,8 +820,10 @@ func TestListMergeRequestsClosingIssue(t *testing.T) {
 	})
 
 	listMergeRequestsClosingIssueOpt := &ListMergeRequestsClosingIssueOptions{
-		Page:    1,
-		PerPage: 10,
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 10,
+		},
 	}
 	mergeRequest, _, err := client.Issues.ListMergeRequestsClosingIssue("1", 5, listMergeRequestsClosingIssueOpt)
 	if err != nil {
@@ -847,8 +849,10 @@ func TestListMergeRequestsRelatedToIssue(t *testing.T) {
 	})
 
 	listMergeRequestsRelatedToIssueOpt := &ListMergeRequestsRelatedToIssueOptions{
-		Page:    1,
-		PerPage: 10,
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 10,
+		},
 	}
 	mergeRequest, _, err := client.Issues.ListMergeRequestsRelatedToIssue("1", 5, listMergeRequestsRelatedToIssueOpt)
 	if err != nil {

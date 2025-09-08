@@ -69,7 +69,9 @@ func (b GroupIssueBoard) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_boards/#list-all-group-issue-boards-in-a-group
-type ListGroupIssueBoardsOptions ListOptions
+type ListGroupIssueBoardsOptions struct {
+	ListOptions
+}
 
 // ListGroupIssueBoards gets a list of all issue boards in a group.
 //
@@ -216,7 +218,9 @@ func (s *GroupIssueBoardsService) DeleteIssueBoard(gid any, board int, options .
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_boards/#list-group-issue-board-lists
-type ListGroupIssueBoardListsOptions ListOptions
+type ListGroupIssueBoardListsOptions struct {
+	ListOptions
+}
 
 // ListGroupIssueBoardLists gets a list of the issue board's lists. Does not include
 // backlog and closed lists.

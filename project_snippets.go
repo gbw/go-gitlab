@@ -46,7 +46,9 @@ var _ ProjectSnippetsServiceInterface = (*ProjectSnippetsService)(nil)
 // ListProjectSnippetsOptions represents the available ListSnippets() options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/project_snippets/#list-snippets
-type ListProjectSnippetsOptions ListOptions
+type ListProjectSnippetsOptions struct {
+	ListOptions
+}
 
 // ListSnippets gets a list of project snippets.
 //

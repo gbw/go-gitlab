@@ -348,7 +348,9 @@ func (c CommitComment) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/commits/#get-the-comments-of-a-commit
-type GetCommitCommentsOptions ListOptions
+type GetCommitCommentsOptions struct {
+	ListOptions
+}
 
 // GetCommitComments gets the comments of a commit in a project.
 //

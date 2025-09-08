@@ -92,7 +92,9 @@ const (
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/emoji_reactions/
-type ListAwardEmojiOptions ListOptions
+type ListAwardEmojiOptions struct {
+	ListOptions
+}
 
 // ListMergeRequestAwardEmoji gets a list of all award emoji on the merge request.
 //

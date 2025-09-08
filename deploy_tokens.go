@@ -84,7 +84,9 @@ func (s *DeployTokensService) ListAllDeployTokens(options ...RequestOptionFunc) 
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_tokens/#list-project-deploy-tokens
-type ListProjectDeployTokensOptions ListOptions
+type ListProjectDeployTokensOptions struct {
+	ListOptions
+}
 
 // ListProjectDeployTokens gets a list of a project's deploy tokens.
 //
@@ -196,7 +198,9 @@ func (s *DeployTokensService) DeleteProjectDeployToken(pid any, deployToken int,
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_tokens/#list-group-deploy-tokens
-type ListGroupDeployTokensOptions ListOptions
+type ListGroupDeployTokensOptions struct {
+	ListOptions
+}
 
 // ListGroupDeployTokens gets a list of a group’s deploy tokens.
 //

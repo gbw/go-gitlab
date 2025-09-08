@@ -84,7 +84,9 @@ func (s Snippet) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/snippets/#list-all-snippets-for-current-user
-type ListSnippetsOptions ListOptions
+type ListSnippetsOptions struct {
+	ListOptions
+}
 
 // ListSnippets gets a list of snippets.
 //
@@ -278,7 +280,9 @@ func (s *SnippetsService) DeleteSnippet(snippet int, options ...RequestOptionFun
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/snippets/#list-all-public-snippets
-type ExploreSnippetsOptions ListOptions
+type ExploreSnippetsOptions struct {
+	ListOptions
+}
 
 // ExploreSnippets gets the list of public snippets.
 //

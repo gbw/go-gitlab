@@ -594,7 +594,9 @@ type SSHKey struct {
 // ListSSHKeysOptions represents the available ListSSHKeys options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys
-type ListSSHKeysOptions ListOptions
+type ListSSHKeysOptions struct {
+	ListOptions
+}
 
 // ListSSHKeys gets a list of currently authenticated user's SSH keys.
 //
@@ -618,7 +620,9 @@ func (s *UsersService) ListSSHKeys(opt *ListSSHKeysOptions, options ...RequestOp
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys-for-a-user
-type ListSSHKeysForUserOptions ListOptions
+type ListSSHKeysForUserOptions struct {
+	ListOptions
+}
 
 // ListSSHKeysForUser gets a list of a specified user's SSH keys.
 //
@@ -963,7 +967,9 @@ func (s *UsersService) ListEmails(options ...RequestOptionFunc) ([]*Email, *Resp
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/user_email_addresses/#list-all-email-addresses-for-a-user
-type ListEmailsForUserOptions ListOptions
+type ListEmailsForUserOptions struct {
+	ListOptions
+}
 
 // ListEmailsForUser gets a list of a specified user's Emails. Available
 // only for admin

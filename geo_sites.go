@@ -121,7 +121,9 @@ func (s *GeoSitesService) CreateGeoSite(opt *CreateGeoSitesOptions, options ...R
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/geo_sites/#retrieve-configuration-about-all-geo-sites
-type ListGeoSitesOptions ListOptions
+type ListGeoSitesOptions struct {
+	ListOptions
+}
 
 // ListGeoSites gets a list of geo sites.
 //
@@ -470,7 +472,9 @@ type GeoSiteStatusLink struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/geo_sites/#retrieve-status-about-all-geo-sites
-type ListStatusOfAllGeoSitesOptions ListOptions
+type ListStatusOfAllGeoSitesOptions struct {
+	ListOptions
+}
 
 // ListStatusOfAllGeoSites get the list of status of all Geo Sites.
 //

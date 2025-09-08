@@ -64,7 +64,9 @@ type AccessRequest struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/access_requests/#list-access-requests-for-a-group-or-project
-type ListAccessRequestsOptions ListOptions
+type ListAccessRequestsOptions struct {
+	ListOptions
+}
 
 // ListProjectAccessRequests gets a list of access requests
 // viewable by the authenticated user.

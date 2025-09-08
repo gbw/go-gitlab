@@ -203,7 +203,9 @@ func (s *PackagesService) ListGroupPackages(gid any, opt *ListGroupPackagesOptio
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/packages/#list-package-files
-type ListPackageFilesOptions ListOptions
+type ListPackageFilesOptions struct {
+	ListOptions
+}
 
 // ListPackageFiles gets a list of files that are within a package
 //

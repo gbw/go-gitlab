@@ -109,7 +109,7 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 		  ]`)
 	})
 
-	repositories, _, err := client.ContainerRegistry.ListGroupRegistryRepositories(5, &ListRegistryRepositoriesOptions{})
+	repositories, _, err := client.ContainerRegistry.ListGroupRegistryRepositories(5, &ListGroupRegistryRepositoriesOptions{})
 	if err != nil {
 		t.Errorf("ContainerRegistry.ListGroupRegistryRepositories returned error: %v", err)
 	}

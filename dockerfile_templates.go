@@ -60,7 +60,9 @@ type DockerfileTemplateListItem struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/templates/dockerfiles/#list-dockerfile-templates
-type ListDockerfileTemplatesOptions ListOptions
+type ListDockerfileTemplatesOptions struct {
+	ListOptions
+}
 
 // ListTemplates get a list of available Dockerfile templates.
 //

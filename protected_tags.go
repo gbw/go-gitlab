@@ -67,7 +67,9 @@ type TagAccessDescription struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/protected_tags/#list-protected-tags
-type ListProtectedTagsOptions ListOptions
+type ListProtectedTagsOptions struct {
+	ListOptions
+}
 
 // ListProtectedTags returns a list of protected tags from a project.
 //

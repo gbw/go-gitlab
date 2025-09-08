@@ -25,7 +25,7 @@ import (
 type (
 	ContainerRegistryServiceInterface interface {
 		ListProjectRegistryRepositories(pid any, opt *ListRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error)
-		ListGroupRegistryRepositories(gid any, opt *ListRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error)
+		ListGroupRegistryRepositories(gid any, opt *ListGroupRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error)
 		GetSingleRegistryRepository(pid any, opt *GetSingleRegistryRepositoryOptions, options ...RequestOptionFunc) (*RegistryRepository, *Response, error)
 		DeleteRegistryRepository(pid any, repository int, options ...RequestOptionFunc) (*Response, error)
 		ListRegistryRepositoryTags(pid any, repository int, opt *ListRegistryRepositoryTagsOptions, options ...RequestOptionFunc) ([]*RegistryRepositoryTag, *Response, error)
@@ -84,16 +84,24 @@ func (s RegistryRepositoryTag) String() string {
 }
 
 // ListRegistryRepositoriesOptions represents the available
-// ListRegistryRepositories() options.
+// ListProjectRegistryRepositories() options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/api/container_registry/#list-registry-repositories
+// https://docs.gitlab.com/api/container_registry/#within-a-project
 type ListRegistryRepositoriesOptions struct {
 	ListOptions
 
-	// Deprecated: These options are deprecated for ListGroupRegistryRepositories calls. (Removed in GitLab 15.0)
 	Tags      *bool `url:"tags,omitempty" json:"tags,omitempty"`
 	TagsCount *bool `url:"tags_count,omitempty" json:"tags_count,omitempty"`
+}
+
+// ListGroupRegistryRepositoriesOptions represents the available
+// ListGroupRegistryRepositories() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/container_registry/#within-a-group
+type ListGroupRegistryRepositoriesOptions struct {
+	ListOptions
 }
 
 // ListProjectRegistryRepositories gets a list of registry repositories in a project.
@@ -125,7 +133,7 @@ func (s *ContainerRegistryService) ListProjectRegistryRepositories(pid any, opt 
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/container_registry/#within-a-group
-func (s *ContainerRegistryService) ListGroupRegistryRepositories(gid any, opt *ListRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error) {
+func (s *ContainerRegistryService) ListGroupRegistryRepositories(gid any, opt *ListGroupRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -205,7 +213,9 @@ func (s *ContainerRegistryService) DeleteRegistryRepository(pid any, repository 
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/container_registry/#list-registry-repository-tags
-type ListRegistryRepositoryTagsOptions ListOptions
+type ListRegistryRepositoryTagsOptions struct {
+	ListOptions
+}
 
 // ListRegistryRepositoryTags gets a list of tags for given registry repository.
 //

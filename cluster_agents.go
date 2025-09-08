@@ -94,7 +94,9 @@ func (a AgentToken) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/cluster_agents/#list-the-agents-for-a-project
-type ListAgentsOptions ListOptions
+type ListAgentsOptions struct {
+	ListOptions
+}
 
 // ListAgents returns a list of agents registered for the project.
 //
@@ -203,7 +205,9 @@ func (s *ClusterAgentsService) DeleteAgent(pid any, id int, options ...RequestOp
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/cluster_agents/#list-tokens-for-an-agent
-type ListAgentTokensOptions ListOptions
+type ListAgentTokensOptions struct {
+	ListOptions
+}
 
 // ListAgentTokens returns a list of tokens for an agent.
 //

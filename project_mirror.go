@@ -66,7 +66,9 @@ type ProjectMirrorPublicKey struct {
 }
 
 // ListProjectMirrorOptions represents the available ListProjectMirror() options.
-type ListProjectMirrorOptions ListOptions
+type ListProjectMirrorOptions struct {
+	ListOptions
+}
 
 // ListProjectMirror gets a list of mirrors configured on the project.
 //

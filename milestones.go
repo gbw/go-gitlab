@@ -228,7 +228,9 @@ func (s *MilestonesService) DeleteMilestone(pid any, milestone int, options ...R
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/milestones/#get-all-issues-assigned-to-a-single-milestone
-type GetMilestoneIssuesOptions ListOptions
+type GetMilestoneIssuesOptions struct {
+	ListOptions
+}
 
 // GetMilestoneIssues gets all issues assigned to a single project milestone.
 //
@@ -260,7 +262,9 @@ func (s *MilestonesService) GetMilestoneIssues(pid any, milestone int, opt *GetM
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/milestones/#get-all-merge-requests-assigned-to-a-single-milestone
-type GetMilestoneMergeRequestsOptions ListOptions
+type GetMilestoneMergeRequestsOptions struct {
+	ListOptions
+}
 
 // GetMilestoneMergeRequests gets all merge requests assigned to a single
 // project milestone.

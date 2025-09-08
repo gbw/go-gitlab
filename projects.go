@@ -1425,7 +1425,9 @@ type ProjectHook struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_webhooks/#list-webhooks-for-a-project
-type ListProjectHooksOptions ListOptions
+type ListProjectHooksOptions struct {
+	ListOptions
+}
 
 // ListProjectHooks gets a list of project hooks.
 //
@@ -2115,7 +2117,9 @@ func (s *ProjectsService) ChangeApprovalConfiguration(pid any, opt *ChangeApprov
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_request_approvals/#get-all-approval-rules-for-project
-type GetProjectApprovalRulesListsOptions ListOptions
+type GetProjectApprovalRulesListsOptions struct {
+	ListOptions
+}
 
 // GetProjectApprovalRules looks up the list of project level approver rules.
 //

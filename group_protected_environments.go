@@ -87,7 +87,9 @@ type GroupEnvironmentApprovalRule struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_protected_environments/#list-group-level-protected-environments
-type ListGroupProtectedEnvironmentsOptions ListOptions
+type ListGroupProtectedEnvironmentsOptions struct {
+	ListOptions
+}
 
 // ListGroupProtectedEnvironments returns a list of protected environments from
 // a group.

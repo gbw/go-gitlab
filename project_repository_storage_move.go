@@ -72,7 +72,9 @@ type RepositoryProject struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_repository_storage_moves/#retrieve-all-project-repository-storage-moves
-type RetrieveAllProjectStorageMovesOptions ListOptions
+type RetrieveAllProjectStorageMovesOptions struct {
+	ListOptions
+}
 
 // RetrieveAllStorageMoves retrieves all project repository storage moves
 // accessible by the authenticated user.

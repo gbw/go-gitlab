@@ -275,7 +275,9 @@ func (s *GroupsService) ListBillableGroupMembers(gid any, opt *ListBillableGroup
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/members/#list-memberships-for-a-billable-member-of-a-group
-type ListMembershipsForBillableGroupMemberOptions = ListOptions
+type ListMembershipsForBillableGroupMemberOptions struct {
+	ListOptions
+}
 
 // ListMembershipsForBillableGroupMember gets a list of memberships for a
 // billable member of a group.

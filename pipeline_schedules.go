@@ -142,7 +142,9 @@ func (s *PipelineSchedulesService) GetPipelineSchedule(pid any, schedule int, op
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipeline_schedules/#get-all-pipelines-triggered-by-a-pipeline-schedule
-type ListPipelinesTriggeredByScheduleOptions ListOptions
+type ListPipelinesTriggeredByScheduleOptions struct {
+	ListOptions
+}
 
 // ListPipelinesTriggeredBySchedule gets all pipelines triggered by a pipeline
 // schedule.

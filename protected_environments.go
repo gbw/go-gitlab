@@ -87,7 +87,9 @@ type EnvironmentApprovalRule struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/protected_environments/#list-protected-environments
-type ListProtectedEnvironmentsOptions ListOptions
+type ListProtectedEnvironmentsOptions struct {
+	ListOptions
+}
 
 // ListProtectedEnvironments returns a list of protected environments from a
 // project.

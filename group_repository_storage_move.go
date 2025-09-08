@@ -66,7 +66,9 @@ type RepositoryGroup struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_repository_storage_moves/#retrieve-all-group-repository-storage-moves
-type RetrieveAllGroupStorageMovesOptions ListOptions
+type RetrieveAllGroupStorageMovesOptions struct {
+	ListOptions
+}
 
 // RetrieveAllStorageMoves retrieves all group repository storage moves
 // accessible by the authenticated user.

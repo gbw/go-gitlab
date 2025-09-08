@@ -494,7 +494,9 @@ func (s *MergeRequestsService) GetMergeRequestApprovals(pid any, mergeRequest in
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-single-merge-request-commits
-type GetMergeRequestCommitsOptions ListOptions
+type GetMergeRequestCommitsOptions struct {
+	ListOptions
+}
 
 // GetMergeRequestCommits gets a list of merge request commits.
 //
@@ -748,7 +750,9 @@ func (s *MergeRequestsService) CreateMergeRequestPipeline(pid any, mergeRequest 
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-issues-that-close-on-merge
-type GetIssuesClosedOnMergeOptions ListOptions
+type GetIssuesClosedOnMergeOptions struct {
+	ListOptions
+}
 
 // GetIssuesClosedOnMerge gets all the issues that would be closed by merging the
 // provided merge request.
@@ -780,7 +784,9 @@ func (s *MergeRequestsService) GetIssuesClosedOnMerge(pid any, mergeRequest int,
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-issues-related-to-the-merge-request
-type ListRelatedIssuesOptions ListOptions
+type ListRelatedIssuesOptions struct {
+	ListOptions
+}
 
 // ListRelatedIssues gets all the issues related to provided merge request.
 //
@@ -1033,7 +1039,9 @@ func (s *MergeRequestsService) RebaseMergeRequest(pid any, mergeRequest int, opt
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-merge-request-diff-versions
-type GetMergeRequestDiffVersionsOptions ListOptions
+type GetMergeRequestDiffVersionsOptions struct {
+	ListOptions
+}
 
 // GetMergeRequestDiffVersions get a list of merge request diff versions.
 //

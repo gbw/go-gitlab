@@ -65,7 +65,9 @@ type FreezePeriod struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/freeze_periods/#list-freeze-periods
-type ListFreezePeriodsOptions ListOptions
+type ListFreezePeriodsOptions struct {
+	ListOptions
+}
 
 // ListFreezePeriods gets a list of project freeze periods.
 //

@@ -180,7 +180,9 @@ func (s *IssueBoardsService) DeleteIssueBoard(pid any, board int, options ...Req
 // ListIssueBoardsOptions represents the available ListIssueBoards() options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/boards/#list-project-issue-boards
-type ListIssueBoardsOptions ListOptions
+type ListIssueBoardsOptions struct {
+	ListOptions
+}
 
 // ListIssueBoards gets a list of all issue boards in a project.
 //
@@ -233,7 +235,9 @@ func (s *IssueBoardsService) GetIssueBoard(pid any, board int, options ...Reques
 // GetIssueBoardListsOptions represents the available GetIssueBoardLists() options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/boards/#list-board-lists-in-a-project-issue-board
-type GetIssueBoardListsOptions ListOptions
+type GetIssueBoardListsOptions struct {
+	ListOptions
+}
 
 // GetIssueBoardLists gets a list of the issue board's lists. Does not include
 // backlog and closed lists.

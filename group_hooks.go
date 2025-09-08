@@ -63,7 +63,9 @@ type GroupHook struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_webhooks/#list-group-hooks
-type ListGroupHooksOptions ListOptions
+type ListGroupHooksOptions struct {
+	ListOptions
+}
 
 // ListGroupHooks gets a list of group hooks.
 //

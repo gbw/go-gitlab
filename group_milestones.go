@@ -235,7 +235,9 @@ func (s *GroupMilestonesService) DeleteGroupMilestone(pid any, milestone int, op
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_milestones/#get-all-issues-assigned-to-a-single-milestone
-type GetGroupMilestoneIssuesOptions ListOptions
+type GetGroupMilestoneIssuesOptions struct {
+	ListOptions
+}
 
 // GetGroupMilestoneIssues gets all issues assigned to a single group milestone.
 //
@@ -267,7 +269,9 @@ func (s *GroupMilestonesService) GetGroupMilestoneIssues(gid any, milestone int,
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_milestones/#get-all-merge-requests-assigned-to-a-single-milestone
-type GetGroupMilestoneMergeRequestsOptions ListOptions
+type GetGroupMilestoneMergeRequestsOptions struct {
+	ListOptions
+}
 
 // GetGroupMilestoneMergeRequests gets all merge requests assigned to a
 // single group milestone.
@@ -310,7 +314,9 @@ type BurndownChartEvent struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_milestones/#get-all-burndown-chart-events-for-a-single-milestone
-type GetGroupMilestoneBurndownChartEventsOptions ListOptions
+type GetGroupMilestoneBurndownChartEventsOptions struct {
+	ListOptions
+}
 
 // GetGroupMilestoneBurndownChartEvents gets all merge requests assigned to a
 // single group milestone.

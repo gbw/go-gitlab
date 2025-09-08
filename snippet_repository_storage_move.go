@@ -77,7 +77,9 @@ type RepositorySnippet struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/snippet_repository_storage_moves/#retrieve-all-snippet-repository-storage-moves
 // https://docs.gitlab.com/api/snippet_repository_storage_moves/#retrieve-all-repository-storage-moves-for-a-snippet
-type RetrieveAllSnippetStorageMovesOptions ListOptions
+type RetrieveAllSnippetStorageMovesOptions struct {
+	ListOptions
+}
 
 // RetrieveAllStorageMoves retrieves all snippet repository storage moves
 // accessible by the authenticated user.

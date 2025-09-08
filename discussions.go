@@ -87,7 +87,9 @@ func (d Discussion) String() string {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-project-issue-discussion-items
-type ListIssueDiscussionsOptions ListOptions
+type ListIssueDiscussionsOptions struct {
+	ListOptions
+}
 
 // ListIssueDiscussions gets a list of all discussions for a single
 // issue.
@@ -287,7 +289,9 @@ func (s *DiscussionsService) DeleteIssueDiscussionNote(pid any, issue int, discu
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-project-snippet-discussion-items
-type ListSnippetDiscussionsOptions ListOptions
+type ListSnippetDiscussionsOptions struct {
+	ListOptions
+}
 
 // ListSnippetDiscussions gets a list of all discussions for a single
 // snippet. Snippet discussions are comments users can post to a snippet.
@@ -489,7 +493,9 @@ func (s *DiscussionsService) DeleteSnippetDiscussionNote(pid any, snippet int, d
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-group-epic-discussion-items
-type ListGroupEpicDiscussionsOptions ListOptions
+type ListGroupEpicDiscussionsOptions struct {
+	ListOptions
+}
 
 // ListGroupEpicDiscussions gets a list of all discussions for a single
 // epic. Epic discussions are comments users can post to a epic.
@@ -696,7 +702,9 @@ func (s *DiscussionsService) DeleteEpicDiscussionNote(gid any, epic int, discuss
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-project-merge-request-discussion-items
-type ListMergeRequestDiscussionsOptions ListOptions
+type ListMergeRequestDiscussionsOptions struct {
+	ListOptions
+}
 
 // ListMergeRequestDiscussions gets a list of all discussions for a single
 // merge request.
@@ -980,7 +988,9 @@ func (s *DiscussionsService) DeleteMergeRequestDiscussionNote(pid any, mergeRequ
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-project-commit-discussion-items
-type ListCommitDiscussionsOptions ListOptions
+type ListCommitDiscussionsOptions struct {
+	ListOptions
+}
 
 // ListCommitDiscussions gets a list of all discussions for a single
 // commit.

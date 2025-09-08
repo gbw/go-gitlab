@@ -160,7 +160,9 @@ func (s *DeployKeysService) AddInstanceDeployKey(opt *AddInstanceDeployKeyOption
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_keys/#list-deploy-keys-for-project
-type ListProjectDeployKeysOptions ListOptions
+type ListProjectDeployKeysOptions struct {
+	ListOptions
+}
 
 // ListProjectDeployKeys gets a list of a project's deploy keys
 //
@@ -192,7 +194,9 @@ func (s *DeployKeysService) ListProjectDeployKeys(pid any, opt *ListProjectDeplo
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_keys/#list-project-deploy-keys-for-user
-type ListUserProjectDeployKeysOptions ListOptions
+type ListUserProjectDeployKeysOptions struct {
+	ListOptions
+}
 
 // ListUserProjectDeployKeys gets a list of a user's deploy keys
 //

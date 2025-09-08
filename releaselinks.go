@@ -56,7 +56,9 @@ type ReleaseLink struct {
 // ListReleaseLinksOptions represents ListReleaseLinks() options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/releases/links/#list-links-of-a-release
-type ListReleaseLinksOptions ListOptions
+type ListReleaseLinksOptions struct {
+	ListOptions
+}
 
 // ListReleaseLinks gets assets as links from a Release.
 //

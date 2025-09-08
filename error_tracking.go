@@ -137,7 +137,9 @@ func (s *ErrorTrackingService) EnableDisableErrorTracking(pid any, opt *EnableDi
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/error_tracking/#list-project-client-keys
-type ListClientKeysOptions ListOptions
+type ListClientKeysOptions struct {
+	ListOptions
+}
 
 // ListClientKeys lists error tracking project client keys.
 //

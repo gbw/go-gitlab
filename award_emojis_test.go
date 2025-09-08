@@ -1428,8 +1428,10 @@ func TestAwardEmojiService_Timeout(t *testing.T) {
 	defer cancel()
 
 	opt := &ListAwardEmojiOptions{
-		Page:    1,
-		PerPage: 20,
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 20,
+		},
 	}
 
 	aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, 80, opt, WithContext(ctx))

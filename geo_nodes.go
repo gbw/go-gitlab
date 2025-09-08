@@ -139,7 +139,9 @@ func (s *GeoNodesService) CreateGeoNode(opt *CreateGeoNodesOptions, options ...R
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/geo_nodes/#retrieve-configuration-about-all-geo-nodes
-type ListGeoNodesOptions ListOptions
+type ListGeoNodesOptions struct {
+	ListOptions
+}
 
 // ListGeoNodes gets a list of geo nodes.
 // Deprecated: will be removed in v5 of the API, use Geo Sites API instead
