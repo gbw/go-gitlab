@@ -198,7 +198,7 @@ type Project struct {
 	CIForwardDeploymentRollbackAllowed       bool                                        `json:"ci_forward_deployment_rollback_allowed"`
 	CIPushRepositoryForJobTokenAllowed       bool                                        `json:"ci_push_repository_for_job_token_allowed"`
 	CIIdTokenSubClaimComponents              []string                                    `json:"ci_id_token_sub_claim_components"`
-	CISeperateCache                          bool                                        `json:"ci_separated_caches"`
+	CISeparatedCaches                        bool                                        `json:"ci_separated_caches"`
 	CIJobTokenScopeEnabled                   bool                                        `json:"ci_job_token_scope_enabled"`
 	CIOptInJWT                               bool                                        `json:"ci_opt_in_jwt"`
 	CIAllowForkPipelinesToRunInParentProject bool                                        `json:"ci_allow_fork_pipelines_to_run_in_parent_project"`
@@ -598,7 +598,7 @@ type ListProjectGroupOptions struct {
 	ListOptions
 	Search               *string           `url:"search,omitempty" json:"search,omitempty"`
 	SharedMinAccessLevel *AccessLevelValue `url:"shared_min_access_level,omitempty" json:"shared_min_access_level,omitempty"`
-	SharedVisiableOnly   *bool             `url:"shared_visible_only,omitempty" json:"shared_visible_only,omitempty"`
+	SharedVisibleOnly    *bool             `url:"shared_visible_only,omitempty" json:"shared_visible_only,omitempty"`
 	SkipGroups           *[]int            `url:"skip_groups,omitempty" json:"skip_groups,omitempty"`
 	WithShared           *bool             `url:"with_shared,omitempty" json:"with_shared,omitempty"`
 }
@@ -946,7 +946,7 @@ type EditProjectOptions struct {
 	CIForwardDeploymentRollbackAllowed        *bool                                        `url:"ci_forward_deployment_rollback_allowed,omitempty" json:"ci_forward_deployment_rollback_allowed,omitempty"`
 	CIPushRepositoryForJobTokenAllowed        *bool                                        `url:"ci_push_repository_for_job_token_allowed,omitempty" json:"ci_push_repository_for_job_token_allowed,omitempty"`
 	CIIdTokenSubClaimComponents               *[]string                                    `url:"ci_id_token_sub_claim_components,omitempty" json:"ci_id_token_sub_claim_components,omitempty"`
-	CISeperateCache                           *bool                                        `url:"ci_separated_caches,omitempty" json:"ci_separated_caches,omitempty"`
+	CISeparatedCaches                         *bool                                        `url:"ci_separated_caches,omitempty" json:"ci_separated_caches,omitempty"`
 	CIRestrictPipelineCancellationRole        *AccessControlValue                          `url:"ci_restrict_pipeline_cancellation_role,omitempty" json:"ci_restrict_pipeline_cancellation_role,omitempty"`
 	CIPipelineVariablesMinimumOverrideRole    *CIPipelineVariablesMinimumOverrideRoleValue `url:"ci_pipeline_variables_minimum_override_role,omitempty" json:"ci_pipeline_variables_minimum_override_role,omitempty"`
 	ContainerExpirationPolicyAttributes       *ContainerExpirationPolicyAttributes         `url:"container_expiration_policy_attributes,omitempty" json:"container_expiration_policy_attributes,omitempty"`
