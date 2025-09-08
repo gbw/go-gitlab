@@ -45,8 +45,8 @@ func TestGetGroup(t *testing.T) {
 			testMethod(t, r, http.MethodGet)
 			fmt.Fprint(w, `
 			{
-			"id": 1, 
-			"name": "g", 
+			"id": 1,
+			"name": "g",
 			"default_branch": "branch",
 			"shared_with_groups": [
 				{
@@ -952,14 +952,14 @@ func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
 				t.Fatalf("Failed to read the request body. Error: %v", err)
 			}
 
-			var bodyJson map[string]any
-			err = json.Unmarshal(body, &bodyJson)
+			var bodyJSON map[string]any
+			err = json.Unmarshal(body, &bodyJSON)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
 			}
 
-			if bodyJson["ip_restriction_ranges"] != ipRange {
-				t.Fatalf("Test failed. `ip_restriction_ranges` expected to be '%v', got %v", ipRange, bodyJson["ip_restriction_ranges"])
+			if bodyJSON["ip_restriction_ranges"] != ipRange {
+				t.Fatalf("Test failed. `ip_restriction_ranges` expected to be '%v', got %v", ipRange, bodyJSON["ip_restriction_ranges"])
 			}
 
 			fmt.Fprintf(w, `{"id": 1, "ip_restriction_ranges" : "%v"}`, ipRange)
@@ -1037,14 +1037,14 @@ func TestCreateGroupWithEmailsEnabled(t *testing.T) {
 			}
 
 			// unmarshal into generic JSON since we don't want to test CreateGroupOptions using itself to validate.
-			var bodyJson map[string]any
-			err = json.Unmarshal(body, &bodyJson)
+			var bodyJSON map[string]any
+			err = json.Unmarshal(body, &bodyJSON)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
 			}
 
-			if bodyJson["emails_enabled"] != true {
-				t.Fatalf("Test failed. `emails_enabled` expected to be true, got %v", bodyJson["emails_enabled"])
+			if bodyJSON["emails_enabled"] != true {
+				t.Fatalf("Test failed. `emails_enabled` expected to be true, got %v", bodyJSON["emails_enabled"])
 			}
 
 			// Response is tested via the "GET" test, only test the actual request here.
@@ -1072,14 +1072,14 @@ func TestUpdateGroupWithEmailsEnabled(t *testing.T) {
 			}
 
 			// unmarshal into generic JSON since we don't want to test UpdateGroupOptions using itself to validate.
-			var bodyJson map[string]any
-			err = json.Unmarshal(body, &bodyJson)
+			var bodyJSON map[string]any
+			err = json.Unmarshal(body, &bodyJSON)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
 			}
 
-			if bodyJson["emails_enabled"] != true {
-				t.Fatalf("Test failed. `emails_enabled` expected to be true, got %v", bodyJson["emails_enabled"])
+			if bodyJSON["emails_enabled"] != true {
+				t.Fatalf("Test failed. `emails_enabled` expected to be true, got %v", bodyJSON["emails_enabled"])
 			}
 
 			// Response is tested via the "GET" test, only test the actual request here.
@@ -1292,14 +1292,14 @@ func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
 				t.Fatalf("Failed to read the request body. Error: %v", err)
 			}
 
-			var bodyJson map[string]any
-			err = json.Unmarshal(body, &bodyJson)
+			var bodyJSON map[string]any
+			err = json.Unmarshal(body, &bodyJSON)
 			if err != nil {
 				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
 			}
 
-			if bodyJson["allowed_email_domains_list"] != domain {
-				t.Fatalf("Test failed. `allowed_email_domains_list` expected to be '%v', got %v", domain, bodyJson["allowed_email_domains_list"])
+			if bodyJSON["allowed_email_domains_list"] != domain {
+				t.Fatalf("Test failed. `allowed_email_domains_list` expected to be '%v', got %v", domain, bodyJSON["allowed_email_domains_list"])
 			}
 
 			fmt.Fprintf(w, `{"id": 1, "allowed_email_domains_list" : "%v"}`, domain)

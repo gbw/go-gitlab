@@ -1941,7 +1941,7 @@ func TestGetProjectWebhookHeader(t *testing.T) {
 func TestSetProjectWebhookHeader(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	var bodyJson map[string]any
+	var bodyJSON map[string]any
 
 	// Removed most of the arguments to keep test slim
 	mux.HandleFunc("/api/v4/projects/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {
@@ -1955,7 +1955,7 @@ func TestSetProjectWebhookHeader(t *testing.T) {
 		}
 
 		// Unmarshal the body into JSON so we can check it
-		_ = json.Unmarshal(body, &bodyJson)
+		_ = json.Unmarshal(body, &bodyJSON)
 
 		fmt.Fprint(w, ``)
 	})
@@ -1963,7 +1963,7 @@ func TestSetProjectWebhookHeader(t *testing.T) {
 	resp, err := client.Projects.SetProjectCustomHeader(1, 1, "Authorization", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	assert.Equal(t, "testValue", bodyJson["value"])
+	assert.Equal(t, "testValue", bodyJSON["value"])
 	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
