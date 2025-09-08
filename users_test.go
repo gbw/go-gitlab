@@ -1081,3 +1081,34 @@ func TestSetUserStatus(t *testing.T) {
 	assert.Equal(t, 0, want.ClearStatusAt.Nanosecond())
 	assert.Equal(t, want, got)
 }
+
+func TestListUsersWithPublicEmail(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/users", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		// Verify that the public_email parameter is correctly passed
+		publicEmail := r.URL.Query().Get("public_email")
+		assert.Equal(t, "longcat@example.com", publicEmail)
+
+		mustWriteHTTPResponse(t, w, "testdata/list_users_public_email.json")
+	})
+
+	opts := &ListUsersOptions{
+		PublicEmail: Ptr("longcat@example.com"),
+	}
+	users, _, err := client.Users.ListUsers(opts)
+	assert.NoError(t, err)
+
+	want := []*User{{
+		ID:          1,
+		Username:    "example_user",
+		Name:        "Example User",
+		State:       "active",
+		PublicEmail: "longcat@example.com",
+		WebURL:      "http://localhost:3000/example_user",
+	}}
+	assert.Equal(t, want, users)
+}
