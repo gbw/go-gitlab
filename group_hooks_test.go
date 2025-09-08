@@ -470,7 +470,7 @@ func TestTriggerTestGroupHook(t *testing.T) {
 func TestSetGroupWebhookHeader(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	var bodyJson map[string]any
+	var bodyJSON map[string]any
 
 	// Removed most of the arguments to keep test slim
 	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {
@@ -484,7 +484,7 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 		}
 
 		// Unmarshal the body into JSON so we can check it
-		_ = json.Unmarshal(body, &bodyJson)
+		_ = json.Unmarshal(body, &bodyJSON)
 
 		fmt.Fprint(w, ``)
 	})
@@ -494,7 +494,7 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 		t.Errorf("Groups.SetGroupCustomHeader returned error: %v", err)
 	}
 
-	require.Equal(t, "testValue", bodyJson["value"])
+	require.Equal(t, "testValue", bodyJSON["value"])
 	require.Equal(t, http.StatusNoContent, req.StatusCode)
 }
 
