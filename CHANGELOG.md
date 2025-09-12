@@ -1,3 +1,10 @@
+# [0.144.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.143.3...v0.144.0) (2025-09-12)
+
+
+### Features
+
+* **client:** add http.RoundTripper Middleware Configuration Option to Client ([88f9d10](https://gitlab.com/gitlab-org/api/client-go/commit/88f9d1055acbd5e060ab13947b856ccc3a03da6f))
+
 ## [0.143.3](https://gitlab.com/gitlab-org/api/client-go/compare/v0.143.2...v0.143.3) (2025-09-10)
 
 ## [0.143.2](https://gitlab.com/gitlab-org/api/client-go/compare/v0.143.1...v0.143.2) (2025-09-09)
