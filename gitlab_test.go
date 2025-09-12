@@ -1012,3 +1012,127 @@ func TestClient_CookieJar(t *testing.T) {
 	}
 	assert.Equal(t, "another-yummy", cookieMap["test-session-cookie"])
 }
+
+func TestWithInterceptor(t *testing.T) {
+	t.Parallel()
+
+	t.Run("when nil interceptor has been passed, then it will result in an error", func(t *testing.T) {
+		_, err := NewClient("", WithInterceptor(nil))
+		require.Error(t, err)
+	})
+
+	t.Run("when interceptor option is provided, then it is used in the client as part of the http round tripping of the transportation", func(t *testing.T) {
+		client, err := NewClient("",
+			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
+				assert.NotNil(t, next, "it was expected that the next middleware is not empty, most likely being the default transport in worse case scenario")
+				return StubRoundTripper(func(r *http.Request) (*http.Response, error) {
+					return &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(strings.NewReader("{}"))}, nil
+				})
+			}),
+		)
+		require.NoError(t, err)
+
+		_, resp, err := client.Users.CurrentUser()
+		require.NoError(t, err)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+	})
+
+	t.Run("enables request manipulation", func(t *testing.T) {
+		client, err := NewClient("",
+			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
+				assert.NotNil(t, next, "it was expected that the next middleware is not empty, most likely being the default transport in worse case scenario")
+				return StubRoundTripper(func(r *http.Request) (*http.Response, error) {
+					assert.Equal(t, "foo", r.Header.Get("X-Foo"))
+					respHeaders := http.Header{}
+					respHeaders.Set("X-Bar", "bar")
+					return &http.Response{
+						StatusCode: http.StatusOK,
+						Body:       io.NopCloser(strings.NewReader("{}")),
+						Header:     respHeaders,
+					}, nil
+				})
+			}),
+		)
+		require.NoError(t, err)
+
+		_, resp, err := client.Users.CurrentUser(func(r *retryablehttp.Request) error {
+			r.Request.Header.Set("X-Foo", "foo")
+			return nil
+		})
+		require.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "bar", resp.Header.Get("X-Bar"))
+	})
+
+	t.Run("ordering aligned to how interceptors are provided, as this makes it easier to read a option setup", func(t *testing.T) {
+		var ordering []int
+		client, err := NewClient("",
+			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
+				assert.NotNil(t, next)
+				return StubRoundTripper(func(r *http.Request) (*http.Response, error) {
+					ordering = append(ordering, 1)
+					return next.RoundTrip(r)
+				})
+			}),
+			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
+				assert.NotNil(t, next)
+				return StubRoundTripper(func(r *http.Request) (*http.Response, error) {
+					ordering = append(ordering, 2)
+					return next.RoundTrip(r)
+				})
+			}),
+			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
+				assert.NotNil(t, next)
+				return StubRoundTripper(func(r *http.Request) (*http.Response, error) {
+					ordering = append(ordering, 3)
+					return &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(strings.NewReader("{}"))}, nil
+				})
+			}),
+		)
+		require.NoError(t, err)
+
+		_, _, _ = client.Users.CurrentUser()
+		assert.Equal(t, []int{1, 2, 3}, ordering)
+	})
+
+	t.Run("e2e", func(t *testing.T) {
+		const endpoint = "/api/v4/user"
+
+		mux := http.NewServeMux()
+		mux.HandleFunc(endpoint, func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("X-Foo", "bar")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintln(w, `{}`)
+		})
+
+		server := httptest.NewServer(mux)
+		t.Cleanup(server.Close)
+
+		client, err := NewClient("",
+			WithBaseURL(server.URL),
+			WithHTTPClient(server.Client()),
+			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
+				return StubRoundTripper(func(r *http.Request) (*http.Response, error) {
+					assert.Contains(t, r.URL.Path, endpoint)
+					resp, err := next.RoundTrip(r)
+					if err == nil {
+						assert.Equal(t, "bar", resp.Header.Get("X-Foo"))
+					}
+					return resp, err
+				})
+			}))
+
+		require.NoError(t, err)
+
+		_, resp, err := client.Users.CurrentUser()
+		require.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+	})
+}
+
+type StubRoundTripper func(r *http.Request) (*http.Response, error)
+
+func (fn StubRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	return fn(r)
+}
