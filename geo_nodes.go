@@ -72,7 +72,7 @@ type GeoNode struct {
 	VerificationMaxCapacity          int          `json:"verification_max_capacity"`
 	SelectiveSyncType                string       `json:"selective_sync_type"`
 	SelectiveSyncShards              []string     `json:"selective_sync_shards"`
-	SelectiveSyncNamespaceIds        []int        `json:"selective_sync_namespace_ids"`
+	SelectiveSyncNamespaceIDs        []int        `json:"selective_sync_namespace_ids"`
 	MinimumReverificationInterval    int          `json:"minimum_reverification_interval"`
 	ContainerRepositoriesMaxCapacity int          `json:"container_repositories_max_capacity"`
 	SyncObjectStorage                bool         `json:"sync_object_storage"`
@@ -110,7 +110,7 @@ type CreateGeoNodesOptions struct {
 	SyncObjectStorage                *bool     `url:"sync_object_storage,omitempty" json:"sync_object_storage,omitempty"`
 	SelectiveSyncType                *string   `url:"selective_sync_type,omitempty" json:"selective_sync_type,omitempty"`
 	SelectiveSyncShards              *[]string `url:"selective_sync_shards,omitempty" json:"selective_sync_shards,omitempty"`
-	SelectiveSyncNamespaceIds        *[]int    `url:"selective_sync_namespace_ids,omitempty" json:"selective_sync_namespace_ids,omitempty"`
+	SelectiveSyncNamespaceIDs        *[]int    `url:"selective_sync_namespace_ids,omitempty" json:"selective_sync_namespace_ids,omitempty"`
 	MinimumReverificationInterval    *int      `url:"minimum_reverification_interval,omitempty" json:"minimum_reverification_interval,omitempty"`
 }
 
@@ -203,7 +203,7 @@ type UpdateGeoNodesOptions struct {
 	SyncObjectStorage                *bool     `url:"sync_object_storage,omitempty" json:"sync_object_storage,omitempty"`
 	SelectiveSyncType                *string   `url:"selective_sync_type,omitempty" json:"selective_sync_type,omitempty"`
 	SelectiveSyncShards              *[]string `url:"selective_sync_shards,omitempty" json:"selective_sync_shards,omitempty"`
-	SelectiveSyncNamespaceIds        *[]int    `url:"selective_sync_namespace_ids,omitempty" json:"selective_sync_namespace_ids,omitempty"`
+	SelectiveSyncNamespaceIDs        *[]int    `url:"selective_sync_namespace_ids,omitempty" json:"selective_sync_namespace_ids,omitempty"`
 	MinimumReverificationInterval    *int      `url:"minimum_reverification_interval,omitempty" json:"minimum_reverification_interval,omitempty"`
 }
 

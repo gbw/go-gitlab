@@ -86,14 +86,14 @@ func (c *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall) DoAndRetur
 }
 
 // GetNonSQLMetrics mocks base method.
-func (m *MockUsageDataServiceInterface) GetNonSQLMetrics(options ...gitlab.RequestOptionFunc) (*gitlab.ServicePingNonSqlMetrics, *gitlab.Response, error) {
+func (m *MockUsageDataServiceInterface) GetNonSQLMetrics(options ...gitlab.RequestOptionFunc) (*gitlab.ServicePingNonSQLMetrics, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetNonSQLMetrics", varargs...)
-	ret0, _ := ret[0].(*gitlab.ServicePingNonSqlMetrics)
+	ret0, _ := ret[0].(*gitlab.ServicePingNonSQLMetrics)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -112,19 +112,19 @@ type MockUsageDataServiceInterfaceGetNonSQLMetricsCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsageDataServiceInterfaceGetNonSQLMetricsCall) Return(arg0 *gitlab.ServicePingNonSqlMetrics, arg1 *gitlab.Response, arg2 error) *MockUsageDataServiceInterfaceGetNonSQLMetricsCall {
+func (c *MockUsageDataServiceInterfaceGetNonSQLMetricsCall) Return(arg0 *gitlab.ServicePingNonSQLMetrics, arg1 *gitlab.Response, arg2 error) *MockUsageDataServiceInterfaceGetNonSQLMetricsCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsageDataServiceInterfaceGetNonSQLMetricsCall) Do(f func(...gitlab.RequestOptionFunc) (*gitlab.ServicePingNonSqlMetrics, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetNonSQLMetricsCall {
+func (c *MockUsageDataServiceInterfaceGetNonSQLMetricsCall) Do(f func(...gitlab.RequestOptionFunc) (*gitlab.ServicePingNonSQLMetrics, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetNonSQLMetricsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsageDataServiceInterfaceGetNonSQLMetricsCall) DoAndReturn(f func(...gitlab.RequestOptionFunc) (*gitlab.ServicePingNonSqlMetrics, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetNonSQLMetricsCall {
+func (c *MockUsageDataServiceInterfaceGetNonSQLMetricsCall) DoAndReturn(f func(...gitlab.RequestOptionFunc) (*gitlab.ServicePingNonSQLMetrics, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetNonSQLMetricsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

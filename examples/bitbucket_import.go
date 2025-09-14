@@ -33,7 +33,7 @@ func bitbucketServerExample() {
 	}
 
 	serverOpt := &gitlab.ImportRepositoryFromBitbucketServerOptions{
-		BitbucketServerUrl:      gitlab.Ptr("https://bitbucket.example.com"),
+		BitbucketServerURL:      gitlab.Ptr("https://bitbucket.example.com"),
 		BitbucketServerUsername: gitlab.Ptr("username"),
 		PersonalAccessToken:     gitlab.Ptr("access-token"),
 		BitbucketServerProject:  gitlab.Ptr("some-project"),

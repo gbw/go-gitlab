@@ -80,7 +80,7 @@ type X509Issuer struct {
 	ID                   int    `json:"id"`
 	Subject              string `json:"subject"`
 	SubjectKeyIdentifier string `json:"subject_key_identifier"`
-	CrlUrl               string `json:"crl_url"`
+	CrlURL               string `json:"crl_url"`
 }
 
 // ReleaseNote represents a GitLab version release.

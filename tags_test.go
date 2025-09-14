@@ -257,7 +257,7 @@ func TestTagsService_GetTagSignature(t *testing.T) {
 				ID:                   1,
 				Subject:              "CN=PKI,OU=Example,O=World",
 				SubjectKeyIdentifier: "AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB:AB",
-				CrlUrl:               "http://example.com/pki.crl",
+				CrlURL:               "http://example.com/pki.crl",
 			},
 		},
 	}

@@ -12,7 +12,7 @@ type (
 		GetServicePing(options ...RequestOptionFunc) (*ServicePingData, *Response, error)
 		GetMetricDefinitionsAsYAML(options ...RequestOptionFunc) (io.Reader, *Response, error)
 		GetQueries(options ...RequestOptionFunc) (*ServicePingQueries, *Response, error)
-		GetNonSQLMetrics(options ...RequestOptionFunc) (*ServicePingNonSqlMetrics, *Response, error)
+		GetNonSQLMetrics(options ...RequestOptionFunc) (*ServicePingNonSQLMetrics, *Response, error)
 		TrackEvent(opt *TrackEventOptions, options ...RequestOptionFunc) (*Response, error)
 		TrackEvents(opt *TrackEventsOptions, options ...RequestOptionFunc) (*Response, error)
 	}
@@ -118,8 +118,8 @@ func (s *UsageDataService) GetQueries(options ...RequestOptionFunc) (*ServicePin
 	return sq, resp, nil
 }
 
-// ServicePingNonSqlMetrics represents the non-SQL metrics used in service ping.
-type ServicePingNonSqlMetrics struct {
+// ServicePingNonSQLMetrics represents the non-SQL metrics used in service ping.
+type ServicePingNonSQLMetrics struct {
 	RecordedAt            string            `json:"recorded_at"`
 	UUID                  string            `json:"uuid"`
 	Hostname              string            `json:"hostname"`
@@ -147,13 +147,13 @@ type ServicePingNonSqlMetrics struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/usage_data/#usagedatanonsqlmetrics-api
-func (s *UsageDataService) GetNonSQLMetrics(options ...RequestOptionFunc) (*ServicePingNonSqlMetrics, *Response, error) {
+func (s *UsageDataService) GetNonSQLMetrics(options ...RequestOptionFunc) (*ServicePingNonSQLMetrics, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "usage_data/non_sql_metrics", nil, options)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	nsm := new(ServicePingNonSqlMetrics)
+	nsm := new(ServicePingNonSQLMetrics)
 	resp, err := s.client.Do(req, nsm)
 	if err != nil {
 		return nil, resp, err

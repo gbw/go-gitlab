@@ -50,7 +50,7 @@ type GitHubImport struct {
 	Name                  string `json:"name"`
 	FullPath              string `json:"full_path"`
 	FullName              string `json:"full_name"`
-	RefsUrl               string `json:"refs_url"`
+	RefsURL               string `json:"refs_url"`
 	ImportSource          string `json:"import_source"`
 	ImportStatus          string `json:"import_status"`
 	HumanImportStatusName string `json:"human_import_status_name"`
@@ -181,7 +181,7 @@ type BitbucketServerImport struct {
 	Name     string `json:"name"`
 	FullPath string `json:"full_path"`
 	FullName string `json:"full_name"`
-	RefsUrl  string `json:"refs_url"`
+	RefsURL  string `json:"refs_url"`
 }
 
 func (s BitbucketServerImport) String() string {
@@ -193,7 +193,7 @@ func (s BitbucketServerImport) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/import/#import-repository-from-bitbucket-server
 type ImportRepositoryFromBitbucketServerOptions struct {
-	BitbucketServerUrl      *string `url:"bitbucket_server_url,omitempty" json:"bitbucket_server_url,omitempty"`
+	BitbucketServerURL      *string `url:"bitbucket_server_url,omitempty" json:"bitbucket_server_url,omitempty"`
 	BitbucketServerUsername *string `url:"bitbucket_server_username,omitempty" json:"bitbucket_server_username,omitempty"`
 	PersonalAccessToken     *string `url:"personal_access_token,omitempty" json:"personal_access_token,omitempty"`
 	BitbucketServerProject  *string `url:"bitbucket_server_project,omitempty" json:"bitbucket_server_project,omitempty"`
@@ -232,7 +232,7 @@ type BitbucketCloudImport struct {
 	Name                  string `json:"name"`
 	FullPath              string `json:"full_path"`
 	FullName              string `json:"full_name"`
-	RefsUrl               string `json:"refs_url"`
+	RefsURL               string `json:"refs_url"`
 	ImportSource          string `json:"import_source"`
 	ImportStatus          string `json:"import_status"`
 	HumanImportStatusName string `json:"human_import_status_name"`

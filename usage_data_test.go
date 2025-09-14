@@ -202,7 +202,7 @@ func TestUsageDataService_GetServicePingNonSqlMetrics(t *testing.T) {
 	nsm, _, err := client.UsageData.GetNonSQLMetrics()
 	require.NoError(t, err)
 
-	want := &ServicePingNonSqlMetrics{
+	want := &ServicePingNonSQLMetrics{
 		RecordedAt:         "2021-03-26T07:04:03.724Z",
 		UUID:               "",
 		Hostname:           "localhost",
