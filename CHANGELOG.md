@@ -1,3 +1,10 @@
+# [0.145.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.144.1...v0.145.0) (2025-09-15)
+
+
+### Features
+
+* Add missing created_by field to ProjectMembers and GroupMembers ([5348e01](https://gitlab.com/gitlab-org/api/client-go/commit/5348e01913c358c53bdd3da46b069713273d6802))
+
 ## [0.144.1](https://gitlab.com/gitlab-org/api/client-go/compare/v0.144.0...v0.144.1) (2025-09-13)
 
 # [0.144.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.143.3...v0.144.0) (2025-09-12)
