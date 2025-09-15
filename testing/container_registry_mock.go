@@ -308,7 +308,7 @@ func (c *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall)
 }
 
 // ListProjectRegistryRepositories mocks base method.
-func (m *MockContainerRegistryServiceInterface) ListProjectRegistryRepositories(pid any, opt *gitlab.ListRegistryRepositoriesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) ListProjectRegistryRepositories(pid any, opt *gitlab.ListProjectRegistryRepositoriesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, opt}
 	for _, a := range options {
@@ -341,13 +341,13 @@ func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCal
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) Do(f func(any, *gitlab.ListRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
+func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) Do(f func(any, *gitlab.ListProjectRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) DoAndReturn(f func(any, *gitlab.ListRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
+func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) DoAndReturn(f func(any, *gitlab.ListProjectRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -24,7 +24,7 @@ import (
 
 type (
 	ContainerRegistryServiceInterface interface {
-		ListProjectRegistryRepositories(pid any, opt *ListRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error)
+		ListProjectRegistryRepositories(pid any, opt *ListProjectRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error)
 		ListGroupRegistryRepositories(gid any, opt *ListGroupRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error)
 		GetSingleRegistryRepository(pid any, opt *GetSingleRegistryRepositoryOptions, options ...RequestOptionFunc) (*RegistryRepository, *Response, error)
 		DeleteRegistryRepository(pid any, repository int, options ...RequestOptionFunc) (*Response, error)
@@ -83,12 +83,12 @@ func (s RegistryRepositoryTag) String() string {
 	return Stringify(s)
 }
 
-// ListRegistryRepositoriesOptions represents the available
+// ListProjectRegistryRepositoriesOptions represents the available
 // ListProjectRegistryRepositories() options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/api/container_registry/#within-a-project
-type ListRegistryRepositoriesOptions struct {
+// https://docs.gitlab.com/api/container_registry/#list-registry-repositories
+type ListProjectRegistryRepositoriesOptions struct {
 	ListOptions
 
 	Tags      *bool `url:"tags,omitempty" json:"tags,omitempty"`
@@ -108,7 +108,7 @@ type ListGroupRegistryRepositoriesOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/container_registry/#within-a-project
-func (s *ContainerRegistryService) ListProjectRegistryRepositories(pid any, opt *ListRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error) {
+func (s *ContainerRegistryService) ListProjectRegistryRepositories(pid any, opt *ListProjectRegistryRepositoriesOptions, options ...RequestOptionFunc) ([]*RegistryRepository, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err

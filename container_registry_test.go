@@ -51,7 +51,7 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 		  ]`)
 	})
 
-	repositories, _, err := client.ContainerRegistry.ListProjectRegistryRepositories(5, &ListRegistryRepositoriesOptions{})
+	repositories, _, err := client.ContainerRegistry.ListProjectRegistryRepositories(5, &ListProjectRegistryRepositoriesOptions{})
 	if err != nil {
 		t.Errorf("ContainerRegistry.ListProjectRegistryRepositories returned error: %v", err)
 	}
