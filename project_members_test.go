@@ -19,16 +19,25 @@ func TestProjectMembersService_ListProjectMembers(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `
 			[
-			  {
+			{
 				"id": 1,
 				"username": "venkatesh_thalluri",
 				"name": "Venkatesh Thalluri",
 				"state": "active",
 				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 				"web_url": "http://192.168.1.8:3000/root",
+				"created_at": "2012-10-22T14:13:35Z",
+				"created_by": {
+					"id": 2,
+					"username": "john_doe",
+					"name": "John Doe",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+					"web_url": "http://192.168.1.8:3000/root"
+				},
 				"access_level": 30,
 				"group_saml_identity": null
-			  }
+			}
 			]
 		`)
 	})
@@ -42,6 +51,15 @@ func TestProjectMembersService_ListProjectMembers(t *testing.T) {
 		AccessLevel: 30,
 		WebURL:      "http://192.168.1.8:3000/root",
 		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+		CreatedAt:   mustParseTime("2012-10-22T14:13:35Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
 	}}
 
 	pms, resp, err := client.ProjectMembers.ListProjectMembers(1, nil, nil)
@@ -73,16 +91,25 @@ func TestProjectMembersService_ListAllProjectMembers(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `
 			[
-			  {
+			{
 				"id": 1,
 				"username": "venkatesh_thalluri",
 				"name": "Venkatesh Thalluri",
 				"state": "active",
 				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 				"web_url": "http://192.168.1.8:3000/root",
+				"created_at": "2012-10-22T14:13:35Z",
+				"created_by": {
+					"id": 2,
+					"username": "john_doe",
+					"name": "John Doe",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+					"web_url": "http://192.168.1.8:3000/root"
+				},
 				"access_level": 30,
 				"group_saml_identity": null
-			  }
+			}
 			]
 		`)
 	})
@@ -96,6 +123,15 @@ func TestProjectMembersService_ListAllProjectMembers(t *testing.T) {
 		AccessLevel: 30,
 		WebURL:      "http://192.168.1.8:3000/root",
 		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+		CreatedAt:   mustParseTime("2012-10-22T14:13:35Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
 	}}
 
 	pms, resp, err := client.ProjectMembers.ListAllProjectMembers(1, nil, nil)
@@ -127,16 +163,25 @@ func TestProjectMembersService_GetProjectMember(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `
 			{
-			  "id": 1,
-			  "username": "venkatesh_thalluri",
-			  "name": "Venkatesh Thalluri",
-			  "state": "active",
-			  "avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			  "web_url": "http://192.168.1.8:3000/root",
-			  "access_level": 30,
-			  "email": "venkatesh.thalluri@example.com",
-			  "expires_at": null,
-			  "group_saml_identity": null
+				"id": 1,
+				"username": "venkatesh_thalluri",
+				"name": "Venkatesh Thalluri",
+				"state": "active",
+				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				"web_url": "http://192.168.1.8:3000/root",
+				"created_at": "2012-10-22T14:13:35Z",
+				"created_by": {
+					"id": 2,
+					"username": "john_doe",
+					"name": "John Doe",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+					"web_url": "http://192.168.1.8:3000/root"
+				},
+				"access_level": 30,
+				"email": "venkatesh.thalluri@example.com",
+				"expires_at": null,
+				"group_saml_identity": null
 			}
 		`)
 	})
@@ -151,6 +196,15 @@ func TestProjectMembersService_GetProjectMember(t *testing.T) {
 		AccessLevel: 30,
 		WebURL:      "http://192.168.1.8:3000/root",
 		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+		CreatedAt:   mustParseTime("2012-10-22T14:13:35Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
 	}
 
 	pm, resp, err := client.ProjectMembers.GetProjectMember(1, 1, nil, nil)
@@ -182,16 +236,25 @@ func TestProjectMembersService_GetInheritedProjectMember(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `
 			{
-			  "id": 1,
-			  "username": "venkatesh_thalluri",
-			  "name": "Venkatesh Thalluri",
-			  "state": "active",
-			  "avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			  "web_url": "http://192.168.1.8:3000/root",
-			  "access_level": 30,
-			  "email": "venkatesh.thalluri@example.com",
-			  "expires_at": null,
-			  "group_saml_identity": null
+				"id": 1,
+				"username": "venkatesh_thalluri",
+				"name": "Venkatesh Thalluri",
+				"state": "active",
+				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				"web_url": "http://192.168.1.8:3000/root",
+				"created_at": "2012-10-22T14:13:35Z",
+				"created_by": {
+					"id": 2,
+					"username": "john_doe",
+					"name": "John Doe",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+					"web_url": "http://192.168.1.8:3000/root"
+				},
+				"access_level": 30,
+				"email": "venkatesh.thalluri@example.com",
+				"expires_at": null,
+				"group_saml_identity": null
 			}
 		`)
 	})
@@ -206,6 +269,15 @@ func TestProjectMembersService_GetInheritedProjectMember(t *testing.T) {
 		AccessLevel: 30,
 		WebURL:      "http://192.168.1.8:3000/root",
 		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+		CreatedAt:   mustParseTime("2012-10-22T14:13:35Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
 	}
 
 	pm, resp, err := client.ProjectMembers.GetInheritedProjectMember(1, 1, nil, nil)
@@ -250,16 +322,25 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 
 		fmt.Fprintf(w, `
 			{
-			  "id": 1,
-			  "username": "venkatesh_thalluri",
-			  "name": "Venkatesh Thalluri",
-			  "state": "active",
-			  "avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			  "web_url": "http://192.168.1.8:3000/root",
-			  "access_level": 30,
-			  "email": "venkatesh.thalluri@example.com",
-			  "expires_at": null,
-			  "group_saml_identity": null
+				"id": 1,
+				"username": "venkatesh_thalluri",
+				"name": "Venkatesh Thalluri",
+				"state": "active",
+				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				"web_url": "http://192.168.1.8:3000/root",
+				"created_at": "2012-10-22T14:13:35Z",
+				"created_by": {
+					"id": 2,
+					"username": "john_doe",
+					"name": "John Doe",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+					"web_url": "http://192.168.1.8:3000/root"
+				},
+				"access_level": 30,
+				"email": "venkatesh.thalluri@example.com",
+				"expires_at": null,
+				"group_saml_identity": null
 			}
 		`)
 	})
@@ -274,6 +355,15 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 		AccessLevel: 30,
 		WebURL:      "http://192.168.1.8:3000/root",
 		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+		CreatedAt:   mustParseTime("2012-10-22T14:13:35Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
 	}
 
 	pm, resp, err := client.ProjectMembers.AddProjectMember(1, &AddProjectMemberOptions{
@@ -308,16 +398,25 @@ func TestProjectMembersService_EditProjectMember(t *testing.T) {
 		testMethod(t, r, http.MethodPut)
 		fmt.Fprintf(w, `
 			{
-			  "id": 1,
-			  "username": "venkatesh_thalluri",
-			  "name": "Venkatesh Thalluri",
-			  "state": "active",
-			  "avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			  "web_url": "http://192.168.1.8:3000/root",
-			  "access_level": 30,
-			  "email": "venkatesh.thalluri@example.com",
-			  "expires_at": null,
-			  "group_saml_identity": null
+				"id": 1,
+				"username": "venkatesh_thalluri",
+				"name": "Venkatesh Thalluri",
+				"state": "active",
+				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				"web_url": "http://192.168.1.8:3000/root",
+				"created_at": "2012-10-22T14:13:35Z",
+				"created_by": {
+					"id": 2,
+					"username": "john_doe",
+					"name": "John Doe",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+					"web_url": "http://192.168.1.8:3000/root"
+				},
+				"access_level": 30,
+				"email": "venkatesh.thalluri@example.com",
+				"expires_at": null,
+				"group_saml_identity": null
 			}
 		`)
 	})
@@ -332,6 +431,15 @@ func TestProjectMembersService_EditProjectMember(t *testing.T) {
 		AccessLevel: 30,
 		WebURL:      "http://192.168.1.8:3000/root",
 		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+		CreatedAt:   mustParseTime("2012-10-22T14:13:35Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
 	}
 
 	pm, resp, err := client.ProjectMembers.EditProjectMember(1, 1, nil, nil)
@@ -363,16 +471,16 @@ func TestProjectMembersService_DeleteProjectMember(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 		fmt.Fprintf(w, `
 			{
-			  "id": 1,
-			  "username": "venkatesh_thalluri",
-			  "name": "Venkatesh Thalluri",
-			  "state": "active",
-			  "avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			  "web_url": "http://192.168.1.8:3000/root",
-			  "access_level": 30,
-			  "email": "venkatesh.thalluri@example.com",
-			  "expires_at": null,
-			  "group_saml_identity": null
+				"id": 1,
+				"username": "venkatesh_thalluri",
+				"name": "Venkatesh Thalluri",
+				"state": "active",
+				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				"web_url": "http://192.168.1.8:3000/root",
+				"access_level": 30,
+				"email": "venkatesh.thalluri@example.com",
+				"expires_at": null,
+				"group_saml_identity": null
 			}
 		`)
 	})

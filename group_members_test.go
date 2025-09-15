@@ -139,6 +139,14 @@ func TestListGroupMembersWithoutEmail(t *testing.T) {
 						"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 						"web_url": "http://192.168.1.8:3000/root",
 						"created_at": "2012-10-21T14:13:35Z",
+						"created_by": {
+							"id": 2,
+							"username": "john_doe",
+							"name": "John Doe",
+							"state": "active",
+							"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+							"web_url": "http://192.168.1.8:3000/root"
+						},
 						"expires_at": "2012-10-22",
 						"access_level": 30,
 						"group_saml_identity": null
@@ -155,13 +163,21 @@ func TestListGroupMembersWithoutEmail(t *testing.T) {
 	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
-			ID:          1,
-			Username:    "raymond_smith",
-			Name:        "Raymond Smith",
-			State:       "active",
-			AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			WebURL:      "http://192.168.1.8:3000/root",
-			CreatedAt:   mustParseTime("2012-10-21T14:13:35Z"),
+			ID:        1,
+			Username:  "raymond_smith",
+			Name:      "Raymond Smith",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+			CreatedAt: mustParseTime("2012-10-21T14:13:35Z"),
+			CreatedBy: &MemberCreatedBy{
+				ID:        2,
+				Username:  "john_doe",
+				Name:      "John Doe",
+				State:     "active",
+				AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				WebURL:    "http://192.168.1.8:3000/root",
+			},
 			ExpiresAt:   &expiresAtISOTime,
 			AccessLevel: 30,
 		},
@@ -189,6 +205,14 @@ func TestListGroupMembersWithEmail(t *testing.T) {
 						"web_url": "http://192.168.1.8:3000/root",
 						"created_at": "2012-10-21T14:13:35Z",
 						"expires_at": "2012-10-22",
+						"created_by": {
+							"id": 2,
+							"username": "john_doe",
+							"name": "John Doe",
+							"state": "active",
+							"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+							"web_url": "http://192.168.1.8:3000/root"
+						},
 						"access_level": 30,
 						"email": "john@example.com",
 						"group_saml_identity": null
@@ -205,13 +229,21 @@ func TestListGroupMembersWithEmail(t *testing.T) {
 	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
-			ID:          1,
-			Username:    "raymond_smith",
-			Name:        "Raymond Smith",
-			State:       "active",
-			AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			WebURL:      "http://192.168.1.8:3000/root",
-			CreatedAt:   mustParseTime("2012-10-21T14:13:35Z"),
+			ID:        1,
+			Username:  "raymond_smith",
+			Name:      "Raymond Smith",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+			CreatedAt: mustParseTime("2012-10-21T14:13:35Z"),
+			CreatedBy: &MemberCreatedBy{
+				ID:        2,
+				Username:  "john_doe",
+				Name:      "John Doe",
+				State:     "active",
+				AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				WebURL:    "http://192.168.1.8:3000/root",
+			},
 			ExpiresAt:   &expiresAtISOTime,
 			AccessLevel: 30,
 			Email:       "john@example.com",
@@ -239,6 +271,14 @@ func TestListGroupMembersWithoutSAML(t *testing.T) {
 						"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 						"web_url": "http://192.168.1.8:3000/root",
 						"created_at": "2012-10-21T14:13:35Z",
+						"created_by": {
+							"id": 2,
+							"username": "john_doe",
+							"name": "John Doe",
+							"state": "active",
+							"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+							"web_url": "http://192.168.1.8:3000/root"
+						},
 						"expires_at": "2012-10-22",
 						"access_level": 30,
 						"group_saml_identity": null
@@ -255,13 +295,21 @@ func TestListGroupMembersWithoutSAML(t *testing.T) {
 	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
-			ID:                1,
-			Username:          "raymond_smith",
-			Name:              "Raymond Smith",
-			State:             "active",
-			AvatarURL:         "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			WebURL:            "http://192.168.1.8:3000/root",
-			CreatedAt:         mustParseTime("2012-10-21T14:13:35Z"),
+			ID:        1,
+			Username:  "raymond_smith",
+			Name:      "Raymond Smith",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+			CreatedAt: mustParseTime("2012-10-21T14:13:35Z"),
+			CreatedBy: &MemberCreatedBy{
+				ID:        2,
+				Username:  "john_doe",
+				Name:      "John Doe",
+				State:     "active",
+				AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				WebURL:    "http://192.168.1.8:3000/root",
+			},
 			ExpiresAt:         &expiresAtISOTime,
 			AccessLevel:       30,
 			GroupSAMLIdentity: nil,
@@ -289,6 +337,14 @@ func TestListGroupMembersWithSAML(t *testing.T) {
 						"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
 						"web_url": "http://192.168.1.8:3000/root",
 						"created_at": "2012-10-21T14:13:35Z",
+						"created_by": {
+							"id": 2,
+							"username": "john_doe",
+							"name": "John Doe",
+							"state": "active",
+							"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+							"web_url": "http://192.168.1.8:3000/root"
+						},
 						"expires_at": "2012-10-22",
 						"access_level": 30,
 						"group_saml_identity": {
@@ -309,13 +365,21 @@ func TestListGroupMembersWithSAML(t *testing.T) {
 	expiresAtISOTime := ISOTime(*expiresAt)
 	want := []*GroupMember{
 		{
-			ID:          2,
-			Username:    "john_doe",
-			Name:        "John Doe",
-			State:       "active",
-			AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
-			WebURL:      "http://192.168.1.8:3000/root",
-			CreatedAt:   mustParseTime("2012-10-21T14:13:35Z"),
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+			CreatedAt: mustParseTime("2012-10-21T14:13:35Z"),
+			CreatedBy: &MemberCreatedBy{
+				ID:        2,
+				Username:  "john_doe",
+				Name:      "John Doe",
+				State:     "active",
+				AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				WebURL:    "http://192.168.1.8:3000/root",
+			},
 			ExpiresAt:   &expiresAtISOTime,
 			AccessLevel: 30,
 			GroupSAMLIdentity: &GroupMemberSAMLIdentity{
@@ -400,15 +464,23 @@ func TestGetGroupMemberAll(t *testing.T) {
 
 		fmt.Fprint(w, `
 		{
-		  "id": 2,
-		  "name": "aaa",
-		  "username": "aaaName",
-		  "state": "active",
-		  "avatar_url": "https://secure.gravatar.com/avatar/e547676d82f1e16954b2280a5b4cbe79?s=80&d=identicon",
-		  "web_url": "https://gitlab.example.cn/aaa",
-		  "access_level": 30,
-		  "created_at": "2024-06-19T07:14:02.793Z",
-		  "expires_at": null
+			"id": 2,
+			"name": "aaa",
+			"username": "aaaName",
+			"state": "active",
+			"avatar_url": "https://secure.gravatar.com/avatar/e547676d82f1e16954b2280a5b4cbe79?s=80&d=identicon",
+			"web_url": "https://gitlab.example.cn/aaa",
+			"access_level": 30,
+			"created_at": "2024-06-19T07:14:02.793Z",
+			"created_by": {
+						"id": 2,
+						"username": "john_doe",
+						"name": "John Doe",
+						"state": "active",
+						"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+						"web_url": "http://192.168.1.8:3000/root"
+					},
+			"expires_at": null
 		}
 		`)
 	})
@@ -422,6 +494,14 @@ func TestGetGroupMemberAll(t *testing.T) {
 		WebURL:      "https://gitlab.example.cn/aaa",
 		AccessLevel: AccessLevelValue(30),
 		CreatedAt:   mustParseTime("2024-06-19T07:14:02.793Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
 	}
 
 	pm, resp, err := client.GroupMembers.GetInheritedGroupMember(1, 2, nil, nil)
