@@ -43,8 +43,8 @@ stages:
   parallel:
     matrix:
       - GOLANG_IMAGE_VERSION:
-        - '1.23'
         - '1.24'
+        - '1.25'
 
 .go:base:
   extends:
@@ -150,15 +150,14 @@ commitlint:
 
 tests:unit:
   extends:
-    - .go:base
     - .go:versions
   stage: test
   needs: []
   image: golang:$GOLANG_IMAGE_VERSION
   variables:
     # configure tooling versions
-    GOTESTSUM_VERSION: 'v1.12.0'
-    GOCOVER_COBERTURA_VERSION: 'v1.2.1-0.20240107185409-0818f3538137'
+    GOTESTSUM_VERSION: 'v1.13.0'
+    GOCOVER_COBERTURA_VERSION: 'v1.4.0'
 
     # configure artifact files
     JUNIT_FILENAME: tests.xml
