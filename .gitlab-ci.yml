@@ -157,7 +157,7 @@ tests:unit:
   variables:
     # configure tooling versions
     GOTESTSUM_VERSION: 'v1.13.0'
-    GOCOVER_COBERTURA_VERSION: 'v1.2.1-0.20240107185409-0818f3538137'
+    GOCOVER_COBERTURA_VERSION: 'v1.4.0'
 
     # configure artifact files
     JUNIT_FILENAME: tests.xml
