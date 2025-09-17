@@ -183,12 +183,11 @@ func TestUpdateGroupMergeRequestApprovalSettings(t *testing.T) {
 			},
 		}
 
-		settings, resp, err := client.MergeRequestApprovalSettings.UpdateGroupMergeRequestApprovalSettings(1, &UpdateMergeRequestApprovalSettingsOptions{
+		settings, resp, err := client.MergeRequestApprovalSettings.UpdateGroupMergeRequestApprovalSettings(1, &UpdateGroupMergeRequestApprovalSettingsOptions{
 			AllowAuthorApproval:                         Ptr(false),
 			AllowCommitterApproval:                      Ptr(false),
 			AllowOverridesToApproverListPerMergeRequest: Ptr(false),
 			RetainApprovalsOnPush:                       Ptr(true),
-			SelectiveCodeOwnerRemovals:                  Ptr(true),
 			RequireReauthenticationToApprove:            Ptr(true),
 		})
 		assert.NoError(t, err)
@@ -372,7 +371,7 @@ func TestUpdateProjectMergeRequestApprovalSettings(t *testing.T) {
 			},
 		}
 
-		settings, resp, err := client.MergeRequestApprovalSettings.UpdateProjectMergeRequestApprovalSettings(1, &UpdateMergeRequestApprovalSettingsOptions{
+		settings, resp, err := client.MergeRequestApprovalSettings.UpdateProjectMergeRequestApprovalSettings(1, &UpdateProjectMergeRequestApprovalSettingsOptions{
 			AllowAuthorApproval:                         Ptr(false),
 			AllowCommitterApproval:                      Ptr(false),
 			AllowOverridesToApproverListPerMergeRequest: Ptr(false),

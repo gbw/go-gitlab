@@ -131,7 +131,7 @@ func (c *MockMergeRequestApprovalSettingsServiceInterfaceGetProjectMergeRequestA
 }
 
 // UpdateGroupMergeRequestApprovalSettings mocks base method.
-func (m *MockMergeRequestApprovalSettingsServiceInterface) UpdateGroupMergeRequestApprovalSettings(gid any, opt *gitlab.UpdateMergeRequestApprovalSettingsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalSettingsServiceInterface) UpdateGroupMergeRequestApprovalSettings(gid any, opt *gitlab.UpdateGroupMergeRequestApprovalSettingsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, opt}
 	for _, a := range options {
@@ -164,19 +164,19 @@ func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequest
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall) Do(f func(any, *gitlab.UpdateMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall {
+func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall) Do(f func(any, *gitlab.UpdateGroupMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall) DoAndReturn(f func(any, *gitlab.UpdateMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall {
+func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall) DoAndReturn(f func(any, *gitlab.UpdateGroupMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateGroupMergeRequestApprovalSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateProjectMergeRequestApprovalSettings mocks base method.
-func (m *MockMergeRequestApprovalSettingsServiceInterface) UpdateProjectMergeRequestApprovalSettings(pid any, opt *gitlab.UpdateMergeRequestApprovalSettingsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalSettingsServiceInterface) UpdateProjectMergeRequestApprovalSettings(pid any, opt *gitlab.UpdateProjectMergeRequestApprovalSettingsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, opt}
 	for _, a := range options {
@@ -209,13 +209,13 @@ func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeReque
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall) Do(f func(any, *gitlab.UpdateMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall {
+func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall) Do(f func(any, *gitlab.UpdateProjectMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall) DoAndReturn(f func(any, *gitlab.UpdateMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall {
+func (c *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall) DoAndReturn(f func(any, *gitlab.UpdateProjectMergeRequestApprovalSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalSettings, *gitlab.Response, error)) *MockMergeRequestApprovalSettingsServiceInterfaceUpdateProjectMergeRequestApprovalSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
