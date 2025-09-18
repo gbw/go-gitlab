@@ -17,6 +17,7 @@
 package gitlab
 
 import (
+	"errors"
 	"net/http"
 	"reflect"
 	"testing"
@@ -215,22 +216,112 @@ func TestGetLatestPipeline_WithRef(t *testing.T) {
 
 func TestCreatePipeline(t *testing.T) {
 	t.Parallel()
-	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/pipeline", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "pending"})
-	})
-
-	opt := &CreatePipelineOptions{Ref: Ptr("master")}
-	pipeline, _, err := client.Pipelines.CreatePipeline(1, opt)
-	if err != nil {
-		t.Errorf("Pipelines.CreatePipeline returned error: %v", err)
+	cases := []struct {
+		name    string
+		opt     *CreatePipelineOptions
+		want    map[string]any
+		wantErr error
+	}{
+		{
+			name: "base",
+			opt:  &CreatePipelineOptions{Ref: Ptr("main")},
+			want: map[string]any{
+				"ref": "main",
+			},
+		},
+		{
+			name: "with variables",
+			opt: &CreatePipelineOptions{
+				Ref: Ptr("main"),
+				Variables: Ptr([]*PipelineVariableOptions{
+					{
+						Key:          Ptr("UPLOAD_TO_S3"),
+						Value:        Ptr("true"),
+						VariableType: Ptr(FileVariableType),
+					},
+					{
+						Key:          Ptr("TEST"),
+						Value:        Ptr("test variable"),
+						VariableType: Ptr(EnvVariableType),
+					},
+				}),
+			},
+			want: map[string]any{
+				"ref": "main",
+				"variables": []any{
+					map[string]any{
+						"key":           "UPLOAD_TO_S3",
+						"value":         "true",
+						"variable_type": "file",
+					},
+					map[string]any{
+						"key":           "TEST",
+						"value":         "test variable",
+						"variable_type": "env_var",
+					},
+				},
+			},
+		},
+		{
+			name: "with inputs",
+			opt: &CreatePipelineOptions{
+				Ref: Ptr("main"),
+				Inputs: PipelineInputOptions{
+					"string_option":  "foo",
+					"integer_option": 42,
+					"boolean_option": true,
+					"array_option":   []string{"bar", "qux"},
+				},
+			},
+			want: map[string]any{
+				"ref": "main",
+				"inputs": map[string]any{
+					"string_option":  "foo",
+					"integer_option": float64(42),
+					"boolean_option": true,
+					"array_option":   []any{"bar", "qux"},
+				},
+			},
+		},
+		{
+			name: "with invalid input type",
+			opt: &CreatePipelineOptions{
+				Ref: Ptr("main"),
+				Inputs: PipelineInputOptions{
+					"invalid_option": struct{}{},
+				},
+			},
+			wantErr: ErrInvalidPipelineInputType,
+		},
 	}
 
-	want := &Pipeline{ID: 1, Status: "pending"}
-	if !reflect.DeepEqual(want, pipeline) {
-		t.Errorf("Pipelines.CreatePipeline returned %+v, want %+v", pipeline, want)
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/v4/projects/1/pipeline", func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodPost)
+				testBodyJSON(t, r, tc.want)
+				mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "pending"})
+			})
+
+			pipeline, _, err := client.Pipelines.CreatePipeline(1, tc.opt)
+			if !errors.Is(err, tc.wantErr) {
+				t.Errorf("Pipelines.CreatePipeline() = error %v, want error %v", err, tc.wantErr)
+			}
+
+			if err != nil {
+				return
+			}
+
+			want := &Pipeline{ID: 1, Status: "pending"}
+			if !reflect.DeepEqual(want, pipeline) {
+				t.Errorf("Pipelines.CreatePipeline returned %+v, want %+v", pipeline, want)
+			}
+		})
 	}
 }
 

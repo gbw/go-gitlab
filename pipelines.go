@@ -17,6 +17,8 @@
 package gitlab
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -362,6 +364,7 @@ func (s *PipelinesService) GetLatestPipeline(pid any, opt *GetLatestPipelineOpti
 type CreatePipelineOptions struct {
 	Ref       *string                     `url:"ref" json:"ref"`
 	Variables *[]*PipelineVariableOptions `url:"variables,omitempty" json:"variables,omitempty"`
+	Inputs    PipelineInputOptions        `url:"inputs,omitempty" json:"inputs,omitempty"`
 }
 
 // PipelineVariableOptions represents a pipeline variable option.
@@ -371,6 +374,44 @@ type PipelineVariableOptions struct {
 	Key          *string            `url:"key,omitempty" json:"key,omitempty"`
 	Value        *string            `url:"value,omitempty" json:"value,omitempty"`
 	VariableType *VariableTypeValue `url:"variable_type,omitempty" json:"variable_type,omitempty"`
+}
+
+// ErrInvalidPipelineInputType indicates that the PipelineInputOptions type
+// contains a value with an invalid type.
+var ErrInvalidPipelineInputType = errors.New("invalid pipeline input type")
+
+// PipelineInputOptions represents pipeline inputs.
+//
+// Valid map values are:
+// - string
+// - integer (int, int64, uint, …)
+// - floats (float32, float64)
+// - bool
+// - string slice ([]string)
+//
+// GitLab API docs:
+// - https://docs.gitlab.com/api/pipelines/#create-a-new-pipeline
+type PipelineInputOptions map[string]any
+
+// MarshalJSON implements the json.Marshaler interface for pipeline inputs.
+//
+// Returns ErrInvalidPipelineInputType if any of the map values has an invalid type.
+func (i PipelineInputOptions) MarshalJSON() ([]byte, error) {
+	// Ensure that all map values are either string, a number, boolean, or a string slice.
+	for k, v := range i {
+		switch v.(type) {
+		case string:
+		case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
+		case float32, float64:
+		case bool:
+		case []string:
+			// Valid type
+		default:
+			return nil, fmt.Errorf("%w: key %q has type %T", ErrInvalidPipelineInputType, k, v)
+		}
+	}
+
+	return json.Marshal(map[string]any(i))
 }
 
 // CreatePipeline creates a new project pipeline.
