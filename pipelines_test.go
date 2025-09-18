@@ -214,6 +214,9 @@ func TestGetLatestPipeline_WithRef(t *testing.T) {
 	assert.Equal(t, &Pipeline{ID: 1, Status: "success"}, pipeline)
 }
 
+// Assert that PipelineInputValue[T] implements the PipelineInputValueInterface.
+var _ PipelineInputValueInterface = PipelineInputValue[string]{}
+
 func TestCreatePipeline(t *testing.T) {
 	t.Parallel()
 

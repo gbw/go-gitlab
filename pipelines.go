@@ -432,9 +432,6 @@ func (v PipelineInputValue[T]) MarshalJSON() ([]byte, error) {
 // pipelineInputValue implements PipelineInputValueInterface.
 func (PipelineInputValue[T]) pipelineInputValue() {}
 
-// Assert that PipelineInputValue[T] implements the PipelineInputValueInterface.
-var _ PipelineInputValueInterface = PipelineInputValue[string]{}
-
 // NewPipelineInputValue wraps a value for use in pipeline inputs.
 // Similar to Ptr(), this ensures type safety at compile time.
 // Supported types: string, integers, floats, bool, []string
