@@ -204,9 +204,10 @@ func (s *PipelineTriggersService) DeletePipelineTrigger(pid any, trigger int, op
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipeline_triggers/#trigger-a-pipeline-with-a-token
 type RunPipelineTriggerOptions struct {
-	Ref       *string           `url:"ref" json:"ref"`
-	Token     *string           `url:"token" json:"token"`
-	Variables map[string]string `url:"variables,omitempty" json:"variables,omitempty"`
+	Ref       *string              `url:"ref" json:"ref"`
+	Token     *string              `url:"token" json:"token"`
+	Variables map[string]string    `url:"variables,omitempty" json:"variables,omitempty"`
+	Inputs    PipelineInputOptions `url:"inputs,omitempty" json:"inputs,omitempty"`
 }
 
 // RunPipelineTrigger starts a trigger from a project.

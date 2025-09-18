@@ -391,6 +391,7 @@ var ErrInvalidPipelineInputType = errors.New("invalid pipeline input type")
 //
 // GitLab API docs:
 // - https://docs.gitlab.com/api/pipelines/#create-a-new-pipeline
+// - https://docs.gitlab.com/api/pipeline_triggers/#trigger-a-pipeline-with-a-token
 type PipelineInputOptions map[string]any
 
 // MarshalJSON implements the json.Marshaler interface for pipeline inputs.
