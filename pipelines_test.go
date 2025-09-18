@@ -267,11 +267,11 @@ func TestCreatePipeline(t *testing.T) {
 			name: "with inputs",
 			opt: &CreatePipelineOptions{
 				Ref: Ptr("main"),
-				Inputs: PipelineInputOptions{
-					"string_option":  "foo",
-					"integer_option": 42,
-					"boolean_option": true,
-					"array_option":   []string{"bar", "qux"},
+				Inputs: map[string]PipelineInputValueInterface{
+					"string_option":  NewPipelineInputValue("foo"),
+					"integer_option": NewPipelineInputValue(42),
+					"boolean_option": NewPipelineInputValue(true),
+					"array_option":   NewPipelineInputValue([]string{"bar", "qux"}),
 				},
 			},
 			want: map[string]any{
@@ -283,16 +283,6 @@ func TestCreatePipeline(t *testing.T) {
 					"array_option":   []any{"bar", "qux"},
 				},
 			},
-		},
-		{
-			name: "with invalid input type",
-			opt: &CreatePipelineOptions{
-				Ref: Ptr("main"),
-				Inputs: PipelineInputOptions{
-					"invalid_option": struct{}{},
-				},
-			},
-			wantErr: ErrInvalidPipelineInputType,
 		},
 	}
 

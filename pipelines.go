@@ -18,10 +18,11 @@ package gitlab
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"time"
+
+	"golang.org/x/exp/constraints"
 )
 
 type PipelineSource string
@@ -364,7 +365,10 @@ func (s *PipelinesService) GetLatestPipeline(pid any, opt *GetLatestPipelineOpti
 type CreatePipelineOptions struct {
 	Ref       *string                     `url:"ref" json:"ref"`
 	Variables *[]*PipelineVariableOptions `url:"variables,omitempty" json:"variables,omitempty"`
-	Inputs    PipelineInputOptions        `url:"inputs,omitempty" json:"inputs,omitempty"`
+
+	// Inputs contains pipeline input parameters.
+	// See PipelineInputsOption for supported types and usage.
+	Inputs PipelineInputsOption `url:"inputs,omitempty" json:"inputs,omitempty"`
 }
 
 // PipelineVariableOptions represents a pipeline variable option.
@@ -376,43 +380,68 @@ type PipelineVariableOptions struct {
 	VariableType *VariableTypeValue `url:"variable_type,omitempty" json:"variable_type,omitempty"`
 }
 
-// ErrInvalidPipelineInputType indicates that the PipelineInputOptions type
-// contains a value with an invalid type.
-var ErrInvalidPipelineInputType = errors.New("invalid pipeline input type")
-
-// PipelineInputOptions represents pipeline inputs.
+// PipelineInputsOption represents pipeline input parameters with type-safe values.
+// Each value must be wrapped using NewPipelineInputValue() to ensure compile-time type safety.
 //
-// Valid map values are:
-// - string
-// - integer (int, int64, uint, …)
-// - floats (float32, float64)
-// - bool
-// - string slice ([]string)
+// Supported value types:
+//   - string
+//   - integers (int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64)
+//   - floats (float32, float64)
+//   - bool
+//   - []string
+//
+// Example:
+//
+//	inputs := PipelineInputsOption{
+//	    "environment": NewPipelineInputValue("production"),
+//	    "replicas":    NewPipelineInputValue(3),
+//	    "debug":       NewPipelineInputValue(false),
+//	    "regions":     NewPipelineInputValue([]string{"us-east", "eu-west"}),
+//	}
 //
 // GitLab API docs:
 // - https://docs.gitlab.com/api/pipelines/#create-a-new-pipeline
 // - https://docs.gitlab.com/api/pipeline_triggers/#trigger-a-pipeline-with-a-token
-type PipelineInputOptions map[string]any
+type PipelineInputsOption map[string]PipelineInputValueInterface
 
-// MarshalJSON implements the json.Marshaler interface for pipeline inputs.
+// PipelineInputValueInterface is implemented by PipelineInputValue[T] for supported pipeline input types.
+// Use NewPipelineInputValue() to create instances - do not implement this interface directly.
 //
-// Returns ErrInvalidPipelineInputType if any of the map values has an invalid type.
-func (i PipelineInputOptions) MarshalJSON() ([]byte, error) {
-	// Ensure that all map values are either string, a number, boolean, or a string slice.
-	for k, v := range i {
-		switch v.(type) {
-		case string:
-		case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
-		case float32, float64:
-		case bool:
-		case []string:
-			// Valid type
-		default:
-			return nil, fmt.Errorf("%w: key %q has type %T", ErrInvalidPipelineInputType, k, v)
-		}
-	}
+// See PipelineInputsOption for supported types and usage examples.
+type PipelineInputValueInterface interface {
+	pipelineInputValue()
+}
 
-	return json.Marshal(map[string]any(i))
+// PipelineInputValueType is a type constraint for valid pipeline input value types.
+// This constraint ensures only supported GitLab pipeline input types can be used.
+type PipelineInputValueType interface {
+	~string | constraints.Integer | constraints.Float | ~bool | []string
+}
+
+// PipelineInputValue wraps a pipeline input value with compile-time type safety.
+// Use NewPipelineInputValue() to create instances of this type.
+type PipelineInputValue[T PipelineInputValueType] struct {
+	Value T
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+func (v PipelineInputValue[T]) MarshalJSON() ([]byte, error) {
+	return json.Marshal(v.Value)
+}
+
+// pipelineInputValue implements PipelineInputValueInterface.
+func (PipelineInputValue[T]) pipelineInputValue() {}
+
+// Assert that PipelineInputValue[T] implements the PipelineInputValueInterface.
+var _ PipelineInputValueInterface = PipelineInputValue[string]{}
+
+// NewPipelineInputValue wraps a value for use in pipeline inputs.
+// Similar to Ptr(), this ensures type safety at compile time.
+// Supported types: string, integers, floats, bool, []string
+func NewPipelineInputValue[T PipelineInputValueType](value T) PipelineInputValue[T] {
+	return PipelineInputValue[T]{
+		Value: value,
+	}
 }
 
 // CreatePipeline creates a new project pipeline.
