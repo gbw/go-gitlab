@@ -1,3 +1,12 @@
+# [0.146.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.145.0...v0.146.0) (2025-09-18)
+
+
+### Features
+
+* **pipelines:** Add compile-time type-safe pipeline inputs support ([4b30e60](https://gitlab.com/gitlab-org/api/client-go/commit/4b30e60260e4f06e7684352693aac49abd748579)), closes [gitlab-org/api/client-go#2154](https://gitlab.com/gitlab-org/api/client-go/issues/2154)
+* **PipelinesService:** Add support for pipeline inputs with type validation ([ab3056f](https://gitlab.com/gitlab-org/api/client-go/commit/ab3056f403ec0268e14b312de3f5b51b115ad97a)), closes [gitlab-org/api/client-go#2154](https://gitlab.com/gitlab-org/api/client-go/issues/2154)
+* **PipelineTriggersService:** Add support for pipeline inputs to trigger API ([9ad770e](https://gitlab.com/gitlab-org/api/client-go/commit/9ad770e49e59b2a41c665dfc4781f3b56650e813)), closes [gitlab-org/api/client-go#2154](https://gitlab.com/gitlab-org/api/client-go/issues/2154)
+
 # [0.145.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.144.1...v0.145.0) (2025-09-15)
 
 
