@@ -428,7 +428,8 @@ func TestGetProjectByID(t *testing.T) {
 			"ci_pipeline_variables_minimum_override_role": "no_one_allowed",
 			"packages_enabled": false,
 			"build_coverage_regex": "Total.*([0-9]{1,3})%",
-			"ci_delete_pipelines_in_seconds": 14
+			"ci_delete_pipelines_in_seconds": 14,
+			"resource_group_default_process_mode": "oldest_first"
 		  }`)
 	})
 
@@ -448,6 +449,7 @@ func TestGetProjectByID(t *testing.T) {
 		CIRestrictPipelineCancellationRole:     "developer",
 		CIPipelineVariablesMinimumOverrideRole: "no_one_allowed",
 		CIDeletePipelinesInSeconds:             14,
+		ResourceGroupDefaultProcessMode:        OldestFirst,
 	}
 
 	project, resp, err := client.Projects.GetProject(1, nil)
@@ -2173,4 +2175,51 @@ func TestEditProject_DuoReviewEnabledSetting(t *testing.T) {
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.True(t, attributeFound)
 	assert.True(t, project.AutoDuoCodeReviewEnabled)
+}
+
+func TestEditProject_ResourceGroupDefaultProcessModeSetting(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	opt := &EditProjectOptions{
+		ResourceGroupDefaultProcessMode: Ptr(OldestFirst),
+	}
+
+	// Store whether we've seen all the attributes we set
+	attributeFound := false
+
+	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		// Check that our request properly included resource_group_default_process_mode
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			t.Fatalf("Unable to read body properly. Error: %v", err)
+		}
+
+		// Set the value to check if our value is included
+		attributeFound = strings.Contains(string(body), "resource_group_default_process_mode")
+
+		// Print the start of the mock example from https://docs.gitlab.com/api/projects/#edit-a-project
+		// including the attribute we edited
+		fmt.Fprint(w, `
+		{
+			"id": 1,
+			"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+			"description_html": "<p data-sourcepos=\"1:1-1:56\" dir=\"auto\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>",
+			"default_branch": "main",
+			"visibility": "private",
+			"ssh_url_to_repo": "git@example.com:diaspora/diaspora-project-site.git",
+			"http_url_to_repo": "http://example.com/diaspora/diaspora-project-site.git",
+			"web_url": "http://example.com/diaspora/diaspora-project-site",
+			"readme_url": "http://example.com/diaspora/diaspora-project-site/blob/main/README.md",
+			"resource_group_default_process_mode": "oldest_first"
+		}`)
+	})
+
+	project, resp, err := client.Projects.EditProject(1, opt)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.True(t, attributeFound)
+	assert.Equal(t, OldestFirst, project.ResourceGroupDefaultProcessMode)
 }
