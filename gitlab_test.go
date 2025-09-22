@@ -22,12 +22,14 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/http/cookiejar"
 	"net/http/httptest"
 	"net/url"
 	"os"
 	"reflect"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -1135,4 +1137,319 @@ type StubRoundTripper func(r *http.Request) (*http.Response, error)
 
 func (fn StubRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 	return fn(r)
+}
+
+func TestClient_DefaultRetryPolicy_RetryOnStatusCodes(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		statusCode    int
+		expectedRetry bool
+		expectedError bool
+	}{
+		// We can't write an invalid status code. See RetryOnZeroStatusCode test
+		// {
+		// 	statusCode:    0,
+		// 	expectedRetry: true,
+		// },
+		{
+			statusCode:    http.StatusOK,
+			expectedRetry: false,
+			expectedError: false,
+		},
+		{
+			statusCode:    http.StatusNotImplemented,
+			expectedRetry: false,
+			expectedError: true,
+		},
+		{
+			statusCode:    http.StatusBadRequest,
+			expectedRetry: false,
+			expectedError: true,
+		},
+		{
+			statusCode:    http.StatusTooManyRequests,
+			expectedRetry: true,
+			expectedError: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(strconv.Itoa(tt.statusCode), func(t *testing.T) {
+			// GIVEN
+			retries := 0
+			mux := http.NewServeMux()
+			mux.HandleFunc("/api/v4/user", func(w http.ResponseWriter, r *http.Request) {
+				retries++
+
+				w.WriteHeader(tt.statusCode)
+				w.Write([]byte(`{}`))
+			})
+			server := httptest.NewServer(mux)
+			t.Cleanup(server.Close)
+
+			client, err := NewClient(
+				"",
+				WithBaseURL(server.URL),
+				WithHTTPClient(server.Client()),
+				WithCustomRetryMax(1),
+			)
+			require.NoError(t, err)
+
+			// WHEN
+			_, resp, err := client.Users.CurrentUser()
+
+			// THEN
+			if tt.expectedError {
+				require.Error(t, err)
+				assert.True(t, HasStatusCode(err, tt.statusCode))
+			} else {
+				require.NoError(t, err)
+				assert.Equal(t, tt.statusCode, resp.StatusCode)
+			}
+
+			if tt.expectedRetry {
+				assert.Equal(t, 2, retries, "Expected 2 retries, got %d", retries)
+			} else {
+				assert.Equal(t, 1, retries, "Didn't expect a retry to happen, but endpoint counter indicates that the request has been retried")
+			}
+		})
+	}
+}
+
+func TestClient_DefaultRetryPolicy_RetryOnIdempotentRequests_ByMethod(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		method        string
+		expectedRetry bool
+	}{
+		{
+			method:        http.MethodGet,
+			expectedRetry: true,
+		},
+		{
+			method:        http.MethodPost,
+			expectedRetry: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.method, func(t *testing.T) {
+			// GIVEN
+			client, err := NewClient(
+				"",
+				WithCustomRetryMax(1),
+			)
+			require.NoError(t, err)
+
+			// WHEN
+			retry, err := client.retryHTTPCheck(context.Background(), &http.Response{Request: &http.Request{Method: tt.method}}, errors.New("dummy"))
+
+			// THEN
+			assert.Equal(t, tt.expectedRetry, retry)
+			assert.NoError(t, err)
+		})
+	}
+}
+
+// TestClient_DefaultRetryPolicy_RetryOnZeroStatusCode tests retry for status code 0
+//
+// We test for this bogus status code because of AWS ALB, see:
+// https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-troubleshooting.html#response-code-000
+func TestClient_DefaultRetryPolicy_RetryOnZeroStatusCode(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN
+	client, err := NewClient(
+		"",
+	)
+	require.NoError(t, err)
+
+	// WHEN
+	retry, err := client.retryHTTPCheck(context.Background(), &http.Response{StatusCode: 0}, nil)
+
+	// THEN
+	assert.True(t, retry)
+	assert.NoError(t, err)
+}
+
+func TestClient_DefaultRetryPolicy_RetryOnNetworkErrors(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name          string
+		err           error
+		expectedRetry bool
+	}{
+		{
+			name:          "DNS error - NXDOMAIN should not retry",
+			err:           &net.DNSError{Err: "no such host", IsNotFound: true},
+			expectedRetry: false,
+		},
+		{
+			name:          "DNS error - temporary DNS error should retry",
+			err:           &net.DNSError{Err: "temporary failure", IsTimeout: true},
+			expectedRetry: true,
+		},
+		{
+			name:          "DNS error - other DNS error should retry",
+			err:           &net.DNSError{Err: "server failure"},
+			expectedRetry: true,
+		},
+		{
+			name:          "OpError - temporary error should retry",
+			err:           &net.OpError{Op: "read", Net: "tcp", Err: &mockTemporaryError{temporary: true}},
+			expectedRetry: true,
+		},
+		{
+			name:          "OpError - dial operation should retry",
+			err:           &net.OpError{Op: "dial", Net: "tcp", Err: errors.New("connection failed")},
+			expectedRetry: true,
+		},
+		{
+			name:          "OpError - non-temporary, non-dial should not retry",
+			err:           &net.OpError{Op: "write", Net: "tcp", Err: errors.New("broken pipe")},
+			expectedRetry: false,
+		},
+		{
+			name:          "URL error - connection refused should retry",
+			err:           &url.Error{Op: "Get", URL: "http://example.com", Err: errors.New("connection refused")},
+			expectedRetry: true,
+		},
+		{
+			name:          "URL error - other URL error should not retry",
+			err:           &url.Error{Op: "Get", URL: "http://example.com", Err: errors.New("other error")},
+			expectedRetry: false,
+		},
+		{
+			name:          "TLS handshake timeout should retry",
+			err:           &mockTLSHandshakeError{msg: "net/http: TLS handshake timeout"},
+			expectedRetry: true,
+		},
+		{
+			name:          "Other TLS error should not retry",
+			err:           &mockTLSHandshakeError{msg: "tls: bad certificate"},
+			expectedRetry: false,
+		},
+		{
+			name:          "Unknown error should not retry (conservative)",
+			err:           errors.New("unknown network error"),
+			expectedRetry: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// GIVEN
+			client, err := NewClient("")
+			require.NoError(t, err)
+
+			// Create a mock response with POST method (non-idempotent) to test error-specific logic
+			// For idempotent methods like GET, the retry logic returns true immediately for any error
+			resp := &http.Response{
+				Request: &http.Request{Method: http.MethodPost},
+			}
+
+			// WHEN
+			retry, err := client.retryHTTPCheck(context.Background(), resp, tt.err)
+
+			// THEN
+			assert.Equal(t, tt.expectedRetry, retry, "Expected retry=%v for error: %v", tt.expectedRetry, tt.err)
+			if tt.expectedRetry {
+				assert.NoError(t, err)
+			}
+		})
+	}
+}
+
+func TestClient_DefaultRetryPolicy_ContextCancellation(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		ctx  func() context.Context
+	}{
+		{
+			name: "context canceled",
+			ctx: func() context.Context {
+				ctx, cancel := context.WithCancel(context.Background())
+				cancel()
+				return ctx
+			},
+		},
+		{
+			name: "context deadline exceeded",
+			ctx: func() context.Context {
+				ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(-time.Hour))
+				defer cancel()
+				return ctx
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// GIVEN
+			client, err := NewClient("")
+			require.NoError(t, err)
+
+			ctx := tt.ctx()
+
+			// WHEN
+			retry, err := client.retryHTTPCheck(ctx, nil, errors.New("some error"))
+
+			// THEN
+			assert.False(t, retry)
+			assert.Equal(t, ctx.Err(), err)
+		})
+	}
+}
+
+func TestClient_DefaultRetryPolicy_RetriesDisabled(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN
+	client, err := NewClient("", WithCustomRetryMax(0))
+	require.NoError(t, err)
+
+	// Manually disable retries to test this specific path
+	client.disableRetries = true
+
+	// WHEN
+	retry, err := client.retryHTTPCheck(context.Background(), nil, errors.New("some error"))
+
+	// THEN
+	assert.False(t, retry)
+	assert.NoError(t, err)
+}
+
+// mockTemporaryError implements a temporary error for testing
+type mockTemporaryError struct {
+	temporary bool
+}
+
+func (e *mockTemporaryError) Error() string {
+	return "mock temporary error"
+}
+
+func (e *mockTemporaryError) Temporary() bool {
+	return e.temporary
+}
+
+// mockTLSHandshakeError implements an error that looks like a TLS handshake error
+type mockTLSHandshakeError struct {
+	msg string
+}
+
+func (e *mockTLSHandshakeError) Error() string {
+	return e.msg
+}
+
+func (e *mockTLSHandshakeError) Timeout() bool {
+	return strings.Contains(e.msg, "timeout")
+}
+
+func (e *mockTLSHandshakeError) Temporary() bool {
+	return strings.Contains(e.msg, "timeout")
 }
