@@ -1,3 +1,10 @@
+# [0.148.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.147.1...v0.148.0) (2025-09-23)
+
+
+### Features
+
+* **ResourceGroup:** add `newest_ready_first` to resource group `process_mode` ([fc8f743](https://gitlab.com/gitlab-org/api/client-go/commit/fc8f7431da4ca8594723105473687e8f1378df2b))
+
 ## [0.147.1](https://gitlab.com/gitlab-org/api/client-go/compare/v0.147.0...v0.147.1) (2025-09-22)
 
 
