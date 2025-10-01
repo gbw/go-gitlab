@@ -799,15 +799,7 @@ func TestCreateNote(t *testing.T) {
 	want := &Note{
 		ID:   1,
 		Body: "Body of note",
-		Author: struct {
-			ID        int    "json:\"id\""
-			Username  string "json:\"username\""
-			Email     string "json:\"email\""
-			Name      string "json:\"name\""
-			State     string "json:\"state\""
-			AvatarURL string "json:\"avatar_url\""
-			WebURL    string "json:\"web_url\""
-		}{
+		Author: NoteAuthor{
 			ID: 1, Username: "snehal", Name: "snehal", Email: "snehal@example.com", State: "active", AvatarURL: "", WebURL: "",
 		},
 		Internal: false,

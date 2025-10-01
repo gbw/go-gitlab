@@ -83,24 +83,26 @@ func (m MergeRequestApprovals) String() string {
 	return Stringify(m)
 }
 
-// MergeRequestApproverGroup  represents GitLab project level merge request approver group.
+// MergeRequestApproverGroup represents GitLab project level merge request approver group.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_request_approvals/#project-approval-rules
 type MergeRequestApproverGroup struct {
-	Group struct {
-		ID                   int    `json:"id"`
-		Name                 string `json:"name"`
-		Path                 string `json:"path"`
-		Description          string `json:"description"`
-		Visibility           string `json:"visibility"`
-		AvatarURL            string `json:"avatar_url"`
-		WebURL               string `json:"web_url"`
-		FullName             string `json:"full_name"`
-		FullPath             string `json:"full_path"`
-		LFSEnabled           bool   `json:"lfs_enabled"`
-		RequestAccessEnabled bool   `json:"request_access_enabled"`
-	}
+	Group MergeRequestApproverNestedGroup `json:"group"`
+}
+
+type MergeRequestApproverNestedGroup struct {
+	ID                   int    `json:"id"`
+	Name                 string `json:"name"`
+	Path                 string `json:"path"`
+	Description          string `json:"description"`
+	Visibility           string `json:"visibility"`
+	AvatarURL            string `json:"avatar_url"`
+	WebURL               string `json:"web_url"`
+	FullName             string `json:"full_name"`
+	FullPath             string `json:"full_path"`
+	LFSEnabled           bool   `json:"lfs_enabled"`
+	RequestAccessEnabled bool   `json:"request_access_enabled"`
 }
 
 // MergeRequestApprovalRule represents a GitLab merge request approval rule.

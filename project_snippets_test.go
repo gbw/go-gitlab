@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -42,14 +41,7 @@ func TestProjectSnippetsService_ListSnippets(t *testing.T) {
 		Title:       "test",
 		FileName:    "add.rb",
 		Description: "Ruby test snippet",
-		Author: struct {
-			ID        int        `json:"id"`
-			Username  string     `json:"username"`
-			Email     string     `json:"email"`
-			Name      string     `json:"name"`
-			State     string     `json:"state"`
-			CreatedAt *time.Time `json:"created_at"`
-		}{
+		Author: SnippetAuthor{
 			ID:       1,
 			Username: "venkatesh_thalluri",
 			Email:    "venky@example.com",
@@ -113,14 +105,7 @@ func TestProjectSnippetsService_GetSnippet(t *testing.T) {
 		Title:       "test",
 		FileName:    "add.rb",
 		Description: "Ruby test snippet",
-		Author: struct {
-			ID        int        `json:"id"`
-			Username  string     `json:"username"`
-			Email     string     `json:"email"`
-			Name      string     `json:"name"`
-			State     string     `json:"state"`
-			CreatedAt *time.Time `json:"created_at"`
-		}{
+		Author: SnippetAuthor{
 			ID:       1,
 			Username: "venkatesh_thalluri",
 			Email:    "venky@example.com",
@@ -190,14 +175,7 @@ func TestProjectSnippetsService_CreateSnippet(t *testing.T) {
 		Title:       "test",
 		FileName:    "add.rb",
 		Description: "Ruby test snippet",
-		Author: struct {
-			ID        int        `json:"id"`
-			Username  string     `json:"username"`
-			Email     string     `json:"email"`
-			Name      string     `json:"name"`
-			State     string     `json:"state"`
-			CreatedAt *time.Time `json:"created_at"`
-		}{
+		Author: SnippetAuthor{
 			ID:       1,
 			Username: "venkatesh_thalluri",
 			Email:    "venky@example.com",
@@ -207,10 +185,7 @@ func TestProjectSnippetsService_CreateSnippet(t *testing.T) {
 		ProjectID: 1,
 		WebURL:    "http://example.com/example/example/snippets/1",
 		RawURL:    "http://example.com/example/example/snippets/1/raw",
-		Files: []struct {
-			Path   string `json:"path"`
-			RawURL string `json:"raw_url"`
-		}{
+		Files: []SnippetFile{
 			{
 				Path:   "add.rb",
 				RawURL: "http://example.com/example/example/-/snippets/1/raw/main/add.rb",
@@ -270,14 +245,7 @@ func TestProjectSnippetsService_UpdateSnippet(t *testing.T) {
 		Title:       "test",
 		FileName:    "add.rb",
 		Description: "Ruby test snippet",
-		Author: struct {
-			ID        int        `json:"id"`
-			Username  string     `json:"username"`
-			Email     string     `json:"email"`
-			Name      string     `json:"name"`
-			State     string     `json:"state"`
-			CreatedAt *time.Time `json:"created_at"`
-		}{
+		Author: SnippetAuthor{
 			ID:       1,
 			Username: "venkatesh_thalluri",
 			Email:    "venky@example.com",

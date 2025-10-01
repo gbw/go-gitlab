@@ -67,10 +67,7 @@ func TestProjectImportExportService_ExportStatus(t *testing.T) {
 		PathWithNamespace: "gitlab-org/gitlab-test",
 		ExportStatus:      "finished",
 		Message:           "",
-		Links: struct {
-			APIURL string `json:"api_url"`
-			WebURL string `json:"web_url"`
-		}{
+		Links: ExportStatusLinks{
 			APIURL: "https://gitlab.example.com/api/v4/projects/1/export/download",
 			WebURL: "https://gitlab.example.com/gitlab-org/gitlab-test/download_export",
 		},

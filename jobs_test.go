@@ -129,13 +129,7 @@ func TestJobsService_ListProjectJobs(t *testing.T) {
 			ID:           7,
 			Name:         "teaspoon",
 			TagList:      []string{"docker runner", "ubuntu18"},
-			Pipeline: struct {
-				ID        int    `json:"id"`
-				ProjectID int    `json:"project_id"`
-				Ref       string `json:"ref"`
-				Sha       string `json:"sha"`
-				Status    string `json:"status"`
-			}{
+			Pipeline: JobPipeline{
 				ID:        6,
 				ProjectID: 1,
 				Ref:       "master",
@@ -163,13 +157,7 @@ func TestJobsService_ListProjectJobs(t *testing.T) {
 			ID:           6,
 			Name:         "rspec:other",
 			TagList:      []string{"docker runner", "win10-2004"},
-			Pipeline: struct {
-				ID        int    `json:"id"`
-				ProjectID int    `json:"project_id"`
-				Ref       string `json:"ref"`
-				Sha       string `json:"sha"`
-				Status    string `json:"status"`
-			}{
+			Pipeline: JobPipeline{
 				ID:        6,
 				ProjectID: 1,
 				Ref:       "master",

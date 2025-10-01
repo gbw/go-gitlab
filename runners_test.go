@@ -55,13 +55,7 @@ func TestListRunnersJobs(t *testing.T) {
 		t.Fatalf("Runners.ListRunnersJobs returns an error: %v", err)
 	}
 
-	pipeline := struct {
-		ID        int    `json:"id"`
-		ProjectID int    `json:"project_id"`
-		Ref       string `json:"ref"`
-		Sha       string `json:"sha"`
-		Status    string `json:"status"`
-	}{
+	pipeline := JobPipeline{
 		ID:        8777,
 		ProjectID: 3252,
 		Ref:       DefaultBranch,
@@ -154,13 +148,7 @@ func TestUpdateRunnersDetails(t *testing.T) {
 		t.Fatalf("Runners.UpdateRunnersDetails returns an error: %v", err)
 	}
 
-	projects := []struct {
-		ID                int    `json:"id"`
-		Name              string `json:"name"`
-		NameWithNamespace string `json:"name_with_namespace"`
-		Path              string `json:"path"`
-		PathWithNamespace string `json:"path_with_namespace"`
-	}{{
+	projects := []RunnerDetailsProject{{
 		ID:                1,
 		Name:              "GitLab Community Edition",
 		NameWithNamespace: "GitLab.org / GitLab Community Edition",
@@ -204,13 +192,7 @@ func TestGetRunnerDetails(t *testing.T) {
 		t.Fatalf("Runners.GetRunnerDetails returns an error: %v", err)
 	}
 
-	projects := []struct {
-		ID                int    `json:"id"`
-		Name              string `json:"name"`
-		NameWithNamespace string `json:"name_with_namespace"`
-		Path              string `json:"path"`
-		PathWithNamespace string `json:"path_with_namespace"`
-	}{{
+	projects := []RunnerDetailsProject{{
 		ID:                1,
 		Name:              "GitLab Community Edition",
 		NameWithNamespace: "GitLab.org / GitLab Community Edition",

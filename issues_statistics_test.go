@@ -44,18 +44,8 @@ func TestGetIssuesStatistics(t *testing.T) {
 	}
 
 	want := &IssuesStatistics{
-		Statistics: struct {
-			Counts struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			} `json:"counts"`
-		}{
-			Counts: struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			}{
+		Statistics: IssuesStatisticsStatistics{
+			Counts: IssuesStatisticsCounts{
 				20, 5, 15,
 			},
 		},
@@ -87,18 +77,8 @@ func TestGetGroupIssuesStatistics(t *testing.T) {
 	}
 
 	want := &IssuesStatistics{
-		Statistics: struct {
-			Counts struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			} `json:"counts"`
-		}{
-			Counts: struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			}{
+		Statistics: IssuesStatisticsStatistics{
+			Counts: IssuesStatisticsCounts{
 				20, 5, 15,
 			},
 		},
@@ -130,18 +110,8 @@ func TestGetProjectIssuesStatistics(t *testing.T) {
 	}
 
 	want := &IssuesStatistics{
-		Statistics: struct {
-			Counts struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			} `json:"counts"`
-		}{
-			Counts: struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			}{
+		Statistics: IssuesStatisticsStatistics{
+			Counts: IssuesStatisticsCounts{
 				20, 5, 15,
 			},
 		},

@@ -45,39 +45,45 @@ var _ DeploymentsServiceInterface = (*DeploymentsService)(nil)
 
 // Deployment represents the Gitlab deployment
 type Deployment struct {
-	ID          int          `json:"id"`
-	IID         int          `json:"iid"`
-	Ref         string       `json:"ref"`
-	SHA         string       `json:"sha"`
-	Status      string       `json:"status"`
-	CreatedAt   *time.Time   `json:"created_at"`
-	UpdatedAt   *time.Time   `json:"updated_at"`
-	User        *ProjectUser `json:"user"`
-	Environment *Environment `json:"environment"`
-	Deployable  struct {
-		ID         int        `json:"id"`
-		Status     string     `json:"status"`
-		Stage      string     `json:"stage"`
-		Name       string     `json:"name"`
-		Ref        string     `json:"ref"`
-		Tag        bool       `json:"tag"`
-		Coverage   float64    `json:"coverage"`
-		CreatedAt  *time.Time `json:"created_at"`
-		StartedAt  *time.Time `json:"started_at"`
-		FinishedAt *time.Time `json:"finished_at"`
-		Duration   float64    `json:"duration"`
-		User       *User      `json:"user"`
-		Commit     *Commit    `json:"commit"`
-		Pipeline   struct {
-			ID        int        `json:"id"`
-			SHA       string     `json:"sha"`
-			Ref       string     `json:"ref"`
-			Status    string     `json:"status"`
-			CreatedAt *time.Time `json:"created_at"`
-			UpdatedAt *time.Time `json:"updated_at"`
-		} `json:"pipeline"`
-		Runner *Runner `json:"runner"`
-	} `json:"deployable"`
+	ID          int                  `json:"id"`
+	IID         int                  `json:"iid"`
+	Ref         string               `json:"ref"`
+	SHA         string               `json:"sha"`
+	Status      string               `json:"status"`
+	CreatedAt   *time.Time           `json:"created_at"`
+	UpdatedAt   *time.Time           `json:"updated_at"`
+	User        *ProjectUser         `json:"user"`
+	Environment *Environment         `json:"environment"`
+	Deployable  DeploymentDeployable `json:"deployable"`
+}
+
+// DeploymentDeployable represents the Gitlab deployment deployable
+type DeploymentDeployable struct {
+	ID         int                          `json:"id"`
+	Status     string                       `json:"status"`
+	Stage      string                       `json:"stage"`
+	Name       string                       `json:"name"`
+	Ref        string                       `json:"ref"`
+	Tag        bool                         `json:"tag"`
+	Coverage   float64                      `json:"coverage"`
+	CreatedAt  *time.Time                   `json:"created_at"`
+	StartedAt  *time.Time                   `json:"started_at"`
+	FinishedAt *time.Time                   `json:"finished_at"`
+	Duration   float64                      `json:"duration"`
+	User       *User                        `json:"user"`
+	Commit     *Commit                      `json:"commit"`
+	Pipeline   DeploymentDeployablePipeline `json:"pipeline"`
+	Runner     *Runner                      `json:"runner"`
+}
+
+// DeploymentDeployablePipeline represents the Gitlab deployment deployable pipeline
+type DeploymentDeployablePipeline struct {
+	ID        int        `json:"id"`
+	SHA       string     `json:"sha"`
+	Ref       string     `json:"ref"`
+	Status    string     `json:"status"`
+	CreatedAt *time.Time `json:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
 }
 
 // ListProjectDeploymentsOptions represents the available ListProjectDeployments() options.

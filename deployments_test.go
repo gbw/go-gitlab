@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -105,30 +104,7 @@ func TestDeploymentsService_ListProjectDeployments(t *testing.T) {
 			Project:        nil,
 			LastDeployment: nil,
 		},
-		Deployable: struct {
-			ID         int        `json:"id"`
-			Status     string     `json:"status"`
-			Stage      string     `json:"stage"`
-			Name       string     `json:"name"`
-			Ref        string     `json:"ref"`
-			Tag        bool       `json:"tag"`
-			Coverage   float64    `json:"coverage"`
-			CreatedAt  *time.Time `json:"created_at"`
-			StartedAt  *time.Time `json:"started_at"`
-			FinishedAt *time.Time `json:"finished_at"`
-			Duration   float64    `json:"duration"`
-			User       *User      `json:"user"`
-			Commit     *Commit    `json:"commit"`
-			Pipeline   struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			} `json:"pipeline"`
-			Runner *Runner `json:"runner"`
-		}{
+		Deployable: DeploymentDeployable{
 			ID:         657,
 			Status:     "success",
 			Stage:      "deploy",
@@ -167,14 +143,7 @@ func TestDeploymentsService_ListProjectDeployments(t *testing.T) {
 				ProjectID:      0,
 				WebURL:         "",
 			},
-			Pipeline: struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			}{
+			Pipeline: DeploymentDeployablePipeline{
 				ID:        36,
 				SHA:       "99d03678b90d914dbb1b109132516d71a4a03ea8",
 				Ref:       "main",
@@ -301,30 +270,7 @@ func TestDeploymentsService_GetProjectDeployment(t *testing.T) {
 			Project:        nil,
 			LastDeployment: nil,
 		},
-		Deployable: struct {
-			ID         int        `json:"id"`
-			Status     string     `json:"status"`
-			Stage      string     `json:"stage"`
-			Name       string     `json:"name"`
-			Ref        string     `json:"ref"`
-			Tag        bool       `json:"tag"`
-			Coverage   float64    `json:"coverage"`
-			CreatedAt  *time.Time `json:"created_at"`
-			StartedAt  *time.Time `json:"started_at"`
-			FinishedAt *time.Time `json:"finished_at"`
-			Duration   float64    `json:"duration"`
-			User       *User      `json:"user"`
-			Commit     *Commit    `json:"commit"`
-			Pipeline   struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			} `json:"pipeline"`
-			Runner *Runner `json:"runner"`
-		}{
+		Deployable: DeploymentDeployable{
 			ID:         657,
 			Status:     "success",
 			Stage:      "deploy",
@@ -363,14 +309,7 @@ func TestDeploymentsService_GetProjectDeployment(t *testing.T) {
 				ProjectID:      0,
 				WebURL:         "",
 			},
-			Pipeline: struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			}{
+			Pipeline: DeploymentDeployablePipeline{
 				ID:        36,
 				SHA:       "99d03678b90d914dbb1b109132516d71a4a03ea8",
 				Ref:       "main",
@@ -497,30 +436,7 @@ func TestDeploymentsService_CreateProjectDeployment(t *testing.T) {
 			Project:        nil,
 			LastDeployment: nil,
 		},
-		Deployable: struct {
-			ID         int        `json:"id"`
-			Status     string     `json:"status"`
-			Stage      string     `json:"stage"`
-			Name       string     `json:"name"`
-			Ref        string     `json:"ref"`
-			Tag        bool       `json:"tag"`
-			Coverage   float64    `json:"coverage"`
-			CreatedAt  *time.Time `json:"created_at"`
-			StartedAt  *time.Time `json:"started_at"`
-			FinishedAt *time.Time `json:"finished_at"`
-			Duration   float64    `json:"duration"`
-			User       *User      `json:"user"`
-			Commit     *Commit    `json:"commit"`
-			Pipeline   struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			} `json:"pipeline"`
-			Runner *Runner `json:"runner"`
-		}{
+		Deployable: DeploymentDeployable{
 			ID:         657,
 			Status:     "success",
 			Stage:      "deploy",
@@ -559,14 +475,7 @@ func TestDeploymentsService_CreateProjectDeployment(t *testing.T) {
 				ProjectID:      0,
 				WebURL:         "",
 			},
-			Pipeline: struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			}{
+			Pipeline: DeploymentDeployablePipeline{
 				ID:        36,
 				SHA:       "99d03678b90d914dbb1b109132516d71a4a03ea8",
 				Ref:       "main",
@@ -693,30 +602,7 @@ func TestDeploymentsService_UpdateProjectDeployment(t *testing.T) {
 			Project:        nil,
 			LastDeployment: nil,
 		},
-		Deployable: struct {
-			ID         int        `json:"id"`
-			Status     string     `json:"status"`
-			Stage      string     `json:"stage"`
-			Name       string     `json:"name"`
-			Ref        string     `json:"ref"`
-			Tag        bool       `json:"tag"`
-			Coverage   float64    `json:"coverage"`
-			CreatedAt  *time.Time `json:"created_at"`
-			StartedAt  *time.Time `json:"started_at"`
-			FinishedAt *time.Time `json:"finished_at"`
-			Duration   float64    `json:"duration"`
-			User       *User      `json:"user"`
-			Commit     *Commit    `json:"commit"`
-			Pipeline   struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			} `json:"pipeline"`
-			Runner *Runner `json:"runner"`
-		}{
+		Deployable: DeploymentDeployable{
 			ID:         657,
 			Status:     "success",
 			Stage:      "deploy",
@@ -755,14 +641,7 @@ func TestDeploymentsService_UpdateProjectDeployment(t *testing.T) {
 				ProjectID:      0,
 				WebURL:         "",
 			},
-			Pipeline: struct {
-				ID        int        `json:"id"`
-				SHA       string     `json:"sha"`
-				Ref       string     `json:"ref"`
-				Status    string     `json:"status"`
-				CreatedAt *time.Time `json:"created_at"`
-				UpdatedAt *time.Time `json:"updated_at"`
-			}{
+			Pipeline: DeploymentDeployablePipeline{
 				ID:        36,
 				SHA:       "99d03678b90d914dbb1b109132516d71a4a03ea8",
 				Ref:       "main",

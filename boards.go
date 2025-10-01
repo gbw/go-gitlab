@@ -50,21 +50,14 @@ var _ IssueBoardsServiceInterface = (*IssueBoardsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/boards/
 type IssueBoard struct {
-	ID        int        `json:"id"`
-	Name      string     `json:"name"`
-	Project   *Project   `json:"project"`
-	Milestone *Milestone `json:"milestone"`
-	Assignee  *struct {
-		ID        int    `json:"id"`
-		Username  string `json:"username"`
-		Name      string `json:"name"`
-		State     string `json:"state"`
-		AvatarURL string `json:"avatar_url"`
-		WebURL    string `json:"web_url"`
-	} `json:"assignee"`
-	Lists  []*BoardList    `json:"lists"`
-	Weight int             `json:"weight"`
-	Labels []*LabelDetails `json:"labels"`
+	ID        int             `json:"id"`
+	Name      string          `json:"name"`
+	Project   *Project        `json:"project"`
+	Milestone *Milestone      `json:"milestone"`
+	Assignee  *BasicUser      `json:"assignee"`
+	Lists     []*BoardList    `json:"lists"`
+	Weight    int             `json:"weight"`
+	Labels    []*LabelDetails `json:"labels"`
 }
 
 func (b IssueBoard) String() string {
@@ -75,22 +68,31 @@ func (b IssueBoard) String() string {
 //
 // GitLab API docs: https://docs.gitlab.com/api/boards/
 type BoardList struct {
-	ID       int `json:"id"`
-	Assignee *struct {
-		ID       int    `json:"id"`
-		Name     string `json:"name"`
-		Username string `json:"username"`
-	} `json:"assignee"`
-	Iteration      *ProjectIteration `json:"iteration"`
-	Label          *Label            `json:"label"`
-	MaxIssueCount  int               `json:"max_issue_count"`
-	MaxIssueWeight int               `json:"max_issue_weight"`
-	Milestone      *Milestone        `json:"milestone"`
-	Position       int               `json:"position"`
+	ID             int                `json:"id"`
+	Assignee       *BoardListAssignee `json:"assignee"`
+	Iteration      *ProjectIteration  `json:"iteration"`
+	Label          *Label             `json:"label"`
+	MaxIssueCount  int                `json:"max_issue_count"`
+	MaxIssueWeight int                `json:"max_issue_weight"`
+	Milestone      *Milestone         `json:"milestone"`
+	Position       int                `json:"position"`
 }
 
 func (b BoardList) String() string {
 	return Stringify(b)
+}
+
+// BoardListAssignee represents a GitLab board list assignee.
+//
+// GitLab API docs: https://docs.gitlab.com/api/boards/
+type BoardListAssignee struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Username string `json:"username"`
+}
+
+func (a BoardListAssignee) String() string {
+	return Stringify(a)
 }
 
 // CreateIssueBoardOptions represents the available CreateIssueBoard() options.

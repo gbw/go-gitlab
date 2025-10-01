@@ -44,17 +44,27 @@ var _ IssuesStatisticsServiceInterface = (*IssuesStatisticsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues_statistics/
 type IssuesStatistics struct {
-	Statistics struct {
-		Counts struct {
-			All    int `json:"all"`
-			Closed int `json:"closed"`
-			Opened int `json:"opened"`
-		} `json:"counts"`
-	} `json:"statistics"`
+	Statistics IssuesStatisticsStatistics `json:"statistics"`
 }
 
 func (n IssuesStatistics) String() string {
 	return Stringify(n)
+}
+
+// IssuesStatisticsStatistics represents a GitLab issues statistic statistics.
+//
+// GitLab API docs: https://docs.gitlab.com/api/issues_statistics/
+type IssuesStatisticsStatistics struct {
+	Counts IssuesStatisticsCounts `json:"counts"`
+}
+
+// IssuesStatisticsCounts represents a GitLab issues statistic counts.
+//
+// GitLab API docs: https://docs.gitlab.com/api/issues_statistics/
+type IssuesStatisticsCounts struct {
+	All    int `json:"all"`
+	Closed int `json:"closed"`
+	Opened int `json:"opened"`
 }
 
 // GetIssuesStatisticsOptions represents the available GetIssuesStatistics() options.

@@ -39,14 +39,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmoji(t *testing.T) {
 	want := []*AwardEmoji{{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -110,14 +103,7 @@ func TestAwardEmojiService_ListIssueAwardEmoji(t *testing.T) {
 	want := []*AwardEmoji{{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -181,14 +167,7 @@ func TestAwardEmojiService_ListSnippetAwardEmoji(t *testing.T) {
 	want := []*AwardEmoji{{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -250,14 +229,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmoji(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -319,14 +291,7 @@ func TestAwardEmojiService_GetIssueAwardEmoji(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -388,14 +353,7 @@ func TestAwardEmojiService_GetSnippetAwardEmoji(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -457,14 +415,7 @@ func TestAwardEmojiService_CreateMergeRequestAwardEmoji(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -526,14 +477,7 @@ func TestAwardEmojiService_CreateIssueAwardEmoji(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -595,14 +539,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmoji(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -741,14 +678,7 @@ func TestAwardEmojiService_ListMergeRequestAwardEmojiOnNote(t *testing.T) {
 	want := []*AwardEmoji{{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -812,14 +742,7 @@ func TestAwardEmojiService_ListIssuesAwardEmojiOnNote(t *testing.T) {
 	want := []*AwardEmoji{{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -883,14 +806,7 @@ func TestAwardEmojiService_ListSnippetAwardEmojiOnNote(t *testing.T) {
 	want := []*AwardEmoji{{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -952,14 +868,7 @@ func TestAwardEmojiService_GetMergeRequestAwardEmojiOnNote(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -1021,14 +930,7 @@ func TestAwardEmojiService_GetIssuesAwardEmojiOnNote(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -1090,14 +992,7 @@ func TestAwardEmojiService_GetSnippetAwardEmojiOnNote(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -1159,14 +1054,7 @@ func TestAwardEmojiService_CCreateMergeRequestAwardEmojiOnNote(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -1228,14 +1116,7 @@ func TestAwardEmojiService_CreateIssuesAwardEmojiOnNote(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,
@@ -1297,14 +1178,7 @@ func TestAwardEmojiService_CreateSnippetAwardEmojiOnNote(t *testing.T) {
 	want := &AwardEmoji{
 		ID:   4,
 		Name: "1234",
-		User: struct {
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			ID        int    `json:"id"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			Name:      "Venkatesh Thalluri",
 			Username:  "venky333",
 			ID:        1,

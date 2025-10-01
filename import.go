@@ -69,17 +69,19 @@ func (s GitHubImport) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/import/#import-repository-from-github
 type ImportRepositoryFromGitHubOptions struct {
-	PersonalAccessToken *string `url:"personal_access_token,omitempty" json:"personal_access_token,omitempty"`
-	RepoID              *int    `url:"repo_id,omitempty" json:"repo_id,omitempty"`
-	NewName             *string `url:"new_name,omitempty" json:"new_name,omitempty"`
-	TargetNamespace     *string `url:"target_namespace,omitempty" json:"target_namespace,omitempty"`
-	GitHubHostname      *string `url:"github_hostname,omitempty" json:"github_hostname,omitempty"`
-	OptionalStages      struct {
-		SingleEndpointNotesImport *bool `url:"single_endpoint_notes_import,omitempty" json:"single_endpoint_notes_import,omitempty"`
-		AttachmentsImport         *bool `url:"attachments_import,omitempty" json:"attachments_import,omitempty"`
-		CollaboratorsImport       *bool `url:"collaborators_import,omitempty" json:"collaborators_import,omitempty"`
-	} `url:"optional_stages,omitempty" json:"optional_stages,omitempty"`
-	TimeoutStrategy *string `url:"timeout_strategy,omitempty" json:"timeout_strategy,omitempty"`
+	PersonalAccessToken *string                                         `url:"personal_access_token,omitempty" json:"personal_access_token,omitempty"`
+	RepoID              *int                                            `url:"repo_id,omitempty" json:"repo_id,omitempty"`
+	NewName             *string                                         `url:"new_name,omitempty" json:"new_name,omitempty"`
+	TargetNamespace     *string                                         `url:"target_namespace,omitempty" json:"target_namespace,omitempty"`
+	GitHubHostname      *string                                         `url:"github_hostname,omitempty" json:"github_hostname,omitempty"`
+	OptionalStages      ImportRepositoryFromGitHubOptionalStagesOptions `url:"optional_stages,omitempty" json:"optional_stages,omitempty"`
+	TimeoutStrategy     *string                                         `url:"timeout_strategy,omitempty" json:"timeout_strategy,omitempty"`
+}
+
+type ImportRepositoryFromGitHubOptionalStagesOptions struct {
+	SingleEndpointNotesImport *bool `url:"single_endpoint_notes_import,omitempty" json:"single_endpoint_notes_import,omitempty"`
+	AttachmentsImport         *bool `url:"attachments_import,omitempty" json:"attachments_import,omitempty"`
+	CollaboratorsImport       *bool `url:"collaborators_import,omitempty" json:"collaborators_import,omitempty"`
 }
 
 // ImportRepositoryFromGitHub imports a repository from GitHub.
