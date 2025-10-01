@@ -1586,7 +1586,7 @@ func TestListProjectHooks(t *testing.T) {
 }
 
 // Test that the "CustomWebhookTemplate" serializes properly
-func TestProjectAddWebhook_CustomTemplateStuff(t *testing.T) {
+func TestAddProjectHook_CustomTemplateStuff(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 	customWebhookSet := false
@@ -1641,7 +1641,7 @@ func TestProjectAddWebhook_CustomTemplateStuff(t *testing.T) {
 }
 
 // Test that the "CustomWebhookTemplate" serializes properly when editing
-func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
+func TestEditProjectHook_CustomTemplateStuff(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 	customWebhookSet := false
@@ -1692,6 +1692,24 @@ func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
 	assert.True(t, authValueSet)
 	assert.Equal(t, "testValue", hook.CustomWebhookTemplate)
 	assert.Len(t, hook.CustomHeaders, 2)
+}
+
+func TestDeleteProjectHook(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/hooks/1",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
+
+	resp, err := client.Projects.DeleteProjectHook(1, 1)
+
+	assert.NoError(t, err)
+
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
 func TestSetProjectWebhookURLVariable(t *testing.T) {
