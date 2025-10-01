@@ -87,34 +87,24 @@ type Runner struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/runners/
 type RunnerDetails struct {
-	Paused          bool       `json:"paused"`
-	Description     string     `json:"description"`
-	ID              int        `json:"id"`
-	IsShared        bool       `json:"is_shared"`
-	RunnerType      string     `json:"runner_type"`
-	ContactedAt     *time.Time `json:"contacted_at"`
-	MaintenanceNote string     `json:"maintenance_note"`
-	Name            string     `json:"name"`
-	Online          bool       `json:"online"`
-	Status          string     `json:"status"`
-	Projects        []struct {
-		ID                int    `json:"id"`
-		Name              string `json:"name"`
-		NameWithNamespace string `json:"name_with_namespace"`
-		Path              string `json:"path"`
-		PathWithNamespace string `json:"path_with_namespace"`
-	} `json:"projects"`
-	Token          string   `json:"token"`
-	TagList        []string `json:"tag_list"`
-	RunUntagged    bool     `json:"run_untagged"`
-	Locked         bool     `json:"locked"`
-	AccessLevel    string   `json:"access_level"`
-	MaximumTimeout int      `json:"maximum_timeout"`
-	Groups         []struct {
-		ID     int    `json:"id"`
-		Name   string `json:"name"`
-		WebURL string `json:"web_url"`
-	} `json:"groups"`
+	Paused          bool                   `json:"paused"`
+	Description     string                 `json:"description"`
+	ID              int                    `json:"id"`
+	IsShared        bool                   `json:"is_shared"`
+	RunnerType      string                 `json:"runner_type"`
+	ContactedAt     *time.Time             `json:"contacted_at"`
+	MaintenanceNote string                 `json:"maintenance_note"`
+	Name            string                 `json:"name"`
+	Online          bool                   `json:"online"`
+	Status          string                 `json:"status"`
+	Projects        []RunnerDetailsProject `json:"projects"`
+	Token           string                 `json:"token"`
+	TagList         []string               `json:"tag_list"`
+	RunUntagged     bool                   `json:"run_untagged"`
+	Locked          bool                   `json:"locked"`
+	AccessLevel     string                 `json:"access_level"`
+	MaximumTimeout  int                    `json:"maximum_timeout"`
+	Groups          []RunnerDetailsGroup   `json:"groups"`
 
 	// Deprecated: for removal in v5 of the API, see GraphQL resource CiRunnerManager instead
 	Architecture string `json:"architecture"`
@@ -133,6 +123,26 @@ type RunnerDetails struct {
 
 	// Deprecated: for removal in v5 of the API, use Paused instead
 	Active bool `json:"active"`
+}
+
+// RunnerDetailsProject represents the GitLab CI runner details project.
+//
+// GitLab API docs: https://docs.gitlab.com/api/runners/
+type RunnerDetailsProject struct {
+	ID                int    `json:"id"`
+	Name              string `json:"name"`
+	NameWithNamespace string `json:"name_with_namespace"`
+	Path              string `json:"path"`
+	PathWithNamespace string `json:"path_with_namespace"`
+}
+
+// RunnerDetailsGroup represents the GitLab CI runner details group.
+//
+// GitLab API docs: https://docs.gitlab.com/api/runners/
+type RunnerDetailsGroup struct {
+	ID     int    `json:"id"`
+	Name   string `json:"name"`
+	WebURL string `json:"web_url"`
 }
 
 // ListRunnersOptions represents the available ListRunners() options.

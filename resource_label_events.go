@@ -51,26 +51,25 @@ var _ ResourceLabelEventsServiceInterface = (*ResourceLabelEventsService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/api/resource_label_events/#get-single-issue-label-event
 type LabelEvent struct {
-	ID           int        `json:"id"`
-	Action       string     `json:"action"`
-	CreatedAt    *time.Time `json:"created_at"`
-	ResourceType string     `json:"resource_type"`
-	ResourceID   int        `json:"resource_id"`
-	User         struct {
-		ID        int    `json:"id"`
-		Name      string `json:"name"`
-		Username  string `json:"username"`
-		State     string `json:"state"`
-		AvatarURL string `json:"avatar_url"`
-		WebURL    string `json:"web_url"`
-	} `json:"user"`
-	Label struct {
-		ID          int    `json:"id"`
-		Name        string `json:"name"`
-		Color       string `json:"color"`
-		TextColor   string `json:"text_color"`
-		Description string `json:"description"`
-	} `json:"label"`
+	ID           int             `json:"id"`
+	Action       string          `json:"action"`
+	CreatedAt    *time.Time      `json:"created_at"`
+	ResourceType string          `json:"resource_type"`
+	ResourceID   int             `json:"resource_id"`
+	User         BasicUser       `json:"user"`
+	Label        LabelEventLabel `json:"label"`
+}
+
+// LabelEventLabel represents a resource label event label.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/resource_label_events/#get-single-issue-label-event
+type LabelEventLabel struct {
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Color       string `json:"color"`
+	TextColor   string `json:"text_color"`
+	Description string `json:"description"`
 }
 
 // ListLabelEventsOptions represents the options for all resource label events

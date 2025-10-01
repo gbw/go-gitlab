@@ -51,14 +51,7 @@ func TestUsersService_ListUserContributionEvents(t *testing.T) {
 			AuthorID:    1,
 			TargetTitle: "Public project search field",
 			Note:        nil,
-			Author: struct {
-				Name      string `json:"name"`
-				Username  string `json:"username"`
-				ID        int    `json:"id"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: BasicUser{
 				Name:      "Venkatesh Thalluri",
 				Username:  "venky333",
 				ID:        1,
@@ -134,14 +127,7 @@ func TestEventsService_ListCurrentUserContributionEvents(t *testing.T) {
 			AuthorID:    25,
 			TargetTitle: "Qui natus eos odio tempore et quaerat consequuntur ducimus cupiditate quis.",
 			Note:        nil,
-			Author: struct {
-				Name      string `json:"name"`
-				Username  string `json:"username"`
-				ID        int    `json:"id"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: BasicUser{
 				Name:      "Venkatesh Thalluri",
 				Username:  "venky333",
 				ID:        25,
@@ -249,14 +235,7 @@ func TestEventsService_ListProjectVisibleEvents(t *testing.T) {
 			TargetType:  "Issue",
 			AuthorID:    1,
 			TargetTitle: "Public project search field",
-			Author: struct {
-				Name      string `json:"name"`
-				Username  string `json:"username"`
-				ID        int    `json:"id"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: BasicUser{
 				Name:      "Venkatesh Thalluri",
 				Username:  "venky333",
 				ID:        1,
@@ -278,14 +257,7 @@ func TestEventsService_ListProjectVisibleEvents(t *testing.T) {
 			AuthorID:    1,
 			TargetTitle: "",
 			CreatedAt:   "",
-			Author: struct {
-				Name      string `json:"name"`
-				Username  string `json:"username"`
-				ID        int    `json:"id"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: BasicUser{
 				Name:      "Dmitriy Zaporozhets",
 				Username:  "root",
 				ID:        1,
@@ -294,15 +266,7 @@ func TestEventsService_ListProjectVisibleEvents(t *testing.T) {
 				WebURL:    "http://localhost:3000/root",
 			},
 			AuthorUsername: "john",
-			PushData: struct {
-				CommitCount int    `json:"commit_count"`
-				Action      string `json:"action"`
-				RefType     string `json:"ref_type"`
-				CommitFrom  string `json:"commit_from"`
-				CommitTo    string `json:"commit_to"`
-				Ref         string `json:"ref"`
-				CommitTitle string `json:"commit_title"`
-			}{
+			PushData: ProjectEventPushData{
 				CommitCount: 1,
 				Action:      "pushed",
 				RefType:     "branch",

@@ -44,22 +44,12 @@ func TestLicenseService_GetLicense(t *testing.T) {
 		Overage:          200,
 		UserLimit:        100,
 		ActiveUsers:      300,
-		Licensee: struct {
-			Name    string `json:"Name"`
-			Company string `json:"Company"`
-			Email   string `json:"Email"`
-		}{
+		Licensee: LicenseLicensee{
 			Name:    "Venkatesh Thalluri",
 			Company: "",
 			Email:   "",
 		},
-		AddOns: struct {
-			GitLabAuditorUser int `json:"GitLab_Auditor_User"`
-			GitLabDeployBoard int `json:"GitLab_DeployBoard"`
-			GitLabFileLocks   int `json:"GitLab_FileLocks"`
-			GitLabGeo         int `json:"GitLab_Geo"`
-			GitLabServiceDesk int `json:"GitLab_ServiceDesk"`
-		}{
+		AddOns: LicenseAddOns{
 			GitLabAuditorUser: 1,
 			GitLabDeployBoard: 0,
 			GitLabFileLocks:   1,
@@ -125,22 +115,12 @@ func TestLicenseService_AddLicense(t *testing.T) {
 		Overage:          200,
 		UserLimit:        100,
 		ActiveUsers:      300,
-		Licensee: struct {
-			Name    string `json:"Name"`
-			Company string `json:"Company"`
-			Email   string `json:"Email"`
-		}{
+		Licensee: LicenseLicensee{
 			Name:    "Venkatesh Thalluri",
 			Company: "",
 			Email:   "",
 		},
-		AddOns: struct {
-			GitLabAuditorUser int `json:"GitLab_Auditor_User"`
-			GitLabDeployBoard int `json:"GitLab_DeployBoard"`
-			GitLabFileLocks   int `json:"GitLab_FileLocks"`
-			GitLabGeo         int `json:"GitLab_Geo"`
-			GitLabServiceDesk int `json:"GitLab_ServiceDesk"`
-		}{
+		AddOns: LicenseAddOns{
 			GitLabAuditorUser: 1,
 			GitLabDeployBoard: 0,
 			GitLabFileLocks:   1,

@@ -65,16 +65,9 @@ var _ AwardEmojiServiceInterface = (*AwardEmojiService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/emoji_reactions/
 type AwardEmoji struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	User struct {
-		Name      string `json:"name"`
-		Username  string `json:"username"`
-		ID        int    `json:"id"`
-		State     string `json:"state"`
-		AvatarURL string `json:"avatar_url"`
-		WebURL    string `json:"web_url"`
-	} `json:"user"`
+	ID            int        `json:"id"`
+	Name          string     `json:"name"`
+	User          BasicUser  `json:"user"`
 	CreatedAt     *time.Time `json:"created_at"`
 	UpdatedAt     *time.Time `json:"updated_at"`
 	AwardableID   int        `json:"awardable_id"`

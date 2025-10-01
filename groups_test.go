@@ -65,7 +65,6 @@ func TestGetGroup(t *testing.T) {
 	}
 
 	// Create the group shares struct to test.
-	// We need to re-declare the struct here since it's an anonymous struct in the upstream struct.
 	shares := []SharedWithGroup{
 		{
 			GroupID:      1,

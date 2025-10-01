@@ -51,33 +51,51 @@ var _ SnippetsServiceInterface = (*SnippetsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/snippets/
 type Snippet struct {
-	ID          int    `json:"id"`
-	Title       string `json:"title"`
-	FileName    string `json:"file_name"`
-	Description string `json:"description"`
-	Visibility  string `json:"visibility"`
-	Author      struct {
-		ID        int        `json:"id"`
-		Username  string     `json:"username"`
-		Email     string     `json:"email"`
-		Name      string     `json:"name"`
-		State     string     `json:"state"`
-		CreatedAt *time.Time `json:"created_at"`
-	} `json:"author"`
-	UpdatedAt *time.Time `json:"updated_at"`
-	CreatedAt *time.Time `json:"created_at"`
-	ProjectID int        `json:"project_id"`
-	WebURL    string     `json:"web_url"`
-	RawURL    string     `json:"raw_url"`
-	Files     []struct {
-		Path   string `json:"path"`
-		RawURL string `json:"raw_url"`
-	} `json:"files"`
-	RepositoryStorage string `json:"repository_storage"`
+	ID                int           `json:"id"`
+	Title             string        `json:"title"`
+	FileName          string        `json:"file_name"`
+	Description       string        `json:"description"`
+	Visibility        string        `json:"visibility"`
+	Author            SnippetAuthor `json:"author"`
+	UpdatedAt         *time.Time    `json:"updated_at"`
+	CreatedAt         *time.Time    `json:"created_at"`
+	ProjectID         int           `json:"project_id"`
+	WebURL            string        `json:"web_url"`
+	RawURL            string        `json:"raw_url"`
+	Files             []SnippetFile `json:"files"`
+	RepositoryStorage string        `json:"repository_storage"`
 }
 
 func (s Snippet) String() string {
 	return Stringify(s)
+}
+
+// SnippetAuthor represents a GitLab snippet author.
+//
+// GitLab API docs: https://docs.gitlab.com/api/snippets/
+type SnippetAuthor struct {
+	ID        int        `json:"id"`
+	Username  string     `json:"username"`
+	Email     string     `json:"email"`
+	Name      string     `json:"name"`
+	State     string     `json:"state"`
+	CreatedAt *time.Time `json:"created_at"`
+}
+
+func (a SnippetAuthor) String() string {
+	return Stringify(a)
+}
+
+// SnippetFile represents a GitLab snippet file.
+//
+// GitLab API docs: https://docs.gitlab.com/api/snippets/
+type SnippetFile struct {
+	Path   string `json:"path"`
+	RawURL string `json:"raw_url"`
+}
+
+func (f SnippetFile) String() string {
+	return Stringify(f)
 }
 
 // ListSnippetsOptions represents the available ListSnippets() options.

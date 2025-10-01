@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -40,13 +39,7 @@ func TestPagesDomainsService_ListPagesDomains(t *testing.T) {
 		Verified:         false,
 		VerificationCode: "",
 		EnabledUntil:     nil,
-		Certificate: struct {
-			Subject         string     `json:"subject"`
-			Expired         bool       `json:"expired"`
-			Expiration      *time.Time `json:"expiration"`
-			Certificate     string     `json:"certificate"`
-			CertificateText string     `json:"certificate_text"`
-		}{
+		Certificate: PagesDomainCertificate{
 			Expired:         false,
 			Expiration:      nil,
 			Subject:         "/O=Example, Inc./OU=Example Origin CA/CN=Example Origin Certificate",
@@ -105,13 +98,7 @@ func TestPagesDomainsService_ListAllPagesDomains(t *testing.T) {
 		Verified:         false,
 		VerificationCode: "",
 		EnabledUntil:     nil,
-		Certificate: struct {
-			Subject         string     `json:"subject"`
-			Expired         bool       `json:"expired"`
-			Expiration      *time.Time `json:"expiration"`
-			Certificate     string     `json:"certificate"`
-			CertificateText string     `json:"certificate_text"`
-		}{
+		Certificate: PagesDomainCertificate{
 			Expired:    false,
 			Expiration: nil,
 		},
@@ -172,13 +159,7 @@ func TestPagesDomainsService_GetPagesDomain(t *testing.T) {
 		Verified:         false,
 		VerificationCode: "",
 		EnabledUntil:     nil,
-		Certificate: struct {
-			Subject         string     `json:"subject"`
-			Expired         bool       `json:"expired"`
-			Expiration      *time.Time `json:"expiration"`
-			Certificate     string     `json:"certificate"`
-			CertificateText string     `json:"certificate_text"`
-		}{
+		Certificate: PagesDomainCertificate{
 			Expired:         false,
 			Expiration:      nil,
 			Subject:         "/O=Example, Inc./OU=Example Origin CA/CN=Example Origin Certificate",
@@ -237,13 +218,7 @@ func TestPagesDomainsService_CreatePagesDomain(t *testing.T) {
 		Verified:         false,
 		VerificationCode: "",
 		EnabledUntil:     nil,
-		Certificate: struct {
-			Subject         string     `json:"subject"`
-			Expired         bool       `json:"expired"`
-			Expiration      *time.Time `json:"expiration"`
-			Certificate     string     `json:"certificate"`
-			CertificateText string     `json:"certificate_text"`
-		}{
+		Certificate: PagesDomainCertificate{
 			Expired:         false,
 			Expiration:      nil,
 			Subject:         "/O=Example, Inc./OU=Example Origin CA/CN=Example Origin Certificate",
@@ -302,13 +277,7 @@ func TestPagesDomainsService_UpdatePagesDomain(t *testing.T) {
 		Verified:         false,
 		VerificationCode: "",
 		EnabledUntil:     nil,
-		Certificate: struct {
-			Subject         string     `json:"subject"`
-			Expired         bool       `json:"expired"`
-			Expiration      *time.Time `json:"expiration"`
-			Certificate     string     `json:"certificate"`
-			CertificateText string     `json:"certificate_text"`
-		}{
+		Certificate: PagesDomainCertificate{
 			Expired:         false,
 			Expiration:      nil,
 			Subject:         "/O=Example, Inc./OU=Example Origin CA/CN=Example Origin Certificate",

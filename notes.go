@@ -63,39 +63,45 @@ var _ NotesServiceInterface = (*NotesService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/api/notes/
 type Note struct {
-	ID           int           `json:"id"`
-	Type         NoteTypeValue `json:"type"`
-	Body         string        `json:"body"`
-	Attachment   string        `json:"attachment"`
-	Title        string        `json:"title"`
-	FileName     string        `json:"file_name"`
-	Author       NoteAuthor    `json:"author"`
-	System       bool          `json:"system"`
-	CreatedAt    *time.Time    `json:"created_at"`
-	UpdatedAt    *time.Time    `json:"updated_at"`
-	ExpiresAt    *time.Time    `json:"expires_at"`
-	CommitID     string        `json:"commit_id"`
-	Position     *NotePosition `json:"position"`
-	NoteableID   int           `json:"noteable_id"`
-	NoteableType string        `json:"noteable_type"`
-	ProjectID    int           `json:"project_id"`
-	NoteableIID  int           `json:"noteable_iid"`
-	Resolvable   bool          `json:"resolvable"`
-	Resolved     bool          `json:"resolved"`
-	ResolvedAt   *time.Time    `json:"resolved_at"`
-	ResolvedBy   struct {
-		ID        int    `json:"id"`
-		Username  string `json:"username"`
-		Email     string `json:"email"`
-		Name      string `json:"name"`
-		State     string `json:"state"`
-		AvatarURL string `json:"avatar_url"`
-		WebURL    string `json:"web_url"`
-	} `json:"resolved_by"`
-	Internal bool `json:"internal"`
+	ID           int            `json:"id"`
+	Type         NoteTypeValue  `json:"type"`
+	Body         string         `json:"body"`
+	Attachment   string         `json:"attachment"`
+	Title        string         `json:"title"`
+	FileName     string         `json:"file_name"`
+	Author       NoteAuthor     `json:"author"`
+	System       bool           `json:"system"`
+	CreatedAt    *time.Time     `json:"created_at"`
+	UpdatedAt    *time.Time     `json:"updated_at"`
+	ExpiresAt    *time.Time     `json:"expires_at"`
+	CommitID     string         `json:"commit_id"`
+	Position     *NotePosition  `json:"position"`
+	NoteableID   int            `json:"noteable_id"`
+	NoteableType string         `json:"noteable_type"`
+	ProjectID    int            `json:"project_id"`
+	NoteableIID  int            `json:"noteable_iid"`
+	Resolvable   bool           `json:"resolvable"`
+	Resolved     bool           `json:"resolved"`
+	ResolvedAt   *time.Time     `json:"resolved_at"`
+	ResolvedBy   NoteResolvedBy `json:"resolved_by"`
+	Internal     bool           `json:"internal"`
 
 	// Deprecated: use Internal instead
 	Confidential bool `json:"confidential"`
+}
+
+// NoteResolvedBy represents the resolver of a GitLab note.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/notes/
+type NoteResolvedBy struct {
+	ID        int    `json:"id"`
+	Username  string `json:"username"`
+	Email     string `json:"email"`
+	Name      string `json:"name"`
+	State     string `json:"state"`
+	AvatarURL string `json:"avatar_url"`
+	WebURL    string `json:"web_url"`
 }
 
 // NoteAuthor represents the author of a note.

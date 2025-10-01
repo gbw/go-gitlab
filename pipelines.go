@@ -114,23 +114,34 @@ type Pipeline struct {
 	DetailedStatus *DetailedStatus `json:"detailed_status"`
 }
 
-// DetailedStatus contains detailed information about the status of a pipeline.
-type DetailedStatus struct {
-	Icon         string `json:"icon"`
-	Text         string `json:"text"`
-	Label        string `json:"label"`
-	Group        string `json:"group"`
-	Tooltip      string `json:"tooltip"`
-	HasDetails   bool   `json:"has_details"`
-	DetailsPath  string `json:"details_path"`
-	Illustration struct {
-		Image string `json:"image"`
-	} `json:"illustration"`
-	Favicon string `json:"favicon"`
-}
-
 func (p Pipeline) String() string {
 	return Stringify(p)
+}
+
+// DetailedStatus contains detailed information about the status of a pipeline.
+type DetailedStatus struct {
+	Icon         string                     `json:"icon"`
+	Text         string                     `json:"text"`
+	Label        string                     `json:"label"`
+	Group        string                     `json:"group"`
+	Tooltip      string                     `json:"tooltip"`
+	HasDetails   bool                       `json:"has_details"`
+	DetailsPath  string                     `json:"details_path"`
+	Illustration DetailedStatusIllustration `json:"illustration"`
+	Favicon      string                     `json:"favicon"`
+}
+
+func (s DetailedStatus) String() string {
+	return Stringify(s)
+}
+
+// DetailedStatusIllustration contains detailed information about the status illustration of a pipeline.
+type DetailedStatusIllustration struct {
+	Image string `json:"image"`
+}
+
+func (i DetailedStatusIllustration) String() string {
+	return Stringify(i)
 }
 
 // PipelineTestReport contains a detailed report of a test run.

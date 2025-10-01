@@ -54,15 +54,7 @@ func TestDiscussionsService_ListIssueDiscussions(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -81,16 +73,8 @@ func TestDiscussionsService_ListIssueDiscussions(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}}
 
@@ -159,15 +143,7 @@ func TestDiscussionsService_GetIssueDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -186,16 +162,8 @@ func TestDiscussionsService_GetIssueDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -264,15 +232,7 @@ func TestDiscussionsService_CreateIssueDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -291,16 +251,8 @@ func TestDiscussionsService_CreateIssueDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -360,15 +312,7 @@ func TestDiscussionsService_AddIssueDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -387,16 +331,8 @@ func TestDiscussionsService_AddIssueDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.AddIssueDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
@@ -455,15 +391,7 @@ func TestDiscussionsService_UpdateIssueDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -482,16 +410,8 @@ func TestDiscussionsService_UpdateIssueDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.UpdateIssueDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
@@ -586,15 +506,7 @@ func TestDiscussionsService_ListSnippetDiscussions(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -613,16 +525,8 @@ func TestDiscussionsService_ListSnippetDiscussions(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}}
 
@@ -691,15 +595,7 @@ func TestDiscussionsService_GetSnippetDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -718,16 +614,8 @@ func TestDiscussionsService_GetSnippetDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -796,15 +684,7 @@ func TestDiscussionsService_CreateSnippetDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -823,16 +703,8 @@ func TestDiscussionsService_CreateSnippetDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -892,15 +764,7 @@ func TestDiscussionsService_AddSnippetDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -919,16 +783,8 @@ func TestDiscussionsService_AddSnippetDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.AddSnippetDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
@@ -987,15 +843,7 @@ func TestDiscussionsService_UpdateSnippetDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -1014,16 +862,8 @@ func TestDiscussionsService_UpdateSnippetDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.UpdateSnippetDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
@@ -1118,15 +958,7 @@ func TestDiscussionsService_ListGroupEpicDiscussions(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -1145,16 +977,8 @@ func TestDiscussionsService_ListGroupEpicDiscussions(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}}
 
@@ -1223,15 +1047,7 @@ func TestDiscussionsService_GetEpicDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -1250,16 +1066,8 @@ func TestDiscussionsService_GetEpicDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -1328,15 +1136,7 @@ func TestDiscussionsService_CreateEpicDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -1355,16 +1155,8 @@ func TestDiscussionsService_CreateEpicDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -1424,15 +1216,7 @@ func TestDiscussionsService_AddEpicDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -1451,16 +1235,8 @@ func TestDiscussionsService_AddEpicDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.AddEpicDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
@@ -1519,15 +1295,7 @@ func TestDiscussionsService_UpdateEpicDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -1546,16 +1314,8 @@ func TestDiscussionsService_UpdateEpicDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.UpdateEpicDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
@@ -1650,15 +1410,7 @@ func TestDiscussionsService_ListMergeRequestDiscussions(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -1677,16 +1429,8 @@ func TestDiscussionsService_ListMergeRequestDiscussions(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}}
 
@@ -1755,15 +1499,7 @@ func TestDiscussionsService_GetMergeRequestDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -1782,16 +1518,8 @@ func TestDiscussionsService_GetMergeRequestDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -1860,15 +1588,7 @@ func TestDiscussionsService_CreateMergeRequestDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -1887,16 +1607,8 @@ func TestDiscussionsService_CreateMergeRequestDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -1965,15 +1677,7 @@ func TestDiscussionsService_ResolveMergeRequestDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -1992,16 +1696,8 @@ func TestDiscussionsService_ResolveMergeRequestDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -2061,15 +1757,7 @@ func TestDiscussionsService_AddMergeRequestDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -2088,16 +1776,8 @@ func TestDiscussionsService_AddMergeRequestDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.AddMergeRequestDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
@@ -2156,15 +1836,7 @@ func TestDiscussionsService_UpdateMergeRequestDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -2183,16 +1855,8 @@ func TestDiscussionsService_UpdateMergeRequestDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.UpdateMergeRequestDiscussionNote(5, 11, "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)
@@ -2287,15 +1951,7 @@ func TestDiscussionsService_ListCommitDiscussions(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -2314,16 +1970,8 @@ func TestDiscussionsService_ListCommitDiscussions(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}}
 
@@ -2392,15 +2040,7 @@ func TestDiscussionsService_GetCommitDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -2419,16 +2059,8 @@ func TestDiscussionsService_GetCommitDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -2497,15 +2129,7 @@ func TestDiscussionsService_CreateCommitDiscussion(t *testing.T) {
 			Attachment: "",
 			Title:      "",
 			FileName:   "",
-			Author: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{
+			Author: NoteAuthor{
 				ID:        1,
 				Username:  "venky333",
 				Email:     "",
@@ -2524,16 +2148,8 @@ func TestDiscussionsService_CreateCommitDiscussion(t *testing.T) {
 			Position:     nil,
 			Resolvable:   false,
 			Resolved:     false,
-			ResolvedBy: struct {
-				ID        int    `json:"id"`
-				Username  string `json:"username"`
-				Email     string `json:"email"`
-				Name      string `json:"name"`
-				State     string `json:"state"`
-				AvatarURL string `json:"avatar_url"`
-				WebURL    string `json:"web_url"`
-			}{},
-			NoteableIID: 0,
+			ResolvedBy:   NoteResolvedBy{},
+			NoteableIID:  0,
 		}},
 	}
 
@@ -2593,15 +2209,7 @@ func TestDiscussionsService_AddCommitDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -2620,16 +2228,8 @@ func TestDiscussionsService_AddCommitDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.AddCommitDiscussionNote(5, "abc123", "6a9c1750b37d513a43987b574953fceb50b03ce7", nil, nil)
@@ -2688,15 +2288,7 @@ func TestDiscussionsService_UpdateCommitDiscussionNote(t *testing.T) {
 		Attachment: "",
 		Title:      "",
 		FileName:   "",
-		Author: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		Author: NoteAuthor{
 			ID:        1,
 			Username:  "venky333",
 			Email:     "venky333@example.com",
@@ -2715,16 +2307,8 @@ func TestDiscussionsService_UpdateCommitDiscussionNote(t *testing.T) {
 		Position:     nil,
 		Resolvable:   false,
 		Resolved:     false,
-		ResolvedBy: struct {
-			ID        int    `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			Name      string `json:"name"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{},
-		NoteableIID: 377,
+		ResolvedBy:   NoteResolvedBy{},
+		NoteableIID:  377,
 	}
 
 	n, resp, err := client.Discussions.UpdateCommitDiscussionNote(5, "abc123", "6a9c1750b37d513a43987b574953fceb50b03ce7", 302, nil, nil)

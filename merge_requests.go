@@ -142,25 +142,19 @@ func (m BasicMergeRequest) String() string {
 // GitLab API docs: https://docs.gitlab.com/api/merge_requests/
 type MergeRequest struct {
 	BasicMergeRequest
-	MergeError   string `json:"merge_error"`
-	Subscribed   bool   `json:"subscribed"`
-	ChangesCount string `json:"changes_count"`
-	User         struct {
-		CanMerge bool `json:"can_merge"`
-	} `json:"user"`
-	LatestBuildStartedAt        *time.Time    `json:"latest_build_started_at"`
-	LatestBuildFinishedAt       *time.Time    `json:"latest_build_finished_at"`
-	FirstDeployedToProductionAt *time.Time    `json:"first_deployed_to_production_at"`
-	Pipeline                    *PipelineInfo `json:"pipeline"`
-	HeadPipeline                *Pipeline     `json:"head_pipeline"`
-	DiffRefs                    struct {
-		BaseSha  string `json:"base_sha"`
-		HeadSha  string `json:"head_sha"`
-		StartSha string `json:"start_sha"`
-	} `json:"diff_refs"`
-	RebaseInProgress     bool `json:"rebase_in_progress"`
-	DivergedCommitsCount int  `json:"diverged_commits_count"`
-	FirstContribution    bool `json:"first_contribution"`
+	MergeError                  string               `json:"merge_error"`
+	Subscribed                  bool                 `json:"subscribed"`
+	ChangesCount                string               `json:"changes_count"`
+	User                        MergeRequestUser     `json:"user"`
+	LatestBuildStartedAt        *time.Time           `json:"latest_build_started_at"`
+	LatestBuildFinishedAt       *time.Time           `json:"latest_build_finished_at"`
+	FirstDeployedToProductionAt *time.Time           `json:"first_deployed_to_production_at"`
+	Pipeline                    *PipelineInfo        `json:"pipeline"`
+	HeadPipeline                *Pipeline            `json:"head_pipeline"`
+	DiffRefs                    MergeRequestDiffRefs `json:"diff_refs"`
+	RebaseInProgress            bool                 `json:"rebase_in_progress"`
+	DivergedCommitsCount        int                  `json:"diverged_commits_count"`
+	FirstContribution           bool                 `json:"first_contribution"`
 
 	// Deprecated: use Draft instead
 	WorkInProgress bool `json:"work_in_progress"`
@@ -168,6 +162,30 @@ type MergeRequest struct {
 
 func (m MergeRequest) String() string {
 	return Stringify(m)
+}
+
+// MergeRequestUser represents a GitLab merge request user.
+//
+// GitLab API docs: https://docs.gitlab.com/api/merge_requests/
+type MergeRequestUser struct {
+	CanMerge bool `json:"can_merge"`
+}
+
+func (u MergeRequestUser) String() string {
+	return Stringify(u)
+}
+
+// MergeRequestDiffRefs represents a GitLab merge request diff refs.
+//
+// GitLab API docs: https://docs.gitlab.com/api/merge_requests/
+type MergeRequestDiffRefs struct {
+	BaseSha  string `json:"base_sha"`
+	HeadSha  string `json:"head_sha"`
+	StartSha string `json:"start_sha"`
+}
+
+func (d MergeRequestDiffRefs) String() string {
+	return Stringify(d)
 }
 
 func (m *MergeRequest) UnmarshalJSON(data []byte) error {

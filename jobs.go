@@ -59,51 +59,71 @@ var _ JobsServiceInterface = (*JobsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/jobs/
 type Job struct {
-	Commit            *Commit    `json:"commit"`
-	Coverage          float64    `json:"coverage"`
-	AllowFailure      bool       `json:"allow_failure"`
-	CreatedAt         *time.Time `json:"created_at"`
-	StartedAt         *time.Time `json:"started_at"`
-	FinishedAt        *time.Time `json:"finished_at"`
-	ErasedAt          *time.Time `json:"erased_at"`
-	Duration          float64    `json:"duration"`
-	QueuedDuration    float64    `json:"queued_duration"`
-	ArtifactsExpireAt *time.Time `json:"artifacts_expire_at"`
-	TagList           []string   `json:"tag_list"`
-	ID                int        `json:"id"`
-	Name              string     `json:"name"`
-	Pipeline          struct {
-		ID        int    `json:"id"`
-		ProjectID int    `json:"project_id"`
-		Ref       string `json:"ref"`
-		Sha       string `json:"sha"`
-		Status    string `json:"status"`
-	} `json:"pipeline"`
+	Commit            *Commit          `json:"commit"`
+	Coverage          float64          `json:"coverage"`
+	AllowFailure      bool             `json:"allow_failure"`
+	CreatedAt         *time.Time       `json:"created_at"`
+	StartedAt         *time.Time       `json:"started_at"`
+	FinishedAt        *time.Time       `json:"finished_at"`
+	ErasedAt          *time.Time       `json:"erased_at"`
+	Duration          float64          `json:"duration"`
+	QueuedDuration    float64          `json:"queued_duration"`
+	ArtifactsExpireAt *time.Time       `json:"artifacts_expire_at"`
+	TagList           []string         `json:"tag_list"`
+	ID                int              `json:"id"`
+	Name              string           `json:"name"`
+	Pipeline          JobPipeline      `json:"pipeline"`
+	Ref               string           `json:"ref"`
+	Artifacts         []JobArtifact    `json:"artifacts"`
+	ArtifactsFile     JobArtifactsFile `json:"artifacts_file"`
+	Runner            JobRunner        `json:"runner"`
+	Stage             string           `json:"stage"`
+	Status            string           `json:"status"`
+	FailureReason     string           `json:"failure_reason"`
+	Tag               bool             `json:"tag"`
+	WebURL            string           `json:"web_url"`
+	Project           *Project         `json:"project"`
+	User              *User            `json:"user"`
+}
+
+// JobPipeline represents a ci build pipeline.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobPipeline struct {
+	ID        int    `json:"id"`
+	ProjectID int    `json:"project_id"`
 	Ref       string `json:"ref"`
-	Artifacts []struct {
-		FileType   string `json:"file_type"`
-		Filename   string `json:"filename"`
-		Size       int    `json:"size"`
-		FileFormat string `json:"file_format"`
-	} `json:"artifacts"`
-	ArtifactsFile struct {
-		Filename string `json:"filename"`
-		Size     int    `json:"size"`
-	} `json:"artifacts_file"`
-	Runner struct {
-		ID          int    `json:"id"`
-		Description string `json:"description"`
-		Active      bool   `json:"active"`
-		IsShared    bool   `json:"is_shared"`
-		Name        string `json:"name"`
-	} `json:"runner"`
-	Stage         string   `json:"stage"`
-	Status        string   `json:"status"`
-	FailureReason string   `json:"failure_reason"`
-	Tag           bool     `json:"tag"`
-	WebURL        string   `json:"web_url"`
-	Project       *Project `json:"project"`
-	User          *User    `json:"user"`
+	Sha       string `json:"sha"`
+	Status    string `json:"status"`
+}
+
+// JobArtifact represents a ci build artifact.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobArtifact struct {
+	FileType   string `json:"file_type"`
+	Filename   string `json:"filename"`
+	Size       int    `json:"size"`
+	FileFormat string `json:"file_format"`
+}
+
+// JobArtifactsFile represents a ci build artifacts file.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobArtifactsFile struct {
+	Filename string `json:"filename"`
+	Size     int    `json:"size"`
+}
+
+// JobRunner represents a ci build runner.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobRunner struct {
+	ID          int    `json:"id"`
+	Description string `json:"description"`
+	Active      bool   `json:"active"`
+	IsShared    bool   `json:"is_shared"`
+	Name        string `json:"name"`
 }
 
 // Bridge represents a pipeline bridge.

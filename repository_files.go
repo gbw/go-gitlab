@@ -179,22 +179,32 @@ func getMetaDataFileFromHeaders(resp *Response) (*File, error) {
 // GitLab API docs:
 // https://docs.gitlab.com/api/repository_files/#get-file-blame-from-repository
 type FileBlameRange struct {
-	Commit struct {
-		ID             string     `json:"id"`
-		ParentIDs      []string   `json:"parent_ids"`
-		Message        string     `json:"message"`
-		AuthoredDate   *time.Time `json:"authored_date"`
-		AuthorName     string     `json:"author_name"`
-		AuthorEmail    string     `json:"author_email"`
-		CommittedDate  *time.Time `json:"committed_date"`
-		CommitterName  string     `json:"committer_name"`
-		CommitterEmail string     `json:"committer_email"`
-	} `json:"commit"`
-	Lines []string `json:"lines"`
+	Commit FileBlameRangeCommit `json:"commit"`
+	Lines  []string             `json:"lines"`
 }
 
 func (b FileBlameRange) String() string {
 	return Stringify(b)
+}
+
+// FileBlameRangeCommit represents one item of blame information's commit.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/repository_files/#get-file-blame-from-repository
+type FileBlameRangeCommit struct {
+	ID             string     `json:"id"`
+	ParentIDs      []string   `json:"parent_ids"`
+	Message        string     `json:"message"`
+	AuthoredDate   *time.Time `json:"authored_date"`
+	AuthorName     string     `json:"author_name"`
+	AuthorEmail    string     `json:"author_email"`
+	CommittedDate  *time.Time `json:"committed_date"`
+	CommitterName  string     `json:"committer_name"`
+	CommitterEmail string     `json:"committer_email"`
+}
+
+func (c FileBlameRangeCommit) String() string {
+	return Stringify(c)
 }
 
 // GetFileBlameOptions represents the available GetFileBlame() options.
