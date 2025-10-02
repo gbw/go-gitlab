@@ -199,13 +199,3 @@ semgrep-sast:
   needs: []
   rules:
     - when: always
-
-# Patch common-ci semantic release jobs
-semantic_release_check:
-  before_script:
-    - npm install -g semantic-release @semantic-release/gitlab @semantic-release/git @semantic-release/changelog
-
-semantic_release:
-  script:
-    - npm install -g semantic-release @semantic-release/gitlab @semantic-release/git @semantic-release/changelog
-    - semantic-release
