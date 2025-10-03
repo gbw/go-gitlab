@@ -101,6 +101,7 @@ var serviceMap = map[any]any{
 	&PipelinesService{}:                        (*PipelinesServiceInterface)(nil),
 	&PlanLimitsService{}:                       (*PlanLimitsServiceInterface)(nil),
 	&ProjectAccessTokensService{}:              (*ProjectAccessTokensServiceInterface)(nil),
+	&ProjectAliasesService{}:                   (*ProjectAliasesServiceInterface)(nil),
 	&ProjectBadgesService{}:                    (*ProjectBadgesServiceInterface)(nil),
 	&ProjectClustersService{}:                  (*ProjectClustersServiceInterface)(nil),
 	&ProjectFeatureFlagService{}:               (*ProjectFeatureFlagServiceInterface)(nil),
