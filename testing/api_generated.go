@@ -101,6 +101,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=pipelines_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PipelinesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=plan_limits_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PlanLimitsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_access_tokens_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectAccessTokensServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_aliases_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectAliasesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_badges_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectBadgesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_clusters_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectClustersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_feature_flags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectFeatureFlagServiceInterface

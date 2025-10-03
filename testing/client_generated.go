@@ -110,6 +110,7 @@ type testClientMocks struct {
 	MockPipelines                        *MockPipelinesServiceInterface
 	MockPlanLimits                       *MockPlanLimitsServiceInterface
 	MockProjectAccessTokens              *MockProjectAccessTokensServiceInterface
+	MockProjectAliases                   *MockProjectAliasesServiceInterface
 	MockProjectBadges                    *MockProjectBadgesServiceInterface
 	MockProjectCluster                   *MockProjectClustersServiceInterface
 	MockProjectFeatureFlags              *MockProjectFeatureFlagServiceInterface
@@ -260,6 +261,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockPipelines := NewMockPipelinesServiceInterface(ctrl)
 	mockPlanLimits := NewMockPlanLimitsServiceInterface(ctrl)
 	mockProjectAccessTokens := NewMockProjectAccessTokensServiceInterface(ctrl)
+	mockProjectAliases := NewMockProjectAliasesServiceInterface(ctrl)
 	mockProjectBadges := NewMockProjectBadgesServiceInterface(ctrl)
 	mockProjectCluster := NewMockProjectClustersServiceInterface(ctrl)
 	mockProjectFeatureFlags := NewMockProjectFeatureFlagServiceInterface(ctrl)
@@ -409,6 +411,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Pipelines:                        mockPipelines,
 		PlanLimits:                       mockPlanLimits,
 		ProjectAccessTokens:              mockProjectAccessTokens,
+		ProjectAliases:                   mockProjectAliases,
 		ProjectBadges:                    mockProjectBadges,
 		ProjectCluster:                   mockProjectCluster,
 		ProjectFeatureFlags:              mockProjectFeatureFlags,
@@ -570,6 +573,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockPipelines:                        mockPipelines,
 			MockPlanLimits:                       mockPlanLimits,
 			MockProjectAccessTokens:              mockProjectAccessTokens,
+			MockProjectAliases:                   mockProjectAliases,
 			MockProjectBadges:                    mockProjectBadges,
 			MockProjectCluster:                   mockProjectCluster,
 			MockProjectFeatureFlags:              mockProjectFeatureFlags,
