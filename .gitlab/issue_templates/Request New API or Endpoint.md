@@ -21,7 +21,7 @@ API documentation:
 
 The code in `client-go` has a strong pattern that is repeatable when adding support for new APIs.
 
-- Read the instructions in `CONTRIBUTING.md` to get your local development environment set up.
-- Follow the instructions in `AddingAPISupport.md`.
+- Read the instructions in [CONTRIBUTING.md](https://gitlab.com/gitlab-org/api/client-go/-/blob/main/CONTRIBUTING.md) to get your local development environment set up.
+- Follow the instructions in [AddingAPISupport.md](https://gitlab.com/gitlab-org/api/client-go/-/blob/main/docs/guides/AddingAPISupport.md).
   - This file includes instructions for adding all endpoints of an API.
   - It also describes how to write functions for each type of endpoint, so can be used for adding new endpoint support as well.
