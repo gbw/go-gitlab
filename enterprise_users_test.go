@@ -163,3 +163,21 @@ func TestEnterpriseUsers_Disable2FAForEnterpriseUser(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
+
+func TestEnterpriseUsers_DeleteEnterpriseUser(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/enterprise_users/66", func(w http.ResponseWriter, r *http.Request) {
+		testURL(t, r, "/api/v4/groups/1/enterprise_users/66?hard_delete=true")
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	hard := true
+	resp, err := client.EnterpriseUsers.DeleteEnterpriseUser(1, 66, &DeleteEnterpriseUserOptions{HardDelete: &hard})
+
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
