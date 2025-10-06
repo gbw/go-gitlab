@@ -98,6 +98,7 @@ type testClientMocks struct {
 	MockMergeTrains                      *MockMergeTrainsServiceInterface
 	MockMetadata                         *MockMetadataServiceInterface
 	MockMilestones                       *MockMilestonesServiceInterface
+	MockModelRegistry                    *MockModelRegistryServiceInterface
 	MockNamespaces                       *MockNamespacesServiceInterface
 	MockNotes                            *MockNotesServiceInterface
 	MockNotificationSettings             *MockNotificationSettingsServiceInterface
@@ -249,6 +250,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockMergeTrains := NewMockMergeTrainsServiceInterface(ctrl)
 	mockMetadata := NewMockMetadataServiceInterface(ctrl)
 	mockMilestones := NewMockMilestonesServiceInterface(ctrl)
+	mockModelRegistry := NewMockModelRegistryServiceInterface(ctrl)
 	mockNamespaces := NewMockNamespacesServiceInterface(ctrl)
 	mockNotes := NewMockNotesServiceInterface(ctrl)
 	mockNotificationSettings := NewMockNotificationSettingsServiceInterface(ctrl)
@@ -399,6 +401,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		MergeTrains:                      mockMergeTrains,
 		Metadata:                         mockMetadata,
 		Milestones:                       mockMilestones,
+		ModelRegistry:                    mockModelRegistry,
 		Namespaces:                       mockNamespaces,
 		Notes:                            mockNotes,
 		NotificationSettings:             mockNotificationSettings,
@@ -561,6 +564,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockMergeTrains:                      mockMergeTrains,
 			MockMetadata:                         mockMetadata,
 			MockMilestones:                       mockMilestones,
+			MockModelRegistry:                    mockModelRegistry,
 			MockNamespaces:                       mockNamespaces,
 			MockNotes:                            mockNotes,
 			MockNotificationSettings:             mockNotificationSettings,
