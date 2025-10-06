@@ -7,15 +7,17 @@ instructions:
       - "!*_generated.go"
       - "!testing/**/*"
     instructions: |
-      1. **Function Documentation**: Every public function, type, and method must have properly formatted comments starting with the function name (no "The" or "This function"), using present tense, keeping under 80 characters per line, and including GitLab API documentation link.
-      2. **API Alignment**: All code must align with GitLab's official API documentation. Every function must reference the corresponding GitLab API documentation URL.
-      3. **Service Structure**: Follow the established service pattern with interface definition at the top, service struct below, and proper interface compliance check.
-      4. **Request Options Pattern**: All API methods should accept `options ...RequestOptionFunc` and follow the standard error handling pattern returning `(*Type, *Response, error)` tuple.
-      5. **Type Usage**: Use `any` instead of `interface{}` and `int64` instead of `int` for all numeric types including slices and maps.
-      6. **Error Handling**: Always use `PathEscape()` for URL path parameters, `url.PathEscape()` for query parameters, and handle `parseID()` errors for project/group IDs.
-      7. **Field Ordering**: Struct fields and methods should be ordered to match the GitLab API documentation order.
-      8. **Pointer Usage**: Use pointers for structs that are used in Requests, and non-pointer for structs that are used in Responses.
-      9. **Parameter Validation**: Use `any` type for project/group IDs to support both int64 and string, implement proper parameter parsing with `parseID()` function.
+      1. **Function Documentation**: Every public interface function, type, and method must have properly formatted comments starting with the function name (no "The" or "This function"), using present tense, keeping under 80 characters per line, and including GitLab API documentation link.
+      2. **Interface Documentation**: Interface functions must have properly formatted comments. Functions that implement a public interface are not required to have a formatted comment, but may still have a comment.
+      3. **API Alignment**: All code must align with GitLab's official API documentation. Every function must reference the corresponding GitLab API documentation URL.
+      4. **Service Structure**: Follow the established service pattern with interface definition at the top, service struct below, and proper interface compliance check.
+      5. **Request Options Pattern**: All API methods should accept `options ...RequestOptionFunc` and follow the standard error handling pattern returning `(*Type, *Response, error)` tuple.
+      6. **Type Usage**: Use `any` instead of `interface{}` and `int64` instead of `int` for all numeric types including slices and maps.
+      7. **Error Handling**: Always use `PathEscape()` for URL path parameters, `url.PathEscape()` for query parameters, and handle `parseID()` errors for project/group IDs.
+      8. **Field Ordering**: Struct fields and methods should be ordered to match the GitLab API documentation order.
+      9. **Pointer Usage**: Use pointers for structs that are used in Requests, and non-pointer for structs that are used in Responses.
+      10. **Parameter Validation**: Use `any` type for project/group IDs to support both int64 and string, implement proper parameter parsing with `parseID()` function.
+      11. **Variable Naming Standards**: Variables and function inputs should be named using lower camel casing to be consistent with the repository. "thisIsAVariable" is good, "this_is_a_variable" is bad.
 
   - name: Go Test Files
     fileFilters:
