@@ -2241,3 +2241,52 @@ func TestEditProject_ResourceGroupDefaultProcessModeSetting(t *testing.T) {
 	assert.True(t, attributeFound)
 	assert.Equal(t, OldestFirst, project.ResourceGroupDefaultProcessMode)
 }
+
+func TestListProjectStarrers(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/123/starrers", func(w http.ResponseWriter, r *http.Request) {
+		testURL(t, r, "/api/v4/projects/123/starrers?page=2&per_page=3&search=jane_smith")
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[
+			{
+				"starred_since": "2019-01-28T14:47:30.642Z",
+				"user": {
+					"id": 1,
+					"username": "jane_smith",
+					"name": "Jane Smith",
+					"state": "active",
+					"avatar_url": "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+					"web_url": "http://localhost:3000/jane_smith"
+				}
+			}
+		]`)
+	})
+
+	opts := &ListProjectStarrersOptions{
+		ListOptions: ListOptions{Page: 2, PerPage: 3},
+		Search:      Ptr("jane_smith"),
+	}
+
+	starrers, resp, err := client.Projects.ListProjectStarrers(123, opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, starrers, 1)
+
+	want := []*ProjectStarrer{
+		{
+			StarredSince: *mustParseTime("2019-01-28T14:47:30.642Z"),
+			User: ProjectUser{
+				ID:        1,
+				Username:  "jane_smith",
+				Name:      "Jane Smith",
+				State:     "active",
+				AvatarURL: "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+				WebURL:    "http://localhost:3000/jane_smith",
+			},
+		},
+	}
+
+	assert.Equal(t, want, starrers)
+}
