@@ -89,6 +89,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=merge_trains_mock.go -package=testing gitlab.com/gitlab-org/api/client-go MergeTrainsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=metadata_mock.go -package=testing gitlab.com/gitlab-org/api/client-go MetadataServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=milestones_mock.go -package=testing gitlab.com/gitlab-org/api/client-go MilestonesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=model_registry_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ModelRegistryServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=namespaces_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NamespacesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=notes_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NotesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=notifications_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NotificationSettingsServiceInterface

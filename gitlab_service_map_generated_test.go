@@ -89,6 +89,7 @@ var serviceMap = map[any]any{
 	&MergeTrainsService{}:                      (*MergeTrainsServiceInterface)(nil),
 	&MetadataService{}:                         (*MetadataServiceInterface)(nil),
 	&MilestonesService{}:                       (*MilestonesServiceInterface)(nil),
+	&ModelRegistryService{}:                    (*ModelRegistryServiceInterface)(nil),
 	&NamespacesService{}:                       (*NamespacesServiceInterface)(nil),
 	&NotesService{}:                            (*NotesServiceInterface)(nil),
 	&NotificationSettingsService{}:             (*NotificationSettingsServiceInterface)(nil),
