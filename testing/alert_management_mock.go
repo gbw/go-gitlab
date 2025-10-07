@@ -42,7 +42,7 @@ func (m *MockAlertManagementServiceInterface) EXPECT() *MockAlertManagementServi
 }
 
 // DeleteMetricImage mocks base method.
-func (m *MockAlertManagementServiceInterface) DeleteMetricImage(pid any, alertIID, id int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAlertManagementServiceInterface) DeleteMetricImage(pid any, alertIID, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, alertIID, id}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockAlertManagementServiceInterfaceDeleteMetricImageCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAlertManagementServiceInterfaceDeleteMetricImageCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAlertManagementServiceInterfaceDeleteMetricImageCall {
+func (c *MockAlertManagementServiceInterfaceDeleteMetricImageCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAlertManagementServiceInterfaceDeleteMetricImageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAlertManagementServiceInterfaceDeleteMetricImageCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAlertManagementServiceInterfaceDeleteMetricImageCall {
+func (c *MockAlertManagementServiceInterfaceDeleteMetricImageCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAlertManagementServiceInterfaceDeleteMetricImageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListMetricImages mocks base method.
-func (m *MockAlertManagementServiceInterface) ListMetricImages(pid any, alertIID int, opt *gitlab.ListMetricImagesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MetricImage, *gitlab.Response, error) {
+func (m *MockAlertManagementServiceInterface) ListMetricImages(pid any, alertIID int64, opt *gitlab.ListMetricImagesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MetricImage, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, alertIID, opt}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockAlertManagementServiceInterfaceListMetricImagesCall) Return(arg0 []
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAlertManagementServiceInterfaceListMetricImagesCall) Do(f func(any, int, *gitlab.ListMetricImagesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceListMetricImagesCall {
+func (c *MockAlertManagementServiceInterfaceListMetricImagesCall) Do(f func(any, int64, *gitlab.ListMetricImagesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceListMetricImagesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAlertManagementServiceInterfaceListMetricImagesCall) DoAndReturn(f func(any, int, *gitlab.ListMetricImagesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceListMetricImagesCall {
+func (c *MockAlertManagementServiceInterfaceListMetricImagesCall) DoAndReturn(f func(any, int64, *gitlab.ListMetricImagesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceListMetricImagesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateMetricImage mocks base method.
-func (m *MockAlertManagementServiceInterface) UpdateMetricImage(pid any, alertIID, id int, opt *gitlab.UpdateMetricImageOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error) {
+func (m *MockAlertManagementServiceInterface) UpdateMetricImage(pid any, alertIID, id int64, opt *gitlab.UpdateMetricImageOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, alertIID, id, opt}
 	for _, a := range options {
@@ -164,19 +164,19 @@ func (c *MockAlertManagementServiceInterfaceUpdateMetricImageCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAlertManagementServiceInterfaceUpdateMetricImageCall) Do(f func(any, int, int, *gitlab.UpdateMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUpdateMetricImageCall {
+func (c *MockAlertManagementServiceInterfaceUpdateMetricImageCall) Do(f func(any, int64, int64, *gitlab.UpdateMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUpdateMetricImageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAlertManagementServiceInterfaceUpdateMetricImageCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUpdateMetricImageCall {
+func (c *MockAlertManagementServiceInterfaceUpdateMetricImageCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUpdateMetricImageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UploadMetricImage mocks base method.
-func (m *MockAlertManagementServiceInterface) UploadMetricImage(pid any, alertIID int, content io.Reader, filename string, opt *gitlab.UploadMetricImageOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error) {
+func (m *MockAlertManagementServiceInterface) UploadMetricImage(pid any, alertIID int64, content io.Reader, filename string, opt *gitlab.UploadMetricImageOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, alertIID, content, filename, opt}
 	for _, a := range options {
@@ -209,13 +209,13 @@ func (c *MockAlertManagementServiceInterfaceUploadMetricImageCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAlertManagementServiceInterfaceUploadMetricImageCall) Do(f func(any, int, io.Reader, string, *gitlab.UploadMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUploadMetricImageCall {
+func (c *MockAlertManagementServiceInterfaceUploadMetricImageCall) Do(f func(any, int64, io.Reader, string, *gitlab.UploadMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUploadMetricImageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAlertManagementServiceInterfaceUploadMetricImageCall) DoAndReturn(f func(any, int, io.Reader, string, *gitlab.UploadMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUploadMetricImageCall {
+func (c *MockAlertManagementServiceInterfaceUploadMetricImageCall) DoAndReturn(f func(any, int64, io.Reader, string, *gitlab.UploadMetricImageOptions, ...gitlab.RequestOptionFunc) (*gitlab.MetricImage, *gitlab.Response, error)) *MockAlertManagementServiceInterfaceUploadMetricImageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

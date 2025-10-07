@@ -41,7 +41,7 @@ func (m *MockAuditEventsServiceInterface) EXPECT() *MockAuditEventsServiceInterf
 }
 
 // GetGroupAuditEvent mocks base method.
-func (m *MockAuditEventsServiceInterface) GetGroupAuditEvent(gid any, event int, options ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error) {
+func (m *MockAuditEventsServiceInterface) GetGroupAuditEvent(gid any, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, event}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockAuditEventsServiceInterfaceGetGroupAuditEventCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAuditEventsServiceInterfaceGetGroupAuditEventCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetGroupAuditEventCall {
+func (c *MockAuditEventsServiceInterfaceGetGroupAuditEventCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetGroupAuditEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAuditEventsServiceInterfaceGetGroupAuditEventCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetGroupAuditEventCall {
+func (c *MockAuditEventsServiceInterfaceGetGroupAuditEventCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetGroupAuditEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetInstanceAuditEvent mocks base method.
-func (m *MockAuditEventsServiceInterface) GetInstanceAuditEvent(event int, options ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error) {
+func (m *MockAuditEventsServiceInterface) GetInstanceAuditEvent(event int64, options ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{event}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall {
+func (c *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall {
+func (c *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetInstanceAuditEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetProjectAuditEvent mocks base method.
-func (m *MockAuditEventsServiceInterface) GetProjectAuditEvent(pid any, event int, options ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error) {
+func (m *MockAuditEventsServiceInterface) GetProjectAuditEvent(pid any, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, event}
 	for _, a := range options {
@@ -164,13 +164,13 @@ func (c *MockAuditEventsServiceInterfaceGetProjectAuditEventCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAuditEventsServiceInterfaceGetProjectAuditEventCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetProjectAuditEventCall {
+func (c *MockAuditEventsServiceInterfaceGetProjectAuditEventCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetProjectAuditEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAuditEventsServiceInterfaceGetProjectAuditEventCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetProjectAuditEventCall {
+func (c *MockAuditEventsServiceInterfaceGetProjectAuditEventCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.AuditEvent, *gitlab.Response, error)) *MockAuditEventsServiceInterfaceGetProjectAuditEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -41,7 +41,7 @@ func (m *MockAwardEmojiServiceInterface) EXPECT() *MockAwardEmojiServiceInterfac
 }
 
 // CreateIssueAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) CreateIssueAwardEmoji(pid any, issueIID int, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) CreateIssueAwardEmoji(pid any, issueIID int64, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueIID, opt}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall) Do(f func(any, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall) Do(f func(any, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall) DoAndReturn(f func(any, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall) DoAndReturn(f func(any, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssueAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateIssuesAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) CreateIssuesAwardEmojiOnNote(pid any, issueID, noteID int, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) CreateIssuesAwardEmojiOnNote(pid any, issueID, noteID int64, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueID, noteID, opt}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall) Do(f func(any, int, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall) Do(f func(any, int64, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateMergeRequestAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) CreateMergeRequestAwardEmoji(pid any, mergeRequestIID int, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) CreateMergeRequestAwardEmoji(pid any, mergeRequestIID int64, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, opt}
 	for _, a := range options {
@@ -164,19 +164,19 @@ func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall) Do(f func(any, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall) Do(f func(any, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateMergeRequestAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) CreateMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID int, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) CreateMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID int64, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, noteID, opt}
 	for _, a := range options {
@@ -209,19 +209,19 @@ func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall) R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int64, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateSnippetAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) CreateSnippetAwardEmoji(pid any, snippetID int, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) CreateSnippetAwardEmoji(pid any, snippetID int64, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetID, opt}
 	for _, a := range options {
@@ -254,19 +254,19 @@ func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall) Do(f func(any, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall) Do(f func(any, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall) DoAndReturn(f func(any, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall) DoAndReturn(f func(any, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateSnippetAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) CreateSnippetAwardEmojiOnNote(pid any, snippetIID, noteID int, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) CreateSnippetAwardEmojiOnNote(pid any, snippetIID, noteID int64, opt *gitlab.CreateAwardEmojiOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetIID, noteID, opt}
 	for _, a := range options {
@@ -299,19 +299,19 @@ func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall) Do(f func(any, int, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall) Do(f func(any, int64, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.CreateAwardEmojiOptions, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceCreateSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteIssueAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) DeleteIssueAwardEmoji(pid any, issueIID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) DeleteIssueAwardEmoji(pid any, issueIID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueIID, awardID}
 	for _, a := range options {
@@ -343,19 +343,19 @@ func (c *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssueAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteIssuesAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) DeleteIssuesAwardEmojiOnNote(pid any, issueID, noteID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) DeleteIssuesAwardEmojiOnNote(pid any, issueID, noteID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueID, noteID, awardID}
 	for _, a := range options {
@@ -387,19 +387,19 @@ func (c *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall) Do(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall) Do(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteMergeRequestAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) DeleteMergeRequestAwardEmoji(pid any, mergeRequestIID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) DeleteMergeRequestAwardEmoji(pid any, mergeRequestIID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, awardID}
 	for _, a := range options {
@@ -431,19 +431,19 @@ func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteMergeRequestAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) DeleteMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) DeleteMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, noteID, awardID}
 	for _, a := range options {
@@ -475,19 +475,19 @@ func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall) R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteSnippetAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) DeleteSnippetAwardEmoji(pid any, snippetID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) DeleteSnippetAwardEmoji(pid any, snippetID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetID, awardID}
 	for _, a := range options {
@@ -519,19 +519,19 @@ func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteSnippetAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) DeleteSnippetAwardEmojiOnNote(pid any, snippetIID, noteID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) DeleteSnippetAwardEmojiOnNote(pid any, snippetIID, noteID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetIID, noteID, awardID}
 	for _, a := range options {
@@ -563,19 +563,19 @@ func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall) Do(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall) Do(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAwardEmojiServiceInterfaceDeleteSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssueAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) GetIssueAwardEmoji(pid any, issueIID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) GetIssueAwardEmoji(pid any, issueIID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueIID, awardID}
 	for _, a := range options {
@@ -608,19 +608,19 @@ func (c *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssueAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssuesAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) GetIssuesAwardEmojiOnNote(pid any, issueID, noteID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) GetIssuesAwardEmojiOnNote(pid any, issueID, noteID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueID, noteID, awardID}
 	for _, a := range options {
@@ -653,19 +653,19 @@ func (c *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall) Do(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall) Do(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMergeRequestAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) GetMergeRequestAwardEmoji(pid any, mergeRequestIID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) GetMergeRequestAwardEmoji(pid any, mergeRequestIID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, awardID}
 	for _, a := range options {
@@ -698,19 +698,19 @@ func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMergeRequestAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) GetMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) GetMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, noteID, awardID}
 	for _, a := range options {
@@ -743,19 +743,19 @@ func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetSnippetAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) GetSnippetAwardEmoji(pid any, snippetID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) GetSnippetAwardEmoji(pid any, snippetID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetID, awardID}
 	for _, a := range options {
@@ -788,19 +788,19 @@ func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall) Return(arg0 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetSnippetAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) GetSnippetAwardEmojiOnNote(pid any, snippetIID, noteID, awardID int, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) GetSnippetAwardEmojiOnNote(pid any, snippetIID, noteID, awardID int64, options ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetIID, noteID, awardID}
 	for _, a := range options {
@@ -833,19 +833,19 @@ func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall) Do(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall) Do(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceGetSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListIssueAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) ListIssueAwardEmoji(pid any, issueIID int, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) ListIssueAwardEmoji(pid any, issueIID int64, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueIID, opt}
 	for _, a := range options {
@@ -878,19 +878,19 @@ func (c *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall) Return(arg0 []*g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall) Do(f func(any, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall) Do(f func(any, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall) DoAndReturn(f func(any, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall) DoAndReturn(f func(any, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssueAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListIssuesAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) ListIssuesAwardEmojiOnNote(pid any, issueID, noteID int, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) ListIssuesAwardEmojiOnNote(pid any, issueID, noteID int64, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issueID, noteID, opt}
 	for _, a := range options {
@@ -923,19 +923,19 @@ func (c *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall) Do(f func(any, int, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall) Do(f func(any, int64, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListIssuesAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListMergeRequestAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) ListMergeRequestAwardEmoji(pid any, mergeRequestIID int, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) ListMergeRequestAwardEmoji(pid any, mergeRequestIID int64, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, opt}
 	for _, a := range options {
@@ -968,19 +968,19 @@ func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall) Do(f func(any, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall) Do(f func(any, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall) DoAndReturn(f func(any, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListMergeRequestAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) ListMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID int, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) ListMergeRequestAwardEmojiOnNote(pid any, mergeRequestIID, noteID int64, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequestIID, noteID, opt}
 	for _, a := range options {
@@ -1013,19 +1013,19 @@ func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall) Ret
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall) Do(f func(any, int64, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListMergeRequestAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListSnippetAwardEmoji mocks base method.
-func (m *MockAwardEmojiServiceInterface) ListSnippetAwardEmoji(pid any, snippetID int, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) ListSnippetAwardEmoji(pid any, snippetID int64, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetID, opt}
 	for _, a := range options {
@@ -1058,19 +1058,19 @@ func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall) Return(arg0 []
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall) Do(f func(any, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall) Do(f func(any, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall) DoAndReturn(f func(any, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall {
+func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall) DoAndReturn(f func(any, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListSnippetAwardEmojiOnNote mocks base method.
-func (m *MockAwardEmojiServiceInterface) ListSnippetAwardEmojiOnNote(pid any, snippetIID, noteID int, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
+func (m *MockAwardEmojiServiceInterface) ListSnippetAwardEmojiOnNote(pid any, snippetIID, noteID int64, opt *gitlab.ListAwardEmojiOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippetIID, noteID, opt}
 	for _, a := range options {
@@ -1103,13 +1103,13 @@ func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall) Do(f func(any, int, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall) Do(f func(any, int64, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int, int, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall {
+func (c *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.ListAwardEmojiOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AwardEmoji, *gitlab.Response, error)) *MockAwardEmojiServiceInterfaceListSnippetAwardEmojiOnNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

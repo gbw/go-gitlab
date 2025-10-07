@@ -25,7 +25,7 @@ type (
 	ApplicationsServiceInterface interface {
 		CreateApplication(opt *CreateApplicationOptions, options ...RequestOptionFunc) (*Application, *Response, error)
 		ListApplications(opt *ListApplicationsOptions, options ...RequestOptionFunc) ([]*Application, *Response, error)
-		DeleteApplication(application int, options ...RequestOptionFunc) (*Response, error)
+		DeleteApplication(application int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// ApplicationsService handles communication with administrables applications
@@ -41,7 +41,7 @@ var _ ApplicationsServiceInterface = (*ApplicationsService)(nil)
 
 // Application represents a GitLab application
 type Application struct {
-	ID              int    `json:"id"`
+	ID              int64  `json:"id"`
 	ApplicationID   string `json:"application_id"`
 	ApplicationName string `json:"application_name"`
 	Secret          string `json:"secret"`
@@ -106,7 +106,7 @@ func (s *ApplicationsService) ListApplications(opt *ListApplicationsOptions, opt
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/applications/#delete-an-application
-func (s *ApplicationsService) DeleteApplication(application int, options ...RequestOptionFunc) (*Response, error) {
+func (s *ApplicationsService) DeleteApplication(application int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("applications/%d", application)
 
 	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)

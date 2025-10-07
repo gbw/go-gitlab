@@ -28,10 +28,10 @@ type (
 		ListGroupAccessRequests(gid any, opt *ListAccessRequestsOptions, options ...RequestOptionFunc) ([]*AccessRequest, *Response, error)
 		RequestProjectAccess(pid any, options ...RequestOptionFunc) (*AccessRequest, *Response, error)
 		RequestGroupAccess(gid any, options ...RequestOptionFunc) (*AccessRequest, *Response, error)
-		ApproveProjectAccessRequest(pid any, user int, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error)
-		ApproveGroupAccessRequest(gid any, user int, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error)
-		DenyProjectAccessRequest(pid any, user int, options ...RequestOptionFunc) (*Response, error)
-		DenyGroupAccessRequest(gid any, user int, options ...RequestOptionFunc) (*Response, error)
+		ApproveProjectAccessRequest(pid any, user int64, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error)
+		ApproveGroupAccessRequest(gid any, user int64, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error)
+		DenyProjectAccessRequest(pid any, user int64, options ...RequestOptionFunc) (*Response, error)
+		DenyGroupAccessRequest(gid any, user int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// AccessRequestsService handles communication with the project/group
@@ -50,7 +50,7 @@ var _ AccessRequestsServiceInterface = (*AccessRequestsService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/api/access_requests/
 type AccessRequest struct {
-	ID          int              `json:"id"`
+	ID          int64            `json:"id"`
 	Username    string           `json:"username"`
 	Name        string           `json:"name"`
 	State       string           `json:"state"`
@@ -185,7 +185,7 @@ type ApproveAccessRequestOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/access_requests/#approve-an-access-request
-func (s *AccessRequestsService) ApproveProjectAccessRequest(pid any, user int, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error) {
+func (s *AccessRequestsService) ApproveProjectAccessRequest(pid any, user int64, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -210,7 +210,7 @@ func (s *AccessRequestsService) ApproveProjectAccessRequest(pid any, user int, o
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/access_requests/#approve-an-access-request
-func (s *AccessRequestsService) ApproveGroupAccessRequest(gid any, user int, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error) {
+func (s *AccessRequestsService) ApproveGroupAccessRequest(gid any, user int64, opt *ApproveAccessRequestOptions, options ...RequestOptionFunc) (*AccessRequest, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -235,7 +235,7 @@ func (s *AccessRequestsService) ApproveGroupAccessRequest(gid any, user int, opt
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/access_requests/#deny-an-access-request
-func (s *AccessRequestsService) DenyProjectAccessRequest(pid any, user int, options ...RequestOptionFunc) (*Response, error) {
+func (s *AccessRequestsService) DenyProjectAccessRequest(pid any, user int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -254,7 +254,7 @@ func (s *AccessRequestsService) DenyProjectAccessRequest(pid any, user int, opti
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/access_requests/#deny-an-access-request
-func (s *AccessRequestsService) DenyGroupAccessRequest(gid any, user int, options ...RequestOptionFunc) (*Response, error) {
+func (s *AccessRequestsService) DenyGroupAccessRequest(gid any, user int64, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err

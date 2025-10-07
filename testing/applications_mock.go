@@ -86,7 +86,7 @@ func (c *MockApplicationsServiceInterfaceCreateApplicationCall) DoAndReturn(f fu
 }
 
 // DeleteApplication mocks base method.
-func (m *MockApplicationsServiceInterface) DeleteApplication(application int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockApplicationsServiceInterface) DeleteApplication(application int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{application}
 	for _, a := range options {
@@ -118,13 +118,13 @@ func (c *MockApplicationsServiceInterfaceDeleteApplicationCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockApplicationsServiceInterfaceDeleteApplicationCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockApplicationsServiceInterfaceDeleteApplicationCall {
+func (c *MockApplicationsServiceInterfaceDeleteApplicationCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockApplicationsServiceInterfaceDeleteApplicationCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockApplicationsServiceInterfaceDeleteApplicationCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockApplicationsServiceInterfaceDeleteApplicationCall {
+func (c *MockApplicationsServiceInterfaceDeleteApplicationCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockApplicationsServiceInterfaceDeleteApplicationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
