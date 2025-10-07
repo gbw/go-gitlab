@@ -91,6 +91,8 @@ func TestCreateContainerRegistryProtectionRule(t *testing.T) {
 }
 
 func TestUpdateContainerRegistryProtectionRule(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/7/registry/protection/repository/rules/1", func(w http.ResponseWriter, r *http.Request) {

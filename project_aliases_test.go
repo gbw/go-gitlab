@@ -11,6 +11,8 @@ import (
 )
 
 func TestProjectAliasesService_CreateProjectAlias(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases", func(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +47,8 @@ func TestProjectAliasesService_CreateProjectAlias(t *testing.T) {
 }
 
 func TestProjectAliasesService_DeleteProjectAlias(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases/my-alias", func(w http.ResponseWriter, r *http.Request) {
@@ -59,6 +63,8 @@ func TestProjectAliasesService_DeleteProjectAlias(t *testing.T) {
 }
 
 func TestProjectAliasesService_GetProjectAlias(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases/my-alias", func(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +83,8 @@ func TestProjectAliasesService_GetProjectAlias(t *testing.T) {
 }
 
 func TestProjectAliasesService_ListProjectAliases(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases", func(w http.ResponseWriter, r *http.Request) {
@@ -96,6 +104,8 @@ func TestProjectAliasesService_ListProjectAliases(t *testing.T) {
 }
 
 func TestProjectAliasesService_GetProjectAlias_WithSpecialCharacters(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	aliasName := "my/alias?with=special&chars"
@@ -117,6 +127,8 @@ func TestProjectAliasesService_GetProjectAlias_WithSpecialCharacters(t *testing.
 }
 
 func TestProjectAliasesService_DeleteProjectAlias_WithSpecialCharacters(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	aliasName := "my/alias?with=special&chars"
@@ -134,6 +146,8 @@ func TestProjectAliasesService_DeleteProjectAlias_WithSpecialCharacters(t *testi
 }
 
 func TestProjectAliasesService_GetProjectAlias_WithSpacesAndDots(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	aliasName := "my alias.name"
@@ -155,6 +169,8 @@ func TestProjectAliasesService_GetProjectAlias_WithSpacesAndDots(t *testing.T) {
 }
 
 func TestProjectAliasesService_DeleteProjectAlias_WithSpacesAndDots(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	aliasName := "my alias.name"

@@ -12,6 +12,8 @@ import (
 )
 
 func TestTerraformState_List(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
@@ -92,6 +94,8 @@ func TestTerraformState_List(t *testing.T) {
 }
 
 func TestTerraformState_Get(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
@@ -142,6 +146,8 @@ func TestTerraformState_Get(t *testing.T) {
 }
 
 func TestTerraformState_DownloadLatest(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/terraform/state/production", func(w http.ResponseWriter, r *http.Request) {
@@ -158,6 +164,8 @@ func TestTerraformState_DownloadLatest(t *testing.T) {
 }
 
 func TestTerraformState_Download(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/terraform/state/production/versions/42", func(w http.ResponseWriter, r *http.Request) {
@@ -174,6 +182,8 @@ func TestTerraformState_Download(t *testing.T) {
 }
 
 func TestTerraformState_Delete(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/terraform/state/production", func(w http.ResponseWriter, r *http.Request) {
@@ -185,6 +195,8 @@ func TestTerraformState_Delete(t *testing.T) {
 }
 
 func TestTerraformState_DeleteVersion(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/terraform/state/production/versions/42", func(w http.ResponseWriter, r *http.Request) {
@@ -196,6 +208,8 @@ func TestTerraformState_DeleteVersion(t *testing.T) {
 }
 
 func TestTerraformState_Lock(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/terraform/state/production/lock", func(w http.ResponseWriter, r *http.Request) {
@@ -207,6 +221,8 @@ func TestTerraformState_Lock(t *testing.T) {
 }
 
 func TestTerraformState_Unlock(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/terraform/state/production/lock", func(w http.ResponseWriter, r *http.Request) {

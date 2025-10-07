@@ -11,6 +11,8 @@ import (
 )
 
 func TestConfig_EmptyConfig(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(``)
 
@@ -20,6 +22,8 @@ func TestConfig_EmptyConfig(t *testing.T) {
 }
 
 func TestConfig_SingleInstance_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -38,6 +42,8 @@ func TestConfig_SingleInstance_Valid(t *testing.T) {
 }
 
 func TestConfig_SingleInstance_Invalid_Name(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -51,6 +57,8 @@ func TestConfig_SingleInstance_Invalid_Name(t *testing.T) {
 }
 
 func TestConfig_MultipleInstances_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -73,6 +81,8 @@ func TestConfig_MultipleInstances_Valid(t *testing.T) {
 }
 
 func TestConfig_MultipleInstances_Invalid_NotUniqueNames(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -88,6 +98,8 @@ func TestConfig_MultipleInstances_Invalid_NotUniqueNames(t *testing.T) {
 }
 
 func TestConfig_Contexts_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -120,6 +132,8 @@ func TestConfig_Contexts_Valid(t *testing.T) {
 }
 
 func TestConfig_Auths_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -148,6 +162,8 @@ func TestConfig_Auths_Valid(t *testing.T) {
 }
 
 func TestConfig_Auths_Invalid_Name(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -163,6 +179,8 @@ func TestConfig_Auths_Invalid_Name(t *testing.T) {
 }
 
 func TestConfig_Auths_Invalid_NotUniqueNames(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -182,6 +200,8 @@ func TestConfig_Auths_Invalid_NotUniqueNames(t *testing.T) {
 }
 
 func TestConfig_Contexts_Invalid_Name(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -206,6 +226,8 @@ func TestConfig_Contexts_Invalid_Name(t *testing.T) {
 }
 
 func TestConfig_Contexts_Invalid_NotUniqueNames(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -233,6 +255,8 @@ func TestConfig_Contexts_Invalid_NotUniqueNames(t *testing.T) {
 }
 
 func TestConfig_Contexts_Invalid_UnknownInstance(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -257,6 +281,8 @@ func TestConfig_Contexts_Invalid_UnknownInstance(t *testing.T) {
 }
 
 func TestConfig_Contexts_Invalid_UnknownAuth(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -281,6 +307,8 @@ func TestConfig_Contexts_Invalid_UnknownAuth(t *testing.T) {
 }
 
 func TestConfig_CurrentContext_Invalid_Unknown(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -307,6 +335,8 @@ func TestConfig_CurrentContext_Invalid_Unknown(t *testing.T) {
 }
 
 func TestConfig_Instance_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -332,6 +362,8 @@ func TestConfig_Instance_Valid(t *testing.T) {
 }
 
 func TestConfig_Instance_NotFound(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -348,6 +380,8 @@ func TestConfig_Instance_NotFound(t *testing.T) {
 }
 
 func TestConfig_Auth_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -375,6 +409,8 @@ func TestConfig_Auth_Valid(t *testing.T) {
 }
 
 func TestConfig_Auth_NotFound(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -393,6 +429,8 @@ func TestConfig_Auth_NotFound(t *testing.T) {
 }
 
 func TestConfig_CurrentContext_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -425,6 +463,8 @@ func TestConfig_CurrentContext_Valid(t *testing.T) {
 }
 
 func TestConfig_CurrentContext_NotSet(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -452,6 +492,8 @@ func TestConfig_CurrentContext_NotSet(t *testing.T) {
 }
 
 func TestConfig_Empty_ReturnsEmptyConfig(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c := Empty()
 
@@ -464,6 +506,8 @@ func TestConfig_Empty_ReturnsEmptyConfig(t *testing.T) {
 }
 
 func TestConfig_PersonalAccessToken_TokenSource_EnvVar(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -486,6 +530,8 @@ func TestConfig_PersonalAccessToken_TokenSource_EnvVar(t *testing.T) {
 }
 
 func TestConfig_JobToken_TokenSource_EnvVar(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -508,6 +554,8 @@ func TestConfig_JobToken_TokenSource_EnvVar(t *testing.T) {
 }
 
 func TestConfig_BasicAuth_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -530,6 +578,8 @@ func TestConfig_BasicAuth_Valid(t *testing.T) {
 }
 
 func TestConfig_BasicAuth_WithSources(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -556,6 +606,8 @@ func TestConfig_BasicAuth_WithSources(t *testing.T) {
 }
 
 func TestConfig_OAuth2_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -580,6 +632,8 @@ func TestConfig_OAuth2_Valid(t *testing.T) {
 }
 
 func TestConfig_Instance_WithRateLimit(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -602,6 +656,8 @@ func TestConfig_Instance_WithRateLimit(t *testing.T) {
 }
 
 func TestConfig_Instance_WithTLSConfig(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -631,6 +687,8 @@ func TestConfig_Instance_WithTLSConfig(t *testing.T) {
 }
 
 func TestConfig_Instance_WithAPIVersion(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -650,6 +708,8 @@ func TestConfig_Instance_WithAPIVersion(t *testing.T) {
 }
 
 func TestConfig_Preferences_Valid(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		preferences:
@@ -672,6 +732,8 @@ func TestConfig_Preferences_Valid(t *testing.T) {
 // Additional tests for increased coverage
 
 func TestConfig_New_WithOptions(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c := New(WithPath("/test/path"))
 
@@ -681,6 +743,8 @@ func TestConfig_New_WithOptions(t *testing.T) {
 }
 
 func TestConfig_NewFromPath_WithOptions(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c := NewFromPath("/custom/path", WithPath("/override/path"))
 
@@ -690,6 +754,8 @@ func TestConfig_NewFromPath_WithOptions(t *testing.T) {
 }
 
 func TestConfig_NewFromString_WithOptions(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	testValidator := func(c *v1beta1.Config) error {
 		return nil
@@ -705,6 +771,8 @@ func TestConfig_NewFromString_WithOptions(t *testing.T) {
 }
 
 func TestConfig_Load_FileNotFound(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c := NewFromPath("/non/existent/path")
 
@@ -717,6 +785,8 @@ func TestConfig_Load_FileNotFound(t *testing.T) {
 }
 
 func TestConfig_Load_EmptyPath(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c := NewFromPath("")
 
@@ -729,6 +799,8 @@ func TestConfig_Load_EmptyPath(t *testing.T) {
 }
 
 func TestConfig_Save_EmptyPath(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(``)
 	require.NoError(t, err)
@@ -742,6 +814,8 @@ func TestConfig_Save_EmptyPath(t *testing.T) {
 }
 
 func TestConfig_Save_NilConfig(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c := NewFromPath("/test/path")
 
@@ -754,6 +828,8 @@ func TestConfig_Save_NilConfig(t *testing.T) {
 }
 
 func TestConfig_Instance_WithCertificateAuthorityFile(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -773,6 +849,8 @@ func TestConfig_Instance_WithCertificateAuthorityFile(t *testing.T) {
 }
 
 func TestConfig_Instance_WithClientCertificates(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -795,6 +873,8 @@ func TestConfig_Instance_WithClientCertificates(t *testing.T) {
 }
 
 func TestConfig_PersonalAccessToken_TokenSource_File(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -817,6 +897,8 @@ func TestConfig_PersonalAccessToken_TokenSource_File(t *testing.T) {
 }
 
 func TestConfig_PersonalAccessToken_TokenSource_Keyring(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -843,6 +925,8 @@ func TestConfig_PersonalAccessToken_TokenSource_Keyring(t *testing.T) {
 }
 
 func TestConfig_PersonalAccessToken_TokenSource_Exec(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -869,6 +953,8 @@ func TestConfig_PersonalAccessToken_TokenSource_Exec(t *testing.T) {
 }
 
 func TestConfig_PersonalAccessToken_TokenSource_Value(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -891,6 +977,8 @@ func TestConfig_PersonalAccessToken_TokenSource_Value(t *testing.T) {
 }
 
 func TestConfig_OAuth2_WithTokenSources(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -923,6 +1011,8 @@ func TestConfig_OAuth2_WithTokenSources(t *testing.T) {
 }
 
 func TestConfig_Contexts_Valid_Multiple(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -971,6 +1061,8 @@ func TestConfig_Contexts_Valid_Multiple(t *testing.T) {
 }
 
 func TestConfig_Instance_Invalid_ServerURL(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -984,6 +1076,8 @@ func TestConfig_Instance_Invalid_ServerURL(t *testing.T) {
 }
 
 func TestConfig_Auths_Invalid_EmptyAuthInfo(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		auths:
@@ -997,6 +1091,8 @@ func TestConfig_Auths_Invalid_EmptyAuthInfo(t *testing.T) {
 }
 
 func TestConfig_DefaultConfigPath_ReturnsPath(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	path := DefaultConfigPath()
 
@@ -1006,6 +1102,8 @@ func TestConfig_DefaultConfigPath_ReturnsPath(t *testing.T) {
 }
 
 func TestConfig_Constants(t *testing.T) {
+	t.Parallel()
+
 	// THEN
 	assert.Equal(t, "gitlab.com", SaaSHostname)
 	assert.Equal(t, "config.yaml", DefaultConfigFileName)
@@ -1016,6 +1114,8 @@ func TestConfig_Constants(t *testing.T) {
 }
 
 func TestConfig_Instance_WithAllFields(t *testing.T) {
+	t.Parallel()
+
 	// WHEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1072,6 +1172,8 @@ func TestConfig_Instance_WithAllFields(t *testing.T) {
 }
 
 func TestConfig_NilConfig_Methods(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c := &Config{} // nil config
 
@@ -1085,6 +1187,8 @@ func TestConfig_NilConfig_Methods(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_PersonalAccessToken(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1113,6 +1217,8 @@ func TestConfig_NewClientForContext_Success_PersonalAccessToken(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_JobToken(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1141,6 +1247,8 @@ func TestConfig_NewClientForContext_Success_JobToken(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_BasicAuth(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1170,6 +1278,8 @@ func TestConfig_NewClientForContext_Success_BasicAuth(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Error_ContextNotFound(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1199,6 +1309,8 @@ func TestConfig_NewClientForContext_Error_ContextNotFound(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Error_AuthNotFound(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN - This test should use a valid config first, then test runtime error
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1231,6 +1343,8 @@ func TestConfig_NewClientForContext_Error_AuthNotFound(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_WithRateLimit(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1262,6 +1376,8 @@ func TestConfig_NewClientForContext_Success_WithRateLimit(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_WithRetryConfig(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		preferences:
@@ -1295,6 +1411,8 @@ func TestConfig_NewClientForContext_Success_WithRetryConfig(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_WithAPIVersion(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1325,6 +1443,8 @@ func TestConfig_NewClientForContext_Success_WithAPIVersion(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_WithTLSConfig(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1462,6 +1582,8 @@ func TestConfig_NewClientForContext_Success_BasicAuthFromEnv(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_GitLabSaaS(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1490,6 +1612,8 @@ func TestConfig_NewClientForContext_Success_GitLabSaaS(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_WithClientCertificates(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1566,6 +1690,8 @@ func TestConfig_NewClientForContext_Success_WithClientCertificates(t *testing.T)
 }
 
 func TestConfig_NewClientForContext_Error_MissingEnvVar(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1596,6 +1722,8 @@ func TestConfig_NewClientForContext_Error_MissingEnvVar(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_WithCustomAPIPath(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1624,6 +1752,8 @@ func TestConfig_NewClientForContext_Success_WithCustomAPIPath(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Success_WithTokenFromValue(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1653,6 +1783,8 @@ func TestConfig_NewClientForContext_Success_WithTokenFromValue(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Error_InvalidCertificateData(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1684,6 +1816,8 @@ func TestConfig_NewClientForContext_Error_InvalidCertificateData(t *testing.T) {
 }
 
 func TestConfig_NewClientForContext_Error_MismatchedCertificateAndKey(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:
@@ -1762,6 +1896,8 @@ func TestConfig_NewClientForContext_Error_MismatchedCertificateAndKey(t *testing
 }
 
 func TestConfig_NewClientForContext_Success_CustomHeaderLiteral(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	c, err := NewFromString(heredoc.Doc(`
 		instances:

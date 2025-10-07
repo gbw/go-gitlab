@@ -849,6 +849,8 @@ func TestNewAuthSourceClient(t *testing.T) {
 }
 
 func TestHasStatusCode(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	tests := []struct {
 		name          string
@@ -890,6 +892,8 @@ func TestHasStatusCode(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			// WHEN
 			actual := HasStatusCode(tt.err, tt.hasStatusCode)
 
@@ -900,6 +904,8 @@ func TestHasStatusCode(t *testing.T) {
 }
 
 func TestNewRequestToURL_disallowedURL(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	tests := []struct {
 		name string
@@ -925,6 +931,8 @@ func TestNewRequestToURL_disallowedURL(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			u, err := url.Parse(tt.url)
 			require.NoError(t, err)
 
@@ -936,6 +944,8 @@ func TestNewRequestToURL_disallowedURL(t *testing.T) {
 }
 
 func TestNewRequestToURL_allowedURL(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	tests := []struct {
 		url string
@@ -954,6 +964,8 @@ func TestNewRequestToURL_allowedURL(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.url, func(t *testing.T) {
+			t.Parallel()
+
 			u, err := url.Parse(tt.url)
 			require.NoError(t, err)
 
@@ -1019,11 +1031,15 @@ func TestWithInterceptor(t *testing.T) {
 	t.Parallel()
 
 	t.Run("when nil interceptor has been passed, then it will result in an error", func(t *testing.T) {
+		t.Parallel()
+
 		_, err := NewClient("", WithInterceptor(nil))
 		require.Error(t, err)
 	})
 
 	t.Run("when interceptor option is provided, then it is used in the client as part of the http round tripping of the transportation", func(t *testing.T) {
+		t.Parallel()
+
 		client, err := NewClient("",
 			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
 				assert.NotNil(t, next, "it was expected that the next middleware is not empty, most likely being the default transport in worse case scenario")
@@ -1041,6 +1057,8 @@ func TestWithInterceptor(t *testing.T) {
 	})
 
 	t.Run("enables request manipulation", func(t *testing.T) {
+		t.Parallel()
+
 		client, err := NewClient("",
 			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
 				assert.NotNil(t, next, "it was expected that the next middleware is not empty, most likely being the default transport in worse case scenario")
@@ -1068,6 +1086,8 @@ func TestWithInterceptor(t *testing.T) {
 	})
 
 	t.Run("ordering aligned to how interceptors are provided, as this makes it easier to read a option setup", func(t *testing.T) {
+		t.Parallel()
+
 		var ordering []int
 		client, err := NewClient("",
 			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
@@ -1099,6 +1119,8 @@ func TestWithInterceptor(t *testing.T) {
 	})
 
 	t.Run("e2e", func(t *testing.T) {
+		t.Parallel()
+
 		const endpoint = "/api/v4/user"
 
 		mux := http.NewServeMux()
@@ -1176,6 +1198,8 @@ func TestClient_DefaultRetryPolicy_RetryOnStatusCodes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(strconv.Itoa(tt.statusCode), func(t *testing.T) {
+			t.Parallel()
+
 			// GIVEN
 			retries := 0
 			mux := http.NewServeMux()
@@ -1236,6 +1260,8 @@ func TestClient_DefaultRetryPolicy_RetryOnIdempotentRequests_ByMethod(t *testing
 
 	for _, tt := range tests {
 		t.Run(tt.method, func(t *testing.T) {
+			t.Parallel()
+
 			// GIVEN
 			client, err := NewClient(
 				"",
@@ -1341,6 +1367,8 @@ func TestClient_DefaultRetryPolicy_RetryOnNetworkErrors(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			// GIVEN
 			client, err := NewClient("")
 			require.NoError(t, err)
@@ -1390,6 +1418,8 @@ func TestClient_DefaultRetryPolicy_ContextCancellation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			// GIVEN
 			client, err := NewClient("")
 			require.NoError(t, err)

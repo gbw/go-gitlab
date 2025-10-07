@@ -16,6 +16,8 @@ import (
 )
 
 func TestPagination_Scan_OffsetBased(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesSuccessfully(t, mux)
 
@@ -32,6 +34,8 @@ func TestPagination_Scan_OffsetBased(t *testing.T) {
 }
 
 func TestPagination_Scan_KeysetBased(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesSuccessfullyWithKeyset(t, mux)
 
@@ -53,6 +57,8 @@ func TestPagination_Scan_KeysetBased(t *testing.T) {
 }
 
 func TestPagination_Scan_Error(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesWithFailure(t, mux)
 
@@ -69,6 +75,8 @@ func TestPagination_Scan_Error(t *testing.T) {
 }
 
 func TestPagination_Scan_ExhaustedError(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesWithFailure(t, mux)
 
@@ -83,6 +91,8 @@ func TestPagination_Scan_ExhaustedError(t *testing.T) {
 }
 
 func TestPagination_Scan2(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesSuccessfully(t, mux)
 
@@ -102,6 +112,8 @@ func TestPagination_Scan2(t *testing.T) {
 }
 
 func TestPagination_Scan2_Error(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesWithFailure(t, mux)
 
@@ -130,6 +142,8 @@ func TestPagination_Scan2_Error(t *testing.T) {
 }
 
 func TestPagination_Must(t *testing.T) {
+	t.Parallel()
+
 	it := Must(func(yield func(int, error) bool) { yield(42, nil) })
 	xs := slices.Collect(it)
 
@@ -138,6 +152,8 @@ func TestPagination_Must(t *testing.T) {
 }
 
 func TestPagination_Must_Error(t *testing.T) {
+	t.Parallel()
+
 	assert.Panics(t, func() {
 		it := Must(func(yield func(int, error) bool) { yield(0, errors.New("sentinel")) })
 		_ = slices.Collect(it)
@@ -145,6 +161,8 @@ func TestPagination_Must_Error(t *testing.T) {
 }
 
 func TestPagination_ScanAndCollect(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesSuccessfully(t, mux)
 
@@ -158,6 +176,8 @@ func TestPagination_ScanAndCollect(t *testing.T) {
 }
 
 func TestPagination_ScanAndCollect_Error(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 	handleTwoPagesWithFailure(t, mux)
 

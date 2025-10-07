@@ -53,6 +53,8 @@ func TestListProjects(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			mux, client := setup(t)
 
 			mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
