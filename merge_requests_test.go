@@ -503,6 +503,8 @@ index c7c7da3..ce2cd85 100644
 func TestIntSliceOrString(t *testing.T) {
 	t.Parallel()
 	t.Run("any", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.ApprovedByIDs = ApproverIDs(UserIDAny)
 		q, err := query.Values(opts)
@@ -510,6 +512,8 @@ func TestIntSliceOrString(t *testing.T) {
 		assert.Equal(t, "Any", q.Get("approved_by_ids"))
 	})
 	t.Run("none", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.ApprovedByIDs = ApproverIDs(UserIDNone)
 		q, err := query.Values(opts)
@@ -517,6 +521,8 @@ func TestIntSliceOrString(t *testing.T) {
 		assert.Equal(t, "None", q.Get("approved_by_ids"))
 	})
 	t.Run("ids", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.ApprovedByIDs = ApproverIDs([]int{1, 2, 3})
 		q, err := query.Values(opts)
@@ -529,6 +535,8 @@ func TestIntSliceOrString(t *testing.T) {
 func TestAssigneeIDMarshalling(t *testing.T) {
 	t.Parallel()
 	t.Run("any", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.AssigneeID = AssigneeID(UserIDAny)
 		q, err := query.Values(opts)
@@ -538,6 +546,8 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 		assert.JSONEq(t, `{"assignee_id":"Any"}`, string(js))
 	})
 	t.Run("none", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.AssigneeID = AssigneeID(UserIDNone)
 		q, err := query.Values(opts)
@@ -547,6 +557,8 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 		assert.JSONEq(t, `{"assignee_id":"None"}`, string(js))
 	})
 	t.Run("id", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.AssigneeID = AssigneeID(5)
 		q, err := query.Values(opts)

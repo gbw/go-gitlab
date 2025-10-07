@@ -1608,6 +1608,8 @@ func TestAwardEmojiService_EdgeCases(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			mux, client := setup(t)
 			mux.HandleFunc("/api/v4/projects/1/merge_requests/80/award_emoji", tt.handler)
 			aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, 80, nil)
@@ -1616,6 +1618,8 @@ func TestAwardEmojiService_EdgeCases(t *testing.T) {
 	}
 
 	t.Run("invalid project ID format", func(t *testing.T) {
+		t.Parallel()
+
 		_, client := setup(t)
 		aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji("invalid-project-id", 80, nil)
 		require.Error(t, err)
@@ -1625,6 +1629,8 @@ func TestAwardEmojiService_EdgeCases(t *testing.T) {
 	})
 
 	t.Run("negative merge request IID", func(t *testing.T) {
+		t.Parallel()
+
 		_, client := setup(t)
 		aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, -80, nil)
 		require.Error(t, err)
@@ -1634,6 +1640,8 @@ func TestAwardEmojiService_EdgeCases(t *testing.T) {
 	})
 
 	t.Run("zero merge request IID", func(t *testing.T) {
+		t.Parallel()
+
 		_, client := setup(t)
 		aes, resp, err := client.AwardEmoji.ListMergeRequestAwardEmoji(1, 0, nil)
 		require.Error(t, err)

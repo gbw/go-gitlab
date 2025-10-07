@@ -114,6 +114,8 @@ func TestReleaseLinksService_CreateReleaseLink(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
+			t.Parallel()
+
 			mux, client := setup(t)
 
 			mux.HandleFunc("/api/v4/projects/1/releases/v0.1/assets/links",

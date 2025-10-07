@@ -14,6 +14,8 @@ type testExtension struct {
 }
 
 func TestExtensions_Unmarshal(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	cfg, err := NewFromString(heredoc.Doc(`
 		version: gitlab.com/config/v1beta1
@@ -55,6 +57,8 @@ func TestExtensions_Unmarshal(t *testing.T) {
 }
 
 func TestExtensions_Marshal(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	cfg, err := NewFromString(heredoc.Doc(`
 		version: gitlab.com/config/v1beta1
@@ -99,6 +103,8 @@ func TestExtensions_Marshal(t *testing.T) {
 }
 
 func TestExtensions_Marshal_NewExtension(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	cfg, err := NewFromString(heredoc.Doc(`
 		version: gitlab.com/config/v1beta1
@@ -138,6 +144,8 @@ func TestExtensions_Marshal_NewExtension(t *testing.T) {
 }
 
 func TestExtensions_Unmarshal_ForContext(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	cfg, err := NewFromString(heredoc.Doc(`
 		version: gitlab.com/config/v1beta1
@@ -177,6 +185,8 @@ func TestExtensions_Unmarshal_ForContext(t *testing.T) {
 }
 
 func TestExtensions_Marshal_ForContext(t *testing.T) {
+	t.Parallel()
+
 	// GIVEN
 	cfg, err := NewFromString(heredoc.Doc(`
 		version: gitlab.com/config/v1beta1

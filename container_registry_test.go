@@ -330,6 +330,8 @@ func TestDeleteRegistryRepositoryTags(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.event, func(t *testing.T) {
+			t.Parallel()
+
 			opt := &DeleteRegistryRepositoryTagsOptions{
 				NameRegexpDelete: &tc.nameRegexDelete,
 				NameRegexpKeep:   &tc.nameRegexKeep,

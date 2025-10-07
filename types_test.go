@@ -74,6 +74,8 @@ func TestBoolValue(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			var b BoolValue
 			if err := json.Unmarshal(testCase.data, &b); err != nil {
 				t.Fatalf("Unexpected error: %v", err)
