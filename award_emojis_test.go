@@ -1402,7 +1402,7 @@ func TestAwardEmojiService_EdgeCases(t *testing.T) {
 				require.NoError(t, err)
 				require.NotNil(t, resp)
 				require.Len(t, aes, 1)
-				require.Equal(t, 0, aes[0].AwardableID)
+				require.Equal(t, int64(0), aes[0].AwardableID)
 				require.Empty(t, aes[0].AwardableType)
 			},
 		},

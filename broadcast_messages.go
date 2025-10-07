@@ -25,10 +25,10 @@ import (
 type (
 	BroadcastMessagesServiceInterface interface {
 		ListBroadcastMessages(opt *ListBroadcastMessagesOptions, options ...RequestOptionFunc) ([]*BroadcastMessage, *Response, error)
-		GetBroadcastMessage(broadcast int, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
+		GetBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
 		CreateBroadcastMessage(opt *CreateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
-		UpdateBroadcastMessage(broadcast int, opt *UpdateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
-		DeleteBroadcastMessage(broadcast int, options ...RequestOptionFunc) (*Response, error)
+		UpdateBroadcastMessage(broadcast int64, opt *UpdateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
+		DeleteBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// BroadcastMessagesService handles communication with the broadcast
@@ -51,7 +51,7 @@ type BroadcastMessage struct {
 	StartsAt           *time.Time         `json:"starts_at"`
 	EndsAt             *time.Time         `json:"ends_at"`
 	Font               string             `json:"font"`
-	ID                 int                `json:"id"`
+	ID                 int64              `json:"id"`
 	Active             bool               `json:"active"`
 	TargetAccessLevels []AccessLevelValue `json:"target_access_levels"`
 	TargetPath         string             `json:"target_path"`
@@ -92,7 +92,7 @@ func (s *BroadcastMessagesService) ListBroadcastMessages(opt *ListBroadcastMessa
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/broadcast_messages/#get-a-specific-broadcast-message
-func (s *BroadcastMessagesService) GetBroadcastMessage(broadcast int, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error) {
+func (s *BroadcastMessagesService) GetBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error) {
 	u := fmt.Sprintf("broadcast_messages/%d", broadcast)
 
 	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
@@ -166,7 +166,7 @@ type UpdateBroadcastMessageOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/broadcast_messages/#update-a-broadcast-message
-func (s *BroadcastMessagesService) UpdateBroadcastMessage(broadcast int, opt *UpdateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error) {
+func (s *BroadcastMessagesService) UpdateBroadcastMessage(broadcast int64, opt *UpdateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error) {
 	u := fmt.Sprintf("broadcast_messages/%d", broadcast)
 
 	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
@@ -187,7 +187,7 @@ func (s *BroadcastMessagesService) UpdateBroadcastMessage(broadcast int, opt *Up
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/broadcast_messages/#delete-a-broadcast-message
-func (s *BroadcastMessagesService) DeleteBroadcastMessage(broadcast int, options ...RequestOptionFunc) (*Response, error) {
+func (s *BroadcastMessagesService) DeleteBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("broadcast_messages/%d", broadcast)
 
 	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)

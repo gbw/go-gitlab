@@ -9,11 +9,11 @@ import (
 type (
 	AuditEventsServiceInterface interface {
 		ListInstanceAuditEvents(opt *ListAuditEventsOptions, options ...RequestOptionFunc) ([]*AuditEvent, *Response, error)
-		GetInstanceAuditEvent(event int, options ...RequestOptionFunc) (*AuditEvent, *Response, error)
+		GetInstanceAuditEvent(event int64, options ...RequestOptionFunc) (*AuditEvent, *Response, error)
 		ListGroupAuditEvents(gid any, opt *ListAuditEventsOptions, options ...RequestOptionFunc) ([]*AuditEvent, *Response, error)
-		GetGroupAuditEvent(gid any, event int, options ...RequestOptionFunc) (*AuditEvent, *Response, error)
+		GetGroupAuditEvent(gid any, event int64, options ...RequestOptionFunc) (*AuditEvent, *Response, error)
 		ListProjectAuditEvents(pid any, opt *ListAuditEventsOptions, options ...RequestOptionFunc) ([]*AuditEvent, *Response, error)
-		GetProjectAuditEvent(pid any, event int, options ...RequestOptionFunc) (*AuditEvent, *Response, error)
+		GetProjectAuditEvent(pid any, event int64, options ...RequestOptionFunc) (*AuditEvent, *Response, error)
 	}
 
 	// AuditEventsService handles communication with the project/group/instance
@@ -31,9 +31,9 @@ var _ AuditEventsServiceInterface = (*AuditEventsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/audit_events/
 type AuditEvent struct {
-	ID         int               `json:"id"`
-	AuthorID   int               `json:"author_id"`
-	EntityID   int               `json:"entity_id"`
+	ID         int64             `json:"id"`
+	AuthorID   int64             `json:"author_id"`
+	EntityID   int64             `json:"entity_id"`
 	EntityType string            `json:"entity_type"`
 	EventName  string            `json:"event_name"`
 	Details    AuditEventDetails `json:"details"`
@@ -100,7 +100,7 @@ func (s *AuditEventsService) ListInstanceAuditEvents(opt *ListAuditEventsOptions
 // Authentication as Administrator is required.
 //
 // GitLab API docs: https://docs.gitlab.com/api/audit_events/#retrieve-single-instance-audit-event
-func (s *AuditEventsService) GetInstanceAuditEvent(event int, options ...RequestOptionFunc) (*AuditEvent, *Response, error) {
+func (s *AuditEventsService) GetInstanceAuditEvent(event int64, options ...RequestOptionFunc) (*AuditEvent, *Response, error) {
 	u := fmt.Sprintf("audit_events/%d", event)
 
 	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
@@ -145,7 +145,7 @@ func (s *AuditEventsService) ListGroupAuditEvents(gid any, opt *ListAuditEventsO
 // GetGroupAuditEvent gets a specific group audit event.
 //
 // GitLab API docs: https://docs.gitlab.com/api/audit_events/#retrieve-a-specific-group-audit-event
-func (s *AuditEventsService) GetGroupAuditEvent(gid any, event int, options ...RequestOptionFunc) (*AuditEvent, *Response, error) {
+func (s *AuditEventsService) GetGroupAuditEvent(gid any, event int64, options ...RequestOptionFunc) (*AuditEvent, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -195,7 +195,7 @@ func (s *AuditEventsService) ListProjectAuditEvents(pid any, opt *ListAuditEvent
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/audit_events/#retrieve-a-specific-project-audit-event
-func (s *AuditEventsService) GetProjectAuditEvent(pid any, event int, options ...RequestOptionFunc) (*AuditEvent, *Response, error) {
+func (s *AuditEventsService) GetProjectAuditEvent(pid any, event int64, options ...RequestOptionFunc) (*AuditEvent, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err

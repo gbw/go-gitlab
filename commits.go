@@ -331,7 +331,7 @@ type CommitComment struct {
 
 // Author represents a GitLab commit author
 type Author struct {
-	ID        int        `json:"id"`
+	ID        int64      `json:"id"`
 	Username  string     `json:"username"`
 	Email     string     `json:"email"`
 	Name      string     `json:"name"`
@@ -432,7 +432,7 @@ type GetCommitStatusesOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/commits/#commit-status
 type CommitStatus struct {
-	ID           int        `json:"id"`
+	ID           int64      `json:"id"`
 	SHA          string     `json:"sha"`
 	Ref          string     `json:"ref"`
 	Status       string     `json:"status"`

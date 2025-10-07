@@ -295,7 +295,7 @@ func TestDeleteRegistryRepositoryTags(t *testing.T) {
 	tests := []struct {
 		event           string
 		nameRegexDelete string
-		keepN           int
+		keepN           int64
 		nameRegexKeep   string
 		olderThan       string
 	}{
