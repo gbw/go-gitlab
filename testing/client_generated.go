@@ -130,6 +130,7 @@ type testClientMocks struct {
 	MockProjects                         *MockProjectsServiceInterface
 	MockProtectedBranches                *MockProtectedBranchesServiceInterface
 	MockProtectedEnvironments            *MockProtectedEnvironmentsServiceInterface
+	MockProtectedPackages                *MockProtectedPackagesServiceInterface
 	MockProtectedTags                    *MockProtectedTagsServiceInterface
 	MockReleaseLinks                     *MockReleaseLinksServiceInterface
 	MockReleases                         *MockReleasesServiceInterface
@@ -283,6 +284,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockProjects := NewMockProjectsServiceInterface(ctrl)
 	mockProtectedBranches := NewMockProtectedBranchesServiceInterface(ctrl)
 	mockProtectedEnvironments := NewMockProtectedEnvironmentsServiceInterface(ctrl)
+	mockProtectedPackages := NewMockProtectedPackagesServiceInterface(ctrl)
 	mockProtectedTags := NewMockProtectedTagsServiceInterface(ctrl)
 	mockReleaseLinks := NewMockReleaseLinksServiceInterface(ctrl)
 	mockReleases := NewMockReleasesServiceInterface(ctrl)
@@ -435,6 +437,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Projects:                         mockProjects,
 		ProtectedBranches:                mockProtectedBranches,
 		ProtectedEnvironments:            mockProtectedEnvironments,
+		ProtectedPackages:                mockProtectedPackages,
 		ProtectedTags:                    mockProtectedTags,
 		ReleaseLinks:                     mockReleaseLinks,
 		Releases:                         mockReleases,
@@ -599,6 +602,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockProjects:                         mockProjects,
 			MockProtectedBranches:                mockProtectedBranches,
 			MockProtectedEnvironments:            mockProtectedEnvironments,
+			MockProtectedPackages:                mockProtectedPackages,
 			MockProtectedTags:                    mockProtectedTags,
 			MockReleaseLinks:                     mockReleaseLinks,
 			MockReleases:                         mockReleases,

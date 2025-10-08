@@ -237,6 +237,7 @@ type Client struct {
 	Projects                         ProjectsServiceInterface
 	ProtectedBranches                ProtectedBranchesServiceInterface
 	ProtectedEnvironments            ProtectedEnvironmentsServiceInterface
+	ProtectedPackages                ProtectedPackagesServiceInterface
 	ProtectedTags                    ProtectedTagsServiceInterface
 	ReleaseLinks                     ReleaseLinksServiceInterface
 	Releases                         ReleasesServiceInterface
@@ -547,6 +548,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.Projects = &ProjectsService{client: c}
 	c.ProtectedBranches = &ProtectedBranchesService{client: c}
 	c.ProtectedEnvironments = &ProtectedEnvironmentsService{client: c}
+	c.ProtectedPackages = &ProtectedPackagesService{client: c}
 	c.ProtectedTags = &ProtectedTagsService{client: c}
 	c.ReleaseLinks = &ReleaseLinksService{client: c}
 	c.Releases = &ReleasesService{client: c}

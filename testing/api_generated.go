@@ -121,6 +121,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=projects_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_branches_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedBranchesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_environments_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedEnvironmentsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_packages_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedPackagesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_tags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedTagsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=releaselinks_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ReleaseLinksServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=releases_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ReleasesServiceInterface
