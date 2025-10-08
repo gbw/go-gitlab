@@ -114,6 +114,7 @@ var serviceMap = map[any]any{
 	&ProjectRepositoryStorageMoveService{}:     (*ProjectRepositoryStorageMoveServiceInterface)(nil),
 	&ProjectSecuritySettingsService{}:          (*ProjectSecuritySettingsServiceInterface)(nil),
 	&ProjectSnippetsService{}:                  (*ProjectSnippetsServiceInterface)(nil),
+	&ProjectStatisticsService{}:                (*ProjectStatisticsServiceInterface)(nil),
 	&ProjectTemplatesService{}:                 (*ProjectTemplatesServiceInterface)(nil),
 	&ProjectVariablesService{}:                 (*ProjectVariablesServiceInterface)(nil),
 	&ProjectVulnerabilitiesService{}:           (*ProjectVulnerabilitiesServiceInterface)(nil),

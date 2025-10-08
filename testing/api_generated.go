@@ -114,6 +114,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_repository_storage_move_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectRepositoryStorageMoveServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_security_settings_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectSecuritySettingsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_snippets_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectSnippetsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_statistics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectStatisticsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_templates_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectTemplatesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_variables_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectVariablesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_vulnerabilities_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectVulnerabilitiesServiceInterface
