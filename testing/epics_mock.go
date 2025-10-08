@@ -86,7 +86,7 @@ func (c *MockEpicsServiceInterfaceCreateEpicCall) DoAndReturn(f func(any, *gitla
 }
 
 // DeleteEpic mocks base method.
-func (m *MockEpicsServiceInterface) DeleteEpic(gid any, epic int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockEpicsServiceInterface) DeleteEpic(gid any, epic int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockEpicsServiceInterfaceDeleteEpicCall) Return(arg0 *gitlab.Response, 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicsServiceInterfaceDeleteEpicCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEpicsServiceInterfaceDeleteEpicCall {
+func (c *MockEpicsServiceInterfaceDeleteEpicCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEpicsServiceInterfaceDeleteEpicCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicsServiceInterfaceDeleteEpicCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEpicsServiceInterfaceDeleteEpicCall {
+func (c *MockEpicsServiceInterfaceDeleteEpicCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEpicsServiceInterfaceDeleteEpicCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetEpic mocks base method.
-func (m *MockEpicsServiceInterface) GetEpic(gid any, epic int, options ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error) {
+func (m *MockEpicsServiceInterface) GetEpic(gid any, epic int64, options ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockEpicsServiceInterfaceGetEpicCall) Return(arg0 *gitlab.Epic, arg1 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicsServiceInterfaceGetEpicCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicCall {
+func (c *MockEpicsServiceInterfaceGetEpicCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicsServiceInterfaceGetEpicCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicCall {
+func (c *MockEpicsServiceInterfaceGetEpicCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetEpicLinks mocks base method.
-func (m *MockEpicsServiceInterface) GetEpicLinks(gid any, epic int, options ...gitlab.RequestOptionFunc) ([]*gitlab.Epic, *gitlab.Response, error) {
+func (m *MockEpicsServiceInterface) GetEpicLinks(gid any, epic int64, options ...gitlab.RequestOptionFunc) ([]*gitlab.Epic, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic}
 	for _, a := range options {
@@ -208,13 +208,13 @@ func (c *MockEpicsServiceInterfaceGetEpicLinksCall) Return(arg0 []*gitlab.Epic, 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicsServiceInterfaceGetEpicLinksCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) ([]*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicLinksCall {
+func (c *MockEpicsServiceInterfaceGetEpicLinksCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicLinksCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicsServiceInterfaceGetEpicLinksCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) ([]*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicLinksCall {
+func (c *MockEpicsServiceInterfaceGetEpicLinksCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceGetEpicLinksCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -265,7 +265,7 @@ func (c *MockEpicsServiceInterfaceListGroupEpicsCall) DoAndReturn(f func(any, *g
 }
 
 // UpdateEpic mocks base method.
-func (m *MockEpicsServiceInterface) UpdateEpic(gid any, epic int, opt *gitlab.UpdateEpicOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error) {
+func (m *MockEpicsServiceInterface) UpdateEpic(gid any, epic int64, opt *gitlab.UpdateEpicOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, opt}
 	for _, a := range options {
@@ -298,13 +298,13 @@ func (c *MockEpicsServiceInterfaceUpdateEpicCall) Return(arg0 *gitlab.Epic, arg1
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicsServiceInterfaceUpdateEpicCall) Do(f func(any, int, *gitlab.UpdateEpicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceUpdateEpicCall {
+func (c *MockEpicsServiceInterfaceUpdateEpicCall) Do(f func(any, int64, *gitlab.UpdateEpicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceUpdateEpicCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicsServiceInterfaceUpdateEpicCall) DoAndReturn(f func(any, int, *gitlab.UpdateEpicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceUpdateEpicCall {
+func (c *MockEpicsServiceInterfaceUpdateEpicCall) DoAndReturn(f func(any, int64, *gitlab.UpdateEpicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Epic, *gitlab.Response, error)) *MockEpicsServiceInterfaceUpdateEpicCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -9,9 +9,9 @@ import (
 
 type (
 	DependencyListExportServiceInterface interface {
-		CreateDependencyListExport(pipelineID int, opt *CreateDependencyListExportOptions, options ...RequestOptionFunc) (*DependencyListExport, *Response, error)
-		GetDependencyListExport(id int, options ...RequestOptionFunc) (*DependencyListExport, *Response, error)
-		DownloadDependencyListExport(id int, options ...RequestOptionFunc) (io.Reader, *Response, error)
+		CreateDependencyListExport(pipelineID int64, opt *CreateDependencyListExportOptions, options ...RequestOptionFunc) (*DependencyListExport, *Response, error)
+		GetDependencyListExport(id int64, options ...RequestOptionFunc) (*DependencyListExport, *Response, error)
+		DownloadDependencyListExport(id int64, options ...RequestOptionFunc) (io.Reader, *Response, error)
 	}
 
 	// DependencyListExportService handles communication with the dependency list export
@@ -39,7 +39,7 @@ type CreateDependencyListExportOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/dependency_list_export/#create-a-dependency-list-export
 type DependencyListExport struct {
-	ID          int    `json:"id"`
+	ID          int64  `json:"id"`
 	HasFinished bool   `json:"has_finished"`
 	Self        string `json:"self"`
 	Download    string `json:"download"`
@@ -57,7 +57,7 @@ const defaultExportType = "sbom"
 //
 // GitLab docs:
 // https://docs.gitlab.com/api/dependency_list_export/#create-a-dependency-list-export
-func (s *DependencyListExportService) CreateDependencyListExport(pipelineID int, opt *CreateDependencyListExportOptions, options ...RequestOptionFunc) (*DependencyListExport, *Response, error) {
+func (s *DependencyListExportService) CreateDependencyListExport(pipelineID int64, opt *CreateDependencyListExportOptions, options ...RequestOptionFunc) (*DependencyListExport, *Response, error) {
 	// POST /pipelines/:id/dependency_list_exports
 	createExportPath := fmt.Sprintf("pipelines/%d/dependency_list_exports", pipelineID)
 
@@ -86,7 +86,7 @@ func (s *DependencyListExportService) CreateDependencyListExport(pipelineID int,
 //
 // GitLab docs:
 // https://docs.gitlab.com/api/dependency_list_export/#get-single-dependency-list-export
-func (s *DependencyListExportService) GetDependencyListExport(id int, options ...RequestOptionFunc) (*DependencyListExport, *Response, error) {
+func (s *DependencyListExportService) GetDependencyListExport(id int64, options ...RequestOptionFunc) (*DependencyListExport, *Response, error) {
 	// GET /dependency_list_exports/:id
 	getExportPath := fmt.Sprintf("dependency_list_exports/%d", id)
 
@@ -117,7 +117,7 @@ func (s *DependencyListExportService) GetDependencyListExport(id int, options ..
 //
 // GitLab docs:
 // https://docs.gitlab.com/api/dependency_list_export/#download-dependency-list-export
-func (s *DependencyListExportService) DownloadDependencyListExport(id int, options ...RequestOptionFunc) (io.Reader, *Response, error) {
+func (s *DependencyListExportService) DownloadDependencyListExport(id int64, options ...RequestOptionFunc) (io.Reader, *Response, error) {
 	// GET /dependency_list_exports/:id/download
 	downloadExportPath := fmt.Sprintf("dependency_list_exports/%d/download", id)
 

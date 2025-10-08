@@ -217,7 +217,7 @@ func TestCreateEnvironment(t *testing.T) {
 		Description:         Ptr("test"),
 		ExternalURL:         Ptr("https://deploy.example.gitlab.com"),
 		Tier:                Ptr("production"),
-		ClusterAgentID:      Ptr(1),
+		ClusterAgentID:      Ptr(int64(1)),
 		KubernetesNamespace: Ptr("flux-system"),
 		FluxResourcePath:    Ptr("HelmRelease/flux-system"),
 		AutoStopSetting:     Ptr("always"),
@@ -297,7 +297,7 @@ func TestEditEnvironment(t *testing.T) {
 		Description:         Ptr("test"),
 		ExternalURL:         Ptr("https://staging.example.gitlab.com"),
 		Tier:                Ptr("staging"),
-		ClusterAgentID:      Ptr(1),
+		ClusterAgentID:      Ptr(int64(1)),
 		KubernetesNamespace: Ptr("flux-system"),
 		FluxResourcePath:    Ptr("HelmRelease/flux-system"),
 		AutoStopSetting:     Ptr("with_action"),
@@ -421,7 +421,7 @@ func TestUnmarshal(t *testing.T) {
 	err := json.Unmarshal([]byte(jsonObject), &env)
 
 	if assert.NoError(t, err) {
-		assert.Equal(t, 10, env.ID)
+		assert.Equal(t, int64(10), env.ID)
 		assert.Equal(t, "production", env.Name)
 		assert.Equal(t, "test", env.Description)
 		assert.Equal(t, "https://example.com", env.ExternalURL)

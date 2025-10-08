@@ -23,8 +23,8 @@ type (
 	ContainerRegistryProtectionRulesServiceInterface interface {
 		ListContainerRegistryProtectionRules(pid any, options ...RequestOptionFunc) ([]*ContainerRegistryProtectionRule, *Response, error)
 		CreateContainerRegistryProtectionRule(pid any, opt *CreateContainerRegistryProtectionRuleOptions, options ...RequestOptionFunc) (*ContainerRegistryProtectionRule, *Response, error)
-		UpdateContainerRegistryProtectionRule(pid any, ruleID int, opt *UpdateContainerRegistryProtectionRuleOptions, options ...RequestOptionFunc) (*ContainerRegistryProtectionRule, *Response, error)
-		DeleteContainerRegistryProtectionRule(pid any, ruleID int, options ...RequestOptionFunc) (*Response, error)
+		UpdateContainerRegistryProtectionRule(pid any, ruleID int64, opt *UpdateContainerRegistryProtectionRuleOptions, options ...RequestOptionFunc) (*ContainerRegistryProtectionRule, *Response, error)
+		DeleteContainerRegistryProtectionRule(pid any, ruleID int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// ContainerRegistryProtectionRulesService handles communication with
@@ -46,8 +46,8 @@ var _ ContainerRegistryProtectionRulesServiceInterface = (*ContainerRegistryProt
 // GitLab API docs:
 // https://docs.gitlab.com/api/container_repository_protection_rules/
 type ContainerRegistryProtectionRule struct {
-	ID                          int                       `json:"id"`
-	ProjectID                   int                       `json:"project_id"`
+	ID                          int64                     `json:"id"`
+	ProjectID                   int64                     `json:"project_id"`
 	RepositoryPathPattern       string                    `json:"repository_path_pattern"`
 	MinimumAccessLevelForPush   ProtectionRuleAccessLevel `json:"minimum_access_level_for_push"`
 	MinimumAccessLevelForDelete ProtectionRuleAccessLevel `json:"minimum_access_level_for_delete"`
@@ -136,7 +136,7 @@ type UpdateContainerRegistryProtectionRuleOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/container_repository_protection_rules/#update-a-container-repository-protection-rule
-func (s *ContainerRegistryProtectionRulesService) UpdateContainerRegistryProtectionRule(pid any, ruleID int, opt *UpdateContainerRegistryProtectionRuleOptions, options ...RequestOptionFunc) (*ContainerRegistryProtectionRule, *Response, error) {
+func (s *ContainerRegistryProtectionRulesService) UpdateContainerRegistryProtectionRule(pid any, ruleID int64, opt *UpdateContainerRegistryProtectionRuleOptions, options ...RequestOptionFunc) (*ContainerRegistryProtectionRule, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -162,7 +162,7 @@ func (s *ContainerRegistryProtectionRulesService) UpdateContainerRegistryProtect
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/container_repository_protection_rules/#delete-a-container-repository-protection-rule
-func (s *ContainerRegistryProtectionRulesService) DeleteContainerRegistryProtectionRule(pid any, ruleID int, options ...RequestOptionFunc) (*Response, error) {
+func (s *ContainerRegistryProtectionRulesService) DeleteContainerRegistryProtectionRule(pid any, ruleID int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err

@@ -26,13 +26,13 @@ type (
 	DeployTokensServiceInterface interface {
 		ListAllDeployTokens(options ...RequestOptionFunc) ([]*DeployToken, *Response, error)
 		ListProjectDeployTokens(pid any, opt *ListProjectDeployTokensOptions, options ...RequestOptionFunc) ([]*DeployToken, *Response, error)
-		GetProjectDeployToken(pid any, deployToken int, options ...RequestOptionFunc) (*DeployToken, *Response, error)
+		GetProjectDeployToken(pid any, deployToken int64, options ...RequestOptionFunc) (*DeployToken, *Response, error)
 		CreateProjectDeployToken(pid any, opt *CreateProjectDeployTokenOptions, options ...RequestOptionFunc) (*DeployToken, *Response, error)
-		DeleteProjectDeployToken(pid any, deployToken int, options ...RequestOptionFunc) (*Response, error)
+		DeleteProjectDeployToken(pid any, deployToken int64, options ...RequestOptionFunc) (*Response, error)
 		ListGroupDeployTokens(gid any, opt *ListGroupDeployTokensOptions, options ...RequestOptionFunc) ([]*DeployToken, *Response, error)
-		GetGroupDeployToken(gid any, deployToken int, options ...RequestOptionFunc) (*DeployToken, *Response, error)
+		GetGroupDeployToken(gid any, deployToken int64, options ...RequestOptionFunc) (*DeployToken, *Response, error)
 		CreateGroupDeployToken(gid any, opt *CreateGroupDeployTokenOptions, options ...RequestOptionFunc) (*DeployToken, *Response, error)
-		DeleteGroupDeployToken(gid any, deployToken int, options ...RequestOptionFunc) (*Response, error)
+		DeleteGroupDeployToken(gid any, deployToken int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// DeployTokensService handles communication with the deploy tokens related methods
@@ -46,7 +46,7 @@ type (
 
 // DeployToken represents a GitLab deploy token.
 type DeployToken struct {
-	ID        int        `json:"id"`
+	ID        int64      `json:"id"`
 	Name      string     `json:"name"`
 	Username  string     `json:"username"`
 	ExpiresAt *time.Time `json:"expires_at"`
@@ -117,7 +117,7 @@ func (s *DeployTokensService) ListProjectDeployTokens(pid any, opt *ListProjectD
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_tokens/#get-a-project-deploy-token
-func (s *DeployTokensService) GetProjectDeployToken(pid any, deployToken int, options ...RequestOptionFunc) (*DeployToken, *Response, error) {
+func (s *DeployTokensService) GetProjectDeployToken(pid any, deployToken int64, options ...RequestOptionFunc) (*DeployToken, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -178,7 +178,7 @@ func (s *DeployTokensService) CreateProjectDeployToken(pid any, opt *CreateProje
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_tokens/#delete-a-project-deploy-token
-func (s *DeployTokensService) DeleteProjectDeployToken(pid any, deployToken int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DeployTokensService) DeleteProjectDeployToken(pid any, deployToken int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -231,7 +231,7 @@ func (s *DeployTokensService) ListGroupDeployTokens(gid any, opt *ListGroupDeplo
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_tokens/#get-a-group-deploy-token
-func (s *DeployTokensService) GetGroupDeployToken(gid any, deployToken int, options ...RequestOptionFunc) (*DeployToken, *Response, error) {
+func (s *DeployTokensService) GetGroupDeployToken(gid any, deployToken int64, options ...RequestOptionFunc) (*DeployToken, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -292,7 +292,7 @@ func (s *DeployTokensService) CreateGroupDeployToken(gid any, opt *CreateGroupDe
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_tokens/#delete-a-group-deploy-token
-func (s *DeployTokensService) DeleteGroupDeployToken(gid any, deployToken int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DeployTokensService) DeleteGroupDeployToken(gid any, deployToken int64, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err

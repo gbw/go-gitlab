@@ -41,7 +41,7 @@ func (m *MockDatabaseMigrationsServiceInterface) EXPECT() *MockDatabaseMigration
 }
 
 // MarkMigrationAsSuccessful mocks base method.
-func (m *MockDatabaseMigrationsServiceInterface) MarkMigrationAsSuccessful(version int, opt *gitlab.MarkMigrationAsSuccessfulOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockDatabaseMigrationsServiceInterface) MarkMigrationAsSuccessful(version int64, opt *gitlab.MarkMigrationAsSuccessfulOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{version, opt}
 	for _, a := range options {
@@ -73,13 +73,13 @@ func (c *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall) Do(f func(int, *gitlab.MarkMigrationAsSuccessfulOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall {
+func (c *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall) Do(f func(int64, *gitlab.MarkMigrationAsSuccessfulOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall) DoAndReturn(f func(int, *gitlab.MarkMigrationAsSuccessfulOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall {
+func (c *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall) DoAndReturn(f func(int64, *gitlab.MarkMigrationAsSuccessfulOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDatabaseMigrationsServiceInterfaceMarkMigrationAsSuccessfulCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

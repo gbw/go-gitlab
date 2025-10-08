@@ -86,7 +86,7 @@ func (c *MockContainerRegistryProtectionRulesServiceInterfaceCreateContainerRegi
 }
 
 // DeleteContainerRegistryProtectionRule mocks base method.
-func (m *MockContainerRegistryProtectionRulesServiceInterface) DeleteContainerRegistryProtectionRule(pid any, ruleID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockContainerRegistryProtectionRulesServiceInterface) DeleteContainerRegistryProtectionRule(pid any, ruleID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, ruleID}
 	for _, a := range options {
@@ -118,13 +118,13 @@ func (c *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall {
+func (c *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall {
+func (c *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceDeleteContainerRegistryProtectionRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -175,7 +175,7 @@ func (c *MockContainerRegistryProtectionRulesServiceInterfaceListContainerRegist
 }
 
 // UpdateContainerRegistryProtectionRule mocks base method.
-func (m *MockContainerRegistryProtectionRulesServiceInterface) UpdateContainerRegistryProtectionRule(pid any, ruleID int, opt *gitlab.UpdateContainerRegistryProtectionRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ContainerRegistryProtectionRule, *gitlab.Response, error) {
+func (m *MockContainerRegistryProtectionRulesServiceInterface) UpdateContainerRegistryProtectionRule(pid any, ruleID int64, opt *gitlab.UpdateContainerRegistryProtectionRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ContainerRegistryProtectionRule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, ruleID, opt}
 	for _, a := range options {
@@ -208,13 +208,13 @@ func (c *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall) Do(f func(any, int, *gitlab.UpdateContainerRegistryProtectionRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ContainerRegistryProtectionRule, *gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall {
+func (c *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall) Do(f func(any, int64, *gitlab.UpdateContainerRegistryProtectionRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ContainerRegistryProtectionRule, *gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall) DoAndReturn(f func(any, int, *gitlab.UpdateContainerRegistryProtectionRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ContainerRegistryProtectionRule, *gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall {
+func (c *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall) DoAndReturn(f func(any, int64, *gitlab.UpdateContainerRegistryProtectionRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ContainerRegistryProtectionRule, *gitlab.Response, error)) *MockContainerRegistryProtectionRulesServiceInterfaceUpdateContainerRegistryProtectionRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
