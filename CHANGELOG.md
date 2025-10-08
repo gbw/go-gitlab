@@ -1,3 +1,18 @@
+## 0.154.0
+
+### 🚀 Features
+
+- feat(protected_packages): Add api integration ([!2520](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2520)) by [Jose Gabriel Companioni Benitez](https://gitlab.com/elC0mpa)
+
+
+
+# [0.154.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.153.0...v0.154.0) (2025-10-08)
+
+
+### Features
+
+* **protected_packages:** Add api integration ([2de15c7](https://gitlab.com/gitlab-org/api/client-go/commit/2de15c7875e232b0b0b1e5e5bb8e184cd11d0774))
+
 ## 0.153.0
 
 ### 🚀 Features
