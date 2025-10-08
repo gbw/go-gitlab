@@ -123,6 +123,7 @@ type testClientMocks struct {
 	MockProjectRepositoryStorageMove     *MockProjectRepositoryStorageMoveServiceInterface
 	MockProjectSecuritySettings          *MockProjectSecuritySettingsServiceInterface
 	MockProjectSnippets                  *MockProjectSnippetsServiceInterface
+	MockProjectStatistics                *MockProjectStatisticsServiceInterface
 	MockProjectTemplates                 *MockProjectTemplatesServiceInterface
 	MockProjectVariables                 *MockProjectVariablesServiceInterface
 	MockProjectVulnerabilities           *MockProjectVulnerabilitiesServiceInterface
@@ -275,6 +276,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockProjectRepositoryStorageMove := NewMockProjectRepositoryStorageMoveServiceInterface(ctrl)
 	mockProjectSecuritySettings := NewMockProjectSecuritySettingsServiceInterface(ctrl)
 	mockProjectSnippets := NewMockProjectSnippetsServiceInterface(ctrl)
+	mockProjectStatistics := NewMockProjectStatisticsServiceInterface(ctrl)
 	mockProjectTemplates := NewMockProjectTemplatesServiceInterface(ctrl)
 	mockProjectVariables := NewMockProjectVariablesServiceInterface(ctrl)
 	mockProjectVulnerabilities := NewMockProjectVulnerabilitiesServiceInterface(ctrl)
@@ -426,6 +428,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		ProjectRepositoryStorageMove:     mockProjectRepositoryStorageMove,
 		ProjectSecuritySettings:          mockProjectSecuritySettings,
 		ProjectSnippets:                  mockProjectSnippets,
+		ProjectStatistics:                mockProjectStatistics,
 		ProjectTemplates:                 mockProjectTemplates,
 		ProjectVariables:                 mockProjectVariables,
 		ProjectVulnerabilities:           mockProjectVulnerabilities,
@@ -589,6 +592,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockProjectRepositoryStorageMove:     mockProjectRepositoryStorageMove,
 			MockProjectSecuritySettings:          mockProjectSecuritySettings,
 			MockProjectSnippets:                  mockProjectSnippets,
+			MockProjectStatistics:                mockProjectStatistics,
 			MockProjectTemplates:                 mockProjectTemplates,
 			MockProjectVariables:                 mockProjectVariables,
 			MockProjectVulnerabilities:           mockProjectVulnerabilities,
