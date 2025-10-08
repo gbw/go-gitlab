@@ -25,37 +25,37 @@ import (
 type (
 	// DiscussionsServiceInterface defines all the API methods for the DiscussionsService
 	DiscussionsServiceInterface interface {
-		ListIssueDiscussions(pid any, issue int, opt *ListIssueDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
-		GetIssueDiscussion(pid any, issue int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		CreateIssueDiscussion(pid any, issue int, opt *CreateIssueDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		AddIssueDiscussionNote(pid any, issue int, discussion string, opt *AddIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		UpdateIssueDiscussionNote(pid any, issue int, discussion string, note int, opt *UpdateIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		DeleteIssueDiscussionNote(pid any, issue int, discussion string, note int, options ...RequestOptionFunc) (*Response, error)
-		ListSnippetDiscussions(pid any, snippet int, opt *ListSnippetDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
-		GetSnippetDiscussion(pid any, snippet int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		CreateSnippetDiscussion(pid any, snippet int, opt *CreateSnippetDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		AddSnippetDiscussionNote(pid any, snippet int, discussion string, opt *AddSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		UpdateSnippetDiscussionNote(pid any, snippet int, discussion string, note int, opt *UpdateSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		DeleteSnippetDiscussionNote(pid any, snippet int, discussion string, note int, options ...RequestOptionFunc) (*Response, error)
-		ListGroupEpicDiscussions(gid any, epic int, opt *ListGroupEpicDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
-		GetEpicDiscussion(gid any, epic int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		CreateEpicDiscussion(gid any, epic int, opt *CreateEpicDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		AddEpicDiscussionNote(gid any, epic int, discussion string, opt *AddEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		UpdateEpicDiscussionNote(gid any, epic int, discussion string, note int, opt *UpdateEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		DeleteEpicDiscussionNote(gid any, epic int, discussion string, note int, options ...RequestOptionFunc) (*Response, error)
-		ListMergeRequestDiscussions(pid any, mergeRequest int, opt *ListMergeRequestDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
-		GetMergeRequestDiscussion(pid any, mergeRequest int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		CreateMergeRequestDiscussion(pid any, mergeRequest int, opt *CreateMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		ResolveMergeRequestDiscussion(pid any, mergeRequest int, discussion string, opt *ResolveMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
-		AddMergeRequestDiscussionNote(pid any, mergeRequest int, discussion string, opt *AddMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		UpdateMergeRequestDiscussionNote(pid any, mergeRequest int, discussion string, note int, opt *UpdateMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		DeleteMergeRequestDiscussionNote(pid any, mergeRequest int, discussion string, note int, options ...RequestOptionFunc) (*Response, error)
+		ListIssueDiscussions(pid any, issue int64, opt *ListIssueDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
+		GetIssueDiscussion(pid any, issue int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		CreateIssueDiscussion(pid any, issue int64, opt *CreateIssueDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		AddIssueDiscussionNote(pid any, issue int64, discussion string, opt *AddIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		UpdateIssueDiscussionNote(pid any, issue int64, discussion string, note int64, opt *UpdateIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		DeleteIssueDiscussionNote(pid any, issue int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error)
+		ListSnippetDiscussions(pid any, snippet int64, opt *ListSnippetDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
+		GetSnippetDiscussion(pid any, snippet int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		CreateSnippetDiscussion(pid any, snippet int64, opt *CreateSnippetDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		AddSnippetDiscussionNote(pid any, snippet int64, discussion string, opt *AddSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		UpdateSnippetDiscussionNote(pid any, snippet int64, discussion string, note int64, opt *UpdateSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		DeleteSnippetDiscussionNote(pid any, snippet int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error)
+		ListGroupEpicDiscussions(gid any, epic int64, opt *ListGroupEpicDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
+		GetEpicDiscussion(gid any, epic int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		CreateEpicDiscussion(gid any, epic int64, opt *CreateEpicDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		AddEpicDiscussionNote(gid any, epic int64, discussion string, opt *AddEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		UpdateEpicDiscussionNote(gid any, epic int64, discussion string, note int64, opt *UpdateEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		DeleteEpicDiscussionNote(gid any, epic int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error)
+		ListMergeRequestDiscussions(pid any, mergeRequest int64, opt *ListMergeRequestDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
+		GetMergeRequestDiscussion(pid any, mergeRequest int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		CreateMergeRequestDiscussion(pid any, mergeRequest int64, opt *CreateMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		ResolveMergeRequestDiscussion(pid any, mergeRequest int64, discussion string, opt *ResolveMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
+		AddMergeRequestDiscussionNote(pid any, mergeRequest int64, discussion string, opt *AddMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		UpdateMergeRequestDiscussionNote(pid any, mergeRequest int64, discussion string, note int64, opt *UpdateMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		DeleteMergeRequestDiscussionNote(pid any, mergeRequest int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error)
 		ListCommitDiscussions(pid any, commit string, opt *ListCommitDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error)
 		GetCommitDiscussion(pid any, commit string, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
 		CreateCommitDiscussion(pid any, commit string, opt *CreateCommitDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
 		AddCommitDiscussionNote(pid any, commit string, discussion string, opt *AddCommitDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		UpdateCommitDiscussionNote(pid any, commit string, discussion string, note int, opt *UpdateCommitDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
-		DeleteCommitDiscussionNote(pid any, commit string, discussion string, note int, options ...RequestOptionFunc) (*Response, error)
+		UpdateCommitDiscussionNote(pid any, commit string, discussion string, note int64, opt *UpdateCommitDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error)
+		DeleteCommitDiscussionNote(pid any, commit string, discussion string, note int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// DiscussionsService handles communication with the discussions related
@@ -96,7 +96,7 @@ type ListIssueDiscussionsOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-project-issue-discussion-items
-func (s *DiscussionsService) ListIssueDiscussions(pid any, issue int, opt *ListIssueDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
+func (s *DiscussionsService) ListIssueDiscussions(pid any, issue int64, opt *ListIssueDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -121,7 +121,7 @@ func (s *DiscussionsService) ListIssueDiscussions(pid any, issue int, opt *ListI
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#get-single-issue-discussion-item
-func (s *DiscussionsService) GetIssueDiscussion(pid any, issue int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) GetIssueDiscussion(pid any, issue int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -160,7 +160,7 @@ type CreateIssueDiscussionOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#create-new-issue-thread
-func (s *DiscussionsService) CreateIssueDiscussion(pid any, issue int, opt *CreateIssueDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) CreateIssueDiscussion(pid any, issue int64, opt *CreateIssueDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -195,7 +195,7 @@ type AddIssueDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#add-note-to-existing-issue-thread
-func (s *DiscussionsService) AddIssueDiscussionNote(pid any, issue int, discussion string, opt *AddIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) AddIssueDiscussionNote(pid any, issue int64, discussion string, opt *AddIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -234,7 +234,7 @@ type UpdateIssueDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#modify-existing-issue-thread-note
-func (s *DiscussionsService) UpdateIssueDiscussionNote(pid any, issue int, discussion string, note int, opt *UpdateIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) UpdateIssueDiscussionNote(pid any, issue int64, discussion string, note int64, opt *UpdateIssueDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -264,7 +264,7 @@ func (s *DiscussionsService) UpdateIssueDiscussionNote(pid any, issue int, discu
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#delete-an-issue-thread-note
-func (s *DiscussionsService) DeleteIssueDiscussionNote(pid any, issue int, discussion string, note int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DiscussionsService) DeleteIssueDiscussionNote(pid any, issue int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -298,7 +298,7 @@ type ListSnippetDiscussionsOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-project-snippet-discussion-items
-func (s *DiscussionsService) ListSnippetDiscussions(pid any, snippet int, opt *ListSnippetDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
+func (s *DiscussionsService) ListSnippetDiscussions(pid any, snippet int64, opt *ListSnippetDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -323,7 +323,7 @@ func (s *DiscussionsService) ListSnippetDiscussions(pid any, snippet int, opt *L
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#get-single-snippet-discussion-item
-func (s *DiscussionsService) GetSnippetDiscussion(pid any, snippet int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) GetSnippetDiscussion(pid any, snippet int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -363,7 +363,7 @@ type CreateSnippetDiscussionOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#create-new-snippet-thread
-func (s *DiscussionsService) CreateSnippetDiscussion(pid any, snippet int, opt *CreateSnippetDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) CreateSnippetDiscussion(pid any, snippet int64, opt *CreateSnippetDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -399,7 +399,7 @@ type AddSnippetDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#add-note-to-existing-snippet-thread
-func (s *DiscussionsService) AddSnippetDiscussionNote(pid any, snippet int, discussion string, opt *AddSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) AddSnippetDiscussionNote(pid any, snippet int64, discussion string, opt *AddSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -438,7 +438,7 @@ type UpdateSnippetDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#modify-existing-snippet-thread-note
-func (s *DiscussionsService) UpdateSnippetDiscussionNote(pid any, snippet int, discussion string, note int, opt *UpdateSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) UpdateSnippetDiscussionNote(pid any, snippet int64, discussion string, note int64, opt *UpdateSnippetDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -468,7 +468,7 @@ func (s *DiscussionsService) UpdateSnippetDiscussionNote(pid any, snippet int, d
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#delete-a-snippet-thread-note
-func (s *DiscussionsService) DeleteSnippetDiscussionNote(pid any, snippet int, discussion string, note int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DiscussionsService) DeleteSnippetDiscussionNote(pid any, snippet int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -502,7 +502,7 @@ type ListGroupEpicDiscussionsOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-group-epic-discussion-items
-func (s *DiscussionsService) ListGroupEpicDiscussions(gid any, epic int, opt *ListGroupEpicDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
+func (s *DiscussionsService) ListGroupEpicDiscussions(gid any, epic int64, opt *ListGroupEpicDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -530,7 +530,7 @@ func (s *DiscussionsService) ListGroupEpicDiscussions(gid any, epic int, opt *Li
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#get-single-epic-discussion-item
-func (s *DiscussionsService) GetEpicDiscussion(gid any, epic int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) GetEpicDiscussion(gid any, epic int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -570,7 +570,7 @@ type CreateEpicDiscussionOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#create-new-epic-thread
-func (s *DiscussionsService) CreateEpicDiscussion(gid any, epic int, opt *CreateEpicDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) CreateEpicDiscussion(gid any, epic int64, opt *CreateEpicDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -608,7 +608,7 @@ type AddEpicDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#add-note-to-existing-epic-thread
-func (s *DiscussionsService) AddEpicDiscussionNote(gid any, epic int, discussion string, opt *AddEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) AddEpicDiscussionNote(gid any, epic int64, discussion string, opt *AddEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -647,7 +647,7 @@ type UpdateEpicDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#modify-existing-epic-thread-note
-func (s *DiscussionsService) UpdateEpicDiscussionNote(gid any, epic int, discussion string, note int, opt *UpdateEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) UpdateEpicDiscussionNote(gid any, epic int64, discussion string, note int64, opt *UpdateEpicDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -677,7 +677,7 @@ func (s *DiscussionsService) UpdateEpicDiscussionNote(gid any, epic int, discuss
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#delete-an-epic-thread-note
-func (s *DiscussionsService) DeleteEpicDiscussionNote(gid any, epic int, discussion string, note int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DiscussionsService) DeleteEpicDiscussionNote(gid any, epic int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err
@@ -711,7 +711,7 @@ type ListMergeRequestDiscussionsOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#list-project-merge-request-discussion-items
-func (s *DiscussionsService) ListMergeRequestDiscussions(pid any, mergeRequest int, opt *ListMergeRequestDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
+func (s *DiscussionsService) ListMergeRequestDiscussions(pid any, mergeRequest int64, opt *ListMergeRequestDiscussionsOptions, options ...RequestOptionFunc) ([]*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -740,7 +740,7 @@ func (s *DiscussionsService) ListMergeRequestDiscussions(pid any, mergeRequest i
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#get-single-merge-request-discussion-item
-func (s *DiscussionsService) GetMergeRequestDiscussion(pid any, mergeRequest int, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) GetMergeRequestDiscussion(pid any, mergeRequest int64, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -785,11 +785,11 @@ type PositionOptions struct {
 	NewPath      *string           `url:"new_path,omitempty" json:"new_path,omitempty"`
 	OldPath      *string           `url:"old_path,omitempty" json:"old_path,omitempty"`
 	PositionType *string           `url:"position_type,omitempty" json:"position_type"`
-	NewLine      *int              `url:"new_line,omitempty" json:"new_line,omitempty"`
-	OldLine      *int              `url:"old_line,omitempty" json:"old_line,omitempty"`
+	NewLine      *int64            `url:"new_line,omitempty" json:"new_line,omitempty"`
+	OldLine      *int64            `url:"old_line,omitempty" json:"old_line,omitempty"`
 	LineRange    *LineRangeOptions `url:"line_range,omitempty" json:"line_range,omitempty"`
-	Width        *int              `url:"width,omitempty" json:"width,omitempty"`
-	Height       *int              `url:"height,omitempty" json:"height,omitempty"`
+	Width        *int64            `url:"width,omitempty" json:"width,omitempty"`
+	Height       *int64            `url:"height,omitempty" json:"height,omitempty"`
 	X            *float64          `url:"x,omitempty" json:"x,omitempty"`
 	Y            *float64          `url:"y,omitempty" json:"y,omitempty"`
 }
@@ -804,8 +804,8 @@ type LineRangeOptions struct {
 type LinePositionOptions struct {
 	LineCode *string `url:"line_code,omitempty" json:"line_code,omitempty"`
 	Type     *string `url:"type,omitempty" json:"type,omitempty"`
-	OldLine  *int    `url:"old_line,omitempty" json:"old_line,omitempty"`
-	NewLine  *int    `url:"new_line,omitempty" json:"new_line,omitempty"`
+	OldLine  *int64  `url:"old_line,omitempty" json:"old_line,omitempty"`
+	NewLine  *int64  `url:"new_line,omitempty" json:"new_line,omitempty"`
 }
 
 // CreateMergeRequestDiscussion creates a new discussion for a single merge
@@ -813,7 +813,7 @@ type LinePositionOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#create-new-merge-request-thread
-func (s *DiscussionsService) CreateMergeRequestDiscussion(pid any, mergeRequest int, opt *CreateMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) CreateMergeRequestDiscussion(pid any, mergeRequest int64, opt *CreateMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -851,7 +851,7 @@ type ResolveMergeRequestDiscussionOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#resolve-a-merge-request-thread
-func (s *DiscussionsService) ResolveMergeRequestDiscussion(pid any, mergeRequest int, discussion string, opt *ResolveMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
+func (s *DiscussionsService) ResolveMergeRequestDiscussion(pid any, mergeRequest int64, discussion string, opt *ResolveMergeRequestDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -891,7 +891,7 @@ type AddMergeRequestDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#add-note-to-existing-merge-request-thread
-func (s *DiscussionsService) AddMergeRequestDiscussionNote(pid any, mergeRequest int, discussion string, opt *AddMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) AddMergeRequestDiscussionNote(pid any, mergeRequest int64, discussion string, opt *AddMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -932,7 +932,7 @@ type UpdateMergeRequestDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#modify-an-existing-merge-request-thread-note
-func (s *DiscussionsService) UpdateMergeRequestDiscussionNote(pid any, mergeRequest int, discussion string, note int, opt *UpdateMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) UpdateMergeRequestDiscussionNote(pid any, mergeRequest int64, discussion string, note int64, opt *UpdateMergeRequestDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -963,7 +963,7 @@ func (s *DiscussionsService) UpdateMergeRequestDiscussionNote(pid any, mergeRequ
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#delete-a-merge-request-thread-note
-func (s *DiscussionsService) DeleteMergeRequestDiscussionNote(pid any, mergeRequest int, discussion string, note int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DiscussionsService) DeleteMergeRequestDiscussionNote(pid any, mergeRequest int64, discussion string, note int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -1143,7 +1143,7 @@ type UpdateCommitDiscussionNoteOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#modify-an-existing-commit-thread-note
-func (s *DiscussionsService) UpdateCommitDiscussionNote(pid any, commit string, discussion string, note int, opt *UpdateCommitDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
+func (s *DiscussionsService) UpdateCommitDiscussionNote(pid any, commit string, discussion string, note int64, opt *UpdateCommitDiscussionNoteOptions, options ...RequestOptionFunc) (*Note, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -1173,7 +1173,7 @@ func (s *DiscussionsService) UpdateCommitDiscussionNote(pid any, commit string, 
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/discussions/#delete-a-commit-thread-note
-func (s *DiscussionsService) DeleteCommitDiscussionNote(pid any, commit string, discussion string, note int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DiscussionsService) DeleteCommitDiscussionNote(pid any, commit string, discussion string, note int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err

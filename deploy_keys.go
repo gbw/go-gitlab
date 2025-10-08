@@ -28,11 +28,11 @@ type (
 		AddInstanceDeployKey(opt *AddInstanceDeployKeyOptions, options ...RequestOptionFunc) (*InstanceDeployKey, *Response, error)
 		ListProjectDeployKeys(pid any, opt *ListProjectDeployKeysOptions, options ...RequestOptionFunc) ([]*ProjectDeployKey, *Response, error)
 		ListUserProjectDeployKeys(uid any, opt *ListUserProjectDeployKeysOptions, options ...RequestOptionFunc) ([]*ProjectDeployKey, *Response, error)
-		GetDeployKey(pid any, deployKey int, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error)
+		GetDeployKey(pid any, deployKey int64, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error)
 		AddDeployKey(pid any, opt *AddDeployKeyOptions, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error)
-		DeleteDeployKey(pid any, deployKey int, options ...RequestOptionFunc) (*Response, error)
-		EnableDeployKey(pid any, deployKey int, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error)
-		UpdateDeployKey(pid any, deployKey int, opt *UpdateDeployKeyOptions, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error)
+		DeleteDeployKey(pid any, deployKey int64, options ...RequestOptionFunc) (*Response, error)
+		EnableDeployKey(pid any, deployKey int64, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error)
+		UpdateDeployKey(pid any, deployKey int64, opt *UpdateDeployKeyOptions, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error)
 	}
 
 	// DeployKeysService handles communication with the keys related methods
@@ -49,7 +49,7 @@ var _ DeployKeysServiceInterface = (*DeployKeysService)(nil)
 // InstanceDeployKey represents a GitLab deploy key with the associated
 // projects it has write access to.
 type InstanceDeployKey struct {
-	ID                         int                 `json:"id"`
+	ID                         int64               `json:"id"`
 	Title                      string              `json:"title"`
 	CreatedAt                  *time.Time          `json:"created_at"`
 	ExpiresAt                  *time.Time          `json:"expires_at"`
@@ -66,7 +66,7 @@ func (k InstanceDeployKey) String() string {
 
 // DeployKeyProject refers to a project an InstanceDeployKey has write access to.
 type DeployKeyProject struct {
-	ID                int        `json:"id"`
+	ID                int64      `json:"id"`
 	Description       string     `json:"description"`
 	Name              string     `json:"name"`
 	NameWithNamespace string     `json:"name_with_namespace"`
@@ -81,7 +81,7 @@ func (k DeployKeyProject) String() string {
 
 // ProjectDeployKey represents a GitLab project deploy key.
 type ProjectDeployKey struct {
-	ID                int        `json:"id"`
+	ID                int64      `json:"id"`
 	Title             string     `json:"title"`
 	Key               string     `json:"key"`
 	Fingerprint       string     `json:"fingerprint"`
@@ -227,7 +227,7 @@ func (s *DeployKeysService) ListUserProjectDeployKeys(uid any, opt *ListUserProj
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_keys/#get-a-single-deploy-key
-func (s *DeployKeysService) GetDeployKey(pid any, deployKey int, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error) {
+func (s *DeployKeysService) GetDeployKey(pid any, deployKey int64, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -290,7 +290,7 @@ func (s *DeployKeysService) AddDeployKey(pid any, opt *AddDeployKeyOptions, opti
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_keys/#delete-deploy-key
-func (s *DeployKeysService) DeleteDeployKey(pid any, deployKey int, options ...RequestOptionFunc) (*Response, error) {
+func (s *DeployKeysService) DeleteDeployKey(pid any, deployKey int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -309,7 +309,7 @@ func (s *DeployKeysService) DeleteDeployKey(pid any, deployKey int, options ...R
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_keys/#enable-a-deploy-key
-func (s *DeployKeysService) EnableDeployKey(pid any, deployKey int, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error) {
+func (s *DeployKeysService) EnableDeployKey(pid any, deployKey int64, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -343,7 +343,7 @@ type UpdateDeployKeyOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/deploy_keys/#update-deploy-key
-func (s *DeployKeysService) UpdateDeployKey(pid any, deployKey int, opt *UpdateDeployKeyOptions, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error) {
+func (s *DeployKeysService) UpdateDeployKey(pid any, deployKey int64, opt *UpdateDeployKeyOptions, options ...RequestOptionFunc) (*ProjectDeployKey, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err

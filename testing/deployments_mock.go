@@ -41,7 +41,7 @@ func (m *MockDeploymentsServiceInterface) EXPECT() *MockDeploymentsServiceInterf
 }
 
 // ApproveOrRejectProjectDeployment mocks base method.
-func (m *MockDeploymentsServiceInterface) ApproveOrRejectProjectDeployment(pid any, deployment int, opt *gitlab.ApproveOrRejectProjectDeploymentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockDeploymentsServiceInterface) ApproveOrRejectProjectDeployment(pid any, deployment int64, opt *gitlab.ApproveOrRejectProjectDeploymentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployment, opt}
 	for _, a := range options {
@@ -73,13 +73,13 @@ func (c *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall) Do(f func(any, int, *gitlab.ApproveOrRejectProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall) Do(f func(any, int64, *gitlab.ApproveOrRejectProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall) DoAndReturn(f func(any, int, *gitlab.ApproveOrRejectProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall) DoAndReturn(f func(any, int64, *gitlab.ApproveOrRejectProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceApproveOrRejectProjectDeploymentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -130,7 +130,7 @@ func (c *MockDeploymentsServiceInterfaceCreateProjectDeploymentCall) DoAndReturn
 }
 
 // DeleteProjectDeployment mocks base method.
-func (m *MockDeploymentsServiceInterface) DeleteProjectDeployment(pid any, deployment int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockDeploymentsServiceInterface) DeleteProjectDeployment(pid any, deployment int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployment}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall) Return(arg0
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeploymentsServiceInterfaceDeleteProjectDeploymentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetProjectDeployment mocks base method.
-func (m *MockDeploymentsServiceInterface) GetProjectDeployment(pid any, deployment int, options ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error) {
+func (m *MockDeploymentsServiceInterface) GetProjectDeployment(pid any, deployment int64, options ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployment}
 	for _, a := range options {
@@ -207,13 +207,13 @@ func (c *MockDeploymentsServiceInterfaceGetProjectDeploymentCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeploymentsServiceInterfaceGetProjectDeploymentCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceGetProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceGetProjectDeploymentCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceGetProjectDeploymentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeploymentsServiceInterfaceGetProjectDeploymentCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceGetProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceGetProjectDeploymentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceGetProjectDeploymentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -264,7 +264,7 @@ func (c *MockDeploymentsServiceInterfaceListProjectDeploymentsCall) DoAndReturn(
 }
 
 // UpdateProjectDeployment mocks base method.
-func (m *MockDeploymentsServiceInterface) UpdateProjectDeployment(pid any, deployment int, opt *gitlab.UpdateProjectDeploymentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error) {
+func (m *MockDeploymentsServiceInterface) UpdateProjectDeployment(pid any, deployment int64, opt *gitlab.UpdateProjectDeploymentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployment, opt}
 	for _, a := range options {
@@ -297,13 +297,13 @@ func (c *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall) Return(arg0
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall) Do(f func(any, int, *gitlab.UpdateProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall) Do(f func(any, int64, *gitlab.UpdateProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall) DoAndReturn(f func(any, int, *gitlab.UpdateProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall {
+func (c *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall) DoAndReturn(f func(any, int64, *gitlab.UpdateProjectDeploymentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Deployment, *gitlab.Response, error)) *MockDeploymentsServiceInterfaceUpdateProjectDeploymentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

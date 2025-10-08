@@ -131,7 +131,7 @@ func (c *MockDeployKeysServiceInterfaceAddInstanceDeployKeyCall) DoAndReturn(f f
 }
 
 // DeleteDeployKey mocks base method.
-func (m *MockDeployKeysServiceInterface) DeleteDeployKey(pid any, deployKey int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockDeployKeysServiceInterface) DeleteDeployKey(pid any, deployKey int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployKey}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockDeployKeysServiceInterfaceDeleteDeployKeyCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployKeysServiceInterfaceDeleteDeployKeyCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployKeysServiceInterfaceDeleteDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceDeleteDeployKeyCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployKeysServiceInterfaceDeleteDeployKeyCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployKeysServiceInterfaceDeleteDeployKeyCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployKeysServiceInterfaceDeleteDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceDeleteDeployKeyCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployKeysServiceInterfaceDeleteDeployKeyCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EnableDeployKey mocks base method.
-func (m *MockDeployKeysServiceInterface) EnableDeployKey(pid any, deployKey int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error) {
+func (m *MockDeployKeysServiceInterface) EnableDeployKey(pid any, deployKey int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployKey}
 	for _, a := range options {
@@ -208,19 +208,19 @@ func (c *MockDeployKeysServiceInterfaceEnableDeployKeyCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployKeysServiceInterfaceEnableDeployKeyCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceEnableDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceEnableDeployKeyCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceEnableDeployKeyCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployKeysServiceInterfaceEnableDeployKeyCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceEnableDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceEnableDeployKeyCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceEnableDeployKeyCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetDeployKey mocks base method.
-func (m *MockDeployKeysServiceInterface) GetDeployKey(pid any, deployKey int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error) {
+func (m *MockDeployKeysServiceInterface) GetDeployKey(pid any, deployKey int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployKey}
 	for _, a := range options {
@@ -253,13 +253,13 @@ func (c *MockDeployKeysServiceInterfaceGetDeployKeyCall) Return(arg0 *gitlab.Pro
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployKeysServiceInterfaceGetDeployKeyCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceGetDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceGetDeployKeyCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceGetDeployKeyCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployKeysServiceInterfaceGetDeployKeyCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceGetDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceGetDeployKeyCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceGetDeployKeyCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -400,7 +400,7 @@ func (c *MockDeployKeysServiceInterfaceListUserProjectDeployKeysCall) DoAndRetur
 }
 
 // UpdateDeployKey mocks base method.
-func (m *MockDeployKeysServiceInterface) UpdateDeployKey(pid any, deployKey int, opt *gitlab.UpdateDeployKeyOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error) {
+func (m *MockDeployKeysServiceInterface) UpdateDeployKey(pid any, deployKey int64, opt *gitlab.UpdateDeployKeyOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployKey, opt}
 	for _, a := range options {
@@ -433,13 +433,13 @@ func (c *MockDeployKeysServiceInterfaceUpdateDeployKeyCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployKeysServiceInterfaceUpdateDeployKeyCall) Do(f func(any, int, *gitlab.UpdateDeployKeyOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceUpdateDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceUpdateDeployKeyCall) Do(f func(any, int64, *gitlab.UpdateDeployKeyOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceUpdateDeployKeyCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployKeysServiceInterfaceUpdateDeployKeyCall) DoAndReturn(f func(any, int, *gitlab.UpdateDeployKeyOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceUpdateDeployKeyCall {
+func (c *MockDeployKeysServiceInterfaceUpdateDeployKeyCall) DoAndReturn(f func(any, int64, *gitlab.UpdateDeployKeyOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectDeployKey, *gitlab.Response, error)) *MockDeployKeysServiceInterfaceUpdateDeployKeyCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

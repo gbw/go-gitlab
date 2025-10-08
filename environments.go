@@ -26,11 +26,11 @@ type (
 	// EnvironmentsServiceInterface defines all the API methods for the EnvironmentsService
 	EnvironmentsServiceInterface interface {
 		ListEnvironments(pid any, opts *ListEnvironmentsOptions, options ...RequestOptionFunc) ([]*Environment, *Response, error)
-		GetEnvironment(pid any, environment int, options ...RequestOptionFunc) (*Environment, *Response, error)
+		GetEnvironment(pid any, environment int64, options ...RequestOptionFunc) (*Environment, *Response, error)
 		CreateEnvironment(pid any, opt *CreateEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error)
-		EditEnvironment(pid any, environment int, opt *EditEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error)
-		DeleteEnvironment(pid any, environment int, options ...RequestOptionFunc) (*Response, error)
-		StopEnvironment(pid any, environmentID int, opt *StopEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error)
+		EditEnvironment(pid any, environment int64, opt *EditEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error)
+		DeleteEnvironment(pid any, environment int64, options ...RequestOptionFunc) (*Response, error)
+		StopEnvironment(pid any, environmentID int64, opt *StopEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error)
 	}
 
 	// EnvironmentsService handles communication with the environment related methods
@@ -48,7 +48,7 @@ var _ EnvironmentsServiceInterface = (*EnvironmentsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/environments/
 type Environment struct {
-	ID                  int         `json:"id"`
+	ID                  int64       `json:"id"`
 	Name                string      `json:"name"`
 	Slug                string      `json:"slug"`
 	Description         string      `json:"description"`
@@ -111,7 +111,7 @@ func (s *EnvironmentsService) ListEnvironments(pid any, opts *ListEnvironmentsOp
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/environments/#get-a-specific-environment
-func (s *EnvironmentsService) GetEnvironment(pid any, environment int, options ...RequestOptionFunc) (*Environment, *Response, error) {
+func (s *EnvironmentsService) GetEnvironment(pid any, environment int64, options ...RequestOptionFunc) (*Environment, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -141,7 +141,7 @@ type CreateEnvironmentOptions struct {
 	Description         *string `url:"description,omitempty" json:"description,omitempty"`
 	ExternalURL         *string `url:"external_url,omitempty" json:"external_url,omitempty"`
 	Tier                *string `url:"tier,omitempty" json:"tier,omitempty"`
-	ClusterAgentID      *int    `url:"cluster_agent_id,omitempty" json:"cluster_agent_id,omitempty"`
+	ClusterAgentID      *int64  `url:"cluster_agent_id,omitempty" json:"cluster_agent_id,omitempty"`
 	KubernetesNamespace *string `url:"kubernetes_namespace,omitempty" json:"kubernetes_namespace,omitempty"`
 	FluxResourcePath    *string `url:"flux_resource_path,omitempty" json:"flux_resource_path,omitempty"`
 	AutoStopSetting     *string `url:"auto_stop_setting,omitempty" json:"auto_stop_setting,omitempty"`
@@ -183,7 +183,7 @@ type EditEnvironmentOptions struct {
 	Description         *string `url:"description,omitempty" json:"description,omitempty"`
 	ExternalURL         *string `url:"external_url,omitempty" json:"external_url,omitempty"`
 	Tier                *string `url:"tier,omitempty" json:"tier,omitempty"`
-	ClusterAgentID      *int    `url:"cluster_agent_id,omitempty" json:"cluster_agent_id,omitempty"`
+	ClusterAgentID      *int64  `url:"cluster_agent_id,omitempty" json:"cluster_agent_id,omitempty"`
 	KubernetesNamespace *string `url:"kubernetes_namespace,omitempty" json:"kubernetes_namespace,omitempty"`
 	FluxResourcePath    *string `url:"flux_resource_path,omitempty" json:"flux_resource_path,omitempty"`
 	AutoStopSetting     *string `url:"auto_stop_setting,omitempty" json:"auto_stop_setting,omitempty"`
@@ -193,7 +193,7 @@ type EditEnvironmentOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/environments/#update-an-existing-environment
-func (s *EnvironmentsService) EditEnvironment(pid any, environment int, opt *EditEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error) {
+func (s *EnvironmentsService) EditEnvironment(pid any, environment int64, opt *EditEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -218,7 +218,7 @@ func (s *EnvironmentsService) EditEnvironment(pid any, environment int, opt *Edi
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/environments/#delete-an-environment
-func (s *EnvironmentsService) DeleteEnvironment(pid any, environment int, options ...RequestOptionFunc) (*Response, error) {
+func (s *EnvironmentsService) DeleteEnvironment(pid any, environment int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -245,7 +245,7 @@ type StopEnvironmentOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/environments/#stop-an-environment
-func (s *EnvironmentsService) StopEnvironment(pid any, environmentID int, opt *StopEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error) {
+func (s *EnvironmentsService) StopEnvironment(pid any, environmentID int64, opt *StopEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err

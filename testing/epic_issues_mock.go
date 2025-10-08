@@ -41,7 +41,7 @@ func (m *MockEpicIssuesServiceInterface) EXPECT() *MockEpicIssuesServiceInterfac
 }
 
 // AssignEpicIssue mocks base method.
-func (m *MockEpicIssuesServiceInterface) AssignEpicIssue(gid any, epic, issue int, options ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error) {
+func (m *MockEpicIssuesServiceInterface) AssignEpicIssue(gid any, epic, issue int64, options ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, issue}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockEpicIssuesServiceInterfaceAssignEpicIssueCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicIssuesServiceInterfaceAssignEpicIssueCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceAssignEpicIssueCall {
+func (c *MockEpicIssuesServiceInterfaceAssignEpicIssueCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceAssignEpicIssueCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicIssuesServiceInterfaceAssignEpicIssueCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceAssignEpicIssueCall {
+func (c *MockEpicIssuesServiceInterfaceAssignEpicIssueCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceAssignEpicIssueCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListEpicIssues mocks base method.
-func (m *MockEpicIssuesServiceInterface) ListEpicIssues(gid any, epic int, opt *gitlab.ListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
+func (m *MockEpicIssuesServiceInterface) ListEpicIssues(gid any, epic int64, opt *gitlab.ListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, opt}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockEpicIssuesServiceInterfaceListEpicIssuesCall) Return(arg0 []*gitlab
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicIssuesServiceInterfaceListEpicIssuesCall) Do(f func(any, int, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceListEpicIssuesCall {
+func (c *MockEpicIssuesServiceInterfaceListEpicIssuesCall) Do(f func(any, int64, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceListEpicIssuesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicIssuesServiceInterfaceListEpicIssuesCall) DoAndReturn(f func(any, int, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceListEpicIssuesCall {
+func (c *MockEpicIssuesServiceInterfaceListEpicIssuesCall) DoAndReturn(f func(any, int64, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceListEpicIssuesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RemoveEpicIssue mocks base method.
-func (m *MockEpicIssuesServiceInterface) RemoveEpicIssue(gid any, epic, epicIssue int, options ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error) {
+func (m *MockEpicIssuesServiceInterface) RemoveEpicIssue(gid any, epic, epicIssue int64, options ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, epicIssue}
 	for _, a := range options {
@@ -164,19 +164,19 @@ func (c *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall {
+func (c *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall {
+func (c *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.EpicIssueAssignment, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceRemoveEpicIssueCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateEpicIssueAssignment mocks base method.
-func (m *MockEpicIssuesServiceInterface) UpdateEpicIssueAssignment(gid any, epic, epicIssue int, opt *gitlab.UpdateEpicIssueAssignmentOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
+func (m *MockEpicIssuesServiceInterface) UpdateEpicIssueAssignment(gid any, epic, epicIssue int64, opt *gitlab.UpdateEpicIssueAssignmentOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, epicIssue, opt}
 	for _, a := range options {
@@ -209,13 +209,13 @@ func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) Do(f func(any, int, int, *gitlab.UpdateEpicIssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
+func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) Do(f func(any, int64, int64, *gitlab.UpdateEpicIssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateEpicIssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
+func (c *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateEpicIssueAssignmentOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockEpicIssuesServiceInterfaceUpdateEpicIssueAssignmentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

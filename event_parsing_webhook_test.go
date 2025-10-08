@@ -261,8 +261,8 @@ func TestParseIssueHook(t *testing.T) {
 		t.Errorf("Assignee username is %v, want %v", event.Assignee.Username, "user1")
 	}
 	assert.Len(t, event.Labels, 1)
-	assert.Equal(t, 0, event.Changes.UpdatedByID.Previous)
-	assert.Equal(t, 1, event.Changes.UpdatedByID.Current)
+	assert.Equal(t, int64(0), event.Changes.UpdatedByID.Previous)
+	assert.Equal(t, int64(1), event.Changes.UpdatedByID.Current)
 	assert.Len(t, event.Changes.Labels.Previous, 1)
 	assert.Len(t, event.Changes.Labels.Current, 1)
 	assert.Empty(t, event.Changes.Description.Previous)
@@ -356,8 +356,8 @@ func TestParseMergeRequestHook(t *testing.T) {
 		t.Errorf("WorkInProgress is %v, want %v", event.ObjectAttributes.WorkInProgress, false)
 	}
 	assert.Len(t, event.Labels, 1)
-	assert.Equal(t, 0, event.Changes.UpdatedByID.Previous)
-	assert.Equal(t, 1, event.Changes.UpdatedByID.Current)
+	assert.Equal(t, int64(0), event.Changes.UpdatedByID.Previous)
+	assert.Equal(t, int64(1), event.Changes.UpdatedByID.Current)
 	assert.Len(t, event.Changes.Labels.Previous, 1)
 	assert.Len(t, event.Changes.Labels.Current, 1)
 }

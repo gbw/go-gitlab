@@ -45,14 +45,14 @@ var _ EventsServiceInterface = (*EventsService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/api/events/#get-user-contribution-events
 type ContributionEvent struct {
-	ID             int                       `json:"id"`
+	ID             int64                     `json:"id"`
 	Title          string                    `json:"title"`
-	ProjectID      int                       `json:"project_id"`
+	ProjectID      int64                     `json:"project_id"`
 	ActionName     string                    `json:"action_name"`
-	TargetID       int                       `json:"target_id"`
-	TargetIID      int                       `json:"target_iid"`
+	TargetID       int64                     `json:"target_id"`
+	TargetIID      int64                     `json:"target_iid"`
 	TargetType     string                    `json:"target_type"`
-	AuthorID       int                       `json:"author_id"`
+	AuthorID       int64                     `json:"author_id"`
 	TargetTitle    string                    `json:"target_title"`
 	CreatedAt      *time.Time                `json:"created_at"`
 	PushData       ContributionEventPushData `json:"push_data"`
@@ -66,7 +66,7 @@ type ContributionEvent struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/events/#get-user-contribution-events
 type ContributionEventPushData struct {
-	CommitCount int    `json:"commit_count"`
+	CommitCount int64  `json:"commit_count"`
 	Action      string `json:"action"`
 	RefType     string `json:"ref_type"`
 	CommitFrom  string `json:"commit_from"`
@@ -137,14 +137,14 @@ func (s *EventsService) ListCurrentUserContributionEvents(opt *ListContributionE
 // GitLab API docs:
 // https://docs.gitlab.com/api/events/#list-a-projects-visible-events
 type ProjectEvent struct {
-	ID             int                  `json:"id"`
+	ID             int64                `json:"id"`
 	Title          string               `json:"title"`
-	ProjectID      int                  `json:"project_id"`
+	ProjectID      int64                `json:"project_id"`
 	ActionName     string               `json:"action_name"`
-	TargetID       int                  `json:"target_id"`
-	TargetIID      int                  `json:"target_iid"`
+	TargetID       int64                `json:"target_id"`
+	TargetIID      int64                `json:"target_iid"`
 	TargetType     string               `json:"target_type"`
-	AuthorID       int                  `json:"author_id"`
+	AuthorID       int64                `json:"author_id"`
 	TargetTitle    string               `json:"target_title"`
 	CreatedAt      string               `json:"created_at"`
 	Author         BasicUser            `json:"author"`
@@ -166,11 +166,11 @@ type ProjectEventData struct {
 	Before            string      `json:"before"`
 	After             string      `json:"after"`
 	Ref               string      `json:"ref"`
-	UserID            int         `json:"user_id"`
+	UserID            int64       `json:"user_id"`
 	UserName          string      `json:"user_name"`
 	Repository        *Repository `json:"repository"`
 	Commits           []*Commit   `json:"commits"`
-	TotalCommitsCount int         `json:"total_commits_count"`
+	TotalCommitsCount int64       `json:"total_commits_count"`
 }
 
 func (d ProjectEventData) String() string {
@@ -182,15 +182,15 @@ func (d ProjectEventData) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/events/#list-a-projects-visible-events
 type ProjectEventNote struct {
-	ID           int                    `json:"id"`
+	ID           int64                  `json:"id"`
 	Body         string                 `json:"body"`
 	Attachment   string                 `json:"attachment"`
 	Author       ProjectEventNoteAuthor `json:"author"`
 	CreatedAt    *time.Time             `json:"created_at"`
 	System       bool                   `json:"system"`
-	NoteableID   int                    `json:"noteable_id"`
+	NoteableID   int64                  `json:"noteable_id"`
 	NoteableType string                 `json:"noteable_type"`
-	NoteableIID  int                    `json:"noteable_iid"`
+	NoteableIID  int64                  `json:"noteable_iid"`
 }
 
 func (n ProjectEventNote) String() string {
@@ -202,7 +202,7 @@ func (n ProjectEventNote) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/events/#list-a-projects-visible-events
 type ProjectEventNoteAuthor struct {
-	ID        int    `json:"id"`
+	ID        int64  `json:"id"`
 	Username  string `json:"username"`
 	Email     string `json:"email"`
 	Name      string `json:"name"`
@@ -220,7 +220,7 @@ func (a ProjectEventNoteAuthor) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/events/#list-a-projects-visible-events
 type ProjectEventPushData struct {
-	CommitCount int    `json:"commit_count"`
+	CommitCount int64  `json:"commit_count"`
 	Action      string `json:"action"`
 	RefType     string `json:"ref_type"`
 	CommitFrom  string `json:"commit_from"`

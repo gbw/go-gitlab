@@ -86,7 +86,7 @@ func (c *MockEnvironmentsServiceInterfaceCreateEnvironmentCall) DoAndReturn(f fu
 }
 
 // DeleteEnvironment mocks base method.
-func (m *MockEnvironmentsServiceInterface) DeleteEnvironment(pid any, environment int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockEnvironmentsServiceInterface) DeleteEnvironment(pid any, environment int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, environment}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnvironmentsServiceInterfaceDeleteEnvironmentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditEnvironment mocks base method.
-func (m *MockEnvironmentsServiceInterface) EditEnvironment(pid any, environment int, opt *gitlab.EditEnvironmentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error) {
+func (m *MockEnvironmentsServiceInterface) EditEnvironment(pid any, environment int64, opt *gitlab.EditEnvironmentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, environment, opt}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockEnvironmentsServiceInterfaceEditEnvironmentCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEnvironmentsServiceInterfaceEditEnvironmentCall) Do(f func(any, int, *gitlab.EditEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceEditEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceEditEnvironmentCall) Do(f func(any, int64, *gitlab.EditEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceEditEnvironmentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEnvironmentsServiceInterfaceEditEnvironmentCall) DoAndReturn(f func(any, int, *gitlab.EditEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceEditEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceEditEnvironmentCall) DoAndReturn(f func(any, int64, *gitlab.EditEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceEditEnvironmentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetEnvironment mocks base method.
-func (m *MockEnvironmentsServiceInterface) GetEnvironment(pid any, environment int, options ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error) {
+func (m *MockEnvironmentsServiceInterface) GetEnvironment(pid any, environment int64, options ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, environment}
 	for _, a := range options {
@@ -208,13 +208,13 @@ func (c *MockEnvironmentsServiceInterfaceGetEnvironmentCall) Return(arg0 *gitlab
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEnvironmentsServiceInterfaceGetEnvironmentCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceGetEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceGetEnvironmentCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceGetEnvironmentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEnvironmentsServiceInterfaceGetEnvironmentCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceGetEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceGetEnvironmentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceGetEnvironmentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -265,7 +265,7 @@ func (c *MockEnvironmentsServiceInterfaceListEnvironmentsCall) DoAndReturn(f fun
 }
 
 // StopEnvironment mocks base method.
-func (m *MockEnvironmentsServiceInterface) StopEnvironment(pid any, environmentID int, opt *gitlab.StopEnvironmentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error) {
+func (m *MockEnvironmentsServiceInterface) StopEnvironment(pid any, environmentID int64, opt *gitlab.StopEnvironmentOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, environmentID, opt}
 	for _, a := range options {
@@ -298,13 +298,13 @@ func (c *MockEnvironmentsServiceInterfaceStopEnvironmentCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEnvironmentsServiceInterfaceStopEnvironmentCall) Do(f func(any, int, *gitlab.StopEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceStopEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceStopEnvironmentCall) Do(f func(any, int64, *gitlab.StopEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceStopEnvironmentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEnvironmentsServiceInterfaceStopEnvironmentCall) DoAndReturn(f func(any, int, *gitlab.StopEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceStopEnvironmentCall {
+func (c *MockEnvironmentsServiceInterfaceStopEnvironmentCall) DoAndReturn(f func(any, int64, *gitlab.StopEnvironmentOptions, ...gitlab.RequestOptionFunc) (*gitlab.Environment, *gitlab.Response, error)) *MockEnvironmentsServiceInterfaceStopEnvironmentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

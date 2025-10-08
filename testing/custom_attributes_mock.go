@@ -41,7 +41,7 @@ func (m *MockCustomAttributesServiceInterface) EXPECT() *MockCustomAttributesSer
 }
 
 // DeleteCustomGroupAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) DeleteCustomGroupAttribute(group int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) DeleteCustomGroupAttribute(group int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{group, key}
 	for _, a := range options {
@@ -73,19 +73,19 @@ func (c *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall) Ret
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall) Do(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall) Do(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall) DoAndReturn(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall) DoAndReturn(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomGroupAttributeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteCustomProjectAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) DeleteCustomProjectAttribute(project int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) DeleteCustomProjectAttribute(project int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{project, key}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall) R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall) Do(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall) Do(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall) DoAndReturn(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall) DoAndReturn(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomProjectAttributeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteCustomUserAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) DeleteCustomUserAttribute(user int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) DeleteCustomUserAttribute(user int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user, key}
 	for _, a := range options {
@@ -161,19 +161,19 @@ func (c *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall) Do(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall) Do(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall) DoAndReturn(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall) DoAndReturn(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockCustomAttributesServiceInterfaceDeleteCustomUserAttributeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetCustomGroupAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) GetCustomGroupAttribute(group int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) GetCustomGroupAttribute(group int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{group, key}
 	for _, a := range options {
@@ -206,19 +206,19 @@ func (c *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall) Do(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall) Do(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall) DoAndReturn(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall) DoAndReturn(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomGroupAttributeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetCustomProjectAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) GetCustomProjectAttribute(project int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) GetCustomProjectAttribute(project int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{project, key}
 	for _, a := range options {
@@ -251,19 +251,19 @@ func (c *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall) Do(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall) Do(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall) DoAndReturn(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall) DoAndReturn(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomProjectAttributeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetCustomUserAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) GetCustomUserAttribute(user int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) GetCustomUserAttribute(user int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user, key}
 	for _, a := range options {
@@ -296,19 +296,19 @@ func (c *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall) Do(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall) Do(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall) DoAndReturn(f func(int, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall {
+func (c *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall) DoAndReturn(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceGetCustomUserAttributeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListCustomGroupAttributes mocks base method.
-func (m *MockCustomAttributesServiceInterface) ListCustomGroupAttributes(group int, options ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) ListCustomGroupAttributes(group int64, options ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{group}
 	for _, a := range options {
@@ -341,19 +341,19 @@ func (c *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall) Do(f func(int, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall {
+func (c *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall) Do(f func(int64, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall {
+func (c *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomGroupAttributesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListCustomProjectAttributes mocks base method.
-func (m *MockCustomAttributesServiceInterface) ListCustomProjectAttributes(project int, options ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) ListCustomProjectAttributes(project int64, options ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{project}
 	for _, a := range options {
@@ -386,19 +386,19 @@ func (c *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall) Do(f func(int, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall {
+func (c *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall) Do(f func(int64, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall {
+func (c *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomProjectAttributesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListCustomUserAttributes mocks base method.
-func (m *MockCustomAttributesServiceInterface) ListCustomUserAttributes(user int, options ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) ListCustomUserAttributes(user int64, options ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
@@ -431,19 +431,19 @@ func (c *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall) Retur
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall) Do(f func(int, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall {
+func (c *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall) Do(f func(int64, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall {
+func (c *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) ([]*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceListCustomUserAttributesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // SetCustomGroupAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) SetCustomGroupAttribute(group int, c gitlab.CustomAttribute, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) SetCustomGroupAttribute(group int64, c gitlab.CustomAttribute, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{group, c}
 	for _, a := range options {
@@ -476,19 +476,19 @@ func (c_2 *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c_2 *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall) Do(f func(int, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall {
+func (c_2 *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall) Do(f func(int64, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall {
 	c_2.Call = c_2.Call.Do(f)
 	return c_2
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c_2 *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall) DoAndReturn(f func(int, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall {
+func (c_2 *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall) DoAndReturn(f func(int64, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomGroupAttributeCall {
 	c_2.Call = c_2.Call.DoAndReturn(f)
 	return c_2
 }
 
 // SetCustomProjectAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) SetCustomProjectAttribute(project int, c gitlab.CustomAttribute, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) SetCustomProjectAttribute(project int64, c gitlab.CustomAttribute, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{project, c}
 	for _, a := range options {
@@ -521,19 +521,19 @@ func (c_2 *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c_2 *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall) Do(f func(int, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall {
+func (c_2 *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall) Do(f func(int64, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall {
 	c_2.Call = c_2.Call.Do(f)
 	return c_2
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c_2 *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall) DoAndReturn(f func(int, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall {
+func (c_2 *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall) DoAndReturn(f func(int64, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomProjectAttributeCall {
 	c_2.Call = c_2.Call.DoAndReturn(f)
 	return c_2
 }
 
 // SetCustomUserAttribute mocks base method.
-func (m *MockCustomAttributesServiceInterface) SetCustomUserAttribute(user int, c gitlab.CustomAttribute, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
+func (m *MockCustomAttributesServiceInterface) SetCustomUserAttribute(user int64, c gitlab.CustomAttribute, options ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user, c}
 	for _, a := range options {
@@ -566,13 +566,13 @@ func (c_2 *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall) Retur
 }
 
 // Do rewrite *gomock.Call.Do
-func (c_2 *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall) Do(f func(int, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall {
+func (c_2 *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall) Do(f func(int64, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall {
 	c_2.Call = c_2.Call.Do(f)
 	return c_2
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c_2 *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall) DoAndReturn(f func(int, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall {
+func (c_2 *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall) DoAndReturn(f func(int64, gitlab.CustomAttribute, ...gitlab.RequestOptionFunc) (*gitlab.CustomAttribute, *gitlab.Response, error)) *MockCustomAttributesServiceInterfaceSetCustomUserAttributeCall {
 	c_2.Call = c_2.Call.DoAndReturn(f)
 	return c_2
 }

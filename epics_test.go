@@ -74,7 +74,7 @@ func TestListGroupEpics(t *testing.T) {
 	})
 
 	listGroupEpics := &ListGroupEpicsOptions{
-		AuthorID: Ptr(26),
+		AuthorID: Ptr(int64(26)),
 		State:    Ptr("opened"),
 	}
 
