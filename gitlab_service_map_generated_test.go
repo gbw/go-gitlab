@@ -121,6 +121,7 @@ var serviceMap = map[any]any{
 	&ProjectsService{}:                         (*ProjectsServiceInterface)(nil),
 	&ProtectedBranchesService{}:                (*ProtectedBranchesServiceInterface)(nil),
 	&ProtectedEnvironmentsService{}:            (*ProtectedEnvironmentsServiceInterface)(nil),
+	&ProtectedPackagesService{}:                (*ProtectedPackagesServiceInterface)(nil),
 	&ProtectedTagsService{}:                    (*ProtectedTagsServiceInterface)(nil),
 	&ReleaseLinksService{}:                     (*ReleaseLinksServiceInterface)(nil),
 	&ReleasesService{}:                         (*ReleasesServiceInterface)(nil),
