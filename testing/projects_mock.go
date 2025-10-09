@@ -1655,7 +1655,7 @@ func (c *MockProjectsServiceInterfaceListProjectsGroupsCall) DoAndReturn(f func(
 }
 
 // ListProjectsInvitedGroups mocks base method.
-func (m *MockProjectsServiceInterface) ListProjectsInvitedGroups(pid any, opt *gitlab.ListProjectInvidedGroupOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) ListProjectsInvitedGroups(pid any, opt *gitlab.ListProjectInvitedGroupOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, opt}
 	for _, a := range options {
@@ -1688,13 +1688,13 @@ func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) Do(f func(any, *gitlab.ListProjectInvidedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
+func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) Do(f func(any, *gitlab.ListProjectInvitedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) DoAndReturn(f func(any, *gitlab.ListProjectInvidedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
+func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) DoAndReturn(f func(any, *gitlab.ListProjectInvitedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

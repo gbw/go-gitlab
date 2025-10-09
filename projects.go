@@ -46,7 +46,7 @@ type (
 		EditProject(pid any, opt *EditProjectOptions, options ...RequestOptionFunc) (*Project, *Response, error)
 		ForkProject(pid any, opt *ForkProjectOptions, options ...RequestOptionFunc) (*Project, *Response, error)
 		StarProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error)
-		ListProjectsInvitedGroups(pid any, opt *ListProjectInvidedGroupOptions, options ...RequestOptionFunc) ([]*ProjectGroup, *Response, error)
+		ListProjectsInvitedGroups(pid any, opt *ListProjectInvitedGroupOptions, options ...RequestOptionFunc) ([]*ProjectGroup, *Response, error)
 		UnstarProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error)
 		ArchiveProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error)
 		UnarchiveProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error)
@@ -1172,16 +1172,11 @@ type ListProjectInvitedGroupOptions struct {
 	WithCustomAttributes *bool             `url:"with_custom_attributes,omitempty" json:"with_custom_attributes,omitempty"`
 }
 
-// ListProjectInvidedGroupOptions is kept for backwards compatibility.
-//
-// Deprecated: use ListProjectInvitedGroupOptions instead. The ListProjectInvidedGroupOptions type will be removed in the next release.
-type ListProjectInvidedGroupOptions = ListProjectInvitedGroupOptions
-
 // ListProjectsInvitedGroups lists invited groups of a project
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#list-a-projects-invited-groups
-func (s *ProjectsService) ListProjectsInvitedGroups(pid any, opt *ListProjectInvidedGroupOptions, options ...RequestOptionFunc) ([]*ProjectGroup, *Response, error) {
+func (s *ProjectsService) ListProjectsInvitedGroups(pid any, opt *ListProjectInvitedGroupOptions, options ...RequestOptionFunc) ([]*ProjectGroup, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
