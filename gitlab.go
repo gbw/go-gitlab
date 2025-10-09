@@ -50,11 +50,11 @@ const (
 	apiVersionPath = "api/v4/"
 	userAgent      = "go-gitlab"
 
-	headerRateLimit = "RateLimit-Limit"
-	headerRateReset = "RateLimit-Reset"
+	headerRateLimit = "Ratelimit-Limit"
+	headerRateReset = "Ratelimit-Reset"
 
-	AccessTokenHeaderName = "PRIVATE-TOKEN"
-	JobTokenHeaderName    = "JOB-TOKEN"
+	AccessTokenHeaderName = "Private-Token"
+	JobTokenHeaderName    = "Job-Token"
 )
 
 // AuthType represents an authentication type within GitLab.
@@ -715,7 +715,7 @@ func (c *Client) retryHTTPBackoff(min, max time.Duration, attemptNum int, resp *
 }
 
 // rateLimitBackoff provides a callback for Client.Backoff which will use the
-// RateLimit-Reset header to determine the time to wait. We add some jitter
+// Ratelimit-Reset header to determine the time to wait. We add some jitter
 // to prevent a thundering herd.
 //
 // min and max are mainly used for bounding the jitter that will be added to
@@ -737,7 +737,7 @@ func rateLimitBackoff(min, max time.Duration, attemptNum int, resp *http.Respons
 				}
 			}
 		} else {
-			// In case the RateLimit-Reset header is not set, back off an additional
+			// In case the Ratelimit-Reset header is not set, back off an additional
 			// 100% exponentially. With the default milliseconds being set to 100 for
 			// `min`, this makes the 5th retry wait 3.2 seconds (3,200 ms) by default.
 			min = time.Duration(float64(min) * math.Pow(2, float64(attemptNum)))

@@ -210,7 +210,7 @@ func handleTwoPagesSuccessfullyWithKeyset(t *testing.T, mux *http.ServeMux) {
 		idBefore := r.URL.Query().Get("id_before")
 		switch idBefore {
 		case "":
-			w.Header().Add("link", `<https://gitlab.example.com/api/v4/projects?id_before=2>; rel="next"`)
+			w.Header().Add("Link", `<https://gitlab.example.com/api/v4/projects?id_before=2>; rel="next"`)
 			fmt.Fprint(w, `[{"id":1}]`)
 		case "2":
 			fmt.Fprint(w, `[{"id":2}]`)

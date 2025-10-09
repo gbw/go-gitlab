@@ -597,7 +597,7 @@ func TestDownloadAvatar(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/avatar",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
-			w.Header().Add("Content-length", strconv.Itoa(len(ico)))
+			w.Header().Add("Content-Length", strconv.Itoa(len(ico)))
 			w.WriteHeader(http.StatusOK)
 			_, _ = w.Write(ico)
 		},

@@ -143,29 +143,29 @@ func TestWithHeader(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/without-header", func(w http.ResponseWriter, r *http.Request) {
-		assert.Empty(t, r.Header.Get("X-CUSTOM-HEADER"))
+		assert.Empty(t, r.Header.Get("X-Custom-Header"))
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{"X-CUSTOM-HEADER": %s`, r.Header.Get("X-CUSTOM-HEADER"))
+		fmt.Fprintf(w, `{"X-Custom-Header": %s`, r.Header.Get("X-Custom-Header"))
 	})
 	mux.HandleFunc("/api/v4/with-header", func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "randomtokenstring", r.Header.Get("X-CUSTOM-HEADER"))
+		assert.Equal(t, "randomtokenstring", r.Header.Get("X-Custom-Header"))
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{"X-CUSTOM-HEADER": %s`, r.Header.Get("X-CUSTOM-HEADER"))
+		fmt.Fprintf(w, `{"X-Custom-Header": %s`, r.Header.Get("X-Custom-Header"))
 	})
 
-	// ensure that X-CUSTOM-HEADER hasn't been set at all
+	// ensure that X-Custom-Header hasn't been set at all
 	req, err := client.NewRequest(http.MethodGet, "/without-header", nil, nil)
 	assert.NoError(t, err)
 
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)
 
-	// ensure that X-CUSTOM-HEADER is set for only one request
+	// ensure that X-Custom-Header is set for only one request
 	req, err = client.NewRequest(
 		http.MethodGet,
 		"/with-header",
 		nil,
-		[]RequestOptionFunc{WithHeader("X-CUSTOM-HEADER", "randomtokenstring")},
+		[]RequestOptionFunc{WithHeader("X-Custom-Header", "randomtokenstring")},
 	)
 	assert.NoError(t, err)
 
@@ -178,7 +178,7 @@ func TestWithHeader(t *testing.T) {
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)
 
-	// ensure that X-CUSTOM-HEADER is set for all client requests
+	// ensure that X-Custom-Header is set for all client requests
 	addr := client.BaseURL().String()
 	client, err = NewClient("",
 		// same base options as setup
@@ -188,20 +188,20 @@ func TestWithHeader(t *testing.T) {
 			return 0
 		}),
 		// add client headers
-		WithRequestOptions(WithHeader("X-CUSTOM-HEADER", "randomtokenstring")))
+		WithRequestOptions(WithHeader("X-Custom-Header", "randomtokenstring")))
 	assert.NoError(t, err)
 	assert.NotNil(t, client)
 
 	req, err = client.NewRequest(http.MethodGet, "/with-header", nil, nil)
 	assert.NoError(t, err)
-	assert.Equal(t, "randomtokenstring", req.Header.Get("X-CUSTOM-HEADER"))
+	assert.Equal(t, "randomtokenstring", req.Header.Get("X-Custom-Header"))
 
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)
 
 	req, err = client.NewRequest(http.MethodGet, "/with-header", nil, nil)
 	assert.NoError(t, err)
-	assert.Equal(t, "randomtokenstring", req.Header.Get("X-CUSTOM-HEADER"))
+	assert.Equal(t, "randomtokenstring", req.Header.Get("X-Custom-Header"))
 
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)
@@ -211,29 +211,29 @@ func TestWithHeaders(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/without-headers", func(w http.ResponseWriter, r *http.Request) {
-		assert.Empty(t, r.Header.Get("X-CUSTOM-HEADER-1"))
-		assert.Empty(t, r.Header.Get("X-CUSTOM-HEADER-2"))
+		assert.Empty(t, r.Header.Get("X-Custom-Header-1"))
+		assert.Empty(t, r.Header.Get("X-Custom-Header-2"))
 		w.WriteHeader(http.StatusOK)
 	})
 	mux.HandleFunc("/api/v4/with-headers", func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "randomtokenstring", r.Header.Get("X-CUSTOM-HEADER-1"))
-		assert.Equal(t, "randomtokenstring2", r.Header.Get("X-CUSTOM-HEADER-2"))
+		assert.Equal(t, "randomtokenstring", r.Header.Get("X-Custom-Header-1"))
+		assert.Equal(t, "randomtokenstring2", r.Header.Get("X-Custom-Header-2"))
 		w.WriteHeader(http.StatusOK)
 	})
 
 	headers := map[string]string{
-		"X-CUSTOM-HEADER-1": "randomtokenstring",
-		"X-CUSTOM-HEADER-2": "randomtokenstring2",
+		"X-Custom-Header-1": "randomtokenstring",
+		"X-Custom-Header-2": "randomtokenstring2",
 	}
 
-	// ensure that X-CUSTOM-HEADER hasn't been set at all
+	// ensure that X-Custom-Header hasn't been set at all
 	req, err := client.NewRequest(http.MethodGet, "/without-headers", nil, nil)
 	assert.NoError(t, err)
 
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)
 
-	// ensure that X-CUSTOM-HEADER is set for only one request
+	// ensure that X-Custom-Header is set for only one request
 	req, err = client.NewRequest(
 		http.MethodGet,
 		"/with-headers",
@@ -251,7 +251,7 @@ func TestWithHeaders(t *testing.T) {
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)
 
-	// ensure that X-CUSTOM-HEADER is set for all client requests
+	// ensure that X-Custom-Header is set for all client requests
 	addr := client.BaseURL().String()
 	client, err = NewClient("",
 		// same base options as setup
@@ -268,14 +268,14 @@ func TestWithHeaders(t *testing.T) {
 
 	req, err = client.NewRequest(http.MethodGet, "/with-headers", nil, nil)
 	assert.NoError(t, err)
-	assert.Equal(t, "randomtokenstring", req.Header.Get("X-CUSTOM-HEADER-1"))
+	assert.Equal(t, "randomtokenstring", req.Header.Get("X-Custom-Header-1"))
 
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)
 
 	req, err = client.NewRequest(http.MethodGet, "/with-headers", nil, nil)
 	assert.NoError(t, err)
-	assert.Equal(t, "randomtokenstring", req.Header.Get("X-CUSTOM-HEADER-1"))
+	assert.Equal(t, "randomtokenstring", req.Header.Get("X-Custom-Header-1"))
 
 	_, err = client.Do(req, nil)
 	assert.NoError(t, err)

@@ -675,7 +675,7 @@ func TestNewClient_auth(t *testing.T) {
 	const token = "glpat-0123456789abcdefg"
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		if got, want := r.Header.Get("PRIVATE-TOKEN"), token; got != want {
+		if got, want := r.Header.Get("Private-Token"), token; got != want {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
 			return
@@ -710,7 +710,7 @@ func TestNewJobClient_auth(t *testing.T) {
 	const token = "glcbt-0123456789abcdefg"
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		if got, want := r.Header.Get("JOB-TOKEN"), token; got != want {
+		if got, want := r.Header.Get("Job-Token"), token; got != want {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
 			return

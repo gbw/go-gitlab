@@ -18,6 +18,7 @@ output:
 linters:
   enable:
     - asciicheck
+    - canonicalheader
     - dogsled
     - dupword
     - errorlint
