@@ -100,14 +100,14 @@ func WithOffsetPaginationParameters(page int) RequestOptionFunc {
 	}
 }
 
-// WithSudo takes either a username or user ID and sets the SUDO request header.
+// WithSudo takes either a username or user ID and sets the Sudo request header.
 func WithSudo(uid any) RequestOptionFunc {
 	return func(req *retryablehttp.Request) error {
 		user, err := parseID(uid)
 		if err != nil {
 			return err
 		}
-		req.Header.Set("SUDO", user)
+		req.Header.Set("Sudo", user)
 		return nil
 	}
 }
@@ -117,11 +117,11 @@ func WithToken(authType AuthType, token string) RequestOptionFunc {
 	return func(req *retryablehttp.Request) error {
 		switch authType {
 		case JobToken:
-			req.Header.Set("JOB-TOKEN", token)
+			req.Header.Set("Job-Token", token)
 		case OAuthToken:
 			req.Header.Set("Authorization", "Bearer "+token)
 		case PrivateToken:
-			req.Header.Set("PRIVATE-TOKEN", token)
+			req.Header.Set("Private-Token", token)
 		}
 		return nil
 	}
