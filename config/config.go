@@ -58,7 +58,7 @@ const (
 	// EnvVarGitLabConfigFile is the environment variable name for specifying a custom config file path
 	EnvVarGitLabConfigFile = "GITLAB_CONFIG"
 
-	// EnvVarGitLabConfigFile is the environment variable name for specify the current context to use
+	// EnvVarGitLabContext is the environment variable name for specifying the current context to use
 	EnvVarGitLabContext = "GITLAB_CONTEXT"
 
 	// CredentialSourceNotFoundExitCode is the command exit code used to determine if a credential source wasn't found
