@@ -448,6 +448,8 @@ func TestTriggerTestGroupHook(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			resp, err := client.Groups.TriggerTestGroupHook(tt.groupID, tt.hookID, tt.trigger)
 
 			if tt.wantErr {

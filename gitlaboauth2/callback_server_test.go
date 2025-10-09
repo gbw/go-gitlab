@@ -16,7 +16,11 @@ import (
 )
 
 func TestBrowserFunc(t *testing.T) {
+	t.Parallel()
+
 	t.Run("successful browser function call", func(t *testing.T) {
+		t.Parallel()
+
 		called := false
 		var capturedURL string
 
@@ -35,6 +39,8 @@ func TestBrowserFunc(t *testing.T) {
 	})
 
 	t.Run("browser function returns error", func(t *testing.T) {
+		t.Parallel()
+
 		expectedError := errors.New("browser failed to open")
 
 		browserFunc := BrowserFunc(func(url string) error {
@@ -48,8 +54,8 @@ func TestBrowserFunc(t *testing.T) {
 	})
 }
 
-func TestNewCallbackServer(t *testing.T) {
-	t.Run("creates callback server with valid parameters", func(t *testing.T) {
+func TestNewCallbackServer(t *testing.T) { //nolint:paralleltest
+	t.Run("creates callback server with valid parameters", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -67,7 +73,7 @@ func TestNewCallbackServer(t *testing.T) {
 		assert.NotNil(t, server.browser)
 	})
 
-	t.Run("creates callback server with nil browser function", func(t *testing.T) {
+	t.Run("creates callback server with nil browser function", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -81,8 +87,8 @@ func TestNewCallbackServer(t *testing.T) {
 	})
 }
 
-func TestCallbackServer_GetToken(t *testing.T) {
-	t.Run("successful token retrieval", func(t *testing.T) {
+func TestCallbackServer_GetToken(t *testing.T) { //nolint:paralleltest
+	t.Run("successful token retrieval", func(t *testing.T) { //nolint:paralleltest
 		// Create a test server to mock the OAuth2 provider
 		mockProvider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Mock token exchange endpoint
@@ -150,7 +156,7 @@ func TestCallbackServer_GetToken(t *testing.T) {
 		assert.Contains(t, capturedURL, "state")
 	})
 
-	t.Run("context timeout", func(t *testing.T) {
+	t.Run("context timeout", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:9999/auth/redirect",
@@ -173,7 +179,7 @@ func TestCallbackServer_GetToken(t *testing.T) {
 		assert.Equal(t, context.DeadlineExceeded, err)
 	})
 
-	t.Run("browser function fails", func(t *testing.T) {
+	t.Run("browser function fails", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:9999/auth/redirect",
@@ -196,7 +202,7 @@ func TestCallbackServer_GetToken(t *testing.T) {
 		assert.Contains(t, err.Error(), "failed to open browser")
 	})
 
-	t.Run("invalid redirect URL", func(t *testing.T) {
+	t.Run("invalid redirect URL", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "://invalid-url",
@@ -215,7 +221,7 @@ func TestCallbackServer_GetToken(t *testing.T) {
 		assert.Contains(t, err.Error(), "missing protocol scheme")
 	})
 
-	t.Run("server fails to start", func(t *testing.T) {
+	t.Run("server fails to start", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -237,8 +243,8 @@ func TestCallbackServer_GetToken(t *testing.T) {
 	})
 }
 
-func TestCallbackServer_CallbackHandler(t *testing.T) {
-	t.Run("successful callback with valid code and state", func(t *testing.T) {
+func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
+	t.Run("successful callback with valid code and state", func(t *testing.T) { //nolint:paralleltest
 		// Create a test server to mock the OAuth2 provider
 		mockProvider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if r.URL.Path == "/oauth/token" {
@@ -295,7 +301,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) {
 		assert.Equal(t, "text/html", w.Header().Get("Content-Type"))
 	})
 
-	t.Run("callback with invalid state", func(t *testing.T) {
+	t.Run("callback with invalid state", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -333,7 +339,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "invalid state")
 	})
 
-	t.Run("callback with missing authorization code", func(t *testing.T) {
+	t.Run("callback with missing authorization code", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -371,7 +377,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "no authorization code received")
 	})
 
-	t.Run("callback with OAuth error", func(t *testing.T) {
+	t.Run("callback with OAuth error", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -409,7 +415,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "authorization error: access_denied")
 	})
 
-	t.Run("token exchange fails", func(t *testing.T) {
+	t.Run("token exchange fails", func(t *testing.T) { //nolint:paralleltest
 		// Create a test server that returns an error
 		mockProvider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if r.URL.Path == "/oauth/token" {
@@ -459,8 +465,8 @@ func TestCallbackServer_CallbackHandler(t *testing.T) {
 	})
 }
 
-func TestCallbackServer_Shutdown(t *testing.T) {
-	t.Run("shutdown with no server", func(t *testing.T) {
+func TestCallbackServer_Shutdown(t *testing.T) { //nolint:paralleltest
+	t.Run("shutdown with no server", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -474,7 +480,7 @@ func TestCallbackServer_Shutdown(t *testing.T) {
 		})
 	})
 
-	t.Run("shutdown with running server", func(t *testing.T) {
+	t.Run("shutdown with running server", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -495,8 +501,8 @@ func TestCallbackServer_Shutdown(t *testing.T) {
 	})
 }
 
-func TestCallbackServer_EdgeCases(t *testing.T) {
-	t.Run("handles malformed callback URLs", func(t *testing.T) {
+func TestCallbackServer_EdgeCases(t *testing.T) { //nolint:paralleltest
+	t.Run("handles malformed callback URLs", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -519,7 +525,7 @@ func TestCallbackServer_EdgeCases(t *testing.T) {
 		})
 	})
 
-	t.Run("handles empty query parameters", func(t *testing.T) {
+	t.Run("handles empty query parameters", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -550,7 +556,7 @@ func TestCallbackServer_EdgeCases(t *testing.T) {
 		}
 	})
 
-	t.Run("handles context cancellation", func(t *testing.T) {
+	t.Run("handles context cancellation", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:9999/auth/redirect",
@@ -576,8 +582,8 @@ func TestCallbackServer_EdgeCases(t *testing.T) {
 	})
 }
 
-func TestCallbackServer_ErrorHandling(t *testing.T) {
-	t.Run("handles server startup failure gracefully", func(t *testing.T) {
+func TestCallbackServer_ErrorHandling(t *testing.T) { //nolint:paralleltest
+	t.Run("handles server startup failure gracefully", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -597,7 +603,7 @@ func TestCallbackServer_ErrorHandling(t *testing.T) {
 		assert.Nil(t, token)
 	})
 
-	t.Run("handles missing state parameter", func(t *testing.T) {
+	t.Run("handles missing state parameter", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",
@@ -630,7 +636,7 @@ func TestCallbackServer_ErrorHandling(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, w.Code)
 	})
 
-	t.Run("handles multiple error parameters in callback", func(t *testing.T) {
+	t.Run("handles multiple error parameters in callback", func(t *testing.T) { //nolint:paralleltest
 		config := &oauth2.Config{
 			ClientID:    "test-client-id",
 			RedirectURL: "http://localhost:7171/auth/redirect",

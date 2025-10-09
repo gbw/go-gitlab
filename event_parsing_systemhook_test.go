@@ -100,6 +100,8 @@ func TestParseSystemhookProject(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.event, func(t *testing.T) {
+			t.Parallel()
+
 			parsedEvent, err := ParseSystemhook(tc.payload)
 			if err != nil {
 				t.Errorf("Error parsing build hook: %s", err)
@@ -125,6 +127,8 @@ func TestParseSystemhookGroup(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.event, func(t *testing.T) {
+			t.Parallel()
+
 			parsedEvent, err := ParseSystemhook(tc.payload)
 			if err != nil {
 				t.Errorf("Error parsing build hook: %s", err)
@@ -151,6 +155,8 @@ func TestParseSystemhookUser(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.event, func(t *testing.T) {
+			t.Parallel()
+
 			parsedEvent, err := ParseSystemhook(tc.payload)
 			if err != nil {
 				t.Errorf("Error parsing build hook: %s", err)
@@ -176,6 +182,8 @@ func TestParseSystemhookUserGroup(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.event, func(t *testing.T) {
+			t.Parallel()
+
 			parsedEvent, err := ParseSystemhook(tc.payload)
 			if err != nil {
 				t.Errorf("Error parsing build hook: %s", err)
@@ -201,6 +209,8 @@ func TestParseSystemhookUserTeam(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.event, func(t *testing.T) {
+			t.Parallel()
+
 			parsedEvent, err := ParseSystemhook(tc.payload)
 			if err != nil {
 				t.Errorf("Error parsing build hook: %s", err)

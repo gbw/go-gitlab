@@ -1519,6 +1519,51 @@ func (c *MockProjectsServiceInterfaceListProjectHooksCall) DoAndReturn(f func(an
 	return c
 }
 
+// ListProjectStarrers mocks base method.
+func (m *MockProjectsServiceInterface) ListProjectStarrers(pid any, opts *gitlab.ListProjectStarrersOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStarrer, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opts}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListProjectStarrers", varargs...)
+	ret0, _ := ret[0].([]*gitlab.ProjectStarrer)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListProjectStarrers indicates an expected call of ListProjectStarrers.
+func (mr *MockProjectsServiceInterfaceMockRecorder) ListProjectStarrers(pid, opts any, options ...any) *MockProjectsServiceInterfaceListProjectStarrersCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opts}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListProjectStarrers", reflect.TypeOf((*MockProjectsServiceInterface)(nil).ListProjectStarrers), varargs...)
+	return &MockProjectsServiceInterfaceListProjectStarrersCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceListProjectStarrersCall wrap *gomock.Call
+type MockProjectsServiceInterfaceListProjectStarrersCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceListProjectStarrersCall) Return(arg0 []*gitlab.ProjectStarrer, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceListProjectStarrersCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceListProjectStarrersCall) Do(f func(any, *gitlab.ListProjectStarrersOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStarrer, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectStarrersCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceListProjectStarrersCall) DoAndReturn(f func(any, *gitlab.ListProjectStarrersOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStarrer, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectStarrersCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListProjects mocks base method.
 func (m *MockProjectsServiceInterface) ListProjects(opt *gitlab.ListProjectsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Project, *gitlab.Response, error) {
 	m.ctrl.T.Helper()

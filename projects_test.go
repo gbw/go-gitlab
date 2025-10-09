@@ -53,6 +53,8 @@ func TestListProjects(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			mux, client := setup(t)
 
 			mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
@@ -428,7 +430,8 @@ func TestGetProjectByID(t *testing.T) {
 			"ci_pipeline_variables_minimum_override_role": "no_one_allowed",
 			"packages_enabled": false,
 			"build_coverage_regex": "Total.*([0-9]{1,3})%",
-			"ci_delete_pipelines_in_seconds": 14
+			"ci_delete_pipelines_in_seconds": 14,
+			"resource_group_default_process_mode": "oldest_first"
 		  }`)
 	})
 
@@ -448,6 +451,7 @@ func TestGetProjectByID(t *testing.T) {
 		CIRestrictPipelineCancellationRole:     "developer",
 		CIPipelineVariablesMinimumOverrideRole: "no_one_allowed",
 		CIDeletePipelinesInSeconds:             14,
+		ResourceGroupDefaultProcessMode:        OldestFirst,
 	}
 
 	project, resp, err := client.Projects.GetProject(1, nil)
@@ -1584,7 +1588,7 @@ func TestListProjectHooks(t *testing.T) {
 }
 
 // Test that the "CustomWebhookTemplate" serializes properly
-func TestProjectAddWebhook_CustomTemplateStuff(t *testing.T) {
+func TestAddProjectHook_CustomTemplateStuff(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 	customWebhookSet := false
@@ -1639,7 +1643,7 @@ func TestProjectAddWebhook_CustomTemplateStuff(t *testing.T) {
 }
 
 // Test that the "CustomWebhookTemplate" serializes properly when editing
-func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
+func TestEditProjectHook_CustomTemplateStuff(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 	customWebhookSet := false
@@ -1690,6 +1694,24 @@ func TestProjectEditWebhook_CustomTemplateStuff(t *testing.T) {
 	assert.True(t, authValueSet)
 	assert.Equal(t, "testValue", hook.CustomWebhookTemplate)
 	assert.Len(t, hook.CustomHeaders, 2)
+}
+
+func TestDeleteProjectHook(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/hooks/1",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
+
+	resp, err := client.Projects.DeleteProjectHook(1, 1)
+
+	assert.NoError(t, err)
+
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
 func TestSetProjectWebhookURLVariable(t *testing.T) {
@@ -2173,4 +2195,100 @@ func TestEditProject_DuoReviewEnabledSetting(t *testing.T) {
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.True(t, attributeFound)
 	assert.True(t, project.AutoDuoCodeReviewEnabled)
+}
+
+func TestEditProject_ResourceGroupDefaultProcessModeSetting(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	opt := &EditProjectOptions{
+		ResourceGroupDefaultProcessMode: Ptr(OldestFirst),
+	}
+
+	// Store whether we've seen all the attributes we set
+	attributeFound := false
+
+	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		// Check that our request properly included resource_group_default_process_mode
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			t.Fatalf("Unable to read body properly. Error: %v", err)
+		}
+
+		// Set the value to check if our value is included
+		attributeFound = strings.Contains(string(body), "resource_group_default_process_mode")
+
+		// Print the start of the mock example from https://docs.gitlab.com/api/projects/#edit-a-project
+		// including the attribute we edited
+		fmt.Fprint(w, `
+		{
+			"id": 1,
+			"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+			"description_html": "<p data-sourcepos=\"1:1-1:56\" dir=\"auto\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>",
+			"default_branch": "main",
+			"visibility": "private",
+			"ssh_url_to_repo": "git@example.com:diaspora/diaspora-project-site.git",
+			"http_url_to_repo": "http://example.com/diaspora/diaspora-project-site.git",
+			"web_url": "http://example.com/diaspora/diaspora-project-site",
+			"readme_url": "http://example.com/diaspora/diaspora-project-site/blob/main/README.md",
+			"resource_group_default_process_mode": "oldest_first"
+		}`)
+	})
+
+	project, resp, err := client.Projects.EditProject(1, opt)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.True(t, attributeFound)
+	assert.Equal(t, OldestFirst, project.ResourceGroupDefaultProcessMode)
+}
+
+func TestListProjectStarrers(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/123/starrers", func(w http.ResponseWriter, r *http.Request) {
+		testURL(t, r, "/api/v4/projects/123/starrers?page=2&per_page=3&search=jane_smith")
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[
+			{
+				"starred_since": "2019-01-28T14:47:30.642Z",
+				"user": {
+					"id": 1,
+					"username": "jane_smith",
+					"name": "Jane Smith",
+					"state": "active",
+					"avatar_url": "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+					"web_url": "http://localhost:3000/jane_smith"
+				}
+			}
+		]`)
+	})
+
+	opts := &ListProjectStarrersOptions{
+		ListOptions: ListOptions{Page: 2, PerPage: 3},
+		Search:      Ptr("jane_smith"),
+	}
+
+	starrers, resp, err := client.Projects.ListProjectStarrers(123, opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, starrers, 1)
+
+	want := []*ProjectStarrer{
+		{
+			StarredSince: *mustParseTime("2019-01-28T14:47:30.642Z"),
+			User: ProjectUser{
+				ID:        1,
+				Username:  "jane_smith",
+				Name:      "Jane Smith",
+				State:     "active",
+				AvatarURL: "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+				WebURL:    "http://localhost:3000/jane_smith",
+			},
+		},
+	}
+
+	assert.Equal(t, want, starrers)
 }

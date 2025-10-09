@@ -40,6 +40,50 @@ func (m *MockEnterpriseUsersServiceInterface) EXPECT() *MockEnterpriseUsersServi
 	return m.recorder
 }
 
+// DeleteEnterpriseUser mocks base method.
+func (m *MockEnterpriseUsersServiceInterface) DeleteEnterpriseUser(gid any, uid int, deleteOptions *gitlab.DeleteEnterpriseUserOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, uid, deleteOptions}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteEnterpriseUser", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteEnterpriseUser indicates an expected call of DeleteEnterpriseUser.
+func (mr *MockEnterpriseUsersServiceInterfaceMockRecorder) DeleteEnterpriseUser(gid, uid, deleteOptions any, options ...any) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, uid, deleteOptions}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteEnterpriseUser", reflect.TypeOf((*MockEnterpriseUsersServiceInterface)(nil).DeleteEnterpriseUser), varargs...)
+	return &MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall{Call: call}
+}
+
+// MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall wrap *gomock.Call
+type MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) Do(f func(any, int, *gitlab.DeleteEnterpriseUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) DoAndReturn(f func(any, int, *gitlab.DeleteEnterpriseUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // Disable2FAForEnterpriseUser mocks base method.
 func (m *MockEnterpriseUsersServiceInterface) Disable2FAForEnterpriseUser(gid any, uid int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()

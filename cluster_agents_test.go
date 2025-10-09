@@ -25,6 +25,8 @@ import (
 )
 
 func TestListClusterAgents(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents", func(w http.ResponseWriter, r *http.Request) {
@@ -110,6 +112,8 @@ func TestListClusterAgents(t *testing.T) {
 }
 
 func TestGetClusterAgent(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/1", func(w http.ResponseWriter, r *http.Request) {
@@ -159,6 +163,8 @@ func TestGetClusterAgent(t *testing.T) {
 }
 
 func TestRegisterClusterAgent(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents", func(w http.ResponseWriter, r *http.Request) {
@@ -209,6 +215,8 @@ func TestRegisterClusterAgent(t *testing.T) {
 }
 
 func TestListAgentTokens(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/5/tokens", func(w http.ResponseWriter, r *http.Request) {
@@ -270,6 +278,8 @@ func TestListAgentTokens(t *testing.T) {
 }
 
 func TestGetAgentToken(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/5/tokens/1", func(w http.ResponseWriter, r *http.Request) {
@@ -309,6 +319,8 @@ func TestGetAgentToken(t *testing.T) {
 }
 
 func TestRegisterAgentToken(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/projects/20/cluster_agents/5/tokens", func(w http.ResponseWriter, r *http.Request) {

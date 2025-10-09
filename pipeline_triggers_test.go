@@ -17,8 +17,10 @@
 package gitlab
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -170,18 +172,93 @@ func TestDeletePipelineTrigger(t *testing.T) {
 
 func TestRunPipelineTrigger(t *testing.T) {
 	t.Parallel()
-	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/trigger/pipeline", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		fmt.Fprint(w, `{"id":1, "status":"pending"}`)
-	})
+	cases := []struct {
+		name    string
+		opt     *RunPipelineTriggerOptions
+		want    map[string]any
+		wantErr error
+	}{
+		{
+			name: "base",
+			opt: &RunPipelineTriggerOptions{
+				Ref:   Ptr("main"),
+				Token: Ptr("test-token"),
+			},
+			want: map[string]any{
+				"ref":   "main",
+				"token": "test-token",
+			},
+		},
+		{
+			name: "with variables",
+			opt: &RunPipelineTriggerOptions{
+				Ref:   Ptr("main"),
+				Token: Ptr("test-token"),
+				Variables: map[string]string{
+					"UPLOAD_TO_S3": "true",
+					"TEST":         "test variable",
+				},
+			},
+			want: map[string]any{
+				"ref":   "main",
+				"token": "test-token",
+				"variables": map[string]any{
+					"UPLOAD_TO_S3": "true",
+					"TEST":         "test variable",
+				},
+			},
+		},
+		{
+			name: "with inputs",
+			opt: &RunPipelineTriggerOptions{
+				Ref:   Ptr("main"),
+				Token: Ptr("test-token"),
+				Inputs: map[string]PipelineInputValueInterface{
+					"string_option":  NewPipelineInputValue("foo"),
+					"integer_option": NewPipelineInputValue(42),
+					"boolean_option": NewPipelineInputValue(true),
+					"array_option":   NewPipelineInputValue([]string{"bar", "qux"}),
+				},
+			},
+			want: map[string]any{
+				"ref":   "main",
+				"token": "test-token",
+				"inputs": map[string]any{
+					"string_option":  "foo",
+					"integer_option": float64(42),
+					"boolean_option": true,
+					"array_option":   []any{"bar", "qux"},
+				},
+			},
+		},
+	}
 
-	opt := &RunPipelineTriggerOptions{Ref: Ptr("master")}
-	pipeline, resp, err := client.PipelineTriggers.RunPipelineTrigger(1, opt)
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 
-	want := &Pipeline{ID: 1, Status: "pending"}
-	assert.Equal(t, want, pipeline)
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/v4/projects/1/trigger/pipeline", func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, http.MethodPost)
+				testBodyJSON(t, r, tc.want)
+				mustWriteJSONResponse(t, w, map[string]any{"id": 1, "status": "pending"})
+			})
+
+			pipeline, _, err := client.PipelineTriggers.RunPipelineTrigger(1, tc.opt)
+			if !errors.Is(err, tc.wantErr) {
+				t.Errorf("PipelineTriggers.RunPipelineTrigger() = error %v, want error %v", err, tc.wantErr)
+			}
+
+			if err != nil {
+				return
+			}
+
+			want := &Pipeline{ID: 1, Status: "pending"}
+			if !reflect.DeepEqual(want, pipeline) {
+				t.Errorf("PipelineTriggers.RunPipelineTrigger returned %+v, want %+v", pipeline, want)
+			}
+		})
+	}
 }

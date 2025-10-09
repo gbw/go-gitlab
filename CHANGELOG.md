@@ -1,3 +1,171 @@
+## 0.154.0
+
+### 🚀 Features
+
+- feat(protected_packages): Add api integration ([!2520](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2520)) by [Jose Gabriel Companioni Benitez](https://gitlab.com/elC0mpa)
+
+
+
+# [0.154.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.153.0...v0.154.0) (2025-10-08)
+
+
+### Features
+
+* **protected_packages:** Add api integration ([2de15c7](https://gitlab.com/gitlab-org/api/client-go/commit/2de15c7875e232b0b0b1e5e5bb8e184cd11d0774))
+
+## 0.153.0
+
+### 🚀 Features
+
+- feat(project_Statistics): Added api integration ([!2512](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2512)) by [Jose Gabriel Companioni Benitez](https://gitlab.com/elC0mpa)
+
+### 🔄 Other Changes
+
+- refactor: moved comments to interface ([!2509](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2509)) by [ajey muthiah](https://gitlab.com/ajeymuthiah)
+- chore(no-release): Helper Functions for Code Refactoring ([!2503](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2503)) by [Yashesvinee V](https://gitlab.com/yashes7516)
+- Add t.Parallel() to all tests and enable linters ([!2513](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2513)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- ci: Remove the `commitlint` job. ([!2511](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2511)) by [Florian Forster](https://gitlab.com/fforster)
+- refactor: moved comments to interface ([!2507](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2507)) by [ajey muthiah](https://gitlab.com/ajeymuthiah)
+
+
+
+# [0.153.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.152.0...v0.153.0) (2025-10-08)
+
+
+### Features
+
+* **project_Statistics:** Added api integration ([75b5a03](https://gitlab.com/gitlab-org/api/client-go/commit/75b5a03010a39d5353c975a558fda0b6f00cb697))
+
+## 0.152.0
+
+### 🚀 Features
+
+- feat(api): add api support for listing users who starred a project ([!2486](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2486)) by [ajey muthiah](https://gitlab.com/ajeymuthiah)
+
+### 🔄 Other Changes
+
+- chore(no-release): Update Duo Review Instructions ([!2502](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2502)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+- feat(model_registry_api): Added api integration ([!2501](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2501)) by [Jose Gabriel Companioni Benitez](https://gitlab.com/elC0mpa)
+- feat(no-release): Add AGENTS.md file ([!2479](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2479)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+- chore(no-release): Disable dependency scanning on personal forks ([!2500](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2500)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+
+
+# [0.152.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.151.0...v0.152.0) (2025-10-06)
+
+
+### Features
+
+* **api:** add api support for listing users who starred a project ([0cdb4ce](https://gitlab.com/gitlab-org/api/client-go/commit/0cdb4ce5399b43e47bf120a90b16d00c022e194c))
+* **model_registry_api:** Added api integration ([065dd63](https://gitlab.com/gitlab-org/api/client-go/commit/065dd639bc8bd0f44cab4d92dbe3ea7f134b913f))
+* **no-release:** Add AGENTS.md file ([b9febab](https://gitlab.com/gitlab-org/api/client-go/commit/b9febab3181c3f87edd1fd99b5e596f76bc8b7cc))
+
+## 0.151.0
+
+### 🚀 Features
+
+- feat(api): add api support for delete enterprise user ([!2492](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2492)) by [ajey muthiah](https://gitlab.com/ajeymuthiah)
+
+### 🔄 Other Changes
+
+- docs(no-release): Make it easier to find the docs on issues ([!2497](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2497)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+# [0.151.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.150.0...v0.151.0) (2025-10-04)
+
+
+### Features
+
+* **api:** add api support for delete enterprise user ([36ca8ab](https://gitlab.com/gitlab-org/api/client-go/commit/36ca8ab7672c352a073d59dacae3d763d4089abb))
+
+## 0.150.0
+
+### 🚀 Features
+
+- feat: add Project Aliases API support ([!2493](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2493)) by [Yashesvinee V](https://gitlab.com/yashes7516)
+
+### 🔄 Other Changes
+
+- chore(deps): update module buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go to v1.36.10-20250912141014-52f32327d4b0.1 ([!2495](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2495)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module github.com/danieljoos/wincred to v1.2.3 ([!2494](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2494)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [0.150.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.149.0...v0.150.0) (2025-10-03)
+
+
+### Features
+
+* add Project Aliases API support ([4ece88e](https://gitlab.com/gitlab-org/api/client-go/commit/4ece88e6a8cfa0f53e68184b2905d4c2fb6e857a))
+
+## 0.149.0
+
+### 🚀 Features
+
+- feat(no-release): Add dependency scanning ([!2480](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2480)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+### 🔄 Other Changes
+
+- ci(semantic-release): migrate to `@gitlab/semantic-release-merge-request-analyzer` ([!2490](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2490)) by [Florian Forster](https://gitlab.com/fforster)
+- ci: add the `autolabels` job ([!2489](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2489)) by [Florian Forster](https://gitlab.com/fforster)
+- chore(deps): update module google.golang.org/protobuf to v1.36.10 ([!2488](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2488)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- refactor(no-release): added tests for delete project hook method ([!2482](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2482)) by [Jose Gabriel Companioni Benitez](https://gitlab.com/elC0mpa)
+- docs(no-release): Add guide for adding new APIs and issue templates ([!2478](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2478)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+# [0.149.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.148.1...v0.149.0) (2025-10-02)
+
+
+### Features
+
+* **no-release:** Add dependency scanning ([8b0ee10](https://gitlab.com/gitlab-org/api/client-go/commit/8b0ee10acb8adceb5d34be2165b7d587b1e42e49))
+
+## [0.148.1](https://gitlab.com/gitlab-org/api/client-go/compare/v0.148.0...v0.148.1) (2025-09-26)
+
+
+### Bug Fixes
+
+* label unmarshaling for `BasicMergeRequest` list operations ([e80c453](https://gitlab.com/gitlab-org/api/client-go/commit/e80c453aa6a5a265ec8748ae3f3f761a70f4470e))
+
+# [0.148.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.147.1...v0.148.0) (2025-09-23)
+
+
+### Features
+
+* **ResourceGroup:** add `newest_ready_first` to resource group `process_mode` ([fc8f743](https://gitlab.com/gitlab-org/api/client-go/commit/fc8f7431da4ca8594723105473687e8f1378df2b))
+
+## [0.147.1](https://gitlab.com/gitlab-org/api/client-go/compare/v0.147.0...v0.147.1) (2025-09-22)
+
+
+### Bug Fixes
+
+* **client:** use default retry policy from retryablehttp ([2a72511](https://gitlab.com/gitlab-org/api/client-go/commit/2a725113118608712f668b159ca2dab11f4e588e))
+
+# [0.147.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.146.0...v0.147.0) (2025-09-22)
+
+
+### Features
+
+* **Project:** add resource_group_default_process_mode ([7804faf](https://gitlab.com/gitlab-org/api/client-go/commit/7804fafa18cc15fec8a0886a081bf3311d72eb1f))
+
+# [0.146.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.145.0...v0.146.0) (2025-09-18)
+
+
+### Features
+
+* **pipelines:** Add compile-time type-safe pipeline inputs support ([4b30e60](https://gitlab.com/gitlab-org/api/client-go/commit/4b30e60260e4f06e7684352693aac49abd748579)), closes [gitlab-org/api/client-go#2154](https://gitlab.com/gitlab-org/api/client-go/issues/2154)
+* **PipelinesService:** Add support for pipeline inputs with type validation ([ab3056f](https://gitlab.com/gitlab-org/api/client-go/commit/ab3056f403ec0268e14b312de3f5b51b115ad97a)), closes [gitlab-org/api/client-go#2154](https://gitlab.com/gitlab-org/api/client-go/issues/2154)
+* **PipelineTriggersService:** Add support for pipeline inputs to trigger API ([9ad770e](https://gitlab.com/gitlab-org/api/client-go/commit/9ad770e49e59b2a41c665dfc4781f3b56650e813)), closes [gitlab-org/api/client-go#2154](https://gitlab.com/gitlab-org/api/client-go/issues/2154)
+
+# [0.145.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.144.1...v0.145.0) (2025-09-15)
+
+
+### Features
+
+* Add missing created_by field to ProjectMembers and GroupMembers ([5348e01](https://gitlab.com/gitlab-org/api/client-go/commit/5348e01913c358c53bdd3da46b069713273d6802))
+
 ## [0.144.1](https://gitlab.com/gitlab-org/api/client-go/compare/v0.144.0...v0.144.1) (2025-09-13)
 
 # [0.144.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.143.3...v0.144.0) (2025-09-12)

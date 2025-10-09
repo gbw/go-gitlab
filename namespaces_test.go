@@ -101,6 +101,8 @@ func TestListNamespaces(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.event, func(t *testing.T) {
+			t.Parallel()
+
 			namespaces, _, err := client.Namespaces.ListNamespaces(&ListNamespacesOptions{Search: tc.search, OwnedOnly: tc.ownedOnly})
 			if err != nil {
 				t.Errorf("Namespaces.ListNamespaces returned error: %v", err)

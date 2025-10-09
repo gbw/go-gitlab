@@ -65,6 +65,8 @@ func TestValidateProject(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
+			t.Parallel()
+
 			mux, client := setup(t)
 
 			mux.HandleFunc("/api/v4/projects/1/ci/lint", func(w http.ResponseWriter, r *http.Request) {
@@ -161,6 +163,8 @@ func TestValidateProjectNamespace(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
+			t.Parallel()
+
 			mux, client := setup(t)
 
 			mux.HandleFunc("/api/v4/projects/1/ci/lint", func(w http.ResponseWriter, r *http.Request) {
@@ -236,6 +240,8 @@ func TestValidateProjectLint(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
+			t.Parallel()
+
 			mux, client := setup(t)
 
 			mux.HandleFunc("/api/v4/projects/1/ci/lint", func(w http.ResponseWriter, r *http.Request) {

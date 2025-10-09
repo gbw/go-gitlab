@@ -311,13 +311,13 @@ func (s *MergeRequestsService) ListMergeRequests(opt *ListMergeRequestsOptions, 
 		return nil, nil, err
 	}
 
-	var m []*BasicMergeRequest
-	resp, err := s.client.Do(req, &m)
+	var mrs []*MergeRequest
+	resp, err := s.client.Do(req, &mrs)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return m, resp, nil
+	return toBasic(mrs), resp, nil
 }
 
 // ListProjectMergeRequestsOptions represents the available ListMergeRequests()
@@ -374,13 +374,13 @@ func (s *MergeRequestsService) ListProjectMergeRequests(pid any, opt *ListProjec
 		return nil, nil, err
 	}
 
-	var m []*BasicMergeRequest
-	resp, err := s.client.Do(req, &m)
+	var mrs []*MergeRequest
+	resp, err := s.client.Do(req, &mrs)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return m, resp, nil
+	return toBasic(mrs), resp, nil
 }
 
 // ListGroupMergeRequestsOptions represents the available ListGroupMergeRequests()
@@ -437,13 +437,13 @@ func (s *MergeRequestsService) ListGroupMergeRequests(gid any, opt *ListGroupMer
 		return nil, nil, err
 	}
 
-	var m []*BasicMergeRequest
-	resp, err := s.client.Do(req, &m)
+	var mrs []*MergeRequest
+	resp, err := s.client.Do(req, &mrs)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return m, resp, nil
+	return toBasic(mrs), resp, nil
 }
 
 // GetMergeRequestsOptions represents the available GetMergeRequests()
@@ -1400,4 +1400,14 @@ func (s *MergeRequestsService) GetMergeRequestDependencies(pid any, mergeRequest
 	}
 
 	return mrd, resp, err
+}
+
+func toBasic(mrs []*MergeRequest) []*BasicMergeRequest {
+	ret := make([]*BasicMergeRequest, len(mrs))
+
+	for i, mr := range mrs {
+		ret[i] = &mr.BasicMergeRequest
+	}
+
+	return ret
 }

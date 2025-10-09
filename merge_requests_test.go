@@ -125,19 +125,19 @@ func TestGetMergeRequest(t *testing.T) {
 	require.Equal(t, "## What does this MR do?\r\n\r\nThis adds the capability to destroy/hide designs.", mergeRequest.Description)
 	require.Equal(t, "https://gitlab.com/gitlab-org/gitlab-ee/merge_requests/14656", mergeRequest.WebURL)
 	require.Equal(t, "mergeable", mergeRequest.DetailedMergeStatus)
-	require.Equal(t, mergeRequest.Author, &ajk)
-	require.Equal(t, mergeRequest.Assignee, &tk)
+	require.Equal(t, &ajk, mergeRequest.Author)
+	require.Equal(t, &tk, mergeRequest.Assignee)
 	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Assignees)
 	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Reviewers)
-	require.Equal(t, mergeRequest.Labels, labels)
+	require.Equal(t, labels, mergeRequest.Labels)
 	require.True(t, mergeRequest.Squash)
 	require.Equal(t, 245, mergeRequest.UserNotesCount)
-	require.Equal(t, mergeRequest.Pipeline, &pipelineBasic)
-	require.Equal(t, mergeRequest.HeadPipeline, &pipelineDetailed)
+	require.Equal(t, &pipelineBasic, mergeRequest.Pipeline)
+	require.Equal(t, &pipelineDetailed, mergeRequest.HeadPipeline)
 	mrCreation := time.Date(2019, time.July, 11, 22, 34, 43, 500000000, time.UTC)
-	require.Equal(t, mergeRequest.CreatedAt, &mrCreation)
+	require.Equal(t, &mrCreation, mergeRequest.CreatedAt)
 	mrUpdate := time.Date(2019, time.August, 20, 9, 9, 56, 690000000, time.UTC)
-	require.Equal(t, mergeRequest.UpdatedAt, &mrUpdate)
+	require.Equal(t, &mrUpdate, mergeRequest.UpdatedAt)
 	require.True(t, mergeRequest.FirstContribution)
 	require.True(t, mergeRequest.HasConflicts)
 	require.True(t, mergeRequest.Draft)
@@ -503,6 +503,8 @@ index c7c7da3..ce2cd85 100644
 func TestIntSliceOrString(t *testing.T) {
 	t.Parallel()
 	t.Run("any", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.ApprovedByIDs = ApproverIDs(UserIDAny)
 		q, err := query.Values(opts)
@@ -510,6 +512,8 @@ func TestIntSliceOrString(t *testing.T) {
 		assert.Equal(t, "Any", q.Get("approved_by_ids"))
 	})
 	t.Run("none", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.ApprovedByIDs = ApproverIDs(UserIDNone)
 		q, err := query.Values(opts)
@@ -517,6 +521,8 @@ func TestIntSliceOrString(t *testing.T) {
 		assert.Equal(t, "None", q.Get("approved_by_ids"))
 	})
 	t.Run("ids", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.ApprovedByIDs = ApproverIDs([]int{1, 2, 3})
 		q, err := query.Values(opts)
@@ -529,6 +535,8 @@ func TestIntSliceOrString(t *testing.T) {
 func TestAssigneeIDMarshalling(t *testing.T) {
 	t.Parallel()
 	t.Run("any", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.AssigneeID = AssigneeID(UserIDAny)
 		q, err := query.Values(opts)
@@ -538,6 +546,8 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 		assert.JSONEq(t, `{"assignee_id":"Any"}`, string(js))
 	})
 	t.Run("none", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.AssigneeID = AssigneeID(UserIDNone)
 		q, err := query.Values(opts)
@@ -547,6 +557,8 @@ func TestAssigneeIDMarshalling(t *testing.T) {
 		assert.JSONEq(t, `{"assignee_id":"None"}`, string(js))
 	})
 	t.Run("id", func(t *testing.T) {
+		t.Parallel()
+
 		opts := &ListMergeRequestsOptions{}
 		opts.AssigneeID = AssigneeID(5)
 		q, err := query.Values(opts)
@@ -678,4 +690,77 @@ func TestAcceptMergeRequest(t *testing.T) {
 	}
 
 	assert.Equal(t, want, mr)
+}
+
+func TestListGroupMergeRequests(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+	const groupID = "12345"
+
+	path := fmt.Sprintf("/%sgroups/%s/merge_requests", apiVersionPath, groupID)
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testFormBody(t, r, "scope", "all")
+		testFormBody(t, r, "target_branch", "main")
+		testFormBody(t, r, "state", "merged")
+		testFormBody(t, r, "with_labels_details", "true")
+
+		mustWriteHTTPResponse(t, w, "testdata/list_group_merge_requests.json")
+	})
+
+	opts := ListGroupMergeRequestsOptions{
+		Scope:             Ptr("all"),
+		TargetBranch:      Ptr("main"),
+		State:             Ptr("merged"),
+		WithLabelsDetails: Ptr(true),
+	}
+
+	mrs, resp, err := client.MergeRequests.ListGroupMergeRequests(groupID, &opts)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Len(t, mrs, 1)
+
+	mr := mrs[0]
+
+	assert.Equal(t, Labels{
+		"dependencies",
+		"dependency-type::patch",
+		"maintenance::dependency",
+		"type::maintenance",
+	}, mr.Labels)
+
+	assert.Equal(t, []*LabelDetails{
+		{
+			ID:              30201862,
+			Name:            "dependencies",
+			Description:     "Merge requests from Renovate (https://gitlab.com/gitlab-com/gl-infra/renovate/renovate-ci/)",
+			DescriptionHTML: "Merge requests from Renovate (<a href=\"https://gitlab.com/gitlab-com/gl-infra/renovate/renovate-ci/\">https://gitlab.com/gitlab-com/gl-infra/renovate/renovate-ci/</a>)",
+			TextColor:       "#FFFFFF",
+			Color:           "#6699cc",
+		},
+		{
+			ID:              39246230,
+			Name:            "dependency-type::patch",
+			Description:     "Renovate patch version upgrade",
+			DescriptionHTML: "Renovate patch version upgrade",
+			TextColor:       "#FFFFFF",
+			Color:           "#6699cc",
+		},
+		{
+			ID:              24287561,
+			Name:            "maintenance::dependency",
+			Description:     "Dependency updates and their version upgrades",
+			DescriptionHTML: "Dependency updates and their version upgrades",
+			TextColor:       "#FFFFFF",
+			Color:           "#7f8c8d",
+		},
+		{
+			ID:              23853047,
+			Name:            "type::maintenance",
+			Description:     "Upkeeping efforts and catch-up corrective improvements that are not Feature nor Bugs. Read more at https://handbook.gitlab.com/handbook/product/groups/product-analysis/engineering/metrics/#work-type-classification",
+			DescriptionHTML: "Upkeeping efforts and catch-up corrective improvements that are not Feature nor Bugs. Read more at <a href=\"https://handbook.gitlab.com/handbook/product/groups/product-analysis/engineering/metrics/#work-type-classification\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">https://handbook.gitlab.com/handbook/product/groups/product-analysis/engineering/metrics/#work-type-classification</a>",
+			TextColor:       "#FFFFFF",
+			Color:           "#330066",
+		},
+	}, mr.LabelDetails)
 }

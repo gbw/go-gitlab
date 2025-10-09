@@ -98,6 +98,7 @@ type testClientMocks struct {
 	MockMergeTrains                      *MockMergeTrainsServiceInterface
 	MockMetadata                         *MockMetadataServiceInterface
 	MockMilestones                       *MockMilestonesServiceInterface
+	MockModelRegistry                    *MockModelRegistryServiceInterface
 	MockNamespaces                       *MockNamespacesServiceInterface
 	MockNotes                            *MockNotesServiceInterface
 	MockNotificationSettings             *MockNotificationSettingsServiceInterface
@@ -110,6 +111,7 @@ type testClientMocks struct {
 	MockPipelines                        *MockPipelinesServiceInterface
 	MockPlanLimits                       *MockPlanLimitsServiceInterface
 	MockProjectAccessTokens              *MockProjectAccessTokensServiceInterface
+	MockProjectAliases                   *MockProjectAliasesServiceInterface
 	MockProjectBadges                    *MockProjectBadgesServiceInterface
 	MockProjectCluster                   *MockProjectClustersServiceInterface
 	MockProjectFeatureFlags              *MockProjectFeatureFlagServiceInterface
@@ -121,12 +123,14 @@ type testClientMocks struct {
 	MockProjectRepositoryStorageMove     *MockProjectRepositoryStorageMoveServiceInterface
 	MockProjectSecuritySettings          *MockProjectSecuritySettingsServiceInterface
 	MockProjectSnippets                  *MockProjectSnippetsServiceInterface
+	MockProjectStatistics                *MockProjectStatisticsServiceInterface
 	MockProjectTemplates                 *MockProjectTemplatesServiceInterface
 	MockProjectVariables                 *MockProjectVariablesServiceInterface
 	MockProjectVulnerabilities           *MockProjectVulnerabilitiesServiceInterface
 	MockProjects                         *MockProjectsServiceInterface
 	MockProtectedBranches                *MockProtectedBranchesServiceInterface
 	MockProtectedEnvironments            *MockProtectedEnvironmentsServiceInterface
+	MockProtectedPackages                *MockProtectedPackagesServiceInterface
 	MockProtectedTags                    *MockProtectedTagsServiceInterface
 	MockReleaseLinks                     *MockReleaseLinksServiceInterface
 	MockReleases                         *MockReleasesServiceInterface
@@ -248,6 +252,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockMergeTrains := NewMockMergeTrainsServiceInterface(ctrl)
 	mockMetadata := NewMockMetadataServiceInterface(ctrl)
 	mockMilestones := NewMockMilestonesServiceInterface(ctrl)
+	mockModelRegistry := NewMockModelRegistryServiceInterface(ctrl)
 	mockNamespaces := NewMockNamespacesServiceInterface(ctrl)
 	mockNotes := NewMockNotesServiceInterface(ctrl)
 	mockNotificationSettings := NewMockNotificationSettingsServiceInterface(ctrl)
@@ -260,6 +265,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockPipelines := NewMockPipelinesServiceInterface(ctrl)
 	mockPlanLimits := NewMockPlanLimitsServiceInterface(ctrl)
 	mockProjectAccessTokens := NewMockProjectAccessTokensServiceInterface(ctrl)
+	mockProjectAliases := NewMockProjectAliasesServiceInterface(ctrl)
 	mockProjectBadges := NewMockProjectBadgesServiceInterface(ctrl)
 	mockProjectCluster := NewMockProjectClustersServiceInterface(ctrl)
 	mockProjectFeatureFlags := NewMockProjectFeatureFlagServiceInterface(ctrl)
@@ -271,12 +277,14 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockProjectRepositoryStorageMove := NewMockProjectRepositoryStorageMoveServiceInterface(ctrl)
 	mockProjectSecuritySettings := NewMockProjectSecuritySettingsServiceInterface(ctrl)
 	mockProjectSnippets := NewMockProjectSnippetsServiceInterface(ctrl)
+	mockProjectStatistics := NewMockProjectStatisticsServiceInterface(ctrl)
 	mockProjectTemplates := NewMockProjectTemplatesServiceInterface(ctrl)
 	mockProjectVariables := NewMockProjectVariablesServiceInterface(ctrl)
 	mockProjectVulnerabilities := NewMockProjectVulnerabilitiesServiceInterface(ctrl)
 	mockProjects := NewMockProjectsServiceInterface(ctrl)
 	mockProtectedBranches := NewMockProtectedBranchesServiceInterface(ctrl)
 	mockProtectedEnvironments := NewMockProtectedEnvironmentsServiceInterface(ctrl)
+	mockProtectedPackages := NewMockProtectedPackagesServiceInterface(ctrl)
 	mockProtectedTags := NewMockProtectedTagsServiceInterface(ctrl)
 	mockReleaseLinks := NewMockReleaseLinksServiceInterface(ctrl)
 	mockReleases := NewMockReleasesServiceInterface(ctrl)
@@ -397,6 +405,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		MergeTrains:                      mockMergeTrains,
 		Metadata:                         mockMetadata,
 		Milestones:                       mockMilestones,
+		ModelRegistry:                    mockModelRegistry,
 		Namespaces:                       mockNamespaces,
 		Notes:                            mockNotes,
 		NotificationSettings:             mockNotificationSettings,
@@ -409,6 +418,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Pipelines:                        mockPipelines,
 		PlanLimits:                       mockPlanLimits,
 		ProjectAccessTokens:              mockProjectAccessTokens,
+		ProjectAliases:                   mockProjectAliases,
 		ProjectBadges:                    mockProjectBadges,
 		ProjectCluster:                   mockProjectCluster,
 		ProjectFeatureFlags:              mockProjectFeatureFlags,
@@ -420,12 +430,14 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		ProjectRepositoryStorageMove:     mockProjectRepositoryStorageMove,
 		ProjectSecuritySettings:          mockProjectSecuritySettings,
 		ProjectSnippets:                  mockProjectSnippets,
+		ProjectStatistics:                mockProjectStatistics,
 		ProjectTemplates:                 mockProjectTemplates,
 		ProjectVariables:                 mockProjectVariables,
 		ProjectVulnerabilities:           mockProjectVulnerabilities,
 		Projects:                         mockProjects,
 		ProtectedBranches:                mockProtectedBranches,
 		ProtectedEnvironments:            mockProtectedEnvironments,
+		ProtectedPackages:                mockProtectedPackages,
 		ProtectedTags:                    mockProtectedTags,
 		ReleaseLinks:                     mockReleaseLinks,
 		Releases:                         mockReleases,
@@ -558,6 +570,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockMergeTrains:                      mockMergeTrains,
 			MockMetadata:                         mockMetadata,
 			MockMilestones:                       mockMilestones,
+			MockModelRegistry:                    mockModelRegistry,
 			MockNamespaces:                       mockNamespaces,
 			MockNotes:                            mockNotes,
 			MockNotificationSettings:             mockNotificationSettings,
@@ -570,6 +583,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockPipelines:                        mockPipelines,
 			MockPlanLimits:                       mockPlanLimits,
 			MockProjectAccessTokens:              mockProjectAccessTokens,
+			MockProjectAliases:                   mockProjectAliases,
 			MockProjectBadges:                    mockProjectBadges,
 			MockProjectCluster:                   mockProjectCluster,
 			MockProjectFeatureFlags:              mockProjectFeatureFlags,
@@ -581,12 +595,14 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockProjectRepositoryStorageMove:     mockProjectRepositoryStorageMove,
 			MockProjectSecuritySettings:          mockProjectSecuritySettings,
 			MockProjectSnippets:                  mockProjectSnippets,
+			MockProjectStatistics:                mockProjectStatistics,
 			MockProjectTemplates:                 mockProjectTemplates,
 			MockProjectVariables:                 mockProjectVariables,
 			MockProjectVulnerabilities:           mockProjectVulnerabilities,
 			MockProjects:                         mockProjects,
 			MockProtectedBranches:                mockProtectedBranches,
 			MockProtectedEnvironments:            mockProtectedEnvironments,
+			MockProtectedPackages:                mockProtectedPackages,
 			MockProtectedTags:                    mockProtectedTags,
 			MockReleaseLinks:                     mockReleaseLinks,
 			MockReleases:                         mockReleases,

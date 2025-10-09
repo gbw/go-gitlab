@@ -24,10 +24,34 @@ import (
 
 type (
 	BroadcastMessagesServiceInterface interface {
+		// ListBroadcastMessages gets a list of all broadcasted messages.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/broadcast_messages/#get-all-broadcast-messages
 		ListBroadcastMessages(opt *ListBroadcastMessagesOptions, options ...RequestOptionFunc) ([]*BroadcastMessage, *Response, error)
+
+		// GetBroadcastMessage gets a single broadcast message.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/broadcast_messages/#get-a-specific-broadcast-message
 		GetBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
+
+		// CreateBroadcastMessage creates a message to broadcast.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/broadcast_messages/#create-a-broadcast-message
 		CreateBroadcastMessage(opt *CreateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
+
+		// UpdateBroadcastMessage updates a broadcasted message.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/broadcast_messages/#update-a-broadcast-message
 		UpdateBroadcastMessage(broadcast int64, opt *UpdateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error)
+
+		// DeleteBroadcastMessage deletes a broadcasted message.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/broadcast_messages/#delete-a-broadcast-message
 		DeleteBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -69,10 +93,6 @@ type ListBroadcastMessagesOptions struct {
 	ListOptions
 }
 
-// ListBroadcastMessages gets a list of all broadcasted messages.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/broadcast_messages/#get-all-broadcast-messages
 func (s *BroadcastMessagesService) ListBroadcastMessages(opt *ListBroadcastMessagesOptions, options ...RequestOptionFunc) ([]*BroadcastMessage, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "broadcast_messages", opt, options)
 	if err != nil {
@@ -88,10 +108,6 @@ func (s *BroadcastMessagesService) ListBroadcastMessages(opt *ListBroadcastMessa
 	return bs, resp, nil
 }
 
-// GetBroadcastMessage gets a single broadcast message.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/broadcast_messages/#get-a-specific-broadcast-message
 func (s *BroadcastMessagesService) GetBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error) {
 	u := fmt.Sprintf("broadcast_messages/%d", broadcast)
 
@@ -126,10 +142,6 @@ type CreateBroadcastMessageOptions struct {
 	Theme              *string            `url:"theme,omitempty" json:"theme,omitempty"`
 }
 
-// CreateBroadcastMessage creates a message to broadcast.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/broadcast_messages/#create-a-broadcast-message
 func (s *BroadcastMessagesService) CreateBroadcastMessage(opt *CreateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "broadcast_messages", opt, options)
 	if err != nil {
@@ -162,10 +174,6 @@ type UpdateBroadcastMessageOptions struct {
 	Theme              *string            `url:"theme,omitempty" json:"theme,omitempty"`
 }
 
-// UpdateBroadcastMessage update a broadcasted message.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/broadcast_messages/#update-a-broadcast-message
 func (s *BroadcastMessagesService) UpdateBroadcastMessage(broadcast int64, opt *UpdateBroadcastMessageOptions, options ...RequestOptionFunc) (*BroadcastMessage, *Response, error) {
 	u := fmt.Sprintf("broadcast_messages/%d", broadcast)
 
@@ -183,10 +191,6 @@ func (s *BroadcastMessagesService) UpdateBroadcastMessage(broadcast int64, opt *
 	return b, resp, nil
 }
 
-// DeleteBroadcastMessage deletes a broadcasted message.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/broadcast_messages/#delete-a-broadcast-message
 func (s *BroadcastMessagesService) DeleteBroadcastMessage(broadcast int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("broadcast_messages/%d", broadcast)
 

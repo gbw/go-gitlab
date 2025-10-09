@@ -89,6 +89,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=merge_trains_mock.go -package=testing gitlab.com/gitlab-org/api/client-go MergeTrainsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=metadata_mock.go -package=testing gitlab.com/gitlab-org/api/client-go MetadataServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=milestones_mock.go -package=testing gitlab.com/gitlab-org/api/client-go MilestonesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=model_registry_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ModelRegistryServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=namespaces_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NamespacesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=notes_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NotesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=notifications_mock.go -package=testing gitlab.com/gitlab-org/api/client-go NotificationSettingsServiceInterface
@@ -101,6 +102,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=pipelines_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PipelinesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=plan_limits_mock.go -package=testing gitlab.com/gitlab-org/api/client-go PlanLimitsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_access_tokens_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectAccessTokensServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_aliases_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectAliasesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_badges_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectBadgesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_clusters_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectClustersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_feature_flags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectFeatureFlagServiceInterface
@@ -112,12 +114,14 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_repository_storage_move_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectRepositoryStorageMoveServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_security_settings_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectSecuritySettingsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_snippets_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectSnippetsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_statistics_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectStatisticsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_templates_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectTemplatesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_variables_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectVariablesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=project_vulnerabilities_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectVulnerabilitiesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=projects_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProjectsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_branches_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedBranchesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_environments_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedEnvironmentsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_packages_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedPackagesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=protected_tags_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ProtectedTagsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=releaselinks_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ReleaseLinksServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=releases_mock.go -package=testing gitlab.com/gitlab-org/api/client-go ReleasesServiceInterface

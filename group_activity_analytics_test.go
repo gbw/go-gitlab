@@ -45,6 +45,8 @@ func TestGroupActivityAnalytics_GetRecentlyCreatedMergeRequestsCount(t *testing.
 }
 
 func TestGroupActivityAnalytics_GetRecentlyAddedMembersCount(t *testing.T) {
+	t.Parallel()
+
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/analytics/group_activity/new_members_count", func(w http.ResponseWriter, r *http.Request) {
