@@ -69,6 +69,7 @@ type testClientMocks struct {
 	MockGroupMembers                     *MockGroupMembersServiceInterface
 	MockGroupMilestones                  *MockGroupMilestonesServiceInterface
 	MockGroupProtectedEnvironments       *MockGroupProtectedEnvironmentsServiceInterface
+	MockGroupRelationsExport             *MockGroupRelationsExportServiceInterface
 	MockGroupReleases                    *MockGroupReleasesServiceInterface
 	MockGroupRepositoryStorageMove       *MockGroupRepositoryStorageMoveServiceInterface
 	MockGroupSCIM                        *MockGroupSCIMServiceInterface
@@ -223,6 +224,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockGroupMembers := NewMockGroupMembersServiceInterface(ctrl)
 	mockGroupMilestones := NewMockGroupMilestonesServiceInterface(ctrl)
 	mockGroupProtectedEnvironments := NewMockGroupProtectedEnvironmentsServiceInterface(ctrl)
+	mockGroupRelationsExport := NewMockGroupRelationsExportServiceInterface(ctrl)
 	mockGroupReleases := NewMockGroupReleasesServiceInterface(ctrl)
 	mockGroupRepositoryStorageMove := NewMockGroupRepositoryStorageMoveServiceInterface(ctrl)
 	mockGroupSCIM := NewMockGroupSCIMServiceInterface(ctrl)
@@ -376,6 +378,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		GroupMembers:                     mockGroupMembers,
 		GroupMilestones:                  mockGroupMilestones,
 		GroupProtectedEnvironments:       mockGroupProtectedEnvironments,
+		GroupRelationsExport:             mockGroupRelationsExport,
 		GroupReleases:                    mockGroupReleases,
 		GroupRepositoryStorageMove:       mockGroupRepositoryStorageMove,
 		GroupSCIM:                        mockGroupSCIM,
@@ -541,6 +544,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockGroupMembers:                     mockGroupMembers,
 			MockGroupMilestones:                  mockGroupMilestones,
 			MockGroupProtectedEnvironments:       mockGroupProtectedEnvironments,
+			MockGroupRelationsExport:             mockGroupRelationsExport,
 			MockGroupReleases:                    mockGroupReleases,
 			MockGroupRepositoryStorageMove:       mockGroupRepositoryStorageMove,
 			MockGroupSCIM:                        mockGroupSCIM,

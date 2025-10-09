@@ -58,6 +58,7 @@ var serviceMap = map[any]any{
 	&GroupMembersService{}:                     (*GroupMembersServiceInterface)(nil),
 	&GroupMilestonesService{}:                  (*GroupMilestonesServiceInterface)(nil),
 	&GroupProtectedEnvironmentsService{}:       (*GroupProtectedEnvironmentsServiceInterface)(nil),
+	&GroupRelationsExportService{}:             (*GroupRelationsExportServiceInterface)(nil),
 	&GroupReleasesService{}:                    (*GroupReleasesServiceInterface)(nil),
 	&GroupRepositoryStorageMoveService{}:       (*GroupRepositoryStorageMoveServiceInterface)(nil),
 	&GroupSCIMService{}:                        (*GroupSCIMServiceInterface)(nil),
