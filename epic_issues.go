@@ -149,10 +149,6 @@ type UpdateEpicIssueAssignmentOptions struct {
 	MoveAfterID  *int64 `url:"move_after_id,omitempty" json:"move_after_id,omitempty"`
 }
 
-// UpdateEpicIsssueAssignmentOptions is kept for backwards compatibility.
-// Deprecated: use UpdateEpicIssueAssignmentOptions instead.
-type UpdateEpicIsssueAssignmentOptions = UpdateEpicIssueAssignmentOptions
-
 // UpdateEpicIssueAssignment moves an issue before or after another issue in an
 // epic issue list.
 // Will be removed in v5 of the API, use Work Items API instead
