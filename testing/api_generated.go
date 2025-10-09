@@ -60,6 +60,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_members_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupMembersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_milestones_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupMilestonesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_protected_environments_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupProtectedEnvironmentsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_relations_export_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupRelationsExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_releases_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupReleasesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_repository_storage_move_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupRepositoryStorageMoveServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_scim_mock.go -package=testing gitlab.com/gitlab-org/api/client-go GroupSCIMServiceInterface
