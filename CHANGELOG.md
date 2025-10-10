@@ -1,3 +1,18 @@
+## 0.156.0
+
+### 🚀 Features
+
+- feat(api): add support for test report summary api ([!2487](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2487)) by [Daniela Filipe Bento](https://gitlab.com/danifbento)
+
+
+
+# [0.156.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.155.0...v0.156.0) (2025-10-10)
+
+
+### Features
+
+* **api:** add support for test report summary api ([8a0c6dd](https://gitlab.com/gitlab-org/api/client-go/commit/8a0c6dde10a4c9c034274a439eaa060dc6e40995))
+
 ## 0.155.0
 
 ### 🚀 Features
