@@ -180,6 +180,50 @@ func TestGetPipelineTestReport(t *testing.T) {
 	}
 }
 
+func TestGetPipelineTestReportSummary(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/pipelines/123456/test_report_summary", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_pipeline_testreport_summary.json")
+	})
+
+	testreport, _, err := client.Pipelines.GetPipelineTestReportSummary(1, 123456)
+	if err != nil {
+		t.Errorf("Pipelines.GetPipelineTestReportSummary returned error: %v", err)
+	}
+
+	want := &PipelineTestReportSummary{
+		Total: PipelineTotalSummary{
+			Time:       1904,
+			Count:      3363,
+			Success:    3351,
+			Failed:     0,
+			Skipped:    12,
+			Error:      0,
+			SuiteError: Ptr("JUnit XML parsing failed: 1:1: FATAL: Document is empty"),
+		},
+		TestSuites: []PipelineTestSuiteSummary{
+			{
+				Name:         "test",
+				TotalTime:    1904,
+				TotalCount:   3363,
+				SuccessCount: 3351,
+				FailedCount:  0,
+				SkippedCount: 12,
+				ErrorCount:   0,
+				BuildIDs:     []int{66004},
+				SuiteError:   Ptr("JUnit XML parsing failed: 1:1: FATAL: Document is empty"),
+			},
+		},
+	}
+
+	if !reflect.DeepEqual(want, testreport) {
+		t.Errorf("Pipelines.GetPipelineTestReportSummary returned %+v, want %+v", testreport, want)
+	}
+}
+
 func TestGetLatestPipeline(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
