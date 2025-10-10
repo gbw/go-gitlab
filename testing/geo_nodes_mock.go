@@ -86,7 +86,7 @@ func (c *MockGeoNodesServiceInterfaceCreateGeoNodeCall) DoAndReturn(f func(*gitl
 }
 
 // DeleteGeoNode mocks base method.
-func (m *MockGeoNodesServiceInterface) DeleteGeoNode(arg0 int, arg1 ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGeoNodesServiceInterface) DeleteGeoNode(arg0 int64, arg1 ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{arg0}
 	for _, a := range arg1 {
@@ -118,19 +118,19 @@ func (c *MockGeoNodesServiceInterfaceDeleteGeoNodeCall) Return(arg0 *gitlab.Resp
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGeoNodesServiceInterfaceDeleteGeoNodeCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGeoNodesServiceInterfaceDeleteGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceDeleteGeoNodeCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGeoNodesServiceInterfaceDeleteGeoNodeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGeoNodesServiceInterfaceDeleteGeoNodeCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGeoNodesServiceInterfaceDeleteGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceDeleteGeoNodeCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGeoNodesServiceInterfaceDeleteGeoNodeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditGeoNode mocks base method.
-func (m *MockGeoNodesServiceInterface) EditGeoNode(arg0 int, arg1 *gitlab.UpdateGeoNodesOptions, arg2 ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error) {
+func (m *MockGeoNodesServiceInterface) EditGeoNode(arg0 int64, arg1 *gitlab.UpdateGeoNodesOptions, arg2 ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{arg0, arg1}
 	for _, a := range arg2 {
@@ -163,19 +163,19 @@ func (c *MockGeoNodesServiceInterfaceEditGeoNodeCall) Return(arg0 *gitlab.GeoNod
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGeoNodesServiceInterfaceEditGeoNodeCall) Do(f func(int, *gitlab.UpdateGeoNodesOptions, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceEditGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceEditGeoNodeCall) Do(f func(int64, *gitlab.UpdateGeoNodesOptions, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceEditGeoNodeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGeoNodesServiceInterfaceEditGeoNodeCall) DoAndReturn(f func(int, *gitlab.UpdateGeoNodesOptions, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceEditGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceEditGeoNodeCall) DoAndReturn(f func(int64, *gitlab.UpdateGeoNodesOptions, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceEditGeoNodeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGeoNode mocks base method.
-func (m *MockGeoNodesServiceInterface) GetGeoNode(arg0 int, arg1 ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error) {
+func (m *MockGeoNodesServiceInterface) GetGeoNode(arg0 int64, arg1 ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{arg0}
 	for _, a := range arg1 {
@@ -208,13 +208,13 @@ func (c *MockGeoNodesServiceInterfaceGetGeoNodeCall) Return(arg0 *gitlab.GeoNode
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGeoNodesServiceInterfaceGetGeoNodeCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceGetGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceGetGeoNodeCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceGetGeoNodeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGeoNodesServiceInterfaceGetGeoNodeCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceGetGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceGetGeoNodeCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceGetGeoNodeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -265,7 +265,7 @@ func (c *MockGeoNodesServiceInterfaceListGeoNodesCall) DoAndReturn(f func(*gitla
 }
 
 // RepairGeoNode mocks base method.
-func (m *MockGeoNodesServiceInterface) RepairGeoNode(arg0 int, arg1 ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error) {
+func (m *MockGeoNodesServiceInterface) RepairGeoNode(arg0 int64, arg1 ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{arg0}
 	for _, a := range arg1 {
@@ -298,13 +298,13 @@ func (c *MockGeoNodesServiceInterfaceRepairGeoNodeCall) Return(arg0 *gitlab.GeoN
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGeoNodesServiceInterfaceRepairGeoNodeCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRepairGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceRepairGeoNodeCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRepairGeoNodeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGeoNodesServiceInterfaceRepairGeoNodeCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRepairGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceRepairGeoNodeCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.GeoNode, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRepairGeoNodeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -354,7 +354,7 @@ func (c *MockGeoNodesServiceInterfaceRetrieveStatusOfAllGeoNodesCall) DoAndRetur
 }
 
 // RetrieveStatusOfGeoNode mocks base method.
-func (m *MockGeoNodesServiceInterface) RetrieveStatusOfGeoNode(arg0 int, arg1 ...gitlab.RequestOptionFunc) (*gitlab.GeoNodeStatus, *gitlab.Response, error) {
+func (m *MockGeoNodesServiceInterface) RetrieveStatusOfGeoNode(arg0 int64, arg1 ...gitlab.RequestOptionFunc) (*gitlab.GeoNodeStatus, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{arg0}
 	for _, a := range arg1 {
@@ -387,13 +387,13 @@ func (c *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.GeoNodeStatus, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.GeoNodeStatus, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.GeoNodeStatus, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall {
+func (c *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.GeoNodeStatus, *gitlab.Response, error)) *MockGeoNodesServiceInterfaceRetrieveStatusOfGeoNodeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

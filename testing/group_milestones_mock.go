@@ -86,7 +86,7 @@ func (c *MockGroupMilestonesServiceInterfaceCreateGroupMilestoneCall) DoAndRetur
 }
 
 // DeleteGroupMilestone mocks base method.
-func (m *MockGroupMilestonesServiceInterface) DeleteGroupMilestone(pid any, milestone int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGroupMilestonesServiceInterface) DeleteGroupMilestone(pid any, milestone int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, milestone}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall {
+func (c *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall {
+func (c *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceDeleteGroupMilestoneCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupMilestone mocks base method.
-func (m *MockGroupMilestonesServiceInterface) GetGroupMilestone(gid any, milestone int, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error) {
+func (m *MockGroupMilestonesServiceInterface) GetGroupMilestone(gid any, milestone int64, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, milestone}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupMilestoneBurndownChartEvents mocks base method.
-func (m *MockGroupMilestonesServiceInterface) GetGroupMilestoneBurndownChartEvents(gid any, milestone int, opt *gitlab.GetGroupMilestoneBurndownChartEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BurndownChartEvent, *gitlab.Response, error) {
+func (m *MockGroupMilestonesServiceInterface) GetGroupMilestoneBurndownChartEvents(gid any, milestone int64, opt *gitlab.GetGroupMilestoneBurndownChartEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BurndownChartEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, milestone, opt}
 	for _, a := range options {
@@ -208,19 +208,19 @@ func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEvents
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall) Do(f func(any, int, *gitlab.GetGroupMilestoneBurndownChartEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BurndownChartEvent, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall) Do(f func(any, int64, *gitlab.GetGroupMilestoneBurndownChartEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BurndownChartEvent, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall) DoAndReturn(f func(any, int, *gitlab.GetGroupMilestoneBurndownChartEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BurndownChartEvent, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall) DoAndReturn(f func(any, int64, *gitlab.GetGroupMilestoneBurndownChartEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BurndownChartEvent, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneBurndownChartEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupMilestoneIssues mocks base method.
-func (m *MockGroupMilestonesServiceInterface) GetGroupMilestoneIssues(gid any, milestone int, opt *gitlab.GetGroupMilestoneIssuesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
+func (m *MockGroupMilestonesServiceInterface) GetGroupMilestoneIssues(gid any, milestone int64, opt *gitlab.GetGroupMilestoneIssuesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, milestone, opt}
 	for _, a := range options {
@@ -253,19 +253,19 @@ func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall) Do(f func(any, int, *gitlab.GetGroupMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall) Do(f func(any, int64, *gitlab.GetGroupMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall) DoAndReturn(f func(any, int, *gitlab.GetGroupMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall) DoAndReturn(f func(any, int64, *gitlab.GetGroupMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneIssuesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupMilestoneMergeRequests mocks base method.
-func (m *MockGroupMilestonesServiceInterface) GetGroupMilestoneMergeRequests(gid any, milestone int, opt *gitlab.GetGroupMilestoneMergeRequestsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error) {
+func (m *MockGroupMilestonesServiceInterface) GetGroupMilestoneMergeRequests(gid any, milestone int64, opt *gitlab.GetGroupMilestoneMergeRequestsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, milestone, opt}
 	for _, a := range options {
@@ -298,13 +298,13 @@ func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall) Do(f func(any, int, *gitlab.GetGroupMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall) Do(f func(any, int64, *gitlab.GetGroupMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall) DoAndReturn(f func(any, int, *gitlab.GetGroupMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall {
+func (c *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall) DoAndReturn(f func(any, int64, *gitlab.GetGroupMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceGetGroupMilestoneMergeRequestsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -355,7 +355,7 @@ func (c *MockGroupMilestonesServiceInterfaceListGroupMilestonesCall) DoAndReturn
 }
 
 // UpdateGroupMilestone mocks base method.
-func (m *MockGroupMilestonesServiceInterface) UpdateGroupMilestone(gid any, milestone int, opt *gitlab.UpdateGroupMilestoneOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error) {
+func (m *MockGroupMilestonesServiceInterface) UpdateGroupMilestone(gid any, milestone int64, opt *gitlab.UpdateGroupMilestoneOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, milestone, opt}
 	for _, a := range options {
@@ -388,13 +388,13 @@ func (c *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall) Do(f func(any, int, *gitlab.UpdateGroupMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall {
+func (c *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall) Do(f func(any, int64, *gitlab.UpdateGroupMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall) DoAndReturn(f func(any, int, *gitlab.UpdateGroupMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall {
+func (c *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall) DoAndReturn(f func(any, int64, *gitlab.UpdateGroupMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMilestone, *gitlab.Response, error)) *MockGroupMilestonesServiceInterfaceUpdateGroupMilestoneCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

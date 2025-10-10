@@ -49,12 +49,12 @@ var _ GenericPackagesServiceInterface = (*GenericPackagesService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/user/packages/generic_packages/#publish-a-single-file
 type GenericPackagesFile struct {
-	ID                     int                    `json:"id"`
-	PackageID              int                    `json:"package_id"`
+	ID                     int64                  `json:"id"`
+	PackageID              int64                  `json:"package_id"`
 	CreatedAt              *time.Time             `json:"created_at"`
 	UpdatedAt              *time.Time             `json:"updated_at"`
-	Size                   int                    `json:"size"`
-	FileStore              int                    `json:"file_store"`
+	Size                   int64                  `json:"size"`
+	FileStore              int64                  `json:"file_store"`
 	FileMD5                string                 `json:"file_md5"`
 	FileSHA1               string                 `json:"file_sha1"`
 	FileName               string                 `json:"file_name"`
@@ -63,9 +63,9 @@ type GenericPackagesFile struct {
 	VerificationRetryAt    *time.Time             `json:"verification_retry_at"`
 	VerifiedAt             *time.Time             `json:"verified_at"`
 	VerificationFailure    bool                   `json:"verification_failure"`
-	VerificationRetryCount int                    `json:"verification_retry_count"`
+	VerificationRetryCount int64                  `json:"verification_retry_count"`
 	VerificationChecksum   string                 `json:"verification_checksum"`
-	VerificationState      int                    `json:"verification_state"`
+	VerificationState      int64                  `json:"verification_state"`
 	VerificationStartedAt  *time.Time             `json:"verification_started_at"`
 	NewFilePath            string                 `json:"new_file_path"`
 }

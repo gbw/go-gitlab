@@ -52,11 +52,11 @@ type (
 		SubscribeToMergeRequest(pid any, mergeRequest int, options ...RequestOptionFunc) (*MergeRequest, *Response, error)
 		UnsubscribeFromMergeRequest(pid any, mergeRequest int, options ...RequestOptionFunc) (*MergeRequest, *Response, error)
 		CreateTodo(pid any, mergeRequest int, options ...RequestOptionFunc) (*Todo, *Response, error)
-		SetTimeEstimate(pid any, mergeRequest int, opt *SetTimeEstimateOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error)
-		ResetTimeEstimate(pid any, mergeRequest int, options ...RequestOptionFunc) (*TimeStats, *Response, error)
-		AddSpentTime(pid any, mergeRequest int, opt *AddSpentTimeOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error)
-		ResetSpentTime(pid any, mergeRequest int, options ...RequestOptionFunc) (*TimeStats, *Response, error)
-		GetTimeSpent(pid any, mergeRequest int, options ...RequestOptionFunc) (*TimeStats, *Response, error)
+		SetTimeEstimate(pid any, mergeRequest int64, opt *SetTimeEstimateOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error)
+		ResetTimeEstimate(pid any, mergeRequest int64, options ...RequestOptionFunc) (*TimeStats, *Response, error)
+		AddSpentTime(pid any, mergeRequest int64, opt *AddSpentTimeOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error)
+		ResetSpentTime(pid any, mergeRequest int64, options ...RequestOptionFunc) (*TimeStats, *Response, error)
+		GetTimeSpent(pid any, mergeRequest int64, options ...RequestOptionFunc) (*TimeStats, *Response, error)
 		CreateMergeRequestDependency(pid any, mergeRequest int, opts CreateMergeRequestDependencyOptions, options ...RequestOptionFunc) (*MergeRequestDependency, *Response, error)
 		DeleteMergeRequestDependency(pid any, mergeRequest int, blockingMergeRequest int, options ...RequestOptionFunc) (*Response, error)
 		GetMergeRequestDependencies(pid any, mergeRequest int, options ...RequestOptionFunc) ([]MergeRequestDependency, *Response, error)
@@ -1206,7 +1206,7 @@ func (s *MergeRequestsService) CreateTodo(pid any, mergeRequest int, options ...
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#set-a-time-estimate-for-a-merge-request
-func (s *MergeRequestsService) SetTimeEstimate(pid any, mergeRequest int, opt *SetTimeEstimateOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
+func (s *MergeRequestsService) SetTimeEstimate(pid any, mergeRequest int64, opt *SetTimeEstimateOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
 	return s.timeStats.setTimeEstimate(pid, "merge_requests", mergeRequest, opt, options...)
 }
 
@@ -1214,7 +1214,7 @@ func (s *MergeRequestsService) SetTimeEstimate(pid any, mergeRequest int, opt *S
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#reset-the-time-estimate-for-a-merge-request
-func (s *MergeRequestsService) ResetTimeEstimate(pid any, mergeRequest int, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
+func (s *MergeRequestsService) ResetTimeEstimate(pid any, mergeRequest int64, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
 	return s.timeStats.resetTimeEstimate(pid, "merge_requests", mergeRequest, options...)
 }
 
@@ -1222,7 +1222,7 @@ func (s *MergeRequestsService) ResetTimeEstimate(pid any, mergeRequest int, opti
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#add-spent-time-for-a-merge-request
-func (s *MergeRequestsService) AddSpentTime(pid any, mergeRequest int, opt *AddSpentTimeOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
+func (s *MergeRequestsService) AddSpentTime(pid any, mergeRequest int64, opt *AddSpentTimeOptions, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
 	return s.timeStats.addSpentTime(pid, "merge_requests", mergeRequest, opt, options...)
 }
 
@@ -1230,7 +1230,7 @@ func (s *MergeRequestsService) AddSpentTime(pid any, mergeRequest int, opt *AddS
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#reset-spent-time-for-a-merge-request
-func (s *MergeRequestsService) ResetSpentTime(pid any, mergeRequest int, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
+func (s *MergeRequestsService) ResetSpentTime(pid any, mergeRequest int64, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
 	return s.timeStats.resetSpentTime(pid, "merge_requests", mergeRequest, options...)
 }
 
@@ -1238,7 +1238,7 @@ func (s *MergeRequestsService) ResetSpentTime(pid any, mergeRequest int, options
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-time-tracking-stats
-func (s *MergeRequestsService) GetTimeSpent(pid any, mergeRequest int, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
+func (s *MergeRequestsService) GetTimeSpent(pid any, mergeRequest int64, options ...RequestOptionFunc) (*TimeStats, *Response, error) {
 	return s.timeStats.getTimeSpent(pid, "merge_requests", mergeRequest, options...)
 }
 

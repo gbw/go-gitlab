@@ -41,7 +41,7 @@ func (m *MockIssueLinksServiceInterface) EXPECT() *MockIssueLinksServiceInterfac
 }
 
 // CreateIssueLink mocks base method.
-func (m *MockIssueLinksServiceInterface) CreateIssueLink(pid any, issue int, opt *gitlab.CreateIssueLinkOptions, options ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error) {
+func (m *MockIssueLinksServiceInterface) CreateIssueLink(pid any, issue int64, opt *gitlab.CreateIssueLinkOptions, options ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, opt}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockIssueLinksServiceInterfaceCreateIssueLinkCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueLinksServiceInterfaceCreateIssueLinkCall) Do(f func(any, int, *gitlab.CreateIssueLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceCreateIssueLinkCall {
+func (c *MockIssueLinksServiceInterfaceCreateIssueLinkCall) Do(f func(any, int64, *gitlab.CreateIssueLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceCreateIssueLinkCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueLinksServiceInterfaceCreateIssueLinkCall) DoAndReturn(f func(any, int, *gitlab.CreateIssueLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceCreateIssueLinkCall {
+func (c *MockIssueLinksServiceInterfaceCreateIssueLinkCall) DoAndReturn(f func(any, int64, *gitlab.CreateIssueLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceCreateIssueLinkCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteIssueLink mocks base method.
-func (m *MockIssueLinksServiceInterface) DeleteIssueLink(pid any, issue, issueLink int, options ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error) {
+func (m *MockIssueLinksServiceInterface) DeleteIssueLink(pid any, issue, issueLink int64, options ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, issueLink}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockIssueLinksServiceInterfaceDeleteIssueLinkCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueLinksServiceInterfaceDeleteIssueLinkCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceDeleteIssueLinkCall {
+func (c *MockIssueLinksServiceInterfaceDeleteIssueLinkCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceDeleteIssueLinkCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueLinksServiceInterfaceDeleteIssueLinkCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceDeleteIssueLinkCall {
+func (c *MockIssueLinksServiceInterfaceDeleteIssueLinkCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceDeleteIssueLinkCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssueLink mocks base method.
-func (m *MockIssueLinksServiceInterface) GetIssueLink(pid any, issue, issueLink int, options ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error) {
+func (m *MockIssueLinksServiceInterface) GetIssueLink(pid any, issue, issueLink int64, options ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, issueLink}
 	for _, a := range options {
@@ -164,19 +164,19 @@ func (c *MockIssueLinksServiceInterfaceGetIssueLinkCall) Return(arg0 *gitlab.Iss
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueLinksServiceInterfaceGetIssueLinkCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceGetIssueLinkCall {
+func (c *MockIssueLinksServiceInterfaceGetIssueLinkCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceGetIssueLinkCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueLinksServiceInterfaceGetIssueLinkCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceGetIssueLinkCall {
+func (c *MockIssueLinksServiceInterfaceGetIssueLinkCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.IssueLink, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceGetIssueLinkCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListIssueRelations mocks base method.
-func (m *MockIssueLinksServiceInterface) ListIssueRelations(pid any, issue int, options ...gitlab.RequestOptionFunc) ([]*gitlab.IssueRelation, *gitlab.Response, error) {
+func (m *MockIssueLinksServiceInterface) ListIssueRelations(pid any, issue int64, options ...gitlab.RequestOptionFunc) ([]*gitlab.IssueRelation, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue}
 	for _, a := range options {
@@ -209,13 +209,13 @@ func (c *MockIssueLinksServiceInterfaceListIssueRelationsCall) Return(arg0 []*gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueLinksServiceInterfaceListIssueRelationsCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) ([]*gitlab.IssueRelation, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceListIssueRelationsCall {
+func (c *MockIssueLinksServiceInterfaceListIssueRelationsCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.IssueRelation, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceListIssueRelationsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueLinksServiceInterfaceListIssueRelationsCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) ([]*gitlab.IssueRelation, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceListIssueRelationsCall {
+func (c *MockIssueLinksServiceInterfaceListIssueRelationsCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.IssueRelation, *gitlab.Response, error)) *MockIssueLinksServiceInterfaceListIssueRelationsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

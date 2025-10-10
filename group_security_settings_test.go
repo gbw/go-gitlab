@@ -27,7 +27,7 @@ func TestGroupSecuritySettings_UpdateSecretPushProtectionEnabledSetting(t *testi
 
 	d, resp, err := client.GroupSecuritySettings.UpdateSecretPushProtectionEnabledSetting(1, UpdateGroupSecuritySettingsOptions{
 		SecretPushProtectionEnabled: Ptr(true),
-		ProjectsToExclude:           Ptr([]int{1, 2}),
+		ProjectsToExclude:           Ptr([]int64{1, 2}),
 	})
 	require.NoError(t, err)
 	require.NotNil(t, resp)

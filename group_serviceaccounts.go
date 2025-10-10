@@ -27,7 +27,7 @@ import (
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#create-a-service-account-user
 type GroupServiceAccount struct {
-	ID       int    `json:"id"`
+	ID       int64  `json:"id"`
 	Name     string `json:"name"`
 	UserName string `json:"username"`
 	Email    string `json:"email"`
@@ -120,7 +120,7 @@ type UpdateServiceAccountOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#update-a-service-account-user
-func (s *GroupsService) UpdateServiceAccount(gid any, serviceAccount int, opt *UpdateServiceAccountOptions, options ...RequestOptionFunc) (*GroupServiceAccount, *Response, error) {
+func (s *GroupsService) UpdateServiceAccount(gid any, serviceAccount int64, opt *UpdateServiceAccountOptions, options ...RequestOptionFunc) (*GroupServiceAccount, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -155,7 +155,7 @@ type DeleteServiceAccountOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#delete-a-service-account-user
-func (s *GroupsService) DeleteServiceAccount(gid any, serviceAccount int, opt *DeleteServiceAccountOptions, options ...RequestOptionFunc) (*Response, error) {
+func (s *GroupsService) DeleteServiceAccount(gid any, serviceAccount int64, opt *DeleteServiceAccountOptions, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err
@@ -184,7 +184,7 @@ type ListServiceAccountPersonalAccessTokensOptions struct {
 	LastUsedAfter  *time.Time `url:"last_used_after,omitempty" json:"last_used_after,omitempty"`
 	LastUsedBefore *time.Time `url:"last_used_before,omitempty" json:"last_used_before,omitempty"`
 	Revoked        *bool      `url:"revoked,omitempty" json:"revoked,omitempty"`
-	UserID         *int       `url:"user_id,omitempty" json:"user_id,omitempty"`
+	UserID         *int64     `url:"user_id,omitempty" json:"user_id,omitempty"`
 	Search         *string    `url:"search,omitempty" json:"search,omitempty"`
 	Sort           *string    `url:"sort,omitempty" json:"sort,omitempty"`
 	State          *string    `url:"state,omitempty" json:"state,omitempty"`
@@ -195,7 +195,7 @@ type ListServiceAccountPersonalAccessTokensOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#list-all-personal-access-tokens-for-a-service-account-user
-func (s *GroupsService) ListServiceAccountPersonalAccessTokens(gid any, serviceAccount int, opt *ListServiceAccountPersonalAccessTokensOptions, options ...RequestOptionFunc) ([]*PersonalAccessToken, *Response, error) {
+func (s *GroupsService) ListServiceAccountPersonalAccessTokens(gid any, serviceAccount int64, opt *ListServiceAccountPersonalAccessTokensOptions, options ...RequestOptionFunc) ([]*PersonalAccessToken, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -233,7 +233,7 @@ type CreateServiceAccountPersonalAccessTokenOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#create-a-personal-access-token-for-a-service-account-user
-func (s *GroupsService) CreateServiceAccountPersonalAccessToken(gid any, serviceAccount int, opt *CreateServiceAccountPersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
+func (s *GroupsService) CreateServiceAccountPersonalAccessToken(gid any, serviceAccount int64, opt *CreateServiceAccountPersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err
@@ -259,7 +259,7 @@ func (s *GroupsService) CreateServiceAccountPersonalAccessToken(gid any, service
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#revoke-a-personal-access-token-for-a-service-account-user
-func (s *GroupsService) RevokeServiceAccountPersonalAccessToken(gid any, serviceAccount, token int, options ...RequestOptionFunc) (*Response, error) {
+func (s *GroupsService) RevokeServiceAccountPersonalAccessToken(gid any, serviceAccount, token int64, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err
@@ -288,7 +288,7 @@ type RotateServiceAccountPersonalAccessTokenOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_service_accounts/#rotate-a-personal-access-token-for-a-service-account-user
-func (s *GroupsService) RotateServiceAccountPersonalAccessToken(gid any, serviceAccount, token int, opt *RotateServiceAccountPersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
+func (s *GroupsService) RotateServiceAccountPersonalAccessToken(gid any, serviceAccount, token int64, opt *RotateServiceAccountPersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, nil, err

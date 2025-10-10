@@ -42,7 +42,7 @@ func (m *MockGroupMarkdownUploadsServiceInterface) EXPECT() *MockGroupMarkdownUp
 }
 
 // DeleteGroupMarkdownUploadByID mocks base method.
-func (m *MockGroupMarkdownUploadsServiceInterface) DeleteGroupMarkdownUploadByID(gid any, uploadID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGroupMarkdownUploadsServiceInterface) DeleteGroupMarkdownUploadByID(gid any, uploadID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, uploadID}
 	for _, a := range options {
@@ -74,13 +74,13 @@ func (c *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCa
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall {
+func (c *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall {
+func (c *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -130,7 +130,7 @@ func (c *MockGroupMarkdownUploadsServiceInterfaceDeleteGroupMarkdownUploadBySecr
 }
 
 // DownloadGroupMarkdownUploadByID mocks base method.
-func (m *MockGroupMarkdownUploadsServiceInterface) DownloadGroupMarkdownUploadByID(gid any, uploadID int, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
+func (m *MockGroupMarkdownUploadsServiceInterface) DownloadGroupMarkdownUploadByID(gid any, uploadID int64, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, uploadID}
 	for _, a := range options {
@@ -163,13 +163,13 @@ func (c *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByID
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall {
+func (c *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall {
+func (c *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockGroupMarkdownUploadsServiceInterfaceDownloadGroupMarkdownUploadByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -86,7 +86,7 @@ func (c *MockGroupAccessTokensServiceInterfaceCreateGroupAccessTokenCall) DoAndR
 }
 
 // GetGroupAccessToken mocks base method.
-func (m *MockGroupAccessTokensServiceInterface) GetGroupAccessToken(gid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error) {
+func (m *MockGroupAccessTokensServiceInterface) GetGroupAccessToken(gid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, id}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall {
+func (c *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall {
+func (c *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceGetGroupAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -176,7 +176,7 @@ func (c *MockGroupAccessTokensServiceInterfaceListGroupAccessTokensCall) DoAndRe
 }
 
 // RevokeGroupAccessToken mocks base method.
-func (m *MockGroupAccessTokensServiceInterface) RevokeGroupAccessToken(gid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGroupAccessTokensServiceInterface) RevokeGroupAccessToken(gid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, id}
 	for _, a := range options {
@@ -208,19 +208,19 @@ func (c *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall {
+func (c *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall {
+func (c *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRevokeGroupAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RotateGroupAccessToken mocks base method.
-func (m *MockGroupAccessTokensServiceInterface) RotateGroupAccessToken(gid any, id int, opt *gitlab.RotateGroupAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error) {
+func (m *MockGroupAccessTokensServiceInterface) RotateGroupAccessToken(gid any, id int64, opt *gitlab.RotateGroupAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, id, opt}
 	for _, a := range options {
@@ -253,13 +253,13 @@ func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall) Do(f func(any, int, *gitlab.RotateGroupAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall {
+func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall) Do(f func(any, int64, *gitlab.RotateGroupAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall) DoAndReturn(f func(any, int, *gitlab.RotateGroupAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall {
+func (c *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall) DoAndReturn(f func(any, int64, *gitlab.RotateGroupAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupAccessToken, *gitlab.Response, error)) *MockGroupAccessTokensServiceInterfaceRotateGroupAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

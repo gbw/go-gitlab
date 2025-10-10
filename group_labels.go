@@ -126,7 +126,7 @@ type CreateGroupLabelOptions struct {
 	Name        *string `url:"name,omitempty" json:"name,omitempty"`
 	Color       *string `url:"color,omitempty" json:"color,omitempty"`
 	Description *string `url:"description,omitempty" json:"description,omitempty"`
-	Priority    *int    `url:"priority,omitempty" json:"priority,omitempty"`
+	Priority    *int64  `url:"priority,omitempty" json:"priority,omitempty"`
 }
 
 // CreateGroupLabel creates a new label for given group with given name and
@@ -199,7 +199,7 @@ type UpdateGroupLabelOptions struct {
 	NewName     *string `url:"new_name,omitempty" json:"new_name,omitempty"`
 	Color       *string `url:"color,omitempty" json:"color,omitempty"`
 	Description *string `url:"description,omitempty" json:"description,omitempty"`
-	Priority    *int    `url:"priority,omitempty" json:"priority,omitempty"`
+	Priority    *int64  `url:"priority,omitempty" json:"priority,omitempty"`
 }
 
 // UpdateGroupLabel updates an existing label with new name or now color. At least

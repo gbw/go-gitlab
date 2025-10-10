@@ -86,7 +86,7 @@ func (c *MockMergeRequestsServiceInterfaceAcceptMergeRequestCall) DoAndReturn(f 
 }
 
 // AddSpentTime mocks base method.
-func (m *MockMergeRequestsServiceInterface) AddSpentTime(pid any, mergeRequest int, opt *gitlab.AddSpentTimeOptions, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
+func (m *MockMergeRequestsServiceInterface) AddSpentTime(pid any, mergeRequest int64, opt *gitlab.AddSpentTimeOptions, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockMergeRequestsServiceInterfaceAddSpentTimeCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestsServiceInterfaceAddSpentTimeCall) Do(f func(any, int, *gitlab.AddSpentTimeOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceAddSpentTimeCall {
+func (c *MockMergeRequestsServiceInterfaceAddSpentTimeCall) Do(f func(any, int64, *gitlab.AddSpentTimeOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceAddSpentTimeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestsServiceInterfaceAddSpentTimeCall) DoAndReturn(f func(any, int, *gitlab.AddSpentTimeOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceAddSpentTimeCall {
+func (c *MockMergeRequestsServiceInterfaceAddSpentTimeCall) DoAndReturn(f func(any, int64, *gitlab.AddSpentTimeOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceAddSpentTimeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -894,7 +894,7 @@ func (c *MockMergeRequestsServiceInterfaceGetSingleMergeRequestDiffVersionCall) 
 }
 
 // GetTimeSpent mocks base method.
-func (m *MockMergeRequestsServiceInterface) GetTimeSpent(pid any, mergeRequest int, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
+func (m *MockMergeRequestsServiceInterface) GetTimeSpent(pid any, mergeRequest int64, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest}
 	for _, a := range options {
@@ -927,13 +927,13 @@ func (c *MockMergeRequestsServiceInterfaceGetTimeSpentCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestsServiceInterfaceGetTimeSpentCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceGetTimeSpentCall {
+func (c *MockMergeRequestsServiceInterfaceGetTimeSpentCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceGetTimeSpentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestsServiceInterfaceGetTimeSpentCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceGetTimeSpentCall {
+func (c *MockMergeRequestsServiceInterfaceGetTimeSpentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceGetTimeSpentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1253,7 +1253,7 @@ func (c *MockMergeRequestsServiceInterfaceRebaseMergeRequestCall) DoAndReturn(f 
 }
 
 // ResetSpentTime mocks base method.
-func (m *MockMergeRequestsServiceInterface) ResetSpentTime(pid any, mergeRequest int, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
+func (m *MockMergeRequestsServiceInterface) ResetSpentTime(pid any, mergeRequest int64, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest}
 	for _, a := range options {
@@ -1286,19 +1286,19 @@ func (c *MockMergeRequestsServiceInterfaceResetSpentTimeCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestsServiceInterfaceResetSpentTimeCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetSpentTimeCall {
+func (c *MockMergeRequestsServiceInterfaceResetSpentTimeCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetSpentTimeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestsServiceInterfaceResetSpentTimeCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetSpentTimeCall {
+func (c *MockMergeRequestsServiceInterfaceResetSpentTimeCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetSpentTimeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ResetTimeEstimate mocks base method.
-func (m *MockMergeRequestsServiceInterface) ResetTimeEstimate(pid any, mergeRequest int, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
+func (m *MockMergeRequestsServiceInterface) ResetTimeEstimate(pid any, mergeRequest int64, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest}
 	for _, a := range options {
@@ -1331,19 +1331,19 @@ func (c *MockMergeRequestsServiceInterfaceResetTimeEstimateCall) Return(arg0 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestsServiceInterfaceResetTimeEstimateCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetTimeEstimateCall {
+func (c *MockMergeRequestsServiceInterfaceResetTimeEstimateCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetTimeEstimateCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestsServiceInterfaceResetTimeEstimateCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetTimeEstimateCall {
+func (c *MockMergeRequestsServiceInterfaceResetTimeEstimateCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceResetTimeEstimateCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // SetTimeEstimate mocks base method.
-func (m *MockMergeRequestsServiceInterface) SetTimeEstimate(pid any, mergeRequest int, opt *gitlab.SetTimeEstimateOptions, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
+func (m *MockMergeRequestsServiceInterface) SetTimeEstimate(pid any, mergeRequest int64, opt *gitlab.SetTimeEstimateOptions, options ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -1376,13 +1376,13 @@ func (c *MockMergeRequestsServiceInterfaceSetTimeEstimateCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestsServiceInterfaceSetTimeEstimateCall) Do(f func(any, int, *gitlab.SetTimeEstimateOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceSetTimeEstimateCall {
+func (c *MockMergeRequestsServiceInterfaceSetTimeEstimateCall) Do(f func(any, int64, *gitlab.SetTimeEstimateOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceSetTimeEstimateCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestsServiceInterfaceSetTimeEstimateCall) DoAndReturn(f func(any, int, *gitlab.SetTimeEstimateOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceSetTimeEstimateCall {
+func (c *MockMergeRequestsServiceInterfaceSetTimeEstimateCall) DoAndReturn(f func(any, int64, *gitlab.SetTimeEstimateOptions, ...gitlab.RequestOptionFunc) (*gitlab.TimeStats, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceSetTimeEstimateCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
