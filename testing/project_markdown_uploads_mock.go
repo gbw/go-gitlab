@@ -42,7 +42,7 @@ func (m *MockProjectMarkdownUploadsServiceInterface) EXPECT() *MockProjectMarkdo
 }
 
 // DeleteProjectMarkdownUploadByID mocks base method.
-func (m *MockProjectMarkdownUploadsServiceInterface) DeleteProjectMarkdownUploadByID(pid any, uploadID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectMarkdownUploadsServiceInterface) DeleteProjectMarkdownUploadByID(pid any, uploadID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, uploadID}
 	for _, a := range options {
@@ -74,13 +74,13 @@ func (c *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadBy
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -130,7 +130,7 @@ func (c *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadBy
 }
 
 // DownloadProjectMarkdownUploadByID mocks base method.
-func (m *MockProjectMarkdownUploadsServiceInterface) DownloadProjectMarkdownUploadByID(pid any, uploadID int, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
+func (m *MockProjectMarkdownUploadsServiceInterface) DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, uploadID}
 	for _, a := range options {
@@ -163,13 +163,13 @@ func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUpload
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

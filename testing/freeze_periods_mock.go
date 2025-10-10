@@ -86,7 +86,7 @@ func (c *MockFreezePeriodsServiceInterfaceCreateFreezePeriodOptionsCall) DoAndRe
 }
 
 // DeleteFreezePeriod mocks base method.
-func (m *MockFreezePeriodsServiceInterface) DeleteFreezePeriod(pid any, freezePeriod int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockFreezePeriodsServiceInterface) DeleteFreezePeriod(pid any, freezePeriod int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, freezePeriod}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall {
+func (c *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall {
+func (c *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceDeleteFreezePeriodCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetFreezePeriod mocks base method.
-func (m *MockFreezePeriodsServiceInterface) GetFreezePeriod(pid any, freezePeriod int, options ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error) {
+func (m *MockFreezePeriodsServiceInterface) GetFreezePeriod(pid any, freezePeriod int64, options ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, freezePeriod}
 	for _, a := range options {
@@ -163,13 +163,13 @@ func (c *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall {
+func (c *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall {
+func (c *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceGetFreezePeriodCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -220,7 +220,7 @@ func (c *MockFreezePeriodsServiceInterfaceListFreezePeriodsCall) DoAndReturn(f f
 }
 
 // UpdateFreezePeriodOptions mocks base method.
-func (m *MockFreezePeriodsServiceInterface) UpdateFreezePeriodOptions(pid any, freezePeriod int, opt *gitlab.UpdateFreezePeriodOptions, options ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error) {
+func (m *MockFreezePeriodsServiceInterface) UpdateFreezePeriodOptions(pid any, freezePeriod int64, opt *gitlab.UpdateFreezePeriodOptions, options ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, freezePeriod, opt}
 	for _, a := range options {
@@ -253,13 +253,13 @@ func (c *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall) Do(f func(any, int, *gitlab.UpdateFreezePeriodOptions, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall {
+func (c *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall) Do(f func(any, int64, *gitlab.UpdateFreezePeriodOptions, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall) DoAndReturn(f func(any, int, *gitlab.UpdateFreezePeriodOptions, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall {
+func (c *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall) DoAndReturn(f func(any, int64, *gitlab.UpdateFreezePeriodOptions, ...gitlab.RequestOptionFunc) (*gitlab.FreezePeriod, *gitlab.Response, error)) *MockFreezePeriodsServiceInterfaceUpdateFreezePeriodOptionsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

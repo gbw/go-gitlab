@@ -92,7 +92,7 @@ func listMarkdownUploads[T any](client *Client, resourceType ResourceType, id an
 }
 
 // downloadMarkdownUploadByID downloads a specific upload by ID
-func downloadMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int, options []RequestOptionFunc) (*bytes.Buffer, *Response, error) {
+func downloadMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int64, options []RequestOptionFunc) (*bytes.Buffer, *Response, error) {
 	resourceID, err := parseID(id)
 	if err != nil {
 		return nil, nil, err
@@ -136,7 +136,7 @@ func downloadMarkdownUploadBySecretAndFilename(client *Client, resourceType Reso
 }
 
 // deleteMarkdownUploadByID deletes an upload by ID
-func deleteMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int, options []RequestOptionFunc) (*Response, error) {
+func deleteMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int64, options []RequestOptionFunc) (*Response, error) {
 	resourceID, err := parseID(id)
 	if err != nil {
 		return nil, err

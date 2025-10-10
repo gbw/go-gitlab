@@ -86,7 +86,7 @@ func (c *MockFeatureFlagUserListsServiceInterfaceCreateFeatureFlagUserListCall) 
 }
 
 // DeleteFeatureFlagUserList mocks base method.
-func (m *MockFeatureFlagUserListsServiceInterface) DeleteFeatureFlagUserList(pid any, iid int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockFeatureFlagUserListsServiceInterface) DeleteFeatureFlagUserList(pid any, iid int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, iid}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall {
+func (c *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall {
+func (c *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceDeleteFeatureFlagUserListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetFeatureFlagUserList mocks base method.
-func (m *MockFeatureFlagUserListsServiceInterface) GetFeatureFlagUserList(pid any, iid int, options ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error) {
+func (m *MockFeatureFlagUserListsServiceInterface) GetFeatureFlagUserList(pid any, iid int64, options ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, iid}
 	for _, a := range options {
@@ -163,13 +163,13 @@ func (c *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall) Ret
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall {
+func (c *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall {
+func (c *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceGetFeatureFlagUserListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -220,7 +220,7 @@ func (c *MockFeatureFlagUserListsServiceInterfaceListFeatureFlagUserListsCall) D
 }
 
 // UpdateFeatureFlagUserList mocks base method.
-func (m *MockFeatureFlagUserListsServiceInterface) UpdateFeatureFlagUserList(pid any, iid int, opt *gitlab.UpdateFeatureFlagUserListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error) {
+func (m *MockFeatureFlagUserListsServiceInterface) UpdateFeatureFlagUserList(pid any, iid int64, opt *gitlab.UpdateFeatureFlagUserListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, iid, opt}
 	for _, a := range options {
@@ -253,13 +253,13 @@ func (c *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall) Do(f func(any, int, *gitlab.UpdateFeatureFlagUserListOptions, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall {
+func (c *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall) Do(f func(any, int64, *gitlab.UpdateFeatureFlagUserListOptions, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall) DoAndReturn(f func(any, int, *gitlab.UpdateFeatureFlagUserListOptions, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall {
+func (c *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall) DoAndReturn(f func(any, int64, *gitlab.UpdateFeatureFlagUserListOptions, ...gitlab.RequestOptionFunc) (*gitlab.FeatureFlagUserList, *gitlab.Response, error)) *MockFeatureFlagUserListsServiceInterfaceUpdateFeatureFlagUserListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

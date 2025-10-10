@@ -583,7 +583,7 @@ func TestGroupMilestonesService_GetGroupMilestoneBurndownChartEvents(t *testing.
 	})
 
 	want := []*BurndownChartEvent{{
-		Weight: Ptr(10),
+		Weight: Ptr(int64(10)),
 		Action: Ptr("update"),
 	}}
 

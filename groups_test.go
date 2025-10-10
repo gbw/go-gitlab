@@ -274,7 +274,7 @@ func TestTransferSubGroup(t *testing.T) {
 		})
 
 	opt := &TransferSubGroupOptions{
-		GroupID: Ptr(2),
+		GroupID: Ptr(int64(2)),
 	}
 
 	group, _, err := client.Groups.TransferSubGroup(1, opt)
@@ -783,7 +783,7 @@ func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
 	opt := &AddGroupSAMLLinkOptions{
 		SAMLGroupName: Ptr("gitlab_group_example_developer"),
 		AccessLevel:   Ptr(DeveloperPermissions),
-		MemberRoleID:  Ptr(123),
+		MemberRoleID:  Ptr(int64(123)),
 	}
 
 	link, _, err := client.Groups.AddGroupSAMLLink(1, opt)
@@ -903,9 +903,9 @@ func TestShareGroupWithGroup(t *testing.T) {
 		})
 
 	group, _, err := client.Groups.ShareGroupWithGroup(1, &ShareGroupWithGroupOptions{
-		GroupID:      Ptr(1),
+		GroupID:      Ptr(int64(1)),
 		GroupAccess:  Ptr(DeveloperPermissions),
-		MemberRoleID: Ptr(1),
+		MemberRoleID: Ptr(int64(1)),
 	})
 	if err != nil {
 		t.Errorf("Groups.ShareGroupWithGroup returned error: %v", err)
@@ -916,7 +916,7 @@ func TestShareGroupWithGroup(t *testing.T) {
 		t.Errorf("Groups.ShareGroupWithGroup returned %+v, want %+v", group, want)
 	}
 
-	assert.Equal(t, 1, *input.MemberRoleID)
+	assert.Equal(t, int64(1), *input.MemberRoleID)
 }
 
 func TestUnshareGroupFromGroup(t *testing.T) {
@@ -1176,7 +1176,7 @@ func TestAddGroupPushRules(t *testing.T) {
 		PreventSecrets:             Ptr(false),
 		AuthorEmailRegex:           Ptr("@company.com$"),
 		FileNameRegex:              Ptr("(jar|exe)$"),
-		MaxFileSize:                Ptr(5),
+		MaxFileSize:                Ptr(int64(5)),
 		CommitCommitterCheck:       Ptr(false),
 		CommitCommitterNameCheck:   Ptr(false),
 		RejectUnsignedCommits:      Ptr(false),
@@ -1243,7 +1243,7 @@ func TestEditGroupPushRules(t *testing.T) {
 		PreventSecrets:             Ptr(false),
 		AuthorEmailRegex:           Ptr("@company.com$"),
 		FileNameRegex:              Ptr("(jar|exe)$"),
-		MaxFileSize:                Ptr(5),
+		MaxFileSize:                Ptr(int64(5)),
 		CommitCommitterCheck:       Ptr(false),
 		CommitCommitterNameCheck:   Ptr(false),
 		RejectUnsignedCommits:      Ptr(false),

@@ -67,7 +67,7 @@ func TestGroupImport(t *testing.T) {
 		Name:     Ptr("test"),
 		Path:     Ptr("path"),
 		File:     Ptr(tmpfile),
-		ParentID: Ptr(1),
+		ParentID: Ptr(int64(1)),
 	}
 
 	resp, err := client.GroupImportExport.ImportFile(opt)

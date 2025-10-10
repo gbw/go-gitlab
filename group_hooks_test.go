@@ -413,7 +413,7 @@ func TestTriggerTestGroupHook(t *testing.T) {
 	tests := []struct {
 		name       string
 		groupID    any
-		hookID     int
+		hookID     int64
 		trigger    GroupHookTrigger
 		wantErr    bool
 		wantStatus int

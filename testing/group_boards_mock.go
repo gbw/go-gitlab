@@ -86,7 +86,7 @@ func (c *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardCall) DoAndRet
 }
 
 // CreateGroupIssueBoardList mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) CreateGroupIssueBoardList(gid any, board int, opt *gitlab.CreateGroupIssueBoardListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) CreateGroupIssueBoardList(gid any, board int64, opt *gitlab.CreateGroupIssueBoardListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board, opt}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall) Do(f func(any, int, *gitlab.CreateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall) Do(f func(any, int64, *gitlab.CreateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall) DoAndReturn(f func(any, int, *gitlab.CreateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall) DoAndReturn(f func(any, int64, *gitlab.CreateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceCreateGroupIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteGroupIssueBoardList mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) DeleteGroupIssueBoardList(gid any, board, list int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) DeleteGroupIssueBoardList(gid any, board, list int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board, list}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteGroupIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteIssueBoard mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) DeleteIssueBoard(gid any, board int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) DeleteIssueBoard(gid any, board int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board}
 	for _, a := range options {
@@ -207,19 +207,19 @@ func (c *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall {
+func (c *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall {
+func (c *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceDeleteIssueBoardCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupIssueBoard mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) GetGroupIssueBoard(gid any, board int, options ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) GetGroupIssueBoard(gid any, board int64, options ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board}
 	for _, a := range options {
@@ -252,19 +252,19 @@ func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall) Return(arg0
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall {
+func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall {
+func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupIssueBoardList mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) GetGroupIssueBoardList(gid any, board, list int, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) GetGroupIssueBoardList(gid any, board, list int64, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board, list}
 	for _, a := range options {
@@ -297,19 +297,19 @@ func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceGetGroupIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListGroupIssueBoardLists mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) ListGroupIssueBoardLists(gid any, board int, opt *gitlab.ListGroupIssueBoardListsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) ListGroupIssueBoardLists(gid any, board int64, opt *gitlab.ListGroupIssueBoardListsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board, opt}
 	for _, a := range options {
@@ -342,13 +342,13 @@ func (c *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall) Retur
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall) Do(f func(any, int, *gitlab.ListGroupIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall {
+func (c *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall) Do(f func(any, int64, *gitlab.ListGroupIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall) DoAndReturn(f func(any, int, *gitlab.ListGroupIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall {
+func (c *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall) DoAndReturn(f func(any, int64, *gitlab.ListGroupIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardListsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -399,7 +399,7 @@ func (c *MockGroupIssueBoardsServiceInterfaceListGroupIssueBoardsCall) DoAndRetu
 }
 
 // UpdateIssueBoard mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) UpdateIssueBoard(gid any, board int, opt *gitlab.UpdateGroupIssueBoardOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) UpdateIssueBoard(gid any, board int64, opt *gitlab.UpdateGroupIssueBoardOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board, opt}
 	for _, a := range options {
@@ -432,19 +432,19 @@ func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall) Do(f func(any, int, *gitlab.UpdateGroupIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall {
+func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall) Do(f func(any, int64, *gitlab.UpdateGroupIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall) DoAndReturn(f func(any, int, *gitlab.UpdateGroupIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall {
+func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall) DoAndReturn(f func(any, int64, *gitlab.UpdateGroupIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupIssueBoard, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateIssueBoardList mocks base method.
-func (m *MockGroupIssueBoardsServiceInterface) UpdateIssueBoardList(gid any, board, list int, opt *gitlab.UpdateGroupIssueBoardListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockGroupIssueBoardsServiceInterface) UpdateIssueBoardList(gid any, board, list int64, opt *gitlab.UpdateGroupIssueBoardListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board, list, opt}
 	for _, a := range options {
@@ -477,13 +477,13 @@ func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall) Do(f func(any, int, int, *gitlab.UpdateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall) Do(f func(any, int64, int64, *gitlab.UpdateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
+func (c *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateGroupIssueBoardListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockGroupIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
