@@ -161,3 +161,53 @@ func TestPackagesService_DeleteProjectPackage(t *testing.T) {
 	require.Error(t, err)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
+
+func TestPackagesService_ListGroupPackages(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/3/packages", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `
+            [
+              {
+                "id": 3,
+                "name": "Hello/0.1@mycompany/stable",
+                "project_id": 42,
+                "project_path": "mycompany/project",
+                "version": "0.1",
+                "package_type": "conan"
+              }
+            ]
+        `)
+	})
+
+	want := []*GroupPackage{{
+		Package: Package{
+			ID:          3,
+			Name:        "Hello/0.1@mycompany/stable",
+			Version:     "0.1",
+			PackageType: "conan",
+		},
+		ProjectID:   42,
+		ProjectPath: "mycompany/project",
+	}}
+
+	ps, resp, err := client.Packages.ListGroupPackages(3, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, want, ps)
+}
+
+func TestPackagesService_DeletePackageFile(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/3/packages/4/package_files/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Packages.DeletePackageFile(3, 4, 5, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+}
