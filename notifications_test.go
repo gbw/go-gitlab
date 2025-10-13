@@ -180,3 +180,63 @@ func TestUpdateProjectSettings(t *testing.T) {
 
 	assert.Equal(t, wantResponse, settings)
 }
+
+func TestUpdateGlobalSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	options := NotificationSettingsOptions{
+		NotificationEmail: Ptr("admin@example.com"),
+	}
+	mux.HandleFunc("/api/v4/notification_settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprintf(w, `{
+            "level": "participating",
+            "notification_email": "admin@example.com"
+        }`)
+	})
+
+	settings, resp, err := client.NotificationSettings.UpdateGlobalSettings(&options)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "admin@example.com", settings.NotificationEmail)
+}
+
+func TestGetSettingsForGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/notification_settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `{
+            "level": "participating",
+            "notification_email": "group@example.com"
+        }`)
+	})
+
+	settings, resp, err := client.NotificationSettings.GetSettingsForGroup(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "group@example.com", settings.NotificationEmail)
+}
+
+func TestUpdateSettingsForGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	options := NotificationSettingsOptions{
+		NotificationEmail: Ptr("group@example.com"),
+	}
+	mux.HandleFunc("/api/v4/groups/1/notification_settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprintf(w, `{
+            "level": "participating",
+            "notification_email": "group@example.com"
+        }`)
+	})
+
+	settings, resp, err := client.NotificationSettings.UpdateSettingsForGroup(1, &options)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "group@example.com", settings.NotificationEmail)
+}
