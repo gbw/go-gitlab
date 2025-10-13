@@ -87,6 +87,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=member_roles_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go MemberRolesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=merge_request_approval_settings_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go MergeRequestApprovalSettingsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=merge_request_approvals_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go MergeRequestApprovalsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=merge_request_context_commits_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go MergeRequestContextCommitsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=merge_requests_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go MergeRequestsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=merge_trains_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go MergeTrainsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=metadata_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go MetadataServiceInterface
