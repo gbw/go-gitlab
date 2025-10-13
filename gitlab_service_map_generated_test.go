@@ -87,6 +87,7 @@ var serviceMap = map[any]any{
 	&MemberRolesService{}:                      (*MemberRolesServiceInterface)(nil),
 	&MergeRequestApprovalSettingsService{}:     (*MergeRequestApprovalSettingsServiceInterface)(nil),
 	&MergeRequestApprovalsService{}:            (*MergeRequestApprovalsServiceInterface)(nil),
+	&MergeRequestContextCommitsService{}:       (*MergeRequestContextCommitsServiceInterface)(nil),
 	&MergeRequestsService{}:                    (*MergeRequestsServiceInterface)(nil),
 	&MergeTrainsService{}:                      (*MergeTrainsServiceInterface)(nil),
 	&MetadataService{}:                         (*MetadataServiceInterface)(nil),

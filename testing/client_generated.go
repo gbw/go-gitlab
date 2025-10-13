@@ -96,6 +96,7 @@ type testClientMocks struct {
 	MockMemberRolesService               *MockMemberRolesServiceInterface
 	MockMergeRequestApprovals            *MockMergeRequestApprovalsServiceInterface
 	MockMergeRequestApprovalSettings     *MockMergeRequestApprovalSettingsServiceInterface
+	MockMergeRequestContextCommits       *MockMergeRequestContextCommitsServiceInterface
 	MockMergeRequests                    *MockMergeRequestsServiceInterface
 	MockMergeTrains                      *MockMergeTrainsServiceInterface
 	MockMetadata                         *MockMetadataServiceInterface
@@ -251,6 +252,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockMemberRolesService := NewMockMemberRolesServiceInterface(ctrl)
 	mockMergeRequestApprovals := NewMockMergeRequestApprovalsServiceInterface(ctrl)
 	mockMergeRequestApprovalSettings := NewMockMergeRequestApprovalSettingsServiceInterface(ctrl)
+	mockMergeRequestContextCommits := NewMockMergeRequestContextCommitsServiceInterface(ctrl)
 	mockMergeRequests := NewMockMergeRequestsServiceInterface(ctrl)
 	mockMergeTrains := NewMockMergeTrainsServiceInterface(ctrl)
 	mockMetadata := NewMockMetadataServiceInterface(ctrl)
@@ -405,6 +407,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		MemberRolesService:               mockMemberRolesService,
 		MergeRequestApprovals:            mockMergeRequestApprovals,
 		MergeRequestApprovalSettings:     mockMergeRequestApprovalSettings,
+		MergeRequestContextCommits:       mockMergeRequestContextCommits,
 		MergeRequests:                    mockMergeRequests,
 		MergeTrains:                      mockMergeTrains,
 		Metadata:                         mockMetadata,
@@ -571,6 +574,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockMemberRolesService:               mockMemberRolesService,
 			MockMergeRequestApprovals:            mockMergeRequestApprovals,
 			MockMergeRequestApprovalSettings:     mockMergeRequestApprovalSettings,
+			MockMergeRequestContextCommits:       mockMergeRequestContextCommits,
 			MockMergeRequests:                    mockMergeRequests,
 			MockMergeTrains:                      mockMergeTrains,
 			MockMetadata:                         mockMetadata,
