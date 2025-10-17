@@ -1385,14 +1385,14 @@ func (c *MockProjectsServiceInterfaceGetProjectPushRulesCall) DoAndReturn(f func
 }
 
 // GetRepositoryStorage mocks base method.
-func (m *MockProjectsServiceInterface) GetRepositoryStorage(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectReposityStorage, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) GetRepositoryStorage(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorage, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetRepositoryStorage", varargs...)
-	ret0, _ := ret[0].(*gitlab.ProjectReposityStorage)
+	ret0, _ := ret[0].(*gitlab.ProjectRepositoryStorage)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -1412,19 +1412,19 @@ type MockProjectsServiceInterfaceGetRepositoryStorageCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Return(arg0 *gitlab.ProjectReposityStorage, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
+func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Return(arg0 *gitlab.ProjectRepositoryStorage, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectReposityStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
+func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectReposityStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
+func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

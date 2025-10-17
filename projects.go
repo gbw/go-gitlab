@@ -85,7 +85,7 @@ type (
 		StartMirroringProject(pid any, options ...RequestOptionFunc) (*Response, error)
 		TransferProject(pid any, opt *TransferProjectOptions, options ...RequestOptionFunc) (*Project, *Response, error)
 		StartHousekeepingProject(pid any, options ...RequestOptionFunc) (*Response, error)
-		GetRepositoryStorage(pid any, options ...RequestOptionFunc) (*ProjectReposityStorage, *Response, error)
+		GetRepositoryStorage(pid any, options ...RequestOptionFunc) (*ProjectRepositoryStorage, *Response, error)
 		ListProjectStarrers(pid any, opts *ListProjectStarrersOptions, options ...RequestOptionFunc) ([]*ProjectStarrer, *Response, error)
 	}
 
@@ -2437,16 +2437,11 @@ type ProjectRepositoryStorage struct {
 	RepositoryStorage string     `json:"repository_storage"`
 }
 
-// ProjectReposityStorage is kept for backwards compatibility.
-//
-// Deprecated: use ProjectRepositoryStorage instead. The ProjectReposityStorage type will be removed in the next release.
-type ProjectReposityStorage = ProjectRepositoryStorage
-
 // GetRepositoryStorage Get the path to repository storage.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#get-the-path-to-repository-storage
-func (s *ProjectsService) GetRepositoryStorage(pid any, options ...RequestOptionFunc) (*ProjectReposityStorage, *Response, error) {
+func (s *ProjectsService) GetRepositoryStorage(pid any, options ...RequestOptionFunc) (*ProjectRepositoryStorage, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -2458,7 +2453,7 @@ func (s *ProjectsService) GetRepositoryStorage(pid any, options ...RequestOption
 		return nil, nil, err
 	}
 
-	prs := new(ProjectReposityStorage)
+	prs := new(ProjectRepositoryStorage)
 	resp, err := s.client.Do(req, prs)
 	if err != nil {
 		return nil, resp, err

@@ -2032,7 +2032,7 @@ func TestGetRepositoryStorage(t *testing.T) {
 	storage, _, err := client.Projects.GetRepositoryStorage(1)
 
 	assert.NoError(t, err)
-	assert.Equal(t, &ProjectReposityStorage{
+	assert.Equal(t, &ProjectRepositoryStorage{
 		ProjectID:         1,
 		DiskPath:          "path/to/repo",
 		CreatedAt:         nil,
