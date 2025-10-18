@@ -22,6 +22,8 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPublishPackageFile(t *testing.T) {
@@ -63,4 +65,15 @@ func TestDownloadPackageFile(t *testing.T) {
 	if !reflect.DeepEqual(want, packageBytes) {
 		t.Errorf("GenericPackages.DownloadPackageFile returned %+v, want %+v", packageBytes, want)
 	}
+}
+
+func TestFormatPackageURL(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	url, err := client.GenericPackages.FormatPackageURL(1234, "foo", "0.1.2", "bar-baz.txt")
+	assert.NoError(t, err)
+
+	want := "projects/1234/packages/generic/foo/0%2E1%2E2/bar-baz%2Etxt"
+	assert.Equal(t, want, url)
 }
