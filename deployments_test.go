@@ -794,3 +794,61 @@ func TestDeploymentsService_UpdateProjectDeployment(t *testing.T) {
 	require.Nil(t, d)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
+
+func TestDeploymentsService_ApproveOrRejectProjectDeployment(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/deployments/1/approval", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"status": "approved",
+			"user": {
+				"id": 1,
+				"name": "Administrator",
+				"username": "root",
+				"state": "active",
+				"avatar_url": "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+				"web_url": "http://localhost:3000/root"
+			}
+		}`)
+	})
+
+	resp, err := client.Deployments.ApproveOrRejectProjectDeployment(1, 1, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, http.StatusOK, resp.StatusCode)
+}
+
+func TestDeploymentsService_ApproveOrRejectProjectDeployment_InvalidProjectIDType(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	resp, err := client.Deployments.ApproveOrRejectProjectDeployment(1.01, 1, nil)
+	require.ErrorIs(t, err, ErrInvalidIDType)
+	require.Nil(t, resp)
+}
+
+func TestDeploymentsService_ApproveOrRejectProjectDeployment_RequestOptionError(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	resp, err := client.Deployments.ApproveOrRejectProjectDeployment(1, 1, nil, errorOption)
+	require.ErrorIs(t, err, errRequestOptionFunc)
+	require.Nil(t, resp)
+}
+
+func TestDeploymentsService_ApproveOrRejectProjectDeployment_NonExistentProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/3/deployments/1/approval", func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "Not Found", http.StatusNotFound)
+	})
+
+	resp, err := client.Deployments.ApproveOrRejectProjectDeployment(3, 1, nil)
+	require.Error(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+}
