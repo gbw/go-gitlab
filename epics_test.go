@@ -21,6 +21,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetEpic(t *testing.T) {
@@ -154,5 +156,29 @@ func TestUpdateEpic(t *testing.T) {
 
 	if !reflect.DeepEqual(want, epic) {
 		t.Errorf("Epics.UpdateEpic returned %+v, want %+v", epic, want)
+	}
+}
+
+func TestGetEpicLinks(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/7/epics/8/epics", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[{"id":9, "title": "Child epic", "description": "This is a child epic", "author" : {"id" : 27, "name": "asmith"}}]`)
+	})
+
+	epics, _, err := client.Epics.GetEpicLinks("7", 8)
+	assert.NoError(t, err)
+
+	want := []*Epic{{
+		ID:          9,
+		Title:       "Child epic",
+		Description: "This is a child epic",
+		Author:      &EpicAuthor{ID: 27, Name: "asmith"},
+	}}
+
+	if !reflect.DeepEqual(want, epics) {
+		t.Errorf("Epics.GetEpicLinks returned %+v, want %+v", epics, want)
 	}
 }
