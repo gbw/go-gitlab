@@ -21,7 +21,7 @@ type TestProject struct {
 	Description string `json:"description"`
 }
 
-func TestDoRequestReturnObjectSuccess(t *testing.T) {
+func TestDoRequestSuccess(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -32,12 +32,11 @@ func TestDoRequestReturnObjectSuccess(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/get_user.json")
 	})
 
-	// WHEN DoRequestReturnObject is called with valid parameters
-	user, resp, err := DoRequestReturnObject[TestUser](
+	// WHEN doRequest is called with valid parameters
+	user, resp, err := doRequest[*TestUser](
 		client,
 		http.MethodGet,
 		"users/1",
-		nil,
 		nil,
 	)
 
@@ -48,7 +47,7 @@ func TestDoRequestReturnObjectSuccess(t *testing.T) {
 	assert.Equal(t, "John Smith", user.Name)
 }
 
-func TestDoRequestReturnObjectPOSTWithBody(t *testing.T) {
+func TestDoRequestPOSTWithBody(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -73,13 +72,12 @@ func TestDoRequestReturnObjectPOSTWithBody(t *testing.T) {
 		Description: "Test project",
 	}
 
-	// WHEN DoRequestReturnObject is called with POST method and body
-	project, resp, err := DoRequestReturnObject[TestProject](
+	// WHEN doRequest is called with POST method and body
+	project, resp, err := doRequest[*TestProject](
 		client,
 		http.MethodPost,
 		"projects",
 		requestBody,
-		nil,
 	)
 
 	// THEN the project should be created successfully
@@ -88,7 +86,7 @@ func TestDoRequestReturnObjectPOSTWithBody(t *testing.T) {
 	assert.Equal(t, "New Project", project.Name)
 }
 
-func TestDoRequestReturnObjectErrorResponse(t *testing.T) {
+func TestDoRequestErrorResponse(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -100,8 +98,8 @@ func TestDoRequestReturnObjectErrorResponse(t *testing.T) {
 		w.Write([]byte(`{"message": "Not found"}`))
 	})
 
-	// WHEN DoRequestReturnObject is called for a non-existent user
-	user, resp, err := DoRequestReturnObject[TestUser](
+	// WHEN doRequest is called for a non-existent user
+	user, resp, err := doRequest[*TestUser](
 		client,
 		http.MethodGet,
 		"users/999",
@@ -115,7 +113,7 @@ func TestDoRequestReturnObjectErrorResponse(t *testing.T) {
 	assert.Nil(t, user)
 }
 
-func TestDoRequestReturnSliceSuccess(t *testing.T) {
+func TestDoRequestSliceSuccess(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -126,8 +124,8 @@ func TestDoRequestReturnSliceSuccess(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/list_users.json")
 	})
 
-	// WHEN DoRequestReturnSlice is called to fetch users
-	users, resp, err := DoRequestReturnSlice[TestUser](
+	// WHEN doRequestSlice is called to fetch users
+	users, resp, err := doRequestSlice[TestUser](
 		client,
 		http.MethodGet,
 		"users",
@@ -151,7 +149,7 @@ func TestDoRequestReturnSliceSuccess(t *testing.T) {
 	}
 }
 
-func TestDoRequestReturnSliceEmptySlice(t *testing.T) {
+func TestDoRequestSliceEmptySlice(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -163,8 +161,8 @@ func TestDoRequestReturnSliceEmptySlice(t *testing.T) {
 		w.Write([]byte("[]"))
 	})
 
-	// WHEN DoRequestReturnSlice is called on an endpoint with no data
-	users, resp, err := DoRequestReturnSlice[TestUser](
+	// WHEN doRequestSlice is called on an endpoint with no data
+	users, resp, err := doRequestSlice[TestUser](
 		client,
 		http.MethodGet,
 		"users",
@@ -178,7 +176,7 @@ func TestDoRequestReturnSliceEmptySlice(t *testing.T) {
 	assert.Empty(t, users)
 }
 
-func TestDoRequestReturnSliceErrorResponse(t *testing.T) {
+func TestDoRequestSliceErrorResponse(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -190,8 +188,8 @@ func TestDoRequestReturnSliceErrorResponse(t *testing.T) {
 		w.Write([]byte(`{"message": "Internal server error"}`))
 	})
 
-	// WHEN DoRequestReturnSlice is called on a failing endpoint
-	users, resp, err := DoRequestReturnSlice[TestUser](
+	// WHEN doRequestSlice is called on a failing endpoint
+	users, resp, err := doRequestSlice[TestUser](
 		client,
 		http.MethodGet,
 		"users",
@@ -205,7 +203,7 @@ func TestDoRequestReturnSliceErrorResponse(t *testing.T) {
 	assert.Nil(t, users)
 }
 
-func TestDoRequestReturnVoidSuccessDELETE(t *testing.T) {
+func TestDoRequestVoidSuccessDELETE(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -216,8 +214,8 @@ func TestDoRequestReturnVoidSuccessDELETE(t *testing.T) {
 		w.WriteHeader(204) // No Content
 	})
 
-	// WHEN DoRequestReturnVoid is called with DELETE method
-	resp, err := DoRequestReturnVoid(
+	// WHEN doRequestVoid is called with DELETE method
+	resp, err := doRequestVoid(
 		client,
 		http.MethodDelete,
 		"users/1",
@@ -230,7 +228,7 @@ func TestDoRequestReturnVoidSuccessDELETE(t *testing.T) {
 	assert.Equal(t, 204, resp.StatusCode)
 }
 
-func TestDoRequestReturnVoidSuccessPUT(t *testing.T) {
+func TestDoRequestVoidSuccessPUT(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -250,8 +248,8 @@ func TestDoRequestReturnVoidSuccessPUT(t *testing.T) {
 	// GIVEN an approval request body
 	requestBody := map[string]string{"action": "approve"}
 
-	// WHEN DoRequestReturnVoid is called with PUT method and body
-	resp, err := DoRequestReturnVoid(
+	// WHEN doRequestVoid is called with PUT method and body
+	resp, err := doRequestVoid(
 		client,
 		http.MethodPut,
 		"merge_requests/1/approve",
@@ -264,7 +262,7 @@ func TestDoRequestReturnVoidSuccessPUT(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TestDoRequestReturnVoidErrorResponse(t *testing.T) {
+func TestDoRequestVoidErrorResponse(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
@@ -276,8 +274,8 @@ func TestDoRequestReturnVoidErrorResponse(t *testing.T) {
 		w.Write([]byte(`{"message": "Forbidden"}`))
 	})
 
-	// WHEN DoRequestReturnVoid is called on a forbidden operation
-	resp, err := DoRequestReturnVoid(
+	// WHEN doRequestVoid is called on a forbidden operation
+	resp, err := doRequestVoid(
 		client,
 		http.MethodDelete,
 		"users/1",
@@ -312,13 +310,13 @@ func TestRequestHandlerWithOptions(t *testing.T) {
 		WithHeader("X-Test-Header", "test-value"),
 	}
 
-	// WHEN DoRequestReturnSlice is called with request options
-	users, resp, err := DoRequestReturnSlice[TestUser](
+	// WHEN doRequestSlice is called with request options
+	users, resp, err := doRequestSlice[TestUser](
 		client,
 		http.MethodGet,
 		"users",
 		nil,
-		options,
+		options...,
 	)
 
 	// THEN the request should succeed with options applied
