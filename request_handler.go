@@ -1,38 +1,40 @@
 package gitlab
 
-// Generic utility functions to handle common request/response patterns
+// Internal utility functions for handling common request/response patterns
 
-// DoRequestReturnObject handles requests that return a single object
+// doRequest handles requests that return a single object.
 // This is a generic utility function for GitLab API endpoints that return a single resource.
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/
-func DoRequestReturnObject[T any](
+func doRequest[T any](
 	client *Client,
 	method, url string,
 	body any,
-	options []RequestOptionFunc,
-) (*T, *Response, error) {
-	result := new(T)
+	options ...RequestOptionFunc,
+) (T, *Response, error) {
+	var result T
 	req, err := client.NewRequest(method, url, body, options)
 	if err != nil {
-		return nil, nil, err
+		var zero T
+		return zero, nil, err
 	}
-	resp, err := client.Do(req, result)
+	resp, err := client.Do(req, &result)
 	if err != nil {
-		return nil, resp, err
+		var zero T
+		return zero, resp, err
 	}
 	return result, resp, nil
 }
 
-// DoRequestReturnSlice handles requests that return a slice of objects
-// This is a generic utility function for GitLab API endpoints that return a slice of objects
+// doRequestSlice handles requests that return a slice of objects.
+// This is a generic utility function for GitLab API endpoints that return a slice of objects.
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/
-func DoRequestReturnSlice[T any](
+func doRequestSlice[T any](
 	client *Client,
 	method, url string,
 	body any,
-	options []RequestOptionFunc,
+	options ...RequestOptionFunc,
 ) ([]T, *Response, error) {
 	var result []T
 	req, err := client.NewRequest(method, url, body, options)
@@ -46,15 +48,15 @@ func DoRequestReturnSlice[T any](
 	return result, resp, nil
 }
 
-// DoRequestReturnVoid handles requests that don't return data
+// doRequestVoid handles requests that don't return data.
 // This is a generic utility function for GitLab API endpoints that perform actions without returning response data.
 //
 // GitLab API docs: https://docs.gitlab.com/ee/api/
-func DoRequestReturnVoid(
+func doRequestVoid(
 	client *Client,
 	method, url string,
 	body any,
-	options []RequestOptionFunc,
+	options ...RequestOptionFunc,
 ) (*Response, error) {
 	req, err := client.NewRequest(method, url, body, options)
 	if err != nil {
