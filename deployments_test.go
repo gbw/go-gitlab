@@ -852,3 +852,33 @@ func TestDeploymentsService_ApproveOrRejectProjectDeployment_NonExistentProject(
 	require.NotNil(t, resp)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
+
+func TestDeploymentsService_DeleteProjectDeployment(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/deployments/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	resp, err := client.Deployments.DeleteProjectDeployment(1, 1, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, http.StatusNoContent, resp.StatusCode)
+
+	resp, err = client.Deployments.DeleteProjectDeployment(1.01, 1, nil)
+	require.ErrorIs(t, err, ErrInvalidIDType)
+	require.Nil(t, resp)
+
+	resp, err = client.Deployments.DeleteProjectDeployment(1, 1, errorOption)
+	require.ErrorIs(t, err, errRequestOptionFunc)
+	require.Nil(t, resp)
+
+	mux.HandleFunc("/api/v4/projects/3/deployments/1", func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "Not Found", http.StatusNotFound)
+	})
+	resp, err = client.Deployments.DeleteProjectDeployment(3, 1, nil)
+	require.Error(t, err)
+	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+}

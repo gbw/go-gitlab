@@ -19,9 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListClusterAgents(t *testing.T) {
@@ -69,9 +70,7 @@ func TestListClusterAgents(t *testing.T) {
 
 	opt := &ListAgentsOptions{}
 	clusterAgents, _, err := client.ClusterAgents.ListAgents(20, opt)
-	if err != nil {
-		t.Errorf("ClusterAgents.ListClusterAgents returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := []*Agent{
 		{
@@ -106,9 +105,7 @@ func TestListClusterAgents(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, clusterAgents) {
-		t.Errorf("ClusterAgents.ListClusterAgents returned %+v, want %+v", clusterAgents, want)
-	}
+	assert.Equal(t, want, clusterAgents)
 }
 
 func TestGetClusterAgent(t *testing.T) {
@@ -138,9 +135,7 @@ func TestGetClusterAgent(t *testing.T) {
 	})
 
 	clusterAgent, _, err := client.ClusterAgents.GetAgent(20, 1)
-	if err != nil {
-		t.Errorf("ClusterAgents.GetClusterAgent returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &Agent{
 		ID:   1,
@@ -157,9 +152,7 @@ func TestGetClusterAgent(t *testing.T) {
 		CreatedAt:       Ptr(time.Date(2022, time.April, 20, 20, 42, 40, 221000000, time.UTC)),
 		CreatedByUserID: 42,
 	}
-	if !reflect.DeepEqual(want, clusterAgent) {
-		t.Errorf("ClusterAgents.GetClusterAgent returned %+v, want %+v", clusterAgent, want)
-	}
+	assert.Equal(t, want, clusterAgent)
 }
 
 func TestRegisterClusterAgent(t *testing.T) {
@@ -190,9 +183,7 @@ func TestRegisterClusterAgent(t *testing.T) {
 
 	opt := &RegisterAgentOptions{Name: Ptr("agent-1")}
 	clusterAgent, _, err := client.ClusterAgents.RegisterAgent(20, opt)
-	if err != nil {
-		t.Errorf("ClusterAgents.RegisterClusterAgent returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &Agent{
 		ID:   1,
@@ -209,9 +200,7 @@ func TestRegisterClusterAgent(t *testing.T) {
 		CreatedAt:       Ptr(time.Date(2022, time.April, 20, 20, 42, 40, 221000000, time.UTC)),
 		CreatedByUserID: 42,
 	}
-	if !reflect.DeepEqual(want, clusterAgent) {
-		t.Errorf("ClusterAgents.RegisterClusterAgent returned %+v, want %+v", clusterAgent, want)
-	}
+	assert.Equal(t, want, clusterAgent)
 }
 
 func TestListAgentTokens(t *testing.T) {
@@ -247,9 +236,7 @@ func TestListAgentTokens(t *testing.T) {
 
 	opt := &ListAgentTokensOptions{}
 	clusterAgentTokens, _, err := client.ClusterAgents.ListAgentTokens(20, 5, opt)
-	if err != nil {
-		t.Errorf("ClusterAgents.ListAgentTokens returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := []*AgentToken{
 		{
@@ -272,9 +259,7 @@ func TestListAgentTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, clusterAgentTokens) {
-		t.Errorf("ClusterAgents.ListAgentTokens returned %+v, want %+v", clusterAgentTokens, want)
-	}
+	assert.Equal(t, want, clusterAgentTokens)
 }
 
 func TestGetAgentToken(t *testing.T) {
@@ -299,9 +284,7 @@ func TestGetAgentToken(t *testing.T) {
 	})
 
 	clusterAgentToken, _, err := client.ClusterAgents.GetAgentToken(20, 5, 1)
-	if err != nil {
-		t.Errorf("ClusterAgents.GetAgentToken returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &AgentToken{
 		ID:              1,
@@ -313,9 +296,7 @@ func TestGetAgentToken(t *testing.T) {
 		CreatedByUserID: 1,
 		LastUsedAt:      nil,
 	}
-	if !reflect.DeepEqual(want, clusterAgentToken) {
-		t.Errorf("ClusterAgents.GetAgentToken returned %+v, want %+v", clusterAgentToken, want)
-	}
+	assert.Equal(t, want, clusterAgentToken)
 }
 
 func TestRegisterAgentToken(t *testing.T) {
@@ -342,9 +323,7 @@ func TestRegisterAgentToken(t *testing.T) {
 
 	opt := &CreateAgentTokenOptions{Name: Ptr("abcd"), Description: Ptr("Some token")}
 	clusterAgentToken, _, err := client.ClusterAgents.CreateAgentToken(20, 5, opt)
-	if err != nil {
-		t.Errorf("ClusterAgents.CreateAgentToken returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &AgentToken{
 		ID:              1,
@@ -357,7 +336,33 @@ func TestRegisterAgentToken(t *testing.T) {
 		LastUsedAt:      nil,
 		Token:           "qeY8UVRisx9y3Loxo1scLxFuRxYcgeX3sxsdrpP_fR3Loq4xyg",
 	}
-	if !reflect.DeepEqual(want, clusterAgentToken) {
-		t.Errorf("ClusterAgents.CreateAgentToken returned %+v, want %+v", clusterAgentToken, want)
-	}
+	assert.Equal(t, want, clusterAgentToken)
+}
+
+func TestDeleteClusterAgent(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/20/cluster_agents/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	resp, err := client.ClusterAgents.DeleteAgent(20, 1)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
+
+func TestRevokeAgentToken(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/20/cluster_agents/5/tokens/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	resp, err := client.ClusterAgents.RevokeAgentToken(20, 5, 1)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
