@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestDockerfileTemplatesService_ListTemplates(t *testing.T) {
@@ -30,67 +31,28 @@ func TestDockerfileTemplatesService_ListTemplates(t *testing.T) {
 	mux.HandleFunc("/api/v4/templates/dockerfiles", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `[
-			{
-			  "key":"Binary",
-			  "name":"Binary"
-			},
-			{
-			  "key":"Binary-alpine",
-			  "name":"Binary-alpine"
-			},
-			{
-			  "key":"Binary-scratch",
-			  "name":"Binary-scratch"
-			},
-			{
-			  "key":"Golang",
-			  "name":"Golang"
-			},
-			{
-			  "key":"Golang-alpine",
-			  "name":"Golang-alpine"
-			},
-			{
-			  "key":"Golang-scratch",
-			  "name":"Golang-scratch"
-			}
-		  ]`)
+			{"key":"Binary","name":"Binary"},
+			{"key":"Binary-alpine","name":"Binary-alpine"},
+			{"key":"Binary-scratch","name":"Binary-scratch"},
+			{"key":"Golang","name":"Golang"},
+			{"key":"Golang-alpine","name":"Golang-alpine"},
+			{"key":"Golang-scratch","name":"Golang-scratch"}
+		]`)
 	})
 
 	templates, _, err := client.DockerfileTemplate.ListTemplates(&ListDockerfileTemplatesOptions{})
-	if err != nil {
-		t.Errorf("DockerfileTemplate.ListTemplates returned error: %v", err)
-	}
+	assert.NoError(t, err, "DockerfileTemplate.ListTemplates should not return an error")
 
 	want := []*DockerfileTemplateListItem{
-		{
-			Key:  "Binary",
-			Name: "Binary",
-		},
-		{
-			Key:  "Binary-alpine",
-			Name: "Binary-alpine",
-		},
-		{
-			Key:  "Binary-scratch",
-			Name: "Binary-scratch",
-		},
-		{
-			Key:  "Golang",
-			Name: "Golang",
-		},
-		{
-			Key:  "Golang-alpine",
-			Name: "Golang-alpine",
-		},
-		{
-			Key:  "Golang-scratch",
-			Name: "Golang-scratch",
-		},
+		{Key: "Binary", Name: "Binary"},
+		{Key: "Binary-alpine", Name: "Binary-alpine"},
+		{Key: "Binary-scratch", Name: "Binary-scratch"},
+		{Key: "Golang", Name: "Golang"},
+		{Key: "Golang-alpine", Name: "Golang-alpine"},
+		{Key: "Golang-scratch", Name: "Golang-scratch"},
 	}
-	if !reflect.DeepEqual(want, templates) {
-		t.Errorf("DockerfileTemplate.ListTemplates returned %+v, want %+v", templates, want)
-	}
+
+	assert.Equal(t, want, templates, "DockerfileTemplate.ListTemplates returned unexpected result")
 }
 
 func TestDockerfileTemplatesService_GetTemplate(t *testing.T) {
@@ -102,19 +64,16 @@ func TestDockerfileTemplatesService_GetTemplate(t *testing.T) {
 		fmt.Fprintf(w, `{
 			"name": "Binary",
 			"content": "# This file is a template, and might need editing before it works on your project."
-		  }`)
+		}`)
 	})
 
 	template, _, err := client.DockerfileTemplate.GetTemplate("Binary")
-	if err != nil {
-		t.Errorf("DockerfileTemplate.GetTemplate returned error: %v", err)
-	}
+	assert.NoError(t, err, "DockerfileTemplate.GetTemplate should not return an error")
 
 	want := &DockerfileTemplate{
 		Name:    "Binary",
 		Content: "# This file is a template, and might need editing before it works on your project.",
 	}
-	if !reflect.DeepEqual(want, template) {
-		t.Errorf("DockerfileTemplate.GetTemplate returned %+v, want %+v", template, want)
-	}
+
+	assert.Equal(t, want, template, "DockerfileTemplate.GetTemplate returned unexpected result")
 }
