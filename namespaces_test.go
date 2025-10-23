@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListNamespaces(t *testing.T) {
@@ -104,9 +105,7 @@ func TestListNamespaces(t *testing.T) {
 			t.Parallel()
 
 			namespaces, _, err := client.Namespaces.ListNamespaces(&ListNamespacesOptions{Search: tc.search, OwnedOnly: tc.ownedOnly})
-			if err != nil {
-				t.Errorf("Namespaces.ListNamespaces returned error: %v", err)
-			}
+			assert.NoError(t, err)
 
 			want := []*Namespace{
 				{
@@ -166,9 +165,7 @@ func TestListNamespaces(t *testing.T) {
 				},
 			}
 
-			if !reflect.DeepEqual(namespaces, want) {
-				t.Errorf("Namespaces.ListNamespaces returned \ngot:\n%v\nwant:\n%v", Stringify(namespaces), Stringify(want))
-			}
+			assert.Equal(t, want, namespaces)
 		})
 	}
 }
@@ -198,9 +195,7 @@ func TestGetNamespace(t *testing.T) {
 	})
 
 	namespace, _, err := client.Namespaces.GetNamespace(2)
-	if err != nil {
-		t.Errorf("Namespaces.GetNamespace returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &Namespace{
 		ID:                          2,
@@ -219,9 +214,7 @@ func TestGetNamespace(t *testing.T) {
 		Trial:                       false,
 	}
 
-	if !reflect.DeepEqual(namespace, want) {
-		t.Errorf("Namespaces.ListNamespaces returned \ngot:\n%v\nwant:\n%v", Stringify(namespace), Stringify(want))
-	}
+	assert.Equal(t, want, namespace)
 }
 
 func TestNamespaceExists(t *testing.T) {
@@ -242,17 +235,13 @@ func TestNamespaceExists(t *testing.T) {
 		ParentID: Ptr(1),
 	}
 	exists, _, err := client.Namespaces.NamespaceExists("my-group", opt)
-	if err != nil {
-		t.Errorf("Namespaces.NamespaceExists returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &NamespaceExistance{
 		Exists:   true,
 		Suggests: []string{"my-group1"},
 	}
-	if !reflect.DeepEqual(exists, want) {
-		t.Errorf("Namespaces.NamespaceExists returned \ngot:\n%v\nwant:\n%v", Stringify(exists), Stringify(want))
-	}
+	assert.Equal(t, want, exists)
 }
 
 func TestSearchNamespace(t *testing.T) {
@@ -282,9 +271,7 @@ func TestSearchNamespace(t *testing.T) {
 	})
 
 	namespaces, _, err := client.Namespaces.SearchNamespace("?search=twitter")
-	if err != nil {
-		t.Errorf("Namespaces.SearchNamespaces returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := []*Namespace{
 		{
@@ -304,7 +291,5 @@ func TestSearchNamespace(t *testing.T) {
 			Trial:                       false,
 		},
 	}
-	if !reflect.DeepEqual(namespaces, want) {
-		t.Errorf("Namespaces.SearchNamespaces returned \ngot:\n%v\nwant:\n%v", Stringify(namespaces), Stringify(want))
-	}
+	assert.Equal(t, want, namespaces)
 }
