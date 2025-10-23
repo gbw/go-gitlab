@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGroupListClusters(t *testing.T) {
@@ -41,8 +43,7 @@ func TestGroupListClusters(t *testing.T) {
 			  "platform_type":"kubernetes",
 			  "environment_scope":"*",
 			  "cluster_type":"group_type",
-			  "user":
-			  {
+			  "user": {
 				"id":1,
 				"name":"Administrator",
 				"username":"root",
@@ -50,16 +51,14 @@ func TestGroupListClusters(t *testing.T) {
 				"avatar_url":"https://www.gravatar.com/avatar/4249f4df72b..",
 				"web_url":"https://gitlab.example.com/root"
 			  },
-			  "platform_kubernetes":
-			  {
+			  "platform_kubernetes": {
 				"api_url":"https://104.197.68.152",
 				"authorization_type":"rbac",
-			    "ca_cert":"-----BEGIN CERTIFICATE-----\r\nAAAAA\r\n-----END CERTIFICATE-----"
+				"ca_cert":"-----BEGIN CERTIFICATE-----\r\nAAAAA\r\n-----END CERTIFICATE-----"
 			  },
-			  "management_project":
-			  {
+			  "management_project": {
 				"id":2,
-				"description": "sdhfgnbsdjfhg",
+				"description":"sdhfgnbsdjfhg",
 				"name":"project2",
 				"name_with_namespace":"John Doe8 / project2",
 				"path":"project2",
@@ -71,13 +70,11 @@ func TestGroupListClusters(t *testing.T) {
 			  "id":19,
 			  "name":"cluster-2"
 			}
-		  ]`)
+		]`)
 	})
 
 	clusters, _, err := client.GroupCluster.ListClusters(26)
-	if err != nil {
-		t.Errorf("GroupCluster.ListClusters returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*GroupCluster{
 		{
@@ -119,9 +116,8 @@ func TestGroupListClusters(t *testing.T) {
 			Name: "cluster-2",
 		},
 	}
-	if !reflect.DeepEqual(want, clusters) {
-		t.Errorf("GroupCluster.ListClusters returned %+v, want %+v", clusters, want)
-	}
+
+	assert.Equal(t, want, clusters)
 }
 
 func TestGetGroupCluster(t *testing.T) {
@@ -141,8 +137,7 @@ func TestGetGroupCluster(t *testing.T) {
 			"platform_type":"kubernetes",
 			"environment_scope":"*",
 			"cluster_type":"group_type",
-			"user":
-			{
+			"user": {
 			  "id":1,
 			  "name":"Administrator",
 			  "username":"root",
@@ -150,35 +145,30 @@ func TestGetGroupCluster(t *testing.T) {
 			  "avatar_url":"https://www.gravatar.com/avatar/4249f4df72b..",
 			  "web_url":"https://gitlab.example.com/root"
 			},
-			"platform_kubernetes":
-			{
+			"platform_kubernetes": {
 			  "api_url":"https://104.197.68.152",
 			  "authorization_type":"rbac",
 			  "ca_cert":"-----BEGIN CERTIFICATE-----\r\nAAAAA\r\n-----END CERTIFICATE-----"
 			},
-			"management_project":
-			{
+			"management_project": {
 			  "id":2,
-			  "description": "skjdfgsdfg",
+			  "description":"skjdfgsdfg",
 			  "name":"project2",
 			  "name_with_namespace":"John Doe8 / project2",
 			  "path":"project2",
 			  "path_with_namespace":"namespace2/project2",
 			  "created_at":"2019-10-11T02:55:54.138Z"
 			},
-			"group":
-			{
+			"group": {
 			  "id":26,
 			  "name":"group-with-clusters-api",
 			  "web_url":"https://gitlab.example.com/group-with-clusters-api"
 			}
-		  }`)
+		}`)
 	})
 
 	cluster, _, err := client.GroupCluster.GetCluster(26, 18)
-	if err != nil {
-		t.Errorf("GroupCluster.GetCluster returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupCluster{
 		ID:               18,
@@ -219,9 +209,8 @@ func TestGetGroupCluster(t *testing.T) {
 			WebURL: "https://gitlab.example.com/group-with-clusters-api",
 		},
 	}
-	if !reflect.DeepEqual(want, cluster) {
-		t.Errorf("GroupCluster.GetCluster returned %+v, want %+v", cluster, want)
-	}
+
+	assert.Equal(t, want, cluster)
 }
 
 func TestAddGroupCluster(t *testing.T) {
@@ -240,8 +229,7 @@ func TestAddGroupCluster(t *testing.T) {
 			"platform_type":"kubernetes",
 			"environment_scope":"*",
 			"cluster_type":"group_type",
-			"user":
-			{
+			"user": {
 			  "id":1,
 			  "name":"Administrator",
 			  "username":"root",
@@ -249,26 +237,22 @@ func TestAddGroupCluster(t *testing.T) {
 			  "avatar_url":"https://www.gravatar.com/avatar/4249f4df72b..",
 			  "web_url":"https://gitlab.example.com/root"
 			},
-			"platform_kubernetes":
-			{
+			"platform_kubernetes": {
 			  "api_url":"https://35.111.51.20",
 			  "authorization_type":"rbac",
 			  "ca_cert":"-----BEGIN CERTIFICATE-----\r\nAAAAA\r\n-----END CERTIFICATE-----"
 			},
-			"management_project":null,
-			"group":
-			{
+			"management_project": null,
+			"group": {
 			  "id":26,
 			  "name":"group-with-clusters-api",
 			  "web_url":"https://gitlab.example.com/root/group-with-clusters-api"
 			}
-		  }`)
+		}`)
 	})
 
 	cluster, _, err := client.GroupCluster.AddCluster(26, &AddGroupClusterOptions{})
-	if err != nil {
-		t.Errorf("GroupCluster.AddCluster returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupCluster{
 		ID:               24,
@@ -300,9 +284,8 @@ func TestAddGroupCluster(t *testing.T) {
 			WebURL: "https://gitlab.example.com/root/group-with-clusters-api",
 		},
 	}
-	if !reflect.DeepEqual(want, cluster) {
-		t.Errorf("GroupCluster.AddCluster returned %+v, want %+v", cluster, want)
-	}
+
+	assert.Equal(t, want, cluster)
 }
 
 func TestEditGroupCluster(t *testing.T) {
@@ -322,43 +305,40 @@ func TestEditGroupCluster(t *testing.T) {
 			"platform_type":"kubernetes",
 			"environment_scope":"*",
 			"cluster_type":"group_type",
-			"user":
-			{
-			  "id":1,
-			  "name":"Administrator",
-			  "username":"root",
-			  "state":"active",
-			  "avatar_url":"https://www.gravatar.com/avatar/4249f4df72b..",
-			  "web_url":"https://gitlab.example.com/root"
+			"user": {
+				"id":1,
+				"name":"Administrator",
+				"username":"root",
+				"state":"active",
+				"avatar_url":"https://www.gravatar.com/avatar/4249f4df72b..",
+				"web_url":"https://gitlab.example.com/root"
 			},
-			"platform_kubernetes":
-			{
-			  "api_url":"https://new-api-url.com",
-			  "authorization_type":"rbac"
+			"platform_kubernetes": {
+				"api_url":"https://new-api-url.com",
+				"authorization_type":"rbac"
 			},
-			"management_project":
-			{
-			  "id":2,
-			  "description":"sjdkfngjkdsfngdfgndfg",
-			  "name":"project2",
-			  "name_with_namespace":"John Doe8 / project2",
-			  "path":"project2",
-			  "path_with_namespace":"namespace2/project2",
-			  "created_at":"2019-10-11T02:55:54.138Z"
+			"management_project": {
+				"id":2,
+				"description":"sjdkfngjkdsfngdfgndfg",
+				"name":"project2",
+				"name_with_namespace":"John Doe8 / project2",
+				"path":"project2",
+				"path_with_namespace":"namespace2/project2",
+				"created_at":"2019-10-11T02:55:54.138Z"
 			},
-			"group":
-			{
-			  "id":26,
-			  "name":"group-with-clusters-api",
-			  "web_url":"https://gitlab.example.com/group-with-clusters-api"
+			"group": {
+				"id":26,
+				"name":"group-with-clusters-api",
+				"web_url":"https://gitlab.example.com/group-with-clusters-api"
 			}
-		  }`)
+		}`)
 	})
 
 	name := "new-cluster-name"
 	domain := "new-domain.com"
 	environmentScope := "*"
 	apiURL := "https://new-api-url.com"
+
 	opt := &EditGroupClusterOptions{
 		Name:             &name,
 		Domain:           &domain,
@@ -367,10 +347,10 @@ func TestEditGroupCluster(t *testing.T) {
 			APIURL: &apiURL,
 		},
 	}
+
 	cluster, _, err := client.GroupCluster.EditCluster(26, 24, opt)
-	if err != nil {
-		t.Errorf("GroupCluster.EditCluster returned error: %v", err)
-	}
+	require.NoError(t, err, "GroupCluster.EditCluster should not return an error")
+	require.NotNil(t, cluster, "Cluster response should not be nil")
 
 	want := &GroupCluster{
 		ID:               24,
@@ -410,9 +390,8 @@ func TestEditGroupCluster(t *testing.T) {
 			WebURL: "https://gitlab.example.com/group-with-clusters-api",
 		},
 	}
-	if !reflect.DeepEqual(want, cluster) {
-		t.Errorf("GroupCluster.EditCluster returned %+v, want %+v", cluster, want)
-	}
+
+	assert.Equal(t, want, cluster, "GroupCluster.EditCluster returned unexpected result")
 }
 
 func TestDeleteGroupCluster(t *testing.T) {
@@ -424,7 +403,5 @@ func TestDeleteGroupCluster(t *testing.T) {
 	})
 
 	_, err := client.GroupCluster.DeleteCluster(26, 23)
-	if err != nil {
-		t.Errorf("GroupCluster.DeleteCluster returned error: %v", err)
-	}
+	require.NoError(t, err, "GroupCluster.DeleteCluster should not return an error")
 }
