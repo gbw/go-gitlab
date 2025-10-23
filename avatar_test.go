@@ -20,6 +20,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetAvatar(t *testing.T) {
@@ -28,27 +31,21 @@ func TestGetAvatar(t *testing.T) {
 
 	const url = "https://www.gravatar.com/avatar/10e6bf7bcf22c2f00a3ef684b4ada178"
 
-	mux.HandleFunc("/api/v4/avatar",
-		func(w http.ResponseWriter, r *http.Request) {
-			testMethod(t, r, http.MethodGet)
-			w.WriteHeader(http.StatusAccepted)
-			avatar := Avatar{AvatarURL: url}
-			resp, _ := json.Marshal(avatar)
-			_, _ = w.Write(resp)
-		},
-	)
+	mux.HandleFunc("/api/v4/avatar", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		w.WriteHeader(http.StatusAccepted)
+		avatar := Avatar{AvatarURL: url}
+		resp, _ := json.Marshal(avatar)
+		_, _ = w.Write(resp)
+	})
 
 	opt := &GetAvatarOptions{Email: Ptr("sander@vanharmelen.nnl")}
 	avatar, resp, err := client.Avatar.GetAvatar(opt)
-	if err != nil {
-		t.Fatalf("Avatar.GetAvatar returned error: %v", err)
-	}
 
-	if resp.Status != "202 Accepted" {
-		t.Fatalf("Avatar.GetAvatar returned wrong status code: %v", resp.Status)
-	}
+	require.NoError(t, err, "Avatar.GetAvatar should not return an error")
+	require.NotNil(t, resp, "Response should not be nil")
+	assert.Equal(t, "202 Accepted", resp.Status, "Expected HTTP status 202 Accepted")
 
-	if url != avatar.AvatarURL {
-		t.Errorf("Avatar.GetAvatar wrong result %s, want %s", avatar.AvatarURL, url)
-	}
+	require.NotNil(t, avatar, "Avatar should not be nil")
+	assert.Equal(t, url, avatar.AvatarURL, "Avatar.GetAvatar returned unexpected URL")
 }
