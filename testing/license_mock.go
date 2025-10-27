@@ -86,7 +86,7 @@ func (c *MockLicenseServiceInterfaceAddLicenseCall) DoAndReturn(f func(*gitlab.A
 }
 
 // DeleteLicense mocks base method.
-func (m *MockLicenseServiceInterface) DeleteLicense(licenseID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockLicenseServiceInterface) DeleteLicense(licenseID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{licenseID}
 	for _, a := range options {
@@ -118,13 +118,13 @@ func (c *MockLicenseServiceInterfaceDeleteLicenseCall) Return(arg0 *gitlab.Respo
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockLicenseServiceInterfaceDeleteLicenseCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockLicenseServiceInterfaceDeleteLicenseCall {
+func (c *MockLicenseServiceInterfaceDeleteLicenseCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockLicenseServiceInterfaceDeleteLicenseCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockLicenseServiceInterfaceDeleteLicenseCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockLicenseServiceInterfaceDeleteLicenseCall {
+func (c *MockLicenseServiceInterfaceDeleteLicenseCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockLicenseServiceInterfaceDeleteLicenseCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

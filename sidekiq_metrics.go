@@ -52,8 +52,8 @@ type QueueMetrics struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/sidekiq_metrics/#get-the-current-queue-metrics
 type QueueMetricsQueue struct {
-	Backlog int `json:"backlog"`
-	Latency int `json:"latency"`
+	Backlog int64 `json:"backlog"`
+	Latency int64 `json:"latency"`
 }
 
 // GetQueueMetrics lists information about all the registered queues,
@@ -90,13 +90,13 @@ type ProcessMetrics struct {
 // https://docs.gitlab.com/api/sidekiq_metrics/#get-the-current-process-metrics
 type ProcessMetricsProcess struct {
 	Hostname    string     `json:"hostname"`
-	Pid         int        `json:"pid"`
+	Pid         int64      `json:"pid"`
 	Tag         string     `json:"tag"`
 	StartedAt   *time.Time `json:"started_at"`
 	Queues      []string   `json:"queues"`
 	Labels      []string   `json:"labels"`
-	Concurrency int        `json:"concurrency"`
-	Busy        int        `json:"busy"`
+	Concurrency int64      `json:"concurrency"`
+	Busy        int64      `json:"busy"`
 }
 
 // GetProcessMetrics lists information about all the Sidekiq workers registered
@@ -132,9 +132,9 @@ type JobStats struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/sidekiq_metrics/#get-the-current-job-statistics
 type JobStatsJobs struct {
-	Processed int `json:"processed"`
-	Failed    int `json:"failed"`
-	Enqueued  int `json:"enqueued"`
+	Processed int64 `json:"processed"`
+	Failed    int64 `json:"failed"`
+	Enqueued  int64 `json:"enqueued"`
 }
 
 // GetJobStats list information about the jobs that Sidekiq has performed.

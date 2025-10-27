@@ -86,7 +86,7 @@ func (c *MockPipelineTriggersServiceInterfaceAddPipelineTriggerCall) DoAndReturn
 }
 
 // DeletePipelineTrigger mocks base method.
-func (m *MockPipelineTriggersServiceInterface) DeletePipelineTrigger(pid any, trigger int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockPipelineTriggersServiceInterface) DeletePipelineTrigger(pid any, trigger int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, trigger}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall {
+func (c *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall {
+func (c *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceDeletePipelineTriggerCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditPipelineTrigger mocks base method.
-func (m *MockPipelineTriggersServiceInterface) EditPipelineTrigger(pid any, trigger int, opt *gitlab.EditPipelineTriggerOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error) {
+func (m *MockPipelineTriggersServiceInterface) EditPipelineTrigger(pid any, trigger int64, opt *gitlab.EditPipelineTriggerOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, trigger, opt}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall) Do(f func(any, int, *gitlab.EditPipelineTriggerOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall {
+func (c *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall) Do(f func(any, int64, *gitlab.EditPipelineTriggerOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall) DoAndReturn(f func(any, int, *gitlab.EditPipelineTriggerOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall {
+func (c *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall) DoAndReturn(f func(any, int64, *gitlab.EditPipelineTriggerOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceEditPipelineTriggerCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetPipelineTrigger mocks base method.
-func (m *MockPipelineTriggersServiceInterface) GetPipelineTrigger(pid any, trigger int, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error) {
+func (m *MockPipelineTriggersServiceInterface) GetPipelineTrigger(pid any, trigger int64, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, trigger}
 	for _, a := range options {
@@ -208,13 +208,13 @@ func (c *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall) Return(arg0
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall {
+func (c *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall {
+func (c *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTrigger, *gitlab.Response, error)) *MockPipelineTriggersServiceInterfaceGetPipelineTriggerCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

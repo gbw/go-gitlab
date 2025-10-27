@@ -25,7 +25,7 @@ type (
 		ListEnterpriseUsers(gid any, opt *ListEnterpriseUsersOptions, options ...RequestOptionFunc) ([]*User, *Response, error)
 		GetEnterpriseUser(gid any, uid int64, options ...RequestOptionFunc) (*User, *Response, error)
 		Disable2FAForEnterpriseUser(gid any, uid int64, options ...RequestOptionFunc) (*Response, error)
-		DeleteEnterpriseUser(gid any, uid int, deleteOptions *DeleteEnterpriseUserOptions, options ...RequestOptionFunc) (*Response, error)
+		DeleteEnterpriseUser(gid any, uid int64, deleteOptions *DeleteEnterpriseUserOptions, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// EnterpriseUsersService handles communication with the enterprise users
@@ -137,7 +137,7 @@ type DeleteEnterpriseUserOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_enterprise_users/#delete-an-enterprise-user
-func (s *EnterpriseUsersService) DeleteEnterpriseUser(gid any, uid int, opt *DeleteEnterpriseUserOptions, options ...RequestOptionFunc) (*Response, error) {
+func (s *EnterpriseUsersService) DeleteEnterpriseUser(gid any, uid int64, opt *DeleteEnterpriseUserOptions, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err

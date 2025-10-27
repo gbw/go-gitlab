@@ -102,7 +102,7 @@ func TestSearchService_Users(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Len(t, users, 1)
-		assert.Equal(t, 2, users[0].ID)
+		assert.Equal(t, int64(2), users[0].ID)
 	})
 }
 

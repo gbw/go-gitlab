@@ -104,7 +104,7 @@ func (s *ExternalStatusChecksService) ListMergeStatusChecks(pid any, mr int64, o
 // https://docs.gitlab.com/api/status_checks/#set-status-of-an-external-status-check
 type SetExternalStatusCheckStatusOptions struct {
 	SHA                   *string `url:"sha,omitempty" json:"sha,omitempty"`
-	ExternalStatusCheckID *int    `url:"external_status_check_id,omitempty" json:"external_status_check_id,omitempty"`
+	ExternalStatusCheckID *int64  `url:"external_status_check_id,omitempty" json:"external_status_check_id,omitempty"`
 	Status                *string `url:"status,omitempty" json:"status,omitempty"`
 }
 
@@ -161,9 +161,9 @@ func (s *ExternalStatusChecksService) ListProjectStatusChecks(pid any, opt *List
 // GitLab API docs:
 // https://docs.gitlab.com/api/status_checks/#create-external-status-check-service
 type CreateExternalStatusCheckOptions struct {
-	Name               *string `url:"name,omitempty" json:"name,omitempty"`
-	ExternalURL        *string `url:"external_url,omitempty" json:"external_url,omitempty"`
-	ProtectedBranchIDs *[]int  `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
+	Name               *string  `url:"name,omitempty" json:"name,omitempty"`
+	ExternalURL        *string  `url:"external_url,omitempty" json:"external_url,omitempty"`
+	ProtectedBranchIDs *[]int64 `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
 }
 
 // CreateExternalStatusCheck creates an external status check.
@@ -213,9 +213,9 @@ func (s *ExternalStatusChecksService) DeleteExternalStatusCheck(pid any, check i
 // GitLab API docs:
 // https://docs.gitlab.com/api/status_checks/#update-external-status-check-service
 type UpdateExternalStatusCheckOptions struct {
-	Name               *string `url:"name,omitempty" json:"name,omitempty"`
-	ExternalURL        *string `url:"external_url,omitempty" json:"external_url,omitempty"`
-	ProtectedBranchIDs *[]int  `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
+	Name               *string  `url:"name,omitempty" json:"name,omitempty"`
+	ExternalURL        *string  `url:"external_url,omitempty" json:"external_url,omitempty"`
+	ProtectedBranchIDs *[]int64 `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
 }
 
 // UpdateExternalStatusCheck updates an external status check.
@@ -333,10 +333,10 @@ func (s *ExternalStatusChecksService) ListProjectExternalStatusChecks(pid any, o
 // GitLab API docs:
 // https://docs.gitlab.com/api/status_checks/#create-external-status-check-service
 type CreateProjectExternalStatusCheckOptions struct {
-	Name               *string `url:"name,omitempty" json:"name,omitempty"`
-	ExternalURL        *string `url:"external_url,omitempty" json:"external_url,omitempty"`
-	SharedSecret       *string `url:"shared_secret,omitempty" json:"shared_secret,omitempty"`
-	ProtectedBranchIDs *[]int  `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
+	Name               *string  `url:"name,omitempty" json:"name,omitempty"`
+	ExternalURL        *string  `url:"external_url,omitempty" json:"external_url,omitempty"`
+	SharedSecret       *string  `url:"shared_secret,omitempty" json:"shared_secret,omitempty"`
+	ProtectedBranchIDs *[]int64 `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
 }
 
 // CreateProjectExternalStatusCheck creates an external status check.
@@ -396,10 +396,10 @@ func (s *ExternalStatusChecksService) DeleteProjectExternalStatusCheck(pid any, 
 // GitLab API docs:
 // https://docs.gitlab.com/api/status_checks/#update-external-status-check-service
 type UpdateProjectExternalStatusCheckOptions struct {
-	Name               *string `url:"name,omitempty" json:"name,omitempty"`
-	ExternalURL        *string `url:"external_url,omitempty" json:"external_url,omitempty"`
-	SharedSecret       *string `url:"shared_secret,omitempty" json:"shared_secret,omitempty"`
-	ProtectedBranchIDs *[]int  `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
+	Name               *string  `url:"name,omitempty" json:"name,omitempty"`
+	ExternalURL        *string  `url:"external_url,omitempty" json:"external_url,omitempty"`
+	SharedSecret       *string  `url:"shared_secret,omitempty" json:"shared_secret,omitempty"`
+	ProtectedBranchIDs *[]int64 `url:"protected_branch_ids,omitempty" json:"protected_branch_ids,omitempty"`
 }
 
 // UpdateProjectExternalStatusCheck updates an external status check.
@@ -460,7 +460,7 @@ func (s *ExternalStatusChecksService) RetryFailedExternalStatusCheckForProjectMe
 // https://docs.gitlab.com/api/status_checks/#set-status-of-an-external-status-check
 type SetProjectMergeRequestExternalStatusCheckStatusOptions struct {
 	SHA                   *string `url:"sha,omitempty" json:"sha,omitempty"`
-	ExternalStatusCheckID *int    `url:"external_status_check_id,omitempty" json:"external_status_check_id,omitempty"`
+	ExternalStatusCheckID *int64  `url:"external_status_check_id,omitempty" json:"external_status_check_id,omitempty"`
 	Status                *string `url:"status,omitempty" json:"status,omitempty"`
 }
 

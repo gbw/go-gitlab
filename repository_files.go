@@ -53,7 +53,7 @@ var _ RepositoryFilesServiceInterface = (*RepositoryFilesService)(nil)
 type File struct {
 	FileName        string `json:"file_name"`
 	FilePath        string `json:"file_path"`
-	Size            int    `json:"size"`
+	Size            int64  `json:"size"`
 	Encoding        string `json:"encoding"`
 	Content         string `json:"content"`
 	ExecuteFilemode bool   `json:"execute_filemode"`
@@ -164,7 +164,7 @@ func getMetaDataFileFromHeaders(resp *Response) (*File, error) {
 	}
 
 	if sizeString := resp.Header.Get("X-Gitlab-Size"); sizeString != "" {
-		size, err := strconv.Atoi(sizeString)
+		size, err := strconv.ParseInt(sizeString, 10, 64)
 		if err != nil {
 			return nil, err
 		}
@@ -213,8 +213,8 @@ func (c FileBlameRangeCommit) String() string {
 // https://docs.gitlab.com/api/repository_files/#get-file-blame-from-repository
 type GetFileBlameOptions struct {
 	Ref        *string `url:"ref,omitempty" json:"ref,omitempty"`
-	RangeStart *int    `url:"range[start],omitempty" json:"range[start],omitempty"`
-	RangeEnd   *int    `url:"range[end],omitempty" json:"range[end],omitempty"`
+	RangeStart *int64  `url:"range[start],omitempty" json:"range[start],omitempty"`
+	RangeEnd   *int64  `url:"range[end],omitempty" json:"range[end],omitempty"`
 }
 
 // GetFileBlame allows you to receive blame information. Each blame range

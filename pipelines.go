@@ -50,15 +50,15 @@ const (
 type (
 	PipelinesServiceInterface interface {
 		ListProjectPipelines(pid any, opt *ListProjectPipelinesOptions, options ...RequestOptionFunc) ([]*PipelineInfo, *Response, error)
-		GetPipeline(pid any, pipeline int, options ...RequestOptionFunc) (*Pipeline, *Response, error)
-		GetPipelineVariables(pid any, pipeline int, options ...RequestOptionFunc) ([]*PipelineVariable, *Response, error)
-		GetPipelineTestReport(pid any, pipeline int, options ...RequestOptionFunc) (*PipelineTestReport, *Response, error)
+		GetPipeline(pid any, pipeline int64, options ...RequestOptionFunc) (*Pipeline, *Response, error)
+		GetPipelineVariables(pid any, pipeline int64, options ...RequestOptionFunc) ([]*PipelineVariable, *Response, error)
+		GetPipelineTestReport(pid any, pipeline int64, options ...RequestOptionFunc) (*PipelineTestReport, *Response, error)
 		GetLatestPipeline(pid any, opt *GetLatestPipelineOptions, options ...RequestOptionFunc) (*Pipeline, *Response, error)
 		CreatePipeline(pid any, opt *CreatePipelineOptions, options ...RequestOptionFunc) (*Pipeline, *Response, error)
-		RetryPipelineBuild(pid any, pipeline int, options ...RequestOptionFunc) (*Pipeline, *Response, error)
-		CancelPipelineBuild(pid any, pipeline int, options ...RequestOptionFunc) (*Pipeline, *Response, error)
-		DeletePipeline(pid any, pipeline int, options ...RequestOptionFunc) (*Response, error)
-		UpdatePipelineMetadata(pid any, pipeline int, opt *UpdatePipelineMetadataOptions, options ...RequestOptionFunc) (*Pipeline, *Response, error)
+		RetryPipelineBuild(pid any, pipeline int64, options ...RequestOptionFunc) (*Pipeline, *Response, error)
+		CancelPipelineBuild(pid any, pipeline int64, options ...RequestOptionFunc) (*Pipeline, *Response, error)
+		DeletePipeline(pid any, pipeline int64, options ...RequestOptionFunc) (*Response, error)
+		UpdatePipelineMetadata(pid any, pipeline int64, opt *UpdatePipelineMetadataOptions, options ...RequestOptionFunc) (*Pipeline, *Response, error)
 	}
 
 	// PipelinesService handles communication with the repositories related
@@ -93,9 +93,9 @@ type PipelineInput struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/pipelines/
 type Pipeline struct {
-	ID             int             `json:"id"`
-	IID            int             `json:"iid"`
-	ProjectID      int             `json:"project_id"`
+	ID             int64           `json:"id"`
+	IID            int64           `json:"iid"`
+	ProjectID      int64           `json:"project_id"`
 	Status         string          `json:"status"`
 	Source         PipelineSource  `json:"source"`
 	Ref            string          `json:"ref"`
@@ -110,8 +110,8 @@ type Pipeline struct {
 	StartedAt      *time.Time      `json:"started_at"`
 	FinishedAt     *time.Time      `json:"finished_at"`
 	CommittedAt    *time.Time      `json:"committed_at"`
-	Duration       int             `json:"duration"`
-	QueuedDuration int             `json:"queued_duration"`
+	Duration       int64           `json:"duration"`
+	QueuedDuration int64           `json:"queued_duration"`
 	Coverage       string          `json:"coverage"`
 	WebURL         string          `json:"web_url"`
 	DetailedStatus *DetailedStatus `json:"detailed_status"`
@@ -150,11 +150,11 @@ func (i DetailedStatusIllustration) String() string {
 // PipelineTestReport contains a detailed report of a test run.
 type PipelineTestReport struct {
 	TotalTime    float64               `json:"total_time"`
-	TotalCount   int                   `json:"total_count"`
-	SuccessCount int                   `json:"success_count"`
-	FailedCount  int                   `json:"failed_count"`
-	SkippedCount int                   `json:"skipped_count"`
-	ErrorCount   int                   `json:"error_count"`
+	TotalCount   int64                 `json:"total_count"`
+	SuccessCount int64                 `json:"success_count"`
+	FailedCount  int64                 `json:"failed_count"`
+	SkippedCount int64                 `json:"skipped_count"`
+	ErrorCount   int64                 `json:"error_count"`
 	TestSuites   []*PipelineTestSuites `json:"test_suites"`
 }
 
@@ -162,11 +162,11 @@ type PipelineTestReport struct {
 type PipelineTestSuites struct {
 	Name         string               `json:"name"`
 	TotalTime    float64              `json:"total_time"`
-	TotalCount   int                  `json:"total_count"`
-	SuccessCount int                  `json:"success_count"`
-	FailedCount  int                  `json:"failed_count"`
-	SkippedCount int                  `json:"skipped_count"`
-	ErrorCount   int                  `json:"error_count"`
+	TotalCount   int64                `json:"total_count"`
+	SuccessCount int64                `json:"success_count"`
+	FailedCount  int64                `json:"failed_count"`
+	SkippedCount int64                `json:"skipped_count"`
+	ErrorCount   int64                `json:"error_count"`
 	TestCases    []*PipelineTestCases `json:"test_cases"`
 }
 
@@ -185,7 +185,7 @@ type PipelineTestCases struct {
 
 // RecentFailures contains failures count for the project's default branch.
 type RecentFailures struct {
-	Count      int    `json:"count"`
+	Count      int64  `json:"count"`
 	BaseBranch string `json:"base_branch"`
 }
 
@@ -196,9 +196,9 @@ func (p PipelineTestReport) String() string {
 // PipelineInfo shows the basic entities of a pipeline, mostly used as fields
 // on other assets, like Commit.
 type PipelineInfo struct {
-	ID        int        `json:"id"`
-	IID       int        `json:"iid"`
-	ProjectID int        `json:"project_id"`
+	ID        int64      `json:"id"`
+	IID       int64      `json:"iid"`
+	ProjectID int64      `json:"project_id"`
 	Status    string     `json:"status"`
 	Source    string     `json:"source"`
 	Ref       string     `json:"ref"`
@@ -265,7 +265,7 @@ func (s *PipelinesService) ListProjectPipelines(pid any, opt *ListProjectPipelin
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipelines/#get-a-single-pipeline
-func (s *PipelinesService) GetPipeline(pid any, pipeline int, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
+func (s *PipelinesService) GetPipeline(pid any, pipeline int64, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -290,7 +290,7 @@ func (s *PipelinesService) GetPipeline(pid any, pipeline int, options ...Request
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipelines/#get-variables-of-a-pipeline
-func (s *PipelinesService) GetPipelineVariables(pid any, pipeline int, options ...RequestOptionFunc) ([]*PipelineVariable, *Response, error) {
+func (s *PipelinesService) GetPipelineVariables(pid any, pipeline int64, options ...RequestOptionFunc) ([]*PipelineVariable, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -315,7 +315,7 @@ func (s *PipelinesService) GetPipelineVariables(pid any, pipeline int, options .
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipelines/#get-a-pipelines-test-report
-func (s *PipelinesService) GetPipelineTestReport(pid any, pipeline int, options ...RequestOptionFunc) (*PipelineTestReport, *Response, error) {
+func (s *PipelinesService) GetPipelineTestReport(pid any, pipeline int64, options ...RequestOptionFunc) (*PipelineTestReport, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -481,7 +481,7 @@ func (s *PipelinesService) CreatePipeline(pid any, opt *CreatePipelineOptions, o
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipelines/#retry-jobs-in-a-pipeline
-func (s *PipelinesService) RetryPipelineBuild(pid any, pipeline int, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
+func (s *PipelinesService) RetryPipelineBuild(pid any, pipeline int64, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -506,7 +506,7 @@ func (s *PipelinesService) RetryPipelineBuild(pid any, pipeline int, options ...
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipelines/#cancel-a-pipelines-jobs
-func (s *PipelinesService) CancelPipelineBuild(pid any, pipeline int, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
+func (s *PipelinesService) CancelPipelineBuild(pid any, pipeline int64, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -531,7 +531,7 @@ func (s *PipelinesService) CancelPipelineBuild(pid any, pipeline int, options ..
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipelines/#delete-a-pipeline
-func (s *PipelinesService) DeletePipeline(pid any, pipeline int, options ...RequestOptionFunc) (*Response, error) {
+func (s *PipelinesService) DeletePipeline(pid any, pipeline int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err
@@ -560,7 +560,7 @@ type UpdatePipelineMetadataOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/pipelines/#update-pipeline-metadata
-func (s *PipelinesService) UpdatePipelineMetadata(pid any, pipeline int, opt *UpdatePipelineMetadataOptions, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
+func (s *PipelinesService) UpdatePipelineMetadata(pid any, pipeline int64, opt *UpdatePipelineMetadataOptions, options ...RequestOptionFunc) (*Pipeline, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err

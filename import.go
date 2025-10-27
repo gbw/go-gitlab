@@ -46,7 +46,7 @@ var _ ImportServiceInterface = (*ImportService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/api/import/#import-repository-from-github
 type GitHubImport struct {
-	ID                    int    `json:"id"`
+	ID                    int64  `json:"id"`
 	Name                  string `json:"name"`
 	FullPath              string `json:"full_path"`
 	FullName              string `json:"full_name"`
@@ -70,7 +70,7 @@ func (s GitHubImport) String() string {
 // https://docs.gitlab.com/api/import/#import-repository-from-github
 type ImportRepositoryFromGitHubOptions struct {
 	PersonalAccessToken *string                                         `url:"personal_access_token,omitempty" json:"personal_access_token,omitempty"`
-	RepoID              *int                                            `url:"repo_id,omitempty" json:"repo_id,omitempty"`
+	RepoID              *int64                                          `url:"repo_id,omitempty" json:"repo_id,omitempty"`
 	NewName             *string                                         `url:"new_name,omitempty" json:"new_name,omitempty"`
 	TargetNamespace     *string                                         `url:"target_namespace,omitempty" json:"target_namespace,omitempty"`
 	GitHubHostname      *string                                         `url:"github_hostname,omitempty" json:"github_hostname,omitempty"`
@@ -109,7 +109,7 @@ func (s *ImportService) ImportRepositoryFromGitHub(opt *ImportRepositoryFromGitH
 // GitLab API docs:
 // https://docs.gitlab.com/api/import/#cancel-github-project-import
 type CancelledGitHubImport struct {
-	ID                    int    `json:"id"`
+	ID                    int64  `json:"id"`
 	Name                  string `json:"name"`
 	FullPath              string `json:"full_path"`
 	FullName              string `json:"full_name"`
@@ -129,7 +129,7 @@ func (s CancelledGitHubImport) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/import/#cancel-github-project-import
 type CancelGitHubProjectImportOptions struct {
-	ProjectID *int `url:"project_id,omitempty" json:"project_id,omitempty"`
+	ProjectID *int64 `url:"project_id,omitempty" json:"project_id,omitempty"`
 }
 
 // CancelGitHubProjectImport cancels an import of a repository from GitHub.
@@ -179,7 +179,7 @@ func (s *ImportService) ImportGitHubGistsIntoGitLabSnippets(opt *ImportGitHubGis
 // GitLab API docs:
 // https://docs.gitlab.com/api/import/#import-repository-from-bitbucket-server
 type BitbucketServerImport struct {
-	ID       int    `json:"id"`
+	ID       int64  `json:"id"`
 	Name     string `json:"name"`
 	FullPath string `json:"full_path"`
 	FullName string `json:"full_name"`
@@ -230,7 +230,7 @@ func (s *ImportService) ImportRepositoryFromBitbucketServer(opt *ImportRepositor
 // GitLab API docs:
 // https://docs.gitlab.com/api/import/#import-repository-from-bitbucket-cloud
 type BitbucketCloudImport struct {
-	ID                    int    `json:"id"`
+	ID                    int64  `json:"id"`
 	Name                  string `json:"name"`
 	FullPath              string `json:"full_path"`
 	FullName              string `json:"full_name"`

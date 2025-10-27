@@ -51,7 +51,7 @@ func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests(t *testing.T
 	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
-		require.Equal(t, 278964, mr.ProjectID)
+		require.Equal(t, int64(278964), mr.ProjectID)
 		require.Contains(t, validStates, mr.State)
 		assert.Less(t, mr.CreatedAt.Unix(), allCreatedBefore.Unix())
 		assert.Greater(t, mr.CreatedAt.Unix(), allCreatedAfter.Unix())

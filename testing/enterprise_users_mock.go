@@ -41,7 +41,7 @@ func (m *MockEnterpriseUsersServiceInterface) EXPECT() *MockEnterpriseUsersServi
 }
 
 // DeleteEnterpriseUser mocks base method.
-func (m *MockEnterpriseUsersServiceInterface) DeleteEnterpriseUser(gid any, uid int, deleteOptions *gitlab.DeleteEnterpriseUserOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockEnterpriseUsersServiceInterface) DeleteEnterpriseUser(gid any, uid int64, deleteOptions *gitlab.DeleteEnterpriseUserOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, uid, deleteOptions}
 	for _, a := range options {
@@ -73,13 +73,13 @@ func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) Do(f func(any, int, *gitlab.DeleteEnterpriseUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
+func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) Do(f func(any, int64, *gitlab.DeleteEnterpriseUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) DoAndReturn(f func(any, int, *gitlab.DeleteEnterpriseUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
+func (c *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall) DoAndReturn(f func(any, int64, *gitlab.DeleteEnterpriseUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockEnterpriseUsersServiceInterfaceDeleteEnterpriseUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

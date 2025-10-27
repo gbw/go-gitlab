@@ -90,11 +90,11 @@ func WithKeysetPaginationParameters(nextLink string) RequestOptionFunc {
 
 // WithOffsetPaginationParameters takes a page number and modifies the request
 // to use that page for offset-based pagination, overriding any existing page value.
-func WithOffsetPaginationParameters(page int) RequestOptionFunc {
+func WithOffsetPaginationParameters(page int64) RequestOptionFunc {
 	return func(req *retryablehttp.Request) error {
 		q := req.URL.Query()
 		q.Del("page")
-		q.Add("page", strconv.Itoa(page))
+		q.Add("page", strconv.FormatInt(page, 10))
 		req.URL.RawQuery = q.Encode()
 		return nil
 	}

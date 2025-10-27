@@ -28,7 +28,7 @@ func impersonationExample() {
 		log.Fatal(err)
 	}
 
-	uid := 1
+	uid := int64(1)
 
 	// list impersonation token from an user
 	tokens, _, err := git.Users.GetAllImpersonationTokens(

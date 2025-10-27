@@ -281,10 +281,10 @@ func Test_UsersGetUserAssociationsCount_Integration(t *testing.T) {
 	// THEN it should return the user's association counts
 	// Verify the response structure
 	assert.NotNil(t, associationsCount)
-	assert.GreaterOrEqual(t, associationsCount.GroupsCount, 0)
-	assert.GreaterOrEqual(t, associationsCount.ProjectsCount, 0)
-	assert.GreaterOrEqual(t, associationsCount.IssuesCount, 0)
-	assert.GreaterOrEqual(t, associationsCount.MergeRequestsCount, 0)
+	assert.GreaterOrEqual(t, associationsCount.GroupsCount, int64(0))
+	assert.GreaterOrEqual(t, associationsCount.ProjectsCount, int64(0))
+	assert.GreaterOrEqual(t, associationsCount.IssuesCount, int64(0))
+	assert.GreaterOrEqual(t, associationsCount.MergeRequestsCount, int64(0))
 }
 
 // Test_UsersGetUserMemberships_Integration tests the GetUserMemberships function.

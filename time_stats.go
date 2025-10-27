@@ -35,8 +35,8 @@ type timeStatsService struct {
 type TimeStats struct {
 	HumanTimeEstimate   string `json:"human_time_estimate"`
 	HumanTotalTimeSpent string `json:"human_total_time_spent"`
-	TimeEstimate        int    `json:"time_estimate"`
-	TotalTimeSpent      int    `json:"total_time_spent"`
+	TimeEstimate        int64  `json:"time_estimate"`
+	TotalTimeSpent      int64  `json:"total_time_spent"`
 }
 
 func (t TimeStats) String() string {

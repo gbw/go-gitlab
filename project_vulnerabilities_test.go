@@ -57,7 +57,7 @@ func TestCreateVulnerability(t *testing.T) {
 	})
 
 	opt := &CreateVulnerabilityOptions{
-		FindingID: Ptr(1),
+		FindingID: Ptr(int64(1)),
 	}
 
 	projectVulnerability, _, err := client.ProjectVulnerabilities.CreateVulnerability(1, opt)

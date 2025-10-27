@@ -86,7 +86,7 @@ func (c *MockProjectClustersServiceInterfaceAddClusterCall) DoAndReturn(f func(a
 }
 
 // DeleteCluster mocks base method.
-func (m *MockProjectClustersServiceInterface) DeleteCluster(pid any, cluster int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectClustersServiceInterface) DeleteCluster(pid any, cluster int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, cluster}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockProjectClustersServiceInterfaceDeleteClusterCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectClustersServiceInterfaceDeleteClusterCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectClustersServiceInterfaceDeleteClusterCall {
+func (c *MockProjectClustersServiceInterfaceDeleteClusterCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectClustersServiceInterfaceDeleteClusterCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectClustersServiceInterfaceDeleteClusterCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectClustersServiceInterfaceDeleteClusterCall {
+func (c *MockProjectClustersServiceInterfaceDeleteClusterCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectClustersServiceInterfaceDeleteClusterCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditCluster mocks base method.
-func (m *MockProjectClustersServiceInterface) EditCluster(pid any, cluster int, opt *gitlab.EditClusterOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error) {
+func (m *MockProjectClustersServiceInterface) EditCluster(pid any, cluster int64, opt *gitlab.EditClusterOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, cluster, opt}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockProjectClustersServiceInterfaceEditClusterCall) Return(arg0 *gitlab
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectClustersServiceInterfaceEditClusterCall) Do(f func(any, int, *gitlab.EditClusterOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceEditClusterCall {
+func (c *MockProjectClustersServiceInterfaceEditClusterCall) Do(f func(any, int64, *gitlab.EditClusterOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceEditClusterCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectClustersServiceInterfaceEditClusterCall) DoAndReturn(f func(any, int, *gitlab.EditClusterOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceEditClusterCall {
+func (c *MockProjectClustersServiceInterfaceEditClusterCall) DoAndReturn(f func(any, int64, *gitlab.EditClusterOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceEditClusterCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetCluster mocks base method.
-func (m *MockProjectClustersServiceInterface) GetCluster(pid any, cluster int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error) {
+func (m *MockProjectClustersServiceInterface) GetCluster(pid any, cluster int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, cluster}
 	for _, a := range options {
@@ -208,13 +208,13 @@ func (c *MockProjectClustersServiceInterfaceGetClusterCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectClustersServiceInterfaceGetClusterCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceGetClusterCall {
+func (c *MockProjectClustersServiceInterfaceGetClusterCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceGetClusterCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectClustersServiceInterfaceGetClusterCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceGetClusterCall {
+func (c *MockProjectClustersServiceInterfaceGetClusterCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectCluster, *gitlab.Response, error)) *MockProjectClustersServiceInterfaceGetClusterCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -86,7 +86,7 @@ func (c *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleCall) DoAndR
 }
 
 // CreatePipelineScheduleVariable mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) CreatePipelineScheduleVariable(pid any, schedule int, opt *gitlab.CreatePipelineScheduleVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) CreatePipelineScheduleVariable(pid any, schedule int64, opt *gitlab.CreatePipelineScheduleVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule, opt}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall) Do(f func(any, int, *gitlab.CreatePipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall {
+func (c *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall) Do(f func(any, int64, *gitlab.CreatePipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall) DoAndReturn(f func(any, int, *gitlab.CreatePipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall {
+func (c *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall) DoAndReturn(f func(any, int64, *gitlab.CreatePipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceCreatePipelineScheduleVariableCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeletePipelineSchedule mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) DeletePipelineSchedule(pid any, schedule int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) DeletePipelineSchedule(pid any, schedule int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeletePipelineScheduleVariable mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) DeletePipelineScheduleVariable(pid any, schedule int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) DeletePipelineScheduleVariable(pid any, schedule int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule, key}
 	for _, a := range options {
@@ -208,19 +208,19 @@ func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall) Do(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall {
+func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall) Do(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall) DoAndReturn(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall {
+func (c *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall) DoAndReturn(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceDeletePipelineScheduleVariableCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditPipelineSchedule mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) EditPipelineSchedule(pid any, schedule int, opt *gitlab.EditPipelineScheduleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) EditPipelineSchedule(pid any, schedule int64, opt *gitlab.EditPipelineScheduleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule, opt}
 	for _, a := range options {
@@ -253,19 +253,19 @@ func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall) Do(f func(any, int, *gitlab.EditPipelineScheduleOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall) Do(f func(any, int64, *gitlab.EditPipelineScheduleOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall) DoAndReturn(f func(any, int, *gitlab.EditPipelineScheduleOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall) DoAndReturn(f func(any, int64, *gitlab.EditPipelineScheduleOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditPipelineScheduleVariable mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) EditPipelineScheduleVariable(pid any, schedule int, key string, opt *gitlab.EditPipelineScheduleVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) EditPipelineScheduleVariable(pid any, schedule int64, key string, opt *gitlab.EditPipelineScheduleVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule, key, opt}
 	for _, a := range options {
@@ -298,19 +298,19 @@ func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall) Do(f func(any, int, string, *gitlab.EditPipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall {
+func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall) Do(f func(any, int64, string, *gitlab.EditPipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall) DoAndReturn(f func(any, int, string, *gitlab.EditPipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall {
+func (c *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall) DoAndReturn(f func(any, int64, string, *gitlab.EditPipelineScheduleVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.PipelineVariable, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceEditPipelineScheduleVariableCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetPipelineSchedule mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) GetPipelineSchedule(pid any, schedule int, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) GetPipelineSchedule(pid any, schedule int64, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule}
 	for _, a := range options {
@@ -343,13 +343,13 @@ func (c *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceGetPipelineScheduleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -400,7 +400,7 @@ func (c *MockPipelineSchedulesServiceInterfaceListPipelineSchedulesCall) DoAndRe
 }
 
 // ListPipelinesTriggeredBySchedule mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) ListPipelinesTriggeredBySchedule(pid any, schedule int, opt *gitlab.ListPipelinesTriggeredByScheduleOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Pipeline, *gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) ListPipelinesTriggeredBySchedule(pid any, schedule int64, opt *gitlab.ListPipelinesTriggeredByScheduleOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Pipeline, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule, opt}
 	for _, a := range options {
@@ -433,19 +433,19 @@ func (c *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCa
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall) Do(f func(any, int, *gitlab.ListPipelinesTriggeredByScheduleOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Pipeline, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall) Do(f func(any, int64, *gitlab.ListPipelinesTriggeredByScheduleOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Pipeline, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall) DoAndReturn(f func(any, int, *gitlab.ListPipelinesTriggeredByScheduleOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Pipeline, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall) DoAndReturn(f func(any, int64, *gitlab.ListPipelinesTriggeredByScheduleOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Pipeline, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceListPipelinesTriggeredByScheduleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RunPipelineSchedule mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) RunPipelineSchedule(pid any, schedule int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) RunPipelineSchedule(pid any, schedule int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule}
 	for _, a := range options {
@@ -477,19 +477,19 @@ func (c *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceRunPipelineScheduleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // TakeOwnershipOfPipelineSchedule mocks base method.
-func (m *MockPipelineSchedulesServiceInterface) TakeOwnershipOfPipelineSchedule(pid any, schedule int, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error) {
+func (m *MockPipelineSchedulesServiceInterface) TakeOwnershipOfPipelineSchedule(pid any, schedule int64, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, schedule}
 	for _, a := range options {
@@ -522,13 +522,13 @@ func (c *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCal
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall {
+func (c *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineSchedule, *gitlab.Response, error)) *MockPipelineSchedulesServiceInterfaceTakeOwnershipOfPipelineScheduleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

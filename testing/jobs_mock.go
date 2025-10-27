@@ -42,7 +42,7 @@ func (m *MockJobsServiceInterface) EXPECT() *MockJobsServiceInterfaceMockRecorde
 }
 
 // CancelJob mocks base method.
-func (m *MockJobsServiceInterface) CancelJob(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) CancelJob(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -75,19 +75,19 @@ func (c *MockJobsServiceInterfaceCancelJobCall) Return(arg0 *gitlab.Job, arg1 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceCancelJobCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceCancelJobCall {
+func (c *MockJobsServiceInterfaceCancelJobCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceCancelJobCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceCancelJobCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceCancelJobCall {
+func (c *MockJobsServiceInterfaceCancelJobCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceCancelJobCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteArtifacts mocks base method.
-func (m *MockJobsServiceInterface) DeleteArtifacts(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockJobsServiceInterface) DeleteArtifacts(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockJobsServiceInterfaceDeleteArtifactsCall) Return(arg0 *gitlab.Respon
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceDeleteArtifactsCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobsServiceInterfaceDeleteArtifactsCall {
+func (c *MockJobsServiceInterfaceDeleteArtifactsCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobsServiceInterfaceDeleteArtifactsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceDeleteArtifactsCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobsServiceInterfaceDeleteArtifactsCall {
+func (c *MockJobsServiceInterfaceDeleteArtifactsCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobsServiceInterfaceDeleteArtifactsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -220,7 +220,7 @@ func (c *MockJobsServiceInterfaceDownloadArtifactsFileCall) DoAndReturn(f func(a
 }
 
 // DownloadSingleArtifactsFile mocks base method.
-func (m *MockJobsServiceInterface) DownloadSingleArtifactsFile(pid any, jobID int, artifactPath string, options ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) DownloadSingleArtifactsFile(pid any, jobID int64, artifactPath string, options ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID, artifactPath}
 	for _, a := range options {
@@ -253,13 +253,13 @@ func (c *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall) Return(arg0 *b
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall) Do(f func(any, int, string, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall {
+func (c *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall) Do(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall) DoAndReturn(f func(any, int, string, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall {
+func (c *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall) DoAndReturn(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceDownloadSingleArtifactsFileCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -310,7 +310,7 @@ func (c *MockJobsServiceInterfaceDownloadSingleArtifactsFileByTagOrBranchCall) D
 }
 
 // EraseJob mocks base method.
-func (m *MockJobsServiceInterface) EraseJob(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) EraseJob(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -343,19 +343,19 @@ func (c *MockJobsServiceInterfaceEraseJobCall) Return(arg0 *gitlab.Job, arg1 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceEraseJobCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceEraseJobCall {
+func (c *MockJobsServiceInterfaceEraseJobCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceEraseJobCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceEraseJobCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceEraseJobCall {
+func (c *MockJobsServiceInterfaceEraseJobCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceEraseJobCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetJob mocks base method.
-func (m *MockJobsServiceInterface) GetJob(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) GetJob(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -388,19 +388,19 @@ func (c *MockJobsServiceInterfaceGetJobCall) Return(arg0 *gitlab.Job, arg1 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceGetJobCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobCall {
+func (c *MockJobsServiceInterfaceGetJobCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceGetJobCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobCall {
+func (c *MockJobsServiceInterfaceGetJobCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetJobArtifacts mocks base method.
-func (m *MockJobsServiceInterface) GetJobArtifacts(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) GetJobArtifacts(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -433,13 +433,13 @@ func (c *MockJobsServiceInterfaceGetJobArtifactsCall) Return(arg0 *bytes.Reader,
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceGetJobArtifactsCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobArtifactsCall {
+func (c *MockJobsServiceInterfaceGetJobArtifactsCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobArtifactsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceGetJobArtifactsCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobArtifactsCall {
+func (c *MockJobsServiceInterfaceGetJobArtifactsCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetJobArtifactsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -490,7 +490,7 @@ func (c *MockJobsServiceInterfaceGetJobTokensJobCall) DoAndReturn(f func(*gitlab
 }
 
 // GetTraceFile mocks base method.
-func (m *MockJobsServiceInterface) GetTraceFile(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) GetTraceFile(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -523,19 +523,19 @@ func (c *MockJobsServiceInterfaceGetTraceFileCall) Return(arg0 *bytes.Reader, ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceGetTraceFileCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetTraceFileCall {
+func (c *MockJobsServiceInterfaceGetTraceFileCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetTraceFileCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceGetTraceFileCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetTraceFileCall {
+func (c *MockJobsServiceInterfaceGetTraceFileCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*bytes.Reader, *gitlab.Response, error)) *MockJobsServiceInterfaceGetTraceFileCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // KeepArtifacts mocks base method.
-func (m *MockJobsServiceInterface) KeepArtifacts(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) KeepArtifacts(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -568,19 +568,19 @@ func (c *MockJobsServiceInterfaceKeepArtifactsCall) Return(arg0 *gitlab.Job, arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceKeepArtifactsCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceKeepArtifactsCall {
+func (c *MockJobsServiceInterfaceKeepArtifactsCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceKeepArtifactsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceKeepArtifactsCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceKeepArtifactsCall {
+func (c *MockJobsServiceInterfaceKeepArtifactsCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceKeepArtifactsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListPipelineBridges mocks base method.
-func (m *MockJobsServiceInterface) ListPipelineBridges(pid any, pipelineID int, opts *gitlab.ListJobsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Bridge, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) ListPipelineBridges(pid any, pipelineID int64, opts *gitlab.ListJobsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Bridge, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, pipelineID, opts}
 	for _, a := range options {
@@ -613,19 +613,19 @@ func (c *MockJobsServiceInterfaceListPipelineBridgesCall) Return(arg0 []*gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceListPipelineBridgesCall) Do(f func(any, int, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Bridge, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineBridgesCall {
+func (c *MockJobsServiceInterfaceListPipelineBridgesCall) Do(f func(any, int64, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Bridge, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineBridgesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceListPipelineBridgesCall) DoAndReturn(f func(any, int, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Bridge, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineBridgesCall {
+func (c *MockJobsServiceInterfaceListPipelineBridgesCall) DoAndReturn(f func(any, int64, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Bridge, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineBridgesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListPipelineJobs mocks base method.
-func (m *MockJobsServiceInterface) ListPipelineJobs(pid any, pipelineID int, opts *gitlab.ListJobsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Job, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) ListPipelineJobs(pid any, pipelineID int64, opts *gitlab.ListJobsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Job, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, pipelineID, opts}
 	for _, a := range options {
@@ -658,13 +658,13 @@ func (c *MockJobsServiceInterfaceListPipelineJobsCall) Return(arg0 []*gitlab.Job
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceListPipelineJobsCall) Do(f func(any, int, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineJobsCall {
+func (c *MockJobsServiceInterfaceListPipelineJobsCall) Do(f func(any, int64, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineJobsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceListPipelineJobsCall) DoAndReturn(f func(any, int, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineJobsCall {
+func (c *MockJobsServiceInterfaceListPipelineJobsCall) DoAndReturn(f func(any, int64, *gitlab.ListJobsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceListPipelineJobsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -715,7 +715,7 @@ func (c *MockJobsServiceInterfaceListProjectJobsCall) DoAndReturn(f func(any, *g
 }
 
 // PlayJob mocks base method.
-func (m *MockJobsServiceInterface) PlayJob(pid any, jobID int, opt *gitlab.PlayJobOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) PlayJob(pid any, jobID int64, opt *gitlab.PlayJobOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID, opt}
 	for _, a := range options {
@@ -748,19 +748,19 @@ func (c *MockJobsServiceInterfacePlayJobCall) Return(arg0 *gitlab.Job, arg1 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfacePlayJobCall) Do(f func(any, int, *gitlab.PlayJobOptions, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfacePlayJobCall {
+func (c *MockJobsServiceInterfacePlayJobCall) Do(f func(any, int64, *gitlab.PlayJobOptions, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfacePlayJobCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfacePlayJobCall) DoAndReturn(f func(any, int, *gitlab.PlayJobOptions, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfacePlayJobCall {
+func (c *MockJobsServiceInterfacePlayJobCall) DoAndReturn(f func(any, int64, *gitlab.PlayJobOptions, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfacePlayJobCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RetryJob mocks base method.
-func (m *MockJobsServiceInterface) RetryJob(pid any, jobID int, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
+func (m *MockJobsServiceInterface) RetryJob(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, jobID}
 	for _, a := range options {
@@ -793,13 +793,13 @@ func (c *MockJobsServiceInterfaceRetryJobCall) Return(arg0 *gitlab.Job, arg1 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobsServiceInterfaceRetryJobCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceRetryJobCall {
+func (c *MockJobsServiceInterfaceRetryJobCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceRetryJobCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobsServiceInterfaceRetryJobCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceRetryJobCall {
+func (c *MockJobsServiceInterfaceRetryJobCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceRetryJobCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

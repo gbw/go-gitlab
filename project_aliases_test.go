@@ -27,7 +27,7 @@ func TestProjectAliasesService_CreateProjectAlias(t *testing.T) {
 
 		require.NotNil(t, payload.Name)
 		assert.Equal(t, "my-alias", *payload.Name)
-		assert.Equal(t, 1, payload.ProjectID)
+		assert.Equal(t, int64(1), payload.ProjectID)
 
 		w.WriteHeader(http.StatusCreated)
 		w.Write([]byte(`{"id": 10, "name": "my-alias", "project_id": 1}`))
@@ -36,13 +36,13 @@ func TestProjectAliasesService_CreateProjectAlias(t *testing.T) {
 	s := client.ProjectAliases
 	opt := &CreateProjectAliasOptions{
 		Name:      Ptr("my-alias"),
-		ProjectID: 1,
+		ProjectID: int64(1),
 	}
 	alias, resp, err := s.CreateProjectAlias(opt)
 	require.NoError(t, err)
-	assert.Equal(t, 10, alias.ID)
+	assert.Equal(t, int64(10), alias.ID)
 	assert.Equal(t, "my-alias", alias.Name)
-	assert.Equal(t, 1, alias.ProjectID)
+	assert.Equal(t, int64(1), alias.ProjectID)
 	assert.Equal(t, 201, resp.StatusCode)
 }
 
@@ -76,9 +76,9 @@ func TestProjectAliasesService_GetProjectAlias(t *testing.T) {
 	s := client.ProjectAliases
 	alias, resp, err := s.GetProjectAlias("my-alias")
 	require.NoError(t, err)
-	assert.Equal(t, 10, alias.ID)
+	assert.Equal(t, int64(10), alias.ID)
 	assert.Equal(t, "my-alias", alias.Name)
-	assert.Equal(t, 1, alias.ProjectID)
+	assert.Equal(t, int64(1), alias.ProjectID)
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
@@ -97,9 +97,9 @@ func TestProjectAliasesService_ListProjectAliases(t *testing.T) {
 	aliases, resp, err := s.ListProjectAliases()
 	require.NoError(t, err)
 	require.Len(t, aliases, 1)
-	assert.Equal(t, 10, aliases[0].ID)
+	assert.Equal(t, int64(10), aliases[0].ID)
 	assert.Equal(t, "my-alias", aliases[0].Name)
-	assert.Equal(t, 1, aliases[0].ProjectID)
+	assert.Equal(t, int64(1), aliases[0].ProjectID)
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
@@ -120,9 +120,9 @@ func TestProjectAliasesService_GetProjectAlias_WithSpecialCharacters(t *testing.
 	s := client.ProjectAliases
 	alias, resp, err := s.GetProjectAlias(aliasName)
 	require.NoError(t, err)
-	assert.Equal(t, 10, alias.ID)
+	assert.Equal(t, int64(10), alias.ID)
 	assert.Equal(t, "my/alias?with=special&chars", alias.Name)
-	assert.Equal(t, 1, alias.ProjectID)
+	assert.Equal(t, int64(1), alias.ProjectID)
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
@@ -162,9 +162,9 @@ func TestProjectAliasesService_GetProjectAlias_WithSpacesAndDots(t *testing.T) {
 	s := client.ProjectAliases
 	alias, resp, err := s.GetProjectAlias(aliasName)
 	require.NoError(t, err)
-	assert.Equal(t, 20, alias.ID)
+	assert.Equal(t, int64(20), alias.ID)
 	assert.Equal(t, "my alias.name", alias.Name)
-	assert.Equal(t, 2, alias.ProjectID)
+	assert.Equal(t, int64(2), alias.ProjectID)
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
