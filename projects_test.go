@@ -374,7 +374,7 @@ func TestEditProject(t *testing.T) {
 	assert.True(t, attributesFound)
 	assert.Equal(t, developerRole, project.CIRestrictPipelineCancellationRole)
 	assert.Equal(t, developerPipelineVariablesRole, project.CIPipelineVariablesMinimumOverrideRole)
-	assert.Equal(t, 14, project.CIDeletePipelinesInSeconds)
+	assert.Equal(t, int64(14), project.CIDeletePipelinesInSeconds)
 }
 
 func TestListStarredProjects(t *testing.T) {
@@ -664,7 +664,7 @@ func TestShareProjectWithGroup(t *testing.T) {
 	})
 
 	opt := &ShareWithGroupOptions{
-		GroupID:     Ptr(1),
+		GroupID:     Ptr(int64(1)),
 		GroupAccess: Ptr(AccessLevelValue(50)),
 	}
 
@@ -744,7 +744,7 @@ func TestChangeApprovalConfiguration(t *testing.T) {
 	})
 
 	opt := &ChangeApprovalConfigurationOptions{
-		ApprovalsBeforeMerge: Ptr(3),
+		ApprovalsBeforeMerge: Ptr(int64(3)),
 	}
 
 	approvals, resp, err := client.Projects.ChangeApprovalConfiguration(1, opt)
@@ -769,7 +769,7 @@ func TestForkProject(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	namespaceID := 42
+	namespaceID := int64(42)
 	name := "myreponame"
 	path := "myrepopath"
 
@@ -778,7 +778,7 @@ func TestForkProject(t *testing.T) {
 		testBodyJSON(t, r, struct {
 			Branches    string `json:"branches"`
 			Name        string `json:"name"`
-			NamespaceID int    `json:"namespace_id"`
+			NamespaceID int64  `json:"namespace_id"`
 			Path        string `json:"path"`
 		}{"main", name, namespaceID, path})
 		fmt.Fprint(w, `{"id":2}`)
@@ -1243,9 +1243,9 @@ func TestCreateProjectApprovalRule(t *testing.T) {
 
 	opt := &CreateProjectLevelRuleOptions{
 		Name:              Ptr("security"),
-		ApprovalsRequired: Ptr(3),
-		UserIDs:           &[]int{5, 50},
-		GroupIDs:          &[]int{5},
+		ApprovalsRequired: Ptr(int64(3)),
+		UserIDs:           &[]int64{5, 50},
+		GroupIDs:          &[]int64{5},
 		ReportType:        Ptr("code_coverage"),
 		Usernames:         &([]string{"some-cool-user"}),
 	}
@@ -1468,7 +1468,7 @@ func TestCreateProjectApprovalRuleEligibleApprovers(t *testing.T) {
 
 	opt := &CreateProjectLevelRuleOptions{
 		Name:              Ptr("Any name"),
-		ApprovalsRequired: Ptr(1),
+		ApprovalsRequired: Ptr(int64(1)),
 	}
 
 	rule, resp, err := client.Projects.CreateProjectApprovalRule(1, opt)
@@ -1824,7 +1824,7 @@ func TestAddProjectPushRules(t *testing.T) {
 		PreventSecrets:             Ptr(false),
 		AuthorEmailRegex:           Ptr("@company.com$"),
 		FileNameRegex:              Ptr("(jar|exe)$"),
-		MaxFileSize:                Ptr(5),
+		MaxFileSize:                Ptr(int64(5)),
 		CommitCommitterCheck:       Ptr(false),
 		CommitCommitterNameCheck:   Ptr(false),
 		RejectUnsignedCommits:      Ptr(false),
@@ -1888,7 +1888,7 @@ func TestEditProjectPushRules(t *testing.T) {
 		PreventSecrets:             Ptr(false),
 		AuthorEmailRegex:           Ptr("@company.com$"),
 		FileNameRegex:              Ptr("(jar|exe)$"),
-		MaxFileSize:                Ptr(5),
+		MaxFileSize:                Ptr(int64(5)),
 		CommitCommitterCheck:       Ptr(false),
 		CommitCommitterNameCheck:   Ptr(false),
 		RejectUnsignedCommits:      Ptr(false),
@@ -2055,7 +2055,7 @@ func TestTransferProject(t *testing.T) {
 	opt := &TransferProjectOptions{Namespace: Ptr("new-namespace")}
 	project, _, err := client.Projects.TransferProject(1, opt)
 	assert.NoError(t, err)
-	assert.Equal(t, 1, project.ID)
+	assert.Equal(t, int64(1), project.ID)
 }
 
 func TestDeleteProjectPushRule(t *testing.T) {

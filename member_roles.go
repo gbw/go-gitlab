@@ -9,10 +9,10 @@ type (
 	MemberRolesServiceInterface interface {
 		ListInstanceMemberRoles(options ...RequestOptionFunc) ([]*MemberRole, *Response, error)
 		CreateInstanceMemberRole(opt *CreateMemberRoleOptions, options ...RequestOptionFunc) (*MemberRole, *Response, error)
-		DeleteInstanceMemberRole(memberRoleID int, options ...RequestOptionFunc) (*Response, error)
+		DeleteInstanceMemberRole(memberRoleID int64, options ...RequestOptionFunc) (*Response, error)
 		ListMemberRoles(gid any, options ...RequestOptionFunc) ([]*MemberRole, *Response, error)
 		CreateMemberRole(gid any, opt *CreateMemberRoleOptions, options ...RequestOptionFunc) (*MemberRole, *Response, error)
-		DeleteMemberRole(gid any, memberRole int, options ...RequestOptionFunc) (*Response, error)
+		DeleteMemberRole(gid any, memberRole int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// MemberRolesService handles communication with the member roles related
@@ -32,10 +32,10 @@ var _ MemberRolesServiceInterface = (*MemberRolesService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/api/member_roles/#list-all-member-roles-of-a-group
 type MemberRole struct {
-	ID                         int              `json:"id"`
+	ID                         int64            `json:"id"`
 	Name                       string           `json:"name"`
 	Description                string           `json:"description,omitempty"`
-	GroupID                    int              `json:"group_id"`
+	GroupID                    int64            `json:"group_id"`
 	BaseAccessLevel            AccessLevelValue `json:"base_access_level"`
 	AdminCICDVariables         bool             `json:"admin_cicd_variables,omitempty"`
 	AdminComplianceFramework   bool             `json:"admin_compliance_framework,omitempty"`
@@ -134,7 +134,7 @@ func (s *MemberRolesService) CreateInstanceMemberRole(opt *CreateMemberRoleOptio
 //
 // Gitlab API docs:
 // https://docs.gitlab.com/api/member_roles/#delete-an-instance-member-role
-func (s *MemberRolesService) DeleteInstanceMemberRole(memberRoleID int, options ...RequestOptionFunc) (*Response, error) {
+func (s *MemberRolesService) DeleteInstanceMemberRole(memberRoleID int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("member_roles/%d", memberRoleID)
 
 	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
@@ -199,7 +199,7 @@ func (s *MemberRolesService) CreateMemberRole(gid any, opt *CreateMemberRoleOpti
 //
 // Gitlab API docs:
 // https://docs.gitlab.com/api/member_roles/#remove-member-role-of-a-group
-func (s *MemberRolesService) DeleteMemberRole(gid any, memberRole int, options ...RequestOptionFunc) (*Response, error) {
+func (s *MemberRolesService) DeleteMemberRole(gid any, memberRole int64, options ...RequestOptionFunc) (*Response, error) {
 	group, err := parseID(gid)
 	if err != nil {
 		return nil, err

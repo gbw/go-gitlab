@@ -686,13 +686,13 @@ func TestCreateUserRunner(t *testing.T) {
 	})
 
 	createRunnerOpts := &CreateUserRunnerOptions{
-		ProjectID:  Ptr(1),
+		ProjectID:  Ptr(int64(1)),
 		RunnerType: Ptr("project_type"),
 	}
 
 	response, _, err := client.Users.CreateUserRunner(createRunnerOpts)
 	assert.NoError(t, err)
-	assert.Equal(t, 1234, response.ID)
+	assert.Equal(t, int64(1234), response.ID)
 	assert.Equal(t, "glrt-1234567890ABCD", response.Token)
 	assert.Equal(t, (*time.Time)(nil), response.TokenExpiresAt)
 }

@@ -86,7 +86,7 @@ func (c *MockReleaseLinksServiceInterfaceCreateReleaseLinkCall) DoAndReturn(f fu
 }
 
 // DeleteReleaseLink mocks base method.
-func (m *MockReleaseLinksServiceInterface) DeleteReleaseLink(pid any, tagName string, link int, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error) {
+func (m *MockReleaseLinksServiceInterface) DeleteReleaseLink(pid any, tagName string, link int64, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, tagName, link}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall) Do(f func(any, string, int, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall {
+func (c *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall) Do(f func(any, string, int64, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall) DoAndReturn(f func(any, string, int, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall {
+func (c *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall) DoAndReturn(f func(any, string, int64, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceDeleteReleaseLinkCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetReleaseLink mocks base method.
-func (m *MockReleaseLinksServiceInterface) GetReleaseLink(pid any, tagName string, link int, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error) {
+func (m *MockReleaseLinksServiceInterface) GetReleaseLink(pid any, tagName string, link int64, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, tagName, link}
 	for _, a := range options {
@@ -164,13 +164,13 @@ func (c *MockReleaseLinksServiceInterfaceGetReleaseLinkCall) Return(arg0 *gitlab
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockReleaseLinksServiceInterfaceGetReleaseLinkCall) Do(f func(any, string, int, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceGetReleaseLinkCall {
+func (c *MockReleaseLinksServiceInterfaceGetReleaseLinkCall) Do(f func(any, string, int64, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceGetReleaseLinkCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockReleaseLinksServiceInterfaceGetReleaseLinkCall) DoAndReturn(f func(any, string, int, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceGetReleaseLinkCall {
+func (c *MockReleaseLinksServiceInterfaceGetReleaseLinkCall) DoAndReturn(f func(any, string, int64, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceGetReleaseLinkCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -221,7 +221,7 @@ func (c *MockReleaseLinksServiceInterfaceListReleaseLinksCall) DoAndReturn(f fun
 }
 
 // UpdateReleaseLink mocks base method.
-func (m *MockReleaseLinksServiceInterface) UpdateReleaseLink(pid any, tagName string, link int, opt *gitlab.UpdateReleaseLinkOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error) {
+func (m *MockReleaseLinksServiceInterface) UpdateReleaseLink(pid any, tagName string, link int64, opt *gitlab.UpdateReleaseLinkOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, tagName, link, opt}
 	for _, a := range options {
@@ -254,13 +254,13 @@ func (c *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall) Do(f func(any, string, int, *gitlab.UpdateReleaseLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall {
+func (c *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall) Do(f func(any, string, int64, *gitlab.UpdateReleaseLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall) DoAndReturn(f func(any, string, int, *gitlab.UpdateReleaseLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall {
+func (c *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall) DoAndReturn(f func(any, string, int64, *gitlab.UpdateReleaseLinkOptions, ...gitlab.RequestOptionFunc) (*gitlab.ReleaseLink, *gitlab.Response, error)) *MockReleaseLinksServiceInterfaceUpdateReleaseLinkCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

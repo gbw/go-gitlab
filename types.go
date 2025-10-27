@@ -103,7 +103,7 @@ type ApproverIDsValue struct {
 // ApproverIDs is a helper routine that creates a new ApproverIDsValue.
 func ApproverIDs(v any) *ApproverIDsValue {
 	switch v.(type) {
-	case UserIDValue, []int:
+	case UserIDValue, []int64:
 		return &ApproverIDsValue{value: v}
 	default:
 		panic("Unsupported value passed as approver ID")
@@ -115,11 +115,11 @@ func (a *ApproverIDsValue) EncodeValues(key string, v *url.Values) error {
 	switch value := a.value.(type) {
 	case UserIDValue:
 		v.Set(key, string(value))
-	case []int:
+	case []int64:
 		v.Del(key)
 		v.Del(key + "[]")
 		for _, id := range value {
-			v.Add(key+"[]", strconv.Itoa(id))
+			v.Add(key+"[]", strconv.FormatInt(id, 10))
 		}
 	}
 	return nil
@@ -775,8 +775,8 @@ const (
 
 // TasksCompletionStatus represents tasks of the issue/merge request.
 type TasksCompletionStatus struct {
-	Count          int `json:"count"`
-	CompletedCount int `json:"completed_count"`
+	Count          int64 `json:"count"`
+	CompletedCount int64 `json:"completed_count"`
 }
 
 // TodoAction represents the available actions that can be performed on a todo.

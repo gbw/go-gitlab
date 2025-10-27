@@ -41,7 +41,7 @@ func (m *MockResourceLabelEventsServiceInterface) EXPECT() *MockResourceLabelEve
 }
 
 // GetGroupEpicLabelEvent mocks base method.
-func (m *MockResourceLabelEventsServiceInterface) GetGroupEpicLabelEvent(gid any, epic, event int, options ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error) {
+func (m *MockResourceLabelEventsServiceInterface) GetGroupEpicLabelEvent(gid any, epic, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, event}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall {
+func (c *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall {
+func (c *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetGroupEpicLabelEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssueLabelEvent mocks base method.
-func (m *MockResourceLabelEventsServiceInterface) GetIssueLabelEvent(pid any, issue, event int, options ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error) {
+func (m *MockResourceLabelEventsServiceInterface) GetIssueLabelEvent(pid any, issue, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, event}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall {
+func (c *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall {
+func (c *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetIssueLabelEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMergeRequestLabelEvent mocks base method.
-func (m *MockResourceLabelEventsServiceInterface) GetMergeRequestLabelEvent(pid any, request, event int, options ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error) {
+func (m *MockResourceLabelEventsServiceInterface) GetMergeRequestLabelEvent(pid any, request, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, request, event}
 	for _, a := range options {
@@ -164,19 +164,19 @@ func (c *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall) R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall {
+func (c *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall {
+func (c *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceGetMergeRequestLabelEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListGroupEpicLabelEvents mocks base method.
-func (m *MockResourceLabelEventsServiceInterface) ListGroupEpicLabelEvents(gid any, epic int, opt *gitlab.ListLabelEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error) {
+func (m *MockResourceLabelEventsServiceInterface) ListGroupEpicLabelEvents(gid any, epic int64, opt *gitlab.ListLabelEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, opt}
 	for _, a := range options {
@@ -209,19 +209,19 @@ func (c *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall) Do(f func(any, int, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall {
+func (c *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall) Do(f func(any, int64, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall) DoAndReturn(f func(any, int, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall {
+func (c *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall) DoAndReturn(f func(any, int64, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListGroupEpicLabelEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListIssueLabelEvents mocks base method.
-func (m *MockResourceLabelEventsServiceInterface) ListIssueLabelEvents(pid any, issue int, opt *gitlab.ListLabelEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error) {
+func (m *MockResourceLabelEventsServiceInterface) ListIssueLabelEvents(pid any, issue int64, opt *gitlab.ListLabelEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, opt}
 	for _, a := range options {
@@ -254,19 +254,19 @@ func (c *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall) Do(f func(any, int, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall {
+func (c *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall) Do(f func(any, int64, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall) DoAndReturn(f func(any, int, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall {
+func (c *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall) DoAndReturn(f func(any, int64, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListIssueLabelEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListMergeRequestsLabelEvents mocks base method.
-func (m *MockResourceLabelEventsServiceInterface) ListMergeRequestsLabelEvents(pid any, request int, opt *gitlab.ListLabelEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error) {
+func (m *MockResourceLabelEventsServiceInterface) ListMergeRequestsLabelEvents(pid any, request int64, opt *gitlab.ListLabelEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, request, opt}
 	for _, a := range options {
@@ -299,13 +299,13 @@ func (c *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall) Do(f func(any, int, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall {
+func (c *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall) Do(f func(any, int64, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall) DoAndReturn(f func(any, int, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall {
+func (c *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall) DoAndReturn(f func(any, int64, *gitlab.ListLabelEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.LabelEvent, *gitlab.Response, error)) *MockResourceLabelEventsServiceInterfaceListMergeRequestsLabelEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

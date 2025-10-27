@@ -41,7 +41,7 @@ func (m *MockResourceStateEventsServiceInterface) EXPECT() *MockResourceStateEve
 }
 
 // GetIssueStateEvent mocks base method.
-func (m *MockResourceStateEventsServiceInterface) GetIssueStateEvent(pid any, issue, event int, options ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error) {
+func (m *MockResourceStateEventsServiceInterface) GetIssueStateEvent(pid any, issue, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, event}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall {
+func (c *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall {
+func (c *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetIssueStateEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMergeRequestStateEvent mocks base method.
-func (m *MockResourceStateEventsServiceInterface) GetMergeRequestStateEvent(pid any, request, event int, options ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error) {
+func (m *MockResourceStateEventsServiceInterface) GetMergeRequestStateEvent(pid any, request, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, request, event}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall) R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall {
+func (c *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall {
+func (c *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceGetMergeRequestStateEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListIssueStateEvents mocks base method.
-func (m *MockResourceStateEventsServiceInterface) ListIssueStateEvents(pid any, issue int, opt *gitlab.ListStateEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error) {
+func (m *MockResourceStateEventsServiceInterface) ListIssueStateEvents(pid any, issue int64, opt *gitlab.ListStateEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, opt}
 	for _, a := range options {
@@ -164,19 +164,19 @@ func (c *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall) Do(f func(any, int, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall {
+func (c *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall) Do(f func(any, int64, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall) DoAndReturn(f func(any, int, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall {
+func (c *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall) DoAndReturn(f func(any, int64, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListIssueStateEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListMergeStateEvents mocks base method.
-func (m *MockResourceStateEventsServiceInterface) ListMergeStateEvents(pid any, request int, opt *gitlab.ListStateEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error) {
+func (m *MockResourceStateEventsServiceInterface) ListMergeStateEvents(pid any, request int64, opt *gitlab.ListStateEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, request, opt}
 	for _, a := range options {
@@ -209,13 +209,13 @@ func (c *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall) Do(f func(any, int, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall {
+func (c *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall) Do(f func(any, int64, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall) DoAndReturn(f func(any, int, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall {
+func (c *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall) DoAndReturn(f func(any, int64, *gitlab.ListStateEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.StateEvent, *gitlab.Response, error)) *MockResourceStateEventsServiceInterfaceListMergeStateEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

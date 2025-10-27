@@ -41,7 +41,7 @@ func (m *MockResourceIterationEventsServiceInterface) EXPECT() *MockResourceIter
 }
 
 // GetIssueIterationEvent mocks base method.
-func (m *MockResourceIterationEventsServiceInterface) GetIssueIterationEvent(pid any, issue, event int, options ...gitlab.RequestOptionFunc) (*gitlab.IterationEvent, *gitlab.Response, error) {
+func (m *MockResourceIterationEventsServiceInterface) GetIssueIterationEvent(pid any, issue, event int64, options ...gitlab.RequestOptionFunc) (*gitlab.IterationEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, event}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall {
+func (c *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall {
+func (c *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceGetIssueIterationEventCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListIssueIterationEvents mocks base method.
-func (m *MockResourceIterationEventsServiceInterface) ListIssueIterationEvents(pid any, issue int, opt *gitlab.ListIterationEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.IterationEvent, *gitlab.Response, error) {
+func (m *MockResourceIterationEventsServiceInterface) ListIssueIterationEvents(pid any, issue int64, opt *gitlab.ListIterationEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.IterationEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, opt}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall) Do(f func(any, int, *gitlab.ListIterationEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall {
+func (c *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall) Do(f func(any, int64, *gitlab.ListIterationEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall) DoAndReturn(f func(any, int, *gitlab.ListIterationEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall {
+func (c *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall) DoAndReturn(f func(any, int64, *gitlab.ListIterationEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.IterationEvent, *gitlab.Response, error)) *MockResourceIterationEventsServiceInterfaceListIssueIterationEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

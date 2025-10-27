@@ -86,7 +86,7 @@ func (c *MockSystemHooksServiceInterfaceAddHookCall) DoAndReturn(f func(*gitlab.
 }
 
 // DeleteHook mocks base method.
-func (m *MockSystemHooksServiceInterface) DeleteHook(hook int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockSystemHooksServiceInterface) DeleteHook(hook int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{hook}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockSystemHooksServiceInterfaceDeleteHookCall) Return(arg0 *gitlab.Resp
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSystemHooksServiceInterfaceDeleteHookCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceDeleteHookCall {
+func (c *MockSystemHooksServiceInterfaceDeleteHookCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceDeleteHookCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSystemHooksServiceInterfaceDeleteHookCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceDeleteHookCall {
+func (c *MockSystemHooksServiceInterfaceDeleteHookCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceDeleteHookCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetHook mocks base method.
-func (m *MockSystemHooksServiceInterface) GetHook(hook int, options ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error) {
+func (m *MockSystemHooksServiceInterface) GetHook(hook int64, options ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{hook}
 	for _, a := range options {
@@ -163,13 +163,13 @@ func (c *MockSystemHooksServiceInterfaceGetHookCall) Return(arg0 *gitlab.Hook, a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSystemHooksServiceInterfaceGetHookCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceGetHookCall {
+func (c *MockSystemHooksServiceInterfaceGetHookCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceGetHookCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSystemHooksServiceInterfaceGetHookCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceGetHookCall {
+func (c *MockSystemHooksServiceInterfaceGetHookCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceGetHookCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -219,7 +219,7 @@ func (c *MockSystemHooksServiceInterfaceListHooksCall) DoAndReturn(f func(...git
 }
 
 // TestHook mocks base method.
-func (m *MockSystemHooksServiceInterface) TestHook(hook int, options ...gitlab.RequestOptionFunc) (*gitlab.HookEvent, *gitlab.Response, error) {
+func (m *MockSystemHooksServiceInterface) TestHook(hook int64, options ...gitlab.RequestOptionFunc) (*gitlab.HookEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{hook}
 	for _, a := range options {
@@ -252,13 +252,13 @@ func (c *MockSystemHooksServiceInterfaceTestHookCall) Return(arg0 *gitlab.HookEv
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSystemHooksServiceInterfaceTestHookCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.HookEvent, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceTestHookCall {
+func (c *MockSystemHooksServiceInterfaceTestHookCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.HookEvent, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceTestHookCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSystemHooksServiceInterfaceTestHookCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.HookEvent, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceTestHookCall {
+func (c *MockSystemHooksServiceInterfaceTestHookCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.HookEvent, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceTestHookCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

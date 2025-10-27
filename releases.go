@@ -70,7 +70,7 @@ type Release struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/releases/#list-releases
 type ReleaseAssets struct {
-	Count            int                   `json:"count"`
+	Count            int64                 `json:"count"`
 	Sources          []ReleaseAssetsSource `json:"sources"`
 	Links            []*ReleaseLink        `json:"links"`
 	EvidenceFilePath string                `json:"evidence_file_path"`
@@ -104,9 +104,9 @@ type ReleaseLinks struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/releases/#list-releases
 type ReleaseMilestone struct {
-	ID          int                         `json:"id"`
-	IID         int                         `json:"iid"`
-	ProjectID   int                         `json:"project_id"`
+	ID          int64                       `json:"id"`
+	IID         int64                       `json:"iid"`
+	ProjectID   int64                       `json:"project_id"`
 	Title       string                      `json:"title"`
 	Description string                      `json:"description"`
 	State       string                      `json:"state"`
@@ -124,8 +124,8 @@ type ReleaseMilestone struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/releases/#list-releases
 type ReleaseMilestoneIssueStats struct {
-	Total  int `json:"total"`
-	Closed int `json:"closed"`
+	Total  int64 `json:"total"`
+	Closed int64 `json:"closed"`
 }
 
 // ReleaseEvidence represents a project release's evidence.

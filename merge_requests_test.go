@@ -114,13 +114,13 @@ func TestGetMergeRequest(t *testing.T) {
 
 	require.NoError(t, err)
 
-	require.Equal(t, 33092005, mergeRequest.ID)
+	require.Equal(t, int64(33092005), mergeRequest.ID)
 	require.Equal(t, "8e0b45049b6253b8984cde9241830d2851168142", mergeRequest.SHA)
-	require.Equal(t, 14656, mergeRequest.IID)
-	require.Equal(t, 278964, mergeRequest.ProjectID)
+	require.Equal(t, int64(14656), mergeRequest.IID)
+	require.Equal(t, int64(278964), mergeRequest.ProjectID)
 	require.Equal(t, "delete-designs-v2", mergeRequest.SourceBranch)
-	require.Equal(t, 9, mergeRequest.TaskCompletionStatus.Count)
-	require.Equal(t, 8, mergeRequest.TaskCompletionStatus.CompletedCount)
+	require.Equal(t, int64(9), mergeRequest.TaskCompletionStatus.Count)
+	require.Equal(t, int64(8), mergeRequest.TaskCompletionStatus.CompletedCount)
 	require.Equal(t, "Add deletion support for designs", mergeRequest.Title)
 	require.Equal(t, "## What does this MR do?\r\n\r\nThis adds the capability to destroy/hide designs.", mergeRequest.Description)
 	require.Equal(t, "https://gitlab.com/gitlab-org/gitlab-ee/merge_requests/14656", mergeRequest.WebURL)
@@ -131,7 +131,7 @@ func TestGetMergeRequest(t *testing.T) {
 	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Reviewers)
 	require.Equal(t, labels, mergeRequest.Labels)
 	require.True(t, mergeRequest.Squash)
-	require.Equal(t, 245, mergeRequest.UserNotesCount)
+	require.Equal(t, int64(245), mergeRequest.UserNotesCount)
 	require.Equal(t, &pipelineBasic, mergeRequest.Pipeline)
 	require.Equal(t, &pipelineDetailed, mergeRequest.HeadPipeline)
 	mrCreation := time.Date(2019, time.July, 11, 22, 34, 43, 500000000, time.UTC)
@@ -188,7 +188,7 @@ func TestListProjectMergeRequests(t *testing.T) {
 	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
-		require.Equal(t, 278964, mr.ProjectID)
+		require.Equal(t, int64(278964), mr.ProjectID)
 		require.Contains(t, validStates, mr.State)
 		assert.Less(t, mr.CreatedAt.Unix(), allCreatedBefore.Unix())
 		assert.Greater(t, mr.CreatedAt.Unix(), allCreatedAfter.Unix())
@@ -245,7 +245,7 @@ func TestListProjectMergeRequestsAuthorUsername(t *testing.T) {
 	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
-		require.Equal(t, 278964, mr.ProjectID)
+		require.Equal(t, int64(278964), mr.ProjectID)
 		require.Contains(t, validStates, mr.State)
 		assert.Less(t, mr.CreatedAt.Unix(), allCreatedBefore.Unix())
 		assert.Greater(t, mr.CreatedAt.Unix(), allCreatedAfter.Unix())
@@ -302,7 +302,7 @@ func TestListProjectMergeRequestsNotAuthorUsername(t *testing.T) {
 	allCreatedAfter := time.Date(2019, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	for _, mr := range mergeRequests {
-		require.Equal(t, 278964, mr.ProjectID)
+		require.Equal(t, int64(278964), mr.ProjectID)
 		require.Contains(t, validStates, mr.State)
 		assert.Less(t, mr.CreatedAt.Unix(), allCreatedBefore.Unix())
 		assert.Greater(t, mr.CreatedAt.Unix(), allCreatedAfter.Unix())
@@ -326,7 +326,7 @@ func TestCreateMergeRequestPipeline(t *testing.T) {
 		t.Errorf("MergeRequests.CreateMergeRequestPipeline returned error: %v", err)
 	}
 
-	assert.Equal(t, 1, pipeline.ID)
+	assert.Equal(t, int64(1), pipeline.ID)
 	assert.Equal(t, "pending", pipeline.Status)
 }
 
@@ -524,7 +524,7 @@ func TestIntSliceOrString(t *testing.T) {
 		t.Parallel()
 
 		opts := &ListMergeRequestsOptions{}
-		opts.ApprovedByIDs = ApproverIDs([]int{1, 2, 3})
+		opts.ApprovedByIDs = ApproverIDs([]int64{1, 2, 3})
 		q, err := query.Values(opts)
 		assert.NoError(t, err)
 		includedIDs := q["approved_by_ids[]"]
@@ -574,7 +574,7 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 	mux, client := setup(t)
 	const project = "12345"
 	const mergeRequest = 1
-	blockingMergeRequest := int(2)
+	blockingMergeRequest := int64(2)
 
 	path := fmt.Sprintf("/%sprojects/%s/merge_requests/%d/blocks", apiVersionPath, project, mergeRequest)
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {

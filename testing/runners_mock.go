@@ -85,7 +85,7 @@ func (c *MockRunnersServiceInterfaceDeleteRegisteredRunnerCall) DoAndReturn(f fu
 }
 
 // DeleteRegisteredRunnerByID mocks base method.
-func (m *MockRunnersServiceInterface) DeleteRegisteredRunnerByID(rid int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockRunnersServiceInterface) DeleteRegisteredRunnerByID(rid int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{rid}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall {
+func (c *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall {
+func (c *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDeleteRegisteredRunnerByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DisableProjectRunner mocks base method.
-func (m *MockRunnersServiceInterface) DisableProjectRunner(pid any, runner int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockRunnersServiceInterface) DisableProjectRunner(pid any, runner int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, runner}
 	for _, a := range options {
@@ -161,13 +161,13 @@ func (c *MockRunnersServiceInterfaceDisableProjectRunnerCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockRunnersServiceInterfaceDisableProjectRunnerCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDisableProjectRunnerCall {
+func (c *MockRunnersServiceInterfaceDisableProjectRunnerCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDisableProjectRunnerCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockRunnersServiceInterfaceDisableProjectRunnerCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDisableProjectRunnerCall {
+func (c *MockRunnersServiceInterfaceDisableProjectRunnerCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnersServiceInterfaceDisableProjectRunnerCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -711,7 +711,7 @@ func (c *MockRunnersServiceInterfaceResetProjectRunnerRegistrationTokenCall) DoA
 }
 
 // ResetRunnerAuthenticationToken mocks base method.
-func (m *MockRunnersServiceInterface) ResetRunnerAuthenticationToken(rid int, options ...gitlab.RequestOptionFunc) (*gitlab.RunnerAuthenticationToken, *gitlab.Response, error) {
+func (m *MockRunnersServiceInterface) ResetRunnerAuthenticationToken(rid int64, options ...gitlab.RequestOptionFunc) (*gitlab.RunnerAuthenticationToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{rid}
 	for _, a := range options {
@@ -744,13 +744,13 @@ func (c *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.RunnerAuthenticationToken, *gitlab.Response, error)) *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall {
+func (c *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerAuthenticationToken, *gitlab.Response, error)) *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.RunnerAuthenticationToken, *gitlab.Response, error)) *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall {
+func (c *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerAuthenticationToken, *gitlab.Response, error)) *MockRunnersServiceInterfaceResetRunnerAuthenticationTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

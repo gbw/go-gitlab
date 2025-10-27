@@ -67,7 +67,7 @@ type X509Signature struct {
 }
 
 type X509Certificate struct {
-	ID                   int        `json:"id"`
+	ID                   int64      `json:"id"`
 	Subject              string     `json:"subject"`
 	SubjectKeyIdentifier string     `json:"subject_key_identifier"`
 	Email                string     `json:"email"`
@@ -77,7 +77,7 @@ type X509Certificate struct {
 }
 
 type X509Issuer struct {
-	ID                   int    `json:"id"`
+	ID                   int64  `json:"id"`
 	Subject              string `json:"subject"`
 	SubjectKeyIdentifier string `json:"subject_key_identifier"`
 	CrlURL               string `json:"crl_url"`

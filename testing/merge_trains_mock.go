@@ -41,7 +41,7 @@ func (m *MockMergeTrainsServiceInterface) EXPECT() *MockMergeTrainsServiceInterf
 }
 
 // AddMergeRequestToMergeTrain mocks base method.
-func (m *MockMergeTrainsServiceInterface) AddMergeRequestToMergeTrain(pid any, mergeRequest int, opts *gitlab.AddMergeRequestToMergeTrainOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeTrain, *gitlab.Response, error) {
+func (m *MockMergeTrainsServiceInterface) AddMergeRequestToMergeTrain(pid any, mergeRequest int64, opts *gitlab.AddMergeRequestToMergeTrainOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeTrain, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opts}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall) Do(f func(any, int, *gitlab.AddMergeRequestToMergeTrainOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall {
+func (c *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall) Do(f func(any, int64, *gitlab.AddMergeRequestToMergeTrainOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall) DoAndReturn(f func(any, int, *gitlab.AddMergeRequestToMergeTrainOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall {
+func (c *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall) DoAndReturn(f func(any, int64, *gitlab.AddMergeRequestToMergeTrainOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceAddMergeRequestToMergeTrainCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMergeRequestOnAMergeTrain mocks base method.
-func (m *MockMergeTrainsServiceInterface) GetMergeRequestOnAMergeTrain(pid any, mergeRequest int, options ...gitlab.RequestOptionFunc) (*gitlab.MergeTrain, *gitlab.Response, error) {
+func (m *MockMergeTrainsServiceInterface) GetMergeRequestOnAMergeTrain(pid any, mergeRequest int64, options ...gitlab.RequestOptionFunc) (*gitlab.MergeTrain, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall {
+func (c *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall {
+func (c *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.MergeTrain, *gitlab.Response, error)) *MockMergeTrainsServiceInterfaceGetMergeRequestOnAMergeTrainCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

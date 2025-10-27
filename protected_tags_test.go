@@ -121,7 +121,7 @@ func TestProtectRepositoryTags(t *testing.T) {
 		CreateAccessLevel: Ptr(AccessLevelValue(30)),
 		AllowedToCreate: &[]*TagsPermissionOptions{
 			{
-				GroupID: Ptr(300),
+				GroupID: Ptr(int64(300)),
 			},
 		},
 	}

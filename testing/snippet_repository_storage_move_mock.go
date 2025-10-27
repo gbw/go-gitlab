@@ -41,7 +41,7 @@ func (m *MockSnippetRepositoryStorageMoveServiceInterface) EXPECT() *MockSnippet
 }
 
 // GetStorageMove mocks base method.
-func (m *MockSnippetRepositoryStorageMoveServiceInterface) GetStorageMove(repositoryStorage int, options ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockSnippetRepositoryStorageMoveServiceInterface) GetStorageMove(repositoryStorage int64, options ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{repositoryStorage}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) Ret
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetStorageMoveForSnippet mocks base method.
-func (m *MockSnippetRepositoryStorageMoveServiceInterface) GetStorageMoveForSnippet(snippet, repositoryStorage int, options ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockSnippetRepositoryStorageMoveServiceInterface) GetStorageMoveForSnippet(snippet, repositoryStorage int64, options ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet, repositoryStorage}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippe
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall) Do(f func(int, int, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall) Do(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall) DoAndReturn(f func(int, int, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall) DoAndReturn(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceGetStorageMoveForSnippetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -176,7 +176,7 @@ func (c *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMoves
 }
 
 // RetrieveAllStorageMovesForSnippet mocks base method.
-func (m *MockSnippetRepositoryStorageMoveServiceInterface) RetrieveAllStorageMovesForSnippet(snippet int, opts gitlab.RetrieveAllSnippetStorageMovesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockSnippetRepositoryStorageMoveServiceInterface) RetrieveAllStorageMovesForSnippet(snippet int64, opts gitlab.RetrieveAllSnippetStorageMovesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet, opts}
 	for _, a := range options {
@@ -209,13 +209,13 @@ func (c *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMoves
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall) Do(f func(int, gitlab.RetrieveAllSnippetStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall) Do(f func(int64, gitlab.RetrieveAllSnippetStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall) DoAndReturn(f func(int, gitlab.RetrieveAllSnippetStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall) DoAndReturn(f func(int64, gitlab.RetrieveAllSnippetStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForSnippetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -265,7 +265,7 @@ func (c *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleAllStorageMoves
 }
 
 // ScheduleStorageMoveForSnippet mocks base method.
-func (m *MockSnippetRepositoryStorageMoveServiceInterface) ScheduleStorageMoveForSnippet(snippet int, opts gitlab.ScheduleStorageMoveForSnippetOptions, options ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockSnippetRepositoryStorageMoveServiceInterface) ScheduleStorageMoveForSnippet(snippet int64, opts gitlab.ScheduleStorageMoveForSnippetOptions, options ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet, opts}
 	for _, a := range options {
@@ -298,13 +298,13 @@ func (c *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForS
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall) Do(f func(int, gitlab.ScheduleStorageMoveForSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall) Do(f func(int64, gitlab.ScheduleStorageMoveForSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall) DoAndReturn(f func(int, gitlab.ScheduleStorageMoveForSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall {
+func (c *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall) DoAndReturn(f func(int64, gitlab.ScheduleStorageMoveForSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.SnippetRepositoryStorageMove, *gitlab.Response, error)) *MockSnippetRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForSnippetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

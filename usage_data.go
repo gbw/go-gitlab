@@ -30,7 +30,7 @@ type (
 type ServicePingData struct {
 	RecordedAt *time.Time        `json:"recorded_at"`
 	License    map[string]string `json:"license"`
-	Counts     map[string]int    `json:"counts"`
+	Counts     map[string]int64  `json:"counts"`
 }
 
 // GetServicePing gets the current service ping data.
@@ -85,13 +85,13 @@ type ServicePingQueries struct {
 	LicenseMD5            string            `json:"license_md5"`
 	LicenseSHA256         string            `json:"license_sha256"`
 	LicenseID             string            `json:"license_id"`
-	HistoricalMaxUsers    int               `json:"historical_max_users"`
+	HistoricalMaxUsers    int64             `json:"historical_max_users"`
 	Licensee              map[string]string `json:"licensee"`
-	LicenseUserCount      int               `json:"license_user_count"`
+	LicenseUserCount      int64             `json:"license_user_count"`
 	LicenseStartsAt       string            `json:"license_starts_at"`
 	LicenseExpiresAt      string            `json:"license_expires_at"`
 	LicensePlan           string            `json:"license_plan"`
-	LicenseAddOns         map[string]int    `json:"license_add_ons"`
+	LicenseAddOns         map[string]int64  `json:"license_add_ons"`
 	LicenseTrial          string            `json:"license_trial"`
 	LicenseSubscriptionID string            `json:"license_subscription_id"`
 	License               map[string]string `json:"license"`
@@ -125,18 +125,18 @@ type ServicePingNonSQLMetrics struct {
 	Hostname              string            `json:"hostname"`
 	Version               string            `json:"version"`
 	InstallationType      string            `json:"installation_type"`
-	ActiveUserCount       int               `json:"active_user_count"`
+	ActiveUserCount       int64             `json:"active_user_count"`
 	Edition               string            `json:"edition"`
 	LicenseMD5            string            `json:"license_md5"`
 	LicenseSHA256         string            `json:"license_sha256"`
 	LicenseID             string            `json:"license_id"`
-	HistoricalMaxUsers    int               `json:"historical_max_users"`
+	HistoricalMaxUsers    int64             `json:"historical_max_users"`
 	Licensee              map[string]string `json:"licensee"`
-	LicenseUserCount      int               `json:"license_user_count"`
+	LicenseUserCount      int64             `json:"license_user_count"`
 	LicenseStartsAt       string            `json:"license_starts_at"`
 	LicenseExpiresAt      string            `json:"license_expires_at"`
 	LicensePlan           string            `json:"license_plan"`
-	LicenseAddOns         map[string]int    `json:"license_add_ons"`
+	LicenseAddOns         map[string]int64  `json:"license_add_ons"`
 	LicenseTrial          string            `json:"license_trial"`
 	LicenseSubscriptionID string            `json:"license_subscription_id"`
 	License               map[string]string `json:"license"`
@@ -166,8 +166,8 @@ func (s *UsageDataService) GetNonSQLMetrics(options ...RequestOptionFunc) (*Serv
 type TrackEventOptions struct {
 	Event                string            `json:"event" url:"event"`
 	SendToSnowplow       *bool             `json:"send_to_snowplow,omitempty" url:"send_to_snowplow,omitempty"`
-	NamespaceID          *int              `json:"namespace_id,omitempty" url:"namespace_id,omitempty"`
-	ProjectID            *int              `json:"project_id,omitempty" url:"project_id,omitempty"`
+	NamespaceID          *int64            `json:"namespace_id,omitempty" url:"namespace_id,omitempty"`
+	ProjectID            *int64            `json:"project_id,omitempty" url:"project_id,omitempty"`
 	AdditionalProperties map[string]string `json:"additional_properties,omitempty" url:"additional_properties,omitempty"`
 }
 

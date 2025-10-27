@@ -45,7 +45,7 @@ func TestImportService_ImportRepositoryFromGitHub(t *testing.T) {
 
 	opt := &ImportRepositoryFromGitHubOptions{
 		PersonalAccessToken: Ptr("token"),
-		RepoID:              Ptr(34),
+		RepoID:              Ptr(int64(34)),
 		TargetNamespace:     Ptr("root"),
 	}
 
@@ -92,7 +92,7 @@ func TestImportService_CancelGitHubProjectImport(t *testing.T) {
 	}
 
 	opt := &CancelGitHubProjectImportOptions{
-		ProjectID: Ptr(27),
+		ProjectID: Ptr(int64(27)),
 	}
 
 	cgi, resp, err := client.Import.CancelGitHubProjectImport(opt)

@@ -50,7 +50,7 @@ var _ ProjectImportExportServiceInterface = (*ProjectImportExportService)(nil)
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_import_export/#import-status
 type ImportStatus struct {
-	ID                int        `json:"id"`
+	ID                int64      `json:"id"`
 	Description       string     `json:"description"`
 	Name              string     `json:"name"`
 	NameWithNamespace string     `json:"name_with_namespace"`
@@ -72,7 +72,7 @@ func (s ImportStatus) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_import_export/#export-status
 type ExportStatus struct {
-	ID                int               `json:"id"`
+	ID                int64             `json:"id"`
 	Description       string            `json:"description"`
 	Name              string            `json:"name"`
 	NameWithNamespace string            `json:"name_with_namespace"`

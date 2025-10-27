@@ -50,7 +50,7 @@ type PagesDomain struct {
 	Domain           string                 `json:"domain"`
 	AutoSslEnabled   bool                   `json:"auto_ssl_enabled"`
 	URL              string                 `json:"url"`
-	ProjectID        int                    `json:"project_id"`
+	ProjectID        int64                  `json:"project_id"`
 	Verified         bool                   `json:"verified"`
 	VerificationCode string                 `json:"verification_code"`
 	EnabledUntil     *time.Time             `json:"enabled_until"`

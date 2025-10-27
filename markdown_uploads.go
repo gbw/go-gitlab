@@ -29,8 +29,8 @@ import (
 // https://docs.gitlab.com/api/project_markdown_uploads/
 // https://docs.gitlab.com/api/group_markdown_uploads/
 type MarkdownUpload struct {
-	ID         int        `json:"id"`
-	Size       int        `json:"size"`
+	ID         int64      `json:"id"`
+	Size       int64      `json:"size"`
 	Filename   string     `json:"filename"`
 	CreatedAt  *time.Time `json:"created_at"`
 	UploadedBy *User      `json:"uploaded_by"`
@@ -50,7 +50,7 @@ func (m MarkdownUpload) String() string {
 // Gitlab API docs:
 // https://docs.gitlab.com/api/project_markdown_uploads/
 type MarkdownUploadedFile struct {
-	ID       int    `json:"id"`
+	ID       int64  `json:"id"`
 	Alt      string `json:"alt"`
 	URL      string `json:"url"`
 	FullPath string `json:"full_path"`

@@ -49,7 +49,7 @@ func TestListTodos(t *testing.T) {
 		{
 			name: "with author_id",
 			opts: &ListTodosOptions{
-				AuthorID: Ptr(1),
+				AuthorID: Ptr(int64(1)),
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
 				testMethod(t, r, http.MethodGet)
@@ -60,7 +60,7 @@ func TestListTodos(t *testing.T) {
 		{
 			name: "with project_id",
 			opts: &ListTodosOptions{
-				ProjectID: Ptr(1),
+				ProjectID: Ptr(int64(1)),
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
 				testMethod(t, r, http.MethodGet)
@@ -71,7 +71,7 @@ func TestListTodos(t *testing.T) {
 		{
 			name: "with group_id",
 			opts: &ListTodosOptions{
-				GroupID: Ptr(1),
+				GroupID: Ptr(int64(1)),
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
 				testMethod(t, r, http.MethodGet)

@@ -91,7 +91,7 @@ type Agent struct {
 	ID              int64         `json:"id"`
 	Name            string        `json:"name"`
 	CreatedAt       *time.Time    `json:"created_at"`
-	CreatedByUserID int           `json:"created_by_user_id"`
+	CreatedByUserID int64         `json:"created_by_user_id"`
 	ConfigProject   ConfigProject `json:"config_project"`
 }
 
@@ -117,10 +117,10 @@ type AgentToken struct {
 	ID              int64      `json:"id"`
 	Name            string     `json:"name"`
 	Description     string     `json:"description"`
-	AgentID         int        `json:"agent_id"`
+	AgentID         int64      `json:"agent_id"`
 	Status          string     `json:"status"`
 	CreatedAt       *time.Time `json:"created_at"`
-	CreatedByUserID int        `json:"created_by_user_id"`
+	CreatedByUserID int64      `json:"created_by_user_id"`
 	LastUsedAt      *time.Time `json:"last_used_at"`
 	Token           string     `json:"token"`
 }

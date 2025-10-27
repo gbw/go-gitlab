@@ -259,10 +259,10 @@ func TestProtectRepositoryEnvironments(t *testing.T) {
 		DeployAccessLevels: &[]*EnvironmentAccessOptions{
 			{AccessLevel: Ptr(AccessLevelValue(30))},
 		},
-		RequiredApprovalCount: Ptr(2),
+		RequiredApprovalCount: Ptr(int64(2)),
 		ApprovalRules: &[]*EnvironmentApprovalRuleOptions{
 			{
-				GroupID:                Ptr(10),
+				GroupID:                Ptr(int64(10)),
 				AccessLevel:            Ptr(AccessLevelValue(0)),
 				AccessLevelDescription: Ptr("devops"),
 			},
@@ -368,13 +368,13 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 		DeployAccessLevels: &[]*UpdateEnvironmentAccessOptions{
 			{
 				AccessLevel:          Ptr(AccessLevelValue(30)),
-				GroupInheritanceType: Ptr(1),
+				GroupInheritanceType: Ptr(int64(1)),
 			},
 		},
-		RequiredApprovalCount: Ptr(2),
+		RequiredApprovalCount: Ptr(int64(2)),
 		ApprovalRules: &[]*UpdateEnvironmentApprovalRuleOptions{
 			{
-				GroupID:                Ptr(10),
+				GroupID:                Ptr(int64(10)),
 				AccessLevel:            Ptr(AccessLevelValue(0)),
 				AccessLevelDescription: Ptr("devops"),
 			},
@@ -456,7 +456,7 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 		Name: Ptr(environmentName),
 		DeployAccessLevels: &[]*UpdateEnvironmentAccessOptions{
 			{
-				ID:          Ptr(42),
+				ID:          Ptr(int64(42)),
 				AccessLevel: Ptr(AccessLevelValue(30)),
 			},
 		},
@@ -516,8 +516,8 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 		Name: Ptr(environmentName),
 		ApprovalRules: &[]*UpdateEnvironmentApprovalRuleOptions{
 			{
-				ID:                     Ptr(1),
-				GroupID:                Ptr(10),
+				ID:                     Ptr(int64(1)),
+				GroupID:                Ptr(int64(10)),
 				AccessLevel:            Ptr(AccessLevelValue(0)),
 				AccessLevelDescription: Ptr("devops"),
 			},
@@ -562,11 +562,11 @@ func TestUpdateProtectedEnvironments(t *testing.T) {
 		Name: Ptr(environmentName),
 		ApprovalRules: &[]*UpdateEnvironmentApprovalRuleOptions{
 			{
-				ID:      Ptr(1),
+				ID:      Ptr(int64(1)),
 				Destroy: Ptr(true),
 			},
 		},
-		RequiredApprovalCount: Ptr(0),
+		RequiredApprovalCount: Ptr(int64(0)),
 	}
 
 	environment, _, err = client.ProtectedEnvironments.UpdateProtectedEnvironments(5, environmentName, opt)

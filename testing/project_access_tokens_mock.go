@@ -86,7 +86,7 @@ func (c *MockProjectAccessTokensServiceInterfaceCreateProjectAccessTokenCall) Do
 }
 
 // GetProjectAccessToken mocks base method.
-func (m *MockProjectAccessTokensServiceInterface) GetProjectAccessToken(pid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error) {
+func (m *MockProjectAccessTokensServiceInterface) GetProjectAccessToken(pid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall) Retur
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall {
+func (c *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall {
+func (c *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceGetProjectAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -176,7 +176,7 @@ func (c *MockProjectAccessTokensServiceInterfaceListProjectAccessTokensCall) DoA
 }
 
 // RevokeProjectAccessToken mocks base method.
-func (m *MockProjectAccessTokensServiceInterface) RevokeProjectAccessToken(pid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectAccessTokensServiceInterface) RevokeProjectAccessToken(pid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id}
 	for _, a := range options {
@@ -208,19 +208,19 @@ func (c *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall {
+func (c *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall {
+func (c *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRevokeProjectAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RotateProjectAccessToken mocks base method.
-func (m *MockProjectAccessTokensServiceInterface) RotateProjectAccessToken(pid any, id int, opt *gitlab.RotateProjectAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error) {
+func (m *MockProjectAccessTokensServiceInterface) RotateProjectAccessToken(pid any, id int64, opt *gitlab.RotateProjectAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id, opt}
 	for _, a := range options {
@@ -253,13 +253,13 @@ func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall) Do(f func(any, int, *gitlab.RotateProjectAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall {
+func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall) Do(f func(any, int64, *gitlab.RotateProjectAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall) DoAndReturn(f func(any, int, *gitlab.RotateProjectAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall {
+func (c *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall) DoAndReturn(f func(any, int64, *gitlab.RotateProjectAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectAccessToken, *gitlab.Response, error)) *MockProjectAccessTokensServiceInterfaceRotateProjectAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

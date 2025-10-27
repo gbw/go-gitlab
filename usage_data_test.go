@@ -34,10 +34,10 @@ func TestUsageDataService_GetServicePing(t *testing.T) {
 	want := &ServicePingData{
 		RecordedAt: Ptr(time.Date(2024, time.January, 15, 23, 33, 50, 387000000, time.UTC)),
 		License:    map[string]string{},
-		Counts: map[string]int{
-			"assignee_lists":        int(0),
-			"ci_builds":             int(463),
-			"ci_external_pipelines": int(0),
+		Counts: map[string]int64{
+			"assignee_lists":        int64(0),
+			"ci_builds":             int64(463),
+			"ci_external_pipelines": int64(0),
 		},
 	}
 	require.Equal(t, want, sp)
@@ -142,7 +142,7 @@ func TestUsageDataService_GetQueries(t *testing.T) {
 		LicenseExpiresAt:      "2022-02-23",
 		LicensePlan:           "starter",
 		LicenseSubscriptionID: "0000",
-		LicenseAddOns: map[string]int{
+		LicenseAddOns: map[string]int64{
 			"GitLab_FileLocks":    1,
 			"GitLab_Auditor_User": 1,
 		},
@@ -221,7 +221,7 @@ func TestUsageDataService_GetServicePingNonSqlMetrics(t *testing.T) {
 		LicenseStartsAt:  "1970-01-01",
 		LicenseExpiresAt: "2022-02-26",
 		LicensePlan:      "starter",
-		LicenseAddOns: map[string]int{
+		LicenseAddOns: map[string]int64{
 			"GitLab_FileLocks":    1,
 			"GitLab_Auditor_User": 1,
 		},
@@ -248,8 +248,8 @@ func TestUsageDataService_TrackEvent(t *testing.T) {
 	})
 
 	sendToSnowplow := true
-	namespaceID := 1
-	projectID := 1
+	namespaceID := int64(1)
+	projectID := int64(1)
 	additionalProperties := map[string]string{
 		"lang": "eng",
 	}
@@ -277,10 +277,10 @@ func TestUsageDataService_TrackEvents(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	namespaceID1 := 1
-	projectID1 := 1
-	namespaceID2 := 2
-	projectID2 := 2
+	namespaceID1 := int64(1)
+	projectID1 := int64(1)
+	namespaceID2 := int64(2)
+	projectID2 := int64(2)
 
 	additionalProperties := map[string]string{
 		"lang": "eng",

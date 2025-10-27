@@ -145,7 +145,7 @@ func TestAddProjectToJobScopeAllowList(t *testing.T) {
 
 	addTokenResponse, resp, err := client.JobTokenScope.AddProjectToJobScopeAllowList(
 		1,
-		&JobTokenInboundAllowOptions{TargetProjectID: Ptr(2)},
+		&JobTokenInboundAllowOptions{TargetProjectID: Ptr(int64(2))},
 	)
 	assert.NoError(t, err)
 	assert.Equal(t, want, addTokenResponse)
@@ -245,7 +245,7 @@ func TestAddGroupToJobTokenAllowlist(t *testing.T) {
 
 	addTokenResponse, resp, err := client.JobTokenScope.AddGroupToJobTokenAllowlist(
 		1,
-		&AddGroupToJobTokenAllowlistOptions{TargetGroupID: Ptr(2)},
+		&AddGroupToJobTokenAllowlistOptions{TargetGroupID: Ptr(int64(2))},
 	)
 	assert.NoError(t, err)
 	assert.Equal(t, want, addTokenResponse)

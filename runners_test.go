@@ -288,7 +288,7 @@ func TestRegisterNewRunnerInfo(t *testing.T) {
 		Active:         Ptr(true),
 		Locked:         Ptr(true),
 		RunUntagged:    Ptr(false),
-		MaximumTimeout: Ptr(45),
+		MaximumTimeout: Ptr(int64(45)),
 	}
 	runner, resp, err := client.Runners.RegisterNewRunner(opt, nil)
 	if err != nil {
@@ -346,7 +346,7 @@ func TestDeleteRegisteredRunnerByID(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	rid := 11111
+	rid := int64(11111)
 
 	resp, err := client.Runners.DeleteRegisteredRunnerByID(rid, nil)
 	if err != nil {
