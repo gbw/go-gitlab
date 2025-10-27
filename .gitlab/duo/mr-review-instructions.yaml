@@ -18,6 +18,8 @@ instructions:
       9. **Pointer Usage**: Use pointers for structs that are used in Requests, and non-pointer for structs that are used in Responses.
       10. **Parameter Validation**: Use `any` type for project/group IDs to support both int64 and string, implement proper parameter parsing with `parseID()` function.
       11. **Variable Naming Standards**: Variables and function inputs should be named using lower camel casing to be consistent with the repository. "thisIsAVariable" is good, "this_is_a_variable" is bad.
+      12. **Brand Capitalization Consistency**: Always spell "GitLab" with the proper capitalization in code comments, log messages, documentation strings, test names, or any other textual content. "Gitlab" and "gitlab" are incorrect, and should be replaced with "GitLab".
+
 
   - name: Go Test Files
     fileFilters:
