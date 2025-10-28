@@ -73,8 +73,8 @@ func TestProtectedPackagesService_CreatePackageProtectionRules(t *testing.T) {
 	opts := &CreatePackageProtectionRulesOptions{
 		PackageNamePattern:          Ptr("@my-scope/my-package-*"),
 		PackageType:                 Ptr("npm"),
-		MinimumAccessLevelForDelete: Ptr(int64(MaintainerPermissions)),
-		MinimumAccessLevelForPush:   Ptr(int64(OwnerPermissions)),
+		MinimumAccessLevelForDelete: Ptr("maintainer"),
+		MinimumAccessLevelForPush:   Ptr("owner"),
 	}
 
 	rule, resp, err := client.ProtectedPackages.CreatePackageProtectionRules(1, opts)
@@ -112,7 +112,7 @@ func TestProtectedPackagesService_UpdatePackageProtectionRules(t *testing.T) {
 
 	opts := &UpdatePackageProtectionRulesOptions{
 		PackageNamePattern:        Ptr("@my-scope/my-package-updated"),
-		MinimumAccessLevelForPush: Ptr(int64(OwnerPermissions)),
+		MinimumAccessLevelForPush: Ptr("owner"),
 	}
 
 	rule, resp, err := client.ProtectedPackages.UpdatePackageProtectionRules(1, int64(123), opts)
