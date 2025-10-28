@@ -200,7 +200,7 @@ func handleTwoPagesSuccessfully(t *testing.T, mux *http.ServeMux) {
 			w.Header().Add("X-Next-Page", "0")
 			fmt.Fprint(w, `[{"id":2}]`)
 		default:
-			require.Fail(t, fmt.Sprintf("received request for unexpected page '%s'", page))
+			assert.Fail(t, fmt.Sprintf("received request for unexpected page '%s'", page))
 		}
 	})
 }
@@ -215,7 +215,7 @@ func handleTwoPagesSuccessfullyWithKeyset(t *testing.T, mux *http.ServeMux) {
 		case "2":
 			fmt.Fprint(w, `[{"id":2}]`)
 		default:
-			require.Fail(t, fmt.Sprintf("received request for unexpected page for id_before='%s'", idBefore))
+			assert.Fail(t, fmt.Sprintf("received request for unexpected page for id_before='%s'", idBefore))
 		}
 	})
 }
@@ -230,7 +230,7 @@ func handleTwoPagesWithFailure(t *testing.T, mux *http.ServeMux) {
 		case "2":
 			w.WriteHeader(http.StatusInternalServerError)
 		default:
-			require.Failf(t, "received request for unexpected page %d", page)
+			assert.Failf(t, "received request for unexpected page %d", page)
 		}
 	})
 }

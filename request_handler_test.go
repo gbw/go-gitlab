@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 type testUser struct {
@@ -55,8 +54,8 @@ func TestDoRequestPOSTWithBody(t *testing.T) {
 
 		var reqBody testProject
 		err := json.NewDecoder(r.Body).Decode(&reqBody)
-		require.NoError(t, err)
-		require.Equal(t, "New Project", reqBody.Name)
+		assert.NoError(t, err)
+		assert.Equal(t, "New Project", reqBody.Name)
 
 		w.WriteHeader(201)
 		w.Header().Set("Content-Type", "application/json")
@@ -221,8 +220,8 @@ func TestDoRequestVoidSuccessPUT(t *testing.T) {
 
 		var reqBody map[string]interface{}
 		err := json.NewDecoder(r.Body).Decode(&reqBody)
-		require.NoError(t, err)
-		require.Equal(t, "approve", reqBody["action"])
+		assert.NoError(t, err)
+		assert.Equal(t, "approve", reqBody["action"])
 
 		w.WriteHeader(200)
 	})

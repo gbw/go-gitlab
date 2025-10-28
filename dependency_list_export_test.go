@@ -19,11 +19,11 @@ func TestCreateDependencyListExport(t *testing.T) {
 	mux.HandleFunc("/api/v4/pipelines/1234/dependency_list_exports", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		body, err := io.ReadAll(r.Body)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		var content CreateDependencyListExportOptions
 		err = json.Unmarshal(body, &content)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		assert.Equal(t, "sbom", *content.ExportType)
 		mustWriteHTTPResponse(t, w, "testdata/create_dependency_list_export.json")
