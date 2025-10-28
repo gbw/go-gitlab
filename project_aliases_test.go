@@ -16,18 +16,19 @@ func TestProjectAliasesService_CreateProjectAlias(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases", func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "POST", r.Method)
+		assert.Equal(t, "POST", r.Method)
 
 		body, err := io.ReadAll(r.Body)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		var payload CreateProjectAliasOptions
 		err = json.Unmarshal(body, &payload)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
-		require.NotNil(t, payload.Name)
-		assert.Equal(t, "my-alias", *payload.Name)
-		assert.Equal(t, 1, payload.ProjectID)
+		if assert.NotNil(t, payload.Name) {
+			assert.Equal(t, "my-alias", *payload.Name)
+			assert.Equal(t, 1, payload.ProjectID)
+		}
 
 		w.WriteHeader(http.StatusCreated)
 		w.Write([]byte(`{"id": 10, "name": "my-alias", "project_id": 1}`))
@@ -52,7 +53,7 @@ func TestProjectAliasesService_DeleteProjectAlias(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases/my-alias", func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "DELETE", r.Method)
+		assert.Equal(t, "DELETE", r.Method)
 		w.WriteHeader(http.StatusNoContent)
 	})
 
@@ -68,7 +69,7 @@ func TestProjectAliasesService_GetProjectAlias(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases/my-alias", func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "GET", r.Method)
+		assert.Equal(t, "GET", r.Method)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"id": 10, "name": "my-alias", "project_id": 1}`))
 	})
@@ -88,7 +89,7 @@ func TestProjectAliasesService_ListProjectAliases(t *testing.T) {
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/project_aliases", func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "GET", r.Method)
+		assert.Equal(t, "GET", r.Method)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`[{"id": 10, "name": "my-alias", "project_id": 1}]`))
 	})
@@ -112,7 +113,7 @@ func TestProjectAliasesService_GetProjectAlias_WithSpecialCharacters(t *testing.
 	expectedEscaped := "my%2Falias%3Fwith%3Dspecial%26chars"
 
 	mux.HandleFunc("/api/v4/project_aliases/"+expectedEscaped, func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "GET", r.Method)
+		assert.Equal(t, "GET", r.Method)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"id": 10, "name": "my/alias?with=special&chars", "project_id": 1}`))
 	})
@@ -135,7 +136,7 @@ func TestProjectAliasesService_DeleteProjectAlias_WithSpecialCharacters(t *testi
 	expectedEscaped := "my%2Falias%3Fwith%3Dspecial%26chars"
 
 	mux.HandleFunc("/api/v4/project_aliases/"+expectedEscaped, func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "DELETE", r.Method)
+		assert.Equal(t, "DELETE", r.Method)
 		w.WriteHeader(http.StatusNoContent)
 	})
 
@@ -154,7 +155,7 @@ func TestProjectAliasesService_GetProjectAlias_WithSpacesAndDots(t *testing.T) {
 	expectedEscaped := "my%20alias%2Ename"
 
 	mux.HandleFunc("/api/v4/project_aliases/"+expectedEscaped, func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "GET", r.Method)
+		assert.Equal(t, "GET", r.Method)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"id": 20, "name": "my alias.name", "project_id": 2}`))
 	})
@@ -177,7 +178,7 @@ func TestProjectAliasesService_DeleteProjectAlias_WithSpacesAndDots(t *testing.T
 	expectedEscaped := "my%20alias%2Ename"
 
 	mux.HandleFunc("/api/v4/project_aliases/"+expectedEscaped, func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "DELETE", r.Method)
+		assert.Equal(t, "DELETE", r.Method)
 		w.WriteHeader(http.StatusNoContent)
 	})
 

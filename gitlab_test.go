@@ -982,7 +982,7 @@ func TestClient_CookieJar(t *testing.T) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/v4/user", func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("test-cookie")
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		assert.Equal(t, "yummy", cookie.Value)
 
