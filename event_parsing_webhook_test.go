@@ -150,7 +150,7 @@ func TestParseIssueHook(t *testing.T) {
 	assert.True(t, ok, "Expected IssueEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, "issue", event.ObjectKind)
-	assert.Equal(t, "Gitlab Test", event.Project.Name)
+	assert.Equal(t, "GitLab Test", event.Project.Name)
 	assert.Equal(t, "opened", event.ObjectAttributes.State)
 	assert.Equal(t, "user1", event.Assignee.Username)
 	assert.Len(t, event.Labels, 1)

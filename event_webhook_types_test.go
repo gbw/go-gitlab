@@ -95,8 +95,8 @@ func TestCommitCommentEventUnmarshal(t *testing.T) {
 		t.Errorf("User ID is %d, want %d", event.User.ID, 42)
 	}
 
-	if event.Repository.Name != "Gitlab Test" {
-		t.Errorf("Repository name is %v, want %v", event.Repository.Name, "Gitlab Test")
+	if event.Repository.Name != "GitLab Test" {
+		t.Errorf("Repository name is %v, want %v", event.Repository.Name, "GitLab Test")
 	}
 
 	if event.ObjectAttributes.NoteableType != "Commit" {

@@ -69,7 +69,7 @@ type (
 var _ EpicIssuesServiceInterface = (*EpicIssuesService)(nil)
 
 // EpicIssueAssignment contains both the epic and issue objects returned from
-// Gitlab with the assignment ID.
+// GitLab with the assignment ID.
 // Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epic_issues/

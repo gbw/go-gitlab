@@ -10,7 +10,7 @@
   },
   "project": {
     "id": 1,
-    "name":"Gitlab Test",
+    "name":"GitLab Test",
     "description":"Aut reprehenderit ut est.",
     "web_url":"http://example.com/gitlabhq/gitlab-test",
     "avatar_url":null,

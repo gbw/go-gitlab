@@ -62,7 +62,7 @@ func setup(t *testing.T) (*http.ServeMux, *Client) {
 	server := httptest.NewServer(mux)
 	t.Cleanup(server.Close)
 
-	// client is the Gitlab client being tested.
+	// client is the GitLab client being tested.
 	client, err := NewClient("",
 		WithBaseURL(server.URL),
 		// Disable backoff to speed up tests that expect errors.
