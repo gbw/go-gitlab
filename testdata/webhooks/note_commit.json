@@ -11,7 +11,7 @@
   "project_id": 5,
   "project": {
     "id": 5,
-    "name": "Gitlab Test",
+    "name": "GitLab Test",
     "description": "Aut reprehenderit ut est.",
     "web_url": "http://example.com/gitlabhq/gitlab-test",
     "avatar_url": null,
@@ -27,7 +27,7 @@
     "http_url": "http://example.com/gitlabhq/gitlab-test.git"
   },
   "repository": {
-    "name": "Gitlab Test",
+    "name": "GitLab Test",
     "url": "http://example.com/gitlab-org/gitlab-test.git",
     "description": "Aut reprehenderit ut est.",
     "homepage": "http://example.com/gitlab-org/gitlab-test"
