@@ -83,6 +83,50 @@ func (c *MockIntegrationsServiceInterfaceDisableGroupHarborCall) DoAndReturn(f f
 	return c
 }
 
+// DisableGroupJira mocks base method.
+func (m *MockIntegrationsServiceInterface) DisableGroupJira(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DisableGroupJira", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DisableGroupJira indicates an expected call of DisableGroupJira.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) DisableGroupJira(gid any, options ...any) *MockIntegrationsServiceInterfaceDisableGroupJiraCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DisableGroupJira", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).DisableGroupJira), varargs...)
+	return &MockIntegrationsServiceInterfaceDisableGroupJiraCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceDisableGroupJiraCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceDisableGroupJiraCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceDisableGroupJiraCall) Return(arg0 *gitlab.Response, arg1 error) *MockIntegrationsServiceInterfaceDisableGroupJiraCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceDisableGroupJiraCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDisableGroupJiraCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceDisableGroupJiraCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDisableGroupJiraCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DisableGroupMicrosoftTeamsNotifications mocks base method.
 func (m *MockIntegrationsServiceInterface) DisableGroupMicrosoftTeamsNotifications(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -168,6 +212,51 @@ func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) Do(f func(a
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetGroupJiraSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupJiraSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupJiraSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.Integration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupJiraSettings indicates an expected call of GetGroupJiraSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupJiraSettings(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupJiraSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupJiraSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall) Return(arg0 *gitlab.Integration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -348,6 +437,51 @@ func (c *MockIntegrationsServiceInterfaceSetUpGroupHarborCall) Do(f func(any, *g
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceSetUpGroupHarborCall) DoAndReturn(f func(any, *gitlab.SetUpHarborOptions, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetUpGroupHarborCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetUpGroupJira mocks base method.
+func (m *MockIntegrationsServiceInterface) SetUpGroupJira(gid any, opt *gitlab.SetUpJiraOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetUpGroupJira", varargs...)
+	ret0, _ := ret[0].(*gitlab.Integration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// SetUpGroupJira indicates an expected call of SetUpGroupJira.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) SetUpGroupJira(gid, opt any, options ...any) *MockIntegrationsServiceInterfaceSetUpGroupJiraCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetUpGroupJira", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).SetUpGroupJira), varargs...)
+	return &MockIntegrationsServiceInterfaceSetUpGroupJiraCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceSetUpGroupJiraCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceSetUpGroupJiraCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceSetUpGroupJiraCall) Return(arg0 *gitlab.Integration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetUpGroupJiraCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceSetUpGroupJiraCall) Do(f func(any, *gitlab.SetUpJiraOptions, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetUpGroupJiraCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceSetUpGroupJiraCall) DoAndReturn(f func(any, *gitlab.SetUpJiraOptions, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetUpGroupJiraCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
