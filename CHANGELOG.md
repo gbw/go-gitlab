@@ -1,3 +1,22 @@
+## 0.159.0
+
+### 🚀 Features
+
+- feat(integrations): add group integration API endpoints for Jira ([!2563](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2563)) by [Harsh Rai](https://gitlab.com/harshrai654)
+
+### 🔄 Other Changes
+
+- chore(deps): update golangci/golangci-lint docker tag to v2.6.1 ([!2564](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2564)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [0.159.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.158.0...v0.159.0) (2025-11-04)
+
+
+### Features
+
+* **integrations:** add group integration API endpoints for Jira ([09e18ee](https://gitlab.com/gitlab-org/api/client-go/commit/09e18ee598bb7805ac8221f6a05426b1785f9011))
+
 ## 0.158.0
 
 ### 🚀 Features
