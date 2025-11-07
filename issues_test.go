@@ -446,7 +446,7 @@ func TestListProjectIssues(t *testing.T) {
 
 	listProjectIssue := &ListProjectIssuesOptions{
 		AuthorID:   Ptr(int64(0o1)),
-		AssigneeID: Ptr(int64(0o2)),
+		AssigneeID: AssigneeID(0o2),
 	}
 	issues, _, err := client.Issues.ListProjectIssues("1", listProjectIssue)
 	if err != nil {
