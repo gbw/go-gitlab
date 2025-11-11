@@ -218,7 +218,7 @@ func TestDoRequestVoidSuccessPUT(t *testing.T) {
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
 
-		var reqBody map[string]interface{}
+		var reqBody map[string]any
 		err := json.NewDecoder(r.Body).Decode(&reqBody)
 		assert.NoError(t, err)
 		assert.Equal(t, "approve", reqBody["action"])

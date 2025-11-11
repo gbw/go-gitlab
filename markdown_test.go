@@ -36,7 +36,6 @@ func TestRender(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		tc := tc // pin for parallel
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 
