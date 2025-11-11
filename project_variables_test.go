@@ -114,7 +114,7 @@ func TestProjectVariablesService_CreateVariable(t *testing.T) {
 		testBodyJSON(t, r, map[string]string{
 			"description": "new variable",
 		})
-		mustWriteJSONResponse(t, w, map[string]interface{}{
+		mustWriteJSONResponse(t, w, map[string]any{
 			"key":               "NEW_VARIABLE",
 			"value":             "new value",
 			"protected":         false,
