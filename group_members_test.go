@@ -524,3 +524,70 @@ func TestGetGroupMemberAll(t *testing.T) {
 	require.Nil(t, member)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
+
+func TestListGroupMembersWithSeatInfo(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/members",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			// Verify that the show_seat_info parameter is passed correctly
+			assert.Equal(t, "true", r.URL.Query().Get("show_seat_info"))
+			fmt.Fprint(w,
+				`[
+					{
+						"id": 1,
+						"username": "raymond_smith",
+						"name": "Raymond Smith",
+						"state": "active",
+						"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+						"web_url": "http://192.168.1.8:3000/root",
+						"created_at": "2012-10-21T14:13:35Z",
+						"created_by": {
+							"id": 2,
+							"username": "john_doe",
+							"name": "John Doe",
+							"state": "active",
+							"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+							"web_url": "http://192.168.1.8:3000/root"
+						},
+						"expires_at": "2012-10-22",
+						"access_level": 30,
+						"is_using_seat": true,
+						"group_saml_identity": null
+					}
+				]`)
+		})
+
+	members, _, err := client.Groups.ListGroupMembers(1, &ListGroupMembersOptions{
+		ShowSeatInfo: Ptr(true),
+	})
+	require.NoError(t, err)
+
+	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
+	expiresAtISOTime := ISOTime(*expiresAt)
+	want := []*GroupMember{
+		{
+			ID:        1,
+			Username:  "raymond_smith",
+			Name:      "Raymond Smith",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+			CreatedAt: mustParseTime("2012-10-21T14:13:35Z"),
+			CreatedBy: &MemberCreatedBy{
+				ID:        2,
+				Username:  "john_doe",
+				Name:      "John Doe",
+				State:     "active",
+				AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				WebURL:    "http://192.168.1.8:3000/root",
+			},
+			ExpiresAt:   &expiresAtISOTime,
+			AccessLevel: 30,
+			IsUsingSeat: true,
+		},
+	}
+	assert.Equal(t, want, members)
+}
