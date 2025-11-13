@@ -65,15 +65,6 @@ type ProjectMember struct {
 }
 
 type MemberCreatedBy struct {
-	ID        int    `json:"id"`
-	Username  string `json:"username"`
-	Name      string `json:"name"`
-	State     string `json:"state"`
-	AvatarURL string `json:"avatar_url"`
-	WebURL    string `json:"web_url"`
-}
-
-type MemberCreatedBy struct {
 	ID        int64  `json:"id"`
 	Username  string `json:"username"`
 	Name      string `json:"name"`

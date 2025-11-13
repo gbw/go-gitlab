@@ -1026,7 +1026,7 @@ func (r *Response) populatePageValues() {
 
 func (r *Response) populateLinkValues() {
 	if link := r.Header.Get("Link"); link != "" {
-		for _, link := range strings.Split(link, ",") {
+		for link := range strings.SplitSeq(link, ",") {
 			parts := strings.Split(link, ";")
 			if len(parts) < 2 {
 				continue

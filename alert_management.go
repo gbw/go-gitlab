@@ -129,7 +129,7 @@ type UpdateMetricImageOptions struct {
 	URLText *string `url:"url_text,omitempty" json:"url_text,omitempty"`
 }
 
-func (s *AlertManagementService) UpdateMetricImage(pid any, alertIID int64, id int, opt *UpdateMetricImageOptions, options ...RequestOptionFunc) (*MetricImage, *Response, error) {
+func (s *AlertManagementService) UpdateMetricImage(pid any, alertIID int64, id int64, opt *UpdateMetricImageOptions, options ...RequestOptionFunc) (*MetricImage, *Response, error) {
 	return do[*MetricImage](s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/alert_management_alerts/%d/metric_images/%d", ProjectID{pid}, alertIID, id),
@@ -138,7 +138,7 @@ func (s *AlertManagementService) UpdateMetricImage(pid any, alertIID int64, id i
 	)
 }
 
-func (s *AlertManagementService) DeleteMetricImage(pid any, alertIID int64, id int, options ...RequestOptionFunc) (*Response, error) {
+func (s *AlertManagementService) DeleteMetricImage(pid any, alertIID int64, id int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/alert_management_alerts/%d/metric_images/%d", ProjectID{pid}, alertIID, id),

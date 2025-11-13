@@ -309,7 +309,7 @@ func (c *MockPipelinesServiceInterfaceGetPipelineTestReportCall) DoAndReturn(f f
 }
 
 // GetPipelineTestReportSummary mocks base method.
-func (m *MockPipelinesServiceInterface) GetPipelineTestReportSummary(pid any, pipeline int, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineTestReportSummary, *gitlab.Response, error) {
+func (m *MockPipelinesServiceInterface) GetPipelineTestReportSummary(pid any, pipeline int64, options ...gitlab.RequestOptionFunc) (*gitlab.PipelineTestReportSummary, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, pipeline}
 	for _, a := range options {
@@ -342,13 +342,13 @@ func (c *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTestReportSummary, *gitlab.Response, error)) *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall {
+func (c *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTestReportSummary, *gitlab.Response, error)) *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTestReportSummary, *gitlab.Response, error)) *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall {
+func (c *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.PipelineTestReportSummary, *gitlab.Response, error)) *MockPipelinesServiceInterfaceGetPipelineTestReportSummaryCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
