@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestTopicsService_ListTopics(t *testing.T) {
@@ -59,9 +60,7 @@ func TestTopicsService_ListTopics(t *testing.T) {
 
 	opt := &ListTopicsOptions{Search: Ptr("git")}
 	topics, _, err := client.Topics.ListTopics(opt)
-	if err != nil {
-		t.Errorf("Tags.ListTags returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := []*Topic{{
 		ID:                 1,
@@ -83,9 +82,7 @@ func TestTopicsService_ListTopics(t *testing.T) {
 		Title:              "Git LFS",
 		TotalProjectsCount: 300,
 	}}
-	if !reflect.DeepEqual(want, topics) {
-		t.Errorf("Topics.ListTopics returned %+v, want %+v", topics, want)
-	}
+	assert.Equal(t, want, topics)
 }
 
 func TestTopicsService_GetTopic(t *testing.T) {
@@ -105,9 +102,7 @@ func TestTopicsService_GetTopic(t *testing.T) {
 	})
 
 	release, _, err := client.Topics.GetTopic(1)
-	if err != nil {
-		t.Errorf("Topics.GetTopic returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &Topic{
 		ID:                 1,
@@ -117,9 +112,7 @@ func TestTopicsService_GetTopic(t *testing.T) {
 		TotalProjectsCount: 1000,
 		AvatarURL:          "http://www.gravatar.com/avatar/a0d477b3ea21970ce6ffcbb817b0b435?s=80&d=identicon",
 	}
-	if !reflect.DeepEqual(want, release) {
-		t.Errorf("Topics.GetTopic returned %+v, want %+v", release, want)
-	}
+	assert.Equal(t, want, release)
 }
 
 func TestTopicsService_CreateTopic(t *testing.T) {
@@ -140,14 +133,10 @@ func TestTopicsService_CreateTopic(t *testing.T) {
 
 	opt := &CreateTopicOptions{Name: Ptr("topic1"), Title: Ptr("Topic 1"), Description: Ptr("description")}
 	release, _, err := client.Topics.CreateTopic(opt)
-	if err != nil {
-		t.Errorf("Topics.CreateTopic returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &Topic{ID: 1, Name: "topic1", Title: "Topic 1", Description: "description", TotalProjectsCount: 0}
-	if !reflect.DeepEqual(want, release) {
-		t.Errorf("Topics.CreateTopic returned %+v, want %+v", release, want)
-	}
+	assert.Equal(t, want, release)
 }
 
 func TestTopicsService_UpdateTopic(t *testing.T) {
@@ -168,12 +157,8 @@ func TestTopicsService_UpdateTopic(t *testing.T) {
 
 	opt := &UpdateTopicOptions{Name: Ptr("topic1"), Title: Ptr("Topic 1"), Description: Ptr("description")}
 	release, _, err := client.Topics.UpdateTopic(1, opt)
-	if err != nil {
-		t.Errorf("Topics.UpdateTopic returned error: %v", err)
-	}
+	assert.NoError(t, err)
 
 	want := &Topic{ID: 1, Name: "topic1", Title: "Topic 1", Description: "description", TotalProjectsCount: 0}
-	if !reflect.DeepEqual(want, release) {
-		t.Errorf("Topics.UpdateTopic returned %+v, want %+v", release, want)
-	}
+	assert.Equal(t, want, release)
 }

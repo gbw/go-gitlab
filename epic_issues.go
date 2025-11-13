@@ -49,7 +49,7 @@ type (
 var _ EpicIssuesServiceInterface = (*EpicIssuesService)(nil)
 
 // EpicIssueAssignment contains both the epic and issue objects returned from
-// Gitlab with the assignment ID.
+// GitLab with the assignment ID.
 // Will be removed in v5 of the API, use Work Items API instead
 //
 // GitLab API docs: https://docs.gitlab.com/api/epic_issues/
@@ -137,12 +137,6 @@ func (s *EpicIssuesService) RemoveEpicIssue(gid any, epic, epicIssue int64, opti
 	return a, resp, nil
 }
 
-// UpdateEpicIssueAssignmentOptions describes the UpdateEpicIssueAssignment()
-// options.
-// Will be removed in v5 of the API, use Work Items API instead
-//
-// Gitlab API Docs:
-// https://docs.gitlab.com/api/epic_issues/#update-epic---issue-association
 type UpdateEpicIssueAssignmentOptions struct {
 	*ListOptions
 	MoveBeforeID *int64 `url:"move_before_id,omitempty" json:"move_before_id,omitempty"`

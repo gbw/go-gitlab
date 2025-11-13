@@ -176,6 +176,7 @@ type Client struct {
 	GroupMembers                     GroupMembersServiceInterface
 	GroupMilestones                  GroupMilestonesServiceInterface
 	GroupProtectedEnvironments       GroupProtectedEnvironmentsServiceInterface
+	GroupRelationsExport             GroupRelationsExportServiceInterface
 	GroupReleases                    GroupReleasesServiceInterface
 	GroupRepositoryStorageMove       GroupRepositoryStorageMoveServiceInterface
 	GroupSCIM                        GroupSCIMServiceInterface
@@ -201,6 +202,7 @@ type Client struct {
 	MemberRolesService               MemberRolesServiceInterface
 	MergeRequestApprovals            MergeRequestApprovalsServiceInterface
 	MergeRequestApprovalSettings     MergeRequestApprovalSettingsServiceInterface
+	MergeRequestContextCommits       MergeRequestContextCommitsServiceInterface
 	MergeRequests                    MergeRequestsServiceInterface
 	MergeTrains                      MergeTrainsServiceInterface
 	Metadata                         MetadataServiceInterface
@@ -487,6 +489,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.GroupMembers = &GroupMembersService{client: c}
 	c.GroupMilestones = &GroupMilestonesService{client: c}
 	c.GroupProtectedEnvironments = &GroupProtectedEnvironmentsService{client: c}
+	c.GroupRelationsExport = &GroupRelationsExportService{client: c}
 	c.GroupReleases = &GroupReleasesService{client: c}
 	c.GroupRepositoryStorageMove = &GroupRepositoryStorageMoveService{client: c}
 	c.GroupSCIM = &GroupSCIMService{client: c}
@@ -512,6 +515,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.MemberRolesService = &MemberRolesService{client: c}
 	c.MergeRequestApprovals = &MergeRequestApprovalsService{client: c}
 	c.MergeRequestApprovalSettings = &MergeRequestApprovalSettingsService{client: c}
+	c.MergeRequestContextCommits = &MergeRequestContextCommitsService{client: c}
 	c.MergeRequests = &MergeRequestsService{client: c, timeStats: timeStats}
 	c.MergeTrains = &MergeTrainsService{client: c}
 	c.Metadata = &MetadataService{client: c}

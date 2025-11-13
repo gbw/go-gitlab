@@ -112,24 +112,12 @@ type ListMetricImagesOptions struct {
 }
 
 func (s *AlertManagementService) ListMetricImages(pid any, alertIID int64, opt *ListMetricImagesOptions, options ...RequestOptionFunc) ([]*MetricImage, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/alert_management_alerts/%d/metric_images", PathEscape(project), alertIID)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mis []*MetricImage
-	resp, err := s.client.Do(req, &mis)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mis, resp, nil
+	return do[[]*MetricImage](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/alert_management_alerts/%d/metric_images", ProjectID{pid}, alertIID),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // UpdateMetricImageOptions represents the available UpdateMetricImage() options.
@@ -141,38 +129,20 @@ type UpdateMetricImageOptions struct {
 	URLText *string `url:"url_text,omitempty" json:"url_text,omitempty"`
 }
 
-func (s *AlertManagementService) UpdateMetricImage(pid any, alertIID int64, id int64, opt *UpdateMetricImageOptions, options ...RequestOptionFunc) (*MetricImage, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/alert_management_alerts/%d/metric_images/%d", PathEscape(project), alertIID, id)
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	mi := new(MetricImage)
-	resp, err := s.client.Do(req, mi)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mi, resp, nil
+func (s *AlertManagementService) UpdateMetricImage(pid any, alertIID int64, id int, opt *UpdateMetricImageOptions, options ...RequestOptionFunc) (*MetricImage, *Response, error) {
+	return do[*MetricImage](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/alert_management_alerts/%d/metric_images/%d", ProjectID{pid}, alertIID, id),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
-func (s *AlertManagementService) DeleteMetricImage(pid any, alertIID int64, id int64, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/alert_management_alerts/%d/metric_images/%d", PathEscape(project), alertIID, id)
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+func (s *AlertManagementService) DeleteMetricImage(pid any, alertIID int64, id int, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/alert_management_alerts/%d/metric_images/%d", ProjectID{pid}, alertIID, id),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }

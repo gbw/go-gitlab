@@ -25,6 +25,11 @@ import (
 type (
 	// EnvironmentsServiceInterface defines all the API methods for the EnvironmentsService
 	EnvironmentsServiceInterface interface {
+		// ListEnvironments gets a list of environments from a project, sorted by name
+		// alphabetically.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/environments/#list-environments
 		ListEnvironments(pid any, opts *ListEnvironmentsOptions, options ...RequestOptionFunc) ([]*Environment, *Response, error)
 		GetEnvironment(pid any, environment int64, options ...RequestOptionFunc) (*Environment, *Response, error)
 		CreateEnvironment(pid any, opt *CreateEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error)
@@ -81,11 +86,6 @@ type ListEnvironmentsOptions struct {
 	States *string `url:"states,omitempty" json:"states,omitempty"`
 }
 
-// ListEnvironments gets a list of environments from a project, sorted by name
-// alphabetically.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/environments/#list-environments
 func (s *EnvironmentsService) ListEnvironments(pid any, opts *ListEnvironmentsOptions, options ...RequestOptionFunc) ([]*Environment, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
@@ -147,12 +147,6 @@ type CreateEnvironmentOptions struct {
 	AutoStopSetting     *string `url:"auto_stop_setting,omitempty" json:"auto_stop_setting,omitempty"`
 }
 
-// CreateEnvironment adds an environment to a project. This method is idempotent
-// and can be called multiple times with the same parameters. Creating an environment
-// that already exists does not affect the existing association.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/environments/#create-a-new-environment
 func (s *EnvironmentsService) CreateEnvironment(pid any, opt *CreateEnvironmentOptions, options ...RequestOptionFunc) (*Environment, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {

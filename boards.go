@@ -27,6 +27,10 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/boards/#create-an-issue-board
+		// CreateIssueBoard creates a new issue board.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/boards/#create-an-issue-board
 		CreateIssueBoard(pid any, opt *CreateIssueBoardOptions, options ...RequestOptionFunc) (*IssueBoard, *Response, error)
 
 		// UpdateIssueBoard update an issue board.

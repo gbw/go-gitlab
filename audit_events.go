@@ -13,6 +13,11 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/audit_events/#retrieve-all-instance-audit-events
+		// ListInstanceAuditEvents gets a list of audit events for instance.
+		// Authentication as Administrator is required.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/audit_events/#retrieve-all-instance-audit-events
 		ListInstanceAuditEvents(opt *ListAuditEventsOptions, options ...RequestOptionFunc) ([]*AuditEvent, *Response, error)
 
 		// GetInstanceAuditEvent gets a specific instance audit event.

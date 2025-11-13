@@ -28,6 +28,10 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/cluster_agents/#list-the-agents-for-a-project
+		// ListAgents returns a list of agents registered for the project.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/cluster_agents/#list-the-agents-for-a-project
 		ListAgents(pid any, opt *ListAgentsOptions, options ...RequestOptionFunc) ([]*Agent, *Response, error)
 
 		// GetAgent gets a single agent details.
@@ -163,20 +167,11 @@ func (s *ClusterAgentsService) GetAgent(pid any, id int64, options ...RequestOpt
 	if err != nil {
 		return nil, nil, err
 	}
-	uri := fmt.Sprintf("projects/%s/cluster_agents/%d", PathEscape(project), id)
 
-	req, err := s.client.NewRequest(http.MethodGet, uri, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	a := new(Agent)
-	resp, err := s.client.Do(req, a)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return a, resp, nil
+	return do[*Agent](s.client,
+		withPath("projects/%s/cluster_agents/%d", project, id),
+		withRequestOpts(options...),
+	)
 }
 
 // RegisterAgentOptions represents the available RegisterAgent()
@@ -214,14 +209,13 @@ func (s *ClusterAgentsService) DeleteAgent(pid any, id int64, options ...Request
 	if err != nil {
 		return nil, err
 	}
-	uri := fmt.Sprintf("projects/%s/cluster_agents/%d", PathEscape(project), id)
 
-	req, err := s.client.NewRequest(http.MethodDelete, uri, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/cluster_agents/%d", project, id),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // ListAgentTokensOptions represents the available ListAgentTokens() options.

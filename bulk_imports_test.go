@@ -42,9 +42,9 @@ func TestBulkImportsService_StartMigration(t *testing.T) {
 	mux.HandleFunc("/api/v4/bulk_imports", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		gotBody, err := io.ReadAll(r.Body)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 		wantBody, err := os.ReadFile("testdata/post_bulk_imports_request.json")
-		require.NoError(t, err)
+		assert.NoError(t, err)
 		assert.JSONEq(t, string(wantBody), string(gotBody))
 		mustWriteHTTPResponse(t, w, "testdata/post_bulk_imports_response.json")
 	})

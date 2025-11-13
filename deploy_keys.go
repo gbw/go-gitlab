@@ -28,7 +28,17 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/deploy_keys/#list-all-deploy-keys
+		// ListAllDeployKeys gets a list of all deploy keys.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/deploy_keys/#list-all-deploy-keys
 		ListAllDeployKeys(opt *ListInstanceDeployKeysOptions, options ...RequestOptionFunc) ([]*InstanceDeployKey, *Response, error)
+
+		// AddInstanceDeployKey creates a deploy key for the GitLab instance.
+		// Requires administrator access.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/deploy_keys/#add-deploy-key
 
 		// AddInstanceDeployKey creates a deploy key for the GitLab instance.
 		// Requires administrator access.
@@ -41,7 +51,17 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/deploy_keys/#list-deploy-keys-for-project
+
+		// ListProjectDeployKeys gets a list of a project's deploy keys.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/deploy_keys/#list-deploy-keys-for-project
 		ListProjectDeployKeys(pid any, opt *ListProjectDeployKeysOptions, options ...RequestOptionFunc) ([]*ProjectDeployKey, *Response, error)
+
+		// ListUserProjectDeployKeys gets a list of a user's deploy keys.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/deploy_keys/#list-project-deploy-keys-for-user
 
 		// ListUserProjectDeployKeys gets a list of a user's deploy keys.
 		//

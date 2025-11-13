@@ -45,8 +45,8 @@ func TestProjectImportExportService_ExportStatus(t *testing.T) {
 			{
 			  "id": 1,
 			  "description": "Itaque perspiciatis minima aspernatur corporis consequatur.",
-			  "name": "Gitlab Test",
-			  "name_with_namespace": "Gitlab Org / Gitlab Test",
+			  "name": "GitLab Test",
+			  "name_with_namespace": "GitLab Org / GitLab Test",
 			  "path": "gitlab-test",
 			  "path_with_namespace": "gitlab-org/gitlab-test",
 			  "export_status": "finished",
@@ -61,8 +61,8 @@ func TestProjectImportExportService_ExportStatus(t *testing.T) {
 	want := &ExportStatus{
 		ID:                1,
 		Description:       "Itaque perspiciatis minima aspernatur corporis consequatur.",
-		Name:              "Gitlab Test",
-		NameWithNamespace: "Gitlab Org / Gitlab Test",
+		Name:              "GitLab Test",
+		NameWithNamespace: "GitLab Org / GitLab Test",
 		Path:              "gitlab-test",
 		PathWithNamespace: "gitlab-org/gitlab-test",
 		ExportStatus:      "finished",
@@ -179,8 +179,8 @@ func TestProjectImportExportService_ImportStatus(t *testing.T) {
 			{
 			  "id": 1,
 			  "description": "Itaque perspiciatis minima aspernatur corporis consequatur.",
-			  "name": "Gitlab Test",
-			  "name_with_namespace": "Gitlab Org / Gitlab Test",
+			  "name": "GitLab Test",
+			  "name_with_namespace": "GitLab Org / GitLab Test",
 			  "path": "gitlab-test",
 			  "path_with_namespace": "gitlab-org/gitlab-test",
 			  "import_status": "started",
@@ -192,8 +192,8 @@ func TestProjectImportExportService_ImportStatus(t *testing.T) {
 	want := &ImportStatus{
 		ID:                1,
 		Description:       "Itaque perspiciatis minima aspernatur corporis consequatur.",
-		Name:              "Gitlab Test",
-		NameWithNamespace: "Gitlab Org / Gitlab Test",
+		Name:              "GitLab Test",
+		NameWithNamespace: "GitLab Org / GitLab Test",
 		Path:              "gitlab-test",
 		PathWithNamespace: "gitlab-org/gitlab-test",
 		ImportStatus:      "started",

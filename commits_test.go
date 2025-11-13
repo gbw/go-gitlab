@@ -139,11 +139,11 @@ func TestSetCommitStatus(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/statuses/b0b3a907f41409829b307a28b82fdbd552ee5a27", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		body, err := io.ReadAll(r.Body)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		var content SetCommitStatusOptions
 		err = json.Unmarshal(body, &content)
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		assert.Equal(t, "ci/jenkins", *content.Name)
 		assert.Equal(t, 99.9, *content.Coverage)

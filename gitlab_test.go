@@ -62,7 +62,7 @@ func setup(t *testing.T) (*http.ServeMux, *Client) {
 	server := httptest.NewServer(mux)
 	t.Cleanup(server.Close)
 
-	// client is the Gitlab client being tested.
+	// client is the GitLab client being tested.
 	client, err := NewClient("",
 		WithBaseURL(server.URL),
 		// Disable backoff to speed up tests that expect errors.
@@ -851,6 +851,8 @@ func TestNewAuthSourceClient(t *testing.T) {
 func TestHasStatusCode(t *testing.T) {
 	t.Parallel()
 
+	t.Parallel()
+
 	// GIVEN
 	tests := []struct {
 		name          string
@@ -894,6 +896,8 @@ func TestHasStatusCode(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
+			t.Parallel()
+
 			// WHEN
 			actual := HasStatusCode(tt.err, tt.hasStatusCode)
 
@@ -904,6 +908,8 @@ func TestHasStatusCode(t *testing.T) {
 }
 
 func TestNewRequestToURL_disallowedURL(t *testing.T) {
+	t.Parallel()
+
 	t.Parallel()
 
 	// GIVEN
@@ -933,6 +939,8 @@ func TestNewRequestToURL_disallowedURL(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
+			t.Parallel()
+
 			u, err := url.Parse(tt.url)
 			require.NoError(t, err)
 
@@ -944,6 +952,8 @@ func TestNewRequestToURL_disallowedURL(t *testing.T) {
 }
 
 func TestNewRequestToURL_allowedURL(t *testing.T) {
+	t.Parallel()
+
 	t.Parallel()
 
 	// GIVEN
@@ -966,6 +976,8 @@ func TestNewRequestToURL_allowedURL(t *testing.T) {
 		t.Run(tt.url, func(t *testing.T) {
 			t.Parallel()
 
+			t.Parallel()
+
 			u, err := url.Parse(tt.url)
 			require.NoError(t, err)
 
@@ -982,7 +994,7 @@ func TestClient_CookieJar(t *testing.T) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/v4/user", func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("test-cookie")
-		require.NoError(t, err)
+		assert.NoError(t, err)
 
 		assert.Equal(t, "yummy", cookie.Value)
 
@@ -1033,11 +1045,15 @@ func TestWithInterceptor(t *testing.T) {
 	t.Run("when nil interceptor has been passed, then it will result in an error", func(t *testing.T) {
 		t.Parallel()
 
+		t.Parallel()
+
 		_, err := NewClient("", WithInterceptor(nil))
 		require.Error(t, err)
 	})
 
 	t.Run("when interceptor option is provided, then it is used in the client as part of the http round tripping of the transportation", func(t *testing.T) {
+		t.Parallel()
+
 		t.Parallel()
 
 		client, err := NewClient("",
@@ -1057,6 +1073,8 @@ func TestWithInterceptor(t *testing.T) {
 	})
 
 	t.Run("enables request manipulation", func(t *testing.T) {
+		t.Parallel()
+
 		t.Parallel()
 
 		client, err := NewClient("",
@@ -1119,6 +1137,8 @@ func TestWithInterceptor(t *testing.T) {
 	})
 
 	t.Run("e2e", func(t *testing.T) {
+		t.Parallel()
+
 		t.Parallel()
 
 		const endpoint = "/api/v4/user"

@@ -28,7 +28,16 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/deploy_tokens/#list-all-deploy-tokens
+		// ListAllDeployTokens gets a list of all deploy tokens.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/deploy_tokens/#list-all-deploy-tokens
 		ListAllDeployTokens(options ...RequestOptionFunc) ([]*DeployToken, *Response, error)
+
+		// ListProjectDeployTokens gets a list of a project's deploy tokens.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/deploy_tokens/#list-project-deploy-tokens
 
 		// ListProjectDeployTokens gets a list of a project's deploy tokens.
 		//

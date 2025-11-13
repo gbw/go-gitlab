@@ -148,6 +148,7 @@ func (s *DraftNotesService) GetDraftNote(pid any, mergeRequest int64, note int64
 // options.
 //
 // GitLab API docs:
+// GitLab API docs:
 // https://docs.gitlab.com/api/draft_notes/#create-a-draft-note
 type CreateDraftNoteOptions struct {
 	Note                  *string          `url:"note" json:"note"`
@@ -181,6 +182,7 @@ func (s *DraftNotesService) CreateDraftNote(pid any, mergeRequest int64, opt *Cr
 // UpdateDraftNoteOptions represents the available UpdateDraftNote()
 // options.
 //
+// GitLab API docs:
 // GitLab API docs:
 // https://docs.gitlab.com/api/draft_notes/#create-a-draft-note
 type UpdateDraftNoteOptions struct {

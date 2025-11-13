@@ -26,7 +26,18 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/container_repository_protection_rules/#list-container-repository-protection-rules
+		// ListContainerRegistryProtectionRules gets a list of container repository
+		// protection rules from a project’s container registry.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/container_repository_protection_rules/#list-container-repository-protection-rules
 		ListContainerRegistryProtectionRules(pid any, options ...RequestOptionFunc) ([]*ContainerRegistryProtectionRule, *Response, error)
+
+		// CreateContainerRegistryProtectionRule creates a container repository
+		// protection rule for a project’s container registry.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/container_repository_protection_rules/#create-a-container-repository-protection-rule
 
 		// CreateContainerRegistryProtectionRule creates a container repository
 		// protection rule for a project’s container registry.

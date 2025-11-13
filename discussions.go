@@ -184,13 +184,28 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/discussions/#get-single-commit-discussion-item
+
+		// GetCommitDiscussion returns a single discussion for a commit.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/discussions/#get-single-commit-discussion-item
 		GetCommitDiscussion(pid any, commit string, discussion string, options ...RequestOptionFunc) (*Discussion, *Response, error)
 
 		// CreateCommitDiscussion creates a new discussion for a commit.
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/discussions/#create-new-commit-thread
+
+		// CreateCommitDiscussion creates a new discussion for a commit.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/discussions/#create-new-commit-thread
 		CreateCommitDiscussion(pid any, commit string, opt *CreateCommitDiscussionOptions, options ...RequestOptionFunc) (*Discussion, *Response, error)
+
+		// AddCommitDiscussionNote adds a new note to a commit discussion.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/discussions/#add-note-to-existing-commit-thread
 
 		// AddCommitDiscussionNote adds a new note to a commit discussion.
 		//

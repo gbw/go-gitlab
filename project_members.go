@@ -61,6 +61,16 @@ type ProjectMember struct {
 	WebURL      string           `json:"web_url"`
 	AvatarURL   string           `json:"avatar_url"`
 	MemberRole  *MemberRole      `json:"member_role"`
+	IsUsingSeat bool             `json:"is_using_seat,omitempty"`
+}
+
+type MemberCreatedBy struct {
+	ID        int    `json:"id"`
+	Username  string `json:"username"`
+	Name      string `json:"name"`
+	State     string `json:"state"`
+	AvatarURL string `json:"avatar_url"`
+	WebURL    string `json:"web_url"`
 }
 
 type MemberCreatedBy struct {
@@ -79,8 +89,9 @@ type MemberCreatedBy struct {
 // https://docs.gitlab.com/api/members/#list-all-members-of-a-group-or-project
 type ListProjectMembersOptions struct {
 	ListOptions
-	Query   *string  `url:"query,omitempty" json:"query,omitempty"`
-	UserIDs *[]int64 `url:"user_ids[],omitempty" json:"user_ids,omitempty"`
+	Query        *string  `url:"query,omitempty" json:"query,omitempty"`
+	UserIDs      *[]int64 `url:"user_ids[],omitempty" json:"user_ids,omitempty"`
+	ShowSeatInfo *bool    `url:"show_seat_info,omitempty" json:"show_seat_info,omitempty"`
 }
 
 // ListProjectMembers gets a list of a project's team members viewable by the

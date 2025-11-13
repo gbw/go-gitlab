@@ -22,6 +22,10 @@ import (
 
 type (
 	EnterpriseUsersServiceInterface interface {
+		// ListEnterpriseUsers lists all enterprise users for a given top-level group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_enterprise_users/#list-all-enterprise-users
 		ListEnterpriseUsers(gid any, opt *ListEnterpriseUsersOptions, options ...RequestOptionFunc) ([]*User, *Response, error)
 		GetEnterpriseUser(gid any, uid int64, options ...RequestOptionFunc) (*User, *Response, error)
 		Disable2FAForEnterpriseUser(gid any, uid int64, options ...RequestOptionFunc) (*Response, error)
@@ -55,10 +59,6 @@ type ListEnterpriseUsersOptions struct {
 	TwoFactor     string     `url:"two_factor,omitempty" json:"two_factor,omitempty"`
 }
 
-// ListEnterpriseUsers lists all enterprise users for a given top-level group.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_enterprise_users/#list-all-enterprise-users
 func (s *EnterpriseUsersService) ListEnterpriseUsers(gid any, opt *ListEnterpriseUsersOptions, options ...RequestOptionFunc) ([]*User, *Response, error) {
 	group, err := parseID(gid)
 	if err != nil {

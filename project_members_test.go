@@ -560,3 +560,66 @@ func TestProjectMembersService_CustomRole(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, want, member)
 }
+
+func TestProjectMembersService_ListProjectMembersWithSeatInfo(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/members", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		// Verify that the show_seat_info parameter is passed correctly
+		assert.Equal(t, "true", r.URL.Query().Get("show_seat_info"))
+		fmt.Fprintf(w, `
+			[
+			{
+				"id": 1,
+				"username": "venkatesh_thalluri",
+				"name": "Venkatesh Thalluri",
+				"state": "active",
+				"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+				"web_url": "http://192.168.1.8:3000/root",
+				"created_at": "2012-10-22T14:13:35Z",
+				"created_by": {
+					"id": 2,
+					"username": "john_doe",
+					"name": "John Doe",
+					"state": "active",
+					"avatar_url": "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+					"web_url": "http://192.168.1.8:3000/root"
+				},
+				"access_level": 30,
+				"is_using_seat": true,
+				"group_saml_identity": null
+			}
+			]
+		`)
+	})
+
+	want := []*ProjectMember{{
+		ID:          1,
+		Username:    "venkatesh_thalluri",
+		Email:       "",
+		Name:        "Venkatesh Thalluri",
+		State:       "active",
+		AccessLevel: 30,
+		WebURL:      "http://192.168.1.8:3000/root",
+		AvatarURL:   "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+		CreatedAt:   mustParseTime("2012-10-22T14:13:35Z"),
+		CreatedBy: &MemberCreatedBy{
+			ID:        2,
+			Username:  "john_doe",
+			Name:      "John Doe",
+			State:     "active",
+			AvatarURL: "https://www.gravatar.com/avatar/c2525a7f58ae3776070e44c106c48e15?s=80&d=identicon",
+			WebURL:    "http://192.168.1.8:3000/root",
+		},
+		IsUsingSeat: true,
+	}}
+
+	pms, resp, err := client.ProjectMembers.ListProjectMembers(1, &ListProjectMembersOptions{
+		ShowSeatInfo: Ptr(true),
+	}, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, want, pms)
+}
