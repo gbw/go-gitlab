@@ -19,19 +19,13 @@ func TestProjectAliasesService_CreateProjectAlias(t *testing.T) {
 		testMethod(t, r, "POST")
 
 		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("Failed to read request body: %v", err)
-		}
+		assert.NoError(t, err, "Failed to read request body")
 
 		var payload CreateProjectAliasOptions
 		err = json.Unmarshal(body, &payload)
-		if err != nil {
-			t.Fatalf("Failed to unmarshal JSON: %v", err)
-		}
+		assert.NoError(t, err, "Failed to unmarshal JSON")
 
-		if payload.Name == nil {
-			t.Fatal("Expected Name to be non-nil")
-		}
+		assert.NotNil(t, payload.Name, "Expected Name to be non-nil")
 		assert.Equal(t, "my-alias", *payload.Name)
 		assert.Equal(t, int64(1), payload.ProjectID)
 

@@ -194,11 +194,11 @@ type PipelineTestReportSummary struct {
 type PipelineTotalSummary struct {
 	// Documentation examples only show whole numbers, but the test specs for GitLab show decimals, so `float64` is the better attribute here.
 	Time       float64 `json:"time"`
-	Count      int     `json:"count"`
-	Success    int     `json:"success"`
-	Failed     int     `json:"failed"`
-	Skipped    int     `json:"skipped"`
-	Error      int     `json:"error"`
+	Count      int64   `json:"count"`
+	Success    int64   `json:"success"`
+	Failed     int64   `json:"failed"`
+	Skipped    int64   `json:"skipped"`
+	Error      int64   `json:"error"`
 	SuiteError *string `json:"suite_error"`
 }
 
@@ -206,12 +206,12 @@ type PipelineTotalSummary struct {
 type PipelineTestSuiteSummary struct {
 	Name         string  `json:"name"`
 	TotalTime    float64 `json:"total_time"`
-	TotalCount   int     `json:"total_count"`
-	SuccessCount int     `json:"success_count"`
-	FailedCount  int     `json:"failed_count"`
-	SkippedCount int     `json:"skipped_count"`
-	ErrorCount   int     `json:"error_count"`
-	BuildIDs     []int   `json:"build_ids"`
+	TotalCount   int64   `json:"total_count"`
+	SuccessCount int64   `json:"success_count"`
+	FailedCount  int64   `json:"failed_count"`
+	SkippedCount int64   `json:"skipped_count"`
+	ErrorCount   int64   `json:"error_count"`
+	BuildIDs     []int64 `json:"build_ids"`
 	SuiteError   *string `json:"suite_error"`
 }
 
