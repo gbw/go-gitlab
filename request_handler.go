@@ -36,6 +36,19 @@ func (i GroupID) forPath() (string, error) {
 	return PathEscape(id), nil
 }
 
+type RunnerID struct {
+	Value any
+}
+
+func (i RunnerID) forPath() (string, error) {
+	id, err := parseID(i.Value)
+	if err != nil {
+		return "", err
+	}
+
+	return PathEscape(id), nil
+}
+
 type UserID struct {
 	Value any
 }
