@@ -109,7 +109,13 @@ func TestPipelineSchedules_GetPipelineSchedule(t *testing.T) {
 				"state": "active",
 				"avatar_url": "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 				"web_url": "https://gitlab.example.com/root"
-			}
+			},
+			"inputs": [
+				{
+					"name": "deploy_environment",
+					"value": "production"
+				}
+			]
 		}
 		`)
 	})
@@ -136,6 +142,12 @@ func TestPipelineSchedules_GetPipelineSchedule(t *testing.T) {
 			State:     "active",
 			AvatarURL: "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 			WebURL:    "https://gitlab.example.com/root",
+		},
+		Inputs: []*PipelineInput{
+			{
+				Name:  "deploy_environment",
+				Value: "production",
+			},
 		},
 	}
 	assert.Equal(t, want, schedule)
@@ -277,6 +289,54 @@ func TestPipelineSchedules_CreatePipelineSchedule(t *testing.T) {
 		},
 	}
 	assert.Equal(t, want, schedule)
+}
+
+func TestPipelineSchedules_CreatePipelineScheduleWithMultipleInputTypes(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/pipeline_schedules", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		// Validate that inputs support different value types
+		testBodyJSON(t, r, map[string]any{
+			"description": "Test schedule with various input types",
+			"ref":         "refs/heads/main",
+			"cron":        "0 1 * * *",
+			"inputs": []any{
+				map[string]any{
+					"name":  "string_input",
+					"value": "production",
+				},
+				map[string]any{
+					"name":  "number_input",
+					"value": float64(42),
+				},
+				map[string]any{
+					"name":  "boolean_input",
+					"value": true,
+				},
+				map[string]any{
+					"name":  "array_input",
+					"value": []any{"us-east", "eu-west"},
+				},
+			},
+		})
+		fmt.Fprint(w, `{"id": 13}`)
+	})
+
+	_, resp, err := client.PipelineSchedules.CreatePipelineSchedule(1, &CreatePipelineScheduleOptions{
+		Description: Ptr("Test schedule with various input types"),
+		Ref:         Ptr("refs/heads/main"),
+		Cron:        Ptr("0 1 * * *"),
+		Inputs: []*PipelineInput{
+			{Name: "string_input", Value: "production"},
+			{Name: "number_input", Value: float64(42)},
+			{Name: "boolean_input", Value: true},
+			{Name: "array_input", Value: []string{"us-east", "eu-west"}},
+		},
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestPipelineSchedules_EditPipelineSchedule(t *testing.T) {
