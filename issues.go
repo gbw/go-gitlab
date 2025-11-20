@@ -18,7 +18,6 @@ package gitlab
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"reflect"
 	"strings"
@@ -250,18 +249,11 @@ type ListIssuesOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#list-issues
 func (s *IssuesService) ListIssues(opt *ListIssuesOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
-	req, err := s.client.NewRequest(http.MethodGet, "issues", opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var i []*Issue
-	resp, err := s.client.Do(req, &i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[[]*Issue](s.client,
+		withPath("issues"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // ListGroupIssuesOptions represents the available ListGroupIssues() options.
@@ -312,24 +304,11 @@ type ListGroupIssuesOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#list-group-issues
 func (s *IssuesService) ListGroupIssues(pid any, opt *ListGroupIssuesOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
-	group, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("groups/%s/issues", PathEscape(group))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var i []*Issue
-	resp, err := s.client.Do(req, &i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[[]*Issue](s.client,
+		withPath("groups/%s/issues", GroupID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // ListProjectIssuesOptions represents the available ListProjectIssues() options.
@@ -379,68 +358,31 @@ type ListProjectIssuesOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#list-project-issues
 func (s *IssuesService) ListProjectIssues(pid any, opt *ListProjectIssuesOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var i []*Issue
-	resp, err := s.client.Do(req, &i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[[]*Issue](s.client,
+		withPath("projects/%s/issues", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // GetIssueByID gets a single issue.
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#single-issue
 func (s *IssuesService) GetIssueByID(issue int64, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	u := fmt.Sprintf("issues/%d", issue)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withPath("issues/%d", issue),
+		withRequestOpts(options...),
+	)
 }
 
 // GetIssue gets a single project issue.
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#single-project-issue
 func (s *IssuesService) GetIssue(pid any, issue int64, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withPath("projects/%s/issues/%d", ProjectID{pid}, issue),
+		withRequestOpts(options...),
+	)
 }
 
 // CreateIssueOptions represents the available CreateIssue() options.
@@ -467,24 +409,12 @@ type CreateIssueOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#new-issue
 func (s *IssuesService) CreateIssue(pid any, opt *CreateIssueOptions, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodPost, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/issues", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // UpdateIssueOptions represents the available UpdateIssue() options.
@@ -573,42 +503,24 @@ func (o UpdateIssueOptions) MarshalJSON() ([]byte, error) {
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#edit-an-issue
 func (s *IssuesService) UpdateIssue(pid any, issue int64, opt *UpdateIssueOptions, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/issues/%d", ProjectID{pid}, issue),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // DeleteIssue deletes a single project issue.
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#delete-an-issue
 func (s *IssuesService) DeleteIssue(pid any, issue int64, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/issues/%d", ProjectID{pid}, issue),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // ReorderIssueOptions represents the available ReorderIssue() options.
@@ -623,24 +535,12 @@ type ReorderIssueOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#reorder-an-issue
 func (s *IssuesService) ReorderIssue(pid any, issue int64, opt *ReorderIssueOptions, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/reorder", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/issues/%d/reorder", ProjectID{pid}, issue),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // MoveIssueOptions represents the available MoveIssue() options.
@@ -655,24 +555,12 @@ type MoveIssueOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/issues/#move-an-issue
 func (s *IssuesService) MoveIssue(pid any, issue int64, opt *MoveIssueOptions, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/move", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/issues/%d/move", ProjectID{pid}, issue),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // SubscribeToIssue subscribes the authenticated user to the given issue to
@@ -682,24 +570,11 @@ func (s *IssuesService) MoveIssue(pid any, issue int64, opt *MoveIssueOptions, o
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#subscribe-to-an-issue
 func (s *IssuesService) SubscribeToIssue(pid any, issue int64, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/subscribe", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/issues/%d/subscribe", ProjectID{pid}, issue),
+		withRequestOpts(options...),
+	)
 }
 
 // UnsubscribeFromIssue unsubscribes the authenticated user from the given
@@ -709,24 +584,11 @@ func (s *IssuesService) SubscribeToIssue(pid any, issue int64, options ...Reques
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#unsubscribe-from-an-issue
 func (s *IssuesService) UnsubscribeFromIssue(pid any, issue int64, options ...RequestOptionFunc) (*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/unsubscribe", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	i := new(Issue)
-	resp, err := s.client.Do(req, i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[*Issue](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/issues/%d/unsubscribe", ProjectID{pid}, issue),
+		withRequestOpts(options...),
+	)
 }
 
 // CreateTodo creates a todo for the current user for an issue.
@@ -736,24 +598,11 @@ func (s *IssuesService) UnsubscribeFromIssue(pid any, issue int64, options ...Re
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#create-a-to-do-item
 func (s *IssuesService) CreateTodo(pid any, issue int64, options ...RequestOptionFunc) (*Todo, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/todo", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	t := new(Todo)
-	resp, err := s.client.Do(req, t)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return t, resp, nil
+	return do[*Todo](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/issues/%d/todo", ProjectID{pid}, issue),
+		withRequestOpts(options...),
+	)
 }
 
 // ListMergeRequestsClosingIssueOptions represents the available
@@ -771,24 +620,11 @@ type ListMergeRequestsClosingIssueOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#list-merge-requests-that-close-a-particular-issue-on-merge
 func (s *IssuesService) ListMergeRequestsClosingIssue(pid any, issue int64, opt *ListMergeRequestsClosingIssueOptions, options ...RequestOptionFunc) ([]*BasicMergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/closed_by", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var m []*BasicMergeRequest
-	resp, err := s.client.Do(req, &m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[[]*BasicMergeRequest](s.client,
+		withPath("projects/%s/issues/%d/closed_by", ProjectID{pid}, issue),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // ListMergeRequestsRelatedToIssueOptions represents the available
@@ -806,27 +642,11 @@ type ListMergeRequestsRelatedToIssueOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#list-merge-requests-related-to-issue
 func (s *IssuesService) ListMergeRequestsRelatedToIssue(pid any, issue int64, opt *ListMergeRequestsRelatedToIssueOptions, options ...RequestOptionFunc) ([]*BasicMergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/related_merge_requests",
-		PathEscape(project),
-		issue,
+	return do[[]*BasicMergeRequest](s.client,
+		withPath("projects/%s/issues/%d/related_merge_requests", ProjectID{pid}, issue),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var m []*BasicMergeRequest
-	resp, err := s.client.Do(req, &m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
 }
 
 // SetTimeEstimate sets the time estimate for a single project issue.
@@ -874,22 +694,8 @@ func (s *IssuesService) GetTimeSpent(pid any, issue int64, options ...RequestOpt
 // GitLab API docs:
 // https://docs.gitlab.com/api/issues/#list-participants-in-an-issue
 func (s *IssuesService) GetParticipants(pid any, issue int64, options ...RequestOptionFunc) ([]*BasicUser, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/issues/%d/participants", PathEscape(project), issue)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var bu []*BasicUser
-	resp, err := s.client.Do(req, &bu)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bu, resp, nil
+	return do[[]*BasicUser](s.client,
+		withPath("projects/%s/issues/%d/participants", ProjectID{pid}, issue),
+		withRequestOpts(options...),
+	)
 }

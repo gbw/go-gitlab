@@ -17,7 +17,6 @@
 package gitlab
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -128,18 +127,16 @@ func (s *CustomAttributesService) ListCustomProjectAttributes(project int64, opt
 }
 
 func (s *CustomAttributesService) listCustomAttributes(resource string, id int64, options ...RequestOptionFunc) ([]*CustomAttribute, *Response, error) {
-	u := fmt.Sprintf("%s/%d/custom_attributes", resource, id)
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var cas []*CustomAttribute
-	resp, err := s.client.Do(req, &cas)
+	res, resp, err := do[[]*CustomAttribute](s.client,
+		withMethod(http.MethodGet),
+		withPath("%s/%d/custom_attributes", resource, id),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-	return cas, resp, nil
+	return res, resp, nil
 }
 
 func (s *CustomAttributesService) GetCustomUserAttribute(user int64, key string, options ...RequestOptionFunc) (*CustomAttribute, *Response, error) {
@@ -155,18 +152,16 @@ func (s *CustomAttributesService) GetCustomProjectAttribute(project int64, key s
 }
 
 func (s *CustomAttributesService) getCustomAttribute(resource string, id int64, key string, options ...RequestOptionFunc) (*CustomAttribute, *Response, error) {
-	u := fmt.Sprintf("%s/%d/custom_attributes/%s", resource, id, key)
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var ca *CustomAttribute
-	resp, err := s.client.Do(req, &ca)
+	res, resp, err := do[*CustomAttribute](s.client,
+		withMethod(http.MethodGet),
+		withPath("%s/%d/custom_attributes/%s", resource, id, key),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-	return ca, resp, nil
+	return res, resp, nil
 }
 
 func (s *CustomAttributesService) SetCustomUserAttribute(user int64, c CustomAttribute, options ...RequestOptionFunc) (*CustomAttribute, *Response, error) {
@@ -182,18 +177,16 @@ func (s *CustomAttributesService) SetCustomProjectAttribute(project int64, c Cus
 }
 
 func (s *CustomAttributesService) setCustomAttribute(resource string, id int64, c CustomAttribute, options ...RequestOptionFunc) (*CustomAttribute, *Response, error) {
-	u := fmt.Sprintf("%s/%d/custom_attributes/%s", resource, id, c.Key)
-	req, err := s.client.NewRequest(http.MethodPut, u, c, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	ca := new(CustomAttribute)
-	resp, err := s.client.Do(req, ca)
+	res, resp, err := do[*CustomAttribute](s.client,
+		withMethod(http.MethodPut),
+		withPath("%s/%d/custom_attributes/%s", resource, id, c.Key),
+		withAPIOpts(c),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-	return ca, resp, nil
+	return res, resp, nil
 }
 
 func (s *CustomAttributesService) DeleteCustomUserAttribute(user int64, key string, options ...RequestOptionFunc) (*Response, error) {
@@ -209,10 +202,11 @@ func (s *CustomAttributesService) DeleteCustomProjectAttribute(project int64, ke
 }
 
 func (s *CustomAttributesService) deleteCustomAttribute(resource string, id int64, key string, options ...RequestOptionFunc) (*Response, error) {
-	u := fmt.Sprintf("%s/%d/custom_attributes/%s", resource, id, key)
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("%s/%d/custom_attributes/%s", resource, id, key),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
