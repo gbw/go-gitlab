@@ -1,3 +1,18 @@
+## 0.161.0
+
+### 🚀 Features
+
+- fix: return detailed API errors for BlockUser instead of generic LDAP message ([!2581](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2581)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+
+
+# [0.161.0](https://gitlab.com/gitlab-org/api/client-go/compare/v0.160.2...v0.161.0) (2025-11-24)
+
+
+### Bug Fixes
+
+* return detailed API errors for BlockUser instead of generic LDAP message ([2ba9fa6](https://gitlab.com/gitlab-org/api/client-go/commit/2ba9fa6995de6cadf0dae1bf600979b73ee471ce))
+
 ## 0.160.2
 
 ### 🐛 Bug Fixes
