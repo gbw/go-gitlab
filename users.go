@@ -1102,14 +1102,7 @@ func (s *UsersService) BlockUser(user int, options ...RequestOptionFunc) error {
 		return err
 	}
 
-	var errorResponse struct {
-		Error            string `json:"error"`
-		ErrorDescription string `json:"error_description"`
-		Message          string `json:"message"`
-	}
-
-	_, doErr := s.client.Do(req, &errorResponse)
-
+	_, doErr := s.client.Do(req, nil)
 	if doErr != nil {
 		return doErr
 	}
