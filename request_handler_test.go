@@ -297,3 +297,83 @@ func TestRequestHandlerWithOptions(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 	assert.Len(t, users, 1)
 }
+
+func TestDoRequestProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	mux.HandleFunc("/api/v4/projects/group%2Fproject", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+	})
+
+	// WHEN
+	_, resp, err := do[none](
+		client,
+		withPath("projects/%s", ProjectID{"group/project"}),
+	)
+
+	// THEN
+	assert.NoError(t, err)
+	assert.Equal(t, 200, resp.StatusCode)
+}
+
+func TestDoRequestGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	mux.HandleFunc("/api/v4/groups/sub%2Fgroup", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+	})
+
+	// WHEN
+	_, resp, err := do[none](
+		client,
+		withPath("groups/%s", GroupID{"sub/group"}),
+	)
+
+	// THEN
+	assert.NoError(t, err)
+	assert.Equal(t, 200, resp.StatusCode)
+}
+
+func TestDoRequestRunnerID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	mux.HandleFunc("/api/v4/runners/some%2Frunner", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+	})
+
+	// WHEN
+	_, resp, err := do[none](
+		client,
+		withPath("runners/%s", RunnerID{"some/runner"}),
+	)
+
+	// THEN
+	assert.NoError(t, err)
+	assert.Equal(t, 200, resp.StatusCode)
+}
+
+func TestDoRequestUserID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	mux.HandleFunc("/api/v4/users/test%2Fuser", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+	})
+
+	// WHEN
+	_, resp, err := do[none](
+		client,
+		withPath("users/%s", UserID{"test/user"}),
+	)
+
+	// THEN
+	assert.NoError(t, err)
+	assert.Equal(t, 200, resp.StatusCode)
+}
