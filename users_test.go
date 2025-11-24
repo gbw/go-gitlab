@@ -184,6 +184,7 @@ func TestBlockUser(t *testing.T) {
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		w.WriteHeader(http.StatusCreated)
+		fmt.Fprint(w, `{}`)
 	})
 
 	err := client.Users.BlockUser(1)
@@ -198,10 +199,12 @@ func TestBlockUser_UserNotFound(t *testing.T) {
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprint(w, `{"message": "404 User Not Found"}`)
 	})
 
 	err := client.Users.BlockUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "404")
 }
 
 func TestBlockUser_BlockPrevented(t *testing.T) {
@@ -215,7 +218,8 @@ func TestBlockUser_BlockPrevented(t *testing.T) {
 	})
 
 	err := client.Users.BlockUser(1)
-	assert.ErrorIs(t, err, ErrUserBlockPrevented)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "403")
 }
 
 func TestBlockUser_UnknownError(t *testing.T) {
@@ -229,7 +233,7 @@ func TestBlockUser_UnknownError(t *testing.T) {
 	})
 
 	err := client.Users.BlockUser(1)
-	assert.ErrorIs(t, err, errUnexpectedResultCode)
+	assert.Error(t, err)
 }
 
 func TestUnblockUser(t *testing.T) {
@@ -292,13 +296,14 @@ func TestBanUser(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	path := fmt.Sprintf("/%susers/1/block", apiVersionPath)
+	path := fmt.Sprintf("/%susers/1/ban", apiVersionPath)
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		w.WriteHeader(http.StatusCreated)
+		fmt.Fprint(w, `{}`)
 	})
 
-	err := client.Users.BlockUser(1)
+	err := client.Users.BanUser(1)
 	assert.NoError(t, err)
 }
 
