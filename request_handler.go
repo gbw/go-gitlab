@@ -88,7 +88,7 @@ func withPath(path string, args ...any) doOption {
 				if err != nil {
 					return err
 				}
-				as[i] = PathEscape(project)
+				as[i] = project
 			case string:
 				as[i] = PathEscape(v)
 			default:
