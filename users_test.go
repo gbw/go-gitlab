@@ -184,7 +184,7 @@ func TestBlockUser(t *testing.T) {
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, `{}`)
+		fmt.Fprint(w, `true`)
 	})
 
 	err := client.Users.BlockUser(1)
