@@ -85,7 +85,7 @@ func (c *MockErrorTrackingServiceInterfaceCreateClientKeyCall) DoAndReturn(f fun
 }
 
 // DeleteClientKey mocks base method.
-func (m *MockErrorTrackingServiceInterface) DeleteClientKey(pid any, keyID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockErrorTrackingServiceInterface) DeleteClientKey(pid any, keyID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, keyID}
 	for _, a := range options {
@@ -117,13 +117,13 @@ func (c *MockErrorTrackingServiceInterfaceDeleteClientKeyCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockErrorTrackingServiceInterfaceDeleteClientKeyCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockErrorTrackingServiceInterfaceDeleteClientKeyCall {
+func (c *MockErrorTrackingServiceInterfaceDeleteClientKeyCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockErrorTrackingServiceInterfaceDeleteClientKeyCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockErrorTrackingServiceInterfaceDeleteClientKeyCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockErrorTrackingServiceInterfaceDeleteClientKeyCall {
+func (c *MockErrorTrackingServiceInterfaceDeleteClientKeyCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockErrorTrackingServiceInterfaceDeleteClientKeyCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

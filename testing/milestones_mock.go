@@ -85,7 +85,7 @@ func (c *MockMilestonesServiceInterfaceCreateMilestoneCall) DoAndReturn(f func(a
 }
 
 // DeleteMilestone mocks base method.
-func (m *MockMilestonesServiceInterface) DeleteMilestone(pid any, milestone int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockMilestonesServiceInterface) DeleteMilestone(pid any, milestone int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, milestone}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockMilestonesServiceInterfaceDeleteMilestoneCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMilestonesServiceInterfaceDeleteMilestoneCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMilestonesServiceInterfaceDeleteMilestoneCall {
+func (c *MockMilestonesServiceInterfaceDeleteMilestoneCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMilestonesServiceInterfaceDeleteMilestoneCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMilestonesServiceInterfaceDeleteMilestoneCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMilestonesServiceInterfaceDeleteMilestoneCall {
+func (c *MockMilestonesServiceInterfaceDeleteMilestoneCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMilestonesServiceInterfaceDeleteMilestoneCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMilestone mocks base method.
-func (m *MockMilestonesServiceInterface) GetMilestone(pid any, milestone int, options ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error) {
+func (m *MockMilestonesServiceInterface) GetMilestone(pid any, milestone int64, options ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, milestone}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockMilestonesServiceInterfaceGetMilestoneCall) Return(arg0 *gitlab.Mil
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMilestonesServiceInterfaceGetMilestoneCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneCall {
+func (c *MockMilestonesServiceInterfaceGetMilestoneCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMilestonesServiceInterfaceGetMilestoneCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneCall {
+func (c *MockMilestonesServiceInterfaceGetMilestoneCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMilestoneIssues mocks base method.
-func (m *MockMilestonesServiceInterface) GetMilestoneIssues(pid any, milestone int, opt *gitlab.GetMilestoneIssuesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
+func (m *MockMilestonesServiceInterface) GetMilestoneIssues(pid any, milestone int64, opt *gitlab.GetMilestoneIssuesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, milestone, opt}
 	for _, a := range options {
@@ -207,19 +207,19 @@ func (c *MockMilestonesServiceInterfaceGetMilestoneIssuesCall) Return(arg0 []*gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMilestonesServiceInterfaceGetMilestoneIssuesCall) Do(f func(any, int, *gitlab.GetMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneIssuesCall {
+func (c *MockMilestonesServiceInterfaceGetMilestoneIssuesCall) Do(f func(any, int64, *gitlab.GetMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneIssuesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMilestonesServiceInterfaceGetMilestoneIssuesCall) DoAndReturn(f func(any, int, *gitlab.GetMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneIssuesCall {
+func (c *MockMilestonesServiceInterfaceGetMilestoneIssuesCall) DoAndReturn(f func(any, int64, *gitlab.GetMilestoneIssuesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Issue, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneIssuesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMilestoneMergeRequests mocks base method.
-func (m *MockMilestonesServiceInterface) GetMilestoneMergeRequests(pid any, milestone int, opt *gitlab.GetMilestoneMergeRequestsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error) {
+func (m *MockMilestonesServiceInterface) GetMilestoneMergeRequests(pid any, milestone int64, opt *gitlab.GetMilestoneMergeRequestsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, milestone, opt}
 	for _, a := range options {
@@ -252,13 +252,13 @@ func (c *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall) Do(f func(any, int, *gitlab.GetMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall {
+func (c *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall) Do(f func(any, int64, *gitlab.GetMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall) DoAndReturn(f func(any, int, *gitlab.GetMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall {
+func (c *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall) DoAndReturn(f func(any, int64, *gitlab.GetMilestoneMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)) *MockMilestonesServiceInterfaceGetMilestoneMergeRequestsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -309,7 +309,7 @@ func (c *MockMilestonesServiceInterfaceListMilestonesCall) DoAndReturn(f func(an
 }
 
 // UpdateMilestone mocks base method.
-func (m *MockMilestonesServiceInterface) UpdateMilestone(pid any, milestone int, opt *gitlab.UpdateMilestoneOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error) {
+func (m *MockMilestonesServiceInterface) UpdateMilestone(pid any, milestone int64, opt *gitlab.UpdateMilestoneOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, milestone, opt}
 	for _, a := range options {
@@ -342,13 +342,13 @@ func (c *MockMilestonesServiceInterfaceUpdateMilestoneCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMilestonesServiceInterfaceUpdateMilestoneCall) Do(f func(any, int, *gitlab.UpdateMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceUpdateMilestoneCall {
+func (c *MockMilestonesServiceInterfaceUpdateMilestoneCall) Do(f func(any, int64, *gitlab.UpdateMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceUpdateMilestoneCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMilestonesServiceInterfaceUpdateMilestoneCall) DoAndReturn(f func(any, int, *gitlab.UpdateMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceUpdateMilestoneCall {
+func (c *MockMilestonesServiceInterfaceUpdateMilestoneCall) DoAndReturn(f func(any, int64, *gitlab.UpdateMilestoneOptions, ...gitlab.RequestOptionFunc) (*gitlab.Milestone, *gitlab.Response, error)) *MockMilestonesServiceInterfaceUpdateMilestoneCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -102,7 +102,7 @@ func TestGetCommitStatuses_WithOptions(t *testing.T) {
 		Ref:        Ptr("master"),
 		Stage:      Ptr("test"),
 		Name:       Ptr("ci"),
-		PipelineID: Ptr(1),
+		PipelineID: Ptr(int64(1)),
 		All:        Ptr(true),
 	}
 

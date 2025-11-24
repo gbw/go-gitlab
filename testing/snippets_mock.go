@@ -85,7 +85,7 @@ func (c *MockSnippetsServiceInterfaceCreateSnippetCall) DoAndReturn(f func(*gitl
 }
 
 // DeleteSnippet mocks base method.
-func (m *MockSnippetsServiceInterface) DeleteSnippet(snippet int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockSnippetsServiceInterface) DeleteSnippet(snippet int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet}
 	for _, a := range options {
@@ -117,13 +117,13 @@ func (c *MockSnippetsServiceInterfaceDeleteSnippetCall) Return(arg0 *gitlab.Resp
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetsServiceInterfaceDeleteSnippetCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceDeleteSnippetCall {
+func (c *MockSnippetsServiceInterfaceDeleteSnippetCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceDeleteSnippetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetsServiceInterfaceDeleteSnippetCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceDeleteSnippetCall {
+func (c *MockSnippetsServiceInterfaceDeleteSnippetCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceDeleteSnippetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -174,7 +174,7 @@ func (c *MockSnippetsServiceInterfaceExploreSnippetsCall) DoAndReturn(f func(*gi
 }
 
 // GetSnippet mocks base method.
-func (m *MockSnippetsServiceInterface) GetSnippet(snippet int, options ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error) {
+func (m *MockSnippetsServiceInterface) GetSnippet(snippet int64, options ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet}
 	for _, a := range options {
@@ -207,13 +207,13 @@ func (c *MockSnippetsServiceInterfaceGetSnippetCall) Return(arg0 *gitlab.Snippet
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetsServiceInterfaceGetSnippetCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceGetSnippetCall {
+func (c *MockSnippetsServiceInterfaceGetSnippetCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceGetSnippetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetsServiceInterfaceGetSnippetCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceGetSnippetCall {
+func (c *MockSnippetsServiceInterfaceGetSnippetCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceGetSnippetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -309,7 +309,7 @@ func (c *MockSnippetsServiceInterfaceListSnippetsCall) DoAndReturn(f func(*gitla
 }
 
 // SnippetContent mocks base method.
-func (m *MockSnippetsServiceInterface) SnippetContent(snippet int, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
+func (m *MockSnippetsServiceInterface) SnippetContent(snippet int64, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet}
 	for _, a := range options {
@@ -342,19 +342,19 @@ func (c *MockSnippetsServiceInterfaceSnippetContentCall) Return(arg0 []byte, arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetsServiceInterfaceSnippetContentCall) Do(f func(int, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetContentCall {
+func (c *MockSnippetsServiceInterfaceSnippetContentCall) Do(f func(int64, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetContentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetsServiceInterfaceSnippetContentCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetContentCall {
+func (c *MockSnippetsServiceInterfaceSnippetContentCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetContentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // SnippetFileContent mocks base method.
-func (m *MockSnippetsServiceInterface) SnippetFileContent(snippet int, ref, filename string, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
+func (m *MockSnippetsServiceInterface) SnippetFileContent(snippet int64, ref, filename string, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet, ref, filename}
 	for _, a := range options {
@@ -387,19 +387,19 @@ func (c *MockSnippetsServiceInterfaceSnippetFileContentCall) Return(arg0 []byte,
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetsServiceInterfaceSnippetFileContentCall) Do(f func(int, string, string, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetFileContentCall {
+func (c *MockSnippetsServiceInterfaceSnippetFileContentCall) Do(f func(int64, string, string, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetFileContentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetsServiceInterfaceSnippetFileContentCall) DoAndReturn(f func(int, string, string, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetFileContentCall {
+func (c *MockSnippetsServiceInterfaceSnippetFileContentCall) DoAndReturn(f func(int64, string, string, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetFileContentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateSnippet mocks base method.
-func (m *MockSnippetsServiceInterface) UpdateSnippet(snippet int, opt *gitlab.UpdateSnippetOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error) {
+func (m *MockSnippetsServiceInterface) UpdateSnippet(snippet int64, opt *gitlab.UpdateSnippetOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{snippet, opt}
 	for _, a := range options {
@@ -432,13 +432,13 @@ func (c *MockSnippetsServiceInterfaceUpdateSnippetCall) Return(arg0 *gitlab.Snip
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSnippetsServiceInterfaceUpdateSnippetCall) Do(f func(int, *gitlab.UpdateSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceUpdateSnippetCall {
+func (c *MockSnippetsServiceInterfaceUpdateSnippetCall) Do(f func(int64, *gitlab.UpdateSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceUpdateSnippetCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSnippetsServiceInterfaceUpdateSnippetCall) DoAndReturn(f func(int, *gitlab.UpdateSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceUpdateSnippetCall {
+func (c *MockSnippetsServiceInterfaceUpdateSnippetCall) DoAndReturn(f func(int64, *gitlab.UpdateSnippetOptions, ...gitlab.RequestOptionFunc) (*gitlab.Snippet, *gitlab.Response, error)) *MockSnippetsServiceInterfaceUpdateSnippetCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

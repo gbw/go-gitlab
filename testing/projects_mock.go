@@ -357,7 +357,7 @@ func (c *MockProjectsServiceInterfaceCreateProjectApprovalRuleCall) DoAndReturn(
 }
 
 // CreateProjectForUser mocks base method.
-func (m *MockProjectsServiceInterface) CreateProjectForUser(user int, opt *gitlab.CreateProjectForUserOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Project, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) CreateProjectForUser(user int64, opt *gitlab.CreateProjectForUserOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Project, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user, opt}
 	for _, a := range options {
@@ -390,19 +390,19 @@ func (c *MockProjectsServiceInterfaceCreateProjectForUserCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceCreateProjectForUserCall) Do(f func(int, *gitlab.CreateProjectForUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Project, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForUserCall {
+func (c *MockProjectsServiceInterfaceCreateProjectForUserCall) Do(f func(int64, *gitlab.CreateProjectForUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Project, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceCreateProjectForUserCall) DoAndReturn(f func(int, *gitlab.CreateProjectForUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Project, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForUserCall {
+func (c *MockProjectsServiceInterfaceCreateProjectForUserCall) DoAndReturn(f func(int64, *gitlab.CreateProjectForUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.Project, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateProjectForkRelation mocks base method.
-func (m *MockProjectsServiceInterface) CreateProjectForkRelation(pid any, fork int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectForkRelation, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) CreateProjectForkRelation(pid any, fork int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectForkRelation, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, fork}
 	for _, a := range options {
@@ -435,13 +435,13 @@ func (c *MockProjectsServiceInterfaceCreateProjectForkRelationCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceCreateProjectForkRelationCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectForkRelation, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForkRelationCall {
+func (c *MockProjectsServiceInterfaceCreateProjectForkRelationCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectForkRelation, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForkRelationCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceCreateProjectForkRelationCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectForkRelation, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForkRelationCall {
+func (c *MockProjectsServiceInterfaceCreateProjectForkRelationCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectForkRelation, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectForkRelationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -491,7 +491,7 @@ func (c *MockProjectsServiceInterfaceDeleteProjectCall) DoAndReturn(f func(any, 
 }
 
 // DeleteProjectApprovalRule mocks base method.
-func (m *MockProjectsServiceInterface) DeleteProjectApprovalRule(pid any, approvalRule int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) DeleteProjectApprovalRule(pid any, approvalRule int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, approvalRule}
 	for _, a := range options {
@@ -523,19 +523,19 @@ func (c *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectApprovalRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteProjectCustomHeader mocks base method.
-func (m *MockProjectsServiceInterface) DeleteProjectCustomHeader(pid any, hook int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) DeleteProjectCustomHeader(pid any, hook int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook, key}
 	for _, a := range options {
@@ -567,13 +567,13 @@ func (c *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall) Do(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall) Do(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall) DoAndReturn(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall) DoAndReturn(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectCustomHeaderCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -623,7 +623,7 @@ func (c *MockProjectsServiceInterfaceDeleteProjectForkRelationCall) DoAndReturn(
 }
 
 // DeleteProjectHook mocks base method.
-func (m *MockProjectsServiceInterface) DeleteProjectHook(pid any, hook int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) DeleteProjectHook(pid any, hook int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook}
 	for _, a := range options {
@@ -655,13 +655,13 @@ func (c *MockProjectsServiceInterfaceDeleteProjectHookCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceDeleteProjectHookCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectHookCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectHookCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectHookCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceDeleteProjectHookCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectHookCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectHookCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectHookCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -711,7 +711,7 @@ func (c *MockProjectsServiceInterfaceDeleteProjectPushRuleCall) DoAndReturn(f fu
 }
 
 // DeleteProjectWebhookURLVariable mocks base method.
-func (m *MockProjectsServiceInterface) DeleteProjectWebhookURLVariable(pid any, hook int, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) DeleteProjectWebhookURLVariable(pid any, hook int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook, key}
 	for _, a := range options {
@@ -743,19 +743,19 @@ func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) Do(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) Do(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) DoAndReturn(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
+func (c *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall) DoAndReturn(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectWebhookURLVariableCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteSharedProjectFromGroup mocks base method.
-func (m *MockProjectsServiceInterface) DeleteSharedProjectFromGroup(pid any, groupID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) DeleteSharedProjectFromGroup(pid any, groupID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, groupID}
 	for _, a := range options {
@@ -787,13 +787,13 @@ func (c *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall {
+func (c *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall {
+func (c *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -889,7 +889,7 @@ func (c *MockProjectsServiceInterfaceEditProjectCall) DoAndReturn(f func(any, *g
 }
 
 // EditProjectHook mocks base method.
-func (m *MockProjectsServiceInterface) EditProjectHook(pid any, hook int, opt *gitlab.EditProjectHookOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) EditProjectHook(pid any, hook int64, opt *gitlab.EditProjectHookOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook, opt}
 	for _, a := range options {
@@ -922,13 +922,13 @@ func (c *MockProjectsServiceInterfaceEditProjectHookCall) Return(arg0 *gitlab.Pr
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceEditProjectHookCall) Do(f func(any, int, *gitlab.EditProjectHookOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceEditProjectHookCall {
+func (c *MockProjectsServiceInterfaceEditProjectHookCall) Do(f func(any, int64, *gitlab.EditProjectHookOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceEditProjectHookCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceEditProjectHookCall) DoAndReturn(f func(any, int, *gitlab.EditProjectHookOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceEditProjectHookCall {
+func (c *MockProjectsServiceInterfaceEditProjectHookCall) DoAndReturn(f func(any, int64, *gitlab.EditProjectHookOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceEditProjectHookCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1114,7 +1114,7 @@ func (c *MockProjectsServiceInterfaceGetProjectCall) DoAndReturn(f func(any, *gi
 }
 
 // GetProjectApprovalRule mocks base method.
-func (m *MockProjectsServiceInterface) GetProjectApprovalRule(pid any, ruleID int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) GetProjectApprovalRule(pid any, ruleID int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, ruleID}
 	for _, a := range options {
@@ -1147,13 +1147,13 @@ func (c *MockProjectsServiceInterfaceGetProjectApprovalRuleCall) Return(arg0 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceGetProjectApprovalRuleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectApprovalRuleCall {
+func (c *MockProjectsServiceInterfaceGetProjectApprovalRuleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectApprovalRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceGetProjectApprovalRuleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectApprovalRuleCall {
+func (c *MockProjectsServiceInterfaceGetProjectApprovalRuleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectApprovalRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1204,7 +1204,7 @@ func (c *MockProjectsServiceInterfaceGetProjectApprovalRulesCall) DoAndReturn(f 
 }
 
 // GetProjectHook mocks base method.
-func (m *MockProjectsServiceInterface) GetProjectHook(pid any, hook int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) GetProjectHook(pid any, hook int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook}
 	for _, a := range options {
@@ -1237,13 +1237,13 @@ func (c *MockProjectsServiceInterfaceGetProjectHookCall) Return(arg0 *gitlab.Pro
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceGetProjectHookCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectHookCall {
+func (c *MockProjectsServiceInterfaceGetProjectHookCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectHookCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceGetProjectHookCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectHookCall {
+func (c *MockProjectsServiceInterfaceGetProjectHookCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectHook, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetProjectHookCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1384,14 +1384,14 @@ func (c *MockProjectsServiceInterfaceGetProjectPushRulesCall) DoAndReturn(f func
 }
 
 // GetRepositoryStorage mocks base method.
-func (m *MockProjectsServiceInterface) GetRepositoryStorage(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectReposityStorage, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) GetRepositoryStorage(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorage, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetRepositoryStorage", varargs...)
-	ret0, _ := ret[0].(*gitlab.ProjectReposityStorage)
+	ret0, _ := ret[0].(*gitlab.ProjectRepositoryStorage)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -1411,19 +1411,19 @@ type MockProjectsServiceInterfaceGetRepositoryStorageCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Return(arg0 *gitlab.ProjectReposityStorage, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
+func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Return(arg0 *gitlab.ProjectRepositoryStorage, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectReposityStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
+func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectReposityStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
+func (c *MockProjectsServiceInterfaceGetRepositoryStorageCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorage, *gitlab.Response, error)) *MockProjectsServiceInterfaceGetRepositoryStorageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1654,7 +1654,7 @@ func (c *MockProjectsServiceInterfaceListProjectsGroupsCall) DoAndReturn(f func(
 }
 
 // ListProjectsInvitedGroups mocks base method.
-func (m *MockProjectsServiceInterface) ListProjectsInvitedGroups(pid any, opt *gitlab.ListProjectInvidedGroupOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) ListProjectsInvitedGroups(pid any, opt *gitlab.ListProjectInvitedGroupOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, opt}
 	for _, a := range options {
@@ -1687,13 +1687,13 @@ func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) Do(f func(any, *gitlab.ListProjectInvidedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
+func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) Do(f func(any, *gitlab.ListProjectInvitedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) DoAndReturn(f func(any, *gitlab.ListProjectInvidedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
+func (c *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall) DoAndReturn(f func(any, *gitlab.ListProjectInvitedGroupOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectGroup, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectsInvitedGroupsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1924,7 +1924,7 @@ func (c *MockProjectsServiceInterfaceRestoreProjectCall) DoAndReturn(f func(any,
 }
 
 // SetProjectCustomHeader mocks base method.
-func (m *MockProjectsServiceInterface) SetProjectCustomHeader(pid any, hook int, key string, opt *gitlab.SetHookCustomHeaderOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) SetProjectCustomHeader(pid any, hook int64, key string, opt *gitlab.SetHookCustomHeaderOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook, key, opt}
 	for _, a := range options {
@@ -1956,19 +1956,19 @@ func (c *MockProjectsServiceInterfaceSetProjectCustomHeaderCall) Return(arg0 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceSetProjectCustomHeaderCall) Do(f func(any, int, string, *gitlab.SetHookCustomHeaderOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectCustomHeaderCall {
+func (c *MockProjectsServiceInterfaceSetProjectCustomHeaderCall) Do(f func(any, int64, string, *gitlab.SetHookCustomHeaderOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectCustomHeaderCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceSetProjectCustomHeaderCall) DoAndReturn(f func(any, int, string, *gitlab.SetHookCustomHeaderOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectCustomHeaderCall {
+func (c *MockProjectsServiceInterfaceSetProjectCustomHeaderCall) DoAndReturn(f func(any, int64, string, *gitlab.SetHookCustomHeaderOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectCustomHeaderCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // SetProjectWebhookURLVariable mocks base method.
-func (m *MockProjectsServiceInterface) SetProjectWebhookURLVariable(pid any, hook int, key string, opt *gitlab.SetProjectWebhookURLVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) SetProjectWebhookURLVariable(pid any, hook int64, key string, opt *gitlab.SetProjectWebhookURLVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook, key, opt}
 	for _, a := range options {
@@ -2000,13 +2000,13 @@ func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) Do(f func(any, int, string, *gitlab.SetProjectWebhookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
+func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) Do(f func(any, int64, string, *gitlab.SetProjectWebhookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) DoAndReturn(f func(any, int, string, *gitlab.SetProjectWebhookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
+func (c *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall) DoAndReturn(f func(any, int64, string, *gitlab.SetProjectWebhookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceSetProjectWebhookURLVariableCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2234,7 +2234,7 @@ func (c *MockProjectsServiceInterfaceTransferProjectCall) DoAndReturn(f func(any
 }
 
 // TriggerTestProjectHook mocks base method.
-func (m *MockProjectsServiceInterface) TriggerTestProjectHook(pid any, hook int, event gitlab.ProjectHookEvent, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) TriggerTestProjectHook(pid any, hook int64, event gitlab.ProjectHookEvent, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, hook, event}
 	for _, a := range options {
@@ -2266,13 +2266,13 @@ func (c *MockProjectsServiceInterfaceTriggerTestProjectHookCall) Return(arg0 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceTriggerTestProjectHookCall) Do(f func(any, int, gitlab.ProjectHookEvent, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceTriggerTestProjectHookCall {
+func (c *MockProjectsServiceInterfaceTriggerTestProjectHookCall) Do(f func(any, int64, gitlab.ProjectHookEvent, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceTriggerTestProjectHookCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceTriggerTestProjectHookCall) DoAndReturn(f func(any, int, gitlab.ProjectHookEvent, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceTriggerTestProjectHookCall {
+func (c *MockProjectsServiceInterfaceTriggerTestProjectHookCall) DoAndReturn(f func(any, int64, gitlab.ProjectHookEvent, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceTriggerTestProjectHookCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2368,7 +2368,7 @@ func (c *MockProjectsServiceInterfaceUnstarProjectCall) DoAndReturn(f func(any, 
 }
 
 // UpdateProjectApprovalRule mocks base method.
-func (m *MockProjectsServiceInterface) UpdateProjectApprovalRule(pid any, approvalRule int, opt *gitlab.UpdateProjectLevelRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error) {
+func (m *MockProjectsServiceInterface) UpdateProjectApprovalRule(pid any, approvalRule int64, opt *gitlab.UpdateProjectLevelRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, approvalRule, opt}
 	for _, a := range options {
@@ -2401,13 +2401,13 @@ func (c *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall) Do(f func(any, int, *gitlab.UpdateProjectLevelRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall {
+func (c *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall) Do(f func(any, int64, *gitlab.UpdateProjectLevelRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall) DoAndReturn(f func(any, int, *gitlab.UpdateProjectLevelRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall {
+func (c *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall) DoAndReturn(f func(any, int64, *gitlab.UpdateProjectLevelRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

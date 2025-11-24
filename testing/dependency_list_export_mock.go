@@ -41,7 +41,7 @@ func (m *MockDependencyListExportServiceInterface) EXPECT() *MockDependencyListE
 }
 
 // CreateDependencyListExport mocks base method.
-func (m *MockDependencyListExportServiceInterface) CreateDependencyListExport(pipelineID int, opt *gitlab.CreateDependencyListExportOptions, options ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error) {
+func (m *MockDependencyListExportServiceInterface) CreateDependencyListExport(pipelineID int64, opt *gitlab.CreateDependencyListExportOptions, options ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pipelineID, opt}
 	for _, a := range options {
@@ -74,19 +74,19 @@ func (c *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall)
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall) Do(f func(int, *gitlab.CreateDependencyListExportOptions, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall) Do(f func(int64, *gitlab.CreateDependencyListExportOptions, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall) DoAndReturn(f func(int, *gitlab.CreateDependencyListExportOptions, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall) DoAndReturn(f func(int64, *gitlab.CreateDependencyListExportOptions, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DownloadDependencyListExport mocks base method.
-func (m *MockDependencyListExportServiceInterface) DownloadDependencyListExport(id int, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
+func (m *MockDependencyListExportServiceInterface) DownloadDependencyListExport(id int64, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{id}
 	for _, a := range options {
@@ -119,19 +119,19 @@ func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCal
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) Do(f func(int, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetDependencyListExport mocks base method.
-func (m *MockDependencyListExportServiceInterface) GetDependencyListExport(id int, options ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error) {
+func (m *MockDependencyListExportServiceInterface) GetDependencyListExport(id int64, options ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{id}
 	for _, a := range options {
@@ -164,13 +164,13 @@ func (c *MockDependencyListExportServiceInterfaceGetDependencyListExportCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDependencyListExportServiceInterfaceGetDependencyListExportCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceGetDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceGetDependencyListExportCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceGetDependencyListExportCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDependencyListExportServiceInterfaceGetDependencyListExportCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceGetDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceGetDependencyListExportCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.DependencyListExport, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceGetDependencyListExportCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

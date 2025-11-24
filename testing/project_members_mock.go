@@ -85,7 +85,7 @@ func (c *MockProjectMembersServiceInterfaceAddProjectMemberCall) DoAndReturn(f f
 }
 
 // DeleteProjectMember mocks base method.
-func (m *MockProjectMembersServiceInterface) DeleteProjectMember(pid any, user int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectMembersServiceInterface) DeleteProjectMember(pid any, user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, user}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockProjectMembersServiceInterfaceDeleteProjectMemberCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMembersServiceInterfaceDeleteProjectMemberCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMembersServiceInterfaceDeleteProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceDeleteProjectMemberCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMembersServiceInterfaceDeleteProjectMemberCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMembersServiceInterfaceDeleteProjectMemberCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMembersServiceInterfaceDeleteProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceDeleteProjectMemberCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMembersServiceInterfaceDeleteProjectMemberCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditProjectMember mocks base method.
-func (m *MockProjectMembersServiceInterface) EditProjectMember(pid any, user int, opt *gitlab.EditProjectMemberOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error) {
+func (m *MockProjectMembersServiceInterface) EditProjectMember(pid any, user int64, opt *gitlab.EditProjectMemberOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, user, opt}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockProjectMembersServiceInterfaceEditProjectMemberCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMembersServiceInterfaceEditProjectMemberCall) Do(f func(any, int, *gitlab.EditProjectMemberOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceEditProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceEditProjectMemberCall) Do(f func(any, int64, *gitlab.EditProjectMemberOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceEditProjectMemberCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMembersServiceInterfaceEditProjectMemberCall) DoAndReturn(f func(any, int, *gitlab.EditProjectMemberOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceEditProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceEditProjectMemberCall) DoAndReturn(f func(any, int64, *gitlab.EditProjectMemberOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceEditProjectMemberCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetInheritedProjectMember mocks base method.
-func (m *MockProjectMembersServiceInterface) GetInheritedProjectMember(pid any, user int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error) {
+func (m *MockProjectMembersServiceInterface) GetInheritedProjectMember(pid any, user int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, user}
 	for _, a := range options {
@@ -207,19 +207,19 @@ func (c *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetInheritedProjectMemberCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetProjectMember mocks base method.
-func (m *MockProjectMembersServiceInterface) GetProjectMember(pid any, user int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error) {
+func (m *MockProjectMembersServiceInterface) GetProjectMember(pid any, user int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, user}
 	for _, a := range options {
@@ -252,13 +252,13 @@ func (c *MockProjectMembersServiceInterfaceGetProjectMemberCall) Return(arg0 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMembersServiceInterfaceGetProjectMemberCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceGetProjectMemberCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetProjectMemberCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMembersServiceInterfaceGetProjectMemberCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetProjectMemberCall {
+func (c *MockProjectMembersServiceInterfaceGetProjectMemberCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMember, *gitlab.Response, error)) *MockProjectMembersServiceInterfaceGetProjectMemberCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

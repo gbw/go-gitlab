@@ -40,7 +40,7 @@ func (m *MockClusterAgentsServiceInterface) EXPECT() *MockClusterAgentsServiceIn
 }
 
 // CreateAgentToken mocks base method.
-func (m *MockClusterAgentsServiceInterface) CreateAgentToken(pid any, aid int, opt *gitlab.CreateAgentTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error) {
+func (m *MockClusterAgentsServiceInterface) CreateAgentToken(pid any, aid int64, opt *gitlab.CreateAgentTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, aid, opt}
 	for _, a := range options {
@@ -73,19 +73,19 @@ func (c *MockClusterAgentsServiceInterfaceCreateAgentTokenCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockClusterAgentsServiceInterfaceCreateAgentTokenCall) Do(f func(any, int, *gitlab.CreateAgentTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceCreateAgentTokenCall {
+func (c *MockClusterAgentsServiceInterfaceCreateAgentTokenCall) Do(f func(any, int64, *gitlab.CreateAgentTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceCreateAgentTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockClusterAgentsServiceInterfaceCreateAgentTokenCall) DoAndReturn(f func(any, int, *gitlab.CreateAgentTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceCreateAgentTokenCall {
+func (c *MockClusterAgentsServiceInterfaceCreateAgentTokenCall) DoAndReturn(f func(any, int64, *gitlab.CreateAgentTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceCreateAgentTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteAgent mocks base method.
-func (m *MockClusterAgentsServiceInterface) DeleteAgent(pid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockClusterAgentsServiceInterface) DeleteAgent(pid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockClusterAgentsServiceInterfaceDeleteAgentCall) Return(arg0 *gitlab.R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockClusterAgentsServiceInterfaceDeleteAgentCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceDeleteAgentCall {
+func (c *MockClusterAgentsServiceInterfaceDeleteAgentCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceDeleteAgentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockClusterAgentsServiceInterfaceDeleteAgentCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceDeleteAgentCall {
+func (c *MockClusterAgentsServiceInterfaceDeleteAgentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceDeleteAgentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetAgent mocks base method.
-func (m *MockClusterAgentsServiceInterface) GetAgent(pid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.Agent, *gitlab.Response, error) {
+func (m *MockClusterAgentsServiceInterface) GetAgent(pid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Agent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockClusterAgentsServiceInterfaceGetAgentCall) Return(arg0 *gitlab.Agen
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockClusterAgentsServiceInterfaceGetAgentCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Agent, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentCall {
+func (c *MockClusterAgentsServiceInterfaceGetAgentCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Agent, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockClusterAgentsServiceInterfaceGetAgentCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Agent, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentCall {
+func (c *MockClusterAgentsServiceInterfaceGetAgentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Agent, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetAgentToken mocks base method.
-func (m *MockClusterAgentsServiceInterface) GetAgentToken(pid any, aid, id int, options ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error) {
+func (m *MockClusterAgentsServiceInterface) GetAgentToken(pid any, aid, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, aid, id}
 	for _, a := range options {
@@ -207,19 +207,19 @@ func (c *MockClusterAgentsServiceInterfaceGetAgentTokenCall) Return(arg0 *gitlab
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockClusterAgentsServiceInterfaceGetAgentTokenCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentTokenCall {
+func (c *MockClusterAgentsServiceInterfaceGetAgentTokenCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockClusterAgentsServiceInterfaceGetAgentTokenCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentTokenCall {
+func (c *MockClusterAgentsServiceInterfaceGetAgentTokenCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceGetAgentTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListAgentTokens mocks base method.
-func (m *MockClusterAgentsServiceInterface) ListAgentTokens(pid any, aid int, opt *gitlab.ListAgentTokensOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AgentToken, *gitlab.Response, error) {
+func (m *MockClusterAgentsServiceInterface) ListAgentTokens(pid any, aid int64, opt *gitlab.ListAgentTokensOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.AgentToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, aid, opt}
 	for _, a := range options {
@@ -252,13 +252,13 @@ func (c *MockClusterAgentsServiceInterfaceListAgentTokensCall) Return(arg0 []*gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockClusterAgentsServiceInterfaceListAgentTokensCall) Do(f func(any, int, *gitlab.ListAgentTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceListAgentTokensCall {
+func (c *MockClusterAgentsServiceInterfaceListAgentTokensCall) Do(f func(any, int64, *gitlab.ListAgentTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceListAgentTokensCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockClusterAgentsServiceInterfaceListAgentTokensCall) DoAndReturn(f func(any, int, *gitlab.ListAgentTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceListAgentTokensCall {
+func (c *MockClusterAgentsServiceInterfaceListAgentTokensCall) DoAndReturn(f func(any, int64, *gitlab.ListAgentTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.AgentToken, *gitlab.Response, error)) *MockClusterAgentsServiceInterfaceListAgentTokensCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -354,7 +354,7 @@ func (c *MockClusterAgentsServiceInterfaceRegisterAgentCall) DoAndReturn(f func(
 }
 
 // RevokeAgentToken mocks base method.
-func (m *MockClusterAgentsServiceInterface) RevokeAgentToken(pid any, aid, id int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockClusterAgentsServiceInterface) RevokeAgentToken(pid any, aid, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, aid, id}
 	for _, a := range options {
@@ -386,13 +386,13 @@ func (c *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall {
+func (c *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall {
+func (c *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockClusterAgentsServiceInterfaceRevokeAgentTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

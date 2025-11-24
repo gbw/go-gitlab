@@ -85,7 +85,7 @@ func (c *MockGroupSSHCertificatesServiceInterfaceCreateGroupSSHCertificateCall) 
 }
 
 // DeleteGroupSSHCertificate mocks base method.
-func (m *MockGroupSSHCertificatesServiceInterface) DeleteGroupSSHCertificate(gid any, cert int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGroupSSHCertificatesServiceInterface) DeleteGroupSSHCertificate(gid any, cert int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, cert}
 	for _, a := range options {
@@ -117,13 +117,13 @@ func (c *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall {
+func (c *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall {
+func (c *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupSSHCertificatesServiceInterfaceDeleteGroupSSHCertificateCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

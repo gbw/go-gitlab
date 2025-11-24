@@ -56,7 +56,7 @@ func TestParseBuildHook(t *testing.T) {
 	assert.True(t, ok, "Expected BuildEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, "build", event.ObjectKind)
-	assert.Equal(t, 1977, event.BuildID)
+	assert.Equal(t, int64(1977), event.BuildID)
 	assert.False(t, event.BuildAllowFailure)
 	assert.Equal(t, "2293ada6b400935a1378653304eaf6221e0fdb8f", event.Commit.SHA)
 	assert.Equal(t, "2021-02-23T02:41:37.886Z", event.BuildCreatedAt)
@@ -73,7 +73,7 @@ func TestParseCommitCommentHook(t *testing.T) {
 	assert.True(t, ok, "Expected CommitCommentEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, string(NoteEventTargetType), event.ObjectKind)
-	assert.Equal(t, 5, event.ProjectID)
+	assert.Equal(t, int64(5), event.ProjectID)
 	assert.Equal(t, "Commit", event.ObjectAttributes.NoteableType)
 	assert.Equal(t, "cfe32cf61b73a0d5e9f13e774abde7ff789b1660", event.Commit.ID)
 }
@@ -89,10 +89,10 @@ func TestParseFeatureFlagHook(t *testing.T) {
 	assert.True(t, ok, "Expected FeatureFlagEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, "feature_flag", event.ObjectKind)
-	assert.Equal(t, 1, event.Project.ID)
-	assert.Equal(t, 1, event.User.ID)
+	assert.Equal(t, int64(1), event.Project.ID)
+	assert.Equal(t, int64(1), event.User.ID)
 	assert.Equal(t, "Administrator", event.User.Name)
-	assert.Equal(t, 6, event.ObjectAttributes.ID)
+	assert.Equal(t, int64(6), event.ObjectAttributes.ID)
 	assert.Equal(t, "test-feature-flag", event.ObjectAttributes.Name)
 	assert.Equal(t, "test-feature-flag-description", event.ObjectAttributes.Description)
 	assert.True(t, event.ObjectAttributes.Active)
@@ -133,7 +133,7 @@ func TestParseIssueCommentHook(t *testing.T) {
 	assert.True(t, ok, "Expected IssueCommentEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, string(NoteEventTargetType), event.ObjectKind)
-	assert.Equal(t, 5, event.ProjectID)
+	assert.Equal(t, int64(5), event.ProjectID)
 	assert.Equal(t, "Issue", event.ObjectAttributes.NoteableType)
 	assert.Equal(t, "test_issue", event.Issue.Title)
 	assert.Len(t, event.Issue.Labels, 2)
@@ -154,8 +154,8 @@ func TestParseIssueHook(t *testing.T) {
 	assert.Equal(t, "opened", event.ObjectAttributes.State)
 	assert.Equal(t, "user1", event.Assignee.Username)
 	assert.Len(t, event.Labels, 1)
-	assert.Equal(t, 0, event.Changes.UpdatedByID.Previous)
-	assert.Equal(t, 1, event.Changes.UpdatedByID.Current)
+	assert.Equal(t, int64(0), event.Changes.UpdatedByID.Previous)
+	assert.Equal(t, int64(1), event.Changes.UpdatedByID.Current)
 	assert.Len(t, event.Changes.Labels.Previous, 1)
 	assert.Len(t, event.Changes.Labels.Current, 1)
 	assert.Empty(t, event.Changes.Description.Previous)
@@ -175,9 +175,9 @@ func TestParseMergeRequestCommentHook(t *testing.T) {
 	assert.True(t, ok, "Expected MergeCommentEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, string(NoteEventTargetType), event.ObjectKind)
-	assert.Equal(t, 5, event.ProjectID)
+	assert.Equal(t, int64(5), event.ProjectID)
 	assert.Equal(t, "MergeRequest", event.ObjectAttributes.NoteableType)
-	assert.Equal(t, 7, event.MergeRequest.ID)
+	assert.Equal(t, int64(7), event.MergeRequest.ID)
 	assert.Equal(t, "Merge branch 'another-branch' into 'master'", event.MergeRequest.LastCommit.Title)
 }
 
@@ -209,8 +209,8 @@ func TestParseMergeRequestHook(t *testing.T) {
 	assert.Equal(t, "da1560886d4f094c3e6c9ef40349f7d38b5d27d7", event.ObjectAttributes.LastCommit.ID)
 	assert.False(t, event.ObjectAttributes.WorkInProgress)
 	assert.Len(t, event.Labels, 1)
-	assert.Equal(t, 0, event.Changes.UpdatedByID.Previous)
-	assert.Equal(t, 1, event.Changes.UpdatedByID.Current)
+	assert.Equal(t, int64(0), event.Changes.UpdatedByID.Previous)
+	assert.Equal(t, int64(1), event.Changes.UpdatedByID.Current)
 	assert.Len(t, event.Changes.Labels.Previous, 1)
 	assert.Len(t, event.Changes.Labels.Current, 1)
 }
@@ -226,9 +226,9 @@ func TestParsePipelineHook(t *testing.T) {
 	assert.True(t, ok, "Expected PipelineEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, "pipeline", event.ObjectKind)
-	assert.Equal(t, 63, event.ObjectAttributes.Duration)
+	assert.Equal(t, int64(63), event.ObjectAttributes.Duration)
 	assert.Equal(t, "bcbb5ec396a2c0f828686f14fac9b80b780504f2", event.Commit.ID)
-	assert.Equal(t, 380, event.Builds[0].ID)
+	assert.Equal(t, int64(380), event.Builds[0].ID)
 	assert.Equal(t, "instance_type", event.Builds[0].Runner.RunnerType)
 }
 
@@ -256,7 +256,7 @@ func TestParsePushHook(t *testing.T) {
 	assert.True(t, ok, "Expected PushEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, eventObjectKindPush, event.ObjectKind)
-	assert.Equal(t, 15, event.ProjectID)
+	assert.Equal(t, int64(15), event.ProjectID)
 	assert.Equal(t, exampleEventUserName, event.UserName)
 	assert.NotNil(t, event.Commits[0])
 	assert.NotNil(t, event.Commits[0].Timestamp)
@@ -308,7 +308,7 @@ func TestParseSnippetCommentHook(t *testing.T) {
 	assert.True(t, ok, "Expected SnippetCommentEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, string(NoteEventTargetType), event.ObjectKind)
-	assert.Equal(t, 5, event.ProjectID)
+	assert.Equal(t, int64(5), event.ProjectID)
 	assert.Equal(t, "Snippet", event.ObjectAttributes.NoteableType)
 	assert.Equal(t, "test", event.Snippet.Title)
 }
@@ -337,7 +337,7 @@ func TestParseTagHook(t *testing.T) {
 	assert.True(t, ok, "Expected TagEvent, but parsing produced %T", parsedEvent)
 
 	assert.Equal(t, eventObjectKindTagPush, event.ObjectKind)
-	assert.Equal(t, 1, event.ProjectID)
+	assert.Equal(t, int64(1), event.ProjectID)
 	assert.Equal(t, exampleEventUserName, event.UserName)
 	assert.Equal(t, exampleEventUserUsername, event.UserUsername)
 	assert.Equal(t, "refs/tags/v1.0.0", event.Ref)

@@ -40,7 +40,7 @@ func (m *MockAccessRequestsServiceInterface) EXPECT() *MockAccessRequestsService
 }
 
 // ApproveGroupAccessRequest mocks base method.
-func (m *MockAccessRequestsServiceInterface) ApproveGroupAccessRequest(gid any, user int, opt *gitlab.ApproveAccessRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error) {
+func (m *MockAccessRequestsServiceInterface) ApproveGroupAccessRequest(gid any, user int64, opt *gitlab.ApproveAccessRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, user, opt}
 	for _, a := range options {
@@ -73,19 +73,19 @@ func (c *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall) Do(f func(any, int, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall) Do(f func(any, int64, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall) DoAndReturn(f func(any, int, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall) DoAndReturn(f func(any, int64, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveGroupAccessRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ApproveProjectAccessRequest mocks base method.
-func (m *MockAccessRequestsServiceInterface) ApproveProjectAccessRequest(pid any, user int, opt *gitlab.ApproveAccessRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error) {
+func (m *MockAccessRequestsServiceInterface) ApproveProjectAccessRequest(pid any, user int64, opt *gitlab.ApproveAccessRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, user, opt}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall) Do(f func(any, int, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall) Do(f func(any, int64, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall) DoAndReturn(f func(any, int, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall) DoAndReturn(f func(any, int64, *gitlab.ApproveAccessRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.AccessRequest, *gitlab.Response, error)) *MockAccessRequestsServiceInterfaceApproveProjectAccessRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DenyGroupAccessRequest mocks base method.
-func (m *MockAccessRequestsServiceInterface) DenyGroupAccessRequest(gid any, user int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAccessRequestsServiceInterface) DenyGroupAccessRequest(gid any, user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, user}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyGroupAccessRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DenyProjectAccessRequest mocks base method.
-func (m *MockAccessRequestsServiceInterface) DenyProjectAccessRequest(pid any, user int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockAccessRequestsServiceInterface) DenyProjectAccessRequest(pid any, user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, user}
 	for _, a := range options {
@@ -206,13 +206,13 @@ func (c *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall {
+func (c *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAccessRequestsServiceInterfaceDenyProjectAccessRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

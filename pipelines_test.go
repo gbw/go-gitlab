@@ -213,7 +213,7 @@ func TestGetPipelineTestReportSummary(t *testing.T) {
 				FailedCount:  0,
 				SkippedCount: 12,
 				ErrorCount:   0,
-				BuildIDs:     []int{66004},
+				BuildIDs:     []int64{66004},
 				SuiteError:   Ptr("JUnit XML parsing failed: 1:1: FATAL: Document is empty"),
 			},
 		},

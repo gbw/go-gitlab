@@ -35,7 +35,12 @@ func TestGroupRepositoryStorageMove_RetrieveAllGroupStorageMoves(t *testing.T) {
 		}]`)
 	})
 
-	opts := RetrieveAllGroupStorageMovesOptions{Page: 1, PerPage: 2}
+	opts := RetrieveAllGroupStorageMovesOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 2,
+		},
+	}
 
 	gsms, _, err := client.GroupRepositoryStorageMove.RetrieveAllStorageMoves(opts)
 	require.NoError(t, err)
@@ -90,7 +95,12 @@ func TestGroupRepositoryStorageMove_RetrieveAllStorageMovesForGroup(t *testing.T
 		}]`)
 	})
 
-	opts := RetrieveAllGroupStorageMovesOptions{Page: 1, PerPage: 2}
+	opts := RetrieveAllGroupStorageMovesOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 2,
+		},
+	}
 
 	gsms, _, err := client.GroupRepositoryStorageMove.RetrieveAllStorageMovesForGroup(283, opts)
 	require.NoError(t, err)

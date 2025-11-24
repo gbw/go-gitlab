@@ -129,7 +129,7 @@ func (c *MockExternalStatusChecksServiceInterfaceCreateProjectExternalStatusChec
 }
 
 // DeleteExternalStatusCheck mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) DeleteExternalStatusCheck(pid any, check int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) DeleteExternalStatusCheck(pid any, check int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, check}
 	for _, a := range options {
@@ -161,19 +161,19 @@ func (c *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteExternalStatusCheckCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteProjectExternalStatusCheck mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) DeleteProjectExternalStatusCheck(pid any, check int, opt *gitlab.DeleteProjectExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) DeleteProjectExternalStatusCheck(pid any, check int64, opt *gitlab.DeleteProjectExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, check, opt}
 	for _, a := range options {
@@ -205,19 +205,19 @@ func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusChec
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall) Do(f func(any, int, *gitlab.DeleteProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall) Do(f func(any, int64, *gitlab.DeleteProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall) DoAndReturn(f func(any, int, *gitlab.DeleteProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall) DoAndReturn(f func(any, int64, *gitlab.DeleteProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceDeleteProjectExternalStatusCheckCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListMergeStatusChecks mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) ListMergeStatusChecks(pid any, mr int, opt *gitlab.ListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) ListMergeStatusChecks(pid any, mr int64, opt *gitlab.ListOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mr, opt}
 	for _, a := range options {
@@ -250,13 +250,13 @@ func (c *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall) Do(f func(any, int, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall {
+func (c *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall) Do(f func(any, int64, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall) DoAndReturn(f func(any, int, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall {
+func (c *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall) DoAndReturn(f func(any, int64, *gitlab.ListOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListMergeStatusChecksCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -307,7 +307,7 @@ func (c *MockExternalStatusChecksServiceInterfaceListProjectExternalStatusChecks
 }
 
 // ListProjectMergeRequestExternalStatusChecks mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) ListProjectMergeRequestExternalStatusChecks(pid any, mr int, opt *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) ListProjectMergeRequestExternalStatusChecks(pid any, mr int64, opt *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mr, opt}
 	for _, a := range options {
@@ -340,13 +340,13 @@ func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternal
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall) Do(f func(any, int, *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
+func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall) Do(f func(any, int64, *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall) DoAndReturn(f func(any, int, *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
+func (c *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall) DoAndReturn(f func(any, int64, *gitlab.ListProjectMergeRequestExternalStatusChecksOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceListProjectMergeRequestExternalStatusChecksCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -397,7 +397,7 @@ func (c *MockExternalStatusChecksServiceInterfaceListProjectStatusChecksCall) Do
 }
 
 // RetryFailedExternalStatusCheckForProjectMergeRequest mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) RetryFailedExternalStatusCheckForProjectMergeRequest(pid any, mergeRequest, externalStatusCheck int, opt *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) RetryFailedExternalStatusCheckForProjectMergeRequest(pid any, mergeRequest, externalStatusCheck int64, opt *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, externalStatusCheck, opt}
 	for _, a := range options {
@@ -429,19 +429,19 @@ func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckF
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall) Do(f func(any, int, int, *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
+func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall) Do(f func(any, int64, int64, *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall) DoAndReturn(f func(any, int, int, *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
+func (c *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall) DoAndReturn(f func(any, int64, int64, *gitlab.RetryFailedExternalStatusCheckForProjectMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedExternalStatusCheckForProjectMergeRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RetryFailedStatusCheckForAMergeRequest mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) RetryFailedStatusCheckForAMergeRequest(pid any, mergeRequest, externalStatusCheck int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) RetryFailedStatusCheckForAMergeRequest(pid any, mergeRequest, externalStatusCheck int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, externalStatusCheck}
 	for _, a := range options {
@@ -473,19 +473,19 @@ func (c *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMerge
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall {
+func (c *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall {
+func (c *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceRetryFailedStatusCheckForAMergeRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // SetExternalStatusCheckStatus mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) SetExternalStatusCheckStatus(pid any, mergeRequest int, opt *gitlab.SetExternalStatusCheckStatusOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) SetExternalStatusCheckStatus(pid any, mergeRequest int64, opt *gitlab.SetExternalStatusCheckStatusOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -517,19 +517,19 @@ func (c *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCal
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall) Do(f func(any, int, *gitlab.SetExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall {
+func (c *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall) Do(f func(any, int64, *gitlab.SetExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall) DoAndReturn(f func(any, int, *gitlab.SetExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall {
+func (c *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall) DoAndReturn(f func(any, int64, *gitlab.SetExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetExternalStatusCheckStatusCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // SetProjectMergeRequestExternalStatusCheckStatus mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) SetProjectMergeRequestExternalStatusCheckStatus(pid any, mergeRequest int, opt *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) SetProjectMergeRequestExternalStatusCheckStatus(pid any, mergeRequest int64, opt *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -561,19 +561,19 @@ func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalS
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall) Do(f func(any, int, *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
+func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall) Do(f func(any, int64, *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall) DoAndReturn(f func(any, int, *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
+func (c *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall) DoAndReturn(f func(any, int64, *gitlab.SetProjectMergeRequestExternalStatusCheckStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceSetProjectMergeRequestExternalStatusCheckStatusCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateExternalStatusCheck mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) UpdateExternalStatusCheck(pid any, check int, opt *gitlab.UpdateExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) UpdateExternalStatusCheck(pid any, check int64, opt *gitlab.UpdateExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, check, opt}
 	for _, a := range options {
@@ -605,19 +605,19 @@ func (c *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall) Do(f func(any, int, *gitlab.UpdateExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall) Do(f func(any, int64, *gitlab.UpdateExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall) DoAndReturn(f func(any, int, *gitlab.UpdateExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall) DoAndReturn(f func(any, int64, *gitlab.UpdateExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateExternalStatusCheckCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateProjectExternalStatusCheck mocks base method.
-func (m *MockExternalStatusChecksServiceInterface) UpdateProjectExternalStatusCheck(pid any, check int, opt *gitlab.UpdateProjectExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error) {
+func (m *MockExternalStatusChecksServiceInterface) UpdateProjectExternalStatusCheck(pid any, check int64, opt *gitlab.UpdateProjectExternalStatusCheckOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, check, opt}
 	for _, a := range options {
@@ -650,13 +650,13 @@ func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusChec
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall) Do(f func(any, int, *gitlab.UpdateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall) Do(f func(any, int64, *gitlab.UpdateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall) DoAndReturn(f func(any, int, *gitlab.UpdateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
+func (c *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall) DoAndReturn(f func(any, int64, *gitlab.UpdateProjectExternalStatusCheckOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectStatusCheck, *gitlab.Response, error)) *MockExternalStatusChecksServiceInterfaceUpdateProjectExternalStatusCheckCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

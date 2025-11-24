@@ -560,7 +560,7 @@ func TestSetJiraServiceAuthTypeBasicAuth(t *testing.T) {
 		URL:          Ptr("asd"),
 		Username:     Ptr("aas"),
 		Password:     Ptr("asd"),
-		JiraAuthType: Ptr(0),
+		JiraAuthType: Ptr(int64(0)),
 	}
 
 	_, resp, err := client.Services.SetJiraService(1, opt)
@@ -580,7 +580,7 @@ func TestSetJiraServiceAuthTypeTokenAuth(t *testing.T) {
 	opt := &SetJiraServiceOptions{
 		URL:          Ptr("asd"),
 		Password:     Ptr("asd"),
-		JiraAuthType: Ptr(1),
+		JiraAuthType: Ptr(int64(1)),
 	}
 
 	_, resp, err := client.Services.SetJiraService(1, opt)

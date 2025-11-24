@@ -309,7 +309,7 @@ func (c *MockJobTokenScopeServiceInterfacePatchProjectJobTokenAccessSettingsCall
 }
 
 // RemoveGroupFromJobTokenAllowlist mocks base method.
-func (m *MockJobTokenScopeServiceInterface) RemoveGroupFromJobTokenAllowlist(pid any, targetGroup int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockJobTokenScopeServiceInterface) RemoveGroupFromJobTokenAllowlist(pid any, targetGroup int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, targetGroup}
 	for _, a := range options {
@@ -341,19 +341,19 @@ func (c *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall {
+func (c *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall {
+func (c *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveGroupFromJobTokenAllowlistCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RemoveProjectFromJobScopeAllowList mocks base method.
-func (m *MockJobTokenScopeServiceInterface) RemoveProjectFromJobScopeAllowList(pid any, targetProject int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockJobTokenScopeServiceInterface) RemoveProjectFromJobScopeAllowList(pid any, targetProject int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, targetProject}
 	for _, a := range options {
@@ -385,13 +385,13 @@ func (c *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall {
+func (c *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall {
+func (c *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockJobTokenScopeServiceInterfaceRemoveProjectFromJobScopeAllowListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

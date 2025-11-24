@@ -33,7 +33,12 @@ func TestSnippetRepositoryStorageMove_RetrieveAllSnippetStorageMoves(t *testing.
 		}]`)
 	})
 
-	opts := RetrieveAllSnippetStorageMovesOptions{Page: 1, PerPage: 2}
+	opts := RetrieveAllSnippetStorageMovesOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 2,
+		},
+	}
 
 	ssms, _, err := client.SnippetRepositoryStorageMove.RetrieveAllStorageMoves(opts)
 	require.NoError(t, err)
@@ -84,7 +89,12 @@ func TestSnippetRepositoryStorageMove_RetrieveAllStorageMovesForSnippet(t *testi
 		}]`)
 	})
 
-	opts := RetrieveAllSnippetStorageMovesOptions{Page: 1, PerPage: 2}
+	opts := RetrieveAllSnippetStorageMovesOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 2,
+		},
+	}
 
 	ssms, _, err := client.SnippetRepositoryStorageMove.RetrieveAllStorageMovesForSnippet(65, opts)
 	require.NoError(t, err)

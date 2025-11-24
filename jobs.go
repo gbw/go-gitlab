@@ -26,21 +26,21 @@ import (
 type (
 	JobsServiceInterface interface {
 		ListProjectJobs(pid any, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error)
-		ListPipelineJobs(pid any, pipelineID int, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error)
-		ListPipelineBridges(pid any, pipelineID int, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Bridge, *Response, error)
+		ListPipelineJobs(pid any, pipelineID int64, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error)
+		ListPipelineBridges(pid any, pipelineID int64, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Bridge, *Response, error)
 		GetJobTokensJob(opts *GetJobTokensJobOptions, options ...RequestOptionFunc) (*Job, *Response, error)
-		GetJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error)
-		GetJobArtifacts(pid any, jobID int, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
+		GetJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error)
+		GetJobArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
 		DownloadArtifactsFile(pid any, refName string, opt *DownloadArtifactsFileOptions, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
-		DownloadSingleArtifactsFile(pid any, jobID int, artifactPath string, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
+		DownloadSingleArtifactsFile(pid any, jobID int64, artifactPath string, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
 		DownloadSingleArtifactsFileByTagOrBranch(pid any, refName string, artifactPath string, opt *DownloadArtifactsFileOptions, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
-		GetTraceFile(pid any, jobID int, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
-		CancelJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error)
-		RetryJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error)
-		EraseJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error)
-		KeepArtifacts(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error)
-		PlayJob(pid any, jobID int, opt *PlayJobOptions, options ...RequestOptionFunc) (*Job, *Response, error)
-		DeleteArtifacts(pid any, jobID int, options ...RequestOptionFunc) (*Response, error)
+		GetTraceFile(pid any, jobID int64, options ...RequestOptionFunc) (*bytes.Reader, *Response, error)
+		CancelJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error)
+		RetryJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error)
+		EraseJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error)
+		KeepArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error)
+		PlayJob(pid any, jobID int64, opt *PlayJobOptions, options ...RequestOptionFunc) (*Job, *Response, error)
+		DeleteArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*Response, error)
 		DeleteProjectArtifacts(pid any, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -59,51 +59,71 @@ var _ JobsServiceInterface = (*JobsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/jobs/
 type Job struct {
-	Commit            *Commit    `json:"commit"`
-	Coverage          float64    `json:"coverage"`
-	AllowFailure      bool       `json:"allow_failure"`
-	CreatedAt         *time.Time `json:"created_at"`
-	StartedAt         *time.Time `json:"started_at"`
-	FinishedAt        *time.Time `json:"finished_at"`
-	ErasedAt          *time.Time `json:"erased_at"`
-	Duration          float64    `json:"duration"`
-	QueuedDuration    float64    `json:"queued_duration"`
-	ArtifactsExpireAt *time.Time `json:"artifacts_expire_at"`
-	TagList           []string   `json:"tag_list"`
-	ID                int        `json:"id"`
-	Name              string     `json:"name"`
-	Pipeline          struct {
-		ID        int    `json:"id"`
-		ProjectID int    `json:"project_id"`
-		Ref       string `json:"ref"`
-		Sha       string `json:"sha"`
-		Status    string `json:"status"`
-	} `json:"pipeline"`
+	Commit            *Commit          `json:"commit"`
+	Coverage          float64          `json:"coverage"`
+	AllowFailure      bool             `json:"allow_failure"`
+	CreatedAt         *time.Time       `json:"created_at"`
+	StartedAt         *time.Time       `json:"started_at"`
+	FinishedAt        *time.Time       `json:"finished_at"`
+	ErasedAt          *time.Time       `json:"erased_at"`
+	Duration          float64          `json:"duration"`
+	QueuedDuration    float64          `json:"queued_duration"`
+	ArtifactsExpireAt *time.Time       `json:"artifacts_expire_at"`
+	TagList           []string         `json:"tag_list"`
+	ID                int64            `json:"id"`
+	Name              string           `json:"name"`
+	Pipeline          JobPipeline      `json:"pipeline"`
+	Ref               string           `json:"ref"`
+	Artifacts         []JobArtifact    `json:"artifacts"`
+	ArtifactsFile     JobArtifactsFile `json:"artifacts_file"`
+	Runner            JobRunner        `json:"runner"`
+	Stage             string           `json:"stage"`
+	Status            string           `json:"status"`
+	FailureReason     string           `json:"failure_reason"`
+	Tag               bool             `json:"tag"`
+	WebURL            string           `json:"web_url"`
+	Project           *Project         `json:"project"`
+	User              *User            `json:"user"`
+}
+
+// JobPipeline represents a ci build pipeline.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobPipeline struct {
+	ID        int64  `json:"id"`
+	ProjectID int64  `json:"project_id"`
 	Ref       string `json:"ref"`
-	Artifacts []struct {
-		FileType   string `json:"file_type"`
-		Filename   string `json:"filename"`
-		Size       int    `json:"size"`
-		FileFormat string `json:"file_format"`
-	} `json:"artifacts"`
-	ArtifactsFile struct {
-		Filename string `json:"filename"`
-		Size     int    `json:"size"`
-	} `json:"artifacts_file"`
-	Runner struct {
-		ID          int    `json:"id"`
-		Description string `json:"description"`
-		Active      bool   `json:"active"`
-		IsShared    bool   `json:"is_shared"`
-		Name        string `json:"name"`
-	} `json:"runner"`
-	Stage         string   `json:"stage"`
-	Status        string   `json:"status"`
-	FailureReason string   `json:"failure_reason"`
-	Tag           bool     `json:"tag"`
-	WebURL        string   `json:"web_url"`
-	Project       *Project `json:"project"`
-	User          *User    `json:"user"`
+	Sha       string `json:"sha"`
+	Status    string `json:"status"`
+}
+
+// JobArtifact represents a ci build artifact.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobArtifact struct {
+	FileType   string `json:"file_type"`
+	Filename   string `json:"filename"`
+	Size       int64  `json:"size"`
+	FileFormat string `json:"file_format"`
+}
+
+// JobArtifactsFile represents a ci build artifacts file.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobArtifactsFile struct {
+	Filename string `json:"filename"`
+	Size     int64  `json:"size"`
+}
+
+// JobRunner represents a ci build runner.
+//
+// GitLab API docs: https://docs.gitlab.com/api/jobs/
+type JobRunner struct {
+	ID          int64  `json:"id"`
+	Description string `json:"description"`
+	Active      bool   `json:"active"`
+	IsShared    bool   `json:"is_shared"`
+	Name        string `json:"name"`
 }
 
 // Bridge represents a pipeline bridge.
@@ -119,7 +139,7 @@ type Bridge struct {
 	ErasedAt           *time.Time    `json:"erased_at"`
 	Duration           float64       `json:"duration"`
 	QueuedDuration     float64       `json:"queued_duration"`
-	ID                 int           `json:"id"`
+	ID                 int64         `json:"id"`
 	Name               string        `json:"name"`
 	Pipeline           PipelineInfo  `json:"pipeline"`
 	Ref                string        `json:"ref"`
@@ -175,7 +195,7 @@ func (s *JobsService) ListProjectJobs(pid any, opts *ListJobsOptions, options ..
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#list-pipeline-jobs
-func (s *JobsService) ListPipelineJobs(pid any, pipelineID int, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error) {
+func (s *JobsService) ListPipelineJobs(pid any, pipelineID int64, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -201,7 +221,7 @@ func (s *JobsService) ListPipelineJobs(pid any, pipelineID int, opts *ListJobsOp
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#list-pipeline-trigger-jobs
-func (s *JobsService) ListPipelineBridges(pid any, pipelineID int, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Bridge, *Response, error) {
+func (s *JobsService) ListPipelineBridges(pid any, pipelineID int64, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Bridge, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -251,7 +271,7 @@ func (s *JobsService) GetJobTokensJob(opts *GetJobTokensJobOptions, options ...R
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#get-a-single-job
-func (s *JobsService) GetJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error) {
+func (s *JobsService) GetJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -276,7 +296,7 @@ func (s *JobsService) GetJob(pid any, jobID int, options ...RequestOptionFunc) (
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#get-job-artifacts
-func (s *JobsService) GetJobArtifacts(pid any, jobID int, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
+func (s *JobsService) GetJobArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -339,7 +359,7 @@ func (s *JobsService) DownloadArtifactsFile(pid any, refName string, opt *Downlo
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#download-a-single-artifact-file-by-job-id
-func (s *JobsService) DownloadSingleArtifactsFile(pid any, jobID int, artifactPath string, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
+func (s *JobsService) DownloadSingleArtifactsFile(pid any, jobID int64, artifactPath string, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -403,7 +423,7 @@ func (s *JobsService) DownloadSingleArtifactsFileByTagOrBranch(pid any, refName 
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#get-a-log-file
-func (s *JobsService) GetTraceFile(pid any, jobID int, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
+func (s *JobsService) GetTraceFile(pid any, jobID int64, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -428,7 +448,7 @@ func (s *JobsService) GetTraceFile(pid any, jobID int, options ...RequestOptionF
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#cancel-a-job
-func (s *JobsService) CancelJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error) {
+func (s *JobsService) CancelJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -453,7 +473,7 @@ func (s *JobsService) CancelJob(pid any, jobID int, options ...RequestOptionFunc
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#retry-a-job
-func (s *JobsService) RetryJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error) {
+func (s *JobsService) RetryJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -479,7 +499,7 @@ func (s *JobsService) RetryJob(pid any, jobID int, options ...RequestOptionFunc)
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#erase-a-job
-func (s *JobsService) EraseJob(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error) {
+func (s *JobsService) EraseJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -505,7 +525,7 @@ func (s *JobsService) EraseJob(pid any, jobID int, options ...RequestOptionFunc)
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#keep-artifacts
-func (s *JobsService) KeepArtifacts(pid any, jobID int, options ...RequestOptionFunc) (*Job, *Response, error) {
+func (s *JobsService) KeepArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -548,7 +568,7 @@ type JobVariableOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#run-a-job
-func (s *JobsService) PlayJob(pid any, jobID int, opt *PlayJobOptions, options ...RequestOptionFunc) (*Job, *Response, error) {
+func (s *JobsService) PlayJob(pid any, jobID int64, opt *PlayJobOptions, options ...RequestOptionFunc) (*Job, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -573,7 +593,7 @@ func (s *JobsService) PlayJob(pid any, jobID int, opt *PlayJobOptions, options .
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#delete-job-artifacts
-func (s *JobsService) DeleteArtifacts(pid any, jobID int, options ...RequestOptionFunc) (*Response, error) {
+func (s *JobsService) DeleteArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, err

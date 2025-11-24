@@ -40,7 +40,7 @@ func (m *MockGroupEpicBoardsServiceInterface) EXPECT() *MockGroupEpicBoardsServi
 }
 
 // GetGroupEpicBoard mocks base method.
-func (m *MockGroupEpicBoardsServiceInterface) GetGroupEpicBoard(gid any, board int, options ...gitlab.RequestOptionFunc) (*gitlab.GroupEpicBoard, *gitlab.Response, error) {
+func (m *MockGroupEpicBoardsServiceInterface) GetGroupEpicBoard(gid any, board int64, options ...gitlab.RequestOptionFunc) (*gitlab.GroupEpicBoard, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, board}
 	for _, a := range options {
@@ -73,13 +73,13 @@ func (c *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupEpicBoard, *gitlab.Response, error)) *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall {
+func (c *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupEpicBoard, *gitlab.Response, error)) *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupEpicBoard, *gitlab.Response, error)) *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall {
+func (c *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupEpicBoard, *gitlab.Response, error)) *MockGroupEpicBoardsServiceInterfaceGetGroupEpicBoardCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

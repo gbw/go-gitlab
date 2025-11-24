@@ -1,0 +1,114 @@
+//go:build integration
+
+package gitlab_test
+
+import (
+	"fmt"
+	"os"
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/require"
+	gitlab "gitlab.com/gitlab-org/api/client-go"
+)
+
+// This file contains helper functions that are useful for
+// writing tests. This includes a helper to create a client
+// related to acceptance tests.
+func SetupIntegrationClient(t *testing.T) *gitlab.Client {
+	t.Helper()
+
+	// Get the token from environment
+	token := os.Getenv("GITLAB_TOKEN")
+	if token == "" {
+		t.Skip("GITLAB_TOKEN environment variable not set")
+	}
+
+	// Get the baseUrl from environment. If it's not set, default
+	// to the local setup.
+	baseURL := os.Getenv("GITLAB_BASE_URL")
+	if baseURL == "" {
+		baseURL = "https://localhost:8095/api/v4"
+	}
+
+	// Return a client with the base URL and the token.
+	client, err := gitlab.NewClient(token, gitlab.WithBaseURL(baseURL))
+	require.NoError(t, err, "failed to create GitLab Client for BaseURL "+baseURL)
+
+	return client
+}
+
+// Skips the given test after the client is configured when running in CE
+// This is required to ensure that integration testing functions that require
+// an EE instance don't fail
+func SkipIfRunningCE(t *testing.T, client *gitlab.Client) {
+	t.Helper()
+
+	// Check if we're running in CE context
+	isEE, err := IsRunningInEEContext(t, client)
+	require.NoError(t, err, "Failed to determine GitLab edition")
+
+	// Skip the test if running on CE
+	if !isEE {
+		t.Skip("Skipping test - requires GitLab Enterprise Edition")
+	}
+}
+
+// Global variable to cache the result of EE evaluation for all the tests
+var isEE *bool
+
+// function calls gitlab server metadata API once and caches the result
+// to determine if license model is enterprise or not
+func IsRunningInEEContext(t *testing.T, client *gitlab.Client) (bool, error) {
+	t.Helper()
+
+	if isEE != nil {
+		return *isEE, nil
+	}
+	metadata, _, err := client.Metadata.GetMetadata()
+	if err != nil {
+		return false, err
+	}
+
+	// Cache the results for later.
+	// Note - if run on versions earlier to 15.5, it will error since
+	// this key wasn't returned. With we're 3 major versions later, this
+	// seems like a safe assumption.
+	isEE = &metadata.Enterprise
+	return *isEE, err
+}
+
+// CreateTestUser creates a test user with a random username and email.
+// The user is automatically cleaned up when the test finishes.
+func CreateTestUser(t *testing.T, client *gitlab.Client) (*gitlab.User, error) {
+	t.Helper()
+
+	// Generate random username and email
+	suffix := time.Now().UnixNano()
+
+	username := fmt.Sprintf("testuser%d", suffix)
+	email := fmt.Sprintf("testuser%d@example.com", suffix)
+	name := fmt.Sprintf("Test User %d", suffix)
+
+	// Create the user
+	user, _, err := client.Users.CreateUser(&gitlab.CreateUserOptions{
+		Username: &username,
+		Email:    &email,
+		Name:     &name,
+		// Required field - must be fairly random or GitLab won't allow it
+		// nosemgrep - testing password
+		Password:         gitlab.Ptr("f0hYXux#yy2CFypKq!aV"),
+		SkipConfirmation: gitlab.Ptr(true), // Skip email confirmation
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create user: %w", err)
+	}
+
+	// Clean up the user when the test finishes
+	t.Cleanup(func() {
+		_, err := client.Users.DeleteUser(user.ID)
+		require.NoError(t, err, "Failed to delete test user")
+	})
+
+	return user, nil
+}

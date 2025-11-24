@@ -85,7 +85,7 @@ func (c *MockGroupBadgesServiceInterfaceAddGroupBadgeCall) DoAndReturn(f func(an
 }
 
 // DeleteGroupBadge mocks base method.
-func (m *MockGroupBadgesServiceInterface) DeleteGroupBadge(gid any, badge int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockGroupBadgesServiceInterface) DeleteGroupBadge(gid any, badge int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, badge}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall {
+func (c *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall {
+func (c *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupBadgesServiceInterfaceDeleteGroupBadgeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditGroupBadge mocks base method.
-func (m *MockGroupBadgesServiceInterface) EditGroupBadge(gid any, badge int, opt *gitlab.EditGroupBadgeOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error) {
+func (m *MockGroupBadgesServiceInterface) EditGroupBadge(gid any, badge int64, opt *gitlab.EditGroupBadgeOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, badge, opt}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockGroupBadgesServiceInterfaceEditGroupBadgeCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupBadgesServiceInterfaceEditGroupBadgeCall) Do(f func(any, int, *gitlab.EditGroupBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceEditGroupBadgeCall {
+func (c *MockGroupBadgesServiceInterfaceEditGroupBadgeCall) Do(f func(any, int64, *gitlab.EditGroupBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceEditGroupBadgeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupBadgesServiceInterfaceEditGroupBadgeCall) DoAndReturn(f func(any, int, *gitlab.EditGroupBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceEditGroupBadgeCall {
+func (c *MockGroupBadgesServiceInterfaceEditGroupBadgeCall) DoAndReturn(f func(any, int64, *gitlab.EditGroupBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceEditGroupBadgeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupBadge mocks base method.
-func (m *MockGroupBadgesServiceInterface) GetGroupBadge(gid any, badge int, options ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error) {
+func (m *MockGroupBadgesServiceInterface) GetGroupBadge(gid any, badge int64, options ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, badge}
 	for _, a := range options {
@@ -207,13 +207,13 @@ func (c *MockGroupBadgesServiceInterfaceGetGroupBadgeCall) Return(arg0 *gitlab.G
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockGroupBadgesServiceInterfaceGetGroupBadgeCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceGetGroupBadgeCall {
+func (c *MockGroupBadgesServiceInterfaceGetGroupBadgeCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceGetGroupBadgeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockGroupBadgesServiceInterfaceGetGroupBadgeCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceGetGroupBadgeCall {
+func (c *MockGroupBadgesServiceInterfaceGetGroupBadgeCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.GroupBadge, *gitlab.Response, error)) *MockGroupBadgesServiceInterfaceGetGroupBadgeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

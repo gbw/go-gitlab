@@ -36,7 +36,7 @@ func TestCreateLabel(t *testing.T) {
 	l := &CreateLabelOptions{
 		Name:     Ptr("MyLabel"),
 		Color:    Ptr("#11FF22"),
-		Priority: Ptr(2),
+		Priority: Ptr(int64(2)),
 	}
 	label, _, err := client.Labels.CreateLabel("1", l)
 	if err != nil {
@@ -96,7 +96,7 @@ func TestUpdateLabel(t *testing.T) {
 		NewName:     Ptr("New Label"),
 		Color:       Ptr("#11FF23"),
 		Description: Ptr("This is updated label"),
-		Priority:    Ptr(42),
+		Priority:    Ptr(int64(42)),
 	}
 
 	label, resp, err := client.Labels.UpdateLabel("1", "MyLabel", l)

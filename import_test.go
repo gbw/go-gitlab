@@ -36,7 +36,7 @@ func TestImportService_ImportRepositoryFromGitHub(t *testing.T) {
 		Name:                  "my-repo",
 		FullPath:              "/root/my-repo",
 		FullName:              "Administrator / my-repo",
-		RefsUrl:               "/root/my-repo/refs",
+		RefsURL:               "/root/my-repo/refs",
 		ImportSource:          "my-github/repo",
 		ImportStatus:          "scheduled",
 		HumanImportStatusName: "scheduled",
@@ -45,7 +45,7 @@ func TestImportService_ImportRepositoryFromGitHub(t *testing.T) {
 
 	opt := &ImportRepositoryFromGitHubOptions{
 		PersonalAccessToken: Ptr("token"),
-		RepoID:              Ptr(34),
+		RepoID:              Ptr(int64(34)),
 		TargetNamespace:     Ptr("root"),
 	}
 
@@ -92,7 +92,7 @@ func TestImportService_CancelGitHubProjectImport(t *testing.T) {
 	}
 
 	opt := &CancelGitHubProjectImportOptions{
-		ProjectID: Ptr(27),
+		ProjectID: Ptr(int64(27)),
 	}
 
 	cgi, resp, err := client.Import.CancelGitHubProjectImport(opt)
@@ -147,11 +147,11 @@ func TestImportService_ImportRepositoryFromBitbucketServer(t *testing.T) {
 		Name:     "my-repo",
 		FullPath: "/root/my-repo",
 		FullName: "Administrator / my-repo",
-		RefsUrl:  "/root/my-repo/refs",
+		RefsURL:  "/root/my-repo/refs",
 	}
 
 	opt := &ImportRepositoryFromBitbucketServerOptions{
-		BitbucketServerUrl:      Ptr("https://bitbucket.example.com"),
+		BitbucketServerURL:      Ptr("https://bitbucket.example.com"),
 		BitbucketServerUsername: Ptr("username"),
 		PersonalAccessToken:     Ptr("token"),
 		BitbucketServerProject:  Ptr("root"),
@@ -200,7 +200,7 @@ func TestImportService_ImportRepositoryFromBitbucketCloud(t *testing.T) {
 		Name:                  "my-repo",
 		FullPath:              "/root/my-repo",
 		FullName:              "Administrator / my-repo",
-		RefsUrl:               "/root/my-repo/refs",
+		RefsURL:               "/root/my-repo/refs",
 		ImportSource:          "my-bitbucket/repo",
 		ImportStatus:          "scheduled",
 		HumanImportStatusName: "scheduled",

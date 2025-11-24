@@ -130,7 +130,7 @@ func (c *MockDeployTokensServiceInterfaceCreateProjectDeployTokenCall) DoAndRetu
 }
 
 // DeleteGroupDeployToken mocks base method.
-func (m *MockDeployTokensServiceInterface) DeleteGroupDeployToken(gid any, deployToken int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockDeployTokensServiceInterface) DeleteGroupDeployToken(gid any, deployToken int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, deployToken}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall) Return(arg0
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteGroupDeployTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteProjectDeployToken mocks base method.
-func (m *MockDeployTokensServiceInterface) DeleteProjectDeployToken(pid any, deployToken int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockDeployTokensServiceInterface) DeleteProjectDeployToken(pid any, deployToken int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployToken}
 	for _, a := range options {
@@ -206,19 +206,19 @@ func (c *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockDeployTokensServiceInterfaceDeleteProjectDeployTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetGroupDeployToken mocks base method.
-func (m *MockDeployTokensServiceInterface) GetGroupDeployToken(gid any, deployToken int, options ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error) {
+func (m *MockDeployTokensServiceInterface) GetGroupDeployToken(gid any, deployToken int64, options ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, deployToken}
 	for _, a := range options {
@@ -251,19 +251,19 @@ func (c *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetGroupDeployTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetProjectDeployToken mocks base method.
-func (m *MockDeployTokensServiceInterface) GetProjectDeployToken(pid any, deployToken int, options ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error) {
+func (m *MockDeployTokensServiceInterface) GetProjectDeployToken(pid any, deployToken int64, options ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployToken}
 	for _, a := range options {
@@ -296,13 +296,13 @@ func (c *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall) Return(arg0 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall {
+func (c *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.DeployToken, *gitlab.Response, error)) *MockDeployTokensServiceInterfaceGetProjectDeployTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -40,7 +40,7 @@ func (m *MockPackagesServiceInterface) EXPECT() *MockPackagesServiceInterfaceMoc
 }
 
 // DeletePackageFile mocks base method.
-func (m *MockPackagesServiceInterface) DeletePackageFile(pid any, pkg, file int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockPackagesServiceInterface) DeletePackageFile(pid any, pkg, file int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, pkg, file}
 	for _, a := range options {
@@ -72,19 +72,19 @@ func (c *MockPackagesServiceInterfaceDeletePackageFileCall) Return(arg0 *gitlab.
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPackagesServiceInterfaceDeletePackageFileCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeletePackageFileCall {
+func (c *MockPackagesServiceInterfaceDeletePackageFileCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeletePackageFileCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPackagesServiceInterfaceDeletePackageFileCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeletePackageFileCall {
+func (c *MockPackagesServiceInterfaceDeletePackageFileCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeletePackageFileCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteProjectPackage mocks base method.
-func (m *MockPackagesServiceInterface) DeleteProjectPackage(pid any, pkg int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockPackagesServiceInterface) DeleteProjectPackage(pid any, pkg int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, pkg}
 	for _, a := range options {
@@ -116,13 +116,13 @@ func (c *MockPackagesServiceInterfaceDeleteProjectPackageCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPackagesServiceInterfaceDeleteProjectPackageCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeleteProjectPackageCall {
+func (c *MockPackagesServiceInterfaceDeleteProjectPackageCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeleteProjectPackageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPackagesServiceInterfaceDeleteProjectPackageCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeleteProjectPackageCall {
+func (c *MockPackagesServiceInterfaceDeleteProjectPackageCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPackagesServiceInterfaceDeleteProjectPackageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -173,7 +173,7 @@ func (c *MockPackagesServiceInterfaceListGroupPackagesCall) DoAndReturn(f func(a
 }
 
 // ListPackageFiles mocks base method.
-func (m *MockPackagesServiceInterface) ListPackageFiles(pid any, pkg int, opt *gitlab.ListPackageFilesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.PackageFile, *gitlab.Response, error) {
+func (m *MockPackagesServiceInterface) ListPackageFiles(pid any, pkg int64, opt *gitlab.ListPackageFilesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.PackageFile, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, pkg, opt}
 	for _, a := range options {
@@ -206,13 +206,13 @@ func (c *MockPackagesServiceInterfaceListPackageFilesCall) Return(arg0 []*gitlab
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPackagesServiceInterfaceListPackageFilesCall) Do(f func(any, int, *gitlab.ListPackageFilesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PackageFile, *gitlab.Response, error)) *MockPackagesServiceInterfaceListPackageFilesCall {
+func (c *MockPackagesServiceInterfaceListPackageFilesCall) Do(f func(any, int64, *gitlab.ListPackageFilesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PackageFile, *gitlab.Response, error)) *MockPackagesServiceInterfaceListPackageFilesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPackagesServiceInterfaceListPackageFilesCall) DoAndReturn(f func(any, int, *gitlab.ListPackageFilesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PackageFile, *gitlab.Response, error)) *MockPackagesServiceInterfaceListPackageFilesCall {
+func (c *MockPackagesServiceInterfaceListPackageFilesCall) DoAndReturn(f func(any, int64, *gitlab.ListPackageFilesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PackageFile, *gitlab.Response, error)) *MockPackagesServiceInterfaceListPackageFilesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

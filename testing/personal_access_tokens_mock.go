@@ -84,7 +84,7 @@ func (c *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenCal
 }
 
 // GetSinglePersonalAccessTokenByID mocks base method.
-func (m *MockPersonalAccessTokensServiceInterface) GetSinglePersonalAccessTokenByID(token int, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
+func (m *MockPersonalAccessTokensServiceInterface) GetSinglePersonalAccessTokenByID(token int64, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{token}
 	for _, a := range options {
@@ -117,13 +117,13 @@ func (c *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByI
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall {
+func (c *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall {
+func (c *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceGetSinglePersonalAccessTokenByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -174,7 +174,7 @@ func (c *MockPersonalAccessTokensServiceInterfaceListPersonalAccessTokensCall) D
 }
 
 // RevokePersonalAccessToken mocks base method.
-func (m *MockPersonalAccessTokensServiceInterface) RevokePersonalAccessToken(token int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockPersonalAccessTokensServiceInterface) RevokePersonalAccessToken(token int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{token}
 	for _, a := range options {
@@ -206,19 +206,19 @@ func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RevokePersonalAccessTokenByID mocks base method.
-func (m *MockPersonalAccessTokensServiceInterface) RevokePersonalAccessTokenByID(token int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockPersonalAccessTokensServiceInterface) RevokePersonalAccessTokenByID(token int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{token}
 	for _, a := range options {
@@ -250,13 +250,13 @@ func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCa
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -305,7 +305,7 @@ func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenSelfCa
 }
 
 // RotatePersonalAccessToken mocks base method.
-func (m *MockPersonalAccessTokensServiceInterface) RotatePersonalAccessToken(token int, opt *gitlab.RotatePersonalAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
+func (m *MockPersonalAccessTokensServiceInterface) RotatePersonalAccessToken(token int64, opt *gitlab.RotatePersonalAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{token, opt}
 	for _, a := range options {
@@ -338,19 +338,19 @@ func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall) Do(f func(int, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall) Do(f func(int64, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall) DoAndReturn(f func(int, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall) DoAndReturn(f func(int64, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // RotatePersonalAccessTokenByID mocks base method.
-func (m *MockPersonalAccessTokensServiceInterface) RotatePersonalAccessTokenByID(token int, opt *gitlab.RotatePersonalAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
+func (m *MockPersonalAccessTokensServiceInterface) RotatePersonalAccessTokenByID(token int64, opt *gitlab.RotatePersonalAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{token, opt}
 	for _, a := range options {
@@ -383,13 +383,13 @@ func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCa
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall) Do(f func(int, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall) Do(f func(int64, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall) DoAndReturn(f func(int, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall {
+func (c *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall) DoAndReturn(f func(int64, *gitlab.RotatePersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRotatePersonalAccessTokenByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

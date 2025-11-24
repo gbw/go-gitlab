@@ -85,7 +85,7 @@ func (c *MockProjectBadgesServiceInterfaceAddProjectBadgeCall) DoAndReturn(f fun
 }
 
 // DeleteProjectBadge mocks base method.
-func (m *MockProjectBadgesServiceInterface) DeleteProjectBadge(pid any, badge int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectBadgesServiceInterface) DeleteProjectBadge(pid any, badge int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, badge}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall {
+func (c *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall {
+func (c *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectBadgesServiceInterfaceDeleteProjectBadgeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditProjectBadge mocks base method.
-func (m *MockProjectBadgesServiceInterface) EditProjectBadge(pid any, badge int, opt *gitlab.EditProjectBadgeOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error) {
+func (m *MockProjectBadgesServiceInterface) EditProjectBadge(pid any, badge int64, opt *gitlab.EditProjectBadgeOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, badge, opt}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockProjectBadgesServiceInterfaceEditProjectBadgeCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectBadgesServiceInterfaceEditProjectBadgeCall) Do(f func(any, int, *gitlab.EditProjectBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceEditProjectBadgeCall {
+func (c *MockProjectBadgesServiceInterfaceEditProjectBadgeCall) Do(f func(any, int64, *gitlab.EditProjectBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceEditProjectBadgeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectBadgesServiceInterfaceEditProjectBadgeCall) DoAndReturn(f func(any, int, *gitlab.EditProjectBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceEditProjectBadgeCall {
+func (c *MockProjectBadgesServiceInterfaceEditProjectBadgeCall) DoAndReturn(f func(any, int64, *gitlab.EditProjectBadgeOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceEditProjectBadgeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetProjectBadge mocks base method.
-func (m *MockProjectBadgesServiceInterface) GetProjectBadge(pid any, badge int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error) {
+func (m *MockProjectBadgesServiceInterface) GetProjectBadge(pid any, badge int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, badge}
 	for _, a := range options {
@@ -207,13 +207,13 @@ func (c *MockProjectBadgesServiceInterfaceGetProjectBadgeCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectBadgesServiceInterfaceGetProjectBadgeCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceGetProjectBadgeCall {
+func (c *MockProjectBadgesServiceInterfaceGetProjectBadgeCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceGetProjectBadgeCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectBadgesServiceInterfaceGetProjectBadgeCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceGetProjectBadgeCall {
+func (c *MockProjectBadgesServiceInterfaceGetProjectBadgeCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectBadge, *gitlab.Response, error)) *MockProjectBadgesServiceInterfaceGetProjectBadgeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

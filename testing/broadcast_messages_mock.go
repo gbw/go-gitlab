@@ -85,7 +85,7 @@ func (c *MockBroadcastMessagesServiceInterfaceCreateBroadcastMessageCall) DoAndR
 }
 
 // DeleteBroadcastMessage mocks base method.
-func (m *MockBroadcastMessagesServiceInterface) DeleteBroadcastMessage(broadcast int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockBroadcastMessagesServiceInterface) DeleteBroadcastMessage(broadcast int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{broadcast}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall {
+func (c *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall {
+func (c *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceDeleteBroadcastMessageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetBroadcastMessage mocks base method.
-func (m *MockBroadcastMessagesServiceInterface) GetBroadcastMessage(broadcast int, options ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error) {
+func (m *MockBroadcastMessagesServiceInterface) GetBroadcastMessage(broadcast int64, options ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{broadcast}
 	for _, a := range options {
@@ -162,13 +162,13 @@ func (c *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall) Return(ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall {
+func (c *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall {
+func (c *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceGetBroadcastMessageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -219,7 +219,7 @@ func (c *MockBroadcastMessagesServiceInterfaceListBroadcastMessagesCall) DoAndRe
 }
 
 // UpdateBroadcastMessage mocks base method.
-func (m *MockBroadcastMessagesServiceInterface) UpdateBroadcastMessage(broadcast int, opt *gitlab.UpdateBroadcastMessageOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error) {
+func (m *MockBroadcastMessagesServiceInterface) UpdateBroadcastMessage(broadcast int64, opt *gitlab.UpdateBroadcastMessageOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{broadcast, opt}
 	for _, a := range options {
@@ -252,13 +252,13 @@ func (c *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall) Do(f func(int, *gitlab.UpdateBroadcastMessageOptions, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall {
+func (c *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall) Do(f func(int64, *gitlab.UpdateBroadcastMessageOptions, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall) DoAndReturn(f func(int, *gitlab.UpdateBroadcastMessageOptions, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall {
+func (c *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall) DoAndReturn(f func(int64, *gitlab.UpdateBroadcastMessageOptions, ...gitlab.RequestOptionFunc) (*gitlab.BroadcastMessage, *gitlab.Response, error)) *MockBroadcastMessagesServiceInterfaceUpdateBroadcastMessageCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

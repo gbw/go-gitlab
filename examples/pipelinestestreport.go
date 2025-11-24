@@ -39,7 +39,7 @@ func pipelineTestReportExample() {
 	for _, pipeline := range pipelines {
 		log.Printf("Found pipeline: %v", pipeline)
 
-		report, _, err := git.Pipelines.GetPipelineTestReport(projectID, pipeline.ID)
+		report, _, err := git.Pipelines.GetPipelineTestReport(projectID, int64(pipeline.ID))
 		if err != nil {
 			log.Fatal(err)
 		}

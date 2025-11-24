@@ -85,7 +85,7 @@ func (c *MockIssueBoardsServiceInterfaceCreateIssueBoardCall) DoAndReturn(f func
 }
 
 // CreateIssueBoardList mocks base method.
-func (m *MockIssueBoardsServiceInterface) CreateIssueBoardList(pid any, board int, opt *gitlab.CreateIssueBoardListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) CreateIssueBoardList(pid any, board int64, opt *gitlab.CreateIssueBoardListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board, opt}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall) Do(f func(any, int, *gitlab.CreateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall) Do(f func(any, int64, *gitlab.CreateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall) DoAndReturn(f func(any, int, *gitlab.CreateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall) DoAndReturn(f func(any, int64, *gitlab.CreateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceCreateIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteIssueBoard mocks base method.
-func (m *MockIssueBoardsServiceInterface) DeleteIssueBoard(pid any, board int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) DeleteIssueBoard(pid any, board int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall {
+func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall {
+func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteIssueBoardList mocks base method.
-func (m *MockIssueBoardsServiceInterface) DeleteIssueBoardList(pid any, board, list int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) DeleteIssueBoardList(pid any, board, list int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board, list}
 	for _, a := range options {
@@ -206,19 +206,19 @@ func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIssueBoardsServiceInterfaceDeleteIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssueBoard mocks base method.
-func (m *MockIssueBoardsServiceInterface) GetIssueBoard(pid any, board int, options ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) GetIssueBoard(pid any, board int64, options ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board}
 	for _, a := range options {
@@ -251,19 +251,19 @@ func (c *MockIssueBoardsServiceInterfaceGetIssueBoardCall) Return(arg0 *gitlab.I
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceGetIssueBoardCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardCall {
+func (c *MockIssueBoardsServiceInterfaceGetIssueBoardCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceGetIssueBoardCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardCall {
+func (c *MockIssueBoardsServiceInterfaceGetIssueBoardCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssueBoardList mocks base method.
-func (m *MockIssueBoardsServiceInterface) GetIssueBoardList(pid any, board, list int, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) GetIssueBoardList(pid any, board, list int64, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board, list}
 	for _, a := range options {
@@ -296,19 +296,19 @@ func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListCall) Return(arg0 *gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssueBoardLists mocks base method.
-func (m *MockIssueBoardsServiceInterface) GetIssueBoardLists(pid any, board int, opt *gitlab.GetIssueBoardListsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) GetIssueBoardLists(pid any, board int64, opt *gitlab.GetIssueBoardListsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board, opt}
 	for _, a := range options {
@@ -341,13 +341,13 @@ func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall) Return(arg0 []*g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall) Do(f func(any, int, *gitlab.GetIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall {
+func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall) Do(f func(any, int64, *gitlab.GetIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall) DoAndReturn(f func(any, int, *gitlab.GetIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall {
+func (c *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall) DoAndReturn(f func(any, int64, *gitlab.GetIssueBoardListsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceGetIssueBoardListsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -398,7 +398,7 @@ func (c *MockIssueBoardsServiceInterfaceListIssueBoardsCall) DoAndReturn(f func(
 }
 
 // UpdateIssueBoard mocks base method.
-func (m *MockIssueBoardsServiceInterface) UpdateIssueBoard(pid any, board int, opt *gitlab.UpdateIssueBoardOptions, options ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) UpdateIssueBoard(pid any, board int64, opt *gitlab.UpdateIssueBoardOptions, options ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board, opt}
 	for _, a := range options {
@@ -431,19 +431,19 @@ func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall) Do(f func(any, int, *gitlab.UpdateIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall {
+func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall) Do(f func(any, int64, *gitlab.UpdateIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall) DoAndReturn(f func(any, int, *gitlab.UpdateIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall {
+func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall) DoAndReturn(f func(any, int64, *gitlab.UpdateIssueBoardOptions, ...gitlab.RequestOptionFunc) (*gitlab.IssueBoard, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateIssueBoardList mocks base method.
-func (m *MockIssueBoardsServiceInterface) UpdateIssueBoardList(pid any, board, list int, opt *gitlab.UpdateIssueBoardListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
+func (m *MockIssueBoardsServiceInterface) UpdateIssueBoardList(pid any, board, list int64, opt *gitlab.UpdateIssueBoardListOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, board, list, opt}
 	for _, a := range options {
@@ -476,13 +476,13 @@ func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall) Return(arg0 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall) Do(f func(any, int, int, *gitlab.UpdateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall) Do(f func(any, int64, int64, *gitlab.UpdateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
+func (c *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateIssueBoardListOptions, ...gitlab.RequestOptionFunc) (*gitlab.BoardList, *gitlab.Response, error)) *MockIssueBoardsServiceInterfaceUpdateIssueBoardListCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

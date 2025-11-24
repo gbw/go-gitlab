@@ -29,8 +29,8 @@ import (
 // https://docs.gitlab.com/api/project_markdown_uploads/
 // https://docs.gitlab.com/api/group_markdown_uploads/
 type MarkdownUpload struct {
-	ID         int        `json:"id"`
-	Size       int        `json:"size"`
+	ID         int64      `json:"id"`
+	Size       int64      `json:"size"`
 	Filename   string     `json:"filename"`
 	CreatedAt  *time.Time `json:"created_at"`
 	UploadedBy *User      `json:"uploaded_by"`
@@ -50,7 +50,7 @@ func (m MarkdownUpload) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_markdown_uploads/
 type MarkdownUploadedFile struct {
-	ID       int    `json:"id"`
+	ID       int64  `json:"id"`
 	Alt      string `json:"alt"`
 	URL      string `json:"url"`
 	FullPath string `json:"full_path"`
@@ -92,7 +92,7 @@ func listMarkdownUploads[T any](client *Client, resourceType ResourceType, id an
 }
 
 // downloadMarkdownUploadByID downloads a specific upload by ID
-func downloadMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int, options []RequestOptionFunc) (*bytes.Buffer, *Response, error) {
+func downloadMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int64, options []RequestOptionFunc) (*bytes.Buffer, *Response, error) {
 	resourceID, err := parseID(id)
 	if err != nil {
 		return nil, nil, err
@@ -136,7 +136,7 @@ func downloadMarkdownUploadBySecretAndFilename(client *Client, resourceType Reso
 }
 
 // deleteMarkdownUploadByID deletes an upload by ID
-func deleteMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int, options []RequestOptionFunc) (*Response, error) {
+func deleteMarkdownUploadByID(client *Client, resourceType ResourceType, id any, uploadID int64, options []RequestOptionFunc) (*Response, error) {
 	resourceID, err := parseID(id)
 	if err != nil {
 		return nil, err

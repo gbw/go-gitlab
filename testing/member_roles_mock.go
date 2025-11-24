@@ -130,7 +130,7 @@ func (c *MockMemberRolesServiceInterfaceCreateMemberRoleCall) DoAndReturn(f func
 }
 
 // DeleteInstanceMemberRole mocks base method.
-func (m *MockMemberRolesServiceInterface) DeleteInstanceMemberRole(memberRoleID int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockMemberRolesServiceInterface) DeleteInstanceMemberRole(memberRoleID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{memberRoleID}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall) Return(arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall {
+func (c *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall {
+func (c *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteInstanceMemberRoleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteMemberRole mocks base method.
-func (m *MockMemberRolesServiceInterface) DeleteMemberRole(gid any, memberRole int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockMemberRolesServiceInterface) DeleteMemberRole(gid any, memberRole int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, memberRole}
 	for _, a := range options {
@@ -206,13 +206,13 @@ func (c *MockMemberRolesServiceInterfaceDeleteMemberRoleCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMemberRolesServiceInterfaceDeleteMemberRoleCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteMemberRoleCall {
+func (c *MockMemberRolesServiceInterfaceDeleteMemberRoleCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteMemberRoleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMemberRolesServiceInterfaceDeleteMemberRoleCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteMemberRoleCall {
+func (c *MockMemberRolesServiceInterfaceDeleteMemberRoleCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMemberRolesServiceInterfaceDeleteMemberRoleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

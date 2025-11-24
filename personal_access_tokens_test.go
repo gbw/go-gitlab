@@ -34,7 +34,7 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 
 	personalAccessTokens, _, err := client.PersonalAccessTokens.ListPersonalAccessTokens(
 		&ListPersonalAccessTokensOptions{
-			UserID:        Ptr(1),
+			UserID:        Ptr(int64(1)),
 			ExpiresBefore: Ptr(ISOTime(time.Date(2022, time.March, 22, 0, 0, 0, 0, time.UTC))),
 			ListOptions:   ListOptions{Page: 1, PerPage: 10},
 		},

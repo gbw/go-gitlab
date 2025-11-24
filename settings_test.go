@@ -56,7 +56,7 @@ func TestUpdateSettings(t *testing.T) {
 	})
 
 	options := &UpdateSettingsOptions{
-		DefaultProjectsLimit: Ptr(100),
+		DefaultProjectsLimit: Ptr(int64(100)),
 	}
 	settings, _, err := client.Settings.UpdateSettings(options)
 	if err != nil {

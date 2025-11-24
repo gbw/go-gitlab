@@ -262,10 +262,10 @@ func TestGroupProtectEnvironments(t *testing.T) {
 		DeployAccessLevels: &[]*GroupEnvironmentAccessOptions{
 			{AccessLevel: Ptr(AccessLevelValue(30))},
 		},
-		RequiredApprovalCount: Ptr(2),
+		RequiredApprovalCount: Ptr(int64(2)),
 		ApprovalRules: &[]*GroupEnvironmentApprovalRuleOptions{
 			{
-				GroupID:                Ptr(10),
+				GroupID:                Ptr(int64(10)),
 				AccessLevel:            Ptr(AccessLevelValue(0)),
 				AccessLevelDescription: Ptr("devops"),
 			},
@@ -373,13 +373,13 @@ func TestGroupUpdateProtectedEnvironments(t *testing.T) {
 		DeployAccessLevels: &[]*UpdateGroupEnvironmentAccessOptions{
 			{
 				AccessLevel:          Ptr(AccessLevelValue(30)),
-				GroupInheritanceType: Ptr(1),
+				GroupInheritanceType: Ptr(int64(1)),
 			},
 		},
-		RequiredApprovalCount: Ptr(2),
+		RequiredApprovalCount: Ptr(int64(2)),
 		ApprovalRules: &[]*UpdateGroupEnvironmentApprovalRuleOptions{
 			{
-				GroupID:                Ptr(10),
+				GroupID:                Ptr(int64(10)),
 				AccessLevel:            Ptr(AccessLevelValue(5)),
 				AccessLevelDescription: Ptr("devops"),
 			},
@@ -460,9 +460,9 @@ func TestGroupUpdateProtectedEnvironments(t *testing.T) {
 		Name: Ptr(environmentName),
 		DeployAccessLevels: &[]*UpdateGroupEnvironmentAccessOptions{
 			{
-				ID:                   Ptr(42),
+				ID:                   Ptr(int64(42)),
 				AccessLevel:          Ptr(AccessLevelValue(30)),
-				GroupInheritanceType: Ptr(0),
+				GroupInheritanceType: Ptr(int64(0)),
 			},
 		},
 	}
@@ -521,8 +521,8 @@ func TestGroupUpdateProtectedEnvironments(t *testing.T) {
 		Name: Ptr(environmentName),
 		ApprovalRules: &[]*UpdateGroupEnvironmentApprovalRuleOptions{
 			{
-				ID:                     Ptr(1),
-				GroupID:                Ptr(10),
+				ID:                     Ptr(int64(1)),
+				GroupID:                Ptr(int64(10)),
 				AccessLevel:            Ptr(AccessLevelValue(5)),
 				AccessLevelDescription: Ptr("devops"),
 			},
@@ -567,11 +567,11 @@ func TestGroupUpdateProtectedEnvironments(t *testing.T) {
 		Name: Ptr(environmentName),
 		ApprovalRules: &[]*UpdateGroupEnvironmentApprovalRuleOptions{
 			{
-				ID:      Ptr(1),
+				ID:      Ptr(int64(1)),
 				Destroy: Ptr(true),
 			},
 		},
-		RequiredApprovalCount: Ptr(0),
+		RequiredApprovalCount: Ptr(int64(0)),
 	}
 
 	environment, _, err = client.GroupProtectedEnvironments.UpdateGroupProtectedEnvironment(5, environmentName, opt)

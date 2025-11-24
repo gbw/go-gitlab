@@ -85,7 +85,7 @@ func (c *MockProjectMirrorServiceInterfaceAddProjectMirrorCall) DoAndReturn(f fu
 }
 
 // DeleteProjectMirror mocks base method.
-func (m *MockProjectMirrorServiceInterface) DeleteProjectMirror(pid any, mirror int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockProjectMirrorServiceInterface) DeleteProjectMirror(pid any, mirror int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mirror}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall {
+func (c *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall {
+func (c *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMirrorServiceInterfaceDeleteProjectMirrorCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // EditProjectMirror mocks base method.
-func (m *MockProjectMirrorServiceInterface) EditProjectMirror(pid any, mirror int, opt *gitlab.EditProjectMirrorOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error) {
+func (m *MockProjectMirrorServiceInterface) EditProjectMirror(pid any, mirror int64, opt *gitlab.EditProjectMirrorOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mirror, opt}
 	for _, a := range options {
@@ -162,19 +162,19 @@ func (c *MockProjectMirrorServiceInterfaceEditProjectMirrorCall) Return(arg0 *gi
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMirrorServiceInterfaceEditProjectMirrorCall) Do(f func(any, int, *gitlab.EditProjectMirrorOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceEditProjectMirrorCall {
+func (c *MockProjectMirrorServiceInterfaceEditProjectMirrorCall) Do(f func(any, int64, *gitlab.EditProjectMirrorOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceEditProjectMirrorCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMirrorServiceInterfaceEditProjectMirrorCall) DoAndReturn(f func(any, int, *gitlab.EditProjectMirrorOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceEditProjectMirrorCall {
+func (c *MockProjectMirrorServiceInterfaceEditProjectMirrorCall) DoAndReturn(f func(any, int64, *gitlab.EditProjectMirrorOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceEditProjectMirrorCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetProjectMirror mocks base method.
-func (m *MockProjectMirrorServiceInterface) GetProjectMirror(pid any, mirror int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error) {
+func (m *MockProjectMirrorServiceInterface) GetProjectMirror(pid any, mirror int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mirror}
 	for _, a := range options {
@@ -207,19 +207,19 @@ func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorCall) Return(arg0 *git
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorCall {
+func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorCall {
+func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetProjectMirrorPublicKey mocks base method.
-func (m *MockProjectMirrorServiceInterface) GetProjectMirrorPublicKey(pid any, mirror int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirrorPublicKey, *gitlab.Response, error) {
+func (m *MockProjectMirrorServiceInterface) GetProjectMirrorPublicKey(pid any, mirror int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirrorPublicKey, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mirror}
 	for _, a := range options {
@@ -252,13 +252,13 @@ func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall) Return(
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirrorPublicKey, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall {
+func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirrorPublicKey, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirrorPublicKey, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall {
+func (c *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirrorPublicKey, *gitlab.Response, error)) *MockProjectMirrorServiceInterfaceGetProjectMirrorPublicKeyCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

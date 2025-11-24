@@ -10,8 +10,8 @@ type (
 	MergeTrainsServiceInterface interface {
 		ListProjectMergeTrains(pid any, opt *ListMergeTrainsOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error)
 		ListMergeRequestInMergeTrain(pid any, targetBranch string, opts *ListMergeTrainsOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error)
-		GetMergeRequestOnAMergeTrain(pid any, mergeRequest int, options ...RequestOptionFunc) (*MergeTrain, *Response, error)
-		AddMergeRequestToMergeTrain(pid any, mergeRequest int, opts *AddMergeRequestToMergeTrainOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error)
+		GetMergeRequestOnAMergeTrain(pid any, mergeRequest int64, options ...RequestOptionFunc) (*MergeTrain, *Response, error)
+		AddMergeRequestToMergeTrain(pid any, mergeRequest int64, opts *AddMergeRequestToMergeTrainOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error)
 	}
 
 	// MergeTrainsService handles communication with the merge trains related
@@ -29,7 +29,7 @@ var _ MergeTrainsServiceInterface = (*MergeTrainsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/merge_trains/
 type MergeTrain struct {
-	ID           int                     `json:"id"`
+	ID           int64                   `json:"id"`
 	MergeRequest *MergeTrainMergeRequest `json:"merge_request"`
 	User         *BasicUser              `json:"user"`
 	Pipeline     *Pipeline               `json:"pipeline"`
@@ -38,16 +38,16 @@ type MergeTrain struct {
 	TargetBranch string                  `json:"target_branch"`
 	Status       string                  `json:"status"`
 	MergedAt     *time.Time              `json:"merged_at"`
-	Duration     int                     `json:"duration"`
+	Duration     int64                   `json:"duration"`
 }
 
 // MergeTrainMergeRequest represents a GitLab merge request inside merge train.
 //
 // GitLab API docs: https://docs.gitlab.com/api/merge_trains/
 type MergeTrainMergeRequest struct {
-	ID          int        `json:"id"`
-	IID         int        `json:"iid"`
-	ProjectID   int        `json:"project_id"`
+	ID          int64      `json:"id"`
+	IID         int64      `json:"iid"`
+	ProjectID   int64      `json:"project_id"`
 	Title       string     `json:"title"`
 	Description string     `json:"description"`
 	State       string     `json:"state"`
@@ -122,7 +122,7 @@ func (s *MergeTrainsService) ListMergeRequestInMergeTrain(pid any, targetBranch 
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_trains/#get-the-status-of-a-merge-request-on-a-merge-train
-func (s *MergeTrainsService) GetMergeRequestOnAMergeTrain(pid any, mergeRequest int, options ...RequestOptionFunc) (*MergeTrain, *Response, error) {
+func (s *MergeTrainsService) GetMergeRequestOnAMergeTrain(pid any, mergeRequest int64, options ...RequestOptionFunc) (*MergeTrain, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err
@@ -162,7 +162,7 @@ type AddMergeRequestToMergeTrainOptions struct {
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_trains/#add-a-merge-request-to-a-merge-train
-func (s *MergeTrainsService) AddMergeRequestToMergeTrain(pid any, mergeRequest int, opts *AddMergeRequestToMergeTrainOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error) {
+func (s *MergeTrainsService) AddMergeRequestToMergeTrain(pid any, mergeRequest int64, opts *AddMergeRequestToMergeTrainOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
 		return nil, nil, err

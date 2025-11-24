@@ -40,7 +40,7 @@ func (m *MockContainerRegistryServiceInterface) EXPECT() *MockContainerRegistryS
 }
 
 // DeleteRegistryRepository mocks base method.
-func (m *MockContainerRegistryServiceInterface) DeleteRegistryRepository(pid any, repository int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) DeleteRegistryRepository(pid any, repository int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, repository}
 	for _, a := range options {
@@ -72,19 +72,19 @@ func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall {
+func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall {
+func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteRegistryRepositoryTag mocks base method.
-func (m *MockContainerRegistryServiceInterface) DeleteRegistryRepositoryTag(pid any, repository int, tagName string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) DeleteRegistryRepositoryTag(pid any, repository int64, tagName string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, repository, tagName}
 	for _, a := range options {
@@ -116,19 +116,19 @@ func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall) R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall) Do(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall {
+func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall) Do(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall) DoAndReturn(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall {
+func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall) DoAndReturn(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteRegistryRepositoryTags mocks base method.
-func (m *MockContainerRegistryServiceInterface) DeleteRegistryRepositoryTags(pid any, repository int, opt *gitlab.DeleteRegistryRepositoryTagsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) DeleteRegistryRepositoryTags(pid any, repository int64, opt *gitlab.DeleteRegistryRepositoryTagsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, repository, opt}
 	for _, a := range options {
@@ -160,19 +160,19 @@ func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall) 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall) Do(f func(any, int, *gitlab.DeleteRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall {
+func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall) Do(f func(any, int64, *gitlab.DeleteRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall) DoAndReturn(f func(any, int, *gitlab.DeleteRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall {
+func (c *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall) DoAndReturn(f func(any, int64, *gitlab.DeleteRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockContainerRegistryServiceInterfaceDeleteRegistryRepositoryTagsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetRegistryRepositoryTagDetail mocks base method.
-func (m *MockContainerRegistryServiceInterface) GetRegistryRepositoryTagDetail(pid any, repository int, tagName string, options ...gitlab.RequestOptionFunc) (*gitlab.RegistryRepositoryTag, *gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) GetRegistryRepositoryTagDetail(pid any, repository int64, tagName string, options ...gitlab.RequestOptionFunc) (*gitlab.RegistryRepositoryTag, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, repository, tagName}
 	for _, a := range options {
@@ -205,13 +205,13 @@ func (c *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall) Do(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall {
+func (c *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall) Do(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall) DoAndReturn(f func(any, int, string, ...gitlab.RequestOptionFunc) (*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall {
+func (c *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall) DoAndReturn(f func(any, int64, string, ...gitlab.RequestOptionFunc) (*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceGetRegistryRepositoryTagDetailCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -262,7 +262,7 @@ func (c *MockContainerRegistryServiceInterfaceGetSingleRegistryRepositoryCall) D
 }
 
 // ListGroupRegistryRepositories mocks base method.
-func (m *MockContainerRegistryServiceInterface) ListGroupRegistryRepositories(gid any, opt *gitlab.ListRegistryRepositoriesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) ListGroupRegistryRepositories(gid any, opt *gitlab.ListGroupRegistryRepositoriesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, opt}
 	for _, a := range options {
@@ -295,19 +295,19 @@ func (c *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall)
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall) Do(f func(any, *gitlab.ListRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall {
+func (c *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall) Do(f func(any, *gitlab.ListGroupRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall) DoAndReturn(f func(any, *gitlab.ListRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall {
+func (c *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall) DoAndReturn(f func(any, *gitlab.ListGroupRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListGroupRegistryRepositoriesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListProjectRegistryRepositories mocks base method.
-func (m *MockContainerRegistryServiceInterface) ListProjectRegistryRepositories(pid any, opt *gitlab.ListRegistryRepositoriesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) ListProjectRegistryRepositories(pid any, opt *gitlab.ListProjectRegistryRepositoriesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, opt}
 	for _, a := range options {
@@ -340,19 +340,19 @@ func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCal
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) Do(f func(any, *gitlab.ListRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
+func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) Do(f func(any, *gitlab.ListProjectRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) DoAndReturn(f func(any, *gitlab.ListRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
+func (c *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall) DoAndReturn(f func(any, *gitlab.ListProjectRegistryRepositoriesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepository, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListProjectRegistryRepositoriesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListRegistryRepositoryTags mocks base method.
-func (m *MockContainerRegistryServiceInterface) ListRegistryRepositoryTags(pid any, repository int, opt *gitlab.ListRegistryRepositoryTagsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepositoryTag, *gitlab.Response, error) {
+func (m *MockContainerRegistryServiceInterface) ListRegistryRepositoryTags(pid any, repository int64, opt *gitlab.ListRegistryRepositoryTagsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepositoryTag, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, repository, opt}
 	for _, a := range options {
@@ -385,13 +385,13 @@ func (c *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall) Re
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall) Do(f func(any, int, *gitlab.ListRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall {
+func (c *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall) Do(f func(any, int64, *gitlab.ListRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall) DoAndReturn(f func(any, int, *gitlab.ListRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall {
+func (c *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall) DoAndReturn(f func(any, int64, *gitlab.ListRegistryRepositoryTagsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.RegistryRepositoryTag, *gitlab.Response, error)) *MockContainerRegistryServiceInterfaceListRegistryRepositoryTagsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

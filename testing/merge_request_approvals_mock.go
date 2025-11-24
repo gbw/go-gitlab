@@ -40,7 +40,7 @@ func (m *MockMergeRequestApprovalsServiceInterface) EXPECT() *MockMergeRequestAp
 }
 
 // ApproveMergeRequest mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) ApproveMergeRequest(pid any, mr int, opt *gitlab.ApproveMergeRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) ApproveMergeRequest(pid any, mr int64, opt *gitlab.ApproveMergeRequestOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mr, opt}
 	for _, a := range options {
@@ -73,19 +73,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall) Retur
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall) Do(f func(any, int, *gitlab.ApproveMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall) Do(f func(any, int64, *gitlab.ApproveMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall) DoAndReturn(f func(any, int, *gitlab.ApproveMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall) DoAndReturn(f func(any, int64, *gitlab.ApproveMergeRequestOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceApproveMergeRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ChangeApprovalConfiguration mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) ChangeApprovalConfiguration(pid any, mergeRequest int, opt *gitlab.ChangeMergeRequestApprovalConfigurationOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequest, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) ChangeApprovalConfiguration(pid any, mergeRequest int64, opt *gitlab.ChangeMergeRequestApprovalConfigurationOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequest, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCal
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall) Do(f func(any, int, *gitlab.ChangeMergeRequestApprovalConfigurationOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequest, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall) Do(f func(any, int64, *gitlab.ChangeMergeRequestApprovalConfigurationOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequest, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall) DoAndReturn(f func(any, int, *gitlab.ChangeMergeRequestApprovalConfigurationOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequest, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall) DoAndReturn(f func(any, int64, *gitlab.ChangeMergeRequestApprovalConfigurationOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequest, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceChangeApprovalConfigurationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateApprovalRule mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) CreateApprovalRule(pid any, mergeRequest int, opt *gitlab.CreateMergeRequestApprovalRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) CreateApprovalRule(pid any, mergeRequest int64, opt *gitlab.CreateMergeRequestApprovalRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall) Do(f func(any, int, *gitlab.CreateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall) Do(f func(any, int64, *gitlab.CreateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall) DoAndReturn(f func(any, int, *gitlab.CreateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall) DoAndReturn(f func(any, int64, *gitlab.CreateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceCreateApprovalRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteApprovalRule mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) DeleteApprovalRule(pid any, mergeRequest, approvalRule int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) DeleteApprovalRule(pid any, mergeRequest, approvalRule int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, approvalRule}
 	for _, a := range options {
@@ -207,19 +207,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceDeleteApprovalRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetApprovalRules mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) GetApprovalRules(pid any, mergeRequest int, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequestApprovalRule, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) GetApprovalRules(pid any, mergeRequest int64, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequestApprovalRule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest}
 	for _, a := range options {
@@ -252,19 +252,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalRulesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetApprovalState mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) GetApprovalState(pid any, mergeRequest int, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalState, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) GetApprovalState(pid any, mergeRequest int64, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalState, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest}
 	for _, a := range options {
@@ -297,19 +297,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalState, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalState, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalState, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalState, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetApprovalStateCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetConfiguration mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) GetConfiguration(pid any, mr int, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) GetConfiguration(pid any, mr int64, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mr}
 	for _, a := range options {
@@ -342,19 +342,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall) Return(a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovals, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceGetConfigurationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ResetApprovalsOfMergeRequest mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) ResetApprovalsOfMergeRequest(pid any, mr int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) ResetApprovalsOfMergeRequest(pid any, mr int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mr}
 	for _, a := range options {
@@ -386,19 +386,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCa
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceResetApprovalsOfMergeRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UnapproveMergeRequest mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) UnapproveMergeRequest(pid any, mr int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) UnapproveMergeRequest(pid any, mr int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mr}
 	for _, a := range options {
@@ -430,19 +430,19 @@ func (c *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall) Ret
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUnapproveMergeRequestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateApprovalRule mocks base method.
-func (m *MockMergeRequestApprovalsServiceInterface) UpdateApprovalRule(pid any, mergeRequest, approvalRule int, opt *gitlab.UpdateMergeRequestApprovalRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error) {
+func (m *MockMergeRequestApprovalsServiceInterface) UpdateApprovalRule(pid any, mergeRequest, approvalRule int64, opt *gitlab.UpdateMergeRequestApprovalRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, approvalRule, opt}
 	for _, a := range options {
@@ -475,13 +475,13 @@ func (c *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall) Return
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall) Do(f func(any, int, int, *gitlab.UpdateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall) Do(f func(any, int64, int64, *gitlab.UpdateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall {
+func (c *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateMergeRequestApprovalRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.MergeRequestApprovalRule, *gitlab.Response, error)) *MockMergeRequestApprovalsServiceInterfaceUpdateApprovalRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

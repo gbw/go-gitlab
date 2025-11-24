@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -21,10 +20,7 @@ func TestSidekiqService_GetQueueMetrics(t *testing.T) {
 	qm, _, err := client.Sidekiq.GetQueueMetrics()
 	require.NoError(t, err)
 
-	want := &QueueMetrics{Queues: map[string]struct {
-		Backlog int `json:"backlog"`
-		Latency int `json:"latency"`
-	}{"default": {Backlog: 0, Latency: 0}}}
+	want := &QueueMetrics{Queues: map[string]QueueMetricsQueue{"default": {Backlog: 0, Latency: 0}}}
 	require.Equal(t, want, qm)
 }
 
@@ -40,16 +36,7 @@ func TestSidekiqService_GetProcessMetrics(t *testing.T) {
 	pm, _, err := client.Sidekiq.GetProcessMetrics()
 	require.NoError(t, err)
 
-	want := &ProcessMetrics{[]struct {
-		Hostname    string     `json:"hostname"`
-		Pid         int        `json:"pid"`
-		Tag         string     `json:"tag"`
-		StartedAt   *time.Time `json:"started_at"`
-		Queues      []string   `json:"queues"`
-		Labels      []string   `json:"labels"`
-		Concurrency int        `json:"concurrency"`
-		Busy        int        `json:"busy"`
-	}{{Hostname: "gitlab.example.com", Pid: 5649, Tag: "gitlab", Concurrency: 25, Busy: 0}}}
+	want := &ProcessMetrics{[]ProcessMetricsProcess{{Hostname: "gitlab.example.com", Pid: 5649, Tag: "gitlab", Concurrency: 25, Busy: 0}}}
 	require.Equal(t, want, pm)
 }
 
@@ -65,15 +52,7 @@ func TestSidekiqService_GetJobStats(t *testing.T) {
 	js, _, err := client.Sidekiq.GetJobStats()
 	require.NoError(t, err)
 
-	want := &JobStats{struct {
-		Processed int `json:"processed"`
-		Failed    int `json:"failed"`
-		Enqueued  int `json:"enqueued"`
-	}(struct {
-		Processed int
-		Failed    int
-		Enqueued  int
-	}{Processed: 2, Failed: 0, Enqueued: 0})}
+	want := &JobStats{JobStatsJobs{Processed: 2, Failed: 0, Enqueued: 0}}
 	require.Equal(t, want, js)
 }
 
@@ -90,32 +69,12 @@ func TestSidekiqService_GetCompoundMetrics(t *testing.T) {
 	require.NoError(t, err)
 
 	want := &CompoundMetrics{
-		QueueMetrics: QueueMetrics{Queues: map[string]struct {
-			Backlog int `json:"backlog"`
-			Latency int `json:"latency"`
-		}{"default": {
+		QueueMetrics: QueueMetrics{Queues: map[string]QueueMetricsQueue{"default": {
 			Backlog: 0,
 			Latency: 0,
 		}}},
-		ProcessMetrics: ProcessMetrics{Processes: []struct {
-			Hostname    string     `json:"hostname"`
-			Pid         int        `json:"pid"`
-			Tag         string     `json:"tag"`
-			StartedAt   *time.Time `json:"started_at"`
-			Queues      []string   `json:"queues"`
-			Labels      []string   `json:"labels"`
-			Concurrency int        `json:"concurrency"`
-			Busy        int        `json:"busy"`
-		}{{Hostname: "gitlab.example.com", Pid: 5649, Tag: "gitlab", Concurrency: 25, Busy: 0}}},
-		JobStats: JobStats{Jobs: struct {
-			Processed int `json:"processed"`
-			Failed    int `json:"failed"`
-			Enqueued  int `json:"enqueued"`
-		}(struct {
-			Processed int
-			Failed    int
-			Enqueued  int
-		}{Processed: 2, Failed: 0, Enqueued: 0})},
+		ProcessMetrics: ProcessMetrics{Processes: []ProcessMetricsProcess{{Hostname: "gitlab.example.com", Pid: 5649, Tag: "gitlab", Concurrency: 25, Busy: 0}}},
+		JobStats:       JobStats{Jobs: JobStatsJobs{Processed: 2, Failed: 0, Enqueued: 0}},
 	}
 	require.Equal(t, want, cm)
 }

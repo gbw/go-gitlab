@@ -34,8 +34,8 @@ func TestGetIssuesStatistics(t *testing.T) {
 	})
 
 	opt := &GetIssuesStatisticsOptions{
-		AssigneeID: Ptr(1),
-		AuthorID:   Ptr(1),
+		AssigneeID: Ptr(int64(1)),
+		AuthorID:   Ptr(int64(1)),
 	}
 
 	issue, _, err := client.IssuesStatistics.GetIssuesStatistics(opt)
@@ -44,18 +44,8 @@ func TestGetIssuesStatistics(t *testing.T) {
 	}
 
 	want := &IssuesStatistics{
-		Statistics: struct {
-			Counts struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			} `json:"counts"`
-		}{
-			Counts: struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			}{
+		Statistics: IssuesStatisticsStatistics{
+			Counts: IssuesStatisticsCounts{
 				20, 5, 15,
 			},
 		},
@@ -77,8 +67,8 @@ func TestGetGroupIssuesStatistics(t *testing.T) {
 	})
 
 	opt := &GetGroupIssuesStatisticsOptions{
-		AssigneeID: Ptr(1),
-		AuthorID:   Ptr(1),
+		AssigneeID: Ptr(int64(1)),
+		AuthorID:   Ptr(int64(1)),
 	}
 
 	issue, _, err := client.IssuesStatistics.GetGroupIssuesStatistics(1, opt)
@@ -87,18 +77,8 @@ func TestGetGroupIssuesStatistics(t *testing.T) {
 	}
 
 	want := &IssuesStatistics{
-		Statistics: struct {
-			Counts struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			} `json:"counts"`
-		}{
-			Counts: struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			}{
+		Statistics: IssuesStatisticsStatistics{
+			Counts: IssuesStatisticsCounts{
 				20, 5, 15,
 			},
 		},
@@ -120,8 +100,8 @@ func TestGetProjectIssuesStatistics(t *testing.T) {
 	})
 
 	opt := &GetProjectIssuesStatisticsOptions{
-		AssigneeID: Ptr(1),
-		AuthorID:   Ptr(1),
+		AssigneeID: Ptr(int64(1)),
+		AuthorID:   Ptr(int64(1)),
 	}
 
 	issue, _, err := client.IssuesStatistics.GetProjectIssuesStatistics(1, opt)
@@ -130,18 +110,8 @@ func TestGetProjectIssuesStatistics(t *testing.T) {
 	}
 
 	want := &IssuesStatistics{
-		Statistics: struct {
-			Counts struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			} `json:"counts"`
-		}{
-			Counts: struct {
-				All    int `json:"all"`
-				Closed int `json:"closed"`
-				Opened int `json:"opened"`
-			}{
+		Statistics: IssuesStatisticsStatistics{
+			Counts: IssuesStatisticsCounts{
 				20, 5, 15,
 			},
 		},

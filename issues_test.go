@@ -105,7 +105,7 @@ func TestReorderIssue(t *testing.T) {
 		fmt.Fprint(w, `{"id":1, "title" : "Reordered issue", "description": "This is the description of a reordered issue", "author" : {"id" : 1, "name": "corrie"}, "assignees":[{"id":1}]}`)
 	})
 
-	afterID := 100
+	afterID := int64(100)
 	opt := ReorderIssueOptions{MoveAfterID: &afterID}
 
 	issue, _, err := client.Issues.ReorderIssue("1", 5, &opt)
@@ -135,7 +135,7 @@ func TestMoveIssue(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/issue_move.json")
 	})
 
-	issue, _, err := client.Issues.MoveIssue("1", 11, &MoveIssueOptions{ToProjectID: Ptr(5)})
+	issue, _, err := client.Issues.MoveIssue("1", 11, &MoveIssueOptions{ToProjectID: Ptr(int64(5))})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -209,7 +209,7 @@ func TestListIssues(t *testing.T) {
 	})
 
 	listProjectIssue := &ListIssuesOptions{
-		AuthorID:   Ptr(0o1),
+		AuthorID:   Ptr(int64(0o1)),
 		AssigneeID: AssigneeID(0o2),
 	}
 
@@ -276,7 +276,7 @@ func TestListIssuesWithLabelDetails(t *testing.T) {
 	})
 
 	listProjectIssue := &ListIssuesOptions{
-		AuthorID:   Ptr(0o1),
+		AuthorID:   Ptr(int64(0o1)),
 		AssigneeID: AssigneeID(0o2),
 	}
 
@@ -407,7 +407,7 @@ func TestListIssuesSearchByIterationID(t *testing.T) {
 	})
 
 	listProjectIssue := &ListIssuesOptions{
-		IterationID: Ptr(90),
+		IterationID: Ptr(int64(90)),
 	}
 
 	issues, _, err := client.Issues.ListIssues(listProjectIssue)
@@ -445,8 +445,8 @@ func TestListProjectIssues(t *testing.T) {
 	})
 
 	listProjectIssue := &ListProjectIssuesOptions{
-		AuthorID:   Ptr(0o1),
-		AssigneeID: Ptr(0o2),
+		AuthorID:   Ptr(int64(0o1)),
+		AssigneeID: AssigneeID(0o2),
 	}
 	issues, _, err := client.Issues.ListProjectIssues("1", listProjectIssue)
 	if err != nil {
@@ -492,7 +492,7 @@ func TestListProjectIssuesSearchByIterationID(t *testing.T) {
 	})
 
 	listProjectIssue := &ListProjectIssuesOptions{
-		IterationID: Ptr(90),
+		IterationID: Ptr(int64(90)),
 	}
 
 	issues, _, err := client.Issues.ListProjectIssues(1, listProjectIssue)
@@ -531,7 +531,7 @@ func TestListGroupIssues(t *testing.T) {
 
 	listGroupIssue := &ListGroupIssuesOptions{
 		State:        Ptr("Open"),
-		AuthorID:     Ptr(0o1),
+		AuthorID:     Ptr(int64(0o1)),
 		AssigneeID:   AssigneeID(0o2),
 		Confidential: Ptr(false),
 	}
@@ -580,7 +580,7 @@ func TestListGroupIssuesSearchByIterationID(t *testing.T) {
 	})
 
 	listProjectIssue := &ListGroupIssuesOptions{
-		IterationID: Ptr(90),
+		IterationID: Ptr(int64(90)),
 	}
 
 	issues, _, err := client.Issues.ListGroupIssues(1, listProjectIssue)
@@ -705,7 +705,7 @@ func TestUpdateIssue_ResetFields(t *testing.T) {
 		},
 		{
 			name:     "set epic",
-			opts:     UpdateIssueOptions{EpicID: Ptr(42)},
+			opts:     UpdateIssueOptions{EpicID: Ptr(int64(42))},
 			wantBody: map[string]any{"epic_id": float64(42)},
 		},
 		{
@@ -715,7 +715,7 @@ func TestUpdateIssue_ResetFields(t *testing.T) {
 		},
 		{
 			name:     "set milestone",
-			opts:     UpdateIssueOptions{MilestoneID: Ptr(42)},
+			opts:     UpdateIssueOptions{MilestoneID: Ptr(int64(42))},
 			wantBody: map[string]any{"milestone_id": float64(42)},
 		},
 		{
@@ -725,7 +725,7 @@ func TestUpdateIssue_ResetFields(t *testing.T) {
 		},
 		{
 			name:     "set weight",
-			opts:     UpdateIssueOptions{Weight: Ptr(42)},
+			opts:     UpdateIssueOptions{Weight: Ptr(int64(42))},
 			wantBody: map[string]any{"weight": float64(42)},
 		},
 		{
@@ -749,7 +749,7 @@ func TestUpdateIssue_ResetFields(t *testing.T) {
 
 			issue, _, err := client.Issues.UpdateIssue(1, 5, &tt.opts)
 			require.NoError(t, err)
-			assert.Equal(t, 5, issue.ID)
+			assert.Equal(t, int64(5), issue.ID)
 		})
 	}
 }
@@ -820,8 +820,10 @@ func TestListMergeRequestsClosingIssue(t *testing.T) {
 	})
 
 	listMergeRequestsClosingIssueOpt := &ListMergeRequestsClosingIssueOptions{
-		Page:    1,
-		PerPage: 10,
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 10,
+		},
 	}
 	mergeRequest, _, err := client.Issues.ListMergeRequestsClosingIssue("1", 5, listMergeRequestsClosingIssueOpt)
 	if err != nil {
@@ -847,8 +849,10 @@ func TestListMergeRequestsRelatedToIssue(t *testing.T) {
 	})
 
 	listMergeRequestsRelatedToIssueOpt := &ListMergeRequestsRelatedToIssueOptions{
-		Page:    1,
-		PerPage: 10,
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 10,
+		},
 	}
 	mergeRequest, _, err := client.Issues.ListMergeRequestsRelatedToIssue("1", 5, listMergeRequestsRelatedToIssueOpt)
 	if err != nil {

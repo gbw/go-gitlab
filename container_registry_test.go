@@ -51,7 +51,7 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 		  ]`)
 	})
 
-	repositories, _, err := client.ContainerRegistry.ListProjectRegistryRepositories(5, &ListRegistryRepositoriesOptions{})
+	repositories, _, err := client.ContainerRegistry.ListProjectRegistryRepositories(5, &ListProjectRegistryRepositoriesOptions{})
 	if err != nil {
 		t.Errorf("ContainerRegistry.ListProjectRegistryRepositories returned error: %v", err)
 	}
@@ -109,7 +109,7 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 		  ]`)
 	})
 
-	repositories, _, err := client.ContainerRegistry.ListGroupRegistryRepositories(5, &ListRegistryRepositoriesOptions{})
+	repositories, _, err := client.ContainerRegistry.ListGroupRegistryRepositories(5, &ListGroupRegistryRepositoriesOptions{})
 	if err != nil {
 		t.Errorf("ContainerRegistry.ListGroupRegistryRepositories returned error: %v", err)
 	}
@@ -295,7 +295,7 @@ func TestDeleteRegistryRepositoryTags(t *testing.T) {
 	tests := []struct {
 		event           string
 		nameRegexDelete string
-		keepN           int
+		keepN           int64
 		nameRegexKeep   string
 		olderThan       string
 	}{

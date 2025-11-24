@@ -128,7 +128,7 @@ func (c *MockTodosServiceInterfaceMarkAllTodosAsDoneCall) DoAndReturn(f func(...
 }
 
 // MarkTodoAsDone mocks base method.
-func (m *MockTodosServiceInterface) MarkTodoAsDone(id int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockTodosServiceInterface) MarkTodoAsDone(id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{id}
 	for _, a := range options {
@@ -160,13 +160,13 @@ func (c *MockTodosServiceInterfaceMarkTodoAsDoneCall) Return(arg0 *gitlab.Respon
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTodosServiceInterfaceMarkTodoAsDoneCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTodosServiceInterfaceMarkTodoAsDoneCall {
+func (c *MockTodosServiceInterfaceMarkTodoAsDoneCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTodosServiceInterfaceMarkTodoAsDoneCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTodosServiceInterfaceMarkTodoAsDoneCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTodosServiceInterfaceMarkTodoAsDoneCall {
+func (c *MockTodosServiceInterfaceMarkTodoAsDoneCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTodosServiceInterfaceMarkTodoAsDoneCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -85,7 +85,7 @@ func (c *MockKeysServiceInterfaceGetKeyByFingerprintCall) DoAndReturn(f func(*gi
 }
 
 // GetKeyWithUser mocks base method.
-func (m *MockKeysServiceInterface) GetKeyWithUser(key int, options ...gitlab.RequestOptionFunc) (*gitlab.Key, *gitlab.Response, error) {
+func (m *MockKeysServiceInterface) GetKeyWithUser(key int64, options ...gitlab.RequestOptionFunc) (*gitlab.Key, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{key}
 	for _, a := range options {
@@ -118,13 +118,13 @@ func (c *MockKeysServiceInterfaceGetKeyWithUserCall) Return(arg0 *gitlab.Key, ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockKeysServiceInterfaceGetKeyWithUserCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Key, *gitlab.Response, error)) *MockKeysServiceInterfaceGetKeyWithUserCall {
+func (c *MockKeysServiceInterfaceGetKeyWithUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Key, *gitlab.Response, error)) *MockKeysServiceInterfaceGetKeyWithUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockKeysServiceInterfaceGetKeyWithUserCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Key, *gitlab.Response, error)) *MockKeysServiceInterfaceGetKeyWithUserCall {
+func (c *MockKeysServiceInterfaceGetKeyWithUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Key, *gitlab.Response, error)) *MockKeysServiceInterfaceGetKeyWithUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

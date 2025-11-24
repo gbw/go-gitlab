@@ -85,7 +85,7 @@ func (c *MockTopicsServiceInterfaceCreateTopicCall) DoAndReturn(f func(*gitlab.C
 }
 
 // DeleteTopic mocks base method.
-func (m *MockTopicsServiceInterface) DeleteTopic(topic int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockTopicsServiceInterface) DeleteTopic(topic int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{topic}
 	for _, a := range options {
@@ -117,19 +117,19 @@ func (c *MockTopicsServiceInterfaceDeleteTopicCall) Return(arg0 *gitlab.Response
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTopicsServiceInterfaceDeleteTopicCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTopicsServiceInterfaceDeleteTopicCall {
+func (c *MockTopicsServiceInterfaceDeleteTopicCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTopicsServiceInterfaceDeleteTopicCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTopicsServiceInterfaceDeleteTopicCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTopicsServiceInterfaceDeleteTopicCall {
+func (c *MockTopicsServiceInterfaceDeleteTopicCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockTopicsServiceInterfaceDeleteTopicCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetTopic mocks base method.
-func (m *MockTopicsServiceInterface) GetTopic(topic int, options ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error) {
+func (m *MockTopicsServiceInterface) GetTopic(topic int64, options ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{topic}
 	for _, a := range options {
@@ -162,13 +162,13 @@ func (c *MockTopicsServiceInterfaceGetTopicCall) Return(arg0 *gitlab.Topic, arg1
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTopicsServiceInterfaceGetTopicCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceGetTopicCall {
+func (c *MockTopicsServiceInterfaceGetTopicCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceGetTopicCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTopicsServiceInterfaceGetTopicCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceGetTopicCall {
+func (c *MockTopicsServiceInterfaceGetTopicCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceGetTopicCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -219,7 +219,7 @@ func (c *MockTopicsServiceInterfaceListTopicsCall) DoAndReturn(f func(*gitlab.Li
 }
 
 // UpdateTopic mocks base method.
-func (m *MockTopicsServiceInterface) UpdateTopic(topic int, opt *gitlab.UpdateTopicOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error) {
+func (m *MockTopicsServiceInterface) UpdateTopic(topic int64, opt *gitlab.UpdateTopicOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{topic, opt}
 	for _, a := range options {
@@ -252,13 +252,13 @@ func (c *MockTopicsServiceInterfaceUpdateTopicCall) Return(arg0 *gitlab.Topic, a
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTopicsServiceInterfaceUpdateTopicCall) Do(f func(int, *gitlab.UpdateTopicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceUpdateTopicCall {
+func (c *MockTopicsServiceInterfaceUpdateTopicCall) Do(f func(int64, *gitlab.UpdateTopicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceUpdateTopicCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTopicsServiceInterfaceUpdateTopicCall) DoAndReturn(f func(int, *gitlab.UpdateTopicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceUpdateTopicCall {
+func (c *MockTopicsServiceInterfaceUpdateTopicCall) DoAndReturn(f func(int64, *gitlab.UpdateTopicOptions, ...gitlab.RequestOptionFunc) (*gitlab.Topic, *gitlab.Response, error)) *MockTopicsServiceInterfaceUpdateTopicCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

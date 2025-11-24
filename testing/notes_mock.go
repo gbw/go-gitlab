@@ -40,7 +40,7 @@ func (m *MockNotesServiceInterface) EXPECT() *MockNotesServiceInterfaceMockRecor
 }
 
 // CreateEpicNote mocks base method.
-func (m *MockNotesServiceInterface) CreateEpicNote(gid any, epic int, opt *gitlab.CreateEpicNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) CreateEpicNote(gid any, epic int64, opt *gitlab.CreateEpicNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, opt}
 	for _, a := range options {
@@ -73,19 +73,19 @@ func (c *MockNotesServiceInterfaceCreateEpicNoteCall) Return(arg0 *gitlab.Note, 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceCreateEpicNoteCall) Do(f func(any, int, *gitlab.CreateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateEpicNoteCall {
+func (c *MockNotesServiceInterfaceCreateEpicNoteCall) Do(f func(any, int64, *gitlab.CreateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateEpicNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceCreateEpicNoteCall) DoAndReturn(f func(any, int, *gitlab.CreateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateEpicNoteCall {
+func (c *MockNotesServiceInterfaceCreateEpicNoteCall) DoAndReturn(f func(any, int64, *gitlab.CreateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateEpicNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateIssueNote mocks base method.
-func (m *MockNotesServiceInterface) CreateIssueNote(pid any, issue int, opt *gitlab.CreateIssueNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) CreateIssueNote(pid any, issue int64, opt *gitlab.CreateIssueNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, opt}
 	for _, a := range options {
@@ -118,19 +118,19 @@ func (c *MockNotesServiceInterfaceCreateIssueNoteCall) Return(arg0 *gitlab.Note,
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceCreateIssueNoteCall) Do(f func(any, int, *gitlab.CreateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateIssueNoteCall {
+func (c *MockNotesServiceInterfaceCreateIssueNoteCall) Do(f func(any, int64, *gitlab.CreateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateIssueNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceCreateIssueNoteCall) DoAndReturn(f func(any, int, *gitlab.CreateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateIssueNoteCall {
+func (c *MockNotesServiceInterfaceCreateIssueNoteCall) DoAndReturn(f func(any, int64, *gitlab.CreateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateIssueNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateMergeRequestNote mocks base method.
-func (m *MockNotesServiceInterface) CreateMergeRequestNote(pid any, mergeRequest int, opt *gitlab.CreateMergeRequestNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) CreateMergeRequestNote(pid any, mergeRequest int64, opt *gitlab.CreateMergeRequestNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -163,19 +163,19 @@ func (c *MockNotesServiceInterfaceCreateMergeRequestNoteCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceCreateMergeRequestNoteCall) Do(f func(any, int, *gitlab.CreateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceCreateMergeRequestNoteCall) Do(f func(any, int64, *gitlab.CreateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateMergeRequestNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceCreateMergeRequestNoteCall) DoAndReturn(f func(any, int, *gitlab.CreateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceCreateMergeRequestNoteCall) DoAndReturn(f func(any, int64, *gitlab.CreateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateMergeRequestNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // CreateSnippetNote mocks base method.
-func (m *MockNotesServiceInterface) CreateSnippetNote(pid any, snippet int, opt *gitlab.CreateSnippetNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) CreateSnippetNote(pid any, snippet int64, opt *gitlab.CreateSnippetNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippet, opt}
 	for _, a := range options {
@@ -208,19 +208,19 @@ func (c *MockNotesServiceInterfaceCreateSnippetNoteCall) Return(arg0 *gitlab.Not
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceCreateSnippetNoteCall) Do(f func(any, int, *gitlab.CreateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateSnippetNoteCall {
+func (c *MockNotesServiceInterfaceCreateSnippetNoteCall) Do(f func(any, int64, *gitlab.CreateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateSnippetNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceCreateSnippetNoteCall) DoAndReturn(f func(any, int, *gitlab.CreateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateSnippetNoteCall {
+func (c *MockNotesServiceInterfaceCreateSnippetNoteCall) DoAndReturn(f func(any, int64, *gitlab.CreateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceCreateSnippetNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteEpicNote mocks base method.
-func (m *MockNotesServiceInterface) DeleteEpicNote(gid any, epic, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockNotesServiceInterface) DeleteEpicNote(gid any, epic, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, note}
 	for _, a := range options {
@@ -252,19 +252,19 @@ func (c *MockNotesServiceInterfaceDeleteEpicNoteCall) Return(arg0 *gitlab.Respon
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceDeleteEpicNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteEpicNoteCall {
+func (c *MockNotesServiceInterfaceDeleteEpicNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteEpicNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceDeleteEpicNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteEpicNoteCall {
+func (c *MockNotesServiceInterfaceDeleteEpicNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteEpicNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteIssueNote mocks base method.
-func (m *MockNotesServiceInterface) DeleteIssueNote(pid any, issue, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockNotesServiceInterface) DeleteIssueNote(pid any, issue, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, note}
 	for _, a := range options {
@@ -296,19 +296,19 @@ func (c *MockNotesServiceInterfaceDeleteIssueNoteCall) Return(arg0 *gitlab.Respo
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceDeleteIssueNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteIssueNoteCall {
+func (c *MockNotesServiceInterfaceDeleteIssueNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteIssueNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceDeleteIssueNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteIssueNoteCall {
+func (c *MockNotesServiceInterfaceDeleteIssueNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteIssueNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteMergeRequestNote mocks base method.
-func (m *MockNotesServiceInterface) DeleteMergeRequestNote(pid any, mergeRequest, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockNotesServiceInterface) DeleteMergeRequestNote(pid any, mergeRequest, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, note}
 	for _, a := range options {
@@ -340,19 +340,19 @@ func (c *MockNotesServiceInterfaceDeleteMergeRequestNoteCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceDeleteMergeRequestNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceDeleteMergeRequestNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteMergeRequestNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceDeleteMergeRequestNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceDeleteMergeRequestNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteMergeRequestNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DeleteSnippetNote mocks base method.
-func (m *MockNotesServiceInterface) DeleteSnippetNote(pid any, snippet, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockNotesServiceInterface) DeleteSnippetNote(pid any, snippet, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippet, note}
 	for _, a := range options {
@@ -384,19 +384,19 @@ func (c *MockNotesServiceInterfaceDeleteSnippetNoteCall) Return(arg0 *gitlab.Res
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceDeleteSnippetNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteSnippetNoteCall {
+func (c *MockNotesServiceInterfaceDeleteSnippetNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteSnippetNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceDeleteSnippetNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteSnippetNoteCall {
+func (c *MockNotesServiceInterfaceDeleteSnippetNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockNotesServiceInterfaceDeleteSnippetNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetEpicNote mocks base method.
-func (m *MockNotesServiceInterface) GetEpicNote(gid any, epic, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) GetEpicNote(gid any, epic, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, note}
 	for _, a := range options {
@@ -429,19 +429,19 @@ func (c *MockNotesServiceInterfaceGetEpicNoteCall) Return(arg0 *gitlab.Note, arg
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceGetEpicNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetEpicNoteCall {
+func (c *MockNotesServiceInterfaceGetEpicNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetEpicNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceGetEpicNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetEpicNoteCall {
+func (c *MockNotesServiceInterfaceGetEpicNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetEpicNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetIssueNote mocks base method.
-func (m *MockNotesServiceInterface) GetIssueNote(pid any, issue, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) GetIssueNote(pid any, issue, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, note}
 	for _, a := range options {
@@ -474,19 +474,19 @@ func (c *MockNotesServiceInterfaceGetIssueNoteCall) Return(arg0 *gitlab.Note, ar
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceGetIssueNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetIssueNoteCall {
+func (c *MockNotesServiceInterfaceGetIssueNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetIssueNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceGetIssueNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetIssueNoteCall {
+func (c *MockNotesServiceInterfaceGetIssueNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetIssueNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetMergeRequestNote mocks base method.
-func (m *MockNotesServiceInterface) GetMergeRequestNote(pid any, mergeRequest, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) GetMergeRequestNote(pid any, mergeRequest, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, note}
 	for _, a := range options {
@@ -519,19 +519,19 @@ func (c *MockNotesServiceInterfaceGetMergeRequestNoteCall) Return(arg0 *gitlab.N
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceGetMergeRequestNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceGetMergeRequestNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetMergeRequestNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceGetMergeRequestNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceGetMergeRequestNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetMergeRequestNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetSnippetNote mocks base method.
-func (m *MockNotesServiceInterface) GetSnippetNote(pid any, snippet, note int, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) GetSnippetNote(pid any, snippet, note int64, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippet, note}
 	for _, a := range options {
@@ -564,19 +564,19 @@ func (c *MockNotesServiceInterfaceGetSnippetNoteCall) Return(arg0 *gitlab.Note, 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceGetSnippetNoteCall) Do(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetSnippetNoteCall {
+func (c *MockNotesServiceInterfaceGetSnippetNoteCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetSnippetNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceGetSnippetNoteCall) DoAndReturn(f func(any, int, int, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetSnippetNoteCall {
+func (c *MockNotesServiceInterfaceGetSnippetNoteCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceGetSnippetNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListEpicNotes mocks base method.
-func (m *MockNotesServiceInterface) ListEpicNotes(gid any, epic int, opt *gitlab.ListEpicNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) ListEpicNotes(gid any, epic int64, opt *gitlab.ListEpicNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, opt}
 	for _, a := range options {
@@ -609,19 +609,19 @@ func (c *MockNotesServiceInterfaceListEpicNotesCall) Return(arg0 []*gitlab.Note,
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceListEpicNotesCall) Do(f func(any, int, *gitlab.ListEpicNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListEpicNotesCall {
+func (c *MockNotesServiceInterfaceListEpicNotesCall) Do(f func(any, int64, *gitlab.ListEpicNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListEpicNotesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceListEpicNotesCall) DoAndReturn(f func(any, int, *gitlab.ListEpicNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListEpicNotesCall {
+func (c *MockNotesServiceInterfaceListEpicNotesCall) DoAndReturn(f func(any, int64, *gitlab.ListEpicNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListEpicNotesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListIssueNotes mocks base method.
-func (m *MockNotesServiceInterface) ListIssueNotes(pid any, issue int, opt *gitlab.ListIssueNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) ListIssueNotes(pid any, issue int64, opt *gitlab.ListIssueNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, opt}
 	for _, a := range options {
@@ -654,19 +654,19 @@ func (c *MockNotesServiceInterfaceListIssueNotesCall) Return(arg0 []*gitlab.Note
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceListIssueNotesCall) Do(f func(any, int, *gitlab.ListIssueNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListIssueNotesCall {
+func (c *MockNotesServiceInterfaceListIssueNotesCall) Do(f func(any, int64, *gitlab.ListIssueNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListIssueNotesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceListIssueNotesCall) DoAndReturn(f func(any, int, *gitlab.ListIssueNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListIssueNotesCall {
+func (c *MockNotesServiceInterfaceListIssueNotesCall) DoAndReturn(f func(any, int64, *gitlab.ListIssueNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListIssueNotesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListMergeRequestNotes mocks base method.
-func (m *MockNotesServiceInterface) ListMergeRequestNotes(pid any, mergeRequest int, opt *gitlab.ListMergeRequestNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) ListMergeRequestNotes(pid any, mergeRequest int64, opt *gitlab.ListMergeRequestNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, opt}
 	for _, a := range options {
@@ -699,19 +699,19 @@ func (c *MockNotesServiceInterfaceListMergeRequestNotesCall) Return(arg0 []*gitl
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceListMergeRequestNotesCall) Do(f func(any, int, *gitlab.ListMergeRequestNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListMergeRequestNotesCall {
+func (c *MockNotesServiceInterfaceListMergeRequestNotesCall) Do(f func(any, int64, *gitlab.ListMergeRequestNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListMergeRequestNotesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceListMergeRequestNotesCall) DoAndReturn(f func(any, int, *gitlab.ListMergeRequestNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListMergeRequestNotesCall {
+func (c *MockNotesServiceInterfaceListMergeRequestNotesCall) DoAndReturn(f func(any, int64, *gitlab.ListMergeRequestNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListMergeRequestNotesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ListSnippetNotes mocks base method.
-func (m *MockNotesServiceInterface) ListSnippetNotes(pid any, snippet int, opt *gitlab.ListSnippetNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) ListSnippetNotes(pid any, snippet int64, opt *gitlab.ListSnippetNotesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippet, opt}
 	for _, a := range options {
@@ -744,19 +744,19 @@ func (c *MockNotesServiceInterfaceListSnippetNotesCall) Return(arg0 []*gitlab.No
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceListSnippetNotesCall) Do(f func(any, int, *gitlab.ListSnippetNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListSnippetNotesCall {
+func (c *MockNotesServiceInterfaceListSnippetNotesCall) Do(f func(any, int64, *gitlab.ListSnippetNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListSnippetNotesCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceListSnippetNotesCall) DoAndReturn(f func(any, int, *gitlab.ListSnippetNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListSnippetNotesCall {
+func (c *MockNotesServiceInterfaceListSnippetNotesCall) DoAndReturn(f func(any, int64, *gitlab.ListSnippetNotesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceListSnippetNotesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateEpicNote mocks base method.
-func (m *MockNotesServiceInterface) UpdateEpicNote(gid any, epic, note int, opt *gitlab.UpdateEpicNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) UpdateEpicNote(gid any, epic, note int64, opt *gitlab.UpdateEpicNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, epic, note, opt}
 	for _, a := range options {
@@ -789,19 +789,19 @@ func (c *MockNotesServiceInterfaceUpdateEpicNoteCall) Return(arg0 *gitlab.Note, 
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceUpdateEpicNoteCall) Do(f func(any, int, int, *gitlab.UpdateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateEpicNoteCall {
+func (c *MockNotesServiceInterfaceUpdateEpicNoteCall) Do(f func(any, int64, int64, *gitlab.UpdateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateEpicNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceUpdateEpicNoteCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateEpicNoteCall {
+func (c *MockNotesServiceInterfaceUpdateEpicNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateEpicNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateEpicNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateIssueNote mocks base method.
-func (m *MockNotesServiceInterface) UpdateIssueNote(pid any, issue, note int, opt *gitlab.UpdateIssueNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) UpdateIssueNote(pid any, issue, note int64, opt *gitlab.UpdateIssueNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, note, opt}
 	for _, a := range options {
@@ -834,19 +834,19 @@ func (c *MockNotesServiceInterfaceUpdateIssueNoteCall) Return(arg0 *gitlab.Note,
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceUpdateIssueNoteCall) Do(f func(any, int, int, *gitlab.UpdateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateIssueNoteCall {
+func (c *MockNotesServiceInterfaceUpdateIssueNoteCall) Do(f func(any, int64, int64, *gitlab.UpdateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateIssueNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceUpdateIssueNoteCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateIssueNoteCall {
+func (c *MockNotesServiceInterfaceUpdateIssueNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateIssueNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateIssueNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateMergeRequestNote mocks base method.
-func (m *MockNotesServiceInterface) UpdateMergeRequestNote(pid any, mergeRequest, note int, opt *gitlab.UpdateMergeRequestNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) UpdateMergeRequestNote(pid any, mergeRequest, note int64, opt *gitlab.UpdateMergeRequestNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, mergeRequest, note, opt}
 	for _, a := range options {
@@ -879,19 +879,19 @@ func (c *MockNotesServiceInterfaceUpdateMergeRequestNoteCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceUpdateMergeRequestNoteCall) Do(f func(any, int, int, *gitlab.UpdateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceUpdateMergeRequestNoteCall) Do(f func(any, int64, int64, *gitlab.UpdateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateMergeRequestNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceUpdateMergeRequestNoteCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateMergeRequestNoteCall {
+func (c *MockNotesServiceInterfaceUpdateMergeRequestNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateMergeRequestNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateMergeRequestNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UpdateSnippetNote mocks base method.
-func (m *MockNotesServiceInterface) UpdateSnippetNote(pid any, snippet, note int, opt *gitlab.UpdateSnippetNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
+func (m *MockNotesServiceInterface) UpdateSnippetNote(pid any, snippet, note int64, opt *gitlab.UpdateSnippetNoteOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, snippet, note, opt}
 	for _, a := range options {
@@ -924,13 +924,13 @@ func (c *MockNotesServiceInterfaceUpdateSnippetNoteCall) Return(arg0 *gitlab.Not
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockNotesServiceInterfaceUpdateSnippetNoteCall) Do(f func(any, int, int, *gitlab.UpdateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateSnippetNoteCall {
+func (c *MockNotesServiceInterfaceUpdateSnippetNoteCall) Do(f func(any, int64, int64, *gitlab.UpdateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateSnippetNoteCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockNotesServiceInterfaceUpdateSnippetNoteCall) DoAndReturn(f func(any, int, int, *gitlab.UpdateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateSnippetNoteCall {
+func (c *MockNotesServiceInterfaceUpdateSnippetNoteCall) DoAndReturn(f func(any, int64, int64, *gitlab.UpdateSnippetNoteOptions, ...gitlab.RequestOptionFunc) (*gitlab.Note, *gitlab.Response, error)) *MockNotesServiceInterfaceUpdateSnippetNoteCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

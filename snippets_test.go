@@ -17,7 +17,12 @@ func TestSnippetsService_ListSnippets(t *testing.T) {
 		fmt.Fprint(w, `[{"id":42,"title":"test"}]`)
 	})
 
-	opt := &ListSnippetsOptions{Page: 1, PerPage: 10}
+	opt := &ListSnippetsOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 10,
+		},
+	}
 
 	ss, _, err := client.Snippets.ListSnippets(opt)
 	require.NoError(t, err)
@@ -128,7 +133,12 @@ func TestSnippetsService_ExploreSnippets(t *testing.T) {
 		fmt.Fprint(w, `[{"id":42,"title":"test"}]`)
 	})
 
-	opt := &ExploreSnippetsOptions{Page: 1, PerPage: 10}
+	opt := &ExploreSnippetsOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 10,
+		},
+	}
 
 	ss, _, err := client.Snippets.ExploreSnippets(opt)
 	require.NoError(t, err)

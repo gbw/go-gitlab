@@ -40,7 +40,7 @@ func (m *MockResourceWeightEventsServiceInterface) EXPECT() *MockResourceWeightE
 }
 
 // ListIssueWeightEvents mocks base method.
-func (m *MockResourceWeightEventsServiceInterface) ListIssueWeightEvents(pid any, issue int, opt *gitlab.ListWeightEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.WeightEvent, *gitlab.Response, error) {
+func (m *MockResourceWeightEventsServiceInterface) ListIssueWeightEvents(pid any, issue int64, opt *gitlab.ListWeightEventsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.WeightEvent, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, issue, opt}
 	for _, a := range options {
@@ -73,13 +73,13 @@ func (c *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall) Retu
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall) Do(f func(any, int, *gitlab.ListWeightEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.WeightEvent, *gitlab.Response, error)) *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall {
+func (c *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall) Do(f func(any, int64, *gitlab.ListWeightEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.WeightEvent, *gitlab.Response, error)) *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall) DoAndReturn(f func(any, int, *gitlab.ListWeightEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.WeightEvent, *gitlab.Response, error)) *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall {
+func (c *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall) DoAndReturn(f func(any, int64, *gitlab.ListWeightEventsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.WeightEvent, *gitlab.Response, error)) *MockResourceWeightEventsServiceInterfaceListIssueWeightEventsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

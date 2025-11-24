@@ -45,14 +45,7 @@ func TestResourceLabelEventsService_ListIssueLabelEvents(t *testing.T) {
 		Action:       "add",
 		ResourceType: "Issue",
 		ResourceID:   253,
-		User: struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			ID:        1,
 			Name:      "Administrator",
 			Username:  "root",
@@ -60,13 +53,7 @@ func TestResourceLabelEventsService_ListIssueLabelEvents(t *testing.T) {
 			AvatarURL: "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 			WebURL:    "http://gitlab.example.com/root",
 		},
-		Label: struct {
-			ID          int    `json:"id"`
-			Name        string `json:"name"`
-			Color       string `json:"color"`
-			TextColor   string `json:"text_color"`
-			Description string `json:"description"`
-		}{
+		Label: LabelEventLabel{
 			ID:          73,
 			Name:        "a1",
 			Color:       "#34495E",
@@ -131,14 +118,7 @@ func TestResourceLabelEventsService_GetIssueLabelEvent(t *testing.T) {
 		Action:       "add",
 		ResourceType: "Issue",
 		ResourceID:   253,
-		User: struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			ID:        1,
 			Name:      "Administrator",
 			Username:  "root",
@@ -146,13 +126,7 @@ func TestResourceLabelEventsService_GetIssueLabelEvent(t *testing.T) {
 			AvatarURL: "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 			WebURL:    "http://gitlab.example.com/root",
 		},
-		Label: struct {
-			ID          int    `json:"id"`
-			Name        string `json:"name"`
-			Color       string `json:"color"`
-			TextColor   string `json:"text_color"`
-			Description string `json:"description"`
-		}{
+		Label: LabelEventLabel{
 			ID:          73,
 			Name:        "a1",
 			Color:       "#34495E",
@@ -219,14 +193,7 @@ func TestResourceLabelEventsService_ListGroupEpicLabelEvents(t *testing.T) {
 		Action:       "add",
 		ResourceType: "Epic",
 		ResourceID:   33,
-		User: struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			ID:        1,
 			Name:      "Administrator",
 			Username:  "root",
@@ -234,13 +201,7 @@ func TestResourceLabelEventsService_ListGroupEpicLabelEvents(t *testing.T) {
 			AvatarURL: "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 			WebURL:    "http://gitlab.example.com/root",
 		},
-		Label: struct {
-			ID          int    `json:"id"`
-			Name        string `json:"name"`
-			Color       string `json:"color"`
-			TextColor   string `json:"text_color"`
-			Description string `json:"description"`
-		}{
+		Label: LabelEventLabel{
 			ID:          73,
 			Name:        "a1",
 			Color:       "#34495E",
@@ -305,14 +266,7 @@ func TestResourceLabelEventsService_GetGroupEpicLabelEvent(t *testing.T) {
 		Action:       "add",
 		ResourceType: "Epic",
 		ResourceID:   33,
-		User: struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			ID:        1,
 			Name:      "Administrator",
 			Username:  "root",
@@ -320,13 +274,7 @@ func TestResourceLabelEventsService_GetGroupEpicLabelEvent(t *testing.T) {
 			AvatarURL: "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 			WebURL:    "http://gitlab.example.com/root",
 		},
-		Label: struct {
-			ID          int    `json:"id"`
-			Name        string `json:"name"`
-			Color       string `json:"color"`
-			TextColor   string `json:"text_color"`
-			Description string `json:"description"`
-		}{
+		Label: LabelEventLabel{
 			ID:          73,
 			Name:        "a1",
 			Color:       "#34495E",
@@ -393,14 +341,7 @@ func TestResourceLabelEventsService_ListMergeRequestsLabelEvents(t *testing.T) {
 		Action:       "add",
 		ResourceType: "MergeRequest",
 		ResourceID:   28,
-		User: struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			ID:        1,
 			Name:      "Administrator",
 			Username:  "root",
@@ -408,13 +349,7 @@ func TestResourceLabelEventsService_ListMergeRequestsLabelEvents(t *testing.T) {
 			AvatarURL: "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 			WebURL:    "http://gitlab.example.com/root",
 		},
-		Label: struct {
-			ID          int    `json:"id"`
-			Name        string `json:"name"`
-			Color       string `json:"color"`
-			TextColor   string `json:"text_color"`
-			Description string `json:"description"`
-		}{
+		Label: LabelEventLabel{
 			ID:          74,
 			Name:        "p1",
 			Color:       "#0033CC",
@@ -479,14 +414,7 @@ func TestResourceLabelEventsService_GetMergeRequestLabelEvent(t *testing.T) {
 		Action:       "add",
 		ResourceType: "MergeRequest",
 		ResourceID:   28,
-		User: struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Username  string `json:"username"`
-			State     string `json:"state"`
-			AvatarURL string `json:"avatar_url"`
-			WebURL    string `json:"web_url"`
-		}{
+		User: BasicUser{
 			ID:        1,
 			Name:      "Administrator",
 			Username:  "root",
@@ -494,13 +422,7 @@ func TestResourceLabelEventsService_GetMergeRequestLabelEvent(t *testing.T) {
 			AvatarURL: "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 			WebURL:    "http://gitlab.example.com/root",
 		},
-		Label: struct {
-			ID          int    `json:"id"`
-			Name        string `json:"name"`
-			Color       string `json:"color"`
-			TextColor   string `json:"text_color"`
-			Description string `json:"description"`
-		}{
+		Label: LabelEventLabel{
 			ID:          74,
 			Name:        "p1",
 			Color:       "#0033CC",

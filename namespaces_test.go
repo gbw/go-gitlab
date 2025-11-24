@@ -207,8 +207,8 @@ func TestGetNamespace(t *testing.T) {
 		WebURL:                      "https://gitlab.example.com/groups/group1",
 		MembersCountWithDescendants: 2,
 		BillableMembersCount:        2,
-		MaxSeatsUsed:                Ptr(0),
-		SeatsInUse:                  Ptr(0),
+		MaxSeatsUsed:                Ptr(int64(0)),
+		SeatsInUse:                  Ptr(int64(0)),
 		Plan:                        "default",
 		TrialEndsOn:                 nil,
 		Trial:                       false,
@@ -232,7 +232,7 @@ func TestNamespaceExists(t *testing.T) {
 	})
 
 	opt := &NamespaceExistsOptions{
-		ParentID: Ptr(1),
+		ParentID: Ptr(int64(1)),
 	}
 	exists, _, err := client.Namespaces.NamespaceExists("my-group", opt)
 	assert.NoError(t, err)
@@ -284,8 +284,8 @@ func TestSearchNamespace(t *testing.T) {
 			WebURL:                      "https://gitlab.example.com/groups/twitter",
 			MembersCountWithDescendants: 2,
 			BillableMembersCount:        2,
-			MaxSeatsUsed:                Ptr(0),
-			SeatsInUse:                  Ptr(0),
+			MaxSeatsUsed:                Ptr(int64(0)),
+			SeatsInUse:                  Ptr(int64(0)),
 			Plan:                        "default",
 			TrialEndsOn:                 nil,
 			Trial:                       false,

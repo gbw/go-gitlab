@@ -40,7 +40,7 @@ func (m *MockProjectRepositoryStorageMoveServiceInterface) EXPECT() *MockProject
 }
 
 // GetStorageMove mocks base method.
-func (m *MockProjectRepositoryStorageMoveServiceInterface) GetStorageMove(repositoryStorage int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockProjectRepositoryStorageMoveServiceInterface) GetStorageMove(repositoryStorage int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{repositoryStorage}
 	for _, a := range options {
@@ -73,19 +73,19 @@ func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) Ret
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) Do(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) DoAndReturn(f func(int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // GetStorageMoveForProject mocks base method.
-func (m *MockProjectRepositoryStorageMoveServiceInterface) GetStorageMoveForProject(project, repositoryStorage int, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockProjectRepositoryStorageMoveServiceInterface) GetStorageMoveForProject(project, repositoryStorage int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{project, repositoryStorage}
 	for _, a := range options {
@@ -118,13 +118,13 @@ func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjec
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall) Do(f func(int, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall) Do(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall) DoAndReturn(f func(int, int, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall) DoAndReturn(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceGetStorageMoveForProjectCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -175,7 +175,7 @@ func (c *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMoves
 }
 
 // RetrieveAllStorageMovesForProject mocks base method.
-func (m *MockProjectRepositoryStorageMoveServiceInterface) RetrieveAllStorageMovesForProject(project int, opts gitlab.RetrieveAllProjectStorageMovesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockProjectRepositoryStorageMoveServiceInterface) RetrieveAllStorageMovesForProject(project int64, opts gitlab.RetrieveAllProjectStorageMovesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{project, opts}
 	for _, a := range options {
@@ -208,13 +208,13 @@ func (c *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMoves
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall) Do(f func(int, gitlab.RetrieveAllProjectStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall) Do(f func(int64, gitlab.RetrieveAllProjectStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall) DoAndReturn(f func(int, gitlab.RetrieveAllProjectStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall) DoAndReturn(f func(int64, gitlab.RetrieveAllProjectStorageMovesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceRetrieveAllStorageMovesForProjectCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -264,7 +264,7 @@ func (c *MockProjectRepositoryStorageMoveServiceInterfaceScheduleAllStorageMoves
 }
 
 // ScheduleStorageMoveForProject mocks base method.
-func (m *MockProjectRepositoryStorageMoveServiceInterface) ScheduleStorageMoveForProject(project int, opts gitlab.ScheduleStorageMoveForProjectOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
+func (m *MockProjectRepositoryStorageMoveServiceInterface) ScheduleStorageMoveForProject(project int64, opts gitlab.ScheduleStorageMoveForProjectOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{project, opts}
 	for _, a := range options {
@@ -297,13 +297,13 @@ func (c *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForP
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall) Do(f func(int, gitlab.ScheduleStorageMoveForProjectOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall) Do(f func(int64, gitlab.ScheduleStorageMoveForProjectOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall) DoAndReturn(f func(int, gitlab.ScheduleStorageMoveForProjectOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall {
+func (c *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall) DoAndReturn(f func(int64, gitlab.ScheduleStorageMoveForProjectOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectRepositoryStorageMove, *gitlab.Response, error)) *MockProjectRepositoryStorageMoveServiceInterfaceScheduleStorageMoveForProjectCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

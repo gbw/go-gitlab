@@ -394,7 +394,7 @@ func TestPathEscape(t *testing.T) {
 
 func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
 	t.Parallel()
-	wantPageHeaders := map[string]int{
+	wantPageHeaders := map[string]int64{
 		xTotal:      0,
 		xTotalPages: 0,
 		xPerPage:    0,
@@ -413,7 +413,7 @@ func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
 		Header: http.Header{},
 	})
 
-	gotPageHeaders := map[string]int{
+	gotPageHeaders := map[string]int64{
 		xTotal:      r.TotalItems,
 		xTotalPages: r.TotalPages,
 		xPerPage:    r.ItemsPerPage,
@@ -442,7 +442,7 @@ func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
 
 func TestPaginationPopulatePageValuesOffset(t *testing.T) {
 	t.Parallel()
-	wantPageHeaders := map[string]int{
+	wantPageHeaders := map[string]int64{
 		xTotal:      100,
 		xTotalPages: 5,
 		xPerPage:    20,
@@ -473,7 +473,7 @@ func TestPaginationPopulatePageValuesOffset(t *testing.T) {
 		Header: h,
 	})
 
-	gotPageHeaders := map[string]int{
+	gotPageHeaders := map[string]int64{
 		xTotal:      r.TotalItems,
 		xTotalPages: r.TotalPages,
 		xPerPage:    r.ItemsPerPage,
@@ -502,7 +502,7 @@ func TestPaginationPopulatePageValuesOffset(t *testing.T) {
 
 func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
 	t.Parallel()
-	wantPageHeaders := map[string]int{
+	wantPageHeaders := map[string]int64{
 		xTotal:      0,
 		xTotalPages: 0,
 		xPerPage:    0,
@@ -532,7 +532,7 @@ func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
 		Header: h,
 	})
 
-	gotPageHeaders := map[string]int{
+	gotPageHeaders := map[string]int64{
 		xTotal:      r.TotalItems,
 		xTotalPages: r.TotalPages,
 		xPerPage:    r.ItemsPerPage,
@@ -675,7 +675,7 @@ func TestNewClient_auth(t *testing.T) {
 	const token = "glpat-0123456789abcdefg"
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		if got, want := r.Header.Get("PRIVATE-TOKEN"), token; got != want {
+		if got, want := r.Header.Get("Private-Token"), token; got != want {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
 			return
@@ -710,7 +710,7 @@ func TestNewJobClient_auth(t *testing.T) {
 	const token = "glcbt-0123456789abcdefg"
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		if got, want := r.Header.Get("JOB-TOKEN"), token; got != want {
+		if got, want := r.Header.Get("Job-Token"), token; got != want {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "Authorization = %q, want %q", got, want)
 			return
@@ -1088,7 +1088,7 @@ func TestWithInterceptor(t *testing.T) {
 	t.Run("ordering aligned to how interceptors are provided, as this makes it easier to read a option setup", func(t *testing.T) {
 		t.Parallel()
 
-		var ordering []int
+		var ordering []int64
 		client, err := NewClient("",
 			WithInterceptor(func(next http.RoundTripper) http.RoundTripper {
 				assert.NotNil(t, next)
@@ -1115,7 +1115,7 @@ func TestWithInterceptor(t *testing.T) {
 		require.NoError(t, err)
 
 		_, _, _ = client.Users.CurrentUser()
-		assert.Equal(t, []int{1, 2, 3}, ordering)
+		assert.Equal(t, []int64{1, 2, 3}, ordering)
 	})
 
 	t.Run("e2e", func(t *testing.T) {
@@ -1482,4 +1482,59 @@ func (e *mockTLSHandshakeError) Timeout() bool {
 
 func (e *mockTLSHandshakeError) Temporary() bool {
 	return strings.Contains(e.msg, "timeout")
+}
+
+func TestParseID(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a set of inputs
+	tests := []struct {
+		name     string
+		input    any
+		expected string
+		wantErr  bool
+	}{
+		{
+			name:     "int type",
+			input:    42,
+			expected: "42",
+			wantErr:  false,
+		},
+		{
+			name:     "int64 type",
+			input:    int64(15),
+			expected: "15",
+			wantErr:  false,
+		},
+		{
+			name:     "string type",
+			input:    "test-id",
+			expected: "test-id",
+			wantErr:  false,
+		},
+		{
+			name:     "invalid type",
+			input:    3.14,
+			expected: "",
+			wantErr:  true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			// WHEN parseID is called with the input
+			result, err := parseID(tt.input)
+
+			// THEN it should return the expected result
+			if tt.wantErr {
+				assert.Error(t, err)
+				assert.Empty(t, result)
+			} else {
+				assert.NoError(t, err)
+				assert.Equal(t, tt.expected, result)
+			}
+		})
+	}
 }

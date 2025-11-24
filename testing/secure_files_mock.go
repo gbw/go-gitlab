@@ -86,7 +86,7 @@ func (c *MockSecureFilesServiceInterfaceCreateSecureFileCall) DoAndReturn(f func
 }
 
 // DownloadSecureFile mocks base method.
-func (m *MockSecureFilesServiceInterface) DownloadSecureFile(pid any, id int, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
+func (m *MockSecureFilesServiceInterface) DownloadSecureFile(pid any, id int64, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id}
 	for _, a := range options {
@@ -119,13 +119,13 @@ func (c *MockSecureFilesServiceInterfaceDownloadSecureFileCall) Return(arg0 io.R
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSecureFilesServiceInterfaceDownloadSecureFileCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceDownloadSecureFileCall {
+func (c *MockSecureFilesServiceInterfaceDownloadSecureFileCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceDownloadSecureFileCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSecureFilesServiceInterfaceDownloadSecureFileCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceDownloadSecureFileCall {
+func (c *MockSecureFilesServiceInterfaceDownloadSecureFileCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceDownloadSecureFileCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -176,7 +176,7 @@ func (c *MockSecureFilesServiceInterfaceListProjectSecureFilesCall) DoAndReturn(
 }
 
 // RemoveSecureFile mocks base method.
-func (m *MockSecureFilesServiceInterface) RemoveSecureFile(pid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+func (m *MockSecureFilesServiceInterface) RemoveSecureFile(pid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id}
 	for _, a := range options {
@@ -208,19 +208,19 @@ func (c *MockSecureFilesServiceInterfaceRemoveSecureFileCall) Return(arg0 *gitla
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSecureFilesServiceInterfaceRemoveSecureFileCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSecureFilesServiceInterfaceRemoveSecureFileCall {
+func (c *MockSecureFilesServiceInterfaceRemoveSecureFileCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSecureFilesServiceInterfaceRemoveSecureFileCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSecureFilesServiceInterfaceRemoveSecureFileCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSecureFilesServiceInterfaceRemoveSecureFileCall {
+func (c *MockSecureFilesServiceInterfaceRemoveSecureFileCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSecureFilesServiceInterfaceRemoveSecureFileCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // ShowSecureFileDetails mocks base method.
-func (m *MockSecureFilesServiceInterface) ShowSecureFileDetails(pid any, id int, options ...gitlab.RequestOptionFunc) (*gitlab.SecureFile, *gitlab.Response, error) {
+func (m *MockSecureFilesServiceInterface) ShowSecureFileDetails(pid any, id int64, options ...gitlab.RequestOptionFunc) (*gitlab.SecureFile, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, id}
 	for _, a := range options {
@@ -253,13 +253,13 @@ func (c *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall) Return(arg0 *
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall) Do(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.SecureFile, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall {
+func (c *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.SecureFile, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall) DoAndReturn(f func(any, int, ...gitlab.RequestOptionFunc) (*gitlab.SecureFile, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall {
+func (c *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.SecureFile, *gitlab.Response, error)) *MockSecureFilesServiceInterfaceShowSecureFileDetailsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

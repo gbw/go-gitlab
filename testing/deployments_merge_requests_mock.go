@@ -40,7 +40,7 @@ func (m *MockDeploymentMergeRequestsServiceInterface) EXPECT() *MockDeploymentMe
 }
 
 // ListDeploymentMergeRequests mocks base method.
-func (m *MockDeploymentMergeRequestsServiceInterface) ListDeploymentMergeRequests(pid any, deployment int, opts *gitlab.ListMergeRequestsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error) {
+func (m *MockDeploymentMergeRequestsServiceInterface) ListDeploymentMergeRequests(pid any, deployment int64, opts *gitlab.ListMergeRequestsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, deployment, opts}
 	for _, a := range options {
@@ -73,13 +73,13 @@ func (c *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsC
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall) Do(f func(any, int, *gitlab.ListMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error)) *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall {
+func (c *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall) Do(f func(any, int64, *gitlab.ListMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error)) *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall) DoAndReturn(f func(any, int, *gitlab.ListMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error)) *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall {
+func (c *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall) DoAndReturn(f func(any, int64, *gitlab.ListMergeRequestsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error)) *MockDeploymentMergeRequestsServiceInterfaceListDeploymentMergeRequestsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

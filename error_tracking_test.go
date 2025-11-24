@@ -111,7 +111,12 @@ func TestListErrorTrackingClientKeys(t *testing.T) {
 		]`)
 	})
 
-	cks, _, err := client.ErrorTracking.ListClientKeys(1, &ListClientKeysOptions{Page: 1, PerPage: 10})
+	cks, _, err := client.ErrorTracking.ListClientKeys(1, &ListClientKeysOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 10,
+		},
+	})
 	if err != nil {
 		t.Errorf("ErrorTracking.ListErrorTrackingClientKeys returned error: %v", err)
 	}

@@ -33,7 +33,12 @@ func TestProjectRepositoryStorageMove_RetrieveAllProjectStorageMoves(t *testing.
 		}]`)
 	})
 
-	opts := RetrieveAllProjectStorageMovesOptions{Page: 1, PerPage: 2}
+	opts := RetrieveAllProjectStorageMovesOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 2,
+		},
+	}
 
 	ssms, _, err := client.ProjectRepositoryStorageMove.RetrieveAllStorageMoves(opts)
 	require.NoError(t, err)
@@ -84,7 +89,12 @@ func TestProjectRepositoryStorageMove_RetrieveAllStorageMovesForProject(t *testi
 		}]`)
 	})
 
-	opts := RetrieveAllProjectStorageMovesOptions{Page: 1, PerPage: 2}
+	opts := RetrieveAllProjectStorageMovesOptions{
+		ListOptions: ListOptions{
+			Page:    1,
+			PerPage: 2,
+		},
+	}
 
 	ssms, _, err := client.ProjectRepositoryStorageMove.RetrieveAllStorageMovesForProject(1, opts)
 	require.NoError(t, err)
