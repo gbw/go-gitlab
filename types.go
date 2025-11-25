@@ -143,7 +143,7 @@ type AssigneeIDValue struct {
 // AssigneeID is a helper routine that creates a new AssigneeIDValue.
 func AssigneeID(v any) *AssigneeIDValue {
 	switch v.(type) {
-	case UserIDValue, int:
+	case UserIDValue, int, int64:
 		return &AssigneeIDValue{value: v}
 	default:
 		panic("Unsupported value passed as assignee ID")
@@ -157,6 +157,8 @@ func (a *AssigneeIDValue) EncodeValues(key string, v *url.Values) error {
 		v.Set(key, string(value))
 	case int:
 		v.Set(key, strconv.Itoa(value))
+	case int64:
+		v.Set(key, strconv.FormatInt(value, 10))
 	}
 	return nil
 }
@@ -179,7 +181,7 @@ type ReviewerIDValue struct {
 // ReviewerID is a helper routine that creates a new ReviewerIDValue.
 func ReviewerID(v any) *ReviewerIDValue {
 	switch v.(type) {
-	case UserIDValue, int:
+	case UserIDValue, int, int64:
 		return &ReviewerIDValue{value: v}
 	default:
 		panic("Unsupported value passed as reviewer ID")
@@ -193,6 +195,8 @@ func (a *ReviewerIDValue) EncodeValues(key string, v *url.Values) error {
 		v.Set(key, string(value))
 	case int:
 		v.Set(key, strconv.Itoa(value))
+	case int64:
+		v.Set(key, strconv.FormatInt(value, 10))
 	}
 	return nil
 }
