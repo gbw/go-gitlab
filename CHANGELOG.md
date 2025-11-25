@@ -1,3 +1,18 @@
+## 1.0.1
+
+### 🐛 Bug Fixes
+
+- fix: fix ReviewerID() and let it accept int64 ([!2587](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2587)) by [Ilya Savitsky](https://gitlab.com/ipsavitsky234)
+
+
+
+## [1.0.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.0.0...v1.0.1) (2025-11-25)
+
+
+### Bug Fixes
+
+* fix ReviewerID() and let it accept int64 ([6a6d439](https://gitlab.com/gitlab-org/api/client-go/commit/6a6d43952b70191358e7b726eff4f7f24a0f7ff6))
+
 ## 1.0.0
 
 ### 💥 Breaking Changes
