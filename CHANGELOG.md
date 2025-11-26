@@ -1,3 +1,23 @@
+## 1.1.0
+
+### 🚀 Features
+
+- feat(service_account): allow providing email when update a Service Account ([!2589](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2589)) by [kilianpaquier](https://gitlab.com/u.kilianpaquier)
+
+### 🔄 Other Changes
+
+- Bump dependencies ([!2591](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2591)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- chore(deps): update docker docker tag to v29 ([!2586](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2586)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.1.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.0.1...v1.1.0) (2025-11-26)
+
+
+### Features
+
+* **service_account:** allow providing email when update a Service Account ([324d080](https://gitlab.com/gitlab-org/api/client-go/commit/324d0806a5cd8cb6ae7f68381d09cf5e2a31a0cc))
+
 ## 1.0.1
 
 ### 🐛 Bug Fixes
