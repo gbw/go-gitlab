@@ -1,3 +1,22 @@
+## 1.2.0
+
+### 🚀 Features
+
+- feat(credentials): Add support for listing all SaaS enterprise user personal access tokens ([!2593](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2593)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+### 🔄 Other Changes
+
+- Code Refactor Using Request Handlers - 10 ([!2525](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2525)) by [Yashesvinee V](https://gitlab.com/yashes7516)
+
+
+
+# [1.2.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.1.0...v1.2.0) (2025-11-27)
+
+
+### Features
+
+* **credentials:** Add support for listing all SaaS enterprise user personal access tokens ([3697779](https://gitlab.com/gitlab-org/api/client-go/commit/369777938e435b043e37460ff1feffedd84b7dd1))
+
 ## 1.1.0
 
 ### 🚀 Features
