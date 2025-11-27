@@ -50,6 +50,7 @@ var serviceMap = map[any]any{
 	&GroupActivityAnalyticsService{}:           (*GroupActivityAnalyticsServiceInterface)(nil),
 	&GroupBadgesService{}:                      (*GroupBadgesServiceInterface)(nil),
 	&GroupClustersService{}:                    (*GroupClustersServiceInterface)(nil),
+	&GroupCredentialsService{}:                 (*GroupCredentialsServiceInterface)(nil),
 	&GroupEpicBoardsService{}:                  (*GroupEpicBoardsServiceInterface)(nil),
 	&GroupImportExportService{}:                (*GroupImportExportServiceInterface)(nil),
 	&GroupIssueBoardsService{}:                 (*GroupIssueBoardsServiceInterface)(nil),

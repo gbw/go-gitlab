@@ -52,6 +52,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_badges_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupBadgesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_boards_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupIssueBoardsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_clusters_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupClustersServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_credentials_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupCredentialsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_epic_boards_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupEpicBoardsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_import_export_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupImportExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_iterations_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupIterationsServiceInterface
