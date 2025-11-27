@@ -166,6 +166,7 @@ type Client struct {
 	GroupActivityAnalytics           GroupActivityAnalyticsServiceInterface
 	GroupBadges                      GroupBadgesServiceInterface
 	GroupCluster                     GroupClustersServiceInterface
+	GroupCredentials                 GroupCredentialsServiceInterface
 	GroupEpicBoards                  GroupEpicBoardsServiceInterface
 	GroupImportExport                GroupImportExportServiceInterface
 	Integrations                     IntegrationsServiceInterface
@@ -479,6 +480,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.GroupActivityAnalytics = &GroupActivityAnalyticsService{client: c}
 	c.GroupBadges = &GroupBadgesService{client: c}
 	c.GroupCluster = &GroupClustersService{client: c}
+	c.GroupCredentials = &GroupCredentialsService{client: c}
 	c.GroupEpicBoards = &GroupEpicBoardsService{client: c}
 	c.GroupImportExport = &GroupImportExportService{client: c}
 	c.Integrations = &IntegrationsService{client: c}

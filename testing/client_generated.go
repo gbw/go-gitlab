@@ -60,6 +60,7 @@ type testClientMocks struct {
 	MockGroupActivityAnalytics           *MockGroupActivityAnalyticsServiceInterface
 	MockGroupBadges                      *MockGroupBadgesServiceInterface
 	MockGroupCluster                     *MockGroupClustersServiceInterface
+	MockGroupCredentials                 *MockGroupCredentialsServiceInterface
 	MockGroupEpicBoards                  *MockGroupEpicBoardsServiceInterface
 	MockGroupImportExport                *MockGroupImportExportServiceInterface
 	MockIntegrations                     *MockIntegrationsServiceInterface
@@ -216,6 +217,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockGroupActivityAnalytics := NewMockGroupActivityAnalyticsServiceInterface(ctrl)
 	mockGroupBadges := NewMockGroupBadgesServiceInterface(ctrl)
 	mockGroupCluster := NewMockGroupClustersServiceInterface(ctrl)
+	mockGroupCredentials := NewMockGroupCredentialsServiceInterface(ctrl)
 	mockGroupEpicBoards := NewMockGroupEpicBoardsServiceInterface(ctrl)
 	mockGroupImportExport := NewMockGroupImportExportServiceInterface(ctrl)
 	mockIntegrations := NewMockIntegrationsServiceInterface(ctrl)
@@ -371,6 +373,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		GroupActivityAnalytics:           mockGroupActivityAnalytics,
 		GroupBadges:                      mockGroupBadges,
 		GroupCluster:                     mockGroupCluster,
+		GroupCredentials:                 mockGroupCredentials,
 		GroupEpicBoards:                  mockGroupEpicBoards,
 		GroupImportExport:                mockGroupImportExport,
 		Integrations:                     mockIntegrations,
@@ -538,6 +541,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockGroupActivityAnalytics:           mockGroupActivityAnalytics,
 			MockGroupBadges:                      mockGroupBadges,
 			MockGroupCluster:                     mockGroupCluster,
+			MockGroupCredentials:                 mockGroupCredentials,
 			MockGroupEpicBoards:                  mockGroupEpicBoards,
 			MockGroupImportExport:                mockGroupImportExport,
 			MockIntegrations:                     mockIntegrations,
