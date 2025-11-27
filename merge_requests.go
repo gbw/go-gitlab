@@ -259,6 +259,15 @@ func (m MergeRequestDiffVersion) String() string {
 	return Stringify(m)
 }
 
+// MergeRequestReviewer represents a reviewer entry returned by the reviewers API.
+// Matches the JSON shape used in tests: {"user": {...}, "state": "...", "created_at": "..."}
+// Placed here because it's used by MergeRequestsService.GetMergeRequestReviewers and tests/mock.
+type MergeRequestReviewer struct {
+	User      *BasicUser `json:"user"`
+	State     string     `json:"state"`
+	CreatedAt *time.Time `json:"created_at"`
+}
+
 // ListMergeRequestsOptions represents the available ListMergeRequests()
 // options.
 //
@@ -306,13 +315,12 @@ type ListMergeRequestsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-merge-requests
 func (s *MergeRequestsService) ListMergeRequests(opt *ListMergeRequestsOptions, options ...RequestOptionFunc) ([]*BasicMergeRequest, *Response, error) {
-	req, err := s.client.NewRequest(http.MethodGet, "merge_requests", opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrs []*MergeRequest
-	resp, err := s.client.Do(req, &mrs)
+	mrs, resp, err := do[[]*MergeRequest](s.client,
+		withMethod(http.MethodGet),
+		withPath("merge_requests"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -363,19 +371,12 @@ type ListProjectMergeRequestsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-project-merge-requests
 func (s *MergeRequestsService) ListProjectMergeRequests(pid any, opt *ListProjectMergeRequestsOptions, options ...RequestOptionFunc) ([]*BasicMergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrs []*MergeRequest
-	resp, err := s.client.Do(req, &mrs)
+	mrs, resp, err := do[[]*MergeRequest](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -416,7 +417,6 @@ type ListGroupMergeRequestsOptions struct {
 	SourceBranch           *string           `url:"source_branch,omitempty" json:"source_branch,omitempty"`
 	TargetBranch           *string           `url:"target_branch,omitempty" json:"target_branch,omitempty"`
 	Search                 *string           `url:"search,omitempty" json:"search,omitempty"`
-	In                     *string           `url:"in,omitempty" json:"in,omitempty"`
 	Draft                  *bool             `url:"draft,omitempty" json:"draft,omitempty"`
 	WIP                    *string           `url:"wip,omitempty" json:"wip,omitempty"`
 }
@@ -426,19 +426,12 @@ type ListGroupMergeRequestsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-group-merge-requests
 func (s *MergeRequestsService) ListGroupMergeRequests(gid any, opt *ListGroupMergeRequestsOptions, options ...RequestOptionFunc) ([]*BasicMergeRequest, *Response, error) {
-	group, err := parseID(gid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("groups/%s/merge_requests", PathEscape(group))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrs []*MergeRequest
-	resp, err := s.client.Do(req, &mrs)
+	mrs, resp, err := do[[]*MergeRequest](s.client,
+		withMethod(http.MethodGet),
+		withPath("groups/%s/merge_requests", GroupID{gid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -462,24 +455,12 @@ type GetMergeRequestsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-single-mr
 func (s *MergeRequestsService) GetMergeRequest(pid any, mergeRequest int64, opt *GetMergeRequestsOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // GetMergeRequestApprovals gets information about a merge requests approvals
@@ -487,24 +468,12 @@ func (s *MergeRequestsService) GetMergeRequest(pid any, mergeRequest int64, opt 
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_request_approvals/#single-merge-request-approval
 func (s *MergeRequestsService) GetMergeRequestApprovals(pid any, mergeRequest int64, options ...RequestOptionFunc) (*MergeRequestApprovals, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/approvals", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	a := new(MergeRequestApprovals)
-	resp, err := s.client.Do(req, a)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return a, resp, nil
+	return do[*MergeRequestApprovals](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/approvals", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // GetMergeRequestCommitsOptions represents the available GetMergeRequestCommits()
@@ -521,24 +490,12 @@ type GetMergeRequestCommitsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-single-merge-request-commits
 func (s *MergeRequestsService) GetMergeRequestCommits(pid any, mergeRequest int64, opt *GetMergeRequestCommitsOptions, options ...RequestOptionFunc) ([]*Commit, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/commits", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var c []*Commit
-	resp, err := s.client.Do(req, &c)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return c, resp, nil
+	return do[[]*Commit](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/commits", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // GetMergeRequestChangesOptions represents the available GetMergeRequestChanges()
@@ -562,24 +519,12 @@ type GetMergeRequestChangesOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-single-merge-request-changes
 func (s *MergeRequestsService) GetMergeRequestChanges(pid any, mergeRequest int64, opt *GetMergeRequestChangesOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/changes", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/changes", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // ListMergeRequestDiffsOptions represents the available ListMergeRequestDiffs()
@@ -597,24 +542,12 @@ type ListMergeRequestDiffsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-merge-request-diffs
 func (s *MergeRequestsService) ListMergeRequestDiffs(pid any, mergeRequest int64, opt *ListMergeRequestDiffsOptions, options ...RequestOptionFunc) ([]*MergeRequestDiff, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/diffs", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var m []*MergeRequestDiff
-	resp, err := s.client.Do(req, &m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[[]*MergeRequestDiff](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/diffs", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // ShowMergeRequestRawDiffsOptions represents the available ShowMergeRequestRawDiffs()
@@ -629,13 +562,13 @@ type ShowMergeRequestRawDiffsOptions struct{}
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#show-merge-request-raw-diffs
 func (s *MergeRequestsService) ShowMergeRequestRawDiffs(pid any, mergeRequest int64, opt *ShowMergeRequestRawDiffsOptions, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	project, err := parseID(pid)
+	p, err := ProjectID{pid}.forPath()
 	if err != nil {
 		return []byte{}, nil, err
 	}
 	u := fmt.Sprintf(
 		"projects/%s/merge_requests/%d/raw_diffs",
-		PathEscape(project),
+		p,
 		mergeRequest,
 	)
 
@@ -658,34 +591,12 @@ func (s *MergeRequestsService) ShowMergeRequestRawDiffs(pid any, mergeRequest in
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-single-merge-request-participants
 func (s *MergeRequestsService) GetMergeRequestParticipants(pid any, mergeRequest int64, options ...RequestOptionFunc) ([]*BasicUser, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/participants", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var bu []*BasicUser
-	resp, err := s.client.Do(req, &bu)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bu, resp, nil
-}
-
-// MergeRequestReviewer represents a GitLab merge request reviewer.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/merge_requests/#get-single-merge-request-reviewers
-type MergeRequestReviewer struct {
-	User      *BasicUser `json:"user"`
-	State     string     `json:"state"`
-	CreatedAt *time.Time `json:"created_at"`
+	return do[[]*BasicUser](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/participants", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // GetMergeRequestReviewers gets a list of merge request reviewers.
@@ -693,24 +604,12 @@ type MergeRequestReviewer struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-single-merge-request-reviewers
 func (s *MergeRequestsService) GetMergeRequestReviewers(pid any, mergeRequest int64, options ...RequestOptionFunc) ([]*MergeRequestReviewer, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/reviewers", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrr []*MergeRequestReviewer
-	resp, err := s.client.Do(req, &mrr)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mrr, resp, nil
+	return do[[]*MergeRequestReviewer](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/reviewers", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // ListMergeRequestPipelines gets all pipelines for the provided merge request.
@@ -718,24 +617,12 @@ func (s *MergeRequestsService) GetMergeRequestReviewers(pid any, mergeRequest in
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-merge-request-pipelines
 func (s *MergeRequestsService) ListMergeRequestPipelines(pid any, mergeRequest int64, options ...RequestOptionFunc) ([]*PipelineInfo, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/pipelines", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var p []*PipelineInfo
-	resp, err := s.client.Do(req, &p)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return p, resp, nil
+	return do[[]*PipelineInfo](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/pipelines", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // CreateMergeRequestPipeline creates a new pipeline for a merge request.
@@ -743,24 +630,12 @@ func (s *MergeRequestsService) ListMergeRequestPipelines(pid any, mergeRequest i
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#create-merge-request-pipeline
 func (s *MergeRequestsService) CreateMergeRequestPipeline(pid any, mergeRequest int64, options ...RequestOptionFunc) (*PipelineInfo, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/pipelines", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	p := new(PipelineInfo)
-	resp, err := s.client.Do(req, p)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return p, resp, nil
+	return do[*PipelineInfo](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_requests/%d/pipelines", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // GetIssuesClosedOnMergeOptions represents the available GetIssuesClosedOnMerge()
@@ -778,24 +653,12 @@ type GetIssuesClosedOnMergeOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-issues-that-close-on-merge
 func (s *MergeRequestsService) GetIssuesClosedOnMerge(pid any, mergeRequest int64, opt *GetIssuesClosedOnMergeOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/closes_issues", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var i []*Issue
-	resp, err := s.client.Do(req, &i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[[]*Issue](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/closes_issues", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // ListRelatedIssuesOptions represents the available ListRelatedIssues() options.
@@ -811,25 +674,12 @@ type ListRelatedIssuesOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#list-issues-related-to-the-merge-request
 func (s *MergeRequestsService) ListRelatedIssues(pid any, mergeRequest int64, opt *ListRelatedIssuesOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/related_issues", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var i []*Issue
-	resp, err := s.client.Do(req, &i)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return i, resp, nil
+	return do[[]*Issue](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/related_issues", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // CreateMergeRequestOptions represents the available CreateMergeRequest()
@@ -861,24 +711,12 @@ type CreateMergeRequestOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#create-mr
 func (s *MergeRequestsService) CreateMergeRequest(pid any, opt *CreateMergeRequestOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodPost, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_requests", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // UpdateMergeRequestOptions represents the available UpdateMergeRequest()
@@ -909,24 +747,12 @@ type UpdateMergeRequestOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#update-mr
 func (s *MergeRequestsService) UpdateMergeRequest(pid any, mergeRequest int64, opt *UpdateMergeRequestOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/merge_requests/%d", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // DeleteMergeRequest deletes a merge request.
@@ -934,18 +760,13 @@ func (s *MergeRequestsService) UpdateMergeRequest(pid any, mergeRequest int64, o
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#delete-a-merge-request
 func (s *MergeRequestsService) DeleteMergeRequest(pid any, mergeRequest int64, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/merge_requests/%d", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // AcceptMergeRequestOptions represents the available AcceptMergeRequest()
@@ -973,24 +794,12 @@ type AcceptMergeRequestOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#merge-a-merge-request
 func (s *MergeRequestsService) AcceptMergeRequest(pid any, mergeRequest int64, opt *AcceptMergeRequestOptions, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/merge", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/merge_requests/%d/merge", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // CancelMergeWhenPipelineSucceeds cancels a merge when pipeline succeeds. If
@@ -1002,24 +811,12 @@ func (s *MergeRequestsService) AcceptMergeRequest(pid any, mergeRequest int64, o
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#cancel-merge-when-pipeline-succeeds
 func (s *MergeRequestsService) CancelMergeWhenPipelineSucceeds(pid any, mergeRequest int64, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/cancel_merge_when_pipeline_succeeds", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_requests/%d/cancel_merge_when_pipeline_succeeds", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // RebaseMergeRequestOptions represents the available RebaseMergeRequest()
@@ -1038,18 +835,13 @@ type RebaseMergeRequestOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#rebase-a-merge-request
 func (s *MergeRequestsService) RebaseMergeRequest(pid any, mergeRequest int64, opt *RebaseMergeRequestOptions, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/rebase", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/merge_requests/%d/rebase", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // GetMergeRequestDiffVersionsOptions represents the available
@@ -1066,24 +858,12 @@ type GetMergeRequestDiffVersionsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-merge-request-diff-versions
 func (s *MergeRequestsService) GetMergeRequestDiffVersions(pid any, mergeRequest int64, opt *GetMergeRequestDiffVersionsOptions, options ...RequestOptionFunc) ([]*MergeRequestDiffVersion, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/versions", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var v []*MergeRequestDiffVersion
-	resp, err := s.client.Do(req, &v)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return v, resp, nil
+	return do[[]*MergeRequestDiffVersion](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/versions", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // GetSingleMergeRequestDiffVersionOptions represents the available
@@ -1100,24 +880,12 @@ type GetSingleMergeRequestDiffVersionOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-a-single-merge-request-diff-version
 func (s *MergeRequestsService) GetSingleMergeRequestDiffVersion(pid any, mergeRequest, version int64, opt *GetSingleMergeRequestDiffVersionOptions, options ...RequestOptionFunc) (*MergeRequestDiffVersion, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/versions/%d", PathEscape(project), mergeRequest, version)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	v := new(MergeRequestDiffVersion)
-	resp, err := s.client.Do(req, v)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return v, resp, nil
+	return do[*MergeRequestDiffVersion](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/versions/%d", ProjectID{pid}, mergeRequest, version),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // SubscribeToMergeRequest subscribes the authenticated user to the given merge
@@ -1127,24 +895,12 @@ func (s *MergeRequestsService) GetSingleMergeRequestDiffVersion(pid any, mergeRe
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#subscribe-to-a-merge-request
 func (s *MergeRequestsService) SubscribeToMergeRequest(pid any, mergeRequest int64, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/subscribe", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_requests/%d/subscribe", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // UnsubscribeFromMergeRequest unsubscribes the authenticated user from the
@@ -1155,24 +911,12 @@ func (s *MergeRequestsService) SubscribeToMergeRequest(pid any, mergeRequest int
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#unsubscribe-from-a-merge-request
 func (s *MergeRequestsService) UnsubscribeFromMergeRequest(pid any, mergeRequest int64, options ...RequestOptionFunc) (*MergeRequest, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/unsubscribe", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	m := new(MergeRequest)
-	resp, err := s.client.Do(req, m)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return m, resp, nil
+	return do[*MergeRequest](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_requests/%d/unsubscribe", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // CreateTodo manually creates a todo for the current user on a merge request.
@@ -1182,24 +926,12 @@ func (s *MergeRequestsService) UnsubscribeFromMergeRequest(pid any, mergeRequest
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#create-a-to-do-item
 func (s *MergeRequestsService) CreateTodo(pid any, mergeRequest int64, options ...RequestOptionFunc) (*Todo, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/todo", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	t := new(Todo)
-	resp, err := s.client.Do(req, t)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return t, resp, nil
+	return do[*Todo](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_requests/%d/todo", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // SetTimeEstimate sets the time estimate for a single project merge request.
@@ -1337,24 +1069,12 @@ type CreateMergeRequestDependencyOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#create-a-merge-request-dependency
 func (s *MergeRequestsService) CreateMergeRequestDependency(pid any, mergeRequest int64, opts CreateMergeRequestDependencyOptions, options ...RequestOptionFunc) (*MergeRequestDependency, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/blocks", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, opts, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrd MergeRequestDependency
-	resp, err := s.client.Do(req, &mrd)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return &mrd, resp, err
+	return do[*MergeRequestDependency](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_requests/%d/blocks", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opts),
+		withRequestOpts(options...),
+	)
 }
 
 // DeleteMergeRequestDependency deletes a merge request dependency for a given
@@ -1363,18 +1083,13 @@ func (s *MergeRequestsService) CreateMergeRequestDependency(pid any, mergeReques
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#delete-a-merge-request-dependency
 func (s *MergeRequestsService) DeleteMergeRequestDependency(pid any, mergeRequest int64, blockingMergeRequest int64, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/blocks/%d", PathEscape(project), mergeRequest, blockingMergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/merge_requests/%d/blocks/%d", ProjectID{pid}, mergeRequest, blockingMergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // GetMergeRequestDependencies gets a list of merge request dependencies.
@@ -1382,24 +1097,12 @@ func (s *MergeRequestsService) DeleteMergeRequestDependency(pid any, mergeReques
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_requests/#get-merge-request-dependencies
 func (s *MergeRequestsService) GetMergeRequestDependencies(pid any, mergeRequest int64, options ...RequestOptionFunc) ([]MergeRequestDependency, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_requests/%d/blocks", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrd []MergeRequestDependency
-	resp, err := s.client.Do(req, &mrd)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mrd, resp, err
+	return do[[]MergeRequestDependency](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_requests/%d/blocks", ProjectID{pid}, mergeRequest),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 func toBasic(mrs []*MergeRequest) []*BasicMergeRequest {

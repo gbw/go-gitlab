@@ -170,24 +170,12 @@ type ListJobsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#list-project-jobs
 func (s *JobsService) ListProjectJobs(pid any, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opts, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var jobs []*Job
-	resp, err := s.client.Do(req, &jobs)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return jobs, resp, nil
+	return do[[]*Job](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/jobs", ProjectID{pid}),
+		withAPIOpts(opts),
+		withRequestOpts(options...),
+	)
 }
 
 // ListPipelineJobs gets a list of jobs for specific pipeline in a
@@ -196,24 +184,12 @@ func (s *JobsService) ListProjectJobs(pid any, opts *ListJobsOptions, options ..
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#list-pipeline-jobs
 func (s *JobsService) ListPipelineJobs(pid any, pipelineID int64, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/pipelines/%d/jobs", PathEscape(project), pipelineID)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opts, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var jobs []*Job
-	resp, err := s.client.Do(req, &jobs)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return jobs, resp, nil
+	return do[[]*Job](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/pipelines/%d/jobs", ProjectID{pid}, pipelineID),
+		withAPIOpts(opts),
+		withRequestOpts(options...),
+	)
 }
 
 // ListPipelineBridges gets a list of bridges for specific pipeline in a
@@ -222,24 +198,12 @@ func (s *JobsService) ListPipelineJobs(pid any, pipelineID int64, opts *ListJobs
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#list-pipeline-trigger-jobs
 func (s *JobsService) ListPipelineBridges(pid any, pipelineID int64, opts *ListJobsOptions, options ...RequestOptionFunc) ([]*Bridge, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/pipelines/%d/bridges", PathEscape(project), pipelineID)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opts, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var bridges []*Bridge
-	resp, err := s.client.Do(req, &bridges)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bridges, resp, nil
+	return do[[]*Bridge](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/pipelines/%d/bridges", ProjectID{pid}, pipelineID),
+		withAPIOpts(opts),
+		withRequestOpts(options...),
+	)
 }
 
 // GetJobTokensJobOptions represents the available GetJobTokensJob() options.
@@ -253,18 +217,12 @@ type GetJobTokensJobOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/jobs/#get-job-tokens-job
 func (s *JobsService) GetJobTokensJob(opts *GetJobTokensJobOptions, options ...RequestOptionFunc) (*Job, *Response, error) {
-	req, err := s.client.NewRequest(http.MethodGet, "job", opts, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	job := new(Job)
-	resp, err := s.client.Do(req, job)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return job, resp, nil
+	return do[*Job](s.client,
+		withMethod(http.MethodGet),
+		withPath("job"),
+		withAPIOpts(opts),
+		withRequestOpts(options...),
+	)
 }
 
 // GetJob gets a single job of a project.
@@ -272,24 +230,12 @@ func (s *JobsService) GetJobTokensJob(opts *GetJobTokensJobOptions, options ...R
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#get-a-single-job
 func (s *JobsService) GetJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	job := new(Job)
-	resp, err := s.client.Do(req, job)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return job, resp, nil
+	return do[*Job](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/jobs/%d", ProjectID{pid}, jobID),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // GetJobArtifacts get jobs artifacts of a project
@@ -301,9 +247,7 @@ func (s *JobsService) GetJobArtifacts(pid any, jobID int64, options ...RequestOp
 	if err != nil {
 		return nil, nil, err
 	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/artifacts", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
+	req, err := s.client.NewRequest(http.MethodGet, fmt.Sprintf("projects/%s/jobs/%d/artifacts", PathEscape(project), jobID), nil, options)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -336,9 +280,7 @@ func (s *JobsService) DownloadArtifactsFile(pid any, refName string, opt *Downlo
 	if err != nil {
 		return nil, nil, err
 	}
-	u := fmt.Sprintf("projects/%s/jobs/artifacts/%s/download", PathEscape(project), refName)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
+	req, err := s.client.NewRequest(http.MethodGet, fmt.Sprintf("projects/%s/jobs/artifacts/%s/download", PathEscape(project), refName), opt, options)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -449,24 +391,12 @@ func (s *JobsService) GetTraceFile(pid any, jobID int64, options ...RequestOptio
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#cancel-a-job
 func (s *JobsService) CancelJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/cancel", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	job := new(Job)
-	resp, err := s.client.Do(req, job)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return job, resp, nil
+	return do[*Job](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/jobs/%d/cancel", ProjectID{pid}, jobID),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // RetryJob retries a single job of a project
@@ -474,24 +404,12 @@ func (s *JobsService) CancelJob(pid any, jobID int64, options ...RequestOptionFu
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#retry-a-job
 func (s *JobsService) RetryJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/retry", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	job := new(Job)
-	resp, err := s.client.Do(req, job)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return job, resp, nil
+	return do[*Job](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/jobs/%d/retry", ProjectID{pid}, jobID),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // EraseJob erases a single job of a project, removes a job
@@ -500,24 +418,12 @@ func (s *JobsService) RetryJob(pid any, jobID int64, options ...RequestOptionFun
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#erase-a-job
 func (s *JobsService) EraseJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/erase", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	job := new(Job)
-	resp, err := s.client.Do(req, job)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return job, resp, nil
+	return do[*Job](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/jobs/%d/erase", ProjectID{pid}, jobID),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // KeepArtifacts prevents artifacts from being deleted when
@@ -526,24 +432,12 @@ func (s *JobsService) EraseJob(pid any, jobID int64, options ...RequestOptionFun
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#keep-artifacts
 func (s *JobsService) KeepArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/artifacts/keep", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	job := new(Job)
-	resp, err := s.client.Do(req, job)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return job, resp, nil
+	return do[*Job](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/jobs/%d/artifacts/keep", ProjectID{pid}, jobID),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // PlayJobOptions represents the available PlayJob() options.
@@ -569,24 +463,12 @@ type JobVariableOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#run-a-job
 func (s *JobsService) PlayJob(pid any, jobID int64, opt *PlayJobOptions, options ...RequestOptionFunc) (*Job, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/play", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	job := new(Job)
-	resp, err := s.client.Do(req, job)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return job, resp, nil
+	return do[*Job](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/jobs/%d/play", ProjectID{pid}, jobID),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // DeleteArtifacts delete artifacts of a job
@@ -594,18 +476,13 @@ func (s *JobsService) PlayJob(pid any, jobID int64, opt *PlayJobOptions, options
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#delete-job-artifacts
 func (s *JobsService) DeleteArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/artifacts", PathEscape(project), jobID)
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/jobs/%d/artifacts", ProjectID{pid}, jobID),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // DeleteProjectArtifacts delete artifacts eligible for deletion in a project
@@ -613,16 +490,11 @@ func (s *JobsService) DeleteArtifacts(pid any, jobID int64, options ...RequestOp
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#delete-job-artifacts
 func (s *JobsService) DeleteProjectArtifacts(pid any, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/artifacts", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/artifacts", ProjectID{pid}),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
