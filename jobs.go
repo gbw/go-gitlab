@@ -18,7 +18,6 @@ package gitlab
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -243,22 +242,12 @@ func (s *JobsService) GetJob(pid any, jobID int64, options ...RequestOptionFunc)
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#get-job-artifacts
 func (s *JobsService) GetJobArtifacts(pid any, jobID int64, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	req, err := s.client.NewRequest(http.MethodGet, fmt.Sprintf("projects/%s/jobs/%d/artifacts", PathEscape(project), jobID), nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
+	b, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/jobs/%d/artifacts", ProjectID{pid}, jobID),
+		withRequestOpts(options...),
+	)
 
-	artifactsBuf := new(bytes.Buffer)
-	resp, err := s.client.Do(req, artifactsBuf)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bytes.NewReader(artifactsBuf.Bytes()), resp, err
+	return bytes.NewReader(b.Bytes()), resp, err
 }
 
 // DownloadArtifactsFileOptions represents the available DownloadArtifactsFile()
@@ -276,22 +265,12 @@ type DownloadArtifactsFileOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#download-the-artifacts-archive
 func (s *JobsService) DownloadArtifactsFile(pid any, refName string, opt *DownloadArtifactsFileOptions, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	req, err := s.client.NewRequest(http.MethodGet, fmt.Sprintf("projects/%s/jobs/artifacts/%s/download", PathEscape(project), refName), opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
+	b, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/jobs/artifacts/%s/download", ProjectID{pid}, NoEscape{refName}),
+		withRequestOpts(options...),
+	)
 
-	artifactsBuf := new(bytes.Buffer)
-	resp, err := s.client.Do(req, artifactsBuf)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bytes.NewReader(artifactsBuf.Bytes()), resp, err
+	return bytes.NewReader(b.Bytes()), resp, err
 }
 
 // DownloadSingleArtifactsFile download a file from the artifacts from the
@@ -302,30 +281,12 @@ func (s *JobsService) DownloadArtifactsFile(pid any, refName string, opt *Downlo
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#download-a-single-artifact-file-by-job-id
 func (s *JobsService) DownloadSingleArtifactsFile(pid any, jobID int64, artifactPath string, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	u := fmt.Sprintf(
-		"projects/%s/jobs/%d/artifacts/%s",
-		PathEscape(project),
-		jobID,
-		artifactPath,
+	b, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/jobs/%d/artifacts/%s", ProjectID{pid}, jobID, NoEscape{artifactPath}),
+		withRequestOpts(options...),
 	)
 
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	artifactBuf := new(bytes.Buffer)
-	resp, err := s.client.Do(req, artifactBuf)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bytes.NewReader(artifactBuf.Bytes()), resp, err
+	return bytes.NewReader(b.Bytes()), resp, err
 }
 
 // DownloadSingleArtifactsFileByTagOrBranch downloads a single file from
@@ -335,30 +296,13 @@ func (s *JobsService) DownloadSingleArtifactsFile(pid any, jobID int64, artifact
 // GitLab API docs:
 // https://docs.gitlab.com/api/job_artifacts/#download-a-single-artifact-file-from-specific-tag-or-branch
 func (s *JobsService) DownloadSingleArtifactsFileByTagOrBranch(pid any, refName string, artifactPath string, opt *DownloadArtifactsFileOptions, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	u := fmt.Sprintf(
-		"projects/%s/jobs/artifacts/%s/raw/%s",
-		PathEscape(project),
-		PathEscape(refName),
-		artifactPath,
+	b, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/jobs/artifacts/%s/raw/%s", ProjectID{pid}, refName, NoEscape{artifactPath}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	)
 
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	artifactBuf := new(bytes.Buffer)
-	resp, err := s.client.Do(req, artifactBuf)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bytes.NewReader(artifactBuf.Bytes()), resp, err
+	return bytes.NewReader(b.Bytes()), resp, err
 }
 
 // GetTraceFile gets a trace of a specific job of a project
@@ -366,24 +310,12 @@ func (s *JobsService) DownloadSingleArtifactsFileByTagOrBranch(pid any, refName 
 // GitLab API docs:
 // https://docs.gitlab.com/api/jobs/#get-a-log-file
 func (s *JobsService) GetTraceFile(pid any, jobID int64, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/jobs/%d/trace", PathEscape(project), jobID)
+	b, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/jobs/%d/trace", ProjectID{pid}, jobID),
+		withRequestOpts(options...),
+	)
 
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	traceBuf := new(bytes.Buffer)
-	resp, err := s.client.Do(req, traceBuf)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return bytes.NewReader(traceBuf.Bytes()), resp, err
+	return bytes.NewReader(b.Bytes()), resp, err
 }
 
 // CancelJob cancels a single job of a project.

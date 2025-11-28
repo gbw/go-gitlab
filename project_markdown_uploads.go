@@ -88,7 +88,7 @@ func (s *ProjectMarkdownUploadsService) UploadProjectMarkdown(pid any, content i
 // GitLab API Docs:
 // https://docs.gitlab.com/api/project_markdown_uploads/#list-uploads
 func (s *ProjectMarkdownUploadsService) ListProjectMarkdownUploads(pid any, options ...RequestOptionFunc) ([]*ProjectMarkdownUpload, *Response, error) {
-	return listMarkdownUploads[ProjectMarkdownUpload](s.client, ProjectResource, pid, nil, options)
+	return listMarkdownUploads[ProjectMarkdownUpload](s.client, ProjectResource, ProjectID{pid}, nil, options)
 }
 
 // DownloadProjectMarkdownUploadByID downloads a specific upload by ID.
@@ -96,7 +96,7 @@ func (s *ProjectMarkdownUploadsService) ListProjectMarkdownUploads(pid any, opti
 // GitLab API Docs:
 // https://docs.gitlab.com/api/project_markdown_uploads/#download-an-uploaded-file-by-id
 func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	buffer, resp, err := downloadMarkdownUploadByID(s.client, ProjectResource, pid, uploadID, options)
+	buffer, resp, err := downloadMarkdownUploadByID(s.client, ProjectResource, ProjectID{pid}, uploadID, options)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -109,7 +109,7 @@ func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadByID(pid an
 // GitLab API Docs:
 // https://docs.gitlab.com/api/project_markdown_uploads/#download-an-uploaded-file-by-secret-and-filename
 func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret string, filename string, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	buffer, resp, err := downloadMarkdownUploadBySecretAndFilename(s.client, ProjectResource, pid, secret, filename, options)
+	buffer, resp, err := downloadMarkdownUploadBySecretAndFilename(s.client, ProjectResource, ProjectID{pid}, secret, filename, options)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -121,7 +121,7 @@ func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadBySecretAnd
 // GitLab API Docs:
 // https://docs.gitlab.com/api/project_markdown_uploads/#delete-an-uploaded-file-by-id
 func (s *ProjectMarkdownUploadsService) DeleteProjectMarkdownUploadByID(pid any, uploadID int64, options ...RequestOptionFunc) (*Response, error) {
-	return deleteMarkdownUploadByID(s.client, ProjectResource, pid, uploadID, options)
+	return deleteMarkdownUploadByID(s.client, ProjectResource, ProjectID{pid}, uploadID, options)
 }
 
 // DeleteProjectMarkdownUploadBySecretAndFilename deletes an upload
@@ -130,5 +130,5 @@ func (s *ProjectMarkdownUploadsService) DeleteProjectMarkdownUploadByID(pid any,
 // GitLab API Docs:
 // https://docs.gitlab.com/api/project_markdown_uploads/#delete-an-uploaded-file-by-secret-and-filename
 func (s *ProjectMarkdownUploadsService) DeleteProjectMarkdownUploadBySecretAndFilename(pid any, secret string, filename string, options ...RequestOptionFunc) (*Response, error) {
-	return deleteMarkdownUploadBySecretAndFilename(s.client, ProjectResource, pid, secret, filename, options)
+	return deleteMarkdownUploadBySecretAndFilename(s.client, ProjectResource, ProjectID{pid}, secret, filename, options)
 }
