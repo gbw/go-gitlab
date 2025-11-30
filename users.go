@@ -31,60 +31,274 @@ import (
 
 type (
 	UsersServiceInterface interface {
+		// ListUsers gets a list of users.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#list-users
 		ListUsers(opt *ListUsersOptions, options ...RequestOptionFunc) ([]*User, *Response, error)
+		// GetUser gets a single user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#get-a-single-user
 		GetUser(user int64, opt GetUsersOptions, options ...RequestOptionFunc) (*User, *Response, error)
+		// CreateUser creates a new user. Note only administrators can create new users.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#create-a-user
 		CreateUser(opt *CreateUserOptions, options ...RequestOptionFunc) (*User, *Response, error)
+		// ModifyUser modifies an existing user. Only administrators can change attributes
+		// of a user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#modify-a-user
 		ModifyUser(user int64, opt *ModifyUserOptions, options ...RequestOptionFunc) (*User, *Response, error)
+		// DeleteUser deletes a user. Available only for administrators. This is an
+		// idempotent function, calling this function for a non-existent user id still
+		// returns a status code 200 OK. The JSON response differs if the user was
+		// actually deleted or not. In the former the user is returned and in the
+		// latter not.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#delete-a-user
 		DeleteUser(user int64, options ...RequestOptionFunc) (*Response, error)
+		// CurrentUser gets currently authenticated user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#get-the-current-user
 		CurrentUser(options ...RequestOptionFunc) (*User, *Response, error)
+		// CurrentUserStatus retrieves the user status
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#get-your-user-status
 		CurrentUserStatus(options ...RequestOptionFunc) (*UserStatus, *Response, error)
+		// GetUserStatus retrieves a user's status.
+		//
+		// uid can be either a user ID (int) or a username (string); will trim one "@" character off the username, if present.
+		// Other types will cause an error to be returned.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#get-the-status-of-a-user
 		GetUserStatus(uid any, options ...RequestOptionFunc) (*UserStatus, *Response, error)
+		// SetUserStatus sets the user's status
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#set-your-user-status
 		SetUserStatus(opt *UserStatusOptions, options ...RequestOptionFunc) (*UserStatus, *Response, error)
+		// GetUserAssociationsCount gets a list of a specified user's associations.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#get-a-count-of-a-users-projects-groups-issues-and-merge-requests
 		GetUserAssociationsCount(user int64, options ...RequestOptionFunc) (*UserAssociationsCount, *Response, error)
+		// ListSSHKeys gets a list of currently authenticated user's SSH keys.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys
 		ListSSHKeys(opt *ListSSHKeysOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error)
+		// ListSSHKeysForUser gets a list of a specified user's SSH keys.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys-for-a-user
 		ListSSHKeysForUser(uid any, opt *ListSSHKeysForUserOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error)
+		// GetSSHKey gets a single key.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-an-ssh-key
 		GetSSHKey(key int64, options ...RequestOptionFunc) (*SSHKey, *Response, error)
+		// GetSSHKeyForUser gets a single key for a given user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-an-ssh-key-for-a-user
 		GetSSHKeyForUser(user int64, key int64, options ...RequestOptionFunc) (*SSHKey, *Response, error)
+		// AddSSHKey creates a new key owned by the currently authenticated user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#add-an-ssh-key
 		AddSSHKey(opt *AddSSHKeyOptions, options ...RequestOptionFunc) (*SSHKey, *Response, error)
+		// AddSSHKeyForUser creates new key owned by specified user. Available only for
+		// admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#add-an-ssh-key-for-a-user
 		AddSSHKeyForUser(user int64, opt *AddSSHKeyOptions, options ...RequestOptionFunc) (*SSHKey, *Response, error)
+		// DeleteSSHKey deletes key owned by currently authenticated user. This is an
+		// idempotent function and calling it on a key that is already deleted or not
+		// available results in 200 OK.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_keys/#delete-an-ssh-key
 		DeleteSSHKey(key int64, options ...RequestOptionFunc) (*Response, error)
+		// DeleteSSHKeyForUser deletes key owned by a specified user. Available only
+		// for admin.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_keys/#delete-an-ssh-key-for-a-user
 		DeleteSSHKeyForUser(user, key int64, options ...RequestOptionFunc) (*Response, error)
+		// ListGPGKeys gets a list of currently authenticated user’s GPG keys.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#list-all-gpg-keys
 		ListGPGKeys(options ...RequestOptionFunc) ([]*GPGKey, *Response, error)
+		// GetGPGKey gets a specific GPG key of currently authenticated user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-a-gpg-key
 		GetGPGKey(key int64, options ...RequestOptionFunc) (*GPGKey, *Response, error)
+		// AddGPGKey creates a new GPG key owned by the currently authenticated user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#add-a-gpg-key
 		AddGPGKey(opt *AddGPGKeyOptions, options ...RequestOptionFunc) (*GPGKey, *Response, error)
+		// DeleteGPGKey deletes a GPG key owned by currently authenticated user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#delete-a-gpg-key
 		DeleteGPGKey(key int64, options ...RequestOptionFunc) (*Response, error)
+		// ListGPGKeysForUser gets a list of a specified user’s GPG keys.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_keys/#list-all-gpg-keys-for-a-user
 		ListGPGKeysForUser(user int64, options ...RequestOptionFunc) ([]*GPGKey, *Response, error)
+		// GetGPGKeyForUser gets a specific GPG key for a given user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-a-gpg-key-for-a-user
 		GetGPGKeyForUser(user, key int64, options ...RequestOptionFunc) (*GPGKey, *Response, error)
+		// AddGPGKeyForUser creates new GPG key owned by the specified user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_keys/#add-a-gpg-key-for-a-user
 		AddGPGKeyForUser(user int64, opt *AddGPGKeyOptions, options ...RequestOptionFunc) (*GPGKey, *Response, error)
+		// DeleteGPGKeyForUser deletes a GPG key owned by a specified user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_keys/#delete-a-gpg-key-for-a-user
 		DeleteGPGKeyForUser(user, key int64, options ...RequestOptionFunc) (*Response, error)
+		// ListEmails gets a list of currently authenticated user's Emails.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_email_addresses/#list-all-email-addresses
 		ListEmails(options ...RequestOptionFunc) ([]*Email, *Response, error)
+		// ListEmailsForUser gets a list of a specified user's Emails. Available
+		// only for admin
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_email_addresses/#list-all-email-addresses-for-a-user
 		ListEmailsForUser(user int64, opt *ListEmailsForUserOptions, options ...RequestOptionFunc) ([]*Email, *Response, error)
+		// GetEmail gets a single email.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_email_addresses/#get-details-on-an-email-address
 		GetEmail(email int64, options ...RequestOptionFunc) (*Email, *Response, error)
+		// AddEmail creates a new email owned by the currently authenticated user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_email_addresses/#add-an-email-address
 		AddEmail(opt *AddEmailOptions, options ...RequestOptionFunc) (*Email, *Response, error)
+		// AddEmailForUser creates new email owned by specified user. Available only for
+		// admin.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_email_addresses/#add-an-email-address-for-a-user
 		AddEmailForUser(user int64, opt *AddEmailOptions, options ...RequestOptionFunc) (*Email, *Response, error)
+		// DeleteEmail deletes email owned by currently authenticated user. This is an
+		// idempotent function and calling it on a key that is already deleted or not
+		// available results in 200 OK.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_email_addresses/#delete-an-email-address
 		DeleteEmail(email int64, options ...RequestOptionFunc) (*Response, error)
+		// DeleteEmailForUser deletes email owned by a specified user. Available only
+		// for admin.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_email_addresses/#delete-an-email-address-for-a-user
 		DeleteEmailForUser(user, email int64, options ...RequestOptionFunc) (*Response, error)
+		// BlockUser blocks the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#block-access-to-a-user
 		BlockUser(user int64, options ...RequestOptionFunc) error
+		// UnblockUser unblocks the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#unblock-access-to-a-user
 		UnblockUser(user int64, options ...RequestOptionFunc) error
+		// BanUser bans the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#ban-a-user
 		BanUser(user int64, options ...RequestOptionFunc) error
+		// UnbanUser unbans the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#unban-a-user
 		UnbanUser(user int64, options ...RequestOptionFunc) error
+		// DeactivateUser deactivate the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#deactivate-a-user
 		DeactivateUser(user int64, options ...RequestOptionFunc) error
+		// ActivateUser activate the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#reactivate-a-user
 		ActivateUser(user int64, options ...RequestOptionFunc) error
+		// ApproveUser approve the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#approve-access-to-a-user
 		ApproveUser(user int64, options ...RequestOptionFunc) error
+		// RejectUser reject the specified user. Available only for admin.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#reject-access-to-a-user
 		RejectUser(user int64, options ...RequestOptionFunc) error
+		// GetAllImpersonationTokens retrieves all impersonation tokens of a user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_tokens/#list-all-impersonation-tokens-for-a-user
 		GetAllImpersonationTokens(user int64, opt *GetAllImpersonationTokensOptions, options ...RequestOptionFunc) ([]*ImpersonationToken, *Response, error)
+		// GetImpersonationToken retrieves an impersonation token of a user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_tokens/#get-an-impersonation-token-for-a-user
 		GetImpersonationToken(user, token int64, options ...RequestOptionFunc) (*ImpersonationToken, *Response, error)
+		// CreateImpersonationToken creates an impersonation token.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_tokens/#create-an-impersonation-token
 		CreateImpersonationToken(user int64, opt *CreateImpersonationTokenOptions, options ...RequestOptionFunc) (*ImpersonationToken, *Response, error)
+		// RevokeImpersonationToken revokes an impersonation token.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_tokens/#revoke-an-impersonation-token
 		RevokeImpersonationToken(user, token int64, options ...RequestOptionFunc) (*Response, error)
+		// CreatePersonalAccessToken creates a personal access token.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token-for-a-user
 		CreatePersonalAccessToken(user int64, opt *CreatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		// CreatePersonalAccessTokenForCurrentUser creates a personal access token with limited scopes for the currently authenticated user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token
 		CreatePersonalAccessTokenForCurrentUser(opt *CreatePersonalAccessTokenForCurrentUserOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		// GetUserActivities retrieves user activities (admin only)
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#list-a-users-activity
 		GetUserActivities(opt *GetUserActivitiesOptions, options ...RequestOptionFunc) ([]*UserActivity, *Response, error)
+		// GetUserMemberships retrieves a list of the user's memberships.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#list-projects-and-groups-that-a-user-is-a-member-of
 		GetUserMemberships(user int64, opt *GetUserMembershipOptions, options ...RequestOptionFunc) ([]*UserMembership, *Response, error)
+		// DisableTwoFactor disables two factor authentication for the specified user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#disable-two-factor-authentication-for-a-user
 		DisableTwoFactor(user int64, options ...RequestOptionFunc) error
+		// CreateUserRunner creates a runner linked to the current user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#create-a-runner-linked-to-a-user
 		CreateUserRunner(opts *CreateUserRunnerOptions, options ...RequestOptionFunc) (*UserRunner, *Response, error)
+		// CreateServiceAccountUser creates a new service account user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_service_accounts/#create-a-service-account-user
 		CreateServiceAccountUser(opts *CreateServiceAccountUserOptions, options ...RequestOptionFunc) (*User, *Response, error)
+		// ListServiceAccounts lists all service accounts.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/user_service_accounts/#list-all-service-account-users
 		ListServiceAccounts(opt *ListServiceAccountsOptions, options ...RequestOptionFunc) ([]*ServiceAccount, *Response, error)
+		// UploadAvatar uploads an avatar to the current user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#upload-an-avatar-for-yourself
 		UploadAvatar(avatar io.Reader, filename string, options ...RequestOptionFunc) (*User, *Response, error)
+		// DeleteUserIdentity deletes a user's authentication identity using the provider
+		// name associated with that identity. Only available for administrators.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/users/#delete-authentication-identity-from-a-user
 		DeleteUserIdentity(user int64, provider string, options ...RequestOptionFunc) (*Response, error)
 
 		// events.go
@@ -246,9 +460,6 @@ type ListUsersOptions struct {
 	WithoutProjectBots   *bool      `url:"without_project_bots,omitempty" json:"without_project_bots,omitempty"`
 }
 
-// ListUsers gets a list of users.
-//
-// GitLab API docs: https://docs.gitlab.com/api/users/#list-users
 func (s *UsersService) ListUsers(opt *ListUsersOptions, options ...RequestOptionFunc) ([]*User, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "users", opt, options)
 	if err != nil {
@@ -271,9 +482,6 @@ type GetUsersOptions struct {
 	WithCustomAttributes *bool `url:"with_custom_attributes,omitempty" json:"with_custom_attributes,omitempty"`
 }
 
-// GetUser gets a single user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/users/#get-a-single-user
 func (s *UsersService) GetUser(user int64, opt GetUsersOptions, options ...RequestOptionFunc) (*User, *Response, error) {
 	u := fmt.Sprintf("users/%d", user)
 
@@ -322,9 +530,6 @@ type CreateUserOptions struct {
 	WebsiteURL          *string     `url:"website_url,omitempty" json:"website_url,omitempty"`
 }
 
-// CreateUser creates a new user. Note only administrators can create new users.
-//
-// GitLab API docs: https://docs.gitlab.com/api/users/#create-a-user
 func (s *UsersService) CreateUser(opt *CreateUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
 	var err error
 	var req *retryablehttp.Request
@@ -386,10 +591,6 @@ type ModifyUserOptions struct {
 	WebsiteURL         *string     `url:"website_url,omitempty" json:"website_url,omitempty"`
 }
 
-// ModifyUser modifies an existing user. Only administrators can change attributes
-// of a user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/users/#modify-a-user
 func (s *UsersService) ModifyUser(user int64, opt *ModifyUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
 	var err error
 	var req *retryablehttp.Request
@@ -421,13 +622,6 @@ func (s *UsersService) ModifyUser(user int64, opt *ModifyUserOptions, options ..
 	return usr, resp, nil
 }
 
-// DeleteUser deletes a user. Available only for administrators. This is an
-// idempotent function, calling this function for a non-existent user id still
-// returns a status code 200 OK. The JSON response differs if the user was
-// actually deleted or not. In the former the user is returned and in the
-// latter not.
-//
-// GitLab API docs: https://docs.gitlab.com/api/users/#delete-a-user
 func (s *UsersService) DeleteUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("users/%d", user)
 
@@ -439,9 +633,6 @@ func (s *UsersService) DeleteUser(user int64, options ...RequestOptionFunc) (*Re
 	return s.client.Do(req, nil)
 }
 
-// CurrentUser gets currently authenticated user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/users/#get-the-current-user
 func (s *UsersService) CurrentUser(options ...RequestOptionFunc) (*User, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "user", nil, options)
 	if err != nil {
@@ -469,10 +660,6 @@ type UserStatus struct {
 	ClearStatusAt *time.Time        `json:"clear_status_at"`
 }
 
-// CurrentUserStatus retrieves the user status
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#get-your-user-status
 func (s *UsersService) CurrentUserStatus(options ...RequestOptionFunc) (*UserStatus, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "user/status", nil, options)
 	if err != nil {
@@ -488,13 +675,6 @@ func (s *UsersService) CurrentUserStatus(options ...RequestOptionFunc) (*UserSta
 	return status, resp, nil
 }
 
-// GetUserStatus retrieves a user's status.
-//
-// uid can be either a user ID (int) or a username (string); will trim one "@" character off the username, if present.
-// Other types will cause an error to be returned.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#get-the-status-of-a-user
 func (s *UsersService) GetUserStatus(uid any, options ...RequestOptionFunc) (*UserStatus, *Response, error) {
 	user, err := parseID(uid)
 	if err != nil {
@@ -528,10 +708,6 @@ type UserStatusOptions struct {
 	ClearStatusAfter *ClearStatusAfterValue `url:"clear_status_after,omitempty" json:"clear_status_after,omitempty"`
 }
 
-// SetUserStatus sets the user's status
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#set-your-user-status
 func (s *UsersService) SetUserStatus(opt *UserStatusOptions, options ...RequestOptionFunc) (*UserStatus, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPut, "user/status", opt, options)
 	if err != nil {
@@ -598,9 +774,6 @@ type ListSSHKeysOptions struct {
 	ListOptions
 }
 
-// ListSSHKeys gets a list of currently authenticated user's SSH keys.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys
 func (s *UsersService) ListSSHKeys(opt *ListSSHKeysOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "user/keys", opt, options)
 	if err != nil {
@@ -624,10 +797,6 @@ type ListSSHKeysForUserOptions struct {
 	ListOptions
 }
 
-// ListSSHKeysForUser gets a list of a specified user's SSH keys.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys-for-a-user
 func (s *UsersService) ListSSHKeysForUser(uid any, opt *ListSSHKeysForUserOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error) {
 	user, err := parseID(uid)
 	if err != nil {
@@ -649,9 +818,6 @@ func (s *UsersService) ListSSHKeysForUser(uid any, opt *ListSSHKeysForUserOption
 	return k, resp, nil
 }
 
-// GetSSHKey gets a single key.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-an-ssh-key
 func (s *UsersService) GetSSHKey(key int64, options ...RequestOptionFunc) (*SSHKey, *Response, error) {
 	u := fmt.Sprintf("user/keys/%d", key)
 
@@ -669,9 +835,6 @@ func (s *UsersService) GetSSHKey(key int64, options ...RequestOptionFunc) (*SSHK
 	return k, resp, nil
 }
 
-// GetSSHKeyForUser gets a single key for a given user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-an-ssh-key-for-a-user
 func (s *UsersService) GetSSHKeyForUser(user int64, key int64, options ...RequestOptionFunc) (*SSHKey, *Response, error) {
 	u := fmt.Sprintf("users/%d/keys/%d", user, key)
 
@@ -699,9 +862,6 @@ type AddSSHKeyOptions struct {
 	UsageType *string  `url:"usage_type,omitempty" json:"usage_type,omitempty"`
 }
 
-// AddSSHKey creates a new key owned by the currently authenticated user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#add-an-ssh-key
 func (s *UsersService) AddSSHKey(opt *AddSSHKeyOptions, options ...RequestOptionFunc) (*SSHKey, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "user/keys", opt, options)
 	if err != nil {
@@ -717,10 +877,6 @@ func (s *UsersService) AddSSHKey(opt *AddSSHKeyOptions, options ...RequestOption
 	return k, resp, nil
 }
 
-// AddSSHKeyForUser creates new key owned by specified user. Available only for
-// admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#add-an-ssh-key-for-a-user
 func (s *UsersService) AddSSHKeyForUser(user int64, opt *AddSSHKeyOptions, options ...RequestOptionFunc) (*SSHKey, *Response, error) {
 	u := fmt.Sprintf("users/%d/keys", user)
 
@@ -738,12 +894,6 @@ func (s *UsersService) AddSSHKeyForUser(user int64, opt *AddSSHKeyOptions, optio
 	return k, resp, nil
 }
 
-// DeleteSSHKey deletes key owned by currently authenticated user. This is an
-// idempotent function and calling it on a key that is already deleted or not
-// available results in 200 OK.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_keys/#delete-an-ssh-key
 func (s *UsersService) DeleteSSHKey(key int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("user/keys/%d", key)
 
@@ -755,11 +905,6 @@ func (s *UsersService) DeleteSSHKey(key int64, options ...RequestOptionFunc) (*R
 	return s.client.Do(req, nil)
 }
 
-// DeleteSSHKeyForUser deletes key owned by a specified user. Available only
-// for admin.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_keys/#delete-an-ssh-key-for-a-user
 func (s *UsersService) DeleteSSHKeyForUser(user, key int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("users/%d/keys/%d", user, key)
 
@@ -780,9 +925,6 @@ type GPGKey struct {
 	CreatedAt *time.Time `json:"created_at"`
 }
 
-// ListGPGKeys gets a list of currently authenticated user’s GPG keys.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#list-all-gpg-keys
 func (s *UsersService) ListGPGKeys(options ...RequestOptionFunc) ([]*GPGKey, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "user/gpg_keys", nil, options)
 	if err != nil {
@@ -798,9 +940,6 @@ func (s *UsersService) ListGPGKeys(options ...RequestOptionFunc) ([]*GPGKey, *Re
 	return ks, resp, nil
 }
 
-// GetGPGKey gets a specific GPG key of currently authenticated user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-a-gpg-key
 func (s *UsersService) GetGPGKey(key int64, options ...RequestOptionFunc) (*GPGKey, *Response, error) {
 	u := fmt.Sprintf("user/gpg_keys/%d", key)
 
@@ -825,9 +964,6 @@ type AddGPGKeyOptions struct {
 	Key *string `url:"key,omitempty" json:"key,omitempty"`
 }
 
-// AddGPGKey creates a new GPG key owned by the currently authenticated user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#add-a-gpg-key
 func (s *UsersService) AddGPGKey(opt *AddGPGKeyOptions, options ...RequestOptionFunc) (*GPGKey, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "user/gpg_keys", opt, options)
 	if err != nil {
@@ -843,9 +979,6 @@ func (s *UsersService) AddGPGKey(opt *AddGPGKeyOptions, options ...RequestOption
 	return k, resp, nil
 }
 
-// DeleteGPGKey deletes a GPG key owned by currently authenticated user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#delete-a-gpg-key
 func (s *UsersService) DeleteGPGKey(key int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("user/gpg_keys/%d", key)
 
@@ -857,10 +990,6 @@ func (s *UsersService) DeleteGPGKey(key int64, options ...RequestOptionFunc) (*R
 	return s.client.Do(req, nil)
 }
 
-// ListGPGKeysForUser gets a list of a specified user’s GPG keys.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_keys/#list-all-gpg-keys-for-a-user
 func (s *UsersService) ListGPGKeysForUser(user int64, options ...RequestOptionFunc) ([]*GPGKey, *Response, error) {
 	u := fmt.Sprintf("users/%d/gpg_keys", user)
 
@@ -878,9 +1007,6 @@ func (s *UsersService) ListGPGKeysForUser(user int64, options ...RequestOptionFu
 	return ks, resp, nil
 }
 
-// GetGPGKeyForUser gets a specific GPG key for a given user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_keys/#get-a-gpg-key-for-a-user
 func (s *UsersService) GetGPGKeyForUser(user, key int64, options ...RequestOptionFunc) (*GPGKey, *Response, error) {
 	u := fmt.Sprintf("users/%d/gpg_keys/%d", user, key)
 
@@ -898,10 +1024,6 @@ func (s *UsersService) GetGPGKeyForUser(user, key int64, options ...RequestOptio
 	return k, resp, nil
 }
 
-// AddGPGKeyForUser creates new GPG key owned by the specified user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_keys/#add-a-gpg-key-for-a-user
 func (s *UsersService) AddGPGKeyForUser(user int64, opt *AddGPGKeyOptions, options ...RequestOptionFunc) (*GPGKey, *Response, error) {
 	u := fmt.Sprintf("users/%d/gpg_keys", user)
 
@@ -919,10 +1041,6 @@ func (s *UsersService) AddGPGKeyForUser(user int64, opt *AddGPGKeyOptions, optio
 	return k, resp, nil
 }
 
-// DeleteGPGKeyForUser deletes a GPG key owned by a specified user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_keys/#delete-a-gpg-key-for-a-user
 func (s *UsersService) DeleteGPGKeyForUser(user, key int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("users/%d/gpg_keys/%d", user, key)
 
@@ -944,10 +1062,6 @@ type Email struct {
 	ConfirmedAt *time.Time `json:"confirmed_at"`
 }
 
-// ListEmails gets a list of currently authenticated user's Emails.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_email_addresses/#list-all-email-addresses
 func (s *UsersService) ListEmails(options ...RequestOptionFunc) ([]*Email, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "user/emails", nil, options)
 	if err != nil {
@@ -971,11 +1085,6 @@ type ListEmailsForUserOptions struct {
 	ListOptions
 }
 
-// ListEmailsForUser gets a list of a specified user's Emails. Available
-// only for admin
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_email_addresses/#list-all-email-addresses-for-a-user
 func (s *UsersService) ListEmailsForUser(user int64, opt *ListEmailsForUserOptions, options ...RequestOptionFunc) ([]*Email, *Response, error) {
 	u := fmt.Sprintf("users/%d/emails", user)
 
@@ -993,10 +1102,6 @@ func (s *UsersService) ListEmailsForUser(user int64, opt *ListEmailsForUserOptio
 	return e, resp, nil
 }
 
-// GetEmail gets a single email.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_email_addresses/#get-details-on-an-email-address
 func (s *UsersService) GetEmail(email int64, options ...RequestOptionFunc) (*Email, *Response, error) {
 	u := fmt.Sprintf("user/emails/%d", email)
 
@@ -1023,10 +1128,6 @@ type AddEmailOptions struct {
 	SkipConfirmation *bool   `url:"skip_confirmation,omitempty" json:"skip_confirmation,omitempty"`
 }
 
-// AddEmail creates a new email owned by the currently authenticated user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_email_addresses/#add-an-email-address
 func (s *UsersService) AddEmail(opt *AddEmailOptions, options ...RequestOptionFunc) (*Email, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "user/emails", opt, options)
 	if err != nil {
@@ -1042,11 +1143,6 @@ func (s *UsersService) AddEmail(opt *AddEmailOptions, options ...RequestOptionFu
 	return e, resp, nil
 }
 
-// AddEmailForUser creates new email owned by specified user. Available only for
-// admin.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_email_addresses/#add-an-email-address-for-a-user
 func (s *UsersService) AddEmailForUser(user int64, opt *AddEmailOptions, options ...RequestOptionFunc) (*Email, *Response, error) {
 	u := fmt.Sprintf("users/%d/emails", user)
 
@@ -1064,12 +1160,6 @@ func (s *UsersService) AddEmailForUser(user int64, opt *AddEmailOptions, options
 	return e, resp, nil
 }
 
-// DeleteEmail deletes email owned by currently authenticated user. This is an
-// idempotent function and calling it on a key that is already deleted or not
-// available results in 200 OK.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_email_addresses/#delete-an-email-address
 func (s *UsersService) DeleteEmail(email int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("user/emails/%d", email)
 
@@ -1081,11 +1171,6 @@ func (s *UsersService) DeleteEmail(email int64, options ...RequestOptionFunc) (*
 	return s.client.Do(req, nil)
 }
 
-// DeleteEmailForUser deletes email owned by a specified user. Available only
-// for admin.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_email_addresses/#delete-an-email-address-for-a-user
 func (s *UsersService) DeleteEmailForUser(user, email int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("users/%d/emails/%d", user, email)
 
@@ -1097,9 +1182,6 @@ func (s *UsersService) DeleteEmailForUser(user, email int64, options ...RequestO
 	return s.client.Do(req, nil)
 }
 
-// BlockUser blocks the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#block-access-to-a-user
 func (s *UsersService) BlockUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/block", user)
 
@@ -1116,9 +1198,6 @@ func (s *UsersService) BlockUser(user int64, options ...RequestOptionFunc) error
 	return nil
 }
 
-// UnblockUser unblocks the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#unblock-access-to-a-user
 func (s *UsersService) UnblockUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/unblock", user)
 
@@ -1144,9 +1223,6 @@ func (s *UsersService) UnblockUser(user int64, options ...RequestOptionFunc) err
 	}
 }
 
-// BanUser bans the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#ban-a-user
 func (s *UsersService) BanUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/ban", user)
 
@@ -1170,9 +1246,6 @@ func (s *UsersService) BanUser(user int64, options ...RequestOptionFunc) error {
 	}
 }
 
-// UnbanUser unbans the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#unban-a-user
 func (s *UsersService) UnbanUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/unban", user)
 
@@ -1196,9 +1269,6 @@ func (s *UsersService) UnbanUser(user int64, options ...RequestOptionFunc) error
 	}
 }
 
-// DeactivateUser deactivate the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#deactivate-a-user
 func (s *UsersService) DeactivateUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/deactivate", user)
 
@@ -1224,9 +1294,6 @@ func (s *UsersService) DeactivateUser(user int64, options ...RequestOptionFunc) 
 	}
 }
 
-// ActivateUser activate the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#reactivate-a-user
 func (s *UsersService) ActivateUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/activate", user)
 
@@ -1252,9 +1319,6 @@ func (s *UsersService) ActivateUser(user int64, options ...RequestOptionFunc) er
 	}
 }
 
-// ApproveUser approve the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#approve-access-to-a-user
 func (s *UsersService) ApproveUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/approve", user)
 
@@ -1280,9 +1344,6 @@ func (s *UsersService) ApproveUser(user int64, options ...RequestOptionFunc) err
 	}
 }
 
-// RejectUser reject the specified user. Available only for admin.
-//
-// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#reject-access-to-a-user
 func (s *UsersService) RejectUser(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/reject", user)
 
@@ -1336,10 +1397,6 @@ type GetAllImpersonationTokensOptions struct {
 	State *string `url:"state,omitempty" json:"state,omitempty"`
 }
 
-// GetAllImpersonationTokens retrieves all impersonation tokens of a user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_tokens/#list-all-impersonation-tokens-for-a-user
 func (s *UsersService) GetAllImpersonationTokens(user int64, opt *GetAllImpersonationTokensOptions, options ...RequestOptionFunc) ([]*ImpersonationToken, *Response, error) {
 	u := fmt.Sprintf("users/%d/impersonation_tokens", user)
 
@@ -1357,10 +1414,6 @@ func (s *UsersService) GetAllImpersonationTokens(user int64, opt *GetAllImperson
 	return ts, resp, nil
 }
 
-// GetImpersonationToken retrieves an impersonation token of a user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_tokens/#get-an-impersonation-token-for-a-user
 func (s *UsersService) GetImpersonationToken(user, token int64, options ...RequestOptionFunc) (*ImpersonationToken, *Response, error) {
 	u := fmt.Sprintf("users/%d/impersonation_tokens/%d", user, token)
 
@@ -1389,10 +1442,6 @@ type CreateImpersonationTokenOptions struct {
 	ExpiresAt *time.Time `url:"expires_at,omitempty" json:"expires_at,omitempty"`
 }
 
-// CreateImpersonationToken creates an impersonation token.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_tokens/#create-an-impersonation-token
 func (s *UsersService) CreateImpersonationToken(user int64, opt *CreateImpersonationTokenOptions, options ...RequestOptionFunc) (*ImpersonationToken, *Response, error) {
 	u := fmt.Sprintf("users/%d/impersonation_tokens", user)
 
@@ -1410,10 +1459,6 @@ func (s *UsersService) CreateImpersonationToken(user int64, opt *CreateImpersona
 	return t, resp, nil
 }
 
-// RevokeImpersonationToken revokes an impersonation token.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_tokens/#revoke-an-impersonation-token
 func (s *UsersService) RevokeImpersonationToken(user, token int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("users/%d/impersonation_tokens/%d", user, token)
 
@@ -1437,10 +1482,6 @@ type CreatePersonalAccessTokenOptions struct {
 	Scopes      *[]string `url:"scopes,omitempty" json:"scopes,omitempty"`
 }
 
-// CreatePersonalAccessToken creates a personal access token.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token-for-a-user
 func (s *UsersService) CreatePersonalAccessToken(user int64, opt *CreatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
 	u := fmt.Sprintf("users/%d/personal_access_tokens", user)
 
@@ -1470,10 +1511,6 @@ type CreatePersonalAccessTokenForCurrentUserOptions struct {
 	ExpiresAt   *ISOTime  `url:"expires_at,omitempty" json:"expires_at,omitempty"`
 }
 
-// CreatePersonalAccessTokenForCurrentUser creates a personal access token with limited scopes for the currently authenticated user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_tokens/#create-a-personal-access-token
 func (s *UsersService) CreatePersonalAccessTokenForCurrentUser(opt *CreatePersonalAccessTokenForCurrentUserOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error) {
 	u := "user/personal_access_tokens"
 
@@ -1509,10 +1546,6 @@ type GetUserActivitiesOptions struct {
 	From *ISOTime `url:"from,omitempty" json:"from,omitempty"`
 }
 
-// GetUserActivities retrieves user activities (admin only)
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#list-a-users-activity
 func (s *UsersService) GetUserActivities(opt *GetUserActivitiesOptions, options ...RequestOptionFunc) ([]*UserActivity, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "user/activities", opt, options)
 	if err != nil {
@@ -1548,10 +1581,6 @@ type GetUserMembershipOptions struct {
 	Type *string `url:"type,omitempty" json:"type,omitempty"`
 }
 
-// GetUserMemberships retrieves a list of the user's memberships.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#list-projects-and-groups-that-a-user-is-a-member-of
 func (s *UsersService) GetUserMemberships(user int64, opt *GetUserMembershipOptions, options ...RequestOptionFunc) ([]*UserMembership, *Response, error) {
 	u := fmt.Sprintf("users/%d/memberships", user)
 
@@ -1569,10 +1598,6 @@ func (s *UsersService) GetUserMemberships(user int64, opt *GetUserMembershipOpti
 	return m, resp, nil
 }
 
-// DisableTwoFactor disables two factor authentication for the specified user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#disable-two-factor-authentication-for-a-user
 func (s *UsersService) DisableTwoFactor(user int64, options ...RequestOptionFunc) error {
 	u := fmt.Sprintf("users/%d/disable_two_factor", user)
 
@@ -1628,10 +1653,6 @@ type CreateUserRunnerOptions struct {
 	MaintenanceNote *string   `url:"maintenance_note,omitempty" json:"maintenance_note,omitempty"`
 }
 
-// CreateUserRunner creates a runner linked to the current user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#create-a-runner-linked-to-a-user
 func (s *UsersService) CreateUserRunner(opts *CreateUserRunnerOptions, options ...RequestOptionFunc) (*UserRunner, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "user/runners", opts, options)
 	if err != nil {
@@ -1657,10 +1678,6 @@ type CreateServiceAccountUserOptions struct {
 	Email    *string `url:"email,omitempty" json:"email,omitempty"`
 }
 
-// CreateServiceAccountUser creates a new service account user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_service_accounts/#create-a-service-account-user
 func (s *UsersService) CreateServiceAccountUser(opts *CreateServiceAccountUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "service_accounts", opts, options)
 	if err != nil {
@@ -1676,10 +1693,6 @@ func (s *UsersService) CreateServiceAccountUser(opts *CreateServiceAccountUserOp
 	return usr, resp, nil
 }
 
-// ListServiceAccounts lists all service accounts.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_service_accounts/#list-all-service-account-users
 func (s *UsersService) ListServiceAccounts(opt *ListServiceAccountsOptions, options ...RequestOptionFunc) ([]*ServiceAccount, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "service_accounts", opt, options)
 	if err != nil {
@@ -1695,10 +1708,6 @@ func (s *UsersService) ListServiceAccounts(opt *ListServiceAccountsOptions, opti
 	return sas, resp, nil
 }
 
-// UploadAvatar uploads an avatar to the current user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#upload-an-avatar-for-yourself
 func (s *UsersService) UploadAvatar(avatar io.Reader, filename string, options ...RequestOptionFunc) (*User, *Response, error) {
 	u := "user/avatar"
 
@@ -1724,11 +1733,6 @@ func (s *UsersService) UploadAvatar(avatar io.Reader, filename string, options .
 	return usr, resp, nil
 }
 
-// DeleteUserIdentity deletes a user's authentication identity using the provider
-// name associated with that identity. Only available for administrators.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/users/#delete-authentication-identity-from-a-user
 func (s *UsersService) DeleteUserIdentity(user int64, provider string, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("users/%d/identities/%s", user, provider)
 
