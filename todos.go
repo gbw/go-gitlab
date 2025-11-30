@@ -24,8 +24,19 @@ import (
 
 type (
 	TodosServiceInterface interface {
+		// ListTodos lists all todos created by authenticated user.
+		// When no filter is applied, it returns all pending todos for the current user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/todos/#get-a-list-of-to-do-items
 		ListTodos(opt *ListTodosOptions, options ...RequestOptionFunc) ([]*Todo, *Response, error)
+		// MarkTodoAsDone marks a single pending todo given by its ID for the current user as done.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/todos/#mark-a-to-do-item-as-done
 		MarkTodoAsDone(id int64, options ...RequestOptionFunc) (*Response, error)
+		// MarkAllTodosAsDone marks all pending todos for the current user as done.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/todos/#mark-all-to-do-items-as-done
 		MarkAllTodosAsDone(options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -127,11 +138,6 @@ type ListTodosOptions struct {
 	Type      *string     `url:"type,omitempty" json:"type,omitempty"`
 }
 
-// ListTodos lists all todos created by authenticated user.
-// When no filter is applied, it returns all pending todos for the current user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/todos/#get-a-list-of-to-do-items
 func (s *TodosService) ListTodos(opt *ListTodosOptions, options ...RequestOptionFunc) ([]*Todo, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "todos", opt, options)
 	if err != nil {
@@ -147,9 +153,6 @@ func (s *TodosService) ListTodos(opt *ListTodosOptions, options ...RequestOption
 	return t, resp, nil
 }
 
-// MarkTodoAsDone marks a single pending todo given by its ID for the current user as done.
-//
-// GitLab API docs: https://docs.gitlab.com/api/todos/#mark-a-to-do-item-as-done
 func (s *TodosService) MarkTodoAsDone(id int64, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("todos/%d/mark_as_done", id)
 
@@ -161,9 +164,6 @@ func (s *TodosService) MarkTodoAsDone(id int64, options ...RequestOptionFunc) (*
 	return s.client.Do(req, nil)
 }
 
-// MarkAllTodosAsDone marks all pending todos for the current user as done.
-//
-// GitLab API docs: https://docs.gitlab.com/api/todos/#mark-all-to-do-items-as-done
 func (s *TodosService) MarkAllTodosAsDone(options ...RequestOptionFunc) (*Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "todos/mark_as_done", nil, options)
 	if err != nil {
