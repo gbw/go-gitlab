@@ -1,3 +1,25 @@
+## 1.3.0
+
+### 🚀 Features
+
+- feat(credentials): Add support for revoking group PATs, listing/deleting group SSH keys ([!2594](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2594)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+### 🔄 Other Changes
+
+- refactor: moved comments to interface ([!2595](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2595)) by [Zubeen](https://gitlab.com/syedzubeen)
+- refactor(users): moved comments to interface ([!2596](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2596)) by [Zubeen](https://gitlab.com/syedzubeen)
+- refactor: moved comments to interface ([!2599](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2599)) by [Zubeen](https://gitlab.com/syedzubeen)
+- Simplify more request functions, introducing NoEscape ([!2592](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2592)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+
+
+# [1.3.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.2.0...v1.3.0) (2025-11-30)
+
+
+### Features
+
+* **credentials:** Add support for revoking group PATs, listing/deleting group SSH keys ([3439f4f](https://gitlab.com/gitlab-org/api/client-go/commit/3439f4f0345b97dea0abf926ecaac9d3a7eb6769))
+
 ## 1.2.0
 
 ### 🚀 Features
