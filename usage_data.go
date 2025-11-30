@@ -9,11 +9,35 @@ import (
 
 type (
 	UsageDataServiceInterface interface {
+		// GetServicePing gets the current service ping data.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/usage_data/#export-service-ping-data
 		GetServicePing(options ...RequestOptionFunc) (*ServicePingData, *Response, error)
+		// GetMetricDefinitionsAsYAML gets all metric definitions as a single YAML file.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/usage_data/#export-metric-definitions-as-a-single-yaml-file
 		GetMetricDefinitionsAsYAML(options ...RequestOptionFunc) (io.Reader, *Response, error)
+		// GetQueries gets all raw SQL queries used to compute service ping.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/usage_data/#export-service-ping-sql-queries
 		GetQueries(options ...RequestOptionFunc) (*ServicePingQueries, *Response, error)
+		// GetNonSQLMetrics gets all non-SQL metrics data used in the service ping.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/usage_data/#usagedatanonsqlmetrics-api
 		GetNonSQLMetrics(options ...RequestOptionFunc) (*ServicePingNonSQLMetrics, *Response, error)
+		// TrackEvent tracks an internal GitLab event.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/usage_data/#events-tracking-api
 		TrackEvent(opt *TrackEventOptions, options ...RequestOptionFunc) (*Response, error)
+		// TrackEvents tracks multiple internal GitLab events.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/usage_data/#events-tracking-api
 		TrackEvents(opt *TrackEventsOptions, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -33,10 +57,6 @@ type ServicePingData struct {
 	Counts     map[string]int64  `json:"counts"`
 }
 
-// GetServicePing gets the current service ping data.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/usage_data/#export-service-ping-data
 func (s *UsageDataService) GetServicePing(options ...RequestOptionFunc) (*ServicePingData, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "usage_data/service_ping", nil, options)
 	if err != nil {
@@ -52,10 +72,6 @@ func (s *UsageDataService) GetServicePing(options ...RequestOptionFunc) (*Servic
 	return sp, resp, nil
 }
 
-// GetMetricDefinitionsAsYAML gets all metric definitions as a single YAML file.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/usage_data/#export-metric-definitions-as-a-single-yaml-file
 func (s *UsageDataService) GetMetricDefinitionsAsYAML(options ...RequestOptionFunc) (io.Reader, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "usage_data/metric_definitions", nil, options)
 	if err != nil {
@@ -99,10 +115,6 @@ type ServicePingQueries struct {
 	Counts                map[string]string `json:"counts"`
 }
 
-// GetQueries gets all raw SQL queries used to compute service ping.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/usage_data/#export-service-ping-sql-queries
 func (s *UsageDataService) GetQueries(options ...RequestOptionFunc) (*ServicePingQueries, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "usage_data/queries", nil, options)
 	if err != nil {
@@ -143,10 +155,6 @@ type ServicePingNonSQLMetrics struct {
 	Settings              map[string]string `json:"settings"`
 }
 
-// GetNonSQLMetrics gets all non-SQL metrics data used in the service ping.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/usage_data/#usagedatanonsqlmetrics-api
 func (s *UsageDataService) GetNonSQLMetrics(options ...RequestOptionFunc) (*ServicePingNonSQLMetrics, *Response, error) {
 	req, err := s.client.NewRequest(http.MethodGet, "usage_data/non_sql_metrics", nil, options)
 	if err != nil {
@@ -171,10 +179,6 @@ type TrackEventOptions struct {
 	AdditionalProperties map[string]string `json:"additional_properties,omitempty" url:"additional_properties,omitempty"`
 }
 
-// TrackEvent tracks an internal GitLab event.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/usage_data/#events-tracking-api
 func (s *UsageDataService) TrackEvent(opt *TrackEventOptions, options ...RequestOptionFunc) (*Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "usage_data/track_event", opt, options)
 	if err != nil {
@@ -189,10 +193,6 @@ type TrackEventsOptions struct {
 	Events []TrackEventOptions `json:"events" url:"events"`
 }
 
-// TrackEvents tracks multiple internal GitLab events.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/usage_data/#events-tracking-api
 func (s *UsageDataService) TrackEvents(opt *TrackEventsOptions, options ...RequestOptionFunc) (*Response, error) {
 	req, err := s.client.NewRequest(http.MethodPost, "usage_data/track_events", opt, options)
 	if err != nil {
