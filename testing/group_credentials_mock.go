@@ -39,6 +39,50 @@ func (m *MockGroupCredentialsServiceInterface) EXPECT() *MockGroupCredentialsSer
 	return m.recorder
 }
 
+// DeleteGroupSSHKey mocks base method.
+func (m *MockGroupCredentialsServiceInterface) DeleteGroupSSHKey(gid any, keyID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, keyID}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteGroupSSHKey", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteGroupSSHKey indicates an expected call of DeleteGroupSSHKey.
+func (mr *MockGroupCredentialsServiceInterfaceMockRecorder) DeleteGroupSSHKey(gid, keyID any, options ...any) *MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, keyID}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteGroupSSHKey", reflect.TypeOf((*MockGroupCredentialsServiceInterface)(nil).DeleteGroupSSHKey), varargs...)
+	return &MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall{Call: call}
+}
+
+// MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall wrap *gomock.Call
+type MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall) Return(arg0 *gitlab.Response, arg1 error) *MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupCredentialsServiceInterfaceDeleteGroupSSHKeyCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListGroupPersonalAccessTokens mocks base method.
 func (m *MockGroupCredentialsServiceInterface) ListGroupPersonalAccessTokens(gid any, opt *gitlab.ListGroupPersonalAccessTokensOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.GroupPersonalAccessToken, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -80,6 +124,95 @@ func (c *MockGroupCredentialsServiceInterfaceListGroupPersonalAccessTokensCall) 
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockGroupCredentialsServiceInterfaceListGroupPersonalAccessTokensCall) DoAndReturn(f func(any, *gitlab.ListGroupPersonalAccessTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.GroupPersonalAccessToken, *gitlab.Response, error)) *MockGroupCredentialsServiceInterfaceListGroupPersonalAccessTokensCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListGroupSSHKeys mocks base method.
+func (m *MockGroupCredentialsServiceInterface) ListGroupSSHKeys(gid any, opt *gitlab.ListGroupSSHKeysOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.GroupSSHKey, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListGroupSSHKeys", varargs...)
+	ret0, _ := ret[0].([]*gitlab.GroupSSHKey)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListGroupSSHKeys indicates an expected call of ListGroupSSHKeys.
+func (mr *MockGroupCredentialsServiceInterfaceMockRecorder) ListGroupSSHKeys(gid, opt any, options ...any) *MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListGroupSSHKeys", reflect.TypeOf((*MockGroupCredentialsServiceInterface)(nil).ListGroupSSHKeys), varargs...)
+	return &MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall{Call: call}
+}
+
+// MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall wrap *gomock.Call
+type MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall) Return(arg0 []*gitlab.GroupSSHKey, arg1 *gitlab.Response, arg2 error) *MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall) Do(f func(any, *gitlab.ListGroupSSHKeysOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.GroupSSHKey, *gitlab.Response, error)) *MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall) DoAndReturn(f func(any, *gitlab.ListGroupSSHKeysOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.GroupSSHKey, *gitlab.Response, error)) *MockGroupCredentialsServiceInterfaceListGroupSSHKeysCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// RevokeGroupPersonalAccessToken mocks base method.
+func (m *MockGroupCredentialsServiceInterface) RevokeGroupPersonalAccessToken(gid any, tokenID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, tokenID}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RevokeGroupPersonalAccessToken", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RevokeGroupPersonalAccessToken indicates an expected call of RevokeGroupPersonalAccessToken.
+func (mr *MockGroupCredentialsServiceInterfaceMockRecorder) RevokeGroupPersonalAccessToken(gid, tokenID any, options ...any) *MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, tokenID}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeGroupPersonalAccessToken", reflect.TypeOf((*MockGroupCredentialsServiceInterface)(nil).RevokeGroupPersonalAccessToken), varargs...)
+	return &MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall{Call: call}
+}
+
+// MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall wrap *gomock.Call
+type MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall) Return(arg0 *gitlab.Response, arg1 error) *MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupCredentialsServiceInterfaceRevokeGroupPersonalAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
