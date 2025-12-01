@@ -1,3 +1,18 @@
+## 1.3.1
+
+### 🐛 Bug Fixes
+
+- fix(merge_requests): Reinstate missing request option ([!2601](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2601)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+## [1.3.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.3.0...v1.3.1) (2025-12-01)
+
+
+### Bug Fixes
+
+* **merge_requests:** Reinstate missing request option ([f5f912d](https://gitlab.com/gitlab-org/api/client-go/commit/f5f912ddc2dfb1af88de8710bde783f3f7ccd7c2))
+
 ## 1.3.0
 
 ### 🚀 Features
