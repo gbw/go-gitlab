@@ -1,3 +1,22 @@
+## 1.4.0
+
+### 🚀 Features
+
+- feat(integrations): Add attestations integrations ([!2582](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2582)) by [Sam Roque-Worcel](https://gitlab.com/sroque-worcel)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.1.1 ([!2602](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2602)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.4.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.3.1...v1.4.0) (2025-12-02)
+
+
+### Features
+
+* **integrations:** Add attestations integrations ([4f50db4](https://gitlab.com/gitlab-org/api/client-go/commit/4f50db4acfb19212bfdfc12eb808dbc7ed8d7ad2))
+
 ## 1.3.1
 
 ### 🐛 Bug Fixes
