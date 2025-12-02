@@ -1,3 +1,13 @@
+## 1.4.1
+
+### 🐛 Bug Fixes
+
+- Encode package managers as CSV in query for dependencies list ([!2604](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2604)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+
+
+## [1.4.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.4.0...v1.4.1) (2025-12-02)
+
 ## 1.4.0
 
 ### 🚀 Features
