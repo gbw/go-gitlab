@@ -8,6 +8,7 @@ var serviceMap = map[any]any{
 	&AppearanceService{}:                       (*AppearanceServiceInterface)(nil),
 	&ApplicationStatisticsService{}:            (*ApplicationStatisticsServiceInterface)(nil),
 	&ApplicationsService{}:                     (*ApplicationsServiceInterface)(nil),
+	&AttestationsService{}:                     (*AttestationsServiceInterface)(nil),
 	&AuditEventsService{}:                      (*AuditEventsServiceInterface)(nil),
 	&AvatarRequestsService{}:                   (*AvatarRequestsServiceInterface)(nil),
 	&AwardEmojiService{}:                       (*AwardEmojiServiceInterface)(nil),

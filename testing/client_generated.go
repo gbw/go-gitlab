@@ -17,6 +17,7 @@ type testClientMocks struct {
 	MockAppearance                       *MockAppearanceServiceInterface
 	MockApplications                     *MockApplicationsServiceInterface
 	MockApplicationStatistics            *MockApplicationStatisticsServiceInterface
+	MockAttestations                     *MockAttestationsServiceInterface
 	MockAuditEvents                      *MockAuditEventsServiceInterface
 	MockAvatar                           *MockAvatarRequestsServiceInterface
 	MockAwardEmoji                       *MockAwardEmojiServiceInterface
@@ -174,6 +175,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockAppearance := NewMockAppearanceServiceInterface(ctrl)
 	mockApplications := NewMockApplicationsServiceInterface(ctrl)
 	mockApplicationStatistics := NewMockApplicationStatisticsServiceInterface(ctrl)
+	mockAttestations := NewMockAttestationsServiceInterface(ctrl)
 	mockAuditEvents := NewMockAuditEventsServiceInterface(ctrl)
 	mockAvatar := NewMockAvatarRequestsServiceInterface(ctrl)
 	mockAwardEmoji := NewMockAwardEmojiServiceInterface(ctrl)
@@ -330,6 +332,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Appearance:                       mockAppearance,
 		Applications:                     mockApplications,
 		ApplicationStatistics:            mockApplicationStatistics,
+		Attestations:                     mockAttestations,
 		AuditEvents:                      mockAuditEvents,
 		Avatar:                           mockAvatar,
 		AwardEmoji:                       mockAwardEmoji,
@@ -498,6 +501,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockAppearance:                       mockAppearance,
 			MockApplications:                     mockApplications,
 			MockApplicationStatistics:            mockApplicationStatistics,
+			MockAttestations:                     mockAttestations,
 			MockAuditEvents:                      mockAuditEvents,
 			MockAvatar:                           mockAvatar,
 			MockAwardEmoji:                       mockAwardEmoji,

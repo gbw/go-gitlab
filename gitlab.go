@@ -123,6 +123,7 @@ type Client struct {
 	Appearance                       AppearanceServiceInterface
 	Applications                     ApplicationsServiceInterface
 	ApplicationStatistics            ApplicationStatisticsServiceInterface
+	Attestations                     AttestationsServiceInterface
 	AuditEvents                      AuditEventsServiceInterface
 	Avatar                           AvatarRequestsServiceInterface
 	AwardEmoji                       AwardEmojiServiceInterface
@@ -437,6 +438,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.Appearance = &AppearanceService{client: c}
 	c.Applications = &ApplicationsService{client: c}
 	c.ApplicationStatistics = &ApplicationStatisticsService{client: c}
+	c.Attestations = &AttestationsService{client: c}
 	c.AuditEvents = &AuditEventsService{client: c}
 	c.Avatar = &AvatarRequestsService{client: c}
 	c.AwardEmoji = &AwardEmojiService{client: c}
