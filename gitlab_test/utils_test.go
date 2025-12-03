@@ -3,6 +3,7 @@
 package gitlab_test
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"testing"
@@ -111,4 +112,37 @@ func CreateTestUser(t *testing.T, client *gitlab.Client) (*gitlab.User, error) {
 	})
 
 	return user, nil
+}
+
+// CreateTestProject creates a test Project with a random name. It'll be set to `public` to
+// help with other testing pieces.
+//
+// The user is automatically cleaned up when the test finishes.
+func CreateTestProject(t *testing.T, client *gitlab.Client) *gitlab.Project {
+	t.Helper()
+
+	suffix := time.Now().UnixNano()
+	return CreateTestProjectWithOptions(t, client, &gitlab.CreateProjectOptions{
+		Name:       gitlab.Ptr(fmt.Sprintf("project%d", suffix)),
+		Visibility: gitlab.Ptr(gitlab.PublicVisibility),
+	})
+}
+
+// CreateTestProjectWithOptions creates a test Project with the provided options.
+//
+// The user is automatically cleaned up when the test finishes.
+func CreateTestProjectWithOptions(t *testing.T, client *gitlab.Client, opts *gitlab.CreateProjectOptions) *gitlab.Project {
+	t.Helper()
+
+	project, _, err := client.Projects.CreateProject(opts, gitlab.WithContext(context.Background()))
+	if err != nil {
+		t.Fatalf("Failed to create project: %v", err)
+	}
+
+	// Add a cleanup function
+	t.Cleanup(func() {
+		_, _ = client.Projects.DeleteProject(project.ID, nil, gitlab.WithContext(context.Background()))
+	})
+
+	return project
 }

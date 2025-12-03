@@ -1362,7 +1362,12 @@ func TestGetProjectPullMirrorDetails(t *testing.T) {
 		  "last_update_at": "2020-01-06T17:32:02.823Z",
 		  "last_update_started_at": "2020-01-06T17:31:55.864Z",
 		  "update_status": "finished",
-		  "url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git"
+		  "url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
+		  "enabled": true,
+		  "mirror_trigger_builds": true,
+		  "only_mirror_protected_branches": null,
+		  "mirror_overwrites_diverged_branches": false,
+		  "mirror_branch_regex": null
 		}`)
 	})
 
@@ -1374,13 +1379,18 @@ func TestGetProjectPullMirrorDetails(t *testing.T) {
 	wantLastUpdateAtTimestamp := time.Date(2020, time.January, 6, 17, 32, 2, 823000000, time.UTC)
 	wantLastUpdateStartedAtTimestamp := time.Date(2020, time.January, 6, 17, 31, 55, 864000000, time.UTC)
 	want := &ProjectPullMirrorDetails{
-		ID:                     101486,
-		LastError:              "",
-		LastSuccessfulUpdateAt: &wantLastSuccessfulUpdateAtTimestamp,
-		LastUpdateAt:           &wantLastUpdateAtTimestamp,
-		LastUpdateStartedAt:    &wantLastUpdateStartedAtTimestamp,
-		UpdateStatus:           "finished",
-		URL:                    "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
+		ID:                               101486,
+		LastError:                        "",
+		LastSuccessfulUpdateAt:           &wantLastSuccessfulUpdateAtTimestamp,
+		LastUpdateAt:                     &wantLastUpdateAtTimestamp,
+		LastUpdateStartedAt:              &wantLastUpdateStartedAtTimestamp,
+		UpdateStatus:                     "finished",
+		URL:                              "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
+		Enabled:                          true,
+		MirrorTriggerBuilds:              true,
+		OnlyMirrorProtectedBranches:      false,
+		MirrorOverwritesDivergedBranches: false,
+		MirrorBranchRegex:                "",
 	}
 
 	assert.Equal(t, want, pullMirror)
@@ -1399,7 +1409,12 @@ func TestConfigureProjectPullMirror(t *testing.T) {
 		  "last_update_at": "2020-01-06T17:32:02.823Z",
 		  "last_update_started_at": "2020-01-06T17:31:55.864Z",
 		  "update_status": "finished",
-		  "url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git"
+		  "url": "https://gitlab.example.com/group/project.git",
+		  "enabled": true,
+		  "mirror_trigger_builds": false,
+		  "only_mirror_protected_branches": false,
+		  "mirror_overwrites_diverged_branches": true,
+		  "mirror_branch_regex": "releases/*"
 		}`)
 	})
 
@@ -1422,13 +1437,18 @@ func TestConfigureProjectPullMirror(t *testing.T) {
 	wantLastUpdateAtTimestamp := time.Date(2020, time.January, 6, 17, 32, 2, 823000000, time.UTC)
 	wantLastUpdateStartedAtTimestamp := time.Date(2020, time.January, 6, 17, 31, 55, 864000000, time.UTC)
 	want := &ProjectPullMirrorDetails{
-		ID:                     101486,
-		LastError:              "",
-		LastSuccessfulUpdateAt: &wantLastSuccessfulUpdateAtTimestamp,
-		LastUpdateAt:           &wantLastUpdateAtTimestamp,
-		LastUpdateStartedAt:    &wantLastUpdateStartedAtTimestamp,
-		UpdateStatus:           "finished",
-		URL:                    "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
+		ID:                               101486,
+		LastError:                        "",
+		LastSuccessfulUpdateAt:           &wantLastSuccessfulUpdateAtTimestamp,
+		LastUpdateAt:                     &wantLastUpdateAtTimestamp,
+		LastUpdateStartedAt:              &wantLastUpdateStartedAtTimestamp,
+		UpdateStatus:                     "finished",
+		URL:                              "https://gitlab.example.com/group/project.git",
+		Enabled:                          true,
+		MirrorTriggerBuilds:              false,
+		OnlyMirrorProtectedBranches:      false,
+		MirrorOverwritesDivergedBranches: true,
+		MirrorBranchRegex:                "releases/*",
 	}
 
 	assert.Equal(t, want, pullMirror)
