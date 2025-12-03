@@ -2282,13 +2282,18 @@ func (s *ProjectsService) DeleteProjectApprovalRule(pid any, approvalRule int64,
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_pull_mirroring/
 type ProjectPullMirrorDetails struct {
-	ID                     int64      `json:"id"`
-	LastError              string     `json:"last_error"`
-	LastSuccessfulUpdateAt *time.Time `json:"last_successful_update_at"`
-	LastUpdateAt           *time.Time `json:"last_update_at"`
-	LastUpdateStartedAt    *time.Time `json:"last_update_started_at"`
-	UpdateStatus           string     `json:"update_status"`
-	URL                    string     `json:"url"`
+	ID                               int64      `json:"id"`
+	LastError                        string     `json:"last_error"`
+	LastSuccessfulUpdateAt           *time.Time `json:"last_successful_update_at"`
+	LastUpdateAt                     *time.Time `json:"last_update_at"`
+	LastUpdateStartedAt              *time.Time `json:"last_update_started_at"`
+	UpdateStatus                     string     `json:"update_status"`
+	URL                              string     `json:"url"`
+	Enabled                          bool       `json:"enabled"`
+	MirrorTriggerBuilds              bool       `json:"mirror_trigger_builds"`
+	OnlyMirrorProtectedBranches      bool       `json:"only_mirror_protected_branches"`
+	MirrorOverwritesDivergedBranches bool       `json:"mirror_overwrites_diverged_branches"`
+	MirrorBranchRegex                string     `json:"mirror_branch_regex"`
 }
 
 // GetProjectPullMirrorDetails returns the pull mirror details.
