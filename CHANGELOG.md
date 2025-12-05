@@ -1,3 +1,25 @@
+## 1.6.0
+
+### 🚀 Features
+
+- feat: add admin compliance policy settings API ([!2610](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2610)) by [Hannes Lange](https://gitlab.com/hlange4)
+
+### 🔄 Other Changes
+
+- doc: fix typo ([!2603](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2603)) by [Guilhem Bonnefille](https://gitlab.com/gbonnefille)
+- chore(deps): update golangci/golangci-lint docker tag to v2.7.1 ([!2611](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2611)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update docker docker tag to v29.1.2 ([!2609](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2609)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update golangci/golangci-lint docker tag to v2.7.0 ([!2608](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2608)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.6.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.5.0...v1.6.0) (2025-12-05)
+
+
+### Features
+
+* add admin compliance policy settings API ([5c17773](https://gitlab.com/gitlab-org/api/client-go/commit/5c17773ca94ddece28978c7396bddcc6c65fb6a7))
+
 ## 1.5.0
 
 ### 🚀 Features
