@@ -334,7 +334,7 @@ func (s *GroupsService) ListDescendantGroups(gid any, opt *ListDescendantGroupsO
 	return gs, resp, nil
 }
 
-// ListGroupProjectsOptions represents the available ListGroup() options.
+// ListGroupProjectsOptions represents the available ListGroupProjects() options.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/groups/#list-projects
