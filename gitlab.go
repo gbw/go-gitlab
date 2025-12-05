@@ -119,6 +119,7 @@ type Client struct {
 
 	// Services used for talking to different parts of the GitLab API.
 	AccessRequests                   AccessRequestsServiceInterface
+	AdminCompliancePolicySettings    AdminCompliancePolicySettingsServiceInterface
 	AlertManagement                  AlertManagementServiceInterface
 	Appearance                       AppearanceServiceInterface
 	Applications                     ApplicationsServiceInterface
@@ -434,6 +435,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 
 	// Create all the public services.
 	c.AccessRequests = &AccessRequestsService{client: c}
+	c.AdminCompliancePolicySettings = &AdminCompliancePolicySettingsService{client: c}
 	c.AlertManagement = &AlertManagementService{client: c}
 	c.Appearance = &AppearanceService{client: c}
 	c.Applications = &ApplicationsService{client: c}
