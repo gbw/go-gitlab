@@ -1105,3 +1105,95 @@ func TestListUsersWithPublicEmail(t *testing.T) {
 	}}
 	assert.Equal(t, want, users)
 }
+
+func TestCreateUserWithViewDiffsFileByFile(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	path := "/api/v4/users"
+
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
+			t.Fatalf("Users.CreateUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
+		}
+		if r.ContentLength == -1 {
+			t.Fatalf("Users.CreateUser request content-length is -1")
+		}
+
+		// Verify the view_diffs_file_by_file parameter is in the request body
+		testJSONBody(t, r, `{
+			"email": "user999@example.com",
+			"name": "Firstname Lastname",
+			"username": "user",
+			"view_diffs_file_by_file": true
+		}`)
+
+		w.WriteHeader(http.StatusCreated)
+		fmt.Fprint(w, `
+		{
+			"email": "user999@example.com",
+			"id": 999,
+			"name":"Firstname Lastname",
+			"username":"user"
+		}`)
+	})
+
+	user, _, err := client.Users.CreateUser(&CreateUserOptions{
+		Email:               Ptr("user999@example.com"),
+		Name:                Ptr("Firstname Lastname"),
+		Username:            Ptr("user"),
+		ViewDiffsFileByFile: Ptr(true),
+	})
+	assert.NoError(t, err)
+
+	want := &User{
+		Email:    "user999@example.com",
+		ID:       999,
+		Name:     "Firstname Lastname",
+		Username: "user",
+	}
+	assert.Equal(t, want, user)
+}
+
+func TestModifyUserWithViewDiffsFileByFile(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	path := "/api/v4/users/1"
+
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
+			t.Fatalf("Users.ModifyUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
+		}
+		if r.ContentLength == -1 {
+			t.Fatalf("Users.ModifyUser request content-length is -1")
+		}
+
+		// Verify the view_diffs_file_by_file parameter is in the request body
+		testJSONBody(t, r, `{
+			"view_diffs_file_by_file": false
+		}`)
+
+		fmt.Fprint(w, `{
+			"id": 1,
+			"username": "john_smith",
+			"email": "john@example.com",
+			"name": "John Smith"
+		}`)
+	})
+
+	user, _, err := client.Users.ModifyUser(1, &ModifyUserOptions{
+		ViewDiffsFileByFile: Ptr(false),
+	})
+	assert.NoError(t, err)
+
+	want := &User{
+		ID:       1,
+		Username: "john_smith",
+		Email:    "john@example.com",
+		Name:     "John Smith",
+	}
+	assert.Equal(t, want, user)
+}

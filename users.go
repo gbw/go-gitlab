@@ -528,6 +528,7 @@ type CreateUserOptions struct {
 	Twitter             *string     `url:"twitter,omitempty" json:"twitter,omitempty"`
 	Username            *string     `url:"username,omitempty" json:"username,omitempty"`
 	WebsiteURL          *string     `url:"website_url,omitempty" json:"website_url,omitempty"`
+	ViewDiffsFileByFile *bool       `url:"view_diffs_file_by_file,omitempty" json:"view_diffs_file_by_file,omitempty"`
 }
 
 func (s *UsersService) CreateUser(opt *CreateUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
@@ -564,31 +565,32 @@ func (s *UsersService) CreateUser(opt *CreateUserOptions, options ...RequestOpti
 //
 // GitLab API docs: https://docs.gitlab.com/api/users/#modify-a-user
 type ModifyUserOptions struct {
-	Admin              *bool       `url:"admin,omitempty" json:"admin,omitempty"`
-	Avatar             *UserAvatar `url:"-" json:"avatar,omitempty"`
-	Bio                *string     `url:"bio,omitempty" json:"bio,omitempty"`
-	CanCreateGroup     *bool       `url:"can_create_group,omitempty" json:"can_create_group,omitempty"`
-	CommitEmail        *string     `url:"commit_email,omitempty" json:"commit_email,omitempty"`
-	Email              *string     `url:"email,omitempty" json:"email,omitempty"`
-	External           *bool       `url:"external,omitempty" json:"external,omitempty"`
-	ExternUID          *string     `url:"extern_uid,omitempty" json:"extern_uid,omitempty"`
-	JobTitle           *string     `url:"job_title,omitempty" json:"job_title,omitempty"`
-	Linkedin           *string     `url:"linkedin,omitempty" json:"linkedin,omitempty"`
-	Location           *string     `url:"location,omitempty" json:"location,omitempty"`
-	Name               *string     `url:"name,omitempty" json:"name,omitempty"`
-	Note               *string     `url:"note,omitempty" json:"note,omitempty"`
-	Organization       *string     `url:"organization,omitempty" json:"organization,omitempty"`
-	Password           *string     `url:"password,omitempty" json:"password,omitempty"`
-	PrivateProfile     *bool       `url:"private_profile,omitempty" json:"private_profile,omitempty"`
-	ProjectsLimit      *int64      `url:"projects_limit,omitempty" json:"projects_limit,omitempty"`
-	Provider           *string     `url:"provider,omitempty" json:"provider,omitempty"`
-	PublicEmail        *string     `url:"public_email,omitempty" json:"public_email,omitempty"`
-	SkipReconfirmation *bool       `url:"skip_reconfirmation,omitempty" json:"skip_reconfirmation,omitempty"`
-	Skype              *string     `url:"skype,omitempty" json:"skype,omitempty"`
-	ThemeID            *int64      `url:"theme_id,omitempty" json:"theme_id,omitempty"`
-	Twitter            *string     `url:"twitter,omitempty" json:"twitter,omitempty"`
-	Username           *string     `url:"username,omitempty" json:"username,omitempty"`
-	WebsiteURL         *string     `url:"website_url,omitempty" json:"website_url,omitempty"`
+	Admin               *bool       `url:"admin,omitempty" json:"admin,omitempty"`
+	Avatar              *UserAvatar `url:"-" json:"avatar,omitempty"`
+	Bio                 *string     `url:"bio,omitempty" json:"bio,omitempty"`
+	CanCreateGroup      *bool       `url:"can_create_group,omitempty" json:"can_create_group,omitempty"`
+	CommitEmail         *string     `url:"commit_email,omitempty" json:"commit_email,omitempty"`
+	Email               *string     `url:"email,omitempty" json:"email,omitempty"`
+	External            *bool       `url:"external,omitempty" json:"external,omitempty"`
+	ExternUID           *string     `url:"extern_uid,omitempty" json:"extern_uid,omitempty"`
+	JobTitle            *string     `url:"job_title,omitempty" json:"job_title,omitempty"`
+	Linkedin            *string     `url:"linkedin,omitempty" json:"linkedin,omitempty"`
+	Location            *string     `url:"location,omitempty" json:"location,omitempty"`
+	Name                *string     `url:"name,omitempty" json:"name,omitempty"`
+	Note                *string     `url:"note,omitempty" json:"note,omitempty"`
+	Organization        *string     `url:"organization,omitempty" json:"organization,omitempty"`
+	Password            *string     `url:"password,omitempty" json:"password,omitempty"`
+	PrivateProfile      *bool       `url:"private_profile,omitempty" json:"private_profile,omitempty"`
+	ProjectsLimit       *int64      `url:"projects_limit,omitempty" json:"projects_limit,omitempty"`
+	Provider            *string     `url:"provider,omitempty" json:"provider,omitempty"`
+	PublicEmail         *string     `url:"public_email,omitempty" json:"public_email,omitempty"`
+	SkipReconfirmation  *bool       `url:"skip_reconfirmation,omitempty" json:"skip_reconfirmation,omitempty"`
+	Skype               *string     `url:"skype,omitempty" json:"skype,omitempty"`
+	ThemeID             *int64      `url:"theme_id,omitempty" json:"theme_id,omitempty"`
+	Twitter             *string     `url:"twitter,omitempty" json:"twitter,omitempty"`
+	Username            *string     `url:"username,omitempty" json:"username,omitempty"`
+	WebsiteURL          *string     `url:"website_url,omitempty" json:"website_url,omitempty"`
+	ViewDiffsFileByFile *bool       `url:"view_diffs_file_by_file,omitempty" json:"view_diffs_file_by_file,omitempty"`
 }
 
 func (s *UsersService) ModifyUser(user int64, opt *ModifyUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
