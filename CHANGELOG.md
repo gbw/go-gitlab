@@ -1,3 +1,18 @@
+## 1.7.0
+
+### 🚀 Features
+
+- feat(users): Add support for a user to see only one file diff per page ([!2597](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2597)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+
+
+# [1.7.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.6.0...v1.7.0) (2025-12-06)
+
+
+### Features
+
+* **users:** Add support for a user to see only one file diff per page ([e2a9e09](https://gitlab.com/gitlab-org/api/client-go/commit/e2a9e09e79e7949e0b19dcfc97e3b7b533541856))
+
 ## 1.6.0
 
 ### 🚀 Features
