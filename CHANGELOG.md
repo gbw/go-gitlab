@@ -1,3 +1,18 @@
+## 1.8.0
+
+### 🚀 Features
+
+- feat(hooks): add support for all hook event types ([!2606](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2606)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+# [1.8.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.7.0...v1.8.0) (2025-12-08)
+
+
+### Features
+
+* **hooks:** add support for all hook event types ([c3c9ca2](https://gitlab.com/gitlab-org/api/client-go/commit/c3c9ca275969adffca37908d63e5c70f634d7bbe))
+
 ## 1.7.0
 
 ### 🚀 Features
