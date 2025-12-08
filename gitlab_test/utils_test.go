@@ -146,3 +146,62 @@ func CreateTestProjectWithOptions(t *testing.T, client *gitlab.Client, opts *git
 
 	return project
 }
+
+// CreateTestGroup creates a test group with a random name.
+// The group is automatically cleaned up when the test finishes.
+func CreateTestGroup(t *testing.T, client *gitlab.Client) (*gitlab.Group, error) {
+	t.Helper()
+
+	// Generate random name
+	suffix := time.Now().UnixNano()
+	name := fmt.Sprintf("testgroup%d", suffix)
+
+	// Create the group
+	group, _, err := client.Groups.CreateGroup(&gitlab.CreateGroupOptions{
+		Name:       &name,
+		Path:       &name,
+		Visibility: gitlab.Ptr(gitlab.PublicVisibility),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create group: %w", err)
+	}
+
+	// Clean up the group when the test finishes
+	t.Cleanup(func() {
+		_, err := client.Groups.DeleteGroup(group.ID, &gitlab.DeleteGroupOptions{})
+		require.NoError(t, err, "Failed to delete test group")
+	})
+
+	return group, nil
+}
+
+// CreateTestGroupHook creates a test group hook with a random url.
+// The group hook is automatically cleaned up when the test finishes.
+func CreateTestGroupHook(t *testing.T, gid any, client *gitlab.Client) (*gitlab.GroupHook, error) {
+	t.Helper()
+
+	// Generate random name
+	suffix := time.Now().UnixNano()
+	url := fmt.Sprintf("https://example.com/%d", suffix)
+
+	// Create the group
+	hook, _, err := client.Groups.AddGroupHook(gid, &gitlab.AddGroupHookOptions{
+		URL:        &url,
+		PushEvents: gitlab.Ptr(true),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create group hook: %w", err)
+	}
+
+	// Clean up the group hook when the test finishes
+	t.Cleanup(func() {
+		_, err := client.Groups.DeleteGroupHook(gid, hook.ID)
+		if err != nil && err.Error() == "404 Not Found" {
+			t.Logf("Group hook %d already deleted", hook.ID)
+			return
+		}
+		require.NoError(t, err, "Failed to delete test group hook")
+	})
+
+	return hook, nil
+}
