@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -39,44 +40,47 @@ func SetupIntegrationClient(t *testing.T) *gitlab.Client {
 	return client
 }
 
-// Skips the given test after the client is configured when running in CE
-// This is required to ensure that integration testing functions that require
-// an EE instance don't fail
-func SkipIfRunningCE(t *testing.T, client *gitlab.Client) {
+// SkipIfNotLicensed skips the test if the GitLab instance doesn't have
+// a Premium or Ultimate license. This is required to ensure that integration
+// tests requiring licensed features don't fail on unlicensed instances.
+func SkipIfNotLicensed(t *testing.T, client *gitlab.Client) {
 	t.Helper()
 
-	// Check if we're running in CE context
-	isEE, err := IsRunningInEEContext(t, client)
-	require.NoError(t, err, "Failed to determine GitLab edition")
+	// Check if we have a valid license
+	isLicensed, err := HasPremiumOrUltimateLicense(t, client)
+	require.NoError(t, err, "Failed to determine GitLab license status")
 
-	// Skip the test if running on CE
-	if !isEE {
-		t.Skip("Skipping test - requires GitLab Enterprise Edition")
+	// Skip the test if not licensed
+	if !isLicensed {
+		t.Skip("Skipping test - requires GitLab Premium or Ultimate license")
 	}
 }
 
-// Global variable to cache the result of EE evaluation for all the tests
-var isEE *bool
+// Global variable to cache the license check result for all tests
+var isLicensed *bool
 
-// function calls gitlab server metadata API once and caches the result
-// to determine if license model is enterprise or not
-func IsRunningInEEContext(t *testing.T, client *gitlab.Client) (bool, error) {
+// HasPremiumOrUltimateLicense calls the GitLab License API once and caches
+// the result to determine if the instance has a Premium or Ultimate plan.
+func HasPremiumOrUltimateLicense(t *testing.T, client *gitlab.Client) (bool, error) {
 	t.Helper()
 
-	if isEE != nil {
-		return *isEE, nil
-	}
-	metadata, _, err := client.Metadata.GetMetadata()
-	if err != nil {
-		return false, err
+	if isLicensed != nil {
+		return *isLicensed, nil
 	}
 
-	// Cache the results for later.
-	// Note - if run on versions earlier to 15.5, it will error since
-	// this key wasn't returned. With we're 3 major versions later, this
-	// seems like a safe assumption.
-	isEE = &metadata.Enterprise
-	return *isEE, err
+	license, _, err := client.License.GetLicense()
+	if err != nil {
+		// If we can't get the license (e.g., no license installed), treat as unlicensed
+		isLicensed = gitlab.Ptr(false)
+		return false, nil
+	}
+
+	// Check if the plan is Premium or Ultimate (case insensitive, though it should always be lowercase)
+	plan := strings.ToLower(license.Plan)
+	result := (plan == "premium" || plan == "ultimate")
+
+	isLicensed = &result
+	return result, nil
 }
 
 // CreateTestUser creates a test user with a random username and email.

@@ -21,7 +21,7 @@ func Test_ProjectPullMirror_Integration(t *testing.T) {
 	client := SetupIntegrationClient(t)
 
 	// Requires Premium/Ultimate EE
-	SkipIfRunningCE(t, client)
+	SkipIfNotLicensed(t, client)
 
 	// Create a test project for the pull mirror,
 	// And a project that will be mirrored
