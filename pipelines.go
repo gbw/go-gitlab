@@ -21,8 +21,6 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"golang.org/x/exp/constraints"
 )
 
 type PipelineSource string
@@ -480,10 +478,26 @@ type PipelineInputValueInterface interface {
 	pipelineInputValue()
 }
 
+type constraintSigned interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64
+}
+
+type constraintUnsigned interface {
+	~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr
+}
+
+type constraintInteger interface {
+	constraintSigned | constraintUnsigned
+}
+
+type constraintFloat interface {
+	~float32 | ~float64
+}
+
 // PipelineInputValueType is a type constraint for valid pipeline input value types.
 // This constraint ensures only supported GitLab pipeline input types can be used.
 type PipelineInputValueType interface {
-	~string | constraints.Integer | constraints.Float | ~bool | []string
+	~string | constraintInteger | constraintFloat | ~bool | []string
 }
 
 // PipelineInputValue wraps a pipeline input value with compile-time type safety.
