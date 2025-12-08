@@ -59,6 +59,9 @@ func TestListGroupHooks(t *testing.T) {
 		"alert_status": "executable",
 		"created_at": "2012-10-12T17:04:47Z",
 		"resource_access_token_events": true,
+		"project_events": true,
+		"milestone_events": true,
+		"vulnerability_events": true,
 		"custom_headers": [
 			{"key": "Authorization"},
 			{"key": "OtherHeader"}
@@ -95,6 +98,9 @@ func TestListGroupHooks(t *testing.T) {
 		AlertStatus:               "executable",
 		CreatedAt:                 &datePointer,
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key: "Authorization",
@@ -140,6 +146,9 @@ func TestGetGroupHook(t *testing.T) {
 	"alert_status": "executable",
 	"created_at": "2012-10-12T17:04:47Z",
 	"resource_access_token_events": true,
+	"project_events": true,
+	"milestone_events": true,
+	"vulnerability_events": true,
 	"custom_headers": [
 		{"key": "Authorization"},
 		{"key": "OtherHeader"}
@@ -175,6 +184,9 @@ func TestGetGroupHook(t *testing.T) {
 		AlertStatus:               "executable",
 		CreatedAt:                 &datePointer,
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key: "Authorization",
@@ -235,6 +247,9 @@ func TestAddGroupHook(t *testing.T) {
 	"created_at": "2012-10-12T17:04:47Z",
 	"custom_webhook_template": "addTestValue",
 	"resource_access_token_events": true,
+	"project_events": true,
+	"milestone_events": true,
+	"vulnerability_events": true,
 	"custom_headers": [
 		{"key": "Authorization", "value": "testMe"},
 		{"key": "OtherHeader", "value": "otherTest"}
@@ -276,6 +291,9 @@ func TestAddGroupHook(t *testing.T) {
 		CreatedAt:                 &datePointer,
 		CustomWebhookTemplate:     "addTestValue",
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key:   "Authorization",
@@ -323,6 +341,9 @@ func TestEditGroupHook(t *testing.T) {
 	"created_at": "2012-10-12T17:04:47Z",
 	"custom_webhook_template": "testValue",
 	"resource_access_token_events": true,
+	"project_events": true,
+	"milestone_events": true,
+	"vulnerability_events": true,
 	"custom_headers": [
 		{"key": "Authorization", "value": "testMe"},
 		{"key": "OtherHeader", "value": "otherTest"}
@@ -364,6 +385,9 @@ func TestEditGroupHook(t *testing.T) {
 		CreatedAt:                 &datePointer,
 		CustomWebhookTemplate:     "testValue",
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key:   "Authorization",

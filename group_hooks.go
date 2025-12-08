@@ -57,6 +57,9 @@ type GroupHook struct {
 	EmojiEvents               bool                `json:"emoji_events"`
 	ResourceAccessTokenEvents bool                `json:"resource_access_token_events"`
 	MemberEvents              bool                `json:"member_events"`
+	ProjectEvents             bool                `json:"project_events"`
+	MilestoneEvents           bool                `json:"milestone_events"`
+	VulnerabilityEvents       bool                `json:"vulnerability_events"`
 }
 
 // ListGroupHooksOptions represents the available ListGroupHooks() options.
@@ -154,13 +157,16 @@ type AddGroupHookOptions struct {
 	ConfidentialNoteEvents    *bool                `url:"confidential_note_events,omitempty"  json:"confidential_note_events,omitempty"`
 	JobEvents                 *bool                `url:"job_events,omitempty"  json:"job_events,omitempty"`
 	PipelineEvents            *bool                `url:"pipeline_events,omitempty"  json:"pipeline_events,omitempty"`
+	ProjectEvents             *bool                `url:"project_events,omitempty"  json:"project_events,omitempty"`
 	WikiPageEvents            *bool                `url:"wiki_page_events,omitempty"  json:"wiki_page_events,omitempty"`
 	DeploymentEvents          *bool                `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
 	FeatureFlagEvents         *bool                `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
 	ReleasesEvents            *bool                `url:"releases_events,omitempty" json:"releases_events,omitempty"`
+	MilestoneEvents           *bool                `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
 	SubGroupEvents            *bool                `url:"subgroup_events,omitempty" json:"subgroup_events,omitempty"`
 	EmojiEvents               *bool                `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
 	MemberEvents              *bool                `url:"member_events,omitempty" json:"member_events,omitempty"`
+	VulnerabilityEvents       *bool                `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
 	EnableSSLVerification     *bool                `url:"enable_ssl_verification,omitempty"  json:"enable_ssl_verification,omitempty"`
 	Token                     *string              `url:"token,omitempty" json:"token,omitempty"`
 	ResourceAccessTokenEvents *bool                `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
@@ -212,13 +218,16 @@ type EditGroupHookOptions struct {
 	ConfidentialNoteEvents                *bool                `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
 	JobEvents                             *bool                `url:"job_events,omitempty" json:"job_events,omitempty"`
 	PipelineEvents                        *bool                `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
+	ProjectEvents                         *bool                `url:"project_events,omitempty" json:"project_events,omitempty"`
 	WikiPageEvents                        *bool                `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
 	DeploymentEvents                      *bool                `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
 	FeatureFlagEvents                     *bool                `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
 	ReleasesEvents                        *bool                `url:"releases_events,omitempty" json:"releases_events,omitempty"`
+	MilestoneEvents                       *bool                `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
 	SubGroupEvents                        *bool                `url:"subgroup_events,omitempty" json:"subgroup_events,omitempty"`
 	EmojiEvents                           *bool                `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
 	MemberEvents                          *bool                `url:"member_events,omitempty" json:"member_events,omitempty"`
+	VulnerabilityEvents                   *bool                `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
 	EnableSSLVerification                 *bool                `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
 	ServiceAccessTokensExpirationEnforced *bool                `url:"service_access_tokens_expiration_enforced,omitempty" json:"service_access_tokens_expiration_enforced,omitempty"`
 	Token                                 *string              `url:"token,omitempty" json:"token,omitempty"`
