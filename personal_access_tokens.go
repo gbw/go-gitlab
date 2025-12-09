@@ -30,6 +30,7 @@ type (
 		RotatePersonalAccessToken(token int64, opt *RotatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
 		RotatePersonalAccessTokenByID(token int64, opt *RotatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
 		RotatePersonalAccessTokenSelf(opt *RotatePersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		// Deprecated: to be removed in 2.0; use RevokePersonalAccessTokenByID instead
 		RevokePersonalAccessToken(token int64, options ...RequestOptionFunc) (*Response, error)
 		RevokePersonalAccessTokenByID(token int64, options ...RequestOptionFunc) (*Response, error)
 		RevokePersonalAccessTokenSelf(options ...RequestOptionFunc) (*Response, error)
@@ -214,6 +215,7 @@ func (s *PersonalAccessTokensService) RotatePersonalAccessTokenSelf(opt *RotateP
 }
 
 // RevokePersonalAccessToken is a backwards-compat shim for RevokePersonalAccessTokenByID.
+// Deprecated: to be removed in 2.0; use RevokePersonalAccessTokenByID instead
 func (s *PersonalAccessTokensService) RevokePersonalAccessToken(token int64, options ...RequestOptionFunc) (*Response, error) {
 	return s.RevokePersonalAccessTokenByID(token, options...)
 }
