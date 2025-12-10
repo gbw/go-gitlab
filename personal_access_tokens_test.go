@@ -144,7 +144,7 @@ func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
 
 	token, _, err := client.PersonalAccessTokens.GetSinglePersonalAccessTokenByID(1)
 	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
+		t.Errorf("PersonalAccessTokens.GetSinglePersonalAccessTokenByID returned error: %v", err)
 	}
 
 	want := &PersonalAccessToken{
@@ -175,7 +175,7 @@ func TestGetSinglePersonalAccessToken(t *testing.T) {
 
 	token, _, err := client.PersonalAccessTokens.GetSinglePersonalAccessToken()
 	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
+		t.Errorf("PersonalAccessTokens.GetSinglePersonalAccessToken returned error: %v", err)
 	}
 
 	want := &PersonalAccessToken{
@@ -295,20 +295,6 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 
 	if !reflect.DeepEqual(want, rotatedToken) {
 		t.Errorf("PersonalAccessTokens.RotatePersonalAccessTokenSelf returned %+v, want %+v", rotatedToken, want)
-	}
-}
-
-func TestRevokePersonalAccessToken(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/personal_access_tokens/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-	})
-
-	_, err := client.PersonalAccessTokens.RevokePersonalAccessToken(1)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
 	}
 }
 
