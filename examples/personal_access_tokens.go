@@ -18,26 +18,11 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"time"
 
-	"gitlab.com/gitlab-org/api/client-go"
+	gitlab "gitlab.com/gitlab-org/api/client-go"
 )
-
-func patRevokeExample() {
-	git, err := gitlab.NewClient("glpat-123xyz")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	resp, err := git.PersonalAccessTokens.RevokePersonalAccessToken(99999999)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("Response Code: %s", resp.Status)
-}
 
 func patListExampleWithUserFilter() {
 	git, err := gitlab.NewClient("glpat-123xyz")
