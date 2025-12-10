@@ -481,10 +481,18 @@ func (t *ISOTime) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	isotime, err := time.Parse(`"`+iso8601+`"`, string(data))
-	*t = ISOTime(isotime)
+	// Try parsing as datetime first (ISO 8601 with time)
+	isotime, err := time.Parse(`"`+time.RFC3339+`"`, string(data))
+	if err != nil {
+		// If that fails, try parsing as date-only
+		isotime, err = time.Parse(`"`+iso8601+`"`, string(data))
+		if err != nil {
+			return err
+		}
+	}
 
-	return err
+	*t = ISOTime(isotime)
+	return nil
 }
 
 // EncodeValues implements the query.Encoder interface.

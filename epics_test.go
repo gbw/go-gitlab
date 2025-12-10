@@ -182,3 +182,66 @@ func TestGetEpicLinks(t *testing.T) {
 		t.Errorf("Epics.GetEpicLinks returned %+v, want %+v", epics, want)
 	}
 }
+
+func TestGetEpicWithDateTimeFields(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/7/epics/10", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 10,
+			"title": "Epic with datetime fields",
+			"description": "Testing ISO 8601 datetime parsing",
+			"author": {"id": 26, "name": "jramsay"},
+			"start_date": "2026-06-13T00:00:00+00:00",
+			"due_date": "2026-12-31T23:59:59+00:00",
+			"start_date_fixed": "2026-06-13T00:00:00+00:00",
+			"due_date_fixed": "2026-12-31T23:59:59+00:00",
+			"start_date_from_milestones": "2026-06-01T00:00:00+00:00",
+			"due_date_from_milestones": "2026-12-31T00:00:00+00:00"
+		}`)
+	})
+
+	epic, _, err := client.Epics.GetEpic("7", 10)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Verify all datetime fields were parsed successfully
+	if epic.StartDate == nil {
+		t.Error("Expected StartDate to be non-nil")
+	}
+	if epic.DueDate == nil {
+		t.Error("Expected DueDate to be non-nil")
+	}
+	if epic.StartDateFixed == nil {
+		t.Error("Expected StartDateFixed to be non-nil")
+	}
+	if epic.DueDateFixed == nil {
+		t.Error("Expected DueDateFixed to be non-nil")
+	}
+	if epic.StartDateFromMilestones == nil {
+		t.Error("Expected StartDateFromMilestones to be non-nil")
+	}
+	if epic.DueDateFromMilestones == nil {
+		t.Error("Expected DueDateFromMilestones to be non-nil")
+	}
+
+	want := &Epic{
+		ID:                      10,
+		Title:                   "Epic with datetime fields",
+		Description:             "Testing ISO 8601 datetime parsing",
+		Author:                  &EpicAuthor{ID: 26, Name: "jramsay"},
+		StartDate:               epic.StartDate,
+		DueDate:                 epic.DueDate,
+		StartDateFixed:          epic.StartDateFixed,
+		DueDateFixed:            epic.DueDateFixed,
+		StartDateFromMilestones: epic.StartDateFromMilestones,
+		DueDateFromMilestones:   epic.DueDateFromMilestones,
+	}
+
+	if !reflect.DeepEqual(want, epic) {
+		t.Errorf("Epics.GetEpic returned %+v, want %+v", epic, want)
+	}
+}

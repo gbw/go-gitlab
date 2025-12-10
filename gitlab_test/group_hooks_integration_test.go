@@ -19,8 +19,7 @@ import (
 func Test_GroupHooksListGroupHooks_Integration(t *testing.T) {
 	client := SetupIntegrationClient(t)
 
-	group, err := CreateTestGroup(t, client)
-	require.NoError(t, err, "Failed to create test group")
+	group := CreateTestGroup(t, client)
 	hook, err := CreateTestGroupHook(t, group.ID, client)
 	require.NoError(t, err, "Failed to create test hook")
 
@@ -35,8 +34,7 @@ func Test_GroupHooksListGroupHooks_Integration(t *testing.T) {
 func Test_GroupHooksGetGroupHook_Integration(t *testing.T) {
 	client := SetupIntegrationClient(t)
 
-	group, err := CreateTestGroup(t, client)
-	require.NoError(t, err, "Failed to create test group")
+	group := CreateTestGroup(t, client)
 	hook, err := CreateTestGroupHook(t, group.ID, client)
 	require.NoError(t, err, "Failed to create test hook")
 
@@ -51,8 +49,8 @@ func Test_GroupHooksGetGroupHook_Integration(t *testing.T) {
 func Test_GroupHooksAddGroupHook_Integration(t *testing.T) {
 	client := SetupIntegrationClient(t)
 
-	group, err := CreateTestGroup(t, client)
-	require.NoError(t, err, "Failed to create test group")
+	group := CreateTestGroup(t, client)
+
 	suffix := time.Now().UnixNano()
 	name := fmt.Sprintf("testhook%d", suffix)
 	description := fmt.Sprintf("Test Hook %d", suffix)
@@ -119,8 +117,8 @@ func Test_GroupHooksAddGroupHook_Integration(t *testing.T) {
 func Test_GroupHooksEditGroupHook_Integration(t *testing.T) {
 	client := SetupIntegrationClient(t)
 
-	group, err := CreateTestGroup(t, client)
-	require.NoError(t, err, "Failed to create test group")
+	group := CreateTestGroup(t, client)
+
 	hook, err := CreateTestGroupHook(t, group.ID, client)
 	require.NoError(t, err, "Failed to create test hook")
 	suffix := time.Now().UnixNano()
@@ -189,8 +187,8 @@ func Test_GroupHooksEditGroupHook_Integration(t *testing.T) {
 func Test_GroupHooksDeleteGroupHook_Integration(t *testing.T) {
 	client := SetupIntegrationClient(t)
 
-	group, err := CreateTestGroup(t, client)
-	require.NoError(t, err, "Failed to create test group")
+	group := CreateTestGroup(t, client)
+
 	hook, err := CreateTestGroupHook(t, group.ID, client)
 	require.NoError(t, err, "Failed to create test hook")
 

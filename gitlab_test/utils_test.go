@@ -151,34 +151,6 @@ func CreateTestProjectWithOptions(t *testing.T, client *gitlab.Client, opts *git
 	return project
 }
 
-// CreateTestGroup creates a test group with a random name.
-// The group is automatically cleaned up when the test finishes.
-func CreateTestGroup(t *testing.T, client *gitlab.Client) (*gitlab.Group, error) {
-	t.Helper()
-
-	// Generate random name
-	suffix := time.Now().UnixNano()
-	name := fmt.Sprintf("testgroup%d", suffix)
-
-	// Create the group
-	group, _, err := client.Groups.CreateGroup(&gitlab.CreateGroupOptions{
-		Name:       &name,
-		Path:       &name,
-		Visibility: gitlab.Ptr(gitlab.PublicVisibility),
-	})
-	if err != nil {
-		return nil, fmt.Errorf("failed to create group: %w", err)
-	}
-
-	// Clean up the group when the test finishes
-	t.Cleanup(func() {
-		_, err := client.Groups.DeleteGroup(group.ID, &gitlab.DeleteGroupOptions{})
-		require.NoError(t, err, "Failed to delete test group")
-	})
-
-	return group, nil
-}
-
 // CreateTestGroupHook creates a test group hook with a random url.
 // The group hook is automatically cleaned up when the test finishes.
 func CreateTestGroupHook(t *testing.T, gid any, client *gitlab.Client) (*gitlab.GroupHook, error) {
@@ -208,4 +180,67 @@ func CreateTestGroupHook(t *testing.T, gid any, client *gitlab.Client) (*gitlab.
 	})
 
 	return hook, nil
+}
+
+// CreateTestGroup creates a test group with a random name and path.
+// The group is automatically cleaned up when the test finishes.
+func CreateTestGroup(t *testing.T, client *gitlab.Client) *gitlab.Group {
+	t.Helper()
+
+	suffix := time.Now().UnixNano()
+	return CreateTestGroupWithOptions(t, client, &gitlab.CreateGroupOptions{
+		Name:       gitlab.Ptr(fmt.Sprintf("testgroup%d", suffix)),
+		Path:       gitlab.Ptr(fmt.Sprintf("testgroup%d", suffix)),
+		Visibility: gitlab.Ptr(gitlab.PublicVisibility),
+	})
+}
+
+// CreateTestGroupWithOptions creates a test group with the provided options.
+// The group is automatically cleaned up when the test finishes.
+func CreateTestGroupWithOptions(t *testing.T, client *gitlab.Client, opts *gitlab.CreateGroupOptions) *gitlab.Group {
+	t.Helper()
+
+	group, _, err := client.Groups.CreateGroup(opts, gitlab.WithContext(context.Background()))
+	if err != nil {
+		t.Fatalf("Failed to create group: %v", err)
+	}
+
+	// Add a cleanup function
+	t.Cleanup(func() {
+		_, err := client.Groups.DeleteGroup(group.ID, nil, gitlab.WithContext(context.Background()))
+		require.NoError(t, err, "Failed to delete test group")
+	})
+
+	return group
+}
+
+// CreateTestEpic creates a test epic with a random title in the specified
+// group. The epic is automatically cleaned up when the test finishes.
+func CreateTestEpic(t *testing.T, client *gitlab.Client, gid any) (*gitlab.Epic, error) {
+	t.Helper()
+
+	suffix := time.Now().UnixNano()
+	return CreateTestEpicWithOptions(t, client, gid, &gitlab.CreateEpicOptions{
+		Title:       gitlab.Ptr(fmt.Sprintf("Test Epic %d", suffix)),
+		Description: gitlab.Ptr(fmt.Sprintf("Test epic created at %d", suffix)),
+	})
+}
+
+// CreateTestEpicWithOptions creates a test epic with the provided options.
+// The epic is automatically cleaned up when the test finishes.
+func CreateTestEpicWithOptions(t *testing.T, client *gitlab.Client, gid any, opts *gitlab.CreateEpicOptions) (*gitlab.Epic, error) {
+	t.Helper()
+
+	epic, _, err := client.Epics.CreateEpic(gid, opts, gitlab.WithContext(context.Background()))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create epic: %w", err)
+	}
+
+	// Add a cleanup function
+	t.Cleanup(func() {
+		_, err := client.Epics.DeleteEpic(gid, epic.ID, gitlab.WithContext(context.Background()))
+		require.NoError(t, err, "Failed to delete test epic")
+	})
+
+	return epic, nil
 }
