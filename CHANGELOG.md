@@ -1,3 +1,26 @@
+## 1.8.1
+
+### 🐛 Bug Fixes
+
+- fix(epics): handle datetime format in ISOTime UnmarshalJSON ([!2612](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2612)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+### 🔄 Other Changes
+
+- chore(deps): update module buf.build/go/protovalidate to v1.1.0 ([!2619](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2619)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore: add deprecation notice for PersonalAccessTokens.RevokePersonalAccessToken ([!2615](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2615)) by [aishahsofea](https://gitlab.com/aishahsofea)
+- chore(deps): update golangci/golangci-lint docker tag to v2.7.2 ([!2613](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2613)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): do not use the experimental package ([!2614](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2614)) by [Mikhail Mazurskiy](https://gitlab.com/ash2k)
+- test: Replace SkipIfRunningCE with SkipIfNotLicensed ([!2616](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2616)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+
+
+## [1.8.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.8.0...v1.8.1) (2025-12-10)
+
+
+### Bug Fixes
+
+* **epics:** handle datetime format in ISOTime UnmarshalJSON ([257e0ac](https://gitlab.com/gitlab-org/api/client-go/commit/257e0acd29daf887456d924c0063b52ebc2e808f))
+
 ## 1.8.0
 
 ### 🚀 Features
