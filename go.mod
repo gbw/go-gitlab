@@ -3,7 +3,7 @@ module gitlab.com/gitlab-org/api/client-go
 go 1.24.0
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.10-20251209175733-2a1774d88802.1
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20251209175733-2a1774d88802.1
 	buf.build/go/protovalidate v1.1.0
 	buf.build/go/protoyaml v0.6.0
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
