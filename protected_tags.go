@@ -58,6 +58,7 @@ type TagAccessDescription struct {
 	ID                     int64            `json:"id"`
 	UserID                 int64            `json:"user_id"`
 	GroupID                int64            `json:"group_id"`
+	DeployKeyID            int64            `json:"deploy_key_id"`
 	AccessLevel            AccessLevelValue `json:"access_level"`
 	AccessLevelDescription string           `json:"access_level_description"`
 }
@@ -139,6 +140,7 @@ type ProtectRepositoryTagsOptions struct {
 type TagsPermissionOptions struct {
 	UserID      *int64            `url:"user_id,omitempty" json:"user_id,omitempty"`
 	GroupID     *int64            `url:"group_id,omitempty" json:"group_id,omitempty"`
+	DeployKeyID *int64            `url:"deploy_key_id,omitempty" json:"deploy_key_id,omitempty"`
 	AccessLevel *AccessLevelValue `url:"access_level,omitempty" json:"access_level,omitempty"`
 }
 
