@@ -65,7 +65,7 @@ func (v ProjectVariable) String() string {
 
 // VariableFilter filters available for project variable related functions
 type VariableFilter struct {
-	EnvironmentScope string `url:"environment_scope, omitempty" json:"environment_scope,omitempty"`
+	EnvironmentScope string `url:"environment_scope,omitempty" json:"environment_scope,omitempty"`
 }
 
 // ListProjectVariablesOptions represents the available options for listing variables

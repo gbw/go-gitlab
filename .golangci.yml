@@ -52,6 +52,7 @@ linters:
         - name: deep-exit
         - name: get-return
         - name: redundant-import-alias
+        - name: struct-tag
         - name: time-date
         - name: var-naming
     staticcheck:
