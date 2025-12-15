@@ -1,3 +1,30 @@
+## 1.8.2
+
+### 🐛 Bug Fixes
+
+- fix: correct omitempty tag in VariableFilter.EnvironmentScope field ([!2629](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2629)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+### 🔄 Other Changes
+
+- feat(protectedTags): add support for `deploy_key_id` to `protected_tags` ([!2624](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2624)) by [Zubeen](https://gitlab.com/syedzubeen)
+- chore(deps): update docker docker tag to v29.1.3 ([!2623](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2623)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go to v1.36.11-20251209175733-2a1774d88802.1 ([!2622](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2622)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module google.golang.org/protobuf to v1.36.11 ([!2621](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2621)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+## [1.8.2](https://gitlab.com/gitlab-org/api/client-go/compare/v1.8.1...v1.8.2) (2025-12-15)
+
+
+### Bug Fixes
+
+* correct omitempty tag in VariableFilter.EnvironmentScope field ([c117da1](https://gitlab.com/gitlab-org/api/client-go/commit/c117da1b123251ba86271d1ce3bf9750617e344f))
+
+
+### Features
+
+* **protectedTags:** add support for `deploy_key_id` to `protected_tags` ([c0fc3db](https://gitlab.com/gitlab-org/api/client-go/commit/c0fc3db793b51bfabb0ac8bb42442e6916b9df3f))
+
 ## 1.8.1
 
 ### 🐛 Bug Fixes
