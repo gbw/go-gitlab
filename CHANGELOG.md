@@ -1,3 +1,18 @@
+## 1.9.0
+
+### 🚀 Features
+
+- feat(api): add support for matrix project integration ([!2630](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2630)) by [aishahsofea](https://gitlab.com/aishahsofea)
+
+
+
+# [1.9.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.8.2...v1.9.0) (2025-12-16)
+
+
+### Features
+
+* **api:** add support for matrix project integration ([0a5b11b](https://gitlab.com/gitlab-org/api/client-go/commit/0a5b11b9e2e405fb0a22009d60ce38091cc96625))
+
 ## 1.8.2
 
 ### 🐛 Bug Fixes
