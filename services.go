@@ -59,6 +59,9 @@ type (
 		GetJiraService(pid any, options ...RequestOptionFunc) (*JiraService, *Response, error)
 		SetJiraService(pid any, opt *SetJiraServiceOptions, options ...RequestOptionFunc) (*JiraService, *Response, error)
 		DeleteJiraService(pid any, options ...RequestOptionFunc) (*Response, error)
+		GetMatrixService(pid any, options ...RequestOptionFunc) (*MatrixService, *Response, error)
+		SetMatrixService(pid any, opt *SetMatrixServiceOptions, options ...RequestOptionFunc) (*MatrixService, *Response, error)
+		DeleteMatrixService(pid any, options ...RequestOptionFunc) (*Response, error)
 		GetMattermostService(pid any, options ...RequestOptionFunc) (*MattermostService, *Response, error)
 		SetMattermostService(pid any, opt *SetMattermostServiceOptions, options ...RequestOptionFunc) (*MattermostService, *Response, error)
 		DeleteMattermostService(pid any, options ...RequestOptionFunc) (*Response, error)
@@ -1363,6 +1366,89 @@ func (s *ServicesService) DeleteJiraService(pid any, options ...RequestOptionFun
 	}
 
 	return s.client.Do(req, nil)
+}
+
+// MatrixService represents Matrix service settings.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_integrations/#matrix-notifications
+type MatrixService struct {
+	Service
+	Properties *MatrixServiceProperties `json:"properties"`
+}
+
+// MatrixServiceProperties represents Matrix specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_integrations/#matrix-notifications
+type MatrixServiceProperties struct {
+	Hostname                  string    `json:"hostname"`
+	Token                     string    `json:"token"`
+	Room                      string    `json:"room"`
+	NotifyOnlyBrokenPipelines BoolValue `json:"notify_only_broken_pipelines"`
+	BranchesToBeNotified      string    `json:"branches_to_be_notified"`
+	UseInheritedSettings      BoolValue `json:"use_inherited_settings"`
+}
+
+// GetMatrixService gets Matrix service settings for a project.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_integrations/#get-matrix-notifications-settings
+func (s *ServicesService) GetMatrixService(pid any, options ...RequestOptionFunc) (*MatrixService, *Response, error) {
+	return do[*MatrixService](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/integrations/matrix", ProjectID{pid}),
+		withRequestOpts(options...),
+	)
+}
+
+// SetMatrixServiceOptions represents the available SetMatrixService()
+// options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_integrations/#set-up-matrix-notifications
+type SetMatrixServiceOptions struct {
+	Hostname                  *string `url:"hostname,omitempty" json:"hostname,omitempty"`
+	Token                     *string `url:"token,omitempty" json:"token,omitempty"`
+	Room                      *string `url:"room,omitempty" json:"room,omitempty"`
+	NotifyOnlyBrokenPipelines *bool   `url:"notify_only_broken_pipelines,omitempty" json:"notify_only_broken_pipelines,omitempty"`
+	BranchesToBeNotified      *string `url:"branches_to_be_notified,omitempty" json:"branches_to_be_notified,omitempty"`
+	PushEvents                *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
+	IssuesEvents              *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
+	ConfidentialIssuesEvents  *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
+	MergeRequestsEvents       *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
+	TagPushEvents             *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
+	NoteEvents                *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
+	ConfidentialNoteEvents    *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
+	PipelineEvents            *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
+	WikiPageEvents            *bool   `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
+	UseInheritedSettings      *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
+}
+
+// SetMatrixService sets Matrix service for a project.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_integrations/#set-up-matrix-notifications
+func (s *ServicesService) SetMatrixService(pid any, opt *SetMatrixServiceOptions, options ...RequestOptionFunc) (*MatrixService, *Response, error) {
+	return do[*MatrixService](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/integrations/matrix", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+// DeleteMatrixService deletes Matrix service for project.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/project_integrations/#disable-matrix-notifications
+func (s *ServicesService) DeleteMatrixService(pid any, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("projects/%s/integrations/matrix", ProjectID{pid}),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // MattermostService represents Mattermost service settings.
