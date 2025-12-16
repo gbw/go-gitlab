@@ -601,6 +601,63 @@ func TestDeleteJiraService(t *testing.T) {
 	assert.NotNil(t, resp)
 }
 
+func TestGetMatrixService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/matrix", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"id":1}`)
+	})
+
+	want := &MatrixService{Service: Service{ID: 1}}
+
+	service, resp, err := client.Services.GetMatrixService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, want, service)
+}
+
+func TestSetMatrixService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/matrix", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		testJSONBody(t, r, `{
+			"hostname": "https://matrix.example.com",
+			"room": "!roomid:matrix.example.com",
+			"token": "mxp_test_token",
+			"use_inherited_settings": false
+		}`)
+		fmt.Fprint(w, `{"id":1, "properties": {}}`)
+	})
+
+	opt := &SetMatrixServiceOptions{
+		Hostname:             Ptr("https://matrix.example.com"),
+		Room:                 Ptr("!roomid:matrix.example.com"),
+		Token:                Ptr("mxp_test_token"),
+		UseInheritedSettings: Ptr(false),
+	}
+
+	_, resp, err := client.Services.SetMatrixService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestDeleteMatrixService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/matrix", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Services.DeleteMatrixService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
 func TestGetMattermostService(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

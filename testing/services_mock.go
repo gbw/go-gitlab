@@ -479,6 +479,50 @@ func (c *MockServicesServiceInterfaceDeleteJiraServiceCall) DoAndReturn(f func(a
 	return c
 }
 
+// DeleteMatrixService mocks base method.
+func (m *MockServicesServiceInterface) DeleteMatrixService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteMatrixService", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteMatrixService indicates an expected call of DeleteMatrixService.
+func (mr *MockServicesServiceInterfaceMockRecorder) DeleteMatrixService(pid any, options ...any) *MockServicesServiceInterfaceDeleteMatrixServiceCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMatrixService", reflect.TypeOf((*MockServicesServiceInterface)(nil).DeleteMatrixService), varargs...)
+	return &MockServicesServiceInterfaceDeleteMatrixServiceCall{Call: call}
+}
+
+// MockServicesServiceInterfaceDeleteMatrixServiceCall wrap *gomock.Call
+type MockServicesServiceInterfaceDeleteMatrixServiceCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockServicesServiceInterfaceDeleteMatrixServiceCall) Return(arg0 *gitlab.Response, arg1 error) *MockServicesServiceInterfaceDeleteMatrixServiceCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockServicesServiceInterfaceDeleteMatrixServiceCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeleteMatrixServiceCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockServicesServiceInterfaceDeleteMatrixServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockServicesServiceInterfaceDeleteMatrixServiceCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteMattermostService mocks base method.
 func (m *MockServicesServiceInterface) DeleteMattermostService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -1365,6 +1409,51 @@ func (c *MockServicesServiceInterfaceGetJiraServiceCall) Do(f func(any, ...gitla
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockServicesServiceInterfaceGetJiraServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.JiraService, *gitlab.Response, error)) *MockServicesServiceInterfaceGetJiraServiceCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetMatrixService mocks base method.
+func (m *MockServicesServiceInterface) GetMatrixService(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.MatrixService, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetMatrixService", varargs...)
+	ret0, _ := ret[0].(*gitlab.MatrixService)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetMatrixService indicates an expected call of GetMatrixService.
+func (mr *MockServicesServiceInterfaceMockRecorder) GetMatrixService(pid any, options ...any) *MockServicesServiceInterfaceGetMatrixServiceCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMatrixService", reflect.TypeOf((*MockServicesServiceInterface)(nil).GetMatrixService), varargs...)
+	return &MockServicesServiceInterfaceGetMatrixServiceCall{Call: call}
+}
+
+// MockServicesServiceInterfaceGetMatrixServiceCall wrap *gomock.Call
+type MockServicesServiceInterfaceGetMatrixServiceCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockServicesServiceInterfaceGetMatrixServiceCall) Return(arg0 *gitlab.MatrixService, arg1 *gitlab.Response, arg2 error) *MockServicesServiceInterfaceGetMatrixServiceCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockServicesServiceInterfaceGetMatrixServiceCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MatrixService, *gitlab.Response, error)) *MockServicesServiceInterfaceGetMatrixServiceCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockServicesServiceInterfaceGetMatrixServiceCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MatrixService, *gitlab.Response, error)) *MockServicesServiceInterfaceGetMatrixServiceCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2310,6 +2399,51 @@ func (c *MockServicesServiceInterfaceSetJiraServiceCall) Do(f func(any, *gitlab.
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockServicesServiceInterfaceSetJiraServiceCall) DoAndReturn(f func(any, *gitlab.SetJiraServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.JiraService, *gitlab.Response, error)) *MockServicesServiceInterfaceSetJiraServiceCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetMatrixService mocks base method.
+func (m *MockServicesServiceInterface) SetMatrixService(pid any, opt *gitlab.SetMatrixServiceOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MatrixService, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetMatrixService", varargs...)
+	ret0, _ := ret[0].(*gitlab.MatrixService)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// SetMatrixService indicates an expected call of SetMatrixService.
+func (mr *MockServicesServiceInterfaceMockRecorder) SetMatrixService(pid, opt any, options ...any) *MockServicesServiceInterfaceSetMatrixServiceCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetMatrixService", reflect.TypeOf((*MockServicesServiceInterface)(nil).SetMatrixService), varargs...)
+	return &MockServicesServiceInterfaceSetMatrixServiceCall{Call: call}
+}
+
+// MockServicesServiceInterfaceSetMatrixServiceCall wrap *gomock.Call
+type MockServicesServiceInterfaceSetMatrixServiceCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockServicesServiceInterfaceSetMatrixServiceCall) Return(arg0 *gitlab.MatrixService, arg1 *gitlab.Response, arg2 error) *MockServicesServiceInterfaceSetMatrixServiceCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockServicesServiceInterfaceSetMatrixServiceCall) Do(f func(any, *gitlab.SetMatrixServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.MatrixService, *gitlab.Response, error)) *MockServicesServiceInterfaceSetMatrixServiceCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockServicesServiceInterfaceSetMatrixServiceCall) DoAndReturn(f func(any, *gitlab.SetMatrixServiceOptions, ...gitlab.RequestOptionFunc) (*gitlab.MatrixService, *gitlab.Response, error)) *MockServicesServiceInterfaceSetMatrixServiceCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
