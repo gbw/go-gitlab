@@ -1,3 +1,24 @@
+## 1.9.1
+
+### 🐛 Bug Fixes
+
+- fix: use parameters in config.NewClient and Jobs.DownloadArtifactsFile ([!2633](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2633)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+### 🔄 Other Changes
+
+- test: fix TestCreateMergeRequestContextCommits failing locally ([!2631](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2631)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- Code Refactor Using Request Handlers - 8 ([!2523](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2523)) by [Yashesvinee V](https://gitlab.com/yashes7516)
+- Code Refactor Using Request Handlers - 6 ([!2521](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2521)) by [Yashesvinee V](https://gitlab.com/yashes7516)
+
+
+
+## [1.9.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.9.0...v1.9.1) (2025-12-17)
+
+
+### Bug Fixes
+
+* use parameters in config.NewClient and Jobs.DownloadArtifactsFile ([28b7cd7](https://gitlab.com/gitlab-org/api/client-go/commit/28b7cd72f06777a2d3ec7772870c26565140341a))
+
 ## 1.9.0
 
 ### 🚀 Features
