@@ -479,7 +479,7 @@ func (c *Config) NewClient(options ...gitlab.ClientOptionFunc) (*gitlab.Client, 
 	if currentContext == nil {
 		return nil, errors.New("unable to resolve current context for new client")
 	}
-	return c.NewClientForContext(*currentContext.Name)
+	return c.NewClientForContext(*currentContext.Name, options...)
 }
 
 // NewClientForContext creates a new GitLab API client using the specified context.
