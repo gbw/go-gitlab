@@ -140,6 +140,8 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=resource_milestone_events_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ResourceMilestoneEventsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=resource_state_events_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ResourceStateEventsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=resource_weight_events_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ResourceWeightEventsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=runner_controller_tokens_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go RunnerControllerTokensServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=runner_controllers_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go RunnerControllersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=runners_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go RunnersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=search_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go SearchServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=secure_files_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go SecureFilesServiceInterface

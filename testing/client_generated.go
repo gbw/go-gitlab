@@ -149,6 +149,8 @@ type testClientMocks struct {
 	MockResourceMilestoneEvents          *MockResourceMilestoneEventsServiceInterface
 	MockResourceStateEvents              *MockResourceStateEventsServiceInterface
 	MockResourceWeightEvents             *MockResourceWeightEventsServiceInterface
+	MockRunnerControllers                *MockRunnerControllersServiceInterface
+	MockRunnerControllerTokens           *MockRunnerControllerTokensServiceInterface
 	MockRunners                          *MockRunnersServiceInterface
 	MockSearch                           *MockSearchServiceInterface
 	MockSecureFiles                      *MockSecureFilesServiceInterface
@@ -308,6 +310,8 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockResourceMilestoneEvents := NewMockResourceMilestoneEventsServiceInterface(ctrl)
 	mockResourceStateEvents := NewMockResourceStateEventsServiceInterface(ctrl)
 	mockResourceWeightEvents := NewMockResourceWeightEventsServiceInterface(ctrl)
+	mockRunnerControllers := NewMockRunnerControllersServiceInterface(ctrl)
+	mockRunnerControllerTokens := NewMockRunnerControllerTokensServiceInterface(ctrl)
 	mockRunners := NewMockRunnersServiceInterface(ctrl)
 	mockSearch := NewMockSearchServiceInterface(ctrl)
 	mockSecureFiles := NewMockSecureFilesServiceInterface(ctrl)
@@ -466,6 +470,8 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		ResourceMilestoneEvents:          mockResourceMilestoneEvents,
 		ResourceStateEvents:              mockResourceStateEvents,
 		ResourceWeightEvents:             mockResourceWeightEvents,
+		RunnerControllers:                mockRunnerControllers,
+		RunnerControllerTokens:           mockRunnerControllerTokens,
 		Runners:                          mockRunners,
 		Search:                           mockSearch,
 		SecureFiles:                      mockSecureFiles,
@@ -636,6 +642,8 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockResourceMilestoneEvents:          mockResourceMilestoneEvents,
 			MockResourceStateEvents:              mockResourceStateEvents,
 			MockResourceWeightEvents:             mockResourceWeightEvents,
+			MockRunnerControllers:                mockRunnerControllers,
+			MockRunnerControllerTokens:           mockRunnerControllerTokens,
 			MockRunners:                          mockRunners,
 			MockSearch:                           mockSearch,
 			MockSecureFiles:                      mockSecureFiles,
