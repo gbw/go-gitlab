@@ -140,6 +140,8 @@ var serviceMap = map[any]any{
 	&ResourceMilestoneEventsService{}:          (*ResourceMilestoneEventsServiceInterface)(nil),
 	&ResourceStateEventsService{}:              (*ResourceStateEventsServiceInterface)(nil),
 	&ResourceWeightEventsService{}:             (*ResourceWeightEventsServiceInterface)(nil),
+	&RunnerControllerTokensService{}:           (*RunnerControllerTokensServiceInterface)(nil),
+	&RunnerControllersService{}:                (*RunnerControllersServiceInterface)(nil),
 	&RunnersService{}:                          (*RunnersServiceInterface)(nil),
 	&SearchService{}:                           (*SearchServiceInterface)(nil),
 	&SecureFilesService{}:                      (*SecureFilesServiceInterface)(nil),
