@@ -7,7 +7,7 @@ require (
 	buf.build/go/protovalidate v1.1.0
 	buf.build/go/protoyaml v0.6.0
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
-	github.com/google/go-querystring v1.1.0
+	github.com/google/go-querystring v1.2.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/stretchr/testify v1.11.1
