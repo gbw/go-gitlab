@@ -68,8 +68,8 @@ func Test_UsersBlockUser_Integration(t *testing.T) {
 	require.NoError(t, err, "Failed to create test user")
 
 	// WHEN the BlockUser function is called
-	err = client.Users.BlockUser(user.ID)
-	assert.NoError(t, err)
+	_, err = client.Users.BlockUser(user.ID)
+	require.NoError(t, err)
 
 	// THEN the user should be blocked successfully
 	// Verify user is blocked by checking their state
@@ -88,11 +88,11 @@ func Test_UsersUnblockUser_Integration(t *testing.T) {
 	user, err := CreateTestUser(t, client)
 	require.NoError(t, err, "Failed to create test user")
 
-	err = client.Users.BlockUser(user.ID)
+	_, err = client.Users.BlockUser(user.ID)
 	require.NoError(t, err, "Failed to block test user")
 
 	// WHEN the UnblockUser function is called
-	err = client.Users.UnblockUser(user.ID)
+	_, err = client.Users.UnblockUser(user.ID)
 	assert.NoError(t, err)
 
 	// THEN the user should be unblocked successfully
@@ -112,8 +112,8 @@ func Test_UsersBanUser_Integration(t *testing.T) {
 	require.NoError(t, err, "Failed to create test user")
 
 	// WHEN the BanUser function is called
-	err = client.Users.BanUser(user.ID)
-	assert.NoError(t, err)
+	_, err = client.Users.BanUser(user.ID)
+	require.NoError(t, err)
 
 	// THEN the user should be banned successfully
 	// Verify user is banned by checking their state
@@ -131,12 +131,12 @@ func Test_UsersUnbanUser_Integration(t *testing.T) {
 	user, err := CreateTestUser(t, client)
 	require.NoError(t, err, "Failed to create test user")
 
-	err = client.Users.BanUser(user.ID)
+	_, err = client.Users.BanUser(user.ID)
 	require.NoError(t, err, "Failed to ban test user")
 
 	// WHEN the UnbanUser function is called
-	err = client.Users.UnbanUser(user.ID)
-	assert.NoError(t, err)
+	_, err = client.Users.UnbanUser(user.ID)
+	require.NoError(t, err)
 
 	// THEN the user should be unbanned successfully
 	// Verify user is unbanned by checking their state
@@ -155,8 +155,8 @@ func Test_UsersDeactivateUser_Integration(t *testing.T) {
 	require.NoError(t, err, "Failed to create test user")
 
 	// WHEN the DeactivateUser function is called
-	err = client.Users.DeactivateUser(user.ID)
-	assert.NoError(t, err)
+	_, err = client.Users.DeactivateUser(user.ID)
+	require.NoError(t, err)
 
 	// THEN the user should be deactivated successfully
 	// Verify user is deactivated by checking their state
@@ -174,12 +174,12 @@ func Test_UsersActivateUser_Integration(t *testing.T) {
 	user, err := CreateTestUser(t, client)
 	require.NoError(t, err, "Failed to create test user")
 
-	err = client.Users.DeactivateUser(user.ID)
+	_, err = client.Users.DeactivateUser(user.ID)
 	require.NoError(t, err, "Failed to deactivate test user")
 
 	// WHEN the ActivateUser function is called
-	err = client.Users.ActivateUser(user.ID)
-	assert.NoError(t, err)
+	_, err = client.Users.ActivateUser(user.ID)
+	require.NoError(t, err)
 
 	// THEN the user should be activated successfully
 	// Verify user is activated by checking their state
@@ -488,7 +488,7 @@ func Test_UsersDisableTwoFactor_Integration(t *testing.T) {
 
 	// WHEN the DisableTwoFactor function is called
 	// This will likely return an error since the user doesn't have 2FA enabled
-	err = client.Users.DisableTwoFactor(user.ID)
+	_, err = client.Users.DisableTwoFactor(user.ID)
 
 	// THEN it should handle the request appropriately
 	// We expect this to fail since the user doesn't have 2FA enabled
@@ -576,7 +576,7 @@ func Test_UsersApproveUser_Integration(t *testing.T) {
 
 	// WHEN the ApproveUser function is called
 	// This will likely return an error since the user is already active/approved
-	err = client.Users.ApproveUser(user.ID)
+	_, err = client.Users.ApproveUser(user.ID)
 
 	// THEN it should handle the request appropriately
 	// We expect this to fail since the user is already active
@@ -595,7 +595,7 @@ func Test_UsersRejectUser_Integration(t *testing.T) {
 
 	// WHEN the RejectUser function is called
 	// This will likely return an error since the user is already active
-	err = client.Users.RejectUser(user.ID)
+	_, err = client.Users.RejectUser(user.ID)
 
 	// THEN it should handle the request appropriately
 	// We expect this to fail since the user is already active
