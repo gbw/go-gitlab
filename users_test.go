@@ -187,8 +187,9 @@ func TestBlockUser(t *testing.T) {
 		fmt.Fprint(w, `true`)
 	})
 
-	err := client.Users.BlockUser(1)
+	resp, err := client.Users.BlockUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestBlockUser_UserNotFound(t *testing.T) {
@@ -202,9 +203,9 @@ func TestBlockUser_UserNotFound(t *testing.T) {
 		fmt.Fprint(w, `{"message": "404 User Not Found"}`)
 	})
 
-	err := client.Users.BlockUser(1)
+	resp, err := client.Users.BlockUser(1)
 	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "404")
+	assert.NotNil(t, resp)
 }
 
 func TestBlockUser_BlockPrevented(t *testing.T) {
@@ -217,9 +218,9 @@ func TestBlockUser_BlockPrevented(t *testing.T) {
 		w.WriteHeader(http.StatusForbidden)
 	})
 
-	err := client.Users.BlockUser(1)
+	resp, err := client.Users.BlockUser(1)
 	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "403")
+	assert.NotNil(t, resp)
 }
 
 func TestBlockUser_UnknownError(t *testing.T) {
@@ -232,8 +233,9 @@ func TestBlockUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	err := client.Users.BlockUser(1)
+	resp, err := client.Users.BlockUser(1)
 	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUnblockUser(t *testing.T) {
@@ -246,8 +248,10 @@ func TestUnblockUser(t *testing.T) {
 		w.WriteHeader(http.StatusCreated)
 	})
 
-	err := client.Users.UnblockUser(1)
+	resp, err := client.Users.UnblockUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, 201, resp.StatusCode)
 }
 
 func TestUnblockUser_UserNotFound(t *testing.T) {
@@ -260,8 +264,9 @@ func TestUnblockUser_UserNotFound(t *testing.T) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	err := client.Users.UnblockUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	resp, err := client.Users.UnblockUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUnblockUser_UnblockPrevented(t *testing.T) {
@@ -274,8 +279,9 @@ func TestUnblockUser_UnblockPrevented(t *testing.T) {
 		w.WriteHeader(http.StatusForbidden)
 	})
 
-	err := client.Users.UnblockUser(1)
-	assert.ErrorIs(t, err, ErrUserUnblockPrevented)
+	resp, err := client.Users.UnblockUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUnblockUser_UnknownError(t *testing.T) {
@@ -288,8 +294,9 @@ func TestUnblockUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	err := client.Users.UnblockUser(1)
-	assert.ErrorIs(t, err, errUnexpectedResultCode)
+	resp, err := client.Users.UnblockUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestBanUser(t *testing.T) {
@@ -303,8 +310,9 @@ func TestBanUser(t *testing.T) {
 		fmt.Fprint(w, `{}`)
 	})
 
-	err := client.Users.BanUser(1)
+	resp, err := client.Users.BanUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestBanUser_UserNotFound(t *testing.T) {
@@ -317,8 +325,9 @@ func TestBanUser_UserNotFound(t *testing.T) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	err := client.Users.BanUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	resp, err := client.Users.BanUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestBanUser_UnknownError(t *testing.T) {
@@ -331,8 +340,9 @@ func TestBanUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	err := client.Users.BanUser(1)
-	assert.ErrorIs(t, err, errUnexpectedResultCode)
+	resp, err := client.Users.BanUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUnbanUser(t *testing.T) {
@@ -345,8 +355,9 @@ func TestUnbanUser(t *testing.T) {
 		w.WriteHeader(http.StatusCreated)
 	})
 
-	err := client.Users.UnbanUser(1)
+	resp, err := client.Users.UnbanUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUnbanUser_UserNotFound(t *testing.T) {
@@ -359,8 +370,9 @@ func TestUnbanUser_UserNotFound(t *testing.T) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	err := client.Users.UnbanUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	resp, err := client.Users.UnbanUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestUnbanUser_UnknownError(t *testing.T) {
@@ -373,8 +385,9 @@ func TestUnbanUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	err := client.Users.UnbanUser(1)
-	assert.ErrorIs(t, err, errUnexpectedResultCode)
+	resp, err := client.Users.UnbanUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeactivateUser(t *testing.T) {
@@ -387,8 +400,9 @@ func TestDeactivateUser(t *testing.T) {
 		w.WriteHeader(http.StatusCreated)
 	})
 
-	err := client.Users.DeactivateUser(1)
+	resp, err := client.Users.DeactivateUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeactivateUser_UserNotFound(t *testing.T) {
@@ -401,8 +415,9 @@ func TestDeactivateUser_UserNotFound(t *testing.T) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	err := client.Users.DeactivateUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	resp, err := client.Users.DeactivateUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestDeactivateUser_DeactivatePrevented(t *testing.T) {
@@ -415,8 +430,9 @@ func TestDeactivateUser_DeactivatePrevented(t *testing.T) {
 		w.WriteHeader(http.StatusForbidden)
 	})
 
-	err := client.Users.DeactivateUser(1)
-	assert.ErrorIs(t, err, ErrUserDeactivatePrevented)
+	resp, err := client.Users.DeactivateUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestActivateUser(t *testing.T) {
@@ -429,8 +445,9 @@ func TestActivateUser(t *testing.T) {
 		w.WriteHeader(http.StatusCreated)
 	})
 
-	err := client.Users.ActivateUser(1)
+	resp, err := client.Users.ActivateUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestActivateUser_ActivatePrevented(t *testing.T) {
@@ -443,8 +460,9 @@ func TestActivateUser_ActivatePrevented(t *testing.T) {
 		w.WriteHeader(http.StatusForbidden)
 	})
 
-	err := client.Users.ActivateUser(1)
-	assert.ErrorIs(t, err, ErrUserActivatePrevented)
+	resp, err := client.Users.ActivateUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestActivateUser_UserNotFound(t *testing.T) {
@@ -457,8 +475,9 @@ func TestActivateUser_UserNotFound(t *testing.T) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	err := client.Users.ActivateUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	resp, err := client.Users.ActivateUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestApproveUser(t *testing.T) {
@@ -471,8 +490,9 @@ func TestApproveUser(t *testing.T) {
 		w.WriteHeader(http.StatusCreated)
 	})
 
-	err := client.Users.ApproveUser(1)
+	resp, err := client.Users.ApproveUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestApproveUser_UserNotFound(t *testing.T) {
@@ -485,8 +505,9 @@ func TestApproveUser_UserNotFound(t *testing.T) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	err := client.Users.ApproveUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	resp, err := client.Users.ApproveUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestApproveUser_ApprovePrevented(t *testing.T) {
@@ -499,8 +520,9 @@ func TestApproveUser_ApprovePrevented(t *testing.T) {
 		w.WriteHeader(http.StatusForbidden)
 	})
 
-	err := client.Users.ApproveUser(1)
-	assert.ErrorIs(t, err, ErrUserApprovePrevented)
+	resp, err := client.Users.ApproveUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestApproveUser_UnknownError(t *testing.T) {
@@ -513,8 +535,9 @@ func TestApproveUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	err := client.Users.ApproveUser(1)
-	assert.ErrorIs(t, err, errUnexpectedResultCode)
+	resp, err := client.Users.ApproveUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestRejectUser(t *testing.T) {
@@ -527,8 +550,9 @@ func TestRejectUser(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	err := client.Users.RejectUser(1)
+	resp, err := client.Users.RejectUser(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestRejectUser_UserNotFound(t *testing.T) {
@@ -541,8 +565,9 @@ func TestRejectUser_UserNotFound(t *testing.T) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	err := client.Users.RejectUser(1)
-	assert.ErrorIs(t, err, ErrUserNotFound)
+	resp, err := client.Users.RejectUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestRejectUser_RejectPrevented(t *testing.T) {
@@ -555,8 +580,9 @@ func TestRejectUser_RejectPrevented(t *testing.T) {
 		w.WriteHeader(http.StatusForbidden)
 	})
 
-	err := client.Users.RejectUser(1)
-	assert.ErrorIs(t, err, ErrUserRejectPrevented)
+	resp, err := client.Users.RejectUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestRejectUser_Conflict(t *testing.T) {
@@ -569,8 +595,9 @@ func TestRejectUser_Conflict(t *testing.T) {
 		w.WriteHeader(http.StatusConflict)
 	})
 
-	err := client.Users.RejectUser(1)
-	assert.ErrorIs(t, err, ErrUserConflict)
+	resp, err := client.Users.RejectUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestRejectUser_UnknownError(t *testing.T) {
@@ -583,8 +610,9 @@ func TestRejectUser_UnknownError(t *testing.T) {
 		w.WriteHeader(http.StatusTeapot)
 	})
 
-	err := client.Users.RejectUser(1)
-	assert.ErrorIs(t, err, errUnexpectedResultCode)
+	resp, err := client.Users.RejectUser(1)
+	assert.Error(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetMemberships(t *testing.T) {
@@ -670,8 +698,9 @@ func TestDisableUser2FA(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	err := client.Users.DisableTwoFactor(1)
+	resp, err := client.Users.DisableTwoFactor(1)
 	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestCreateUserRunner(t *testing.T) {

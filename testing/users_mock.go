@@ -41,15 +41,16 @@ func (m *MockUsersServiceInterface) EXPECT() *MockUsersServiceInterfaceMockRecor
 }
 
 // ActivateUser mocks base method.
-func (m *MockUsersServiceInterface) ActivateUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) ActivateUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ActivateUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // ActivateUser indicates an expected call of ActivateUser.
@@ -66,19 +67,19 @@ type MockUsersServiceInterfaceActivateUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceActivateUserCall) Return(arg0 error) *MockUsersServiceInterfaceActivateUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceActivateUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceActivateUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceActivateUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceActivateUserCall {
+func (c *MockUsersServiceInterfaceActivateUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceActivateUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceActivateUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceActivateUserCall {
+func (c *MockUsersServiceInterfaceActivateUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceActivateUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -354,15 +355,16 @@ func (c *MockUsersServiceInterfaceAddSSHKeyForUserCall) DoAndReturn(f func(int64
 }
 
 // ApproveUser mocks base method.
-func (m *MockUsersServiceInterface) ApproveUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) ApproveUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ApproveUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // ApproveUser indicates an expected call of ApproveUser.
@@ -379,33 +381,34 @@ type MockUsersServiceInterfaceApproveUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceApproveUserCall) Return(arg0 error) *MockUsersServiceInterfaceApproveUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceApproveUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceApproveUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceApproveUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceApproveUserCall {
+func (c *MockUsersServiceInterfaceApproveUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceApproveUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceApproveUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceApproveUserCall {
+func (c *MockUsersServiceInterfaceApproveUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceApproveUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // BanUser mocks base method.
-func (m *MockUsersServiceInterface) BanUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) BanUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "BanUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // BanUser indicates an expected call of BanUser.
@@ -422,33 +425,34 @@ type MockUsersServiceInterfaceBanUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceBanUserCall) Return(arg0 error) *MockUsersServiceInterfaceBanUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceBanUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceBanUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceBanUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceBanUserCall {
+func (c *MockUsersServiceInterfaceBanUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceBanUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceBanUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceBanUserCall {
+func (c *MockUsersServiceInterfaceBanUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceBanUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // BlockUser mocks base method.
-func (m *MockUsersServiceInterface) BlockUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) BlockUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "BlockUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // BlockUser indicates an expected call of BlockUser.
@@ -465,19 +469,19 @@ type MockUsersServiceInterfaceBlockUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceBlockUserCall) Return(arg0 error) *MockUsersServiceInterfaceBlockUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceBlockUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceBlockUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceBlockUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceBlockUserCall {
+func (c *MockUsersServiceInterfaceBlockUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceBlockUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceBlockUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceBlockUserCall {
+func (c *MockUsersServiceInterfaceBlockUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceBlockUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -841,15 +845,16 @@ func (c *MockUsersServiceInterfaceCurrentUserStatusCall) DoAndReturn(f func(...g
 }
 
 // DeactivateUser mocks base method.
-func (m *MockUsersServiceInterface) DeactivateUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) DeactivateUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "DeactivateUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // DeactivateUser indicates an expected call of DeactivateUser.
@@ -866,19 +871,19 @@ type MockUsersServiceInterfaceDeactivateUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceDeactivateUserCall) Return(arg0 error) *MockUsersServiceInterfaceDeactivateUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceDeactivateUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceDeactivateUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceDeactivateUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceDeactivateUserCall {
+func (c *MockUsersServiceInterfaceDeactivateUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceDeactivateUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceDeactivateUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceDeactivateUserCall {
+func (c *MockUsersServiceInterfaceDeactivateUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceDeactivateUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1236,15 +1241,16 @@ func (c *MockUsersServiceInterfaceDeleteUserIdentityCall) DoAndReturn(f func(int
 }
 
 // DisableTwoFactor mocks base method.
-func (m *MockUsersServiceInterface) DisableTwoFactor(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) DisableTwoFactor(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "DisableTwoFactor", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // DisableTwoFactor indicates an expected call of DisableTwoFactor.
@@ -1261,19 +1267,19 @@ type MockUsersServiceInterfaceDisableTwoFactorCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceDisableTwoFactorCall) Return(arg0 error) *MockUsersServiceInterfaceDisableTwoFactorCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceDisableTwoFactorCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceDisableTwoFactorCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceDisableTwoFactorCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceDisableTwoFactorCall {
+func (c *MockUsersServiceInterfaceDisableTwoFactorCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceDisableTwoFactorCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceDisableTwoFactorCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceDisableTwoFactorCall {
+func (c *MockUsersServiceInterfaceDisableTwoFactorCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceDisableTwoFactorCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2267,15 +2273,16 @@ func (c *MockUsersServiceInterfaceModifyUserCall) DoAndReturn(f func(int64, *git
 }
 
 // RejectUser mocks base method.
-func (m *MockUsersServiceInterface) RejectUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) RejectUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "RejectUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // RejectUser indicates an expected call of RejectUser.
@@ -2292,19 +2299,19 @@ type MockUsersServiceInterfaceRejectUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceRejectUserCall) Return(arg0 error) *MockUsersServiceInterfaceRejectUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceRejectUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceRejectUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceRejectUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceRejectUserCall {
+func (c *MockUsersServiceInterfaceRejectUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceRejectUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceRejectUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceRejectUserCall {
+func (c *MockUsersServiceInterfaceRejectUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceRejectUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2399,15 +2406,16 @@ func (c *MockUsersServiceInterfaceSetUserStatusCall) DoAndReturn(f func(*gitlab.
 }
 
 // UnbanUser mocks base method.
-func (m *MockUsersServiceInterface) UnbanUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) UnbanUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "UnbanUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // UnbanUser indicates an expected call of UnbanUser.
@@ -2424,33 +2432,34 @@ type MockUsersServiceInterfaceUnbanUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceUnbanUserCall) Return(arg0 error) *MockUsersServiceInterfaceUnbanUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceUnbanUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceUnbanUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceUnbanUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceUnbanUserCall {
+func (c *MockUsersServiceInterfaceUnbanUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceUnbanUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceUnbanUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceUnbanUserCall {
+func (c *MockUsersServiceInterfaceUnbanUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceUnbanUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // UnblockUser mocks base method.
-func (m *MockUsersServiceInterface) UnblockUser(user int64, options ...gitlab.RequestOptionFunc) error {
+func (m *MockUsersServiceInterface) UnblockUser(user int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "UnblockUser", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // UnblockUser indicates an expected call of UnblockUser.
@@ -2467,19 +2476,19 @@ type MockUsersServiceInterfaceUnblockUserCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsersServiceInterfaceUnblockUserCall) Return(arg0 error) *MockUsersServiceInterfaceUnblockUserCall {
-	c.Call = c.Call.Return(arg0)
+func (c *MockUsersServiceInterfaceUnblockUserCall) Return(arg0 *gitlab.Response, arg1 error) *MockUsersServiceInterfaceUnblockUserCall {
+	c.Call = c.Call.Return(arg0, arg1)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceUnblockUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceUnblockUserCall {
+func (c *MockUsersServiceInterfaceUnblockUserCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceUnblockUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceUnblockUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) error) *MockUsersServiceInterfaceUnblockUserCall {
+func (c *MockUsersServiceInterfaceUnblockUserCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockUsersServiceInterfaceUnblockUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
