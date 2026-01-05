@@ -19,7 +19,7 @@ func TestListActiveGroupIntegrations(t *testing.T) {
 			{
 				"id": 1,
 				"title": "Microsoft Teams",
-				"slug": "microsoft_teams",
+				"slug": "microsoft-teams",
 				"created_at": "2023-01-01T00:00:00.000Z",
 				"updated_at": "2023-01-02T00:00:00.000Z",
 				"active": true,
@@ -80,7 +80,7 @@ func TestListActiveGroupIntegrations(t *testing.T) {
 		{
 			ID:                       1,
 			Title:                    "Microsoft Teams",
-			Slug:                     "microsoft_teams",
+			Slug:                     "microsoft-teams",
 			CreatedAt:                &createdAt1,
 			UpdatedAt:                &updatedAt1,
 			Active:                   true,
@@ -273,12 +273,12 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft_teams", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
 		fmt.Fprint(w, `{
 			"id": 1,
 			"title": "Microsoft Teams",
-			"slug": "microsoft_teams",
+			"slug": "microsoft-teams",
 			"created_at": "2023-01-01T00:00:00.000Z",
 			"updated_at": "2023-01-02T00:00:00.000Z",
 			"active": true,
@@ -308,7 +308,7 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	want := &Integration{
 		ID:                       1,
 		Title:                    "Microsoft Teams",
-		Slug:                     "microsoft_teams",
+		Slug:                     "microsoft-teams",
 		CreatedAt:                &createdAt,
 		UpdatedAt:                &updatedAt,
 		Active:                   true,
@@ -336,7 +336,7 @@ func TestDisableGroupMicrosoftTeamsNotifications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft_teams", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
 	})
 	resp, err := client.Integrations.DisableGroupMicrosoftTeamsNotifications(1)
@@ -348,12 +348,12 @@ func TestGetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft_teams", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{
 			"id": 1,
 			"title": "Microsoft Teams",
-			"slug": "microsoft_teams",
+			"slug": "microsoft-teams",
 			"created_at": "2023-01-01T00:00:00.000Z",
 			"updated_at": "2023-01-02T00:00:00.000Z",
 			"active": true,
@@ -384,7 +384,7 @@ func TestGetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	want := &Integration{
 		ID:                       1,
 		Title:                    "Microsoft Teams",
-		Slug:                     "microsoft_teams",
+		Slug:                     "microsoft-teams",
 		CreatedAt:                &createdAt,
 		UpdatedAt:                &updatedAt,
 		Active:                   true,
