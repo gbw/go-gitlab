@@ -19,6 +19,7 @@ package gitlab
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -544,7 +545,7 @@ func (s *GroupsService) CreateGroup(opt *CreateGroupOptions, options ...RequestO
 		// since the Avatar is provided, check allowed_to_push and
 		// allowed_to_merge access levels and error if multiples are provided
 		if opt.DefaultBranchProtectionDefaults != nil && (len(*opt.DefaultBranchProtectionDefaults.AllowedToMerge) > 1 || len(*opt.DefaultBranchProtectionDefaults.AllowedToPush) > 1) {
-			return nil, nil, fmt.Errorf("multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior")
+			return nil, nil, errors.New("multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior")
 		}
 		req, err = s.client.UploadRequest(
 			http.MethodPost,
@@ -701,7 +702,7 @@ func (s *GroupsService) UpdateGroup(gid any, opt *UpdateGroupOptions, options ..
 		// since the Avatar is provided, check allowed_to_push and
 		// allowed_to_merge access levels and error if multiples are provided
 		if opt.DefaultBranchProtectionDefaults != nil && (len(*opt.DefaultBranchProtectionDefaults.AllowedToMerge) > 1 || len(*opt.DefaultBranchProtectionDefaults.AllowedToPush) > 1) {
-			return nil, nil, fmt.Errorf("multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior")
+			return nil, nil, errors.New("multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior")
 		}
 		req, err = s.client.UploadRequest(
 			http.MethodPut,
