@@ -2,6 +2,7 @@ package gitlaboauth2
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -204,7 +205,7 @@ func (s *CallbackServer) callbackHandler(ctx context.Context, tokenChan chan *oa
 		// Check for correct state
 		state := r.URL.Query().Get("state")
 		if state != expectedState {
-			err := fmt.Errorf("invalid state")
+			err := errors.New("invalid state")
 			errorChan <- err
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -213,7 +214,7 @@ func (s *CallbackServer) callbackHandler(ctx context.Context, tokenChan chan *oa
 		// Extract authorization code
 		code := r.URL.Query().Get("code")
 		if code == "" {
-			err := fmt.Errorf("no authorization code received")
+			err := errors.New("no authorization code received")
 			errorChan <- err
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
