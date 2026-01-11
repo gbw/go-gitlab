@@ -1552,6 +1552,7 @@ func TestListProjectHooks(t *testing.T) {
 		"wiki_page_events": true,
 		"deployment_events": true,
 		"releases_events": true,
+		"emoji_events": true,
 		"enable_ssl_verification": true,
 		"alert_status": "executable",
 		"created_at": "2024-10-13T13:37:00Z",
@@ -1589,6 +1590,7 @@ func TestListProjectHooks(t *testing.T) {
 		WikiPageEvents:            true,
 		DeploymentEvents:          true,
 		ReleasesEvents:            true,
+		EmojiEvents:               true,
 		EnableSSLVerification:     true,
 		CreatedAt:                 &createdAt,
 		AlertStatus:               "executable",
@@ -1605,6 +1607,100 @@ func TestListProjectHooks(t *testing.T) {
 	}}
 
 	assert.Equal(t, want, hooks)
+}
+
+func TestAddProjectHook(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/hooks", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `
+{
+	"id": 1,
+	"url": "http://example.com/hook",
+	"project_id": 1,
+	"push_events": true,
+	"issues_events": true,
+	"merge_requests_events": true,
+	"tag_push_events": true,
+	"emoji_events": true,
+	"enable_ssl_verification": true,
+	"created_at": "2024-10-13T13:37:00Z"
+}`)
+	})
+
+	opt := &AddProjectHookOptions{
+		URL:         Ptr("http://example.com/hook"),
+		EmojiEvents: Ptr(true),
+	}
+
+	hook, resp, err := client.Projects.AddProjectHook(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	createdAt := time.Date(2024, time.October, 13, 13, 37, 0, 0, time.UTC)
+	want := &ProjectHook{
+		ID:                    1,
+		URL:                   "http://example.com/hook",
+		ProjectID:             1,
+		PushEvents:            true,
+		IssuesEvents:          true,
+		MergeRequestsEvents:   true,
+		TagPushEvents:         true,
+		EmojiEvents:           true,
+		EnableSSLVerification: true,
+		CreatedAt:             &createdAt,
+	}
+
+	assert.Equal(t, want, hook)
+}
+
+func TestEditProjectHook(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `
+{
+	"id": 1,
+	"url": "http://example.com/hook",
+	"project_id": 1,
+	"push_events": false,
+	"issues_events": true,
+	"merge_requests_events": true,
+	"tag_push_events": true,
+	"emoji_events": true,
+	"enable_ssl_verification": true,
+	"created_at": "2024-10-13T13:37:00Z"
+}`)
+	})
+
+	opt := &EditProjectHookOptions{
+		PushEvents:  Ptr(false),
+		EmojiEvents: Ptr(true),
+	}
+
+	hook, resp, err := client.Projects.EditProjectHook(1, 1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	createdAt := time.Date(2024, time.October, 13, 13, 37, 0, 0, time.UTC)
+	want := &ProjectHook{
+		ID:                    1,
+		URL:                   "http://example.com/hook",
+		ProjectID:             1,
+		PushEvents:            false,
+		IssuesEvents:          true,
+		MergeRequestsEvents:   true,
+		TagPushEvents:         true,
+		EmojiEvents:           true,
+		EnableSSLVerification: true,
+		CreatedAt:             &createdAt,
+	}
+
+	assert.Equal(t, want, hook)
 }
 
 // Test that the "CustomWebhookTemplate" serializes properly
