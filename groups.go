@@ -345,6 +345,7 @@ func (s *GroupsService) ListDescendantGroups(gid any, opt *ListDescendantGroupsO
 // https://docs.gitlab.com/api/groups/#list-projects
 type ListGroupProjectsOptions struct {
 	ListOptions
+	Active                   *bool             `url:"active,omitempty" json:"active,omitempty"`
 	Archived                 *bool             `url:"archived,omitempty" json:"archived,omitempty"`
 	IncludeSubGroups         *bool             `url:"include_subgroups,omitempty" json:"include_subgroups,omitempty"`
 	MinAccessLevel           *AccessLevelValue `url:"min_access_level,omitempty" json:"min_access_level,omitempty"`
