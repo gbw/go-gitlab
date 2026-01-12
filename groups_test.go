@@ -443,6 +443,29 @@ func TestListGroupProjects(t *testing.T) {
 	}
 }
 
+func TestListGroupProjectsWithActive(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/22/projects",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testURL(t, r, "/api/v4/groups/22/projects?active=true")
+			fmt.Fprint(w, `[{"id":1},{"id":2}]`)
+		})
+
+	projects, _, err := client.Groups.ListGroupProjects(22,
+		&ListGroupProjectsOptions{Active: Ptr(true)})
+	if err != nil {
+		t.Errorf("Groups.ListGroupProjects returned error: %v", err)
+	}
+
+	want := []*Project{{ID: 1}, {ID: 2}}
+	if !reflect.DeepEqual(want, projects) {
+		t.Errorf("Groups.ListGroupProjects returned %+v, want %+v", projects, want)
+	}
+}
+
 func TestListSubGroups(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
