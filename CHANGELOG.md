@@ -1,3 +1,22 @@
+## 1.13.0
+
+### 🚀 Features
+
+- feat(groups): add Active parameter to ListGroupProjects ([!2657](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2657)) by [Kai Armstrong](https://gitlab.com/phikai)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.1.4 ([!2651](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2651)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.13.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.12.0...v1.13.0) (2026-01-12)
+
+
+### Features
+
+* **groups:** add Active parameter to ListGroupProjects ([dec511a](https://gitlab.com/gitlab-org/api/client-go/commit/dec511a199b0adb7ba87f5a02a50651049b68b71))
+
 ## 1.12.0
 
 ### 🚀 Features
