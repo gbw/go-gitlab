@@ -1426,6 +1426,8 @@ type ProjectHook struct {
 	ResourceAccessTokenEvents bool                `json:"resource_access_token_events"`
 	CustomWebhookTemplate     string              `json:"custom_webhook_template"`
 	CustomHeaders             []*HookCustomHeader `json:"custom_headers"`
+	VulnerabilityEvents       bool                `json:"vulnerability_events"`
+	BranchFilterStrategy      string              `json:"branch_filter_strategy"`
 }
 
 // ListProjectHooksOptions represents the available ListProjectHooks() options.
@@ -1513,6 +1515,8 @@ type AddProjectHookOptions struct {
 	ResourceAccessTokenEvents *bool                `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
 	CustomWebhookTemplate     *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
 	CustomHeaders             *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
+	VulnerabilityEvents       *bool                `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
+	BranchFilterStrategy      *string              `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
 }
 
 // AddProjectHook adds a hook to a specified project.
@@ -1567,6 +1571,8 @@ type EditProjectHookOptions struct {
 	ResourceAccessTokenEvents *bool                `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
 	CustomWebhookTemplate     *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
 	CustomHeaders             *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
+	VulnerabilityEvents       *bool                `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
+	BranchFilterStrategy      *string              `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
 }
 
 // EditProjectHook edits a hook for a specified project.

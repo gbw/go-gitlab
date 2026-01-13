@@ -151,6 +151,37 @@ func CreateTestProjectWithOptions(t *testing.T, client *gitlab.Client, opts *git
 	return project
 }
 
+// CreateTestProjectHook creates a test project hook with a random url.
+// The project hook is automatically cleaned up when the test finishes.
+func CreateTestProjectHook(t *testing.T, pid any, client *gitlab.Client) (*gitlab.ProjectHook, error) {
+	t.Helper()
+
+	// Generate random name
+	suffix := time.Now().UnixNano()
+	url := fmt.Sprintf("https://example.com/%d", suffix)
+
+	// Create the project hook
+	hook, _, err := client.Projects.AddProjectHook(pid, &gitlab.AddProjectHookOptions{
+		URL:        &url,
+		PushEvents: gitlab.Ptr(true),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create project hook: %w", err)
+	}
+
+	// Clean up the project hook when the test finishes
+	t.Cleanup(func() {
+		_, err := client.Projects.DeleteProjectHook(pid, hook.ID)
+		if err != nil && err.Error() == "404 Not Found" {
+			t.Logf("Project hook %d already deleted", hook.ID)
+			return
+		}
+		require.NoError(t, err, "Failed to delete test project hook")
+	})
+
+	return hook, nil
+}
+
 // CreateTestGroupHook creates a test group hook with a random url.
 // The group hook is automatically cleaned up when the test finishes.
 func CreateTestGroupHook(t *testing.T, gid any, client *gitlab.Client) (*gitlab.GroupHook, error) {
@@ -160,7 +191,7 @@ func CreateTestGroupHook(t *testing.T, gid any, client *gitlab.Client) (*gitlab.
 	suffix := time.Now().UnixNano()
 	url := fmt.Sprintf("https://example.com/%d", suffix)
 
-	// Create the group
+	// Create the group hook
 	hook, _, err := client.Groups.AddGroupHook(gid, &gitlab.AddGroupHookOptions{
 		URL:        &url,
 		PushEvents: gitlab.Ptr(true),
