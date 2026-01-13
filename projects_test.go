@@ -329,6 +329,7 @@ func TestEditProject(t *testing.T) {
 	var developerRole AccessControlValue = "developer"
 	developerPipelineVariablesRole := CIPipelineVariablesDeveloperRole
 	opt := &EditProjectOptions{
+		MaxArtifactsSize:                       Ptr(int64(100)),
 		CIRestrictPipelineCancellationRole:     Ptr(developerRole),
 		CIPipelineVariablesMinimumOverrideRole: Ptr(developerPipelineVariablesRole),
 	}

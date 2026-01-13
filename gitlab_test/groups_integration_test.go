@@ -85,3 +85,25 @@ func Test_GroupsUpdateGroup_MergeSettings_Disable_Integration(t *testing.T) {
 	assert.False(t, updatedGroup.AllowMergeOnSkippedPipeline)
 	assert.False(t, updatedGroup.OnlyAllowMergeIfAllDiscussionsAreResolved)
 }
+
+func Test_GroupsMaxArtifactsSize_Integration(t *testing.T) {
+    // GIVEN a GitLab client and a test group
+    client := SetupIntegrationClient(t)
+    group := CreateTestGroup(t, client)
+
+    // WHEN updating the group to set MaxArtifactsSize to 100 MB
+    updatedGroup, _, err := client.Groups.UpdateGroup(group.ID, &gitlab.UpdateGroupOptions{
+        MaxArtifactsSize: gitlab.Ptr(int64(100)), // 100 MB
+    })
+    require.NoError(t, err, "Failed to update group MaxArtifactsSize")
+
+    // THEN the setting should be reflected in the update response
+    assert.Equal(t, int64(100), updatedGroup.MaxArtifactsSize)
+
+    // AND WHEN retrieving the group again
+    retrievedGroup, _, err := client.Groups.GetGroup(group.ID, nil)
+    require.NoError(t, err, "Failed to retrieve group after update")
+
+    // THEN MaxArtifactsSize should persist
+    assert.Equal(t, int64(100), retrievedGroup.MaxArtifactsSize)
+}
