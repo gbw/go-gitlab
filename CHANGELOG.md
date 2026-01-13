@@ -1,3 +1,19 @@
+## 1.14.0
+
+### 🚀 Features
+
+- feat(hooks): Add project hook support for vulnerability events and branch filter strategy ([!2658](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2658)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+- Add max_artifacts_size parameter to groups and projects ([!2652](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2652)) by [Betty Godier](https://gitlab.com/betty-godier)
+
+
+
+# [1.14.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.13.0...v1.14.0) (2026-01-13)
+
+
+### Features
+
+* **hooks:** Add project hook support for vulnerability events and branch filter strategy ([4f6d252](https://gitlab.com/gitlab-org/api/client-go/commit/4f6d252a47411602ac6757400e6b5479d807cdb8))
+
 ## 1.13.0
 
 ### 🚀 Features
