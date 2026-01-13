@@ -44,3 +44,25 @@ func Test_ProjectPullMirror_Integration(t *testing.T) {
 	assert.Equal(t, true, mirror.MirrorOverwritesDivergedBranches)
 	assert.Equal(t, projectToMirror.HTTPURLToRepo, mirror.URL)
 }
+
+func Test_ProjectsMaxArtifactsSize_Integration(t *testing.T) {
+    // GIVEN a GitLab client and a test project
+    client := SetupIntegrationClient(t)
+    project := CreateTestProject(t, client)
+
+    // WHEN editing the project to set MaxArtifactsSize to 150 MB
+    updatedProject, _, err := client.Projects.EditProject(project.ID, &gitlab.EditProjectOptions{
+        MaxArtifactsSize: gitlab.Ptr(int64(150)), // 150 MB
+    })
+    require.NoError(t, err, "Failed to update project MaxArtifactsSize")
+
+    // THEN the setting should be reflected in the update response
+    assert.Equal(t, int64(150), updatedProject.MaxArtifactsSize)
+
+    // AND WHEN retrieving the project again
+    retrievedProject, _, err := client.Projects.GetProject(project.ID, nil)
+    require.NoError(t, err, "Failed to retrieve project after update")
+
+    // THEN MaxArtifactsSize should persist
+    assert.Equal(t, int64(150), retrievedProject.MaxArtifactsSize)
+}

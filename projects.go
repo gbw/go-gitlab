@@ -150,6 +150,7 @@ type Project struct {
 	PreventMergeWithoutJiraIssue              bool                                        `json:"prevent_merge_without_jira_issue"`
 	PrintingMergeRequestLinkEnabled           bool                                        `json:"printing_merge_request_link_enabled"`
 	LFSEnabled                                bool                                        `json:"lfs_enabled"`
+	MaxArtifactsSize                          int64                                       `json:"max_artifacts_size"`
 	RepositoryStorage                         string                                      `json:"repository_storage"`
 	RequestAccessEnabled                      bool                                        `json:"request_access_enabled"`
 	MergeMethod                               MergeMethodValue                            `json:"merge_method"`
@@ -971,6 +972,7 @@ type EditProjectOptions struct {
 	IssuesTemplate                            *string                                      `url:"issues_template,omitempty" json:"issues_template,omitempty"`
 	KeepLatestArtifact                        *bool                                        `url:"keep_latest_artifact,omitempty" json:"keep_latest_artifact,omitempty"`
 	LFSEnabled                                *bool                                        `url:"lfs_enabled,omitempty" json:"lfs_enabled,omitempty"`
+	MaxArtifactsSize                          *int64                                       `url:"max_artifacts_size,omitempty" json:"max_artifacts_size,omitempty"`
 	MergeCommitTemplate                       *string                                      `url:"merge_commit_template,omitempty" json:"merge_commit_template,omitempty"`
 	MergeRequestDefaultTargetSelf             *bool                                        `url:"mr_default_target_self,omitempty" json:"mr_default_target_self,omitempty"`
 	MergeMethod                               *MergeMethodValue                            `url:"merge_method,omitempty" json:"merge_method,omitempty"`

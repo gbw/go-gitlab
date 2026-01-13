@@ -117,6 +117,7 @@ type Group struct {
 	MembershipLock                  bool                       `json:"membership_lock"`
 	Visibility                      VisibilityValue            `json:"visibility"`
 	LFSEnabled                      bool                       `json:"lfs_enabled"`
+	MaxArtifactsSize                int64                      `json:"max_artifacts_size"`
 	DefaultBranch                   string                     `json:"default_branch"`
 	DefaultBranchProtectionDefaults *BranchProtectionDefaults  `json:"default_branch_protection_defaults"`
 	AvatarURL                       string                     `json:"avatar_url"`
@@ -655,6 +656,7 @@ type UpdateGroupOptions struct {
 	EmailsEnabled                        *bool                                   `url:"emails_enabled,omitempty" json:"emails_enabled,omitempty"`
 	MentionsDisabled                     *bool                                   `url:"mentions_disabled,omitempty" json:"mentions_disabled,omitempty"`
 	LFSEnabled                           *bool                                   `url:"lfs_enabled,omitempty" json:"lfs_enabled,omitempty"`
+	MaxArtifactsSize                     *int64                                  `url:"max_artifacts_size,omitempty" json:"max_artifacts_size,omitempty"`
 	RequestAccessEnabled                 *bool                                   `url:"request_access_enabled,omitempty" json:"request_access_enabled,omitempty"`
 	DefaultBranchProtectionDefaults      *DefaultBranchProtectionDefaultsOptions `url:"default_branch_protection_defaults,omitempty" json:"default_branch_protection_defaults,omitempty"`
 	FileTemplateProjectID                *int64                                  `url:"file_template_project_id,omitempty" json:"file_template_project_id,omitempty"`
