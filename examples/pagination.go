@@ -1,6 +1,3 @@
-//go:build go1.23
-// +build go1.23
-
 //
 // Copyright 2021, Sander van Harmelen
 //
