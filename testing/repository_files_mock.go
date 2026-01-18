@@ -9,6 +9,7 @@
 package testing
 
 import (
+	io "io"
 	reflect "reflect"
 
 	gitlab "gitlab.com/gitlab-org/api/client-go"
@@ -349,6 +350,50 @@ func (c *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall) Do(f func(an
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall) DoAndReturn(f func(any, string, *gitlab.GetRawFileOptions, ...gitlab.RequestOptionFunc) (*gitlab.File, *gitlab.Response, error)) *MockRepositoryFilesServiceInterfaceGetRawFileMetaDataCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// StreamRawFile mocks base method.
+func (m *MockRepositoryFilesServiceInterface) StreamRawFile(pid any, fileName string, w io.Writer, opt *gitlab.GetRawFileOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, fileName, w, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StreamRawFile", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StreamRawFile indicates an expected call of StreamRawFile.
+func (mr *MockRepositoryFilesServiceInterfaceMockRecorder) StreamRawFile(pid, fileName, w, opt any, options ...any) *MockRepositoryFilesServiceInterfaceStreamRawFileCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, fileName, w, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamRawFile", reflect.TypeOf((*MockRepositoryFilesServiceInterface)(nil).StreamRawFile), varargs...)
+	return &MockRepositoryFilesServiceInterfaceStreamRawFileCall{Call: call}
+}
+
+// MockRepositoryFilesServiceInterfaceStreamRawFileCall wrap *gomock.Call
+type MockRepositoryFilesServiceInterfaceStreamRawFileCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockRepositoryFilesServiceInterfaceStreamRawFileCall) Return(arg0 *gitlab.Response, arg1 error) *MockRepositoryFilesServiceInterfaceStreamRawFileCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockRepositoryFilesServiceInterfaceStreamRawFileCall) Do(f func(any, string, io.Writer, *gitlab.GetRawFileOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRepositoryFilesServiceInterfaceStreamRawFileCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockRepositoryFilesServiceInterfaceStreamRawFileCall) DoAndReturn(f func(any, string, io.Writer, *gitlab.GetRawFileOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRepositoryFilesServiceInterfaceStreamRawFileCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

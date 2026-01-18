@@ -9,6 +9,7 @@
 package testing
 
 import (
+	io "io"
 	reflect "reflect"
 
 	gitlab "gitlab.com/gitlab-org/api/client-go"
@@ -394,6 +395,94 @@ func (c *MockSnippetsServiceInterfaceSnippetFileContentCall) Do(f func(int64, st
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockSnippetsServiceInterfaceSnippetFileContentCall) DoAndReturn(f func(int64, string, string, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockSnippetsServiceInterfaceSnippetFileContentCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// StreamSnippetContent mocks base method.
+func (m *MockSnippetsServiceInterface) StreamSnippetContent(snippet int64, w io.Writer, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{snippet, w}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StreamSnippetContent", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StreamSnippetContent indicates an expected call of StreamSnippetContent.
+func (mr *MockSnippetsServiceInterfaceMockRecorder) StreamSnippetContent(snippet, w any, options ...any) *MockSnippetsServiceInterfaceStreamSnippetContentCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{snippet, w}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamSnippetContent", reflect.TypeOf((*MockSnippetsServiceInterface)(nil).StreamSnippetContent), varargs...)
+	return &MockSnippetsServiceInterfaceStreamSnippetContentCall{Call: call}
+}
+
+// MockSnippetsServiceInterfaceStreamSnippetContentCall wrap *gomock.Call
+type MockSnippetsServiceInterfaceStreamSnippetContentCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockSnippetsServiceInterfaceStreamSnippetContentCall) Return(arg0 *gitlab.Response, arg1 error) *MockSnippetsServiceInterfaceStreamSnippetContentCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockSnippetsServiceInterfaceStreamSnippetContentCall) Do(f func(int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceStreamSnippetContentCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockSnippetsServiceInterfaceStreamSnippetContentCall) DoAndReturn(f func(int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceStreamSnippetContentCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// StreamSnippetFileContent mocks base method.
+func (m *MockSnippetsServiceInterface) StreamSnippetFileContent(snippet int64, ref, filename string, w io.Writer, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{snippet, ref, filename, w}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StreamSnippetFileContent", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StreamSnippetFileContent indicates an expected call of StreamSnippetFileContent.
+func (mr *MockSnippetsServiceInterfaceMockRecorder) StreamSnippetFileContent(snippet, ref, filename, w any, options ...any) *MockSnippetsServiceInterfaceStreamSnippetFileContentCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{snippet, ref, filename, w}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamSnippetFileContent", reflect.TypeOf((*MockSnippetsServiceInterface)(nil).StreamSnippetFileContent), varargs...)
+	return &MockSnippetsServiceInterfaceStreamSnippetFileContentCall{Call: call}
+}
+
+// MockSnippetsServiceInterfaceStreamSnippetFileContentCall wrap *gomock.Call
+type MockSnippetsServiceInterfaceStreamSnippetFileContentCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockSnippetsServiceInterfaceStreamSnippetFileContentCall) Return(arg0 *gitlab.Response, arg1 error) *MockSnippetsServiceInterfaceStreamSnippetFileContentCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockSnippetsServiceInterfaceStreamSnippetFileContentCall) Do(f func(int64, string, string, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceStreamSnippetFileContentCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockSnippetsServiceInterfaceStreamSnippetFileContentCall) DoAndReturn(f func(int64, string, string, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSnippetsServiceInterfaceStreamSnippetFileContentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

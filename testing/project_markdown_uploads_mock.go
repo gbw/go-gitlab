@@ -263,6 +263,94 @@ func (c *MockProjectMarkdownUploadsServiceInterfaceListProjectMarkdownUploadsCal
 	return c
 }
 
+// StreamDownloadProjectMarkdownUploadByID mocks base method.
+func (m *MockProjectMarkdownUploadsServiceInterface) StreamDownloadProjectMarkdownUploadByID(pid any, uploadID int64, w io.Writer, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, uploadID, w}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StreamDownloadProjectMarkdownUploadByID", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StreamDownloadProjectMarkdownUploadByID indicates an expected call of StreamDownloadProjectMarkdownUploadByID.
+func (mr *MockProjectMarkdownUploadsServiceInterfaceMockRecorder) StreamDownloadProjectMarkdownUploadByID(pid, uploadID, w any, options ...any) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, uploadID, w}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamDownloadProjectMarkdownUploadByID", reflect.TypeOf((*MockProjectMarkdownUploadsServiceInterface)(nil).StreamDownloadProjectMarkdownUploadByID), varargs...)
+	return &MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall{Call: call}
+}
+
+// MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall wrap *gomock.Call
+type MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall) Do(f func(any, int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall) DoAndReturn(f func(any, int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadByIDCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// StreamDownloadProjectMarkdownUploadBySecretAndFilename mocks base method.
+func (m *MockProjectMarkdownUploadsServiceInterface) StreamDownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret, filename string, w io.Writer, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, secret, filename, w}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StreamDownloadProjectMarkdownUploadBySecretAndFilename", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StreamDownloadProjectMarkdownUploadBySecretAndFilename indicates an expected call of StreamDownloadProjectMarkdownUploadBySecretAndFilename.
+func (mr *MockProjectMarkdownUploadsServiceInterfaceMockRecorder) StreamDownloadProjectMarkdownUploadBySecretAndFilename(pid, secret, filename, w any, options ...any) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, secret, filename, w}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamDownloadProjectMarkdownUploadBySecretAndFilename", reflect.TypeOf((*MockProjectMarkdownUploadsServiceInterface)(nil).StreamDownloadProjectMarkdownUploadBySecretAndFilename), varargs...)
+	return &MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall{Call: call}
+}
+
+// MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall wrap *gomock.Call
+type MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall) Do(f func(any, string, string, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall) DoAndReturn(f func(any, string, string, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceStreamDownloadProjectMarkdownUploadBySecretAndFilenameCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // UploadProjectMarkdown mocks base method.
 func (m *MockProjectMarkdownUploadsServiceInterface) UploadProjectMarkdown(pid any, content io.Reader, filename string, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMarkdownUploadedFile, *gitlab.Response, error) {
 	m.ctrl.T.Helper()

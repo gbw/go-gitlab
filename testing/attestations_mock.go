@@ -9,6 +9,7 @@
 package testing
 
 import (
+	io "io"
 	reflect "reflect"
 
 	gitlab "gitlab.com/gitlab-org/api/client-go"
@@ -125,6 +126,50 @@ func (c *MockAttestationsServiceInterfaceListAttestationsCall) Do(f func(any, st
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockAttestationsServiceInterfaceListAttestationsCall) DoAndReturn(f func(any, string, ...gitlab.RequestOptionFunc) ([]*gitlab.Attestation, *gitlab.Response, error)) *MockAttestationsServiceInterfaceListAttestationsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// StreamDownloadAttestation mocks base method.
+func (m *MockAttestationsServiceInterface) StreamDownloadAttestation(pid any, attestationIID int64, w io.Writer, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, attestationIID, w}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StreamDownloadAttestation", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StreamDownloadAttestation indicates an expected call of StreamDownloadAttestation.
+func (mr *MockAttestationsServiceInterfaceMockRecorder) StreamDownloadAttestation(pid, attestationIID, w any, options ...any) *MockAttestationsServiceInterfaceStreamDownloadAttestationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, attestationIID, w}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamDownloadAttestation", reflect.TypeOf((*MockAttestationsServiceInterface)(nil).StreamDownloadAttestation), varargs...)
+	return &MockAttestationsServiceInterfaceStreamDownloadAttestationCall{Call: call}
+}
+
+// MockAttestationsServiceInterfaceStreamDownloadAttestationCall wrap *gomock.Call
+type MockAttestationsServiceInterfaceStreamDownloadAttestationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockAttestationsServiceInterfaceStreamDownloadAttestationCall) Return(arg0 *gitlab.Response, arg1 error) *MockAttestationsServiceInterfaceStreamDownloadAttestationCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockAttestationsServiceInterfaceStreamDownloadAttestationCall) Do(f func(any, int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAttestationsServiceInterfaceStreamDownloadAttestationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockAttestationsServiceInterfaceStreamDownloadAttestationCall) DoAndReturn(f func(any, int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockAttestationsServiceInterfaceStreamDownloadAttestationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

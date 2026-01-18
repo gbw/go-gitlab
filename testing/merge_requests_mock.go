@@ -9,6 +9,7 @@
 package testing
 
 import (
+	io "io"
 	reflect "reflect"
 
 	gitlab "gitlab.com/gitlab-org/api/client-go"
@@ -1427,6 +1428,50 @@ func (c *MockMergeRequestsServiceInterfaceShowMergeRequestRawDiffsCall) Do(f fun
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockMergeRequestsServiceInterfaceShowMergeRequestRawDiffsCall) DoAndReturn(f func(any, int64, *gitlab.ShowMergeRequestRawDiffsOptions, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockMergeRequestsServiceInterfaceShowMergeRequestRawDiffsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// StreamMergeRequestRawDiffs mocks base method.
+func (m *MockMergeRequestsServiceInterface) StreamMergeRequestRawDiffs(pid any, mergeRequest int64, w io.Writer, opt *gitlab.ShowMergeRequestRawDiffsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, mergeRequest, w, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StreamMergeRequestRawDiffs", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StreamMergeRequestRawDiffs indicates an expected call of StreamMergeRequestRawDiffs.
+func (mr *MockMergeRequestsServiceInterfaceMockRecorder) StreamMergeRequestRawDiffs(pid, mergeRequest, w, opt any, options ...any) *MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, mergeRequest, w, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamMergeRequestRawDiffs", reflect.TypeOf((*MockMergeRequestsServiceInterface)(nil).StreamMergeRequestRawDiffs), varargs...)
+	return &MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall{Call: call}
+}
+
+// MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall wrap *gomock.Call
+type MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall) Return(arg0 *gitlab.Response, arg1 error) *MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall) Do(f func(any, int64, io.Writer, *gitlab.ShowMergeRequestRawDiffsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall) DoAndReturn(f func(any, int64, io.Writer, *gitlab.ShowMergeRequestRawDiffsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockMergeRequestsServiceInterfaceStreamMergeRequestRawDiffsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
