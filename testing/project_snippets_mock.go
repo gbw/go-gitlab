@@ -9,7 +9,6 @@
 package testing
 
 import (
-	io "io"
 	reflect "reflect"
 
 	gitlab "gitlab.com/gitlab-org/api/client-go"
@@ -260,50 +259,6 @@ func (c *MockProjectSnippetsServiceInterfaceSnippetContentCall) Do(f func(any, i
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockProjectSnippetsServiceInterfaceSnippetContentCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectSnippetsServiceInterfaceSnippetContentCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
-// StreamSnippetContent mocks base method.
-func (m *MockProjectSnippetsServiceInterface) StreamSnippetContent(pid any, snippet int64, w io.Writer, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{pid, snippet, w}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "StreamSnippetContent", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// StreamSnippetContent indicates an expected call of StreamSnippetContent.
-func (mr *MockProjectSnippetsServiceInterfaceMockRecorder) StreamSnippetContent(pid, snippet, w any, options ...any) *MockProjectSnippetsServiceInterfaceStreamSnippetContentCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{pid, snippet, w}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StreamSnippetContent", reflect.TypeOf((*MockProjectSnippetsServiceInterface)(nil).StreamSnippetContent), varargs...)
-	return &MockProjectSnippetsServiceInterfaceStreamSnippetContentCall{Call: call}
-}
-
-// MockProjectSnippetsServiceInterfaceStreamSnippetContentCall wrap *gomock.Call
-type MockProjectSnippetsServiceInterfaceStreamSnippetContentCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockProjectSnippetsServiceInterfaceStreamSnippetContentCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectSnippetsServiceInterfaceStreamSnippetContentCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockProjectSnippetsServiceInterfaceStreamSnippetContentCall) Do(f func(any, int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectSnippetsServiceInterfaceStreamSnippetContentCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectSnippetsServiceInterfaceStreamSnippetContentCall) DoAndReturn(f func(any, int64, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectSnippetsServiceInterfaceStreamSnippetContentCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
