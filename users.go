@@ -31,7 +31,13 @@ import (
 type (
 	UsersServiceInterface interface {
 		ListUsers(opt *ListUsersOptions, options ...RequestOptionFunc) ([]*User, *Response, error)
-		GetUser(user int64, opt GetUsersOptions, options ...RequestOptionFunc) (*User, *Response, error)
+		// GetUser gets a single user.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#get-a-single-user
+		GetUser(user int64, opt *GetUserOptions, options ...RequestOptionFunc) (*User, *Response, error)
+		// CreateUser creates a new user. Note only administrators can create new users.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/users/#create-a-user
 		CreateUser(opt *CreateUserOptions, options ...RequestOptionFunc) (*User, *Response, error)
 		ModifyUser(user int64, opt *ModifyUserOptions, options ...RequestOptionFunc) (*User, *Response, error)
 		DeleteUser(user int64, options ...RequestOptionFunc) (*Response, error)
@@ -247,17 +253,14 @@ func (s *UsersService) ListUsers(opt *ListUsersOptions, options ...RequestOption
 	return usr, resp, nil
 }
 
-// GetUsersOptions represents the available GetUser() options.
+// GetUserOptions represents the available GetUser() options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/users/#get-a-single-user
-type GetUsersOptions struct {
+type GetUserOptions struct {
 	WithCustomAttributes *bool `url:"with_custom_attributes,omitempty" json:"with_custom_attributes,omitempty"`
 }
 
-// GetUser gets a single user.
-//
-// GitLab API docs: https://docs.gitlab.com/api/users/#get-a-single-user
-func (s *UsersService) GetUser(user int64, opt GetUsersOptions, options ...RequestOptionFunc) (*User, *Response, error) {
+func (s *UsersService) GetUser(user int64, opt *GetUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
 	u := fmt.Sprintf("users/%d", user)
 
 	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)

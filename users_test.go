@@ -39,7 +39,7 @@ func TestGetUser(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/get_user.json")
 	})
 
-	user, _, err := client.Users.GetUser(1, GetUsersOptions{})
+	user, _, err := client.Users.GetUser(1, &GetUserOptions{})
 	assert.NoError(t, err)
 
 	want := &User{
@@ -74,7 +74,7 @@ func TestGetUserAdmin(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/get_user_admin.json")
 	})
 
-	user, _, err := client.Users.GetUser(1, GetUsersOptions{})
+	user, _, err := client.Users.GetUser(1, &GetUserOptions{})
 	assert.NoError(t, err)
 
 	lastActivityOn := ISOTime(time.Date(2012, time.May, 23, 0, 0, 0, 0, time.UTC))
@@ -131,7 +131,7 @@ func TestCreatedBy(t *testing.T) {
 		mustWriteHTTPResponse(t, w, "testdata/get_user_bot.json")
 	})
 
-	user, _, err := client.Users.GetUser(2, GetUsersOptions{})
+	user, _, err := client.Users.GetUser(2, &GetUserOptions{})
 	assert.NoError(t, err)
 
 	lastActivityOn := ISOTime(time.Date(2012, time.May, 23, 0, 0, 0, 0, time.UTC))

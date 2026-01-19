@@ -1600,7 +1600,7 @@ func (c *MockUsersServiceInterfaceGetSSHKeyForUserCall) DoAndReturn(f func(int64
 }
 
 // GetUser mocks base method.
-func (m *MockUsersServiceInterface) GetUser(user int64, opt gitlab.GetUsersOptions, options ...gitlab.RequestOptionFunc) (*gitlab.User, *gitlab.Response, error) {
+func (m *MockUsersServiceInterface) GetUser(user int64, opt *gitlab.GetUserOptions, options ...gitlab.RequestOptionFunc) (*gitlab.User, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{user, opt}
 	for _, a := range options {
@@ -1633,13 +1633,13 @@ func (c *MockUsersServiceInterfaceGetUserCall) Return(arg0 *gitlab.User, arg1 *g
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsersServiceInterfaceGetUserCall) Do(f func(int64, gitlab.GetUsersOptions, ...gitlab.RequestOptionFunc) (*gitlab.User, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserCall {
+func (c *MockUsersServiceInterfaceGetUserCall) Do(f func(int64, *gitlab.GetUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.User, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsersServiceInterfaceGetUserCall) DoAndReturn(f func(int64, gitlab.GetUsersOptions, ...gitlab.RequestOptionFunc) (*gitlab.User, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserCall {
+func (c *MockUsersServiceInterfaceGetUserCall) DoAndReturn(f func(int64, *gitlab.GetUserOptions, ...gitlab.RequestOptionFunc) (*gitlab.User, *gitlab.Response, error)) *MockUsersServiceInterfaceGetUserCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
