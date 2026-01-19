@@ -48,7 +48,7 @@ func Test_UsersGetUser_Integration(t *testing.T) {
 	require.NoError(t, err, "Failed to create test user")
 
 	// WHEN the GetUser function is called with the user ID
-	retrievedUser, _, err := client.Users.GetUser(user.ID, gitlab.GetUsersOptions{})
+	retrievedUser, _, err := client.Users.GetUser(user.ID, &gitlab.GetUserOptions{})
 	require.NoError(t, err, "Failed to get user")
 
 	// THEN it should return the user details
@@ -73,7 +73,7 @@ func Test_UsersBlockUser_Integration(t *testing.T) {
 
 	// THEN the user should be blocked successfully
 	// Verify user is blocked by checking their state
-	retrievedUser, _, err := client.Users.GetUser(user.ID, gitlab.GetUsersOptions{})
+	retrievedUser, _, err := client.Users.GetUser(user.ID, &gitlab.GetUserOptions{})
 	require.NoError(t, err, "Failed to get user after blocking")
 
 	assert.Equal(t, "blocked", retrievedUser.State)
@@ -97,7 +97,7 @@ func Test_UsersUnblockUser_Integration(t *testing.T) {
 
 	// THEN the user should be unblocked successfully
 	// Verify user is unblocked by checking their state
-	retrievedUser, _, err := client.Users.GetUser(user.ID, gitlab.GetUsersOptions{})
+	retrievedUser, _, err := client.Users.GetUser(user.ID, &gitlab.GetUserOptions{})
 	require.NoError(t, err, "Failed to get user after unblocking")
 	assert.Equal(t, "active", retrievedUser.State)
 }
@@ -117,7 +117,7 @@ func Test_UsersBanUser_Integration(t *testing.T) {
 
 	// THEN the user should be banned successfully
 	// Verify user is banned by checking their state
-	retrievedUser, _, err := client.Users.GetUser(user.ID, gitlab.GetUsersOptions{})
+	retrievedUser, _, err := client.Users.GetUser(user.ID, &gitlab.GetUserOptions{})
 	require.NoError(t, err, "Failed to get user after banning")
 	assert.Equal(t, "banned", retrievedUser.State)
 }
@@ -140,7 +140,7 @@ func Test_UsersUnbanUser_Integration(t *testing.T) {
 
 	// THEN the user should be unbanned successfully
 	// Verify user is unbanned by checking their state
-	retrievedUser, _, err := client.Users.GetUser(user.ID, gitlab.GetUsersOptions{})
+	retrievedUser, _, err := client.Users.GetUser(user.ID, &gitlab.GetUserOptions{})
 	require.NoError(t, err, "Failed to get user after unbanning")
 	assert.Equal(t, "active", retrievedUser.State)
 }
@@ -160,7 +160,7 @@ func Test_UsersDeactivateUser_Integration(t *testing.T) {
 
 	// THEN the user should be deactivated successfully
 	// Verify user is deactivated by checking their state
-	retrievedUser, _, err := client.Users.GetUser(user.ID, gitlab.GetUsersOptions{})
+	retrievedUser, _, err := client.Users.GetUser(user.ID, &gitlab.GetUserOptions{})
 	require.NoError(t, err, "Failed to get user after deactivating")
 	assert.Equal(t, "deactivated", retrievedUser.State)
 }
@@ -183,7 +183,7 @@ func Test_UsersActivateUser_Integration(t *testing.T) {
 
 	// THEN the user should be activated successfully
 	// Verify user is activated by checking their state
-	retrievedUser, _, err := client.Users.GetUser(user.ID, gitlab.GetUsersOptions{})
+	retrievedUser, _, err := client.Users.GetUser(user.ID, &gitlab.GetUserOptions{})
 	require.NoError(t, err, "Failed to get user after activating")
 	assert.Equal(t, "active", retrievedUser.State)
 }
