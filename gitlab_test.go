@@ -361,7 +361,7 @@ func TestRequestWithContext(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(t.Context())
 	req, err := c.NewRequest(http.MethodGet, "test", nil, []RequestOptionFunc{WithContext(ctx)})
 	if err != nil {
 		t.Fatalf("Failed to create request: %v", err)
@@ -1270,7 +1270,7 @@ func TestClient_DefaultRetryPolicy_RetryOnIdempotentRequests_ByMethod(t *testing
 			require.NoError(t, err)
 
 			// WHEN
-			retry, err := client.retryHTTPCheck(context.Background(), &http.Response{Request: &http.Request{Method: tt.method}}, errors.New("dummy"))
+			retry, err := client.retryHTTPCheck(t.Context(), &http.Response{Request: &http.Request{Method: tt.method}}, errors.New("dummy"))
 
 			// THEN
 			assert.Equal(t, tt.expectedRetry, retry)
@@ -1293,7 +1293,7 @@ func TestClient_DefaultRetryPolicy_RetryOnZeroStatusCode(t *testing.T) {
 	require.NoError(t, err)
 
 	// WHEN
-	retry, err := client.retryHTTPCheck(context.Background(), &http.Response{StatusCode: 0}, nil)
+	retry, err := client.retryHTTPCheck(t.Context(), &http.Response{StatusCode: 0}, nil)
 
 	// THEN
 	assert.True(t, retry)
@@ -1380,7 +1380,7 @@ func TestClient_DefaultRetryPolicy_RetryOnNetworkErrors(t *testing.T) {
 			}
 
 			// WHEN
-			retry, err := client.retryHTTPCheck(context.Background(), resp, tt.err)
+			retry, err := client.retryHTTPCheck(t.Context(), resp, tt.err)
 
 			// THEN
 			assert.Equal(t, tt.expectedRetry, retry, "Expected retry=%v for error: %v", tt.expectedRetry, tt.err)
@@ -1401,7 +1401,7 @@ func TestClient_DefaultRetryPolicy_ContextCancellation(t *testing.T) {
 		{
 			name: "context canceled",
 			ctx: func() context.Context {
-				ctx, cancel := context.WithCancel(context.Background())
+				ctx, cancel := context.WithCancel(t.Context())
 				cancel()
 				return ctx
 			},
@@ -1409,7 +1409,7 @@ func TestClient_DefaultRetryPolicy_ContextCancellation(t *testing.T) {
 		{
 			name: "context deadline exceeded",
 			ctx: func() context.Context {
-				ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(-time.Hour))
+				ctx, cancel := context.WithDeadline(t.Context(), time.Now().Add(-time.Hour))
 				defer cancel()
 				return ctx
 			},
@@ -1447,7 +1447,7 @@ func TestClient_DefaultRetryPolicy_RetriesDisabled(t *testing.T) {
 	client.disableRetries = true
 
 	// WHEN
-	retry, err := client.retryHTTPCheck(context.Background(), nil, errors.New("some error"))
+	retry, err := client.retryHTTPCheck(t.Context(), nil, errors.New("some error"))
 
 	// THEN
 	assert.False(t, retry)
