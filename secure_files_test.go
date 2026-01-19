@@ -1,14 +1,15 @@
 package gitlab
 
 import (
-	"bytes"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSecureFiles_ListProjectSecureFiles(t *testing.T) {
@@ -188,13 +189,25 @@ func TestSecureFiles_DownloadSecureFile(t *testing.T) {
 		`))
 	})
 
-	var want bytes.Buffer
-	want.Write([]byte("bar = baz"))
+	wantContent := []byte("bar = baz")
 
-	bytes, resp, err := client.SecureFiles.DownloadSecureFile(1, 2)
+	reader, resp, err := client.SecureFiles.DownloadSecureFile(1, 2)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	assert.Equal(t, &want, bytes)
+	require.NotNil(t, reader)
+
+	// GIVEN: A reader is returned
+	// WHEN: We read the content
+	gotContent, err := io.ReadAll(reader)
+	assert.NoError(t, err)
+
+	// THEN: The content should match
+	assert.Equal(t, wantContent, gotContent)
+
+	// Clean up: Close the reader if it's a ReadCloser
+	if rc, ok := reader.(io.Closer); ok {
+		rc.Close()
+	}
 }
 
 func TestSecureFiles_RemoveSecureFile(t *testing.T) {
