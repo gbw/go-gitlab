@@ -35,7 +35,7 @@ func TestWithContext(t *testing.T) {
 	})
 
 	// WithContext is called once
-	ctx1 := contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	ctx1 := contextWithCheckRetry(t.Context(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
 		if ctx.Err() != nil {
 			return false, ctx.Err()
 		}
@@ -60,7 +60,7 @@ func TestWithContext(t *testing.T) {
 	assert.NoError(t, err)
 
 	// WithContext is called twice
-	ctx1 = contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	ctx1 = contextWithCheckRetry(t.Context(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
 		if ctx.Err() != nil {
 			return false, ctx.Err()
 		}
@@ -72,7 +72,7 @@ func TestWithContext(t *testing.T) {
 		}
 		return false, nil
 	})
-	ctx2 := contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	ctx2 := contextWithCheckRetry(t.Context(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
 		if ctx.Err() != nil {
 			return false, ctx.Err()
 		}
@@ -113,7 +113,7 @@ func TestWithContextAndWithRequestRetry(t *testing.T) {
 	})
 
 	// retryableStatusCodes in context is restored when WithContext is called
-	newCtx := context.Background()
+	newCtx := t.Context()
 	req, err := client.NewRequest(
 		http.MethodGet,
 		"/success-on-3rd",

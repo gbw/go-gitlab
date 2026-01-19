@@ -141,7 +141,7 @@ func TestCallbackServer_GetToken(t *testing.T) { //nolint:paralleltest
 
 		server := NewCallbackServer(config, ":9999", browserFunc)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		ctx, cancel := context.WithTimeout(t.Context(), 5*time.Second)
 		defer cancel()
 
 		token, err := server.GetToken(ctx)
@@ -169,7 +169,7 @@ func TestCallbackServer_GetToken(t *testing.T) { //nolint:paralleltest
 
 		server := NewCallbackServer(config, ":9999", browserFunc)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+		ctx, cancel := context.WithTimeout(t.Context(), 100*time.Millisecond)
 		defer cancel()
 
 		token, err := server.GetToken(ctx)
@@ -192,7 +192,7 @@ func TestCallbackServer_GetToken(t *testing.T) { //nolint:paralleltest
 
 		server := NewCallbackServer(config, ":9999", browserFunc)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+		ctx, cancel := context.WithTimeout(t.Context(), 1*time.Second)
 		defer cancel()
 
 		token, err := server.GetToken(ctx)
@@ -211,7 +211,7 @@ func TestCallbackServer_GetToken(t *testing.T) { //nolint:paralleltest
 		browserFunc := func(url string) error { return nil }
 		server := NewCallbackServer(config, ":9999", browserFunc)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+		ctx, cancel := context.WithTimeout(t.Context(), 1*time.Second)
 		defer cancel()
 
 		token, err := server.GetToken(ctx)
@@ -232,7 +232,7 @@ func TestCallbackServer_GetToken(t *testing.T) { //nolint:paralleltest
 		// Try to bind to an invalid address
 		server := NewCallbackServer(config, "invalid-address", browserFunc)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+		ctx, cancel := context.WithTimeout(t.Context(), 1*time.Second)
 		defer cancel()
 
 		token, err := server.GetToken(ctx)
@@ -276,7 +276,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		expectedState := "test-state"
 		verifier := "test-verifier"
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, expectedState, verifier)
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, expectedState, verifier)
 
 		// Create test request
 		req := httptest.NewRequest("GET", "/auth/redirect?code=test-code&state=test-state", nil)
@@ -315,7 +315,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		expectedState := "expected-state"
 		verifier := "test-verifier"
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, expectedState, verifier)
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, expectedState, verifier)
 
 		// Create test request with wrong state
 		req := httptest.NewRequest("GET", "/auth/redirect?code=test-code&state=wrong-state", nil)
@@ -353,7 +353,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		expectedState := "test-state"
 		verifier := "test-verifier"
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, expectedState, verifier)
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, expectedState, verifier)
 
 		// Create test request without code
 		req := httptest.NewRequest("GET", "/auth/redirect?state=test-state", nil)
@@ -391,7 +391,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		expectedState := "test-state"
 		verifier := "test-verifier"
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, expectedState, verifier)
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, expectedState, verifier)
 
 		// Create test request with OAuth error
 		req := httptest.NewRequest("GET", "/auth/redirect?error=access_denied&state=test-state", nil)
@@ -441,7 +441,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		expectedState := "test-state"
 		verifier := "test-verifier"
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, expectedState, verifier)
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, expectedState, verifier)
 
 		// Create test request
 		req := httptest.NewRequest("GET", "/auth/redirect?code=test-code&state=test-state", nil)
@@ -513,7 +513,7 @@ func TestCallbackServer_EdgeCases(t *testing.T) { //nolint:paralleltest
 		tokenChan := make(chan *oauth2.Token, 1)
 		errorChan := make(chan error, 1)
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, "test-state", "test-verifier")
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, "test-state", "test-verifier")
 
 		// Test with malformed query parameters
 		req := httptest.NewRequest("GET", "/auth/redirect?code=test-code&state=test-state&malformed=%", nil)
@@ -536,7 +536,7 @@ func TestCallbackServer_EdgeCases(t *testing.T) { //nolint:paralleltest
 		tokenChan := make(chan *oauth2.Token, 1)
 		errorChan := make(chan error, 1)
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, "test-state", "test-verifier")
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, "test-state", "test-verifier")
 
 		// Test with empty query parameters
 		req := httptest.NewRequest("GET", "/auth/redirect?code=&state=", nil)
@@ -569,7 +569,7 @@ func TestCallbackServer_EdgeCases(t *testing.T) { //nolint:paralleltest
 
 		server := NewCallbackServer(config, ":9999", browserFunc)
 
-		ctx, cancel := context.WithCancel(context.Background())
+		ctx, cancel := context.WithCancel(t.Context())
 
 		// Cancel the context immediately
 		cancel()
@@ -594,7 +594,7 @@ func TestCallbackServer_ErrorHandling(t *testing.T) { //nolint:paralleltest
 		// Use an address that's likely to fail
 		server := NewCallbackServer(config, "256.256.256.256:80", browserFunc)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+		ctx, cancel := context.WithTimeout(t.Context(), 1*time.Second)
 		defer cancel()
 
 		token, err := server.GetToken(ctx)
@@ -614,7 +614,7 @@ func TestCallbackServer_ErrorHandling(t *testing.T) { //nolint:paralleltest
 		tokenChan := make(chan *oauth2.Token, 1)
 		errorChan := make(chan error, 1)
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, "expected-state", "test-verifier")
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, "expected-state", "test-verifier")
 
 		// Create test request without state parameter
 		req := httptest.NewRequest("GET", "/auth/redirect?code=test-code", nil)
@@ -647,7 +647,7 @@ func TestCallbackServer_ErrorHandling(t *testing.T) { //nolint:paralleltest
 		tokenChan := make(chan *oauth2.Token, 1)
 		errorChan := make(chan error, 1)
 
-		handler := server.callbackHandler(context.Background(), tokenChan, errorChan, "test-state", "test-verifier")
+		handler := server.callbackHandler(t.Context(), tokenChan, errorChan, "test-state", "test-verifier")
 
 		// Create test request with multiple error scenarios
 		req := httptest.NewRequest("GET", "/auth/redirect?error=access_denied&error_description=User+denied+access&state=test-state", nil)

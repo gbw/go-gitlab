@@ -138,7 +138,7 @@ func CreateTestProject(t *testing.T, client *gitlab.Client) *gitlab.Project {
 func CreateTestProjectWithOptions(t *testing.T, client *gitlab.Client, opts *gitlab.CreateProjectOptions) *gitlab.Project {
 	t.Helper()
 
-	project, _, err := client.Projects.CreateProject(opts, gitlab.WithContext(context.Background()))
+	project, _, err := client.Projects.CreateProject(opts, gitlab.WithContext(t.Context()))
 	if err != nil {
 		t.Fatalf("Failed to create project: %v", err)
 	}
@@ -231,7 +231,7 @@ func CreateTestGroup(t *testing.T, client *gitlab.Client) *gitlab.Group {
 func CreateTestGroupWithOptions(t *testing.T, client *gitlab.Client, opts *gitlab.CreateGroupOptions) *gitlab.Group {
 	t.Helper()
 
-	group, _, err := client.Groups.CreateGroup(opts, gitlab.WithContext(context.Background()))
+	group, _, err := client.Groups.CreateGroup(opts, gitlab.WithContext(t.Context()))
 	if err != nil {
 		t.Fatalf("Failed to create group: %v", err)
 	}
@@ -262,7 +262,7 @@ func CreateTestEpic(t *testing.T, client *gitlab.Client, gid any) (*gitlab.Epic,
 func CreateTestEpicWithOptions(t *testing.T, client *gitlab.Client, gid any, opts *gitlab.CreateEpicOptions) (*gitlab.Epic, error) {
 	t.Helper()
 
-	epic, _, err := client.Epics.CreateEpic(gid, opts, gitlab.WithContext(context.Background()))
+	epic, _, err := client.Epics.CreateEpic(gid, opts, gitlab.WithContext(t.Context()))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create epic: %w", err)
 	}
