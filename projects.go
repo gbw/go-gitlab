@@ -263,10 +263,11 @@ type Project struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/projects/
 type ProjectSharedWithGroup struct {
-	GroupID          int64  `json:"group_id"`
-	GroupName        string `json:"group_name"`
-	GroupFullPath    string `json:"group_full_path"`
-	GroupAccessLevel int64  `json:"group_access_level"`
+	GroupID          int64    `json:"group_id"`
+	GroupName        string   `json:"group_name"`
+	GroupFullPath    string   `json:"group_full_path"`
+	GroupAccessLevel int64    `json:"group_access_level"`
+	ExpiresAt        *ISOTime `json:"expires_at"`
 }
 
 // BasicProject included in other service responses (such as todos).
