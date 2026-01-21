@@ -172,14 +172,14 @@ func (c *MockIntegrationsServiceInterfaceDisableGroupMicrosoftTeamsNotifications
 }
 
 // GetGroupHarborSettings mocks base method.
-func (m *MockIntegrationsServiceInterface) GetGroupHarborSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error) {
+func (m *MockIntegrationsServiceInterface) GetGroupHarborSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.HarborIntegration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetGroupHarborSettings", varargs...)
-	ret0, _ := ret[0].(*gitlab.Integration)
+	ret0, _ := ret[0].(*gitlab.HarborIntegration)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -199,19 +199,19 @@ type MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) Return(arg0 *gitlab.Integration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall {
+func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) Return(arg0 *gitlab.HarborIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall {
+func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.HarborIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall {
+func (c *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.HarborIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupHarborSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

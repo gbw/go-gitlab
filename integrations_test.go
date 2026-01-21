@@ -9,6 +9,36 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestGroupIntegrationUnmarshalHarborProperties(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 45,
+			"title": "Harbor",
+			"slug": "harbor",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"url": "https://demo.goharbor.io",
+				"project_name": "library",
+				"username": "testuser"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupHarborSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotNil(t, integration.Properties)
+	assert.Equal(t, "https://demo.goharbor.io", integration.Properties.URL)
+	assert.Equal(t, "library", integration.Properties.ProjectName)
+	assert.Equal(t, "testuser", integration.Properties.Username)
+}
+
 func TestListActiveGroupIntegrations(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -233,7 +263,12 @@ func TestGetGroupHarborSettings(t *testing.T) {
 			"job_events": false,
 			"comment_on_event_enabled": true,
 			"inherited": false,
-			"vulnerability_events": false
+			"vulnerability_events": false,
+			"properties": {
+				"url": "https://demo.goharbor.io",
+				"project_name": "library",
+				"username": "testuser"
+			}
 		}`)
 	})
 	integration, resp, err := client.Integrations.GetGroupHarborSettings(1)
@@ -242,29 +277,36 @@ func TestGetGroupHarborSettings(t *testing.T) {
 
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Harbor",
-		Slug:                     "harbor",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &HarborIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Harbor",
+			Slug:                     "harbor",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
+		Properties: HarborIntegrationProperties{
+			URL:         "https://demo.goharbor.io",
+			ProjectName: "library",
+			Username:    "testuser",
+		},
 	}
 	assert.Equal(t, want, integration)
 }
