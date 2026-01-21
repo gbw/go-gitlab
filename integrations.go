@@ -44,7 +44,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#get-harbor-settings
-		GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
+		GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*HarborIntegration, *Response, error)
 
 		// SetGroupMicrosoftTeamsNotifications sets up Microsoft Teams notifications for a group.
 		//
@@ -129,6 +129,27 @@ type Integration struct {
 	Inherited                      bool       `json:"inherited"`
 }
 
+// HarborIntegration represents the Harbor integration settings.
+// It embeds the generic Integration struct and adds Harbor-specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-harbor-settings
+type HarborIntegration struct {
+	Integration
+	Properties HarborIntegrationProperties `json:"properties"`
+}
+
+// HarborIntegrationProperties represents Harbor specific properties
+// returned by the GitLab API.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-harbor-settings
+type HarborIntegrationProperties struct {
+	URL         string `json:"url"`
+	ProjectName string `json:"project_name"`
+	Username    string `json:"username"`
+}
+
 // ListActiveIntegrationsOptions represents the available
 // ListActiveIntegrations() options.
 //
@@ -181,8 +202,8 @@ func (s *IntegrationsService) DisableGroupHarbor(gid any, options ...RequestOpti
 	return resp, err
 }
 
-func (s *IntegrationsService) GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*HarborIntegration, *Response, error) {
+	return do[*HarborIntegration](
 		s.client,
 		withPath("groups/%s/integrations/harbor", GroupID{gid}),
 		withMethod(http.MethodGet),
