@@ -1,3 +1,13 @@
+## 1.17.0
+
+### 🚀 Features
+
+- Add support for Group Mattermost integrations ([!2675](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2675)) by [Hamza Hassanain](https://gitlab.com/HamzaHassanain)
+
+
+
+# [1.17.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.16.0...v1.17.0) (2026-01-23)
+
 ## 1.16.0
 
 ### 🚀 Features
