@@ -39,6 +39,94 @@ func (m *MockIntegrationsServiceInterface) EXPECT() *MockIntegrationsServiceInte
 	return m.recorder
 }
 
+// DeleteGroupMattermostIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) DeleteGroupMattermostIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteGroupMattermostIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteGroupMattermostIntegration indicates an expected call of DeleteGroupMattermostIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) DeleteGroupMattermostIntegration(gid any, options ...any) *MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteGroupMattermostIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).DeleteGroupMattermostIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall) Return(arg0 *gitlab.Response, arg1 error) *MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDeleteGroupMattermostIntegrationCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// DeleteGroupMattermostSlashCommandsIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) DeleteGroupMattermostSlashCommandsIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteGroupMattermostSlashCommandsIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteGroupMattermostSlashCommandsIntegration indicates an expected call of DeleteGroupMattermostSlashCommandsIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) DeleteGroupMattermostSlashCommandsIntegration(gid any, options ...any) *MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteGroupMattermostSlashCommandsIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).DeleteGroupMattermostSlashCommandsIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall) Return(arg0 *gitlab.Response, arg1 error) *MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDeleteGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DisableGroupHarbor mocks base method.
 func (m *MockIntegrationsServiceInterface) DisableGroupHarbor(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -261,6 +349,96 @@ func (c *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall) DoAndReturn(f
 	return c
 }
 
+// GetGroupMattermostIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupMattermostIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupMattermostIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupMattermostIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupMattermostIntegration indicates an expected call of GetGroupMattermostIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupMattermostIntegration(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupMattermostIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupMattermostIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall) Return(arg0 *gitlab.GroupMattermostIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetGroupMattermostSlashCommandsIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupMattermostSlashCommandsIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostSlashCommandsIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupMattermostSlashCommandsIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupMattermostSlashCommandsIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupMattermostSlashCommandsIntegration indicates an expected call of GetGroupMattermostSlashCommandsIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupMattermostSlashCommandsIntegration(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupMattermostSlashCommandsIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupMattermostSlashCommandsIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall) Return(arg0 *gitlab.GroupMattermostSlashCommandsIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostSlashCommandsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostSlashCommandsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetGroupMicrosoftTeamsNotifications mocks base method.
 func (m *MockIntegrationsServiceInterface) GetGroupMicrosoftTeamsNotifications(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -347,6 +525,96 @@ func (c *MockIntegrationsServiceInterfaceListActiveGroupIntegrationsCall) Do(f f
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceListActiveGroupIntegrationsCall) DoAndReturn(f func(any, *gitlab.ListActiveIntegrationsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceListActiveGroupIntegrationsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetGroupMattermostIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) SetGroupMattermostIntegration(gid any, opt *gitlab.GroupMattermostIntegrationOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetGroupMattermostIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupMattermostIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// SetGroupMattermostIntegration indicates an expected call of SetGroupMattermostIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) SetGroupMattermostIntegration(gid, opt any, options ...any) *MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGroupMattermostIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).SetGroupMattermostIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall) Return(arg0 *gitlab.GroupMattermostIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall) Do(f func(any, *gitlab.GroupMattermostIntegrationOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall) DoAndReturn(f func(any, *gitlab.GroupMattermostIntegrationOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMattermostIntegrationCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetGroupMattermostSlashCommandsIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) SetGroupMattermostSlashCommandsIntegration(gid any, opt *gitlab.GroupMattermostSlashCommandsIntegrationOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostSlashCommandsIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetGroupMattermostSlashCommandsIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupMattermostSlashCommandsIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// SetGroupMattermostSlashCommandsIntegration indicates an expected call of SetGroupMattermostSlashCommandsIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) SetGroupMattermostSlashCommandsIntegration(gid, opt any, options ...any) *MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGroupMattermostSlashCommandsIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).SetGroupMattermostSlashCommandsIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall) Return(arg0 *gitlab.GroupMattermostSlashCommandsIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall) Do(f func(any, *gitlab.GroupMattermostSlashCommandsIntegrationOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostSlashCommandsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall) DoAndReturn(f func(any, *gitlab.GroupMattermostSlashCommandsIntegrationOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostSlashCommandsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMattermostSlashCommandsIntegrationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
