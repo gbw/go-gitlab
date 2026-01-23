@@ -83,6 +83,42 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
 		GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
+
+		// GetGroupMattermostIntegration retrieves the Mattermost integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#mattermost-notifications
+		GetGroupMattermostIntegration(gid any, options ...RequestOptionFunc) (*GroupMattermostIntegration, *Response, error)
+
+		// SetGroupMattermostIntegration creates or updates the Mattermost integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#mattermost-notifications
+		SetGroupMattermostIntegration(gid any, opt *GroupMattermostIntegrationOptions, options ...RequestOptionFunc) (*GroupMattermostIntegration, *Response, error)
+
+		// DeleteGroupMattermostIntegration removes the Mattermost integration from a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#mattermost-notifications
+		DeleteGroupMattermostIntegration(gid any, options ...RequestOptionFunc) (*Response, error)
+
+		// GetGroupMattermostSlashCommandsIntegration retrieves the Mattermost slash commands integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#mattermost-slash-commands
+		GetGroupMattermostSlashCommandsIntegration(gid any, options ...RequestOptionFunc) (*GroupMattermostSlashCommandsIntegration, *Response, error)
+
+		// SetGroupMattermostSlashCommandsIntegration creates or updates the Mattermost slash commands integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#mattermost-slash-commands
+		SetGroupMattermostSlashCommandsIntegration(gid any, opt *GroupMattermostSlashCommandsIntegrationOptions, options ...RequestOptionFunc) (*GroupMattermostSlashCommandsIntegration, *Response, error)
+
+		// DeleteGroupMattermostSlashCommandsIntegration removes the Mattermost slash commands integration from a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#mattermost-slash-commands
+		DeleteGroupMattermostSlashCommandsIntegration(gid any, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// IntegrationsService handles communication with the group
