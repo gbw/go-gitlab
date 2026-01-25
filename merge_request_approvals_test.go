@@ -424,3 +424,177 @@ func TestCreateApprovalRules(t *testing.T) {
 	}
 	assert.Equal(t, want, rule)
 }
+
+func TestApproveMergeRequest(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a merge request
+	// WHEN approving the merge request
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approve", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"iid": 1,
+			"project_id": 1,
+			"approvals_required": 2,
+			"approvals_left": 1,
+			"approved_by": [
+				{
+					"user": {
+						"id": 5,
+						"name": "John Doe",
+						"username": "jdoe"
+					}
+				}
+			]
+		}`)
+	})
+
+	opt := &ApproveMergeRequestOptions{SHA: Ptr("abc123")}
+
+	// THEN the merge request should be approved successfully
+	approvals, resp, err := client.MergeRequestApprovals.ApproveMergeRequest(1, 1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), approvals.ID)
+	assert.Equal(t, int64(2), approvals.ApprovalsRequired)
+	assert.Equal(t, int64(1), approvals.ApprovalsLeft)
+}
+
+func TestUnapproveMergeRequest(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN an approved merge request
+	// WHEN unapproving the merge request
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/unapprove", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusCreated)
+	})
+
+	// THEN the merge request should be unapproved successfully
+	resp, err := client.MergeRequestApprovals.UnapproveMergeRequest(1, 1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
+}
+
+func TestResetApprovalsOfMergeRequest(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a merge request with approvals
+	// WHEN resetting all approvals
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/reset_approvals", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		w.WriteHeader(http.StatusAccepted)
+	})
+
+	// THEN all approvals should be reset successfully
+	resp, err := client.MergeRequestApprovals.ResetApprovalsOfMergeRequest(1, 1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
+}
+
+func TestGetConfiguration(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a merge request
+	// WHEN getting the approval configuration
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approvals", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"iid": 1,
+			"project_id": 1,
+			"approvals_required": 2,
+			"approvals_left": 2,
+			"approved_by": []
+		}`)
+	})
+
+	// THEN the approval configuration should be returned
+	approvals, resp, err := client.MergeRequestApprovals.GetConfiguration(1, 1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), approvals.ID)
+	assert.Equal(t, int64(2), approvals.ApprovalsRequired)
+	assert.Equal(t, int64(2), approvals.ApprovalsLeft)
+}
+
+func TestMergeRequestApprovals_ChangeApprovalConfiguration(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a merge request
+	// WHEN changing the approval configuration
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approvals", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"iid": 1,
+			"project_id": 1,
+			"title": "Test MR"
+		}`)
+	})
+
+	opt := &ChangeMergeRequestApprovalConfigurationOptions{ApprovalsRequired: Ptr(int64(3))}
+
+	// THEN the approval configuration should be updated successfully
+	mr, resp, err := client.MergeRequestApprovals.ChangeApprovalConfiguration(1, 1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), mr.ID)
+	assert.Equal(t, "Test MR", mr.Title)
+}
+
+func TestUpdateApprovalRule(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a merge request with an approval rule
+	// WHEN updating the approval rule
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approval_rules/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 5,
+			"name": "Updated Security Team",
+			"rule_type": "regular",
+			"approvals_required": 3
+		}`)
+	})
+
+	opt := &UpdateMergeRequestApprovalRuleOptions{
+		Name:              Ptr("Updated Security Team"),
+		ApprovalsRequired: Ptr(int64(3)),
+	}
+
+	// THEN the approval rule should be updated successfully
+	rule, resp, err := client.MergeRequestApprovals.UpdateApprovalRule(1, 1, 5, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(5), rule.ID)
+	assert.Equal(t, "Updated Security Team", rule.Name)
+	assert.Equal(t, int64(3), rule.ApprovalsRequired)
+}
+
+func TestDeleteApprovalRule(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a merge request with an approval rule
+	// WHEN deleting the approval rule
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/1/approval_rules/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the approval rule should be deleted successfully
+	resp, err := client.MergeRequestApprovals.DeleteApprovalRule(1, 1, 5)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}

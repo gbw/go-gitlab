@@ -202,6 +202,24 @@ func TestUpdateGlobalSettings(t *testing.T) {
 	assert.Equal(t, "admin@example.com", settings.NotificationEmail)
 }
 
+func TestUpdateGlobalSettings_InvalidLevel(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	// GIVEN notification settings with global level
+	// WHEN updating global settings with global level
+	options := NotificationSettingsOptions{
+		Level: Ptr(GlobalNotificationLevel),
+	}
+
+	// THEN an error should be returned
+	settings, resp, err := client.NotificationSettings.UpdateGlobalSettings(&options)
+	assert.Error(t, err)
+	assert.Nil(t, settings)
+	assert.Nil(t, resp)
+	assert.Contains(t, err.Error(), "notification level 'global' is not valid for global notification settings")
+}
+
 func TestGetSettingsForGroup(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

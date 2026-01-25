@@ -257,3 +257,135 @@ func TestRetryFailedExternalStatusCheckForProjectMergeRequest(t *testing.T) {
 
 	assert.NotNil(t, resp)
 }
+
+func TestSetExternalStatusCheckStatus(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with a merge request
+	// WHEN setting the status of an external status check
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/2/status_check_responses", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusCreated)
+	})
+
+	opt := &SetExternalStatusCheckStatusOptions{
+		SHA:                   Ptr("abc123"),
+		ExternalStatusCheckID: Ptr(int64(5)),
+		Status:                Ptr("passed"),
+	}
+
+	// THEN the status should be set successfully
+	resp, err := client.ExternalStatusChecks.SetExternalStatusCheckStatus(1, 2, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
+}
+
+func TestCreateExternalStatusCheck(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project
+	// WHEN creating an external status check
+	mux.HandleFunc("/api/v4/projects/1/external_status_checks", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusCreated)
+	})
+
+	opt := &CreateExternalStatusCheckOptions{
+		Name:               Ptr("Security Check"),
+		ExternalURL:        Ptr("https://example.com/check"),
+		ProtectedBranchIDs: &[]int64{1, 2},
+	}
+
+	// THEN the external status check should be created successfully
+	resp, err := client.ExternalStatusChecks.CreateExternalStatusCheck(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
+}
+
+func TestDeleteExternalStatusCheck(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with an external status check
+	// WHEN deleting the external status check
+	mux.HandleFunc("/api/v4/projects/1/external_status_checks/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the external status check should be deleted successfully
+	resp, err := client.ExternalStatusChecks.DeleteExternalStatusCheck(1, 5)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
+
+func TestUpdateExternalStatusCheck(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with an external status check
+	// WHEN updating the external status check
+	mux.HandleFunc("/api/v4/projects/1/external_status_checks/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		w.WriteHeader(http.StatusOK)
+	})
+
+	opt := &UpdateExternalStatusCheckOptions{
+		Name:               Ptr("Updated Security Check"),
+		ExternalURL:        Ptr("https://example.com/updated-check"),
+		ProtectedBranchIDs: &[]int64{1, 2, 3},
+	}
+
+	// THEN the external status check should be updated successfully
+	resp, err := client.ExternalStatusChecks.UpdateExternalStatusCheck(1, 5, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+}
+
+func TestDeleteProjectExternalStatusCheck(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with an external status check
+	// WHEN deleting the project external status check
+	mux.HandleFunc("/api/v4/projects/1/external_status_checks/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the project external status check should be deleted successfully
+	resp, err := client.ExternalStatusChecks.DeleteProjectExternalStatusCheck(1, 5, &DeleteProjectExternalStatusCheckOptions{})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
+
+func TestSetProjectMergeRequestExternalStatusCheckStatus(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with a merge request
+	// WHEN setting the status of a project merge request external status check
+	mux.HandleFunc("/api/v4/projects/1/merge_requests/2/status_check_responses", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusCreated)
+	})
+
+	opt := &SetProjectMergeRequestExternalStatusCheckStatusOptions{
+		SHA:                   Ptr("abc123"),
+		ExternalStatusCheckID: Ptr(int64(5)),
+		Status:                Ptr("passed"),
+	}
+
+	// THEN the status should be set successfully
+	resp, err := client.ExternalStatusChecks.SetProjectMergeRequestExternalStatusCheckStatus(1, 2, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
+}
