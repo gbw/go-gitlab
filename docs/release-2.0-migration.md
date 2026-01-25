@@ -32,3 +32,21 @@ user, _, err := client.Users.GetUser(1, &GetUserOptions{
 
 ### Merge Requests That Implement This Change
 - [Fix GetUser function parameter naming](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2668#) by @seif-hatem
+
+## Refactor Jira Integration Settings
+
+The `GetGroupJiraSettings` and `SetUpGroupJira` methods now return a `*JiraIntegration` struct instead of the generic `*Integration` struct. This provides strongly typed access to Jira-specific properties.
+
+**Changes:**
+- Return type: Changed from `*Integration` to `*JiraIntegration`
+- Properties: The `Properties` field in `JiraIntegration` is now of type `JiraIntegrationProperties`, containing fields like `URL`, `Username`, `Password`, etc., instead of being a `map[string]any` or similar generic accessible only via the API response JSON.
+
+```go
+// Before (v1.x)
+integration, _, err := client.Integrations.GetGroupJiraSettings(gid)
+// integration.Properties was generic/untyped
+
+// After (v2.0)
+jiraIntegration, _, err := client.Integrations.GetGroupJiraSettings(gid)
+fmt.Println(jiraIntegration.Properties.URL)
+```
