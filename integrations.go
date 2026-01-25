@@ -69,7 +69,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#set-up-jira
-		SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
+		SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*JiraIntegration, *Response, error)
 
 		// DisableGroupJira disables the Jira integration for a group.
 		// Integration settings are reset.
@@ -82,7 +82,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
-		GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
+		GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*JiraIntegration, *Response, error)
 	}
 
 	// IntegrationsService handles communication with the group
@@ -148,6 +148,33 @@ type HarborIntegrationProperties struct {
 	URL         string `json:"url"`
 	ProjectName string `json:"project_name"`
 	Username    string `json:"username"`
+}
+
+// JiraIntegration represents the Jira integration settings.
+// It embeds the generic Integration struct and adds Jira-specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
+type JiraIntegration struct {
+	Integration
+	Properties JiraIntegrationProperties `json:"properties"`
+}
+
+// JiraIntegrationProperties represents Jira specific properties
+// returned by the GitLab API.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
+type JiraIntegrationProperties struct {
+	URL                   string   `json:"url"`
+	APIURL                *string  `json:"api_url"`
+	JiraAuthType          int64    `json:"jira_auth_type"`
+	Username              string   `json:"username"`
+	JiraIssueRegex        *string  `json:"jira_issue_regex"`
+	JiraIssuePrefix       *string  `json:"jira_issue_prefix"`
+	JiraIssueTransitionID *string  `json:"jira_issue_transition_id"`
+	IssuesEnabled         bool     `json:"issues_enabled"`
+	ProjectKeys           []string `json:"project_keys"`
 }
 
 // ListActiveIntegrationsOptions represents the available
@@ -286,8 +313,8 @@ type SetUpJiraOptions struct {
 	UseInheritedSettings         *bool     `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
 }
 
-func (s *IntegrationsService) SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*JiraIntegration, *Response, error) {
+	return do[*JiraIntegration](
 		s.client,
 		withPath("groups/%s/integrations/jira", GroupID{gid}),
 		withMethod(http.MethodPut),
@@ -306,8 +333,8 @@ func (s *IntegrationsService) DisableGroupJira(gid any, options ...RequestOption
 	return resp, err
 }
 
-func (s *IntegrationsService) GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*JiraIntegration, *Response, error) {
+	return do[*JiraIntegration](
 		s.client,
 		withPath("groups/%s/integrations/jira", GroupID{gid}),
 		withMethod(http.MethodGet),
