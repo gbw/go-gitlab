@@ -154,3 +154,21 @@ func TestLicenseService_AddLicense_StatusNotFound(t *testing.T) {
 	require.Nil(t, l)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
+
+func TestLicenseService_DeleteLicense(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a license with ID 2
+	// WHEN deleting the license
+	mux.HandleFunc("/api/v4/license/2", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the license should be deleted successfully
+	resp, err := client.License.DeleteLicense(2)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, http.StatusNoContent, resp.StatusCode)
+}

@@ -1116,3 +1116,305 @@ func TestDeleteYouTrackService(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
+
+func TestGetExternalWikiService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with External Wiki service
+	// WHEN getting the External Wiki service
+	mux.HandleFunc("/api/v4/projects/1/services/external-wiki", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "External Wiki",
+			"active": true,
+			"properties": {
+				"external_wiki_url": "https://wiki.example.com"
+			}
+		}`)
+	})
+
+	// THEN the External Wiki service should be returned
+	service, resp, err := client.Services.GetExternalWikiService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+	assert.True(t, service.Active)
+	assert.Equal(t, "https://wiki.example.com", service.Properties.ExternalWikiURL)
+}
+
+func TestSetExternalWikiService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project
+	// WHEN setting the External Wiki service
+	mux.HandleFunc("/api/v4/projects/1/services/external-wiki", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "External Wiki",
+			"active": true,
+			"properties": {
+				"external_wiki_url": "https://wiki.example.com"
+			}
+		}`)
+	})
+
+	opt := &SetExternalWikiServiceOptions{
+		ExternalWikiURL: Ptr("https://wiki.example.com"),
+	}
+
+	// THEN the External Wiki service should be set successfully
+	service, resp, err := client.Services.SetExternalWikiService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+}
+
+func TestDeleteExternalWikiService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with External Wiki service
+	// WHEN deleting the External Wiki service
+	mux.HandleFunc("/api/v4/projects/1/services/external-wiki", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the External Wiki service should be deleted successfully
+	resp, err := client.Services.DeleteExternalWikiService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
+
+func TestGetGithubService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with GitHub service
+	// WHEN getting the GitHub service
+	mux.HandleFunc("/api/v4/projects/1/services/github", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "GitHub",
+			"active": true,
+			"properties": {
+				"repository_url": "https://github.com/user/repo",
+				"static_context": true
+			}
+		}`)
+	})
+
+	// THEN the GitHub service should be returned
+	service, resp, err := client.Services.GetGithubService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+	assert.True(t, service.Active)
+	assert.Equal(t, "https://github.com/user/repo", service.Properties.RepositoryURL)
+}
+
+func TestSetGithubService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project
+	// WHEN setting the GitHub service
+	mux.HandleFunc("/api/v4/projects/1/services/github", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "GitHub",
+			"active": true,
+			"properties": {
+				"repository_url": "https://github.com/user/repo",
+				"static_context": true
+			}
+		}`)
+	})
+
+	opt := &SetGithubServiceOptions{
+		RepositoryURL: Ptr("https://github.com/user/repo"),
+		StaticContext: Ptr(true),
+	}
+
+	// THEN the GitHub service should be set successfully
+	service, resp, err := client.Services.SetGithubService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+}
+
+func TestDeleteGithubService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with GitHub service
+	// WHEN deleting the GitHub service
+	mux.HandleFunc("/api/v4/projects/1/services/github", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the GitHub service should be deleted successfully
+	resp, err := client.Services.DeleteGithubService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
+
+func TestGetJenkinsCIService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with Jenkins CI service
+	// WHEN getting the Jenkins CI service
+	mux.HandleFunc("/api/v4/projects/1/services/jenkins", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Jenkins CI",
+			"active": true,
+			"properties": {
+				"jenkins_url": "https://jenkins.example.com",
+				"project_name": "my-project"
+			}
+		}`)
+	})
+
+	// THEN the Jenkins CI service should be returned
+	service, resp, err := client.Services.GetJenkinsCIService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+	assert.True(t, service.Active)
+	assert.Equal(t, "https://jenkins.example.com", service.Properties.URL)
+}
+
+func TestSetJenkinsCIService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project
+	// WHEN setting the Jenkins CI service
+	mux.HandleFunc("/api/v4/projects/1/services/jenkins", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Jenkins CI",
+			"active": true,
+			"properties": {
+				"jenkins_url": "https://jenkins.example.com",
+				"project_name": "my-project"
+			}
+		}`)
+	})
+
+	opt := &SetJenkinsCIServiceOptions{
+		URL:         Ptr("https://jenkins.example.com"),
+		ProjectName: Ptr("my-project"),
+	}
+
+	// THEN the Jenkins CI service should be set successfully
+	service, resp, err := client.Services.SetJenkinsCIService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+}
+
+func TestDeleteJenkinsCIService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with Jenkins CI service
+	// WHEN deleting the Jenkins CI service
+	mux.HandleFunc("/api/v4/projects/1/services/jenkins", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the Jenkins CI service should be deleted successfully
+	resp, err := client.Services.DeleteJenkinsCIService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
+
+func TestGetMicrosoftTeamsService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with Microsoft Teams service
+	// WHEN getting the Microsoft Teams service
+	mux.HandleFunc("/api/v4/projects/1/services/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Microsoft Teams",
+			"active": true,
+			"properties": {
+				"webhook": "https://outlook.office.com/webhook/..."
+			}
+		}`)
+	})
+
+	// THEN the Microsoft Teams service should be returned
+	service, resp, err := client.Services.GetMicrosoftTeamsService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+	assert.True(t, service.Active)
+	assert.Equal(t, "https://outlook.office.com/webhook/...", service.Properties.WebHook)
+}
+
+func TestSetMicrosoftTeamsService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project
+	// WHEN setting the Microsoft Teams service
+	mux.HandleFunc("/api/v4/projects/1/services/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Microsoft Teams",
+			"active": true,
+			"properties": {
+				"webhook": "https://outlook.office.com/webhook/..."
+			}
+		}`)
+	})
+
+	opt := &SetMicrosoftTeamsServiceOptions{
+		WebHook: Ptr("https://outlook.office.com/webhook/..."),
+	}
+
+	// THEN the Microsoft Teams service should be set successfully
+	service, resp, err := client.Services.SetMicrosoftTeamsService(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), service.ID)
+}
+
+func TestDeleteMicrosoftTeamsService(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with Microsoft Teams service
+	// WHEN deleting the Microsoft Teams service
+	mux.HandleFunc("/api/v4/projects/1/services/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the Microsoft Teams service should be deleted successfully
+	resp, err := client.Services.DeleteMicrosoftTeamsService(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
