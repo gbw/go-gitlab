@@ -259,6 +259,96 @@ func (c *MockIntegrationsServiceInterfaceDisableGroupMicrosoftTeamsNotifications
 	return c
 }
 
+// GetGroupDiscordSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupDiscordSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.DiscordIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupDiscordSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.DiscordIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupDiscordSettings indicates an expected call of GetGroupDiscordSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupDiscordSettings(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupDiscordSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupDiscordSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall) Return(arg0 *gitlab.DiscordIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.DiscordIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.DiscordIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupDiscordSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetGroupGoogleChatSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupGoogleChatSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupGoogleChatSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.GoogleChatIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupGoogleChatSettings indicates an expected call of GetGroupGoogleChatSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupGoogleChatSettings(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupGoogleChatSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupGoogleChatSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall) Return(arg0 *gitlab.GoogleChatIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupGoogleChatSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetGroupHarborSettings mocks base method.
 func (m *MockIntegrationsServiceInterface) GetGroupHarborSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -349,6 +439,51 @@ func (c *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall) DoAndReturn(f
 	return c
 }
 
+// GetGroupMatrixSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupMatrixSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.MatrixIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupMatrixSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.MatrixIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupMatrixSettings indicates an expected call of GetGroupMatrixSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupMatrixSettings(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupMatrixSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupMatrixSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall) Return(arg0 *gitlab.MatrixIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MatrixIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MatrixIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMatrixSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetGroupMattermostIntegration mocks base method.
 func (m *MockIntegrationsServiceInterface) GetGroupMattermostIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -390,6 +525,51 @@ func (c *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall) Do(f
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GroupMattermostIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMattermostIntegrationCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetGroupMattermostSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupMattermostSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.MattermostIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupMattermostSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.MattermostIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupMattermostSettings indicates an expected call of GetGroupMattermostSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupMattermostSettings(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupMattermostSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupMattermostSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall) Return(arg0 *gitlab.MattermostIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MattermostIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MattermostIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMattermostSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -480,6 +660,51 @@ func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetGroupTelegramSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupTelegramSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.TelegramIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupTelegramSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.TelegramIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupTelegramSettings indicates an expected call of GetGroupTelegramSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupTelegramSettings(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupTelegramSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupTelegramSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall) Return(arg0 *gitlab.TelegramIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.TelegramIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.TelegramIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupTelegramSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

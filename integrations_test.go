@@ -546,3 +546,123 @@ func TestGetGroupJiraSettings(t *testing.T) {
 	}
 	assert.Equal(t, want, integration)
 }
+
+func TestGetGroupDiscordSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/discord", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "DiscordNotifications",
+			"slug": "discord",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"properties": {
+				"branches_to_be_notified": "default",
+				"notify_only_broken_pipelines": true
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupDiscordSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "default", integration.Properties.BranchesToBeNotified)
+	assert.True(t, integration.Properties.NotifyOnlyBrokenPipelines)
+}
+
+func TestGetGroupTelegramSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/telegram", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Telegram",
+			"slug": "telegram",
+			"properties": {
+				"room": "-1001",
+				"branches_to_be_notified": "default"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupTelegramSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "-1001", integration.Properties.Room)
+	assert.Equal(t, "default", integration.Properties.BranchesToBeNotified)
+}
+
+func TestGetGroupMattermostSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/mattermost", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Mattermost",
+			"slug": "mattermost",
+			"properties": {
+				"username": "gitlab_bot",
+				"channel": "town-square"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupMattermostSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "gitlab_bot", integration.Properties.Username)
+	assert.Equal(t, "town-square", integration.Properties.Channel)
+}
+
+func TestGetGroupMatrixSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/matrix", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Matrix",
+			"slug": "matrix",
+			"properties": {
+				"room": "!abc:matrix.org",
+				"hostname": "https://matrix.org"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupMatrixSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "!abc:matrix.org", integration.Properties.Room)
+	assert.Equal(t, "https://matrix.org", integration.Properties.Hostname)
+}
+
+func TestGetGroupGoogleChatSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/hangouts-chat", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Google Chat",
+			"slug": "hangouts-chat",
+			"properties": {
+				"branches_to_be_notified": "default"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupGoogleChatSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "default", integration.Properties.BranchesToBeNotified)
+}
