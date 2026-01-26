@@ -39,6 +39,34 @@ func TestGroupIntegrationUnmarshalHarborProperties(t *testing.T) {
 	assert.Equal(t, "testuser", integration.Properties.Username)
 }
 
+func TestGroupIntegrationUnmarshalMicrosoftTeamsProperties(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 46,
+			"title": "Microsoft Teams notifications",
+			"slug": "microsoft-teams",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"notify_only_broken_pipelines": false,
+				"branches_to_be_notified": "all"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupMicrosoftTeamsNotifications(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotNil(t, integration.Properties)
+	assert.False(t, integration.Properties.NotifyOnlyBrokenPipelines)
+	assert.Equal(t, "all", integration.Properties.BranchesToBeNotified)
+}
+
 func TestGroupIntegrationUnmarshalJiraProperties(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -349,12 +377,12 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft_teams", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
 		fmt.Fprint(w, `{
 			"id": 1,
 			"title": "Microsoft Teams",
-			"slug": "microsoft_teams",
+			"slug": "microsoft-teams",
 			"created_at": "2023-01-01T00:00:00.000Z",
 			"updated_at": "2023-01-02T00:00:00.000Z",
 			"active": true,
@@ -373,7 +401,11 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 			"job_events": false,
 			"comment_on_event_enabled": true,
 			"inherited": false,
-			"vulnerability_events": false
+			"vulnerability_events": false,
+			"properties": {
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "default"
+			}
 		}`)
 	})
 	integration, resp, err := client.Integrations.SetGroupMicrosoftTeamsNotifications(1, nil)
@@ -381,29 +413,35 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	assert.NotNil(t, resp)
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Microsoft Teams",
-		Slug:                     "microsoft_teams",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &MicrosoftTeamsIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Microsoft Teams",
+			Slug:                     "microsoft-teams",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
+		Properties: MicrosoftTeamsIntegrationProperties{
+			NotifyOnlyBrokenPipelines: true,
+			BranchesToBeNotified:      "default",
+		},
 	}
 	assert.Equal(t, want, integration)
 }
@@ -412,7 +450,7 @@ func TestDisableGroupMicrosoftTeamsNotifications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft_teams", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
 	})
 	resp, err := client.Integrations.DisableGroupMicrosoftTeamsNotifications(1)
@@ -424,12 +462,12 @@ func TestGetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft_teams", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{
 			"id": 1,
 			"title": "Microsoft Teams",
-			"slug": "microsoft_teams",
+			"slug": "microsoft-teams",
 			"created_at": "2023-01-01T00:00:00.000Z",
 			"updated_at": "2023-01-02T00:00:00.000Z",
 			"active": true,
@@ -448,7 +486,11 @@ func TestGetGroupMicrosoftTeamsNotifications(t *testing.T) {
 			"job_events": false,
 			"comment_on_event_enabled": true,
 			"inherited": false,
-			"vulnerability_events": false
+			"vulnerability_events": false,
+			"properties": {
+				"notify_only_broken_pipelines": false,
+				"branches_to_be_notified": "all"
+			}
 		}`)
 	})
 	integration, resp, err := client.Integrations.GetGroupMicrosoftTeamsNotifications(1)
@@ -457,29 +499,35 @@ func TestGetGroupMicrosoftTeamsNotifications(t *testing.T) {
 
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Microsoft Teams",
-		Slug:                     "microsoft_teams",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &MicrosoftTeamsIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Microsoft Teams",
+			Slug:                     "microsoft-teams",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
+		Properties: MicrosoftTeamsIntegrationProperties{
+			NotifyOnlyBrokenPipelines: false,
+			BranchesToBeNotified:      "all",
+		},
 	}
 	assert.Equal(t, want, integration)
 }

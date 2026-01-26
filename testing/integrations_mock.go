@@ -262,14 +262,14 @@ func (c *MockIntegrationsServiceInterfaceGetGroupJiraSettingsCall) DoAndReturn(f
 }
 
 // GetGroupMicrosoftTeamsNotifications mocks base method.
-func (m *MockIntegrationsServiceInterface) GetGroupMicrosoftTeamsNotifications(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error) {
+func (m *MockIntegrationsServiceInterface) GetGroupMicrosoftTeamsNotifications(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.MicrosoftTeamsIntegration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetGroupMicrosoftTeamsNotifications", varargs...)
-	ret0, _ := ret[0].(*gitlab.Integration)
+	ret0, _ := ret[0].(*gitlab.MicrosoftTeamsIntegration)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -289,19 +289,19 @@ type MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall str
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall) Return(arg0 *gitlab.Integration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall {
+func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall) Return(arg0 *gitlab.MicrosoftTeamsIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall {
+func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MicrosoftTeamsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall {
+func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.MicrosoftTeamsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -352,14 +352,14 @@ func (c *MockIntegrationsServiceInterfaceListActiveGroupIntegrationsCall) DoAndR
 }
 
 // SetGroupMicrosoftTeamsNotifications mocks base method.
-func (m *MockIntegrationsServiceInterface) SetGroupMicrosoftTeamsNotifications(gid any, opt *gitlab.SetMicrosoftTeamsNotificationsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error) {
+func (m *MockIntegrationsServiceInterface) SetGroupMicrosoftTeamsNotifications(gid any, opt *gitlab.SetMicrosoftTeamsNotificationsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.MicrosoftTeamsIntegration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{gid, opt}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "SetGroupMicrosoftTeamsNotifications", varargs...)
-	ret0, _ := ret[0].(*gitlab.Integration)
+	ret0, _ := ret[0].(*gitlab.MicrosoftTeamsIntegration)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -379,19 +379,19 @@ type MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall str
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall) Return(arg0 *gitlab.Integration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall {
+func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall) Return(arg0 *gitlab.MicrosoftTeamsIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall) Do(f func(any, *gitlab.SetMicrosoftTeamsNotificationsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall {
+func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall) Do(f func(any, *gitlab.SetMicrosoftTeamsNotificationsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MicrosoftTeamsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall) DoAndReturn(f func(any, *gitlab.SetMicrosoftTeamsNotificationsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall {
+func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall) DoAndReturn(f func(any, *gitlab.SetMicrosoftTeamsNotificationsOptions, ...gitlab.RequestOptionFunc) (*gitlab.MicrosoftTeamsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
