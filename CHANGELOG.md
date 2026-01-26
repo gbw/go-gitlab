@@ -1,3 +1,24 @@
+## 1.19.0
+
+### 🚀 Features
+
+- feat(integrations): Add Chat & Notify integrations ([!2691](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2691)) by [Hamza Hassanain](https://gitlab.com/HamzaHassanain)
+
+### 🔄 Other Changes
+
+- refactor: use do function for requests ([!2674](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2674)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- chore(docs): Update adding API support guide for new coding patterns ([!2688](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2688)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+# [1.19.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.18.0...v1.19.0) (2026-01-26)
+
+
+### Features
+
+* **integrations:** Add Chat & Notify integrations ([cc692ed](https://gitlab.com/gitlab-org/api/client-go/commit/cc692edd6d8dfed55fd411559af7e53b55d4e2dd))
+* **mocks:** add streaming methods for various services ([889b407](https://gitlab.com/gitlab-org/api/client-go/commit/889b407e48432b32b4c1589102ceed6fadb857db))
+
 ## 1.18.0
 
 ### 🚀 Features
