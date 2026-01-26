@@ -50,7 +50,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#set-up-microsoft-teams-notifications
-		SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
+		SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error)
 
 		// DisableGroupMicrosoftTeamsNotifications disables Microsoft Teams notifications
 		// for a group. Integration settings are reset.
@@ -63,7 +63,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#get-microsoft-teams-notifications-settings
-		GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
+		GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error)
 
 		// SetUpGroupJira sets up the Jira integration for a group.
 		//
@@ -148,6 +148,26 @@ type HarborIntegrationProperties struct {
 	URL         string `json:"url"`
 	ProjectName string `json:"project_name"`
 	Username    string `json:"username"`
+}
+
+// MicrosoftTeamsIntegration represents the Microsoft Teams integration settings.
+// It embeds the generic Integration struct and adds Microsoft Teams-specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-microsoft-teams-notifications-settings
+type MicrosoftTeamsIntegration struct {
+	Integration
+	Properties MicrosoftTeamsIntegrationProperties `json:"properties"`
+}
+
+// MicrosoftTeamsIntegrationProperties represents Microsoft Teams specific properties
+// returned by the GitLab API.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-microsoft-teams-notifications-settings
+type MicrosoftTeamsIntegrationProperties struct {
+	NotifyOnlyBrokenPipelines bool   `json:"notify_only_broken_pipelines"`
+	BranchesToBeNotified      string `json:"branches_to_be_notified"`
 }
 
 // JiraIntegration represents the Jira integration settings.
@@ -261,10 +281,10 @@ type SetMicrosoftTeamsNotificationsOptions struct {
 	UseInheritedSettings      *bool   `url:"use_inherited_settings,omitempty"`
 }
 
-func (s *IntegrationsService) SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error) {
+	return do[*MicrosoftTeamsIntegration](
 		s.client,
-		withPath("groups/%s/integrations/microsoft_teams", GroupID{gid}),
+		withPath("groups/%s/integrations/microsoft-teams", GroupID{gid}),
 		withMethod(http.MethodPut),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -274,17 +294,17 @@ func (s *IntegrationsService) SetGroupMicrosoftTeamsNotifications(gid any, opt *
 func (s *IntegrationsService) DisableGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](
 		s.client,
-		withPath("groups/%s/integrations/microsoft_teams", GroupID{gid}),
+		withPath("groups/%s/integrations/microsoft-teams", GroupID{gid}),
 		withMethod(http.MethodDelete),
 		withRequestOpts(options...),
 	)
 	return resp, err
 }
 
-func (s *IntegrationsService) GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error) {
+	return do[*MicrosoftTeamsIntegration](
 		s.client,
-		withPath("groups/%s/integrations/microsoft_teams", GroupID{gid}),
+		withPath("groups/%s/integrations/microsoft-teams", GroupID{gid}),
 		withMethod(http.MethodGet),
 		withRequestOpts(options...),
 	)

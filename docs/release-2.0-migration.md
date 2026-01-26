@@ -33,6 +33,16 @@ user, _, err := client.Users.GetUser(1, &GetUserOptions{
 ### Merge Requests That Implement This Change
 - [Fix GetUser function parameter naming](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2668#) by @seif-hatem
 
+## Group Integrations
+
+### Microsoft Teams
+
+- `GetGroupMicrosoftTeamsNotifications` now returns `*MicrosoftTeamsIntegration` instead of `*Integration`.
+- `SetGroupMicrosoftTeamsNotifications` now returns `*MicrosoftTeamsIntegration` instead of `*Integration`.
+
+#### Merge Requests That Implement This Change
+- [Refactor Microsoft Teams Group Integration](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2679) by @HamzaHassanain
+
 ## Refactor Jira Integration Settings
 
 The `GetGroupJiraSettings` and `SetUpGroupJira` methods now return a `*JiraIntegration` struct instead of the generic `*Integration` struct. This provides strongly typed access to Jira-specific properties.
