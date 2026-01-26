@@ -522,18 +522,10 @@ func (s Settings) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/settings/#get-details-on-current-application-settings
 func (s *SettingsService) GetSettings(options ...RequestOptionFunc) (*Settings, *Response, error) {
-	req, err := s.client.NewRequest(http.MethodGet, "application/settings", nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	as := new(Settings)
-	resp, err := s.client.Do(req, as)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return as, resp, nil
+	return do[*Settings](s.client,
+		withPath("application/settings"),
+		withRequestOpts(options...),
+	)
 }
 
 // UpdateSettingsOptions represents the available UpdateSettings() options.
@@ -989,16 +981,10 @@ type BranchProtectionDefaultsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/settings/#update-application-settings
 func (s *SettingsService) UpdateSettings(opt *UpdateSettingsOptions, options ...RequestOptionFunc) (*Settings, *Response, error) {
-	req, err := s.client.NewRequest(http.MethodPut, "application/settings", opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	as := new(Settings)
-	resp, err := s.client.Do(req, as)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return as, resp, nil
+	return do[*Settings](s.client,
+		withMethod(http.MethodPut),
+		withPath("application/settings"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
