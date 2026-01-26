@@ -38,7 +38,6 @@ Usually, `Get` endpoints only need function parameters and no custom input struc
 They use IDs get a single entry from the API endpoint.
 Project and group endpoints usually accept either a numeric ID or the namespace path.
 These functions take an `any` type parameter like `pid` or `gid`.
-They use the helper function `parseID` to convert it into a string for use in the endpoint URL.
 
 Most of the time they need a custom struct for the decoded JSON response.
 The fields in these structs can usually be plain fields (for example, `string`).
@@ -66,36 +65,13 @@ Pass the URL path parameters and generic `RequestOptionFunc` optional parameter 
 For example, for `GetBranch`:
 
 ```golang
-// GetBranch gets a single project repository branch.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/branches/#get-single-repository-branch
 func (s *BranchesService) GetBranch(pid any, branch string, options ...RequestOptionFunc) (*Branch, *Response, error) {
-    // Ensure whatever format `pid` is, it is converted into a string
-    project, err := parseID(pid)
-    if err != nil {
-        return nil, nil, err
-    }
-    // Create the endpoint URL, ensuring the project string is URL encoded with `PathEscape`
-    u := fmt.Sprintf("projects/%s/repository/branches/%s", PathEscape(project), url.PathEscape(branch))
-
-    // Create a request object with the HTTP method, endpoint URL and any custom options
-    req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-    if err != nil {
-        return nil, nil, err
-    }
-
-    // Call the endpoint and store the JSON decoded response in the custom struct
-    b := new(Branch)
-    resp, err := s.client.Do(req, b)
-    if err != nil {
-        return nil, resp, err
-    }
-
-    // Return the result
-    return b, resp, nil
+    return do[*Branch](s.client,
+        withMethod(http.MethodGet),
+        withPath("projects/%s/repository/branches/%s", ProjectID{pid}, branch),
+        withRequestOpts(options...),
+    )
 }
-
 ```
 
 ### Step 3b: `List` endpoints
@@ -133,37 +109,14 @@ Usually, `List` endpoints return a slice of the custom struct created for the `G
 For example, for `ListBranches`:
 
 ```golang
-// ListBranches gets a list of repository branches from a project, sorted by
-// name alphabetically.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/branches/#list-repository-branches
 func (s *BranchesService) ListBranches(pid any, opts *ListBranchesOptions, options ...RequestOptionFunc) ([]*Branch, *Response, error) {
-    // Ensure whatever format `pid` is, it is converted into a string
-    project, err := parseID(pid)
-    if err != nil {
-        return nil, nil, err
-    }
-    // Create the endpoint URL, ensuring the project string is URL encoded with `PathEscape`
-    u := fmt.Sprintf("projects/%s/repository/branches", PathEscape(project))
-
-    // Create a request object with the HTTP method, endpoint URL and any custom options
-    req, err := s.client.NewRequest(http.MethodGet, u, opts, options)
-    if err != nil {
-        return nil, nil, err
-    }
-
-    // Call the endpoint and store the JSON decoded response in the custom struct slice
-    var b []*Branch
-    resp, err := s.client.Do(req, &b)
-    if err != nil {
-        return nil, resp, err
-    }
-
-    // Return the result
-    return b, resp, nil
+    return do[[]*Branch](s.client,
+        withMethod(http.MethodGet),
+        withPath("projects/%s/repository/branches", ProjectID{pid}),
+        withAPIOpts(opts),
+        withRequestOpts(options...),
+    )
 }
-
 ```
 
 ### Step 3c: `Create`/`Update` endpoints
@@ -191,34 +144,13 @@ This is usually the same custom struct created for the `Get` endpoint.
 For example, for `CreateBranch`:
 
 ```golang
-// CreateBranch creates branch from commit SHA or existing branch.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/branches/#create-repository-branch
 func (s *BranchesService) CreateBranch(pid any, opt *CreateBranchOptions, options ...RequestOptionFunc) (*Branch, *Response, error) {
-    // Ensure whatever format `pid` is, it is converted into a string
-    project, err := parseID(pid)
-    if err != nil {
-        return nil, nil, err
-    }
-    // Create the endpoint URL, ensuring the project string is URL encoded with `PathEscape`
-    u := fmt.Sprintf("projects/%s/repository/branches", PathEscape(project))
-
-    // Create a request object with the HTTP method, endpoint URL and any custom options
-    req, err := s.client.NewRequest(http.MethodPost, u, opt, options)
-    if err != nil {
-        return nil, nil, err
-    }
-
-    // Call the endpoint and store the JSON decoded response in the custom struct
-    b := new(Branch)
-    resp, err := s.client.Do(req, b)
-    if err != nil {
-        return nil, resp, err
-    }
-
-    // Return the result
-    return b, resp, nil
+    return do[*Branch](s.client,
+        withMethod(http.MethodPost),
+        withPath("projects/%s/repository/branches", ProjectID{pid}),
+        withAPIOpts(opt),
+        withRequestOpts(options...),
+    )
 }
 ```
 
@@ -231,29 +163,14 @@ Pass the URL path parameters and generic `RequestOptionFunc` optional parameter 
 For example, for `DeleteBranch`:
 
 ```golang
-// DeleteBranch deletes an existing branch.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/branches/#delete-repository-branch
 func (s *BranchesService) DeleteBranch(pid any, branch string, options ...RequestOptionFunc) (*Response, error) {
-    // Ensure whatever format `pid` is, it is converted into a string
-    project, err := parseID(pid)
-    if err != nil {
-        return nil, err
-    }
-    // Create the endpoint URL, ensuring any inputs are URL encoded
-    u := fmt.Sprintf("projects/%s/repository/branches/%s", PathEscape(project), url.PathEscape(branch))
-
-    // Create a request object with the HTTP method, endpoint URL and any custom options
-    req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-    if err != nil {
-        return nil, err
-    }
-
-    // Call the endpoint and return the result directly
-    return s.client.Do(req, nil)
+    _, resp, err := do[none](s.client,
+        withMethod(http.MethodDelete),
+        withPath("projects/%s/repository/branches/%s", ProjectID{pid}, branch),
+        withRequestOpts(options...),
+    )
+    return resp, err
 }
-
 ```
 
 ## Step 4: Add the API Service Interface and Service struct
@@ -269,10 +186,34 @@ For example, for the Branches API:
 ```golang
 type (
     BranchesServiceInterface interface {
+        // ListBranches gets a list of repository branches from a project, sorted by name alphabetically.
+        //
+        // GitLab API docs:
+        // https://docs.gitlab.com/api/branches/#list-repository-branches
         ListBranches(pid any, opts *ListBranchesOptions, options ...RequestOptionFunc) ([]*Branch, *Response, error)
+
+        // GetBranch gets a single project repository branch.
+        //
+        // GitLab API docs:
+        // https://docs.gitlab.com/api/branches/#get-single-repository-branch
         GetBranch(pid any, branch string, options ...RequestOptionFunc) (*Branch, *Response, error)
+
+        // CreateBranch creates branch from commit SHA or existing branch.
+        //
+        // GitLab API docs:
+        // https://docs.gitlab.com/api/branches/#create-repository-branch
         CreateBranch(pid any, opt *CreateBranchOptions, options ...RequestOptionFunc) (*Branch, *Response, error)
+
+        // DeleteBranch deletes an existing branch.
+        //
+        // GitLab API docs:
+        // https://docs.gitlab.com/api/branches/#delete-repository-branch
         DeleteBranch(pid any, branch string, options ...RequestOptionFunc) (*Response, error)
+
+        // DeleteMergedBranches deletes all branches that are merged into the project's default branch.
+        //
+        // GitLab API docs:
+        // https://docs.gitlab.com/api/branches/#delete-merged-branches
         DeleteMergedBranches(pid any, options ...RequestOptionFunc) (*Response, error)
     }
 
@@ -322,15 +263,14 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 }
 ```
 
-## Step 6: Create tests
+## Step 6: Create unit tests
 
-Every endpoint function should have tests associated with it.
-Tests are in a separate `go` file, using a standard naming convention, appending `_test` to the end of your API's file name.
+Every endpoint function should have unit tests associated with it.
+Unit tests are in a separate `go` file, using a standard naming convention, appending `_test` to the end of your API's file name.
 For example, the `branches.go` endpoints have tests in `branches_test.go`.
 
-We are working on running the tests against a working GitLab instance.
-Currently they use `mux` to mock out the HTTP responses.
-Tests apply the following pattern, for example with the test for `GetBranch`:
+These unit tests use `mux` to mock out the HTTP responses.
+They apply the following pattern, for example with the test for `GetBranch`:
 
 ```golang
 func TestGetBranch(t *testing.T) {
@@ -382,7 +322,52 @@ func TestGetBranch(t *testing.T) {
 }
 ```
 
-## Step 7: Validate code and generate mocks
+## Step 7: Create integration tests
+
+Integration tests have the benefit of running against a real test GitLab instance.
+This confirms that the code is able to interact with the API successfully.
+
+The ability to write and run integration tests is relatively new.
+Therefore, there are only a small amount of tests written.
+These tests are all in the `gitlab_test` folder.
+
+As with the unit tests, each supported API should have a test file with `_integration_test.go` appended to the API's file name.
+For example, the `branches.go` endpoints would have tests in `branches_integration_test.go`.
+
+The integration tests all apply the following pattern, for example with the test for `Projects.GetProjectHook`:
+
+```golang
+func Test_ProjectGetProjectHook_Integration(t *testing.T) {
+    // Run in parallel unless the test uses shared resources (all tests run against the same GitLab instance)
+    t.Parallel()
+
+    // Create a real client for the test GitLab instance
+    client := SetupIntegrationClient(t)
+
+    // The following two functions are reusable helper functions defined in the utils_test.go file in the same directory as the tests
+    project := CreateTestProject(t, client)
+    hook, err := CreateTestProjectHook(t, project.ID, client)
+    require.NoError(t, err, "Failed to create test hook")
+
+    // Call the function being tested
+    retrievedHook, _, err := client.Projects.GetProjectHook(project.ID, hook.ID)
+    // Assert the results are as expected
+    require.NoError(t, err, "Failed to get project hook")
+
+    assert.Equal(t, hook.ID, retrievedHook.ID)
+    assert.Equal(t, hook.URL, retrievedHook.URL)
+    assert.True(t, retrievedHook.PushEvents)
+}
+```
+
+### Running Integration Tests
+
+The integration tests use Docker to run a community edition instance of GitLab.
+To start this instance locally, run the `make testacc-up` command.
+To stop this instance, run the `make testacc-down` command.
+To run the integration tests, run the `make test-integration` command.
+
+## Step 8: Validate code and generate mocks
 
 There are various targets in the `Makefile` for validating your code changes as you go along.
 You can run `make` (without arguments) to get a list of valid make targets.
@@ -392,7 +377,7 @@ This generates a mock version of the service.
 Then it formats the code and tests it using a linter and by running the unit tests.
 You can run each command yourself by using the other targets in the `Makefile`.
 
-## Step 8: Create your merge request
+## Step 9: Create your merge request
 
 We use semantic commits in this project.
 Please make sure any commits you do have semantic commit prefixes.
