@@ -1,3 +1,23 @@
+## 1.20.0
+
+### 🚀 Features
+
+- feat: update events ([!2689](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2689)) by [Huijie Shi](https://gitlab.com/lcdlyxrqy)
+
+### 🔄 Other Changes
+
+- chore(no-release): remove redundant build tag ([!2701](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2701)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- chore(deps): update docker docker tag to v29.2.0 ([!2698](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2698)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.20.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.19.0...v1.20.0) (2026-01-27)
+
+
+### Features
+
+* update events ([46ba91c](https://gitlab.com/gitlab-org/api/client-go/commit/46ba91cabfe7c13cf4f80738d48ca60b810f520a))
+
 ## 1.19.0
 
 ### 🚀 Features
