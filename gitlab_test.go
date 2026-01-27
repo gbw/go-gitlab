@@ -22,6 +22,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net"
 	"net/http"
 	"net/http/cookiejar"
@@ -1534,6 +1535,95 @@ func TestParseID(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 				assert.Equal(t, tt.expected, result)
+			}
+		})
+	}
+}
+
+func TestSetBaseURL(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name        string
+		input       string
+		wantBaseURL string
+	}{
+		{
+			name:        "valid HTTPS URL",
+			input:       "https://gitlab.com",
+			wantBaseURL: "https://gitlab.com/api/v4/",
+		},
+		{
+			name:        "valid URL with custom path and port",
+			input:       "https://git.company.com:8443/gitlab",
+			wantBaseURL: "https://git.company.com:8443/gitlab/api/v4/",
+		},
+		{
+			name:        "URL with trailing slash",
+			input:       "https://gitlab.com/",
+			wantBaseURL: "https://gitlab.com/api/v4/",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			c := &Client{}
+			err := c.setBaseURL(tt.input)
+
+			require.NoError(t, err)
+			require.NotNil(t, c.baseURL)
+			assert.Equal(t, tt.wantBaseURL, c.baseURL.String())
+		})
+	}
+}
+
+func TestSetBaseURL_ValidationWarnings(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name        string
+		input       string
+		expectError bool
+	}{
+		{
+			name:        "empty URL logs warning but continues",
+			input:       "",
+			expectError: false,
+		},
+		{
+			name:        "missing scheme logs warning but continues",
+			input:       "gitlab.com",
+			expectError: false,
+		},
+		{
+			name:        "wrong scheme logs warning but continues",
+			input:       "git://gitlab.com",
+			expectError: false,
+		},
+		{
+			name:        "unparseable URL returns error",
+			input:       "://invalid",
+			expectError: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			c := &Client{
+				// TODO: Use slog.NewDiscardHandler() when we upgrade to Go 1.25+
+				urlWarningLogger: slog.New(slog.NewTextHandler(io.Discard, nil)),
+			}
+
+			err := c.setBaseURL(tt.input)
+
+			if tt.expectError {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
 			}
 		})
 	}
