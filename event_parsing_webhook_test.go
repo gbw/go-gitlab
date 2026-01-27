@@ -358,3 +358,89 @@ func TestParseWikiPageHook(t *testing.T) {
 	assert.Equal(t, "http://example.com/root/awesome-project/wikis/home", event.Wiki.WebURL)
 	assert.Equal(t, "adding an awesome page to the wiki", event.ObjectAttributes.Message)
 }
+
+func TestParseEmojiHook(t *testing.T) {
+	t.Parallel()
+	raw := loadFixture(t, "testdata/webhooks/emoji.json")
+
+	parsedEvent, err := ParseWebhook("Emoji Hook", raw)
+	assert.NoError(t, err)
+
+	event, ok := parsedEvent.(*EmojiEvent)
+	assert.True(t, ok, "Expected EmojiEvent, but parsing produced %T", parsedEvent)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, int64(1), event.User.ID)
+	assert.Equal(t, "Administrator", event.User.Name)
+	assert.Equal(t, int64(7), event.ProjectID)
+	assert.Equal(t, "Flight", event.Project.Name)
+	assert.Equal(t, "thumbsup", event.ObjectAttributes.Name)
+	assert.Equal(t, "Issue", event.ObjectAttributes.AwardableType)
+	assert.Equal(t, int64(123), event.ObjectAttributes.AwardableID)
+	assert.Equal(t, "award", event.ObjectAttributes.Action)
+}
+
+func TestParseMilestoneHook(t *testing.T) {
+	t.Parallel()
+	raw := loadFixture(t, "testdata/webhooks/milestone.json")
+
+	parsedEvent, err := ParseWebhook("Milestone Hook", raw)
+	assert.NoError(t, err)
+
+	event, ok := parsedEvent.(*MilestoneWebhookEvent)
+	assert.True(t, ok, "Expected MilestoneWebhookEvent, but parsing produced %T", parsedEvent)
+
+	assert.Equal(t, "milestone", event.ObjectKind)
+	assert.Equal(t, "milestone", event.EventType)
+	assert.Equal(t, "Flight", event.Project.Name)
+	assert.Equal(t, int64(7), event.Project.ID)
+	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
+	assert.Equal(t, "v1.0.0", event.ObjectAttributes.Title)
+	assert.Equal(t, "active", event.ObjectAttributes.State)
+	assert.Equal(t, "create", event.Action)
+}
+
+func TestParseProjectHook(t *testing.T) {
+	t.Parallel()
+	raw := loadFixture(t, "testdata/webhooks/project.json")
+
+	parsedEvent, err := ParseWebhook("Project Hook", raw)
+	assert.NoError(t, err)
+
+	event, ok := parsedEvent.(*ProjectWebhookEvent)
+	assert.True(t, ok, "Expected ProjectWebhookEvent, but parsing produced %T", parsedEvent)
+
+	assert.Equal(t, "project_create", event.EventName)
+	assert.Equal(t, "Flight", event.Name)
+	assert.Equal(t, "flight", event.Path)
+	assert.Equal(t, "flightjs/flight", event.PathWithNamespace)
+	assert.Equal(t, int64(7), event.ProjectID)
+	assert.Equal(t, int64(35), event.ProjectNamespaceID)
+	assert.Equal(t, "private", event.ProjectVisibility)
+	assert.Len(t, event.Owners, 1)
+	assert.Equal(t, "Administrator", event.Owners[0].Name)
+	assert.Equal(t, "admin@example.com", event.Owners[0].Email)
+}
+
+func TestParseVulnerabilityHook(t *testing.T) {
+	t.Parallel()
+	raw := loadFixture(t, "testdata/webhooks/vulnerability.json")
+
+	parsedEvent, err := ParseWebhook("Vulnerability Hook", raw)
+	assert.NoError(t, err)
+
+	event, ok := parsedEvent.(*VulnerabilityEvent)
+	assert.True(t, ok, "Expected VulnerabilityEvent, but parsing produced %T", parsedEvent)
+
+	assert.Equal(t, "vulnerability", event.ObjectKind)
+	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
+	assert.Equal(t, "Potential SQL Injection", event.ObjectAttributes.Title)
+	assert.Equal(t, "detected", event.ObjectAttributes.State)
+	assert.Equal(t, int64(7), event.ObjectAttributes.ProjectID)
+	assert.Equal(t, "high", event.ObjectAttributes.Severity)
+	assert.Equal(t, "sast", event.ObjectAttributes.ReportType)
+	assert.Equal(t, "app/models/user.rb", event.ObjectAttributes.Location.File)
+	assert.Len(t, event.ObjectAttributes.Identifiers, 1)
+	assert.Equal(t, "CVE-2024-1234", event.ObjectAttributes.Identifiers[0].Name)
+}
