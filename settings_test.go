@@ -24,6 +24,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetSettings(t *testing.T) {
@@ -160,4 +161,51 @@ func TestSettings_RequestBody(t *testing.T) {
 	}
 
 	assert.Equal(t, want["enforce_ci_inbound_job_token_scope_enabled"], requestBody["enforce_ci_inbound_job_token_scope_enabled"])
+}
+
+func TestUpdateSettings_AnonymousSearchesAllowed(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	var requestBody map[string]any
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		// Read the request body into `requestBody` by unmarshalling it
+		err := json.NewDecoder(r.Body).Decode(&requestBody)
+		assert.NoError(t, err)
+
+		fmt.Fprint(w, `{"id":1,   "anonymous_searches_allowed" : true}`)
+	})
+
+	_, _, err := client.Settings.UpdateSettings(&UpdateSettingsOptions{
+		AnonymousSearchesAllowed: Ptr(true),
+	})
+	require.NoError(t, err)
+
+	// This is the payload that should be produced. This allows us to test that the request produced matches our options input.
+	want := map[string]any{
+		"anonymous_searches_allowed": true,
+	}
+
+	assert.Equal(t, want["anonymous_searches_allowed"], requestBody["anonymous_searches_allowed"])
+}
+
+func TestGetSettings_AnonymousSearchesAllowed(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"default_projects_limit": 100000,
+			"anonymous_searches_allowed": true
+		}`)
+	})
+
+	settings, _, err := client.Settings.GetSettings()
+	require.NoError(t, err)
+
+	assert.True(t, settings.AnonymousSearchesAllowed)
 }
