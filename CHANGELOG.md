@@ -1,3 +1,23 @@
+## 1.21.0
+
+### 🚀 Features
+
+- feat(settings): Add AnonymousSearchesAllowed field support ([!2678](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2678)) by [Seif Hatem](https://gitlab.com/seif-hatem)
+
+### 🔄 Other Changes
+
+- feat: improve URL validation and error handling in client initialization ([!2656](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2656)) by [Amer Khaled](https://gitlab.com/amrkhald777)
+
+
+
+# [1.21.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.20.0...v1.21.0) (2026-01-27)
+
+
+### Features
+
+* improve URL validation and error handling in client initialization ([9417155](https://gitlab.com/gitlab-org/api/client-go/commit/9417155f9c8a5d7c044d052e61d8da5c91bbe57d))
+* **settings:** Add AnonymousSearchesAllowed field support ([7185888](https://gitlab.com/gitlab-org/api/client-go/commit/7185888208173e18216ecb353fdfebe91423f0c4))
+
 ## 1.20.0
 
 ### 🚀 Features
