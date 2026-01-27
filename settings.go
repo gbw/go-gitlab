@@ -67,6 +67,7 @@ type Settings struct {
 	AllowLocalRequestsFromWebHooksAndServices             bool                      `json:"allow_local_requests_from_web_hooks_and_services"`
 	AllowProjectCreationForGuestAndBelow                  bool                      `json:"allow_project_creation_for_guest_and_below"`
 	AllowRunnerRegistrationToken                          bool                      `json:"allow_runner_registration_token"`
+	AnonymousSearchesAllowed                              bool                      `json:"anonymous_searches_allowed"`
 	ArchiveBuildsInHumanReadable                          string                    `json:"archive_builds_in_human_readable"`
 	ASCIIDocMaxIncludes                                   int64                     `json:"asciidoc_max_includes"`
 	AssetProxyAllowlist                                   []string                  `json:"asset_proxy_allowlist"`
@@ -547,6 +548,7 @@ type UpdateSettingsOptions struct {
 	AllowLocalRequestsFromWebHooksAndServices             *bool                                   `url:"allow_local_requests_from_web_hooks_and_services,omitempty" json:"allow_local_requests_from_web_hooks_and_services,omitempty"`
 	AllowProjectCreationForGuestAndBelow                  *bool                                   `url:"allow_project_creation_for_guest_and_below,omitempty" json:"allow_project_creation_for_guest_and_below,omitempty"`
 	AllowRunnerRegistrationToken                          *bool                                   `url:"allow_runner_registration_token,omitempty" json:"allow_runner_registration_token,omitempty"`
+	AnonymousSearchesAllowed                              *bool                                   `url:"anonymous_searches_allowed,omitempty" json:"anonymous_searches_allowed,omitempty"`
 	ArchiveBuildsInHumanReadable                          *string                                 `url:"archive_builds_in_human_readable,omitempty" json:"archive_builds_in_human_readable,omitempty"`
 	ASCIIDocMaxIncludes                                   *int64                                  `url:"asciidoc_max_includes,omitempty" json:"asciidoc_max_includes,omitempty"`
 	AssetProxyAllowlist                                   *[]string                               `url:"asset_proxy_allowlist,omitempty" json:"asset_proxy_allowlist,omitempty"`
