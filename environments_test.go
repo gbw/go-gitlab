@@ -20,10 +20,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListEnvironments(t *testing.T) {
@@ -65,9 +65,7 @@ func TestListEnvironments(t *testing.T) {
 	})
 
 	envs, _, err := client.Environments.ListEnvironments(1, &ListEnvironmentsOptions{Name: Ptr("review/fix-foo"), ListOptions: ListOptions{Page: 1, PerPage: 10}})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := []*Environment{{
@@ -96,9 +94,7 @@ func TestListEnvironments(t *testing.T) {
 		KubernetesNamespace: "flux-system",
 		FluxResourcePath:    "HelmRelease/flux-system",
 	}}
-	if !reflect.DeepEqual(want, envs) {
-		t.Errorf("Environments.ListEnvironments returned %+v, want %+v", envs, want)
-	}
+	assert.Equal(t, want, envs)
 }
 
 func TestGetEnvironment(t *testing.T) {
@@ -139,9 +135,7 @@ func TestGetEnvironment(t *testing.T) {
 	})
 
 	env, _, err := client.Environments.GetEnvironment(1, 5949167)
-	if err != nil {
-		t.Errorf("Environments.GetEnvironment returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := &Environment{
@@ -172,9 +166,7 @@ func TestGetEnvironment(t *testing.T) {
 		AutoStopAt:          mustParseTime("2025-01-25T15:08:29Z"),
 		AutoStopSetting:     "always",
 	}
-	if !reflect.DeepEqual(want, env) {
-		t.Errorf("Environments.GetEnvironment returned %+v, want %+v", env, want)
-	}
+	assert.Equal(t, want, env)
 }
 
 func TestCreateEnvironment(t *testing.T) {
@@ -222,9 +214,7 @@ func TestCreateEnvironment(t *testing.T) {
 		FluxResourcePath:    Ptr("HelmRelease/flux-system"),
 		AutoStopSetting:     Ptr("always"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := &Environment{
@@ -252,9 +242,7 @@ func TestCreateEnvironment(t *testing.T) {
 		FluxResourcePath:    "HelmRelease/flux-system",
 		AutoStopSetting:     "always",
 	}
-	if !reflect.DeepEqual(want, envs) {
-		t.Errorf("Environments.CreateEnvironment returned %+v, want %+v", envs, want)
-	}
+	assert.Equal(t, want, envs)
 }
 
 func TestEditEnvironment(t *testing.T) {
@@ -302,9 +290,7 @@ func TestEditEnvironment(t *testing.T) {
 		FluxResourcePath:    Ptr("HelmRelease/flux-system"),
 		AutoStopSetting:     Ptr("with_action"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	createdAtWant := mustParseTime("2013-10-02T10:12:29Z")
 	want := &Environment{
@@ -332,9 +318,7 @@ func TestEditEnvironment(t *testing.T) {
 		FluxResourcePath:    "HelmRelease/flux-system",
 		AutoStopSetting:     "with_action",
 	}
-	if !reflect.DeepEqual(want, envs) {
-		t.Errorf("Environments.EditEnvironment returned %+v, want %+v", envs, want)
-	}
+	assert.Equal(t, want, envs)
 }
 
 func TestDeleteEnvironment(t *testing.T) {
@@ -346,9 +330,7 @@ func TestDeleteEnvironment(t *testing.T) {
 		testURL(t, r, "/api/v4/projects/1/environments/1")
 	})
 	_, err := client.Environments.DeleteEnvironment(1, 1)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestStopEnvironment(t *testing.T) {
@@ -368,9 +350,7 @@ func TestStopEnvironment(t *testing.T) {
     }`)
 	})
 	_, _, err := client.Environments.StopEnvironment(1, 1, &StopEnvironmentOptions{})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestUnmarshal(t *testing.T) {
