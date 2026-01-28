@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -53,9 +52,7 @@ func TestListBillableGroupMembers(t *testing.T) {
 		})
 
 	billableMembers, _, err := client.Groups.ListBillableGroupMembers(1, &ListBillableGroupMembersOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListBillableGroupMembers returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	lastActivityOn := mustParseTime("2021-01-27T00:00:00Z")
 	lastActivityOnISOTime := ISOTime(*lastActivityOn)
@@ -102,9 +99,7 @@ func TestListMembershipsForBillableGroupMember(t *testing.T) {
 		})
 
 	memberships, _, err := client.Groups.ListMembershipsForBillableGroupMember(1, 42, &ListMembershipsForBillableGroupMemberOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListMembershipsForBillableGroupMember returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*BillableUserMembership{
 		{
@@ -155,9 +150,7 @@ func TestListGroupMembersWithoutEmail(t *testing.T) {
 		})
 
 	members, _, err := client.Groups.ListGroupMembers(1, &ListGroupMembersOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
 	expiresAtISOTime := ISOTime(*expiresAt)
@@ -182,9 +175,7 @@ func TestListGroupMembersWithoutEmail(t *testing.T) {
 			AccessLevel: 30,
 		},
 	}
-	if !reflect.DeepEqual(want, members) {
-		t.Errorf("Groups.ListBillableGroupMembers returned %+v, want %+v", members[0], want[0])
-	}
+	assert.Equal(t, want, members)
 }
 
 func TestListGroupMembersWithEmail(t *testing.T) {
@@ -221,9 +212,7 @@ func TestListGroupMembersWithEmail(t *testing.T) {
 		})
 
 	members, _, err := client.Groups.ListGroupMembers(1, &ListGroupMembersOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
 	expiresAtISOTime := ISOTime(*expiresAt)
@@ -249,9 +238,7 @@ func TestListGroupMembersWithEmail(t *testing.T) {
 			Email:       "john@example.com",
 		},
 	}
-	if !reflect.DeepEqual(want, members) {
-		t.Errorf("Groups.ListBillableGroupMembers returned %+v, want %+v", members[0], want[0])
-	}
+	assert.Equal(t, want, members)
 }
 
 func TestListGroupMembersWithoutSAML(t *testing.T) {
@@ -287,9 +274,7 @@ func TestListGroupMembersWithoutSAML(t *testing.T) {
 		})
 
 	members, _, err := client.Groups.ListGroupMembers(1, &ListGroupMembersOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
 	expiresAtISOTime := ISOTime(*expiresAt)
@@ -315,9 +300,7 @@ func TestListGroupMembersWithoutSAML(t *testing.T) {
 			GroupSAMLIdentity: nil,
 		},
 	}
-	if !reflect.DeepEqual(want, members) {
-		t.Errorf("Groups.ListBillableGroupMembers returned %+v, want %+v", members[0], want[0])
-	}
+	assert.Equal(t, want, members)
 }
 
 func TestListGroupMembersWithSAML(t *testing.T) {
@@ -357,9 +340,7 @@ func TestListGroupMembersWithSAML(t *testing.T) {
 		})
 
 	members, _, err := client.Groups.ListGroupMembers(1, &ListGroupMembersOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListGroupMembers returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expiresAt := mustParseTime("2012-10-22T00:00:00Z")
 	expiresAtISOTime := ISOTime(*expiresAt)
@@ -389,9 +370,7 @@ func TestListGroupMembersWithSAML(t *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(want, members) {
-		t.Errorf("Groups.ListBillableGroupMembers returned %+v, want %+v", members[0], want[0])
-	}
+	assert.Equal(t, want, members)
 }
 
 func TestGetGroupMemberCustomRole(t *testing.T) {
@@ -450,7 +429,7 @@ func TestGetGroupMemberCustomRole(t *testing.T) {
 	}
 	member, _, err := client.GroupMembers.GetGroupMember(1, 2)
 
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, want, member)
 }
 

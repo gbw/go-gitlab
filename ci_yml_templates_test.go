@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListAllTemplates(t *testing.T) {
@@ -30,29 +32,27 @@ func TestListAllTemplates(t *testing.T) {
 	mux.HandleFunc("/api/v4/templates/gitlab_ci_ymls", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `[
-			{
-			   "key":"5-Minute-Production-App",
-			   "name":"5-Minute-Production-App"
-			},
-			{
-			   "key":"Android",
-			   "name":"Android"
-			},
-			{
-			   "key":"Android-Fastlane",
-			   "name":"Android-Fastlane"
-			},
-			{
-			   "key":"Auto-DevOps",
-			   "name":"Auto-DevOps"
-			}
-		 ]`)
+          {
+             "key":"5-Minute-Production-App",
+             "name":"5-Minute-Production-App"
+          },
+          {
+             "key":"Android",
+             "name":"Android"
+          },
+          {
+             "key":"Android-Fastlane",
+             "name":"Android-Fastlane"
+          },
+          {
+             "key":"Auto-DevOps",
+             "name":"Auto-DevOps"
+          }
+        ]`)
 	})
 
 	templates, _, err := client.CIYMLTemplate.ListAllTemplates(&ListCIYMLTemplatesOptions{})
-	if err != nil {
-		t.Errorf("CIYMLTemplates.ListAllTemplates returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*CIYMLTemplateListItem{
 		{
@@ -72,9 +72,7 @@ func TestListAllTemplates(t *testing.T) {
 			Name: "Auto-DevOps",
 		},
 	}
-	if !reflect.DeepEqual(want, templates) {
-		t.Errorf("CIYMLTemplates.ListAllTemplates returned %+v, want %+v", templates, want)
-	}
+	assert.Equal(t, want, templates)
 }
 
 func TestGetTemplate(t *testing.T) {
@@ -84,21 +82,17 @@ func TestGetTemplate(t *testing.T) {
 	mux.HandleFunc("/api/v4/templates/gitlab_ci_ymls/Ruby", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprintf(w, `{
-			"name": "Ruby",
-			"content": "# This file is a template, and might need editing before it works on your project."
-		  }`)
+          "name": "Ruby",
+          "content": "# This file is a template, and might need editing before it works on your project."
+         }`)
 	})
 
 	template, _, err := client.CIYMLTemplate.GetTemplate("Ruby")
-	if err != nil {
-		t.Errorf("CIYMLTemplates.GetTemplate returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &CIYMLTemplate{
 		Name:    "Ruby",
 		Content: "# This file is a template, and might need editing before it works on your project.",
 	}
-	if !reflect.DeepEqual(want, template) {
-		t.Errorf("CIYMLTemplates.GetTemplate returned %+v, want %+v", template, want)
-	}
+	assert.Equal(t, want, template)
 }
