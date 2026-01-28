@@ -1,3 +1,22 @@
+## 1.23.0
+
+### 🚀 Features
+
+- feat: add group protected branches service ([!2685](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2685)) by [Prakash Divy](https://gitlab.com/prakashdivyy)
+
+### 🔄 Other Changes
+
+- chore(no-release): refactor to slog.DiscardHandler ([!2710](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2710)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+
+
+# [1.23.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.22.1...v1.23.0) (2026-01-28)
+
+
+### Features
+
+* add group protected branches service ([c7ffe6f](https://gitlab.com/gitlab-org/api/client-go/commit/c7ffe6ff7bc12996ce27df767a706a253a3ce00b))
+
 ## 1.22.1
 
 ### 🐛 Bug Fixes
