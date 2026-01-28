@@ -3,8 +3,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListGroupPendingInvites(t *testing.T) {
@@ -21,14 +23,10 @@ func TestListGroupPendingInvites(t *testing.T) {
 	}
 
 	projects, _, err := client.Invites.ListPendingGroupInvitations("test", opt)
-	if err != nil {
-		t.Errorf("Invites.ListPendingGroupInvitations returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*PendingInvite{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Invites.ListPendingGroupInvitations returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestGroupInvites(t *testing.T) {
@@ -45,14 +43,10 @@ func TestGroupInvites(t *testing.T) {
 	}
 
 	projects, _, err := client.Invites.GroupInvites("test", opt)
-	if err != nil {
-		t.Errorf("Invites.GroupInvites returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &InvitesResult{Status: "success"}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Invites.GroupInvites returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestGroupInvitesError(t *testing.T) {
@@ -69,14 +63,10 @@ func TestGroupInvitesError(t *testing.T) {
 	}
 
 	projects, _, err := client.Invites.GroupInvites("test", opt)
-	if err != nil {
-		t.Errorf("Invites.GroupInvites returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &InvitesResult{Status: "error", Message: map[string]string{"example@member.org": "Already invited"}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Invites.GroupInvites returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListProjectPendingInvites(t *testing.T) {
@@ -93,14 +83,10 @@ func TestListProjectPendingInvites(t *testing.T) {
 	}
 
 	projects, _, err := client.Invites.ListPendingProjectInvitations("test", opt)
-	if err != nil {
-		t.Errorf("Invites.ListPendingProjectInvitations returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*PendingInvite{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Invites.ListPendingProjectInvitations returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestProjectInvites(t *testing.T) {
@@ -117,14 +103,10 @@ func TestProjectInvites(t *testing.T) {
 	}
 
 	projects, _, err := client.Invites.ProjectInvites("test", opt)
-	if err != nil {
-		t.Errorf("Invites.ProjectInvites returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &InvitesResult{Status: "success"}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Invites.ProjectInvites returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestProjectInvitesError(t *testing.T) {
@@ -141,12 +123,8 @@ func TestProjectInvitesError(t *testing.T) {
 	}
 
 	projects, _, err := client.Invites.ProjectInvites("test", opt)
-	if err != nil {
-		t.Errorf("Invites.ProjectInvites returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &InvitesResult{Status: "error", Message: map[string]string{"example@member.org": "Already invited"}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Invites.ProjectInvites returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
