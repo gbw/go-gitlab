@@ -19,10 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetEpic(t *testing.T) {
@@ -35,9 +35,7 @@ func TestGetEpic(t *testing.T) {
 	})
 
 	epic, _, err := client.Epics.GetEpic("7", 8)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Epic{
 		ID:          8,
@@ -46,9 +44,7 @@ func TestGetEpic(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}
 
-	if !reflect.DeepEqual(want, epic) {
-		t.Errorf("Epics.GetEpic returned %+v, want %+v", epic, want)
-	}
+	assert.Equal(t, want, epic)
 }
 
 func TestDeleteEpic(t *testing.T) {
@@ -60,9 +56,7 @@ func TestDeleteEpic(t *testing.T) {
 	})
 
 	_, err := client.Epics.DeleteEpic("7", 8)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestListGroupEpics(t *testing.T) {
@@ -81,9 +75,7 @@ func TestListGroupEpics(t *testing.T) {
 	}
 
 	epics, _, err := client.Epics.ListGroupEpics("7", listGroupEpics)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Epic{{
 		ID:          8,
@@ -92,9 +84,7 @@ func TestListGroupEpics(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}}
 
-	if !reflect.DeepEqual(want, epics) {
-		t.Errorf("Epics.ListGroupEpics returned %+v, want %+v", epics, want)
-	}
+	assert.Equal(t, want, epics)
 }
 
 func TestCreateEpic(t *testing.T) {
@@ -112,9 +102,7 @@ func TestCreateEpic(t *testing.T) {
 	}
 
 	epic, _, err := client.Epics.CreateEpic("7", createEpicOptions)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Epic{
 		ID:          8,
@@ -123,9 +111,7 @@ func TestCreateEpic(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}
 
-	if !reflect.DeepEqual(want, epic) {
-		t.Errorf("Epics.CreateEpic returned %+v, want %+v", epic, want)
-	}
+	assert.Equal(t, want, epic)
 }
 
 func TestUpdateEpic(t *testing.T) {
@@ -143,9 +129,7 @@ func TestUpdateEpic(t *testing.T) {
 	}
 
 	epic, _, err := client.Epics.UpdateEpic("7", 8, updateEpicOptions)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Epic{
 		ID:          8,
@@ -154,9 +138,7 @@ func TestUpdateEpic(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}
 
-	if !reflect.DeepEqual(want, epic) {
-		t.Errorf("Epics.UpdateEpic returned %+v, want %+v", epic, want)
-	}
+	assert.Equal(t, want, epic)
 }
 
 func TestGetEpicLinks(t *testing.T) {
@@ -169,7 +151,7 @@ func TestGetEpicLinks(t *testing.T) {
 	})
 
 	epics, _, err := client.Epics.GetEpicLinks("7", 8)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	want := []*Epic{{
 		ID:          9,
@@ -178,9 +160,7 @@ func TestGetEpicLinks(t *testing.T) {
 		Author:      &EpicAuthor{ID: 27, Name: "asmith"},
 	}}
 
-	if !reflect.DeepEqual(want, epics) {
-		t.Errorf("Epics.GetEpicLinks returned %+v, want %+v", epics, want)
-	}
+	assert.Equal(t, want, epics)
 }
 
 func TestGetEpicWithDateTimeFields(t *testing.T) {
@@ -204,29 +184,15 @@ func TestGetEpicWithDateTimeFields(t *testing.T) {
 	})
 
 	epic, _, err := client.Epics.GetEpic("7", 10)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	// Verify all datetime fields were parsed successfully
-	if epic.StartDate == nil {
-		t.Error("Expected StartDate to be non-nil")
-	}
-	if epic.DueDate == nil {
-		t.Error("Expected DueDate to be non-nil")
-	}
-	if epic.StartDateFixed == nil {
-		t.Error("Expected StartDateFixed to be non-nil")
-	}
-	if epic.DueDateFixed == nil {
-		t.Error("Expected DueDateFixed to be non-nil")
-	}
-	if epic.StartDateFromMilestones == nil {
-		t.Error("Expected StartDateFromMilestones to be non-nil")
-	}
-	if epic.DueDateFromMilestones == nil {
-		t.Error("Expected DueDateFromMilestones to be non-nil")
-	}
+	assert.NotNil(t, epic.StartDate, "Expected StartDate to be non-nil")
+	assert.NotNil(t, epic.DueDate, "Expected DueDate to be non-nil")
+	assert.NotNil(t, epic.StartDateFixed, "Expected StartDateFixed to be non-nil")
+	assert.NotNil(t, epic.DueDateFixed, "Expected DueDateFixed to be non-nil")
+	assert.NotNil(t, epic.StartDateFromMilestones, "Expected StartDateFromMilestones to be non-nil")
+	assert.NotNil(t, epic.DueDateFromMilestones, "Expected DueDateFromMilestones to be non-nil")
 
 	want := &Epic{
 		ID:                      10,
@@ -241,7 +207,5 @@ func TestGetEpicWithDateTimeFields(t *testing.T) {
 		DueDateFromMilestones:   epic.DueDateFromMilestones,
 	}
 
-	if !reflect.DeepEqual(want, epic) {
-		t.Errorf("Epics.GetEpic returned %+v, want %+v", epic, want)
-	}
+	assert.Equal(t, want, epic)
 }
