@@ -1,3 +1,22 @@
+## 1.22.0
+
+### 🚀 Features
+
+- feat(project_mirror): add ForceSyncProjectMirror ([!2683](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2683)) by [Prakash Divy](https://gitlab.com/prakashdivyy)
+
+### 🔄 Other Changes
+
+- test: Refactor tests to use testify assertions 5 ([!2697](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2697)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+
+
+# [1.22.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.21.0...v1.22.0) (2026-01-28)
+
+
+### Features
+
+* **project_mirror:** add ForceSyncProjectMirror ([b13fcb7](https://gitlab.com/gitlab-org/api/client-go/commit/b13fcb79e6ffb454dc9fd7e332bde90c79a62376))
+
 ## 1.21.0
 
 ### 🚀 Features
