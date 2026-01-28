@@ -107,3 +107,62 @@ func Test_GroupsMaxArtifactsSize_Integration(t *testing.T) {
 	// THEN MaxArtifactsSize should persist
 	assert.Equal(t, int64(100), retrievedGroup.MaxArtifactsSize)
 }
+
+func Test_GroupProtectedBranches_Integration(t *testing.T) {
+	// GIVEN a GitLab client and a test group
+	client := SetupIntegrationClient(t)
+	group := CreateTestGroup(t, client)
+
+	// Define branch name
+	branchName := "main"
+
+	// WHEN protecting a branch
+	protectedBranch, _, err := client.GroupProtectedBranches.ProtectRepositoryBranches(group.ID, &gitlab.ProtectGroupRepositoryBranchesOptions{
+		Name:             gitlab.Ptr(branchName),
+		PushAccessLevel:  gitlab.Ptr(gitlab.MaintainerPermissions),
+		MergeAccessLevel: gitlab.Ptr(gitlab.MaintainerPermissions),
+	})
+	require.NoError(t, err, "Failed to protect branch")
+
+	// THEN the branch should be protected
+	assert.Equal(t, branchName, protectedBranch.Name)
+
+	// WHEN listing protected branches
+	branches, _, err := client.GroupProtectedBranches.ListProtectedBranches(group.ID, nil)
+	require.NoError(t, err, "Failed to list protected branches")
+
+	// THEN the protected branch should be in the list
+	found := false
+	for _, b := range branches {
+		if b.Name == branchName {
+			found = true
+			break
+		}
+	}
+	assert.True(t, found, "Protected branch not found in list")
+
+	// WHEN getting the protected branch
+	gotBranch, _, err := client.GroupProtectedBranches.GetProtectedBranch(group.ID, branchName)
+	require.NoError(t, err, "Failed to get protected branch")
+
+	// THEN it should match
+	assert.Equal(t, branchName, gotBranch.Name)
+
+	// WHEN updating the protected branch
+	updatedBranch, _, err := client.GroupProtectedBranches.UpdateProtectedBranch(group.ID, branchName, &gitlab.UpdateGroupProtectedBranchOptions{
+		AllowForcePush: gitlab.Ptr(true),
+	})
+	require.NoError(t, err, "Failed to update protected branch")
+
+	// THEN the update should be reflected
+	assert.True(t, updatedBranch.AllowForcePush)
+
+	// WHEN unprotecting the branch
+	_, err = client.GroupProtectedBranches.UnprotectRepositoryBranches(group.ID, branchName)
+	require.NoError(t, err, "Failed to unprotect branch")
+
+	// THEN getting the branch should fail (404)
+	_, resp, err := client.GroupProtectedBranches.GetProtectedBranch(group.ID, branchName)
+	assert.Error(t, err)
+	assert.Equal(t, 404, resp.StatusCode)
+}

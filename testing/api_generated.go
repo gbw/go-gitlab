@@ -62,6 +62,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_markdown_uploads_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupMarkdownUploadsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_members_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupMembersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_milestones_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupMilestonesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_protected_branches_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupProtectedBranchesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_protected_environments_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupProtectedEnvironmentsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_relations_export_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupRelationsExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_releases_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupReleasesServiceInterface

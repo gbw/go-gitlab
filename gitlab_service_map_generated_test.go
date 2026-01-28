@@ -61,6 +61,7 @@ var serviceMap = map[any]any{
 	&GroupMarkdownUploadsService{}:             (*GroupMarkdownUploadsServiceInterface)(nil),
 	&GroupMembersService{}:                     (*GroupMembersServiceInterface)(nil),
 	&GroupMilestonesService{}:                  (*GroupMilestonesServiceInterface)(nil),
+	&GroupProtectedBranchesService{}:           (*GroupProtectedBranchesServiceInterface)(nil),
 	&GroupProtectedEnvironmentsService{}:       (*GroupProtectedEnvironmentsServiceInterface)(nil),
 	&GroupRelationsExportService{}:             (*GroupRelationsExportServiceInterface)(nil),
 	&GroupReleasesService{}:                    (*GroupReleasesServiceInterface)(nil),

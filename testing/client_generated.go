@@ -73,6 +73,7 @@ type testClientMocks struct {
 	MockGroupMembers                     *MockGroupMembersServiceInterface
 	MockGroupMilestones                  *MockGroupMilestonesServiceInterface
 	MockGroupProtectedEnvironments       *MockGroupProtectedEnvironmentsServiceInterface
+	MockGroupProtectedBranches           *MockGroupProtectedBranchesServiceInterface
 	MockGroupRelationsExport             *MockGroupRelationsExportServiceInterface
 	MockGroupReleases                    *MockGroupReleasesServiceInterface
 	MockGroupRepositoryStorageMove       *MockGroupRepositoryStorageMoveServiceInterface
@@ -234,6 +235,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockGroupMembers := NewMockGroupMembersServiceInterface(ctrl)
 	mockGroupMilestones := NewMockGroupMilestonesServiceInterface(ctrl)
 	mockGroupProtectedEnvironments := NewMockGroupProtectedEnvironmentsServiceInterface(ctrl)
+	mockGroupProtectedBranches := NewMockGroupProtectedBranchesServiceInterface(ctrl)
 	mockGroupRelationsExport := NewMockGroupRelationsExportServiceInterface(ctrl)
 	mockGroupReleases := NewMockGroupReleasesServiceInterface(ctrl)
 	mockGroupRepositoryStorageMove := NewMockGroupRepositoryStorageMoveServiceInterface(ctrl)
@@ -394,6 +396,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		GroupMembers:                     mockGroupMembers,
 		GroupMilestones:                  mockGroupMilestones,
 		GroupProtectedEnvironments:       mockGroupProtectedEnvironments,
+		GroupProtectedBranches:           mockGroupProtectedBranches,
 		GroupRelationsExport:             mockGroupRelationsExport,
 		GroupReleases:                    mockGroupReleases,
 		GroupRepositoryStorageMove:       mockGroupRepositoryStorageMove,
@@ -566,6 +569,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockGroupMembers:                     mockGroupMembers,
 			MockGroupMilestones:                  mockGroupMilestones,
 			MockGroupProtectedEnvironments:       mockGroupProtectedEnvironments,
+			MockGroupProtectedBranches:           mockGroupProtectedBranches,
 			MockGroupRelationsExport:             mockGroupRelationsExport,
 			MockGroupReleases:                    mockGroupReleases,
 			MockGroupRepositoryStorageMove:       mockGroupRepositoryStorageMove,
