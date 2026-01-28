@@ -835,7 +835,7 @@ type UpdateSettingsOptions struct {
 	SendUserConfirmationEmail                             *bool                                   `url:"send_user_confirmation_email,omitempty" json:"send_user_confirmation_email,omitempty"`
 	SentryClientsideDSN                                   *string                                 `url:"sentry_clientside_dsn,omitempty" json:"sentry_clientside_dsn,omitempty"`
 	SentryDSN                                             *string                                 `url:"sentry_dsn,omitempty" json:"sentry_dsn,omitempty"`
-	SentryEnabled                                         *string                                 `url:"sentry_enabled,omitempty" json:"sentry_enabled,omitempty"`
+	SentryEnabled                                         *bool                                   `url:"sentry_enabled,omitempty" json:"sentry_enabled,omitempty"`
 	SentryEnvironment                                     *string                                 `url:"sentry_environment,omitempty" json:"sentry_environment,omitempty"`
 	ServiceAccessTokensExpirationEnforced                 *bool                                   `url:"service_access_tokens_expiration_enforced,omitempty" json:"service_access_tokens_expiration_enforced,omitempty"`
 	SessionExpireDelay                                    *int64                                  `url:"session_expire_delay,omitempty" json:"session_expire_delay,omitempty"`
