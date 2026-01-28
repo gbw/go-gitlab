@@ -18,9 +18,11 @@ package gitlab
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
@@ -39,9 +41,7 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 			ListOptions:   ListOptions{Page: 1, PerPage: 10},
 		},
 	)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expiresAt1 := ISOTime(time.Date(2022, time.March, 21, 0, 0, 0, 0, time.UTC))
 	expiresAt2 := ISOTime(time.Date(2022, time.March, 20, 0, 0, 0, 0, time.UTC))
@@ -73,11 +73,7 @@ func TestListPersonalAccessTokensWithUserFilter(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, personalAccessTokens) {
-		t.Errorf(
-			"PersonalAccessTokens.ListPersonalAccessTokens returned %+v, want %+v", personalAccessTokens, want,
-		)
-	}
+	assert.Equal(t, want, personalAccessTokens)
 }
 
 func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
@@ -92,9 +88,7 @@ func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
 	personalAccessTokens, _, err := client.PersonalAccessTokens.ListPersonalAccessTokens(
 		&ListPersonalAccessTokensOptions{ListOptions: ListOptions{Page: 1, PerPage: 10}},
 	)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expiresAt1 := ISOTime(time.Date(2022, time.March, 21, 0, 0, 0, 0, time.UTC))
 	expiresAt2 := ISOTime(time.Date(2022, time.March, 20, 0, 0, 0, 0, time.UTC))
@@ -126,11 +120,7 @@ func TestListPersonalAccessTokensNoUserFilter(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, personalAccessTokens) {
-		t.Errorf(
-			"PersonalAccessTokens.ListPersonalAccessTokens returned %+v, want %+v", personalAccessTokens, want,
-		)
-	}
+	assert.Equal(t, want, personalAccessTokens)
 }
 
 func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
@@ -143,9 +133,7 @@ func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
 	})
 
 	token, _, err := client.PersonalAccessTokens.GetSinglePersonalAccessTokenByID(1)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PersonalAccessToken{
 		ID:          1,
@@ -159,9 +147,7 @@ func TestGetSinglePersonalAccessTokenByID(t *testing.T) {
 		Active:      true,
 	}
 
-	if !reflect.DeepEqual(want, token) {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned %+v, want %+v", token, want)
-	}
+	assert.Equal(t, want, token)
 }
 
 func TestGetSinglePersonalAccessToken(t *testing.T) {
@@ -174,9 +160,7 @@ func TestGetSinglePersonalAccessToken(t *testing.T) {
 	})
 
 	token, _, err := client.PersonalAccessTokens.GetSinglePersonalAccessToken()
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PersonalAccessToken{
 		ID:          1,
@@ -190,9 +174,7 @@ func TestGetSinglePersonalAccessToken(t *testing.T) {
 		Active:      true,
 	}
 
-	if !reflect.DeepEqual(want, token) {
-		t.Errorf("PersonalAccessTokens.ListPersonalAccessTokens returned %+v, want %+v", token, want)
-	}
+	assert.Equal(t, want, token)
 }
 
 func TestRotatePersonalAccessToken(t *testing.T) {
@@ -206,9 +188,7 @@ func TestRotatePersonalAccessToken(t *testing.T) {
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotatePersonalAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.PersonalAccessTokens.RotatePersonalAccessToken(42, opts)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RotatePersonalAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PersonalAccessToken{
 		ID:          42,
@@ -223,11 +203,7 @@ func TestRotatePersonalAccessToken(t *testing.T) {
 		Token:       "s3cr3t",
 	}
 
-	if !reflect.DeepEqual(want, rotatedToken) {
-		t.Errorf(
-			"PersonalAccessTokens.RotatePersonalAccessToken returned %+v, want %+v", rotatedToken, want,
-		)
-	}
+	assert.Equal(t, want, rotatedToken)
 }
 
 func TestRotatePersonalAccessTokenByID(t *testing.T) {
@@ -241,9 +217,7 @@ func TestRotatePersonalAccessTokenByID(t *testing.T) {
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotatePersonalAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.PersonalAccessTokens.RotatePersonalAccessTokenByID(42, opts)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RotatePersonalAccessTokenByID returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PersonalAccessToken{
 		ID:          42,
@@ -258,11 +232,7 @@ func TestRotatePersonalAccessTokenByID(t *testing.T) {
 		Token:       "s3cr3t",
 	}
 
-	if !reflect.DeepEqual(want, rotatedToken) {
-		t.Errorf(
-			"PersonalAccessTokens.RotatePersonalAccessTokenByID returned %+v, want %+v", rotatedToken, want,
-		)
-	}
+	assert.Equal(t, want, rotatedToken)
 }
 
 func TestRotatePersonalAccessTokenSelf(t *testing.T) {
@@ -276,9 +246,7 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotatePersonalAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.PersonalAccessTokens.RotatePersonalAccessTokenSelf(opts)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RotatePersonalAccessTokenSelf returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PersonalAccessToken{
 		ID:          42,
@@ -293,9 +261,7 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 		Token:       "s3cr3t",
 	}
 
-	if !reflect.DeepEqual(want, rotatedToken) {
-		t.Errorf("PersonalAccessTokens.RotatePersonalAccessTokenSelf returned %+v, want %+v", rotatedToken, want)
-	}
+	assert.Equal(t, want, rotatedToken)
 }
 
 func TestRevokePersonalAccessToken(t *testing.T) {
@@ -307,9 +273,7 @@ func TestRevokePersonalAccessToken(t *testing.T) {
 	})
 
 	_, err := client.PersonalAccessTokens.RevokePersonalAccessToken(1)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestRevokePersonalAccessTokenByID(t *testing.T) {
@@ -321,9 +285,7 @@ func TestRevokePersonalAccessTokenByID(t *testing.T) {
 	})
 
 	_, err := client.PersonalAccessTokens.RevokePersonalAccessTokenByID(1)
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessTokenByID returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestRevokePersonalAccessTokenSelf(t *testing.T) {
@@ -335,7 +297,5 @@ func TestRevokePersonalAccessTokenSelf(t *testing.T) {
 	})
 
 	_, err := client.PersonalAccessTokens.RevokePersonalAccessTokenSelf()
-	if err != nil {
-		t.Errorf("PersonalAccessTokens.RevokePersonalAccessTokenSelf returned error: %v", err)
-	}
+	require.NoError(t, err)
 }

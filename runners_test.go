@@ -19,9 +19,11 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestDisableRunner(t *testing.T) {
@@ -34,9 +36,7 @@ func TestDisableRunner(t *testing.T) {
 	})
 
 	_, err := client.Runners.DisableProjectRunner(1, 2, nil)
-	if err != nil {
-		t.Fatalf("Runners.DisableProjectRunner returns an error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestListRunnersJobs(t *testing.T) {
@@ -51,9 +51,7 @@ func TestListRunnersJobs(t *testing.T) {
 	opt := &ListRunnerJobsOptions{}
 
 	jobs, _, err := client.Runners.ListRunnerJobs(1, opt)
-	if err != nil {
-		t.Fatalf("Runners.ListRunnersJobs returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	pipeline := JobPipeline{
 		ID:        8777,
@@ -112,9 +110,7 @@ func TestListRunnersJobs(t *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(want[0], jobs[0]) {
-		t.Errorf("Runners.ListRunnersJobs returned %+v, want %+v", jobs[0], want[0])
-	}
+	assert.Equal(t, want[0], jobs[0])
 }
 
 func TestRemoveRunner(t *testing.T) {
@@ -127,9 +123,7 @@ func TestRemoveRunner(t *testing.T) {
 	})
 
 	_, err := client.Runners.RemoveRunner(1, nil)
-	if err != nil {
-		t.Fatalf("Runners.RemoveARunner returns an error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestUpdateRunnersDetails(t *testing.T) {
@@ -144,9 +138,7 @@ func TestUpdateRunnersDetails(t *testing.T) {
 	opt := &UpdateRunnerDetailsOptions{}
 
 	details, _, err := client.Runners.UpdateRunnerDetails(6, opt, nil)
-	if err != nil {
-		t.Fatalf("Runners.UpdateRunnersDetails returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	projects := []RunnerDetailsProject{{
 		ID:                1,
@@ -173,9 +165,7 @@ func TestUpdateRunnersDetails(t *testing.T) {
 		MaximumTimeout: 3600,
 		Locked:         false,
 	}
-	if !reflect.DeepEqual(want, details) {
-		t.Errorf("Runners.UpdateRunnersDetails returned %+v, want %+v", details, want)
-	}
+	assert.Equal(t, want, details)
 }
 
 func TestGetRunnerDetails(t *testing.T) {
@@ -188,9 +178,7 @@ func TestGetRunnerDetails(t *testing.T) {
 	})
 
 	details, _, err := client.Runners.GetRunnerDetails(6, nil)
-	if err != nil {
-		t.Fatalf("Runners.GetRunnerDetails returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	projects := []RunnerDetailsProject{{
 		ID:                1,
@@ -217,9 +205,7 @@ func TestGetRunnerDetails(t *testing.T) {
 		MaximumTimeout: 3600,
 		Locked:         false,
 	}
-	if !reflect.DeepEqual(want, details) {
-		t.Errorf("Runners.UpdateRunnersDetails returned %+v, want %+v", details, want)
-	}
+	assert.Equal(t, want, details)
 }
 
 func TestRegisterNewRunner(t *testing.T) {
@@ -235,23 +221,15 @@ func TestRegisterNewRunner(t *testing.T) {
 	opt := &RegisterNewRunnerOptions{}
 
 	runner, resp, err := client.Runners.RegisterNewRunner(opt, nil)
-	if err != nil {
-		t.Fatalf("Runners.RegisterNewRunner returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Runner{
 		ID:             12345,
 		Token:          "6337ff461c94fd3fa32ba3b1ff4125",
 		TokenExpiresAt: Ptr(time.Date(2016, time.January, 25, 16, 39, 48, 166000000, time.UTC)),
 	}
-	if !reflect.DeepEqual(want, runner) {
-		t.Errorf("Runners.RegisterNewRunner returned %+v, want %+v", runner, want)
-	}
-
-	wantCode := 201
-	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.DeleteRegisteredRunner returned status code %+v, want %+v", resp.StatusCode, wantCode)
-	}
+	assert.Equal(t, want, runner)
+	assert.Equal(t, 201, resp.StatusCode)
 }
 
 // Similar to TestRegisterNewRunner but sends info struct and some extra other
@@ -291,9 +269,7 @@ func TestRegisterNewRunnerInfo(t *testing.T) {
 		MaximumTimeout: Ptr(int64(45)),
 	}
 	runner, resp, err := client.Runners.RegisterNewRunner(opt, nil)
-	if err != nil {
-		t.Fatalf("Runners.RegisterNewRunner returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Runner{
 		ID:             53,
@@ -305,14 +281,8 @@ func TestRegisterNewRunnerInfo(t *testing.T) {
 		Token:          "1111122222333333444444",
 		TokenExpiresAt: Ptr(time.Date(2016, time.January, 25, 16, 39, 48, 166000000, time.UTC)),
 	}
-	if !reflect.DeepEqual(want, runner) {
-		t.Errorf("Runners.RegisterNewRunner returned %+v, want %+v", runner, want)
-	}
-
-	wantCode := 201
-	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.DeleteRegisteredRunner returned status code %+v, want %+v", resp.StatusCode, wantCode)
-	}
+	assert.Equal(t, want, runner)
+	assert.Equal(t, 201, resp.StatusCode)
 }
 
 func TestDeleteRegisteredRunner(t *testing.T) {
@@ -327,14 +297,9 @@ func TestDeleteRegisteredRunner(t *testing.T) {
 	opt := &DeleteRegisteredRunnerOptions{}
 
 	resp, err := client.Runners.DeleteRegisteredRunner(opt, nil)
-	if err != nil {
-		t.Fatalf("Runners.DeleteRegisteredRunner returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := 204
-	if !reflect.DeepEqual(want, resp.StatusCode) {
-		t.Errorf("Runners.DeleteRegisteredRunner returned status code  %+v, want %+v", resp.StatusCode, want)
-	}
+	assert.Equal(t, 204, resp.StatusCode)
 }
 
 func TestDeleteRegisteredRunnerByID(t *testing.T) {
@@ -349,14 +314,9 @@ func TestDeleteRegisteredRunnerByID(t *testing.T) {
 	rid := int64(11111)
 
 	resp, err := client.Runners.DeleteRegisteredRunnerByID(rid, nil)
-	if err != nil {
-		t.Fatalf("Runners.DeleteRegisteredRunnerByID returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := 204
-	if !reflect.DeepEqual(want, resp.StatusCode) {
-		t.Errorf("Runners.DeleteRegisteredRunnerByID returned status code  %+v, want %+v", resp.StatusCode, want)
-	}
+	assert.Equal(t, 204, resp.StatusCode)
 }
 
 func TestVerifyRegisteredRunner(t *testing.T) {
@@ -371,14 +331,9 @@ func TestVerifyRegisteredRunner(t *testing.T) {
 	opt := &VerifyRegisteredRunnerOptions{}
 
 	resp, err := client.Runners.VerifyRegisteredRunner(opt, nil)
-	if err != nil {
-		t.Fatalf("Runners.VerifyRegisteredRunner returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := 200
-	if !reflect.DeepEqual(want, resp.StatusCode) {
-		t.Errorf("Runners.VerifyRegisteredRunner returned status code  %+v, want %+v", resp.StatusCode, want)
-	}
+	assert.Equal(t, 200, resp.StatusCode)
 }
 
 func TestResetInstanceRunnerRegistrationToken(t *testing.T) {
@@ -395,22 +350,14 @@ func TestResetInstanceRunnerRegistrationToken(t *testing.T) {
 	})
 
 	token, resp, err := client.Runners.ResetInstanceRunnerRegistrationToken(nil)
-	if err != nil {
-		t.Fatalf("Runners.ResetInstanceRunnerRegistrationToken returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &RunnerRegistrationToken{
 		Token:          Ptr("6337ff461c94fd3fa32ba3b1ff4125"),
 		TokenExpiresAt: Ptr(time.Date(2016, time.January, 25, 16, 39, 48, 166000000, time.UTC)),
 	}
-	if !reflect.DeepEqual(want, token) {
-		t.Errorf("Runners.ResetInstanceRunnerRegistrationToken returned %+v, want %+v", token, want)
-	}
-
-	wantCode := 201
-	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetInstanceRunnerRegistrationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
-	}
+	assert.Equal(t, want, token)
+	assert.Equal(t, 201, resp.StatusCode)
 }
 
 func TestResetGroupRunnerRegistrationToken(t *testing.T) {
@@ -427,22 +374,14 @@ func TestResetGroupRunnerRegistrationToken(t *testing.T) {
 	})
 
 	token, resp, err := client.Runners.ResetGroupRunnerRegistrationToken("foobar", nil)
-	if err != nil {
-		t.Fatalf("Runners.ResetGroupRunnerRegistrationToken returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &RunnerRegistrationToken{
 		Token:          Ptr("6337ff461c94fd3fa32ba3b1ff4125"),
 		TokenExpiresAt: Ptr(time.Date(2016, time.January, 25, 16, 39, 48, 166000000, time.UTC)),
 	}
-	if !reflect.DeepEqual(want, token) {
-		t.Errorf("Runners.ResetGroupRunnerRegistrationToken returned %+v, want %+v", token, want)
-	}
-
-	wantCode := 201
-	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetGroupRunnerRegistrationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
-	}
+	assert.Equal(t, want, token)
+	assert.Equal(t, 201, resp.StatusCode)
 }
 
 func TestResetProjectRunnerRegistrationToken(t *testing.T) {
@@ -459,22 +398,14 @@ func TestResetProjectRunnerRegistrationToken(t *testing.T) {
 	})
 
 	token, resp, err := client.Runners.ResetProjectRunnerRegistrationToken("9", nil)
-	if err != nil {
-		t.Fatalf("Runners.ResetProjectRunnerRegistrationToken returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &RunnerRegistrationToken{
 		Token:          Ptr("6337ff461c94fd3fa32ba3b1ff4125"),
 		TokenExpiresAt: Ptr(time.Date(2016, time.January, 25, 16, 39, 48, 166000000, time.UTC)),
 	}
-	if !reflect.DeepEqual(want, token) {
-		t.Errorf("Runners.ResetProjectRunnerRegistrationToken returned %+v, want %+v", token, want)
-	}
-
-	wantCode := 201
-	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetProjectRunnerRegistrationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
-	}
+	assert.Equal(t, want, token)
+	assert.Equal(t, 201, resp.StatusCode)
 }
 
 func TestResetRunnerAuthenticationToken(t *testing.T) {
@@ -491,20 +422,12 @@ func TestResetRunnerAuthenticationToken(t *testing.T) {
 	})
 
 	token, resp, err := client.Runners.ResetRunnerAuthenticationToken(42, nil)
-	if err != nil {
-		t.Fatalf("Runners.ResetRunnerAuthenticationToken returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &RunnerAuthenticationToken{
 		Token:          Ptr("6337ff461c94fd3fa32ba3b1ff4125"),
 		TokenExpiresAt: Ptr(time.Date(2016, time.January, 25, 16, 39, 48, 166000000, time.UTC)),
 	}
-	if !reflect.DeepEqual(want, token) {
-		t.Errorf("Runners.ResetRunnerAuthenticationToken returned %+v, want %+v", token, want)
-	}
-
-	wantCode := 201
-	if !reflect.DeepEqual(wantCode, resp.StatusCode) {
-		t.Errorf("Runners.ResetRunnerAuthenticationToken returned status code  %+v, want %+v", resp.StatusCode, wantCode)
-	}
+	assert.Equal(t, want, token)
+	assert.Equal(t, 201, resp.StatusCode)
 }
