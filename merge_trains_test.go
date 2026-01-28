@@ -2,9 +2,11 @@ package gitlab
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProjectMergeTrains(t *testing.T) {
@@ -19,9 +21,7 @@ func TestListProjectMergeTrains(t *testing.T) {
 	opts := &ListMergeTrainsOptions{}
 
 	mergeTrains, _, err := client.MergeTrains.ListProjectMergeTrains(1, opts)
-	if err != nil {
-		t.Errorf("MergeTrains.ListProjectMergeTrains returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	mergeRequestCreatedAt := time.Date(2020, time.February, 6, 8, 39, 14, 883000000, time.UTC)
 	mergeRequestUpdatedAt := time.Date(2020, time.February, 6, 8, 40, 57, 38000000, time.UTC)
@@ -73,9 +73,7 @@ func TestListProjectMergeTrains(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, mergeTrains) {
-		t.Errorf("MergeTrains.ListProjectMergeTrains returned %+v, want %+v", mergeTrains, want)
-	}
+	assert.Equal(t, want, mergeTrains)
 }
 
 func TestListMergeRequestInMergeTrain(t *testing.T) {
@@ -90,9 +88,7 @@ func TestListMergeRequestInMergeTrain(t *testing.T) {
 	opts := &ListMergeTrainsOptions{}
 
 	mergeTrains, _, err := client.MergeTrains.ListMergeRequestInMergeTrain(597, "main", opts)
-	if err != nil {
-		t.Errorf("MergeTrains.ListMergeRequestInMergeTrain returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	mergeRequestCreatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
 	mergeRequestUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
@@ -146,9 +142,7 @@ func TestListMergeRequestInMergeTrain(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, mergeTrains) {
-		t.Errorf("MergeTrains.ListMergeRequestInMergeTrain returned %+v, want %+v", mergeTrains, want)
-	}
+	assert.Equal(t, want, mergeTrains)
 }
 
 func TestGetMergeRequestOnAMergeTrain(t *testing.T) {
@@ -161,9 +155,7 @@ func TestGetMergeRequestOnAMergeTrain(t *testing.T) {
 	})
 
 	mergeTrain, _, err := client.MergeTrains.GetMergeRequestOnAMergeTrain(597, 1)
-	if err != nil {
-		t.Errorf("MergeTrains.GetMergeRequestOnAMergeTrain returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	mergeRequestCreatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
 	mergeRequestUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
@@ -215,9 +207,7 @@ func TestGetMergeRequestOnAMergeTrain(t *testing.T) {
 		Duration:     0,
 	}
 
-	if !reflect.DeepEqual(want, mergeTrain) {
-		t.Errorf("MergeTrains.GetMergeRequestOnAMergeTrain returned %+v, want %+v", mergeTrain, want)
-	}
+	assert.Equal(t, want, mergeTrain)
 }
 
 func TestAddMergeRequestToMergeTrain(t *testing.T) {
@@ -232,9 +222,7 @@ func TestAddMergeRequestToMergeTrain(t *testing.T) {
 	opt := &AddMergeRequestToMergeTrainOptions{WhenPipelineSucceeds: Ptr(true), Squash: Ptr(true)}
 
 	mergeTrains, _, err := client.MergeTrains.AddMergeRequestToMergeTrain(597, 1, opt)
-	if err != nil {
-		t.Errorf("MergeTrains.AddMergeRequestToMergeTrain returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	mergeRequestCreatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
 	mergeRequestUpdatedAt := time.Date(2022, time.October, 31, 19, 6, 5, 725000000, time.UTC)
@@ -288,7 +276,5 @@ func TestAddMergeRequestToMergeTrain(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, mergeTrains) {
-		t.Errorf("MergeTrains.AddMergeRequestToMergeTrain returned %+v, want %+v", mergeTrains, want)
-	}
+	assert.Equal(t, want, mergeTrains)
 }
