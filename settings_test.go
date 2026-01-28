@@ -209,3 +209,33 @@ func TestGetSettings_AnonymousSearchesAllowed(t *testing.T) {
 
 	assert.True(t, settings.AnonymousSearchesAllowed)
 }
+
+func TestSettings_SentryEnabled(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			testMethod(t, r, http.MethodGet)
+			fmt.Fprint(w, `{"id":1, "sentry_enabled": false}`)
+			return
+		}
+
+		if r.Method == http.MethodPut {
+			testMethod(t, r, http.MethodPut)
+			fmt.Fprint(w, `{"id":1, "sentry_enabled": true}`)
+		}
+	})
+
+	// Get current settings
+	settings, _, err := client.Settings.GetSettings()
+	assert.NoError(t, err)
+	assert.False(t, settings.SentryEnabled)
+
+	// Update the setting
+	updated, _, err := client.Settings.UpdateSettings(&UpdateSettingsOptions{
+		SentryEnabled: Ptr(true),
+	})
+	assert.NoError(t, err)
+	assert.True(t, updated.SentryEnabled)
+}
