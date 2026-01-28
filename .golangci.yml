@@ -29,6 +29,7 @@ linters:
     - nakedret
     - nolintlint
     - revive
+    - sloglint
     - staticcheck
     - testifylint
     - unconvert
