@@ -153,12 +153,11 @@ func WithUserAgent(userAgent string) ClientOptionFunc {
 
 // WithURLWarningLogger sets a custom logger for URL validation warnings.
 // By default, warnings are logged using slog.Default().
-// Pass slog.New(slog.NewTextHandler(io.Discard, nil)) to disable warnings.
-// TODO: Use slog.NewDiscardHandler() when we upgrade to Go 1.25+
+// Pass slog.New(slog.DiscardHandler) to disable warnings.
 func WithURLWarningLogger(logger *slog.Logger) ClientOptionFunc {
 	return func(c *Client) error {
 		if logger == nil {
-			return errors.New("logger cannot be nil, use slog.New(slog.NewTextHandler(io.Discard, nil)) to discard warnings")
+			return errors.New("logger cannot be nil, use slog.New(slog.DiscardHandler) to discard warnings")
 		}
 		c.urlWarningLogger = logger
 		return nil

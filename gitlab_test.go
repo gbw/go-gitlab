@@ -1614,8 +1614,7 @@ func TestSetBaseURL_ValidationWarnings(t *testing.T) {
 			t.Parallel()
 
 			c := &Client{
-				// TODO: Use slog.NewDiscardHandler() when we upgrade to Go 1.25+
-				urlWarningLogger: slog.New(slog.NewTextHandler(io.Discard, nil)),
+				urlWarningLogger: slog.New(slog.DiscardHandler),
 			}
 
 			err := c.setBaseURL(tt.input)
