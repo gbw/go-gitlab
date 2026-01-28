@@ -1,3 +1,29 @@
+## 1.22.1
+
+### 🐛 Bug Fixes
+
+- fix: Type Mismatch in UpdateSettingsOptions for SentryEnabled ([!2690](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2690)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+### 🔄 Other Changes
+
+- fix: URL tags for throttle protected path settings in UpdateSettingsOptions ([!2705](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2705)) by [Zubeen](https://gitlab.com/syedzubeen)
+- test: Refactor tests to use testify assertions 7 ([!2700](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2700)) by [Zubeen](https://gitlab.com/syedzubeen)
+- test: Refactor tests to use testify assertions 4 ([!2696](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2696)) by [Zubeen](https://gitlab.com/syedzubeen)
+- test: Refactor tests to use testify assertions 3 ([!2695](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2695)) by [Zubeen](https://gitlab.com/syedzubeen)
+- test(no-release): Refactor tests to use testify assertions 2 ([!2694](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2694)) by [Zubeen](https://gitlab.com/syedzubeen)
+- test(no-release): Refactor tests to use testify assertions ([!2693](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2693)) by [Zubeen](https://gitlab.com/syedzubeen)
+- test(no-release): Refactor tests to use testify assertions 6 ([!2699](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2699)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+
+
+## [1.22.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.22.0...v1.22.1) (2026-01-28)
+
+
+### Bug Fixes
+
+* Type Mismatch in UpdateSettingsOptions for SentryEnabled ([c2d3ca9](https://gitlab.com/gitlab-org/api/client-go/commit/c2d3ca98450719f615a951930153ad9fc2585b19))
+* URL tags for throttle protected path settings in UpdateSettingsOptions ([a4a525d](https://gitlab.com/gitlab-org/api/client-go/commit/a4a525dce32ba6aa80f45b48fbc0261e59cdabd3))
+
 ## 1.22.0
 
 ### 🚀 Features
