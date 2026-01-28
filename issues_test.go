@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 
@@ -37,9 +36,7 @@ func TestGetIssue(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.GetIssue("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:                1,
@@ -49,9 +46,7 @@ func TestGetIssue(t *testing.T) {
 		MergeRequestCount: 1,
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.GetIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestGetIssueByID(t *testing.T) {
@@ -64,9 +59,7 @@ func TestGetIssueByID(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.GetIssueByID(5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:                5,
@@ -76,9 +69,7 @@ func TestGetIssueByID(t *testing.T) {
 		MergeRequestCount: 1,
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.GetIssueByID returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestDeleteIssue(t *testing.T) {
@@ -91,9 +82,7 @@ func TestDeleteIssue(t *testing.T) {
 	})
 
 	_, err := client.Issues.DeleteIssue("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestReorderIssue(t *testing.T) {
@@ -109,9 +98,7 @@ func TestReorderIssue(t *testing.T) {
 	opt := ReorderIssueOptions{MoveAfterID: &afterID}
 
 	issue, _, err := client.Issues.ReorderIssue("1", 5, &opt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:          1,
@@ -121,9 +108,7 @@ func TestReorderIssue(t *testing.T) {
 		Assignees:   []*IssueAssignee{{ID: 1}},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.ReorderIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestMoveIssue(t *testing.T) {
@@ -136,9 +121,7 @@ func TestMoveIssue(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.MoveIssue("1", 11, &MoveIssueOptions{ToProjectID: Ptr(int64(5))})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:        92,
@@ -162,9 +145,7 @@ func TestMoveIssue(t *testing.T) {
 		)
 	})
 	movedIssue, _, err := client.Issues.GetIssue("1", 11)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	wantedMovedIssue := &Issue{
 		ID:        1,
@@ -173,9 +154,7 @@ func TestMoveIssue(t *testing.T) {
 		MovedToID: 92,
 	}
 
-	if !reflect.DeepEqual(wantedMovedIssue, movedIssue) {
-		t.Errorf("Issues.GetIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, wantedMovedIssue, movedIssue)
 }
 
 func TestListIssues(t *testing.T) {
@@ -214,9 +193,7 @@ func TestListIssues(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListIssues(listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -226,9 +203,7 @@ func TestListIssues(t *testing.T) {
 		Labels:      []string{"foo", "bar"},
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListIssuesWithLabelDetails(t *testing.T) {
@@ -281,9 +256,7 @@ func TestListIssuesWithLabelDetails(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListIssues(listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -297,9 +270,7 @@ func TestListIssuesWithLabelDetails(t *testing.T) {
 		},
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListIssuesSearchInTitle(t *testing.T) {
@@ -326,9 +297,7 @@ func TestListIssuesSearchInTitle(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListIssues(listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -336,9 +305,7 @@ func TestListIssuesSearchInTitle(t *testing.T) {
 		Description: "This is the description for the issue",
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListIssuesSearchInDescription(t *testing.T) {
@@ -365,9 +332,7 @@ func TestListIssuesSearchInDescription(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListIssues(listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -375,9 +340,7 @@ func TestListIssuesSearchInDescription(t *testing.T) {
 		Description: "This is the description for the issue",
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListIssuesSearchByIterationID(t *testing.T) {
@@ -411,9 +374,7 @@ func TestListIssuesSearchByIterationID(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListIssues(listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -429,9 +390,7 @@ func TestListIssuesSearchByIterationID(t *testing.T) {
 		},
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListProjectIssues(t *testing.T) {
@@ -449,9 +408,7 @@ func TestListProjectIssues(t *testing.T) {
 		AssigneeID: AssigneeID(0o2),
 	}
 	issues, _, err := client.Issues.ListProjectIssues("1", listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -460,9 +417,7 @@ func TestListProjectIssues(t *testing.T) {
 		Assignees:   []*IssueAssignee{{ID: 1}},
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListProjectIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListProjectIssuesSearchByIterationID(t *testing.T) {
@@ -496,9 +451,7 @@ func TestListProjectIssuesSearchByIterationID(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListProjectIssues(1, listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -514,9 +467,7 @@ func TestListProjectIssuesSearchByIterationID(t *testing.T) {
 		},
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListGroupIssues(t *testing.T) {
@@ -537,9 +488,7 @@ func TestListGroupIssues(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListGroupIssues("1", listGroupIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -548,9 +497,7 @@ func TestListGroupIssues(t *testing.T) {
 		Assignees:   []*IssueAssignee{{ID: 1}},
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListGroupIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestListGroupIssuesSearchByIterationID(t *testing.T) {
@@ -584,9 +531,7 @@ func TestListGroupIssuesSearchByIterationID(t *testing.T) {
 	}
 
 	issues, _, err := client.Issues.ListGroupIssues(1, listProjectIssue)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Issue{{
 		ID:          1,
@@ -602,9 +547,7 @@ func TestListGroupIssuesSearchByIterationID(t *testing.T) {
 		},
 	}}
 
-	if !reflect.DeepEqual(want, issues) {
-		t.Errorf("Issues.ListIssues returned %+v, want %+v", issues, want)
-	}
+	assert.Equal(t, want, issues)
 }
 
 func TestCreateIssue(t *testing.T) {
@@ -622,9 +565,7 @@ func TestCreateIssue(t *testing.T) {
 	}
 
 	issue, _, err := client.Issues.CreateIssue("1", createIssueOptions)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:          1,
@@ -634,9 +575,7 @@ func TestCreateIssue(t *testing.T) {
 		Assignees:   []*IssueAssignee{{ID: 1}},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.CreateIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestUpdateIssue(t *testing.T) {
@@ -668,9 +607,7 @@ func TestUpdateIssue(t *testing.T) {
 		Description: Ptr("This is description of an issue"),
 	}
 	issue, _, err := client.Issues.UpdateIssue(1, 5, updateIssueOpt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:          1,
@@ -680,9 +617,7 @@ func TestUpdateIssue(t *testing.T) {
 		Assignees:   []*IssueAssignee{{ID: 1}},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.UpdateIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestUpdateIssue_ResetFields(t *testing.T) {
@@ -764,9 +699,7 @@ func TestSubscribeToIssue(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.SubscribeToIssue("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:          1,
@@ -776,9 +709,7 @@ func TestSubscribeToIssue(t *testing.T) {
 		Assignees:   []*IssueAssignee{{ID: 1}},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.SubscribeToIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestUnsubscribeFromIssue(t *testing.T) {
@@ -791,9 +722,7 @@ func TestUnsubscribeFromIssue(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.UnsubscribeFromIssue("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:          1,
@@ -803,9 +732,7 @@ func TestUnsubscribeFromIssue(t *testing.T) {
 		Assignees:   []*IssueAssignee{{ID: 1}},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.UnsubscribeFromIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestListMergeRequestsClosingIssue(t *testing.T) {
@@ -826,15 +753,11 @@ func TestListMergeRequestsClosingIssue(t *testing.T) {
 		},
 	}
 	mergeRequest, _, err := client.Issues.ListMergeRequestsClosingIssue("1", 5, listMergeRequestsClosingIssueOpt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*BasicMergeRequest{{ID: 1, Title: "test merge one"}, {ID: 2, Title: "test merge two"}}
 
-	if !reflect.DeepEqual(want, mergeRequest) {
-		t.Errorf("Issues.ListMergeRequestsClosingIssue returned %+v, want %+v", mergeRequest, want)
-	}
+	assert.Equal(t, want, mergeRequest)
 }
 
 func TestListMergeRequestsRelatedToIssue(t *testing.T) {
@@ -855,15 +778,11 @@ func TestListMergeRequestsRelatedToIssue(t *testing.T) {
 		},
 	}
 	mergeRequest, _, err := client.Issues.ListMergeRequestsRelatedToIssue("1", 5, listMergeRequestsRelatedToIssueOpt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*BasicMergeRequest{{ID: 1, Title: "test merge one"}, {ID: 2, Title: "test merge two"}}
 
-	if !reflect.DeepEqual(want, mergeRequest) {
-		t.Errorf("Issues.ListMergeRequestsClosingIssue returned %+v, want %+v", mergeRequest, want)
-	}
+	assert.Equal(t, want, mergeRequest)
 }
 
 func TestSetTimeEstimate(t *testing.T) {
@@ -880,14 +799,11 @@ func TestSetTimeEstimate(t *testing.T) {
 	}
 
 	timeState, _, err := client.Issues.SetTimeEstimate("1", 5, setTimeEstiOpt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
+
 	want := &TimeStats{HumanTimeEstimate: "3h 30m", HumanTotalTimeSpent: "", TimeEstimate: 12600, TotalTimeSpent: 0}
 
-	if !reflect.DeepEqual(want, timeState) {
-		t.Errorf("Issues.SetTimeEstimate returned %+v, want %+v", timeState, want)
-	}
+	assert.Equal(t, want, timeState)
 }
 
 func TestResetTimeEstimate(t *testing.T) {
@@ -900,14 +816,11 @@ func TestResetTimeEstimate(t *testing.T) {
 	})
 
 	timeState, _, err := client.Issues.ResetTimeEstimate("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
+
 	want := &TimeStats{HumanTimeEstimate: "", HumanTotalTimeSpent: "", TimeEstimate: 0, TotalTimeSpent: 0}
 
-	if !reflect.DeepEqual(want, timeState) {
-		t.Errorf("Issues.ResetTimeEstimate returned %+v, want %+v", timeState, want)
-	}
+	assert.Equal(t, want, timeState)
 }
 
 func TestAddSpentTime(t *testing.T) {
@@ -929,14 +842,11 @@ func TestAddSpentTime(t *testing.T) {
 	}
 
 	timeState, _, err := client.Issues.AddSpentTime("1", 5, addSpentTimeOpt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
+
 	want := &TimeStats{HumanTimeEstimate: "", HumanTotalTimeSpent: "1h", TimeEstimate: 0, TotalTimeSpent: 3600}
 
-	if !reflect.DeepEqual(want, timeState) {
-		t.Errorf("Issues.AddSpentTime returned %+v, want %+v", timeState, want)
-	}
+	assert.Equal(t, want, timeState)
 }
 
 func TestResetSpentTime(t *testing.T) {
@@ -950,14 +860,11 @@ func TestResetSpentTime(t *testing.T) {
 	})
 
 	timeState, _, err := client.Issues.ResetSpentTime("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &TimeStats{HumanTimeEstimate: "", HumanTotalTimeSpent: "", TimeEstimate: 0, TotalTimeSpent: 0}
-	if !reflect.DeepEqual(want, timeState) {
-		t.Errorf("Issues.ResetSpentTime returned %+v, want %+v", timeState, want)
-	}
+
+	assert.Equal(t, want, timeState)
 }
 
 func TestGetTimeSpent(t *testing.T) {
@@ -971,14 +878,11 @@ func TestGetTimeSpent(t *testing.T) {
 	})
 
 	timeState, _, err := client.Issues.GetTimeSpent("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &TimeStats{HumanTimeEstimate: "2h", HumanTotalTimeSpent: "1h", TimeEstimate: 7200, TotalTimeSpent: 3600}
-	if !reflect.DeepEqual(want, timeState) {
-		t.Errorf("Issues.GetTimeSpent returned %+v, want %+v", timeState, want)
-	}
+
+	assert.Equal(t, want, timeState)
 }
 
 func TestGetIssueParticipants(t *testing.T) {
@@ -994,18 +898,14 @@ func TestGetIssueParticipants(t *testing.T) {
 	})
 
 	issueParticipants, _, err := client.Issues.GetParticipants("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*BasicUser{
 		{ID: 1, Name: "User1", Username: "User1", State: "active", AvatarURL: "", WebURL: "https://localhost/User1"},
 		{ID: 2, Name: "User2", Username: "User2", State: "active", AvatarURL: "https://localhost/uploads/-/system/user/avatar/2/avatar.png", WebURL: "https://localhost/User2"},
 	}
 
-	if !reflect.DeepEqual(want, issueParticipants) {
-		t.Errorf("Issues.GetIssueParticipants returned %+v, want %+v", issueParticipants, want)
-	}
+	assert.Equal(t, want, issueParticipants)
 }
 
 func TestGetIssueMilestone(t *testing.T) {
@@ -1019,9 +919,7 @@ func TestGetIssueMilestone(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.GetIssue("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:                1,
@@ -1040,9 +938,7 @@ func TestGetIssueMilestone(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.GetIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestGetIssueGroupMilestone(t *testing.T) {
@@ -1056,9 +952,7 @@ func TestGetIssueGroupMilestone(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.GetIssue("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:                1,
@@ -1077,9 +971,7 @@ func TestGetIssueGroupMilestone(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.GetIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestGetIssueWithServiceDesk(t *testing.T) {
@@ -1092,9 +984,7 @@ func TestGetIssueWithServiceDesk(t *testing.T) {
 	})
 
 	issue, _, err := client.Issues.GetIssue("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Issue{
 		ID:                 1,
@@ -1104,7 +994,5 @@ func TestGetIssueWithServiceDesk(t *testing.T) {
 		ServiceDeskReplyTo: "snehal@test.com",
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("Issues.GetIssue returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
