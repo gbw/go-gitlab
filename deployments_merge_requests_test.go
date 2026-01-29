@@ -65,3 +65,21 @@ func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests(t *testing.T
 		assert.Empty(t, mr.DiffRefs.HeadSha)
 	}
 }
+
+func TestDeploymentMergeRequestsService_ListDeploymentMergeRequests_WithStringProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded project path
+	mux.HandleFunc("/api/v4/projects/namespace%2Fproject/deployments/2/merge_requests", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_merge_requests.json")
+	})
+
+	// WHEN: Listing deployment merge requests with a string project ID
+	mergeRequests, _, err := client.DeploymentMergeRequests.ListDeploymentMergeRequests("namespace/project", 2, nil)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Len(t, mergeRequests, 3)
+}

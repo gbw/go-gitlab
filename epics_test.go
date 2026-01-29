@@ -209,3 +209,98 @@ func TestGetEpicWithDateTimeFields(t *testing.T) {
 
 	assert.Equal(t, want, epic)
 }
+
+func TestListGroupEpics_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}]`)
+	})
+
+	// WHEN: Listing group epics with an integer group ID
+	epics, _, err := client.Epics.ListGroupEpics(123, nil)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Len(t, epics, 1)
+	require.Equal(t, int64(8), epics[0].ID)
+}
+
+func TestGetEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics/8", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}`)
+	})
+
+	// WHEN: Getting an epic with an integer group ID
+	epic, _, err := client.Epics.GetEpic(123, 8)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(8), epic.ID)
+}
+
+func TestCreateEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}`)
+	})
+
+	// WHEN: Creating an epic with an integer group ID
+	epic, _, err := client.Epics.CreateEpic(123, &CreateEpicOptions{
+		Title:       Ptr("Incredible idea"),
+		Description: Ptr("This is a test epic"),
+	})
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(8), epic.ID)
+}
+
+func TestUpdateEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics/8", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}`)
+	})
+
+	// WHEN: Updating an epic with an integer group ID
+	epic, _, err := client.Epics.UpdateEpic(123, 8, &UpdateEpicOptions{
+		Title:       Ptr("Incredible idea"),
+		Description: Ptr("This is a test epic"),
+	})
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(8), epic.ID)
+}
+
+func TestDeleteEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics/8", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	// WHEN: Deleting an epic with an integer group ID
+	_, err := client.Epics.DeleteEpic(123, 8)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+}

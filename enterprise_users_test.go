@@ -181,3 +181,92 @@ func TestEnterpriseUsers_DeleteEnterpriseUser(t *testing.T) {
 	assert.NotNil(t, resp)
 	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
+
+func TestEnterpriseUsers_ListEnterpriseUsers_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/enterprise_users", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `[
+			{
+				"id": 66,
+				"username": "user22",
+				"name": "Sidney Jones22",
+				"state": "active",
+				"email": "user22@example.org"
+			}
+		]`)
+	})
+
+	// WHEN: Listing enterprise users with a string group ID
+	users, _, err := client.EnterpriseUsers.ListEnterpriseUsers("namespace/group", nil)
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.Len(t, users, 1)
+	assert.Equal(t, int64(66), users[0].ID)
+}
+
+func TestEnterpriseUsers_GetEnterpriseUser_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/enterprise_users/66", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `
+			{
+				"id": 66,
+				"username": "user22",
+				"name": "Sidney Jones22",
+				"state": "active",
+				"email": "user22@example.org"
+			}
+		`)
+	})
+
+	// WHEN: Getting an enterprise user with a string group ID
+	user, _, err := client.EnterpriseUsers.GetEnterpriseUser("namespace/group", 66)
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.Equal(t, int64(66), user.ID)
+}
+
+func TestEnterpriseUsers_Disable2FAForEnterpriseUser_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/enterprise_users/66/disable_two_factor", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPatch)
+	})
+
+	// WHEN: Disabling 2FA for an enterprise user with a string group ID
+	resp, err := client.EnterpriseUsers.Disable2FAForEnterpriseUser("namespace/group", 66)
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestEnterpriseUsers_DeleteEnterpriseUser_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/enterprise_users/66", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// WHEN: Deleting an enterprise user with a string group ID
+	resp, err := client.EnterpriseUsers.DeleteEnterpriseUser("namespace/group", 66, nil)
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
