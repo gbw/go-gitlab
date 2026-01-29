@@ -1,3 +1,13 @@
+## 1.24.0
+
+### 🚀 Features
+
+- Add assignee_id to issues api ([!2673](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2673)) by [David Schneider](https://gitlab.com/dvob)
+
+
+
+# [1.24.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.23.0...v1.24.0) (2026-01-29)
+
 ## 1.23.0
 
 ### 🚀 Features
