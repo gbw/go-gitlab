@@ -737,3 +737,119 @@ func TestEpicIssuesService_UpdateEpicIssueAssignment(t *testing.T) {
 	require.Nil(t, is)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
+
+func TestEpicIssuesService_ListEpicIssues_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/epics/5/issues", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `
+			[
+			  {
+				"id": 76,
+				"iid": 6,
+				"project_id": 8,
+				"title" : "Test issue"
+			  }
+			]
+		`)
+	})
+
+	// WHEN: Listing epic issues with a string group ID
+	issues, _, err := client.EpicIssues.ListEpicIssues("namespace/group", 5, nil)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Len(t, issues, 1)
+	require.Equal(t, int64(76), issues[0].ID)
+}
+
+func TestEpicIssuesService_AssignEpicIssue_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/epics/5/issues/53", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprintf(w, `
+			{
+			  "id": 11,
+			  "epic": {
+				"id": 5,
+				"title": "Incredible idea"
+			  },
+			  "issue": {
+				"id": 53,
+				"title": "Test issue"
+			  }
+			}
+		`)
+	})
+
+	// WHEN: Assigning an epic issue with a string group ID
+	assignment, _, err := client.EpicIssues.AssignEpicIssue("namespace/group", 5, 53)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(11), assignment.ID)
+}
+
+func TestEpicIssuesService_RemoveEpicIssue_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/epics/5/issues/11", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		fmt.Fprintf(w, `
+			{
+			  "id": 11,
+			  "epic": {
+				"id": 5,
+				"title": "Incredible idea"
+			  },
+			  "issue": {
+				"id": 53,
+				"title": "Test issue"
+			  }
+			}
+		`)
+	})
+
+	// WHEN: Removing an epic issue with a string group ID
+	assignment, _, err := client.EpicIssues.RemoveEpicIssue("namespace/group", 5, 11)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(11), assignment.ID)
+}
+
+func TestEpicIssuesService_UpdateEpicIssueAssignment_WithStringGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/namespace%2Fgroup/epics/5/issues/11", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprintf(w, `
+			[
+			  {
+				"id": 76,
+				"iid": 6,
+				"project_id": 8,
+				"title" : "Test issue"
+			  }
+			]
+		`)
+	})
+
+	// WHEN: Updating an epic issue assignment with a string group ID
+	issues, _, err := client.EpicIssues.UpdateEpicIssueAssignment("namespace/group", 5, 11, nil)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Len(t, issues, 1)
+	require.Equal(t, int64(76), issues[0].ID)
+}
