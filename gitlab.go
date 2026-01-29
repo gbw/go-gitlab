@@ -302,6 +302,7 @@ type Client struct {
 	Validate                         ValidateServiceInterface
 	Version                          VersionServiceInterface
 	Wikis                            WikisServiceInterface
+	WorkItems                        WorkItemsServiceInterface
 }
 
 // Interceptor is used to build a *http.Client request pipeline,
@@ -623,6 +624,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.Validate = &ValidateService{client: c}
 	c.Version = &VersionService{client: c}
 	c.Wikis = &WikisService{client: c}
+	c.WorkItems = &WorkItemsService{client: c}
 
 	return c, nil
 }

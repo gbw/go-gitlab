@@ -171,6 +171,7 @@ type testClientMocks struct {
 	MockValidate                         *MockValidateServiceInterface
 	MockVersion                          *MockVersionServiceInterface
 	MockWikis                            *MockWikisServiceInterface
+	MockWorkItems                        *MockWorkItemsServiceInterface
 }
 
 func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOptionFunc) *TestClient {
@@ -334,6 +335,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockValidate := NewMockValidateServiceInterface(ctrl)
 	mockVersion := NewMockVersionServiceInterface(ctrl)
 	mockWikis := NewMockWikisServiceInterface(ctrl)
+	mockWorkItems := NewMockWorkItemsServiceInterface(ctrl)
 
 	c := &gitlab.Client{
 		GraphQL:                          mockGraphQL,
@@ -496,6 +498,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Validate:                         mockValidate,
 		Version:                          mockVersion,
 		Wikis:                            mockWikis,
+		WorkItems:                        mockWorkItems,
 	}
 	// Apply any given client options.
 	for _, fn := range options {
@@ -670,6 +673,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockValidate:                         mockValidate,
 			MockVersion:                          mockVersion,
 			MockWikis:                            mockWikis,
+			MockWorkItems:                        mockWorkItems,
 		},
 	}
 }
