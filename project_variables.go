@@ -23,10 +23,30 @@ import (
 
 type (
 	ProjectVariablesServiceInterface interface {
+		// ListVariables gets a list of all variables in a project.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_level_variables/#list-project-variables
 		ListVariables(pid any, opt *ListProjectVariablesOptions, options ...RequestOptionFunc) ([]*ProjectVariable, *Response, error)
+		// GetVariable gets a variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_level_variables/#get-a-single-variable
 		GetVariable(pid any, key string, opt *GetProjectVariableOptions, options ...RequestOptionFunc) (*ProjectVariable, *Response, error)
+		// CreateVariable creates a new project variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_level_variables/#create-a-variable
 		CreateVariable(pid any, opt *CreateProjectVariableOptions, options ...RequestOptionFunc) (*ProjectVariable, *Response, error)
+		// UpdateVariable updates a project's variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_level_variables/#update-a-variable
 		UpdateVariable(pid any, key string, opt *UpdateProjectVariableOptions, options ...RequestOptionFunc) (*ProjectVariable, *Response, error)
+		// RemoveVariable removes a project's variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_level_variables/#delete-a-variable
 		RemoveVariable(pid any, key string, opt *RemoveProjectVariableOptions, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -76,10 +96,6 @@ type ListProjectVariablesOptions struct {
 	ListOptions
 }
 
-// ListVariables gets a list of all variables in a project.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_level_variables/#list-project-variables
 func (s *ProjectVariablesService) ListVariables(pid any, opt *ListProjectVariablesOptions, options ...RequestOptionFunc) ([]*ProjectVariable, *Response, error) {
 	return do[[]*ProjectVariable](s.client,
 		withPath("projects/%s/variables", ProjectID{pid}),
@@ -97,10 +113,6 @@ type GetProjectVariableOptions struct {
 	Filter *VariableFilter `url:"filter,omitempty" json:"filter,omitempty"`
 }
 
-// GetVariable gets a variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_level_variables/#get-a-single-variable
 func (s *ProjectVariablesService) GetVariable(pid any, key string, opt *GetProjectVariableOptions, options ...RequestOptionFunc) (*ProjectVariable, *Response, error) {
 	return do[*ProjectVariable](s.client,
 		withPath("projects/%s/variables/%s", ProjectID{pid}, url.PathEscape(key)),
@@ -126,10 +138,6 @@ type CreateProjectVariableOptions struct {
 	VariableType     *VariableTypeValue `url:"variable_type,omitempty" json:"variable_type,omitempty"`
 }
 
-// CreateVariable creates a new project variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_level_variables/#create-a-variable
 func (s *ProjectVariablesService) CreateVariable(pid any, opt *CreateProjectVariableOptions, options ...RequestOptionFunc) (*ProjectVariable, *Response, error) {
 	return do[*ProjectVariable](s.client,
 		withMethod(http.MethodPost),
@@ -155,10 +163,6 @@ type UpdateProjectVariableOptions struct {
 	VariableType     *VariableTypeValue `url:"variable_type,omitempty" json:"variable_type,omitempty"`
 }
 
-// UpdateVariable updates a project's variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_level_variables/#update-a-variable
 func (s *ProjectVariablesService) UpdateVariable(pid any, key string, opt *UpdateProjectVariableOptions, options ...RequestOptionFunc) (*ProjectVariable, *Response, error) {
 	return do[*ProjectVariable](s.client,
 		withMethod(http.MethodPut),
@@ -177,10 +181,6 @@ type RemoveProjectVariableOptions struct {
 	Filter *VariableFilter `url:"filter,omitempty" json:"filter,omitempty"`
 }
 
-// RemoveVariable removes a project's variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_level_variables/#delete-a-variable
 func (s *ProjectVariablesService) RemoveVariable(pid any, key string, opt *RemoveProjectVariableOptions, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodDelete),
