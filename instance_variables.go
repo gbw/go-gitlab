@@ -24,10 +24,30 @@ import (
 
 type (
 	InstanceVariablesServiceInterface interface {
+		// ListVariables gets a list of all variables for an instance.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/instance_level_ci_variables/#list-all-instance-variables
 		ListVariables(opt *ListInstanceVariablesOptions, options ...RequestOptionFunc) ([]*InstanceVariable, *Response, error)
+		// GetVariable gets a variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/instance_level_ci_variables/#show-instance-variable-details
 		GetVariable(key string, options ...RequestOptionFunc) (*InstanceVariable, *Response, error)
+		// CreateVariable creates a new instance level CI variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/instance_level_ci_variables/#create-instance-variable
 		CreateVariable(opt *CreateInstanceVariableOptions, options ...RequestOptionFunc) (*InstanceVariable, *Response, error)
+		// UpdateVariable updates an existing instance level CI variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/instance_level_ci_variables/#update-instance-variable
 		UpdateVariable(key string, opt *UpdateInstanceVariableOptions, options ...RequestOptionFunc) (*InstanceVariable, *Response, error)
+		// RemoveVariable removes an instance level CI variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/instance_level_ci_variables/#remove-instance-variable
 		RemoveVariable(key string, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -70,10 +90,6 @@ type ListInstanceVariablesOptions struct {
 	ListOptions
 }
 
-// ListVariables gets a list of all variables for an instance.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/instance_level_ci_variables/#list-all-instance-variables
 func (s *InstanceVariablesService) ListVariables(opt *ListInstanceVariablesOptions, options ...RequestOptionFunc) ([]*InstanceVariable, *Response, error) {
 	u := "admin/ci/variables"
 
@@ -91,10 +107,6 @@ func (s *InstanceVariablesService) ListVariables(opt *ListInstanceVariablesOptio
 	return vs, resp, nil
 }
 
-// GetVariable gets a variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/instance_level_ci_variables/#show-instance-variable-details
 func (s *InstanceVariablesService) GetVariable(key string, options ...RequestOptionFunc) (*InstanceVariable, *Response, error) {
 	u := fmt.Sprintf("admin/ci/variables/%s", url.PathEscape(key))
 
@@ -127,10 +139,6 @@ type CreateInstanceVariableOptions struct {
 	VariableType *VariableTypeValue `url:"variable_type,omitempty" json:"variable_type,omitempty"`
 }
 
-// CreateVariable creates a new instance level CI variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/instance_level_ci_variables/#create-instance-variable
 func (s *InstanceVariablesService) CreateVariable(opt *CreateInstanceVariableOptions, options ...RequestOptionFunc) (*InstanceVariable, *Response, error) {
 	u := "admin/ci/variables"
 
@@ -162,11 +170,6 @@ type UpdateInstanceVariableOptions struct {
 	VariableType *VariableTypeValue `url:"variable_type,omitempty" json:"variable_type,omitempty"`
 }
 
-// UpdateVariable updates the position of an existing
-// instance level CI variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/instance_level_ci_variables/#update-instance-variable
 func (s *InstanceVariablesService) UpdateVariable(key string, opt *UpdateInstanceVariableOptions, options ...RequestOptionFunc) (*InstanceVariable, *Response, error) {
 	u := fmt.Sprintf("admin/ci/variables/%s", url.PathEscape(key))
 
@@ -184,10 +187,6 @@ func (s *InstanceVariablesService) UpdateVariable(key string, opt *UpdateInstanc
 	return v, resp, nil
 }
 
-// RemoveVariable removes an instance level CI variable.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/instance_level_ci_variables/#remove-instance-variable
 func (s *InstanceVariablesService) RemoveVariable(key string, options ...RequestOptionFunc) (*Response, error) {
 	u := fmt.Sprintf("admin/ci/variables/%s", url.PathEscape(key))
 
