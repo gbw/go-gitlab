@@ -22,7 +22,16 @@ import (
 
 type (
 	ProjectSecuritySettingsServiceInterface interface {
+		// ListProjectSecuritySettings lists all of a project's security settings.
+		//
+		// GitLab API Docs:
+		// https://docs.gitlab.com/api/project_security_settings/#list-project-security-settings
 		ListProjectSecuritySettings(pid any, options ...RequestOptionFunc) (*ProjectSecuritySettings, *Response, error)
+		// UpdateSecretPushProtectionEnabledSetting updates the secret_push_protection_enabled
+		// setting for a project to the provided value.
+		//
+		// GitLab API Docs:
+		// https://docs.gitlab.com/api/project_security_settings/#update-secret_push_protection_enabled-setting
 		UpdateSecretPushProtectionEnabledSetting(pid any, opt UpdateProjectSecuritySettingsOptions, options ...RequestOptionFunc) (*ProjectSecuritySettings, *Response, error)
 	}
 
@@ -63,10 +72,6 @@ func (s ProjectSecuritySettings) String() string {
 	return Stringify(s)
 }
 
-// ListProjectSecuritySettings lists all of a project's security settings.
-//
-// GitLab API Docs:
-// https://docs.gitlab.com/api/project_security_settings/#list-project-security-settings
 func (s *ProjectSecuritySettingsService) ListProjectSecuritySettings(pid any, options ...RequestOptionFunc) (*ProjectSecuritySettings, *Response, error) {
 	return do[*ProjectSecuritySettings](s.client,
 		withPath("projects/%s/security_settings", ProjectID{pid}),
@@ -83,11 +88,6 @@ type UpdateProjectSecuritySettingsOptions struct {
 	SecretPushProtectionEnabled *bool `url:"secret_push_protection_enabled,omitempty" json:"secret_push_protection_enabled,omitempty"`
 }
 
-// UpdateSecretPushProtectionEnabledSetting updates the secret_push_protection_enabled
-// setting for the all projects in a project to the provided value.
-//
-// GitLab API Docs:
-// https://docs.gitlab.com/api/project_security_settings/#update-secret_push_protection_enabled-setting
 func (s *ProjectSecuritySettingsService) UpdateSecretPushProtectionEnabledSetting(pid any, opt UpdateProjectSecuritySettingsOptions, options ...RequestOptionFunc) (*ProjectSecuritySettings, *Response, error) {
 	return do[*ProjectSecuritySettings](s.client,
 		withMethod(http.MethodPut),
