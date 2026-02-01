@@ -149,6 +149,25 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#mattermost-slash-commands
 		DeleteGroupMattermostSlashCommandsIntegration(gid any, options ...RequestOptionFunc) (*Response, error)
+
+		// GetGroupWebexTeamsSettings gets the Webex Teams integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#get-webex-teams-settings
+		GetGroupWebexTeamsSettings(gid any, options ...RequestOptionFunc) (*WebexTeamsIntegration, *Response, error)
+
+		// SetGroupWebexTeamsSettings sets up the Webex Teams integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#set-up-webex-teams
+		SetGroupWebexTeamsSettings(gid any, opt *SetGroupWebexTeamsOptions, options ...RequestOptionFunc) (*WebexTeamsIntegration, *Response, error)
+
+		// DisableGroupWebexTeams disables the Webex Teams integration for a group.
+		// Integration settings are reset.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#disable-webex-teams
+		DisableGroupWebexTeams(gid any, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// IntegrationsService handles communication with the group
@@ -288,6 +307,30 @@ type GoogleChatIntegration struct {
 type GoogleChatIntegrationProperties struct {
 	NotifyOnlyBrokenPipelines bool   `json:"notify_only_broken_pipelines,omitempty"`
 	BranchesToBeNotified      string `json:"branches_to_be_notified,omitempty"`
+}
+
+// WebexTeamsIntegration represents the WebexTeams integration settings.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-webex-teams-settings
+type WebexTeamsIntegration struct {
+	Integration
+	Properties WebexTeamsIntegrationProperties `json:"properties"`
+}
+
+// WebexTeamsIntegrationProperties represents WebexTeams specific properties
+type WebexTeamsIntegrationProperties struct {
+	NotifyOnlyBrokenPipelines bool   `json:"notify_only_broken_pipelines,omitempty"`
+	BranchesToBeNotified      string `json:"branches_to_be_notified,omitempty"`
+}
+
+// SetGroupWebexTeamsOptions represents the available SetGroupWebexTeamsSettings() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#set-up-webex-teams
+type SetGroupWebexTeamsOptions struct {
+	NotifyOnlyBrokenPipelines *bool   `url:"notify_only_broken_pipelines,omitempty" json:"notify_only_broken_pipelines,omitempty"`
+	BranchesToBeNotified      *string `url:"branches_to_be_notified,omitempty" json:"branches_to_be_notified,omitempty"`
 }
 
 // ListActiveIntegrationsOptions represents the available
@@ -498,4 +541,33 @@ func (s *IntegrationsService) GetGroupGoogleChatSettings(gid any, options ...Req
 		withMethod(http.MethodGet),
 		withRequestOpts(options...),
 	)
+}
+
+func (s *IntegrationsService) GetGroupWebexTeamsSettings(gid any, options ...RequestOptionFunc) (*WebexTeamsIntegration, *Response, error) {
+	return do[*WebexTeamsIntegration](
+		s.client,
+		withPath("groups/%s/integrations/webex-teams", GroupID{gid}),
+		withMethod(http.MethodGet),
+		withRequestOpts(options...),
+	)
+}
+
+func (s *IntegrationsService) SetGroupWebexTeamsSettings(gid any, opt *SetGroupWebexTeamsOptions, options ...RequestOptionFunc) (*WebexTeamsIntegration, *Response, error) {
+	return do[*WebexTeamsIntegration](
+		s.client,
+		withPath("groups/%s/integrations/webex-teams", GroupID{gid}),
+		withMethod(http.MethodPut),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+func (s *IntegrationsService) DisableGroupWebexTeams(gid any, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](
+		s.client,
+		withPath("groups/%s/integrations/webex-teams", GroupID{gid}),
+		withMethod(http.MethodDelete),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }

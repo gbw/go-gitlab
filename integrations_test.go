@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListActiveGroupIntegrations(t *testing.T) {
@@ -665,4 +666,73 @@ func TestGetGroupGoogleChatSettings(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.Equal(t, "default", integration.Properties.BranchesToBeNotified)
+}
+
+func TestGetGroupWebexTeamsSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/webex-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Webex Teams",
+			"slug": "webex-teams",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "all"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupWebexTeamsSettings(1)
+	require.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	assert.True(t, integration.Properties.NotifyOnlyBrokenPipelines)
+	assert.Equal(t, "all", integration.Properties.BranchesToBeNotified)
+}
+
+func TestSetGroupWebexTeamsSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/webex-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Webex Teams",
+			"slug": "webex-teams",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "all"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.SetGroupWebexTeamsSettings(1, nil)
+	require.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	assert.True(t, integration.Properties.NotifyOnlyBrokenPipelines)
+	assert.Equal(t, "all", integration.Properties.BranchesToBeNotified)
+}
+
+func TestDisableGroupWebexTeams(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/webex-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Integrations.DisableGroupWebexTeams(1)
+	require.NoError(t, err)
+	assert.NotNil(t, resp)
 }
