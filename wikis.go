@@ -27,24 +27,24 @@ type (
 		// When with_content is set, it also returns the content of the pages.
 		//
 		// GitLab API docs:
-		// https://docs.gitlab.com/api/wikis/#list-wiki-pages
+		// https://docs.gitlab.com/api/wikis/#list-all-wiki-pages
 		ListWikis(pid any, opt *ListWikisOptions, options ...RequestOptionFunc) ([]*Wiki, *Response, error)
 		// GetWikiPage gets a wiki page for a given project.
 		//
 		// GitLab API docs:
-		// https://docs.gitlab.com/api/wikis/#get-a-wiki-page
+		// https://docs.gitlab.com/api/wikis/#retrieve-a-wiki-page
 		GetWikiPage(pid any, slug string, opt *GetWikiPageOptions, options ...RequestOptionFunc) (*Wiki, *Response, error)
 		// CreateWikiPage creates a new wiki page for the given repository with
 		// the given title, slug, and content.
 		//
 		// GitLab API docs:
-		// https://docs.gitlab.com/api/wikis/#create-a-new-wiki-page
+		// https://docs.gitlab.com/api/wikis/#create-a-wiki-page
 		CreateWikiPage(pid any, opt *CreateWikiPageOptions, options ...RequestOptionFunc) (*Wiki, *Response, error)
 		// EditWikiPage Updates an existing wiki page. At least one parameter is
 		// required to update the wiki page.
 		//
 		// GitLab API docs:
-		// https://docs.gitlab.com/api/wikis/#edit-an-existing-wiki-page
+		// https://docs.gitlab.com/api/wikis/#update-a-wiki-page
 		EditWikiPage(pid any, slug string, opt *EditWikiPageOptions, options ...RequestOptionFunc) (*Wiki, *Response, error)
 		// DeleteWikiPage deletes a wiki page with a given slug.
 		//
