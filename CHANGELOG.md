@@ -1,3 +1,32 @@
+## 1.25.0
+
+### 🚀 Features
+
+- feat(hooks): Add webexintegration ([!2707](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2707)) by [Preethi Atchudan](https://gitlab.com/preethiatchudan)
+
+### 🔄 Other Changes
+
+- fix: Fix broken GitLab docs anchors for Wikis API ([!2723](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2723)) by [Mohamed Othman](https://gitlab.com/mohamed.othman27)
+- refactor: moved comments to interface 7 ([!2715](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2715)) by [Zubeen](https://gitlab.com/syedzubeen)
+- chore(deps): update module github.com/google/cel-go to v0.27.0 ([!2721](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2721)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- refactor: moved comments to interface 1 ([!2706](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2706)) by [Zubeen](https://gitlab.com/syedzubeen)
+- Refactor low complexity endpoints to use new `do` request function ([!2718](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2718)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- Add some additional test coverage for functions before migrating to `do` ([!2720](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2720)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+
+
+# [1.25.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.24.0...v1.25.0) (2026-02-01)
+
+
+### Bug Fixes
+
+* Fix broken GitLab docs anchors for Wikis API ([bdbb5c0](https://gitlab.com/gitlab-org/api/client-go/commit/bdbb5c0e93847846f6f786c93d649bec18db38e4))
+
+
+### Features
+
+* **hooks:** Add webexintegration ([857ac6a](https://gitlab.com/gitlab-org/api/client-go/commit/857ac6a82ff63a65ae4df221cf8347fed8946f53))
+
 ## 1.24.0
 
 ### 🚀 Features
