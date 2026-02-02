@@ -36,13 +36,13 @@ func TestCreateLabel(t *testing.T) {
 	l := &CreateLabelOptions{
 		Name:     Ptr("MyLabel"),
 		Color:    Ptr("#11FF22"),
-		Priority: Ptr(int64(2)),
+		Priority: NewNullableWithValue(int64(2)),
 	}
 	label, _, err := client.Labels.CreateLabel("1", l)
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := &Label{ID: 1, Name: "MyLabel", Color: "#11FF22", Priority: 2}
+	want := &Label{ID: 1, Name: "MyLabel", Color: "#11FF22", Priority: NewNullableWithValue(int64(2))}
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("Labels.CreateLabel returned %+v, want %+v", label, want)
 	}
@@ -96,7 +96,7 @@ func TestUpdateLabel(t *testing.T) {
 		NewName:     Ptr("New Label"),
 		Color:       Ptr("#11FF23"),
 		Description: Ptr("This is updated label"),
-		Priority:    Ptr(int64(42)),
+		Priority:    NewNullableWithValue(int64(42)),
 	}
 
 	label, resp, err := client.Labels.UpdateLabel("1", "MyLabel", l)
@@ -108,7 +108,7 @@ func TestUpdateLabel(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	want := &Label{ID: 1, Name: "New Label", Color: "#11FF23", Description: "This is updated label", Priority: 42}
+	want := &Label{ID: 1, Name: "New Label", Color: "#11FF23", Description: "This is updated label", Priority: NewNullableWithValue(int64(42))}
 
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("Labels.UpdateLabel returned %+v, want %+v", label, want)
@@ -128,7 +128,7 @@ func TestSubscribeToLabel(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true}
+	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("Labels.SubscribeToLabel returned %+v, want %+v", label, want)
 	}
@@ -167,7 +167,7 @@ func TestListLabels(t *testing.T) {
 	if err != nil {
 		t.Log(err.Error() == "invalid ID type 1.1, the ID must be an int or a string")
 	}
-	want := []*Label{{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true}}
+	want := []*Label{{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}}
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("Labels.ListLabels returned %+v, want %+v", label, want)
 	}
@@ -186,7 +186,7 @@ func TestGetLabel(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	}
-	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true}
+	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("Labels.GetLabel returned %+v, want %+v", label, want)
 	}
