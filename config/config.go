@@ -1069,8 +1069,7 @@ func (c *Config) defaulting() {
 			continue
 		}
 
-		switch p := auth.AuthInfo.AuthProvider.(type) {
-		case *v1beta1.AuthInfo_Oauth2:
+		if p, ok := auth.AuthInfo.AuthProvider.(*v1beta1.AuthInfo_Oauth2); ok {
 			if p.Oauth2.Oauth2AccessToken == nil {
 				p.Oauth2.Oauth2AccessToken = &v1beta1.OAuth2_AccessToken{}
 			}

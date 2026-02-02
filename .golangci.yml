@@ -51,11 +51,17 @@ linters:
     revive:
       enable-all-rules: false
       rules:
+        - name: comment-spacings
         - name: deep-exit
+        - name: error-strings
         - name: get-return
+        - name: identical-switch-branches
+        - name: increment-decrement
+        - name: indent-error-flow
         - name: redundant-import-alias
         - name: struct-tag
         - name: time-date
+        - name: unnecessary-stmt
         - name: unused-parameter
         - name: use-errors-new
         - name: var-naming

@@ -1287,9 +1287,8 @@ func (e *ErrorResponse) Error() string {
 
 	if e.Message == "" {
 		return fmt.Sprintf("%s %s: %d", e.Response.Request.Method, url, e.Response.StatusCode)
-	} else {
-		return fmt.Sprintf("%s %s: %d %s", e.Response.Request.Method, url, e.Response.StatusCode, e.Message)
 	}
+	return fmt.Sprintf("%s %s: %d %s", e.Response.Request.Method, url, e.Response.StatusCode, e.Message)
 }
 
 func (e *ErrorResponse) HasStatusCode(statusCode int) bool {
