@@ -103,7 +103,7 @@ func TestWithContextAndWithRequestRetry(t *testing.T) {
 	retryCount := 0
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/success-on-3rd", func(w http.ResponseWriter, r *http.Request) {
-		retryCount += 1
+		retryCount++
 
 		if retryCount < 3 {
 			w.WriteHeader(http.StatusMethodNotAllowed)
@@ -310,7 +310,7 @@ func TestWithRequestRetry(t *testing.T) {
 
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/success-on-3rd", func(w http.ResponseWriter, r *http.Request) {
-		retryCount += 1
+		retryCount++
 		switch retryCount {
 		case 1:
 			w.WriteHeader(http.StatusMethodNotAllowed)
