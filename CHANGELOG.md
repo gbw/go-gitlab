@@ -1,3 +1,17 @@
+## 1.26.0
+
+### 🚀 Features
+
+- Add slack integration support ([!2692](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2692)) by [Hamza Hassanain](https://gitlab.com/HamzaHassanain)
+
+### 🔄 Other Changes
+
+- refactor(no-release): fix minor revive issues ([!2711](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2711)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+
+
+# [1.26.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.25.0...v1.26.0) (2026-02-03)
+
 ## 1.25.0
 
 ### 🚀 Features
