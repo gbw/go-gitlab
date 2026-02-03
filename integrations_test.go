@@ -548,6 +548,118 @@ func TestGetGroupJiraSettings(t *testing.T) {
 	assert.Equal(t, want, integration)
 }
 
+func TestGetGroupSlackSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/slack", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 53,
+			"title": "Slack notifications",
+			"slug": "slack",
+			"created_at": "2026-01-23T17:52:37.490Z",
+			"updated_at": "2026-01-23T17:52:37.490Z",
+			"active": true,
+			"commit_events": true,
+			"push_events": true,
+			"issues_events": true,
+			"incident_events": false,
+			"alert_events": true,
+			"confidential_issues_events": true,
+			"merge_requests_events": true,
+			"tag_push_events": true,
+			"deployment_events": false,
+			"note_events": true,
+			"confidential_note_events": true,
+			"pipeline_events": true,
+			"wiki_page_events": true,
+			"job_events": true,
+			"comment_on_event_enabled": true,
+			"inherited": false,
+			"properties": {
+				"username": "testuser",
+				"channel": "general",
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "default",
+				"labels_to_be_notified": "bug",
+				"labels_to_be_notified_behavior": "match_any",
+				"push_channel": "push-channel",
+				"issue_channel": "issue-channel",
+				"confidential_issue_channel": "conf-issue-channel",
+				"merge_request_channel": "mr-channel",
+				"note_channel": "note-channel",
+				"confidential_note_channel": "conf-note-channel",
+				"tag_push_channel": "tag-push-channel",
+				"pipeline_channel": "pipeline-channel",
+				"wiki_page_channel": "wiki-channel",
+				"deployment_channel": "deploy-channel",
+				"incident_channel": "incident-channel",
+				"alert_channel": "alert-channel",
+				"group_mention_channel": "mention-channel",
+				"group_confidential_mention_channel": "conf-mention-channel"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupSlackSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	createdAt, _ := time.Parse(time.RFC3339, "2026-01-23T17:52:37.490Z")
+	updatedAt, _ := time.Parse(time.RFC3339, "2026-01-23T17:52:37.490Z")
+
+	want := &SlackIntegration{
+		Integration: Integration{
+			ID:                       53,
+			Title:                    "Slack notifications",
+			Slug:                     "slack",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              true,
+			ConfidentialIssuesEvents: true,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   true,
+			PipelineEvents:           true,
+			WikiPageEvents:           true,
+			JobEvents:                true,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			IncidentEvents:           false,
+		},
+		Properties: SlackIntegrationProperties{
+			Username:                        "testuser",
+			Channel:                         "general",
+			NotifyOnlyBrokenPipelines:       true,
+			BranchesToBeNotified:            "default",
+			LabelsToBeNotified:              "bug",
+			LabelsToBeNotifiedBehavior:      "match_any",
+			PushChannel:                     "push-channel",
+			IssueChannel:                    "issue-channel",
+			ConfidentialIssueChannel:        "conf-issue-channel",
+			MergeRequestChannel:             "mr-channel",
+			NoteChannel:                     "note-channel",
+			ConfidentialNoteChannel:         "conf-note-channel",
+			TagPushChannel:                  "tag-push-channel",
+			PipelineChannel:                 "pipeline-channel",
+			WikiPageChannel:                 "wiki-channel",
+			DeploymentChannel:               "deploy-channel",
+			IncidentChannel:                 "incident-channel",
+			AlertChannel:                    "alert-channel",
+			GroupMentionChannel:             "mention-channel",
+			GroupConfidentialMentionChannel: "conf-mention-channel",
+		},
+	}
+	assert.Equal(t, want, integration)
+}
+
 func TestGetGroupDiscordSettings(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -596,6 +708,155 @@ func TestGetGroupTelegramSettings(t *testing.T) {
 	assert.NotNil(t, resp)
 	assert.Equal(t, "-1001", integration.Properties.Room)
 	assert.Equal(t, "default", integration.Properties.BranchesToBeNotified)
+}
+
+func TestSetGroupSlackSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/slack", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 53,
+			"title": "Slack notifications",
+			"slug": "slack",
+			"created_at": "2026-01-23T17:52:37.490Z",
+			"updated_at": "2026-01-23T17:52:37.490Z",
+			"active": true,
+			"commit_events": true,
+			"push_events": true,
+			"issues_events": true,
+			"incident_events": false,
+			"alert_events": true,
+			"confidential_issues_events": true,
+			"merge_requests_events": true,
+			"tag_push_events": true,
+			"deployment_events": false,
+			"note_events": true,
+			"confidential_note_events": true,
+			"pipeline_events": true,
+			"wiki_page_events": true,
+			"job_events": true,
+			"comment_on_event_enabled": true,
+			"inherited": false,
+			"properties": {
+				"username": "testuser",
+				"channel": "general",
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "default",
+				"labels_to_be_notified": "bug",
+				"labels_to_be_notified_behavior": "match_any",
+				"push_channel": "push-channel",
+				"issue_channel": "issue-channel",
+				"confidential_issue_channel": "conf-issue-channel",
+				"merge_request_channel": "mr-channel",
+				"note_channel": "note-channel",
+				"confidential_note_channel": "conf-note-channel",
+				"tag_push_channel": "tag-push-channel",
+				"pipeline_channel": "pipeline-channel",
+				"wiki_page_channel": "wiki-channel",
+				"deployment_channel": "deploy-channel",
+				"incident_channel": "incident-channel",
+				"alert_channel": "alert-channel",
+				"group_mention_channel": "mention-channel",
+				"group_confidential_mention_channel": "conf-mention-channel"
+			}
+		}`)
+	})
+
+	opt := &SetGroupSlackOptions{
+		Webhook:                         Ptr("https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"),
+		Username:                        Ptr("testuser"),
+		Channel:                         Ptr("general"),
+		NotifyOnlyBrokenPipelines:       Ptr(true),
+		BranchesToBeNotified:            Ptr("default"),
+		LabelsToBeNotified:              Ptr("bug"),
+		LabelsToBeNotifiedBehavior:      Ptr("match_any"),
+		PushChannel:                     Ptr("push-channel"),
+		IssueChannel:                    Ptr("issue-channel"),
+		ConfidentialIssueChannel:        Ptr("conf-issue-channel"),
+		MergeRequestChannel:             Ptr("mr-channel"),
+		NoteChannel:                     Ptr("note-channel"),
+		ConfidentialNoteChannel:         Ptr("conf-note-channel"),
+		TagPushChannel:                  Ptr("tag-push-channel"),
+		PipelineChannel:                 Ptr("pipeline-channel"),
+		WikiPageChannel:                 Ptr("wiki-channel"),
+		DeploymentChannel:               Ptr("deploy-channel"),
+		IncidentChannel:                 Ptr("incident-channel"),
+		AlertChannel:                    Ptr("alert-channel"),
+		GroupMentionChannel:             Ptr("mention-channel"),
+		GroupConfidentialMentionChannel: Ptr("conf-mention-channel"),
+	}
+
+	integration, resp, err := client.Integrations.SetGroupSlackSettings(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	createdAt, _ := time.Parse(time.RFC3339, "2026-01-23T17:52:37.490Z")
+	updatedAt, _ := time.Parse(time.RFC3339, "2026-01-23T17:52:37.490Z")
+
+	want := &SlackIntegration{
+		Integration: Integration{
+			ID:                       53,
+			Title:                    "Slack notifications",
+			Slug:                     "slack",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              true,
+			ConfidentialIssuesEvents: true,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   true,
+			PipelineEvents:           true,
+			WikiPageEvents:           true,
+			JobEvents:                true,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			IncidentEvents:           false,
+		},
+		Properties: SlackIntegrationProperties{
+			Username:                        "testuser",
+			Channel:                         "general",
+			NotifyOnlyBrokenPipelines:       true,
+			BranchesToBeNotified:            "default",
+			LabelsToBeNotified:              "bug",
+			LabelsToBeNotifiedBehavior:      "match_any",
+			PushChannel:                     "push-channel",
+			IssueChannel:                    "issue-channel",
+			ConfidentialIssueChannel:        "conf-issue-channel",
+			MergeRequestChannel:             "mr-channel",
+			NoteChannel:                     "note-channel",
+			ConfidentialNoteChannel:         "conf-note-channel",
+			TagPushChannel:                  "tag-push-channel",
+			PipelineChannel:                 "pipeline-channel",
+			WikiPageChannel:                 "wiki-channel",
+			DeploymentChannel:               "deploy-channel",
+			IncidentChannel:                 "incident-channel",
+			AlertChannel:                    "alert-channel",
+			GroupMentionChannel:             "mention-channel",
+			GroupConfidentialMentionChannel: "conf-mention-channel",
+		},
+	}
+	assert.Equal(t, want, integration)
+}
+
+func TestDisableGroupSlack(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/slack", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Integrations.DisableGroupSlack(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
 }
 
 func TestGetGroupMattermostSettings(t *testing.T) {
