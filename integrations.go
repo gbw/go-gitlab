@@ -84,6 +84,25 @@ type (
 		// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
 		GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
 
+		// GetGroupSlackSettings gets the Slack integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#get-slack-settings
+		GetGroupSlackSettings(gid any, options ...RequestOptionFunc) (*SlackIntegration, *Response, error)
+
+		// SetGroupSlackSettings sets up the Slack integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#set-up-slack
+		SetGroupSlackSettings(gid any, opt *SetGroupSlackOptions, options ...RequestOptionFunc) (*SlackIntegration, *Response, error)
+
+		// DisableGroupSlack disables the Slack integration for a group.
+		// Integration settings are reset.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#disable-slack
+		DisableGroupSlack(gid any, options ...RequestOptionFunc) (*Response, error)
+
 		// GetGroupDiscordSettings gets the Discord integration settings for a group.
 		//
 		// GitLab API docs:
@@ -212,6 +231,44 @@ type Integration struct {
 	WikiPageEvents                 bool       `json:"wiki_page_events"`
 	CommentOnEventEnabled          bool       `json:"comment_on_event_enabled"`
 	Inherited                      bool       `json:"inherited"`
+}
+
+// SlackIntegration represents the Slack integration settings.
+// It embeds the generic Integration struct and adds Slack-specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-slack-settings
+type SlackIntegration struct {
+	Integration
+	Properties SlackIntegrationProperties `json:"properties"`
+}
+
+// SlackIntegrationProperties represents Slack specific properties
+// returned by the GitLab API.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-slack-settings
+type SlackIntegrationProperties struct {
+	Username                        string `json:"username"`
+	Channel                         string `json:"channel"`
+	NotifyOnlyBrokenPipelines       bool   `json:"notify_only_broken_pipelines"`
+	BranchesToBeNotified            string `json:"branches_to_be_notified"`
+	LabelsToBeNotified              string `json:"labels_to_be_notified"`
+	LabelsToBeNotifiedBehavior      string `json:"labels_to_be_notified_behavior"`
+	PushChannel                     string `json:"push_channel"`
+	IssueChannel                    string `json:"issue_channel"`
+	ConfidentialIssueChannel        string `json:"confidential_issue_channel"`
+	MergeRequestChannel             string `json:"merge_request_channel"`
+	NoteChannel                     string `json:"note_channel"`
+	ConfidentialNoteChannel         string `json:"confidential_note_channel"`
+	TagPushChannel                  string `json:"tag_push_channel"`
+	PipelineChannel                 string `json:"pipeline_channel"`
+	WikiPageChannel                 string `json:"wiki_page_channel"`
+	DeploymentChannel               string `json:"deployment_channel"`
+	IncidentChannel                 string `json:"incident_channel"`
+	AlertChannel                    string `json:"alert_channel"`
+	GroupMentionChannel             string `json:"group_mention_channel"`
+	GroupConfidentialMentionChannel string `json:"group_confidential_mention_channel"`
 }
 
 // DiscordIntegration represents the Discord integration settings.
@@ -493,6 +550,63 @@ func (s *IntegrationsService) GetGroupJiraSettings(gid any, options ...RequestOp
 	return do[*Integration](
 		s.client,
 		withPath("groups/%s/integrations/jira", GroupID{gid}),
+		withMethod(http.MethodGet),
+		withRequestOpts(options...),
+	)
+}
+
+// SetGroupSlackOptions represents the available SetGroupSlackSettings() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#set-up-slack
+type SetGroupSlackOptions struct {
+	Webhook                         *string `url:"webhook,omitempty" json:"webhook,omitempty"`
+	Username                        *string `url:"username,omitempty" json:"username,omitempty"`
+	Channel                         *string `url:"channel,omitempty" json:"channel,omitempty"`
+	NotifyOnlyBrokenPipelines       *bool   `url:"notify_only_broken_pipelines,omitempty" json:"notify_only_broken_pipelines,omitempty"`
+	BranchesToBeNotified            *string `url:"branches_to_be_notified,omitempty" json:"branches_to_be_notified,omitempty"`
+	LabelsToBeNotified              *string `url:"labels_to_be_notified,omitempty" json:"labels_to_be_notified,omitempty"`
+	LabelsToBeNotifiedBehavior      *string `url:"labels_to_be_notified_behavior,omitempty" json:"labels_to_be_notified_behavior,omitempty"`
+	PushChannel                     *string `url:"push_channel,omitempty" json:"push_channel,omitempty"`
+	IssueChannel                    *string `url:"issue_channel,omitempty" json:"issue_channel,omitempty"`
+	ConfidentialIssueChannel        *string `url:"confidential_issue_channel,omitempty" json:"confidential_issue_channel,omitempty"`
+	MergeRequestChannel             *string `url:"merge_request_channel,omitempty" json:"merge_request_channel,omitempty"`
+	NoteChannel                     *string `url:"note_channel,omitempty" json:"note_channel,omitempty"`
+	ConfidentialNoteChannel         *string `url:"confidential_note_channel,omitempty" json:"confidential_note_channel,omitempty"`
+	TagPushChannel                  *string `url:"tag_push_channel,omitempty" json:"tag_push_channel,omitempty"`
+	PipelineChannel                 *string `url:"pipeline_channel,omitempty" json:"pipeline_channel,omitempty"`
+	WikiPageChannel                 *string `url:"wiki_page_channel,omitempty" json:"wiki_page_channel,omitempty"`
+	DeploymentChannel               *string `url:"deployment_channel,omitempty" json:"deployment_channel,omitempty"`
+	IncidentChannel                 *string `url:"incident_channel,omitempty" json:"incident_channel,omitempty"`
+	AlertChannel                    *string `url:"alert_channel,omitempty" json:"alert_channel,omitempty"`
+	GroupMentionChannel             *string `url:"group_mention_channel,omitempty" json:"group_mention_channel,omitempty"`
+	GroupConfidentialMentionChannel *string `url:"group_confidential_mention_channel,omitempty" json:"group_confidential_mention_channel,omitempty"`
+}
+
+func (s *IntegrationsService) SetGroupSlackSettings(gid any, opt *SetGroupSlackOptions, options ...RequestOptionFunc) (*SlackIntegration, *Response, error) {
+	return do[*SlackIntegration](
+		s.client,
+		withPath("groups/%s/integrations/slack", GroupID{gid}),
+		withMethod(http.MethodPut),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+func (s *IntegrationsService) DisableGroupSlack(gid any, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](
+		s.client,
+		withPath("groups/%s/integrations/slack", GroupID{gid}),
+		withMethod(http.MethodDelete),
+		withRequestOpts(options...),
+	)
+	return resp, err
+}
+
+func (s *IntegrationsService) GetGroupSlackSettings(gid any, options ...RequestOptionFunc) (*SlackIntegration, *Response, error) {
+	return do[*SlackIntegration](
+		s.client,
+		withPath("groups/%s/integrations/slack", GroupID{gid}),
 		withMethod(http.MethodGet),
 		withRequestOpts(options...),
 	)

@@ -259,6 +259,50 @@ func (c *MockIntegrationsServiceInterfaceDisableGroupMicrosoftTeamsNotifications
 	return c
 }
 
+// DisableGroupSlack mocks base method.
+func (m *MockIntegrationsServiceInterface) DisableGroupSlack(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DisableGroupSlack", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DisableGroupSlack indicates an expected call of DisableGroupSlack.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) DisableGroupSlack(gid any, options ...any) *MockIntegrationsServiceInterfaceDisableGroupSlackCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DisableGroupSlack", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).DisableGroupSlack), varargs...)
+	return &MockIntegrationsServiceInterfaceDisableGroupSlackCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceDisableGroupSlackCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceDisableGroupSlackCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceDisableGroupSlackCall) Return(arg0 *gitlab.Response, arg1 error) *MockIntegrationsServiceInterfaceDisableGroupSlackCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceDisableGroupSlackCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDisableGroupSlackCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceDisableGroupSlackCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDisableGroupSlackCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DisableGroupWebexTeams mocks base method.
 func (m *MockIntegrationsServiceInterface) DisableGroupWebexTeams(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -708,6 +752,51 @@ func (c *MockIntegrationsServiceInterfaceGetGroupMicrosoftTeamsNotificationsCall
 	return c
 }
 
+// GetGroupSlackSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupSlackSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.SlackIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupSlackSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.SlackIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupSlackSettings indicates an expected call of GetGroupSlackSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupSlackSettings(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupSlackSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupSlackSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall) Return(arg0 *gitlab.SlackIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.SlackIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.SlackIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupSlackSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetGroupTelegramSettings mocks base method.
 func (m *MockIntegrationsServiceInterface) GetGroupTelegramSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.TelegramIntegration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -974,6 +1063,51 @@ func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall) DoAndReturn(f func(any, *gitlab.SetMicrosoftTeamsNotificationsOptions, ...gitlab.RequestOptionFunc) (*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupMicrosoftTeamsNotificationsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetGroupSlackSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) SetGroupSlackSettings(gid any, opt *gitlab.SetGroupSlackOptions, options ...gitlab.RequestOptionFunc) (*gitlab.SlackIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetGroupSlackSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.SlackIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// SetGroupSlackSettings indicates an expected call of SetGroupSlackSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) SetGroupSlackSettings(gid, opt any, options ...any) *MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGroupSlackSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).SetGroupSlackSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall) Return(arg0 *gitlab.SlackIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall) Do(f func(any, *gitlab.SetGroupSlackOptions, ...gitlab.RequestOptionFunc) (*gitlab.SlackIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall) DoAndReturn(f func(any, *gitlab.SetGroupSlackOptions, ...gitlab.RequestOptionFunc) (*gitlab.SlackIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupSlackSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
