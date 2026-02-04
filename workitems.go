@@ -53,49 +53,62 @@ func (wi WorkItem) GID() string {
 	}.String()
 }
 
-const workItemQuery = `
-id
-iid
-workItemType {
-  name
-}
-state
-title
-description
-author {
-  id
-  username
-  name
-  state
-  createdAt
-  avatarUrl
-  webUrl
-}
-createdAt
-updatedAt
-closedAt
-webUrl
-features {
-  assignees {
-    assignees {
-      nodes {
-        id
-        username
-        name
-        state
-        createdAt
-        avatarUrl
-        webUrl
-      }
-    }
-  }
-  status {
-    status {
-      name
-    }
-  }
-}
-`
+var (
+	// userCoreBasicTemplate defines the common fields for a user in GraphQL queries.
+	userCoreBasicTemplate = template.Must(template.New("UserCoreBasic").Parse(`
+		id
+		username
+		name
+		state
+		createdAt
+		avatarUrl
+		webUrl
+	`))
+
+	// workItemTemplate defines the common fields for a work item in GraphQL queries.
+	// It's chained from userCoreBasicTemplate so nested templates work.
+	workItemTemplate = template.Must(template.Must(userCoreBasicTemplate.Clone()).New("WorkItem").Parse(`
+		id
+		iid
+		workItemType {
+		  name
+		}
+		state
+		title
+		description
+		author {
+		  {{ template "UserCoreBasic" }}
+		}
+		createdAt
+		updatedAt
+		closedAt
+		webUrl
+		features {
+		  assignees {
+		    assignees {
+		      nodes {
+		        {{ template "UserCoreBasic" }}
+		      }
+		    }
+		  }
+		  status {
+		    status {
+		      name
+		    }
+		  }
+		}
+	`))
+)
+
+// getWorkItemByIDTemplate is chained from workItemTemplate so it has access to both
+// UserCoreBasic and WorkItem templates.
+var getWorkItemByIDTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("GetWorkItemByID").Parse(`
+	query GetWorkItemByID($id: WorkItemID!) {
+	  workItem(id: $id) {
+	    {{ template "WorkItem" }}
+	  }
+	}
+`))
 
 // GetWorkItemByID gets a single work item identified by its global ID.
 //
@@ -103,14 +116,13 @@ features {
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#queryworkitem
 func (s *WorkItemsService) GetWorkItemByID(gid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
+	var queryBuilder strings.Builder
+	if err := getWorkItemByIDTemplate.Execute(&queryBuilder, nil); err != nil {
+		return nil, nil, err
+	}
+
 	q := GraphQLQuery{
-		Query: fmt.Sprintf(`
-			query ($id: WorkItemID!) {
-				workItem(id: $id) {
-					%s
-				}
-			}
-		`, workItemQuery),
+		Query: queryBuilder.String(),
 		Variables: map[string]any{
 			"id": fmt.Sprintf("gid://gitlab/WorkItem/%d", gid),
 		},
@@ -142,6 +154,18 @@ func (s *WorkItemsService) GetWorkItemByID(gid int64, options ...RequestOptionFu
 	return result.Data.WorkItem.unwrap(), resp, nil
 }
 
+// getWorkItemTemplate is chained from workItemTemplate so it has access to both
+// UserCoreBasic and WorkItem templates.
+var getWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("GetWorkItem").Parse(`
+	query GetWorkItem($fullPath: ID!, $iid: String!) {
+	  namespace(fullPath: $fullPath) {
+	    workItem(iid: $iid) {
+	      {{ template "WorkItem" }}
+	    }
+	  }
+	}
+`))
+
 // GetWorkItem gets a single work item.
 //
 // fullPath is the full path to either a group or project.
@@ -149,18 +173,13 @@ func (s *WorkItemsService) GetWorkItemByID(gid int64, options ...RequestOptionFu
 //
 // GitLab API docs:
 func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
+	var queryBuilder strings.Builder
+	if err := getWorkItemTemplate.Execute(&queryBuilder, nil); err != nil {
+		return nil, nil, err
+	}
+
 	q := GraphQLQuery{
-		Query: fmt.Sprintf(`
-query ($fullPath: ID!, $iid: String) {
-  namespace(fullPath: $fullPath) {
-    workItems(iid: $iid) {
-      nodes {
-	    %s
-      }
-    }
-  }
-}
-		`, workItemQuery),
+		Query: queryBuilder.String(),
 		Variables: map[string]any{
 			"fullPath": fullPath,
 			"iid":      strconv.FormatInt(iid, 10),
@@ -170,9 +189,7 @@ query ($fullPath: ID!, $iid: String) {
 	var result struct {
 		Data struct {
 			Namespace struct {
-				WorkItems struct {
-					Nodes []workItemGQL `json:"nodes"`
-				} `json:"workItems"`
+				WorkItem *workItemGQL `json:"workItem"`
 			} `json:"namespace"`
 		}
 		GenericGraphQLErrors
@@ -190,11 +207,10 @@ query ($fullPath: ID!, $iid: String) {
 		}
 	}
 
-	if len(result.Data.Namespace.WorkItems.Nodes) == 0 {
+	wiQL := result.Data.Namespace.WorkItem
+	if wiQL == nil {
 		return nil, resp, ErrNotFound
 	}
-
-	wiQL := result.Data.Namespace.WorkItems.Nodes[0]
 
 	return wiQL.unwrap(), resp, nil
 }
@@ -255,18 +271,18 @@ type ListWorkItemsOptions struct {
 	Last   *int64  `gql:"last Int"`
 }
 
-var listWorkItemsTemplate = template.Must(template.New("ListWorkItems").Parse(`
-query ListWorkItems($fullPath: ID!, {{ .Variables.Definitions }}) {
-  namespace(fullPath: $fullPath) {
-    workItems({{ .Variables.Arguments }}) {
-      nodes {
-        id
-        iid
-        title
-      }
-    }
-  }
-}
+// listWorkItemsTemplate is chained from workItemTemplate so it has access to both
+// UserCoreBasic and WorkItem templates.
+var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("ListWorkItems").Parse(`
+	query ListWorkItems($fullPath: ID!, {{ .Variables.Definitions }}) {
+	  namespace(fullPath: $fullPath) {
+	    workItems({{ .Variables.Arguments }}) {
+	      nodes {
+	        {{ template "WorkItem" }}
+	      }
+	    }
+	  }
+	}
 `))
 
 // ListWorkItems lists workitems in a given namespace (group or project).
