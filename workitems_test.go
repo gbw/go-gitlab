@@ -366,8 +366,8 @@ func TestListWorkItems(t *testing.T) {
 				}
 			`),
 			wantQuerySubstr: []string{
-				`query ListWorkItems($fullPath: ID!, $state: IssuableState, $authorUsername: String)`,
-				`workItems(state: $state, authorUsername: $authorUsername) {`,
+				`query ListWorkItems($fullPath: ID!, $authorUsername: String, $state: IssuableState)`,
+				`workItems(authorUsername: $authorUsername, state: $state) {`,
 			},
 			want: []*WorkItem{
 				{
@@ -396,8 +396,120 @@ func TestListWorkItems(t *testing.T) {
 				}
 			`),
 			wantQuerySubstr: []string{
-				`query ListWorkItems($fullPath: ID!, $state: IssuableState, $authorUsername: String)`,
-				`workItems(state: $state, authorUsername: $authorUsername) {`,
+				`query ListWorkItems($fullPath: ID!, $authorUsername: String, $state: IssuableState)`,
+				`workItems(authorUsername: $authorUsername, state: $state) {`,
+			},
+			want: nil,
+		},
+		{
+			name:     "all ListWorkItemsOptions fields are included in query",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &ListWorkItemsOptions{
+				// Main filters
+				AssigneeUsernames:    []string{"user1", "user2"},
+				AssigneeWildcardID:   Ptr("NONE"),
+				AuthorUsername:       Ptr("fforster"),
+				Confidential:         Ptr(true),
+				CRMContactID:         Ptr("contact123"),
+				CRMOrganizationID:    Ptr("org456"),
+				HealthStatusFilter:   Ptr("onTrack"),
+				IDs:                  []string{"gid://gitlab/WorkItem/1", "gid://gitlab/WorkItem/2"},
+				IIDs:                 []string{"1", "2", "3"},
+				IncludeAncestors:     Ptr(true),
+				IncludeDescendants:   Ptr(false),
+				IterationCadenceID:   []string{"cadence1"},
+				IterationID:          []string{"iter1", "iter2"},
+				IterationWildcardID:  Ptr("CURRENT"),
+				LabelName:            []string{"bug", "urgent"},
+				MilestoneTitle:       []string{"v1.0", "v2.0"},
+				MilestoneWildcardID:  Ptr("STARTED"),
+				MyReactionEmoji:      Ptr("thumbsup"),
+				ParentIDs:            []string{"gid://gitlab/WorkItem/100"},
+				ReleaseTag:           []string{"v1.0.0"},
+				ReleaseTagWildcardID: Ptr("ANY"),
+				State:                Ptr("opened"),
+				Subscribed:           Ptr("SUBSCRIBED"),
+				Types:                []string{"ISSUE", "TASK"},
+				Weight:               Ptr("5"),
+				WeightWildcardID:     Ptr("NONE"),
+				// Time filters
+				ClosedAfter:   Ptr(time.Date(2026, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				ClosedBefore:  Ptr(time.Date(2026, time.February, 1, 0, 0, 0, 0, time.UTC)),
+				CreatedAfter:  Ptr(time.Date(2026, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				CreatedBefore: Ptr(time.Date(2026, time.February, 1, 0, 0, 0, 0, time.UTC)),
+				DueAfter:      Ptr(time.Date(2026, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				DueBefore:     Ptr(time.Date(2026, time.February, 1, 0, 0, 0, 0, time.UTC)),
+				UpdatedAfter:  Ptr(time.Date(2026, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				UpdatedBefore: Ptr(time.Date(2026, time.February, 1, 0, 0, 0, 0, time.UTC)),
+				// Sorting
+				Sort: Ptr("CREATED_DESC"),
+				// Search
+				Search: Ptr("bug"),
+				In:     []string{"TITLE", "DESCRIPTION"},
+				// Pagination
+				After:  Ptr("cursor123"),
+				Before: Ptr("cursor456"),
+				First:  Ptr(int64(10)),
+				Last:   Ptr(int64(5)),
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "namespace": {
+				      "workItems": {
+				        "nodes": []
+				      }
+				    }
+				  }
+				}
+			`),
+			wantQuerySubstr: []string{
+				// Main filters
+				`$assigneeUsernames: [String!]`, `assigneeUsernames: $assigneeUsernames`,
+				`$assigneeWildcardId: AssigneeWildcardId`, `assigneeWildcardId: $assigneeWildcardId`,
+				`$authorUsername: String`, `authorUsername: $authorUsername`,
+				`$confidential: Boolean`, `confidential: $confidential`,
+				`$crmContactId: String`, `crmContactId: $crmContactId`,
+				`$crmOrganizationId: String`, `crmOrganizationId: $crmOrganizationId`,
+				`$healthStatusFilter: HealthStatusFilter`, `healthStatusFilter: $healthStatusFilter`,
+				`$ids: [WorkItemID!]`, `ids: $ids`,
+				`$iids: [String!]`, `iids: $iids`,
+				`$includeAncestors: Boolean`, `includeAncestors: $includeAncestors`,
+				`$includeDescendants: Boolean`, `includeDescendants: $includeDescendants`,
+				`$iterationCadenceId: [IterationsCadenceID!]`, `iterationCadenceId: $iterationCadenceId`,
+				`$iterationId: [ID]`, `iterationId: $iterationId`,
+				`$iterationWildcardId: IterationWildcardId`, `iterationWildcardId: $iterationWildcardId`,
+				`$labelName: [String!]`, `labelName: $labelName`,
+				`$milestoneTitle: [String!]`, `milestoneTitle: $milestoneTitle`,
+				`$milestoneWildcardId: MilestoneWildcardId`, `milestoneWildcardId: $milestoneWildcardId`,
+				`$myReactionEmoji: String`, `myReactionEmoji: $myReactionEmoji`,
+				`$parentIds: [WorkItemID!]`, `parentIds: $parentIds`,
+				`$releaseTag: [String!]`, `releaseTag: $releaseTag`,
+				`$releaseTagWildcardId: ReleaseTagWildcardId`, `releaseTagWildcardId: $releaseTagWildcardId`,
+				`$state: IssuableState`, `state: $state`,
+				`$subscribed: SubscriptionStatus`, `subscribed: $subscribed`,
+				`$types: [IssueType!]`, `types: $types`,
+				`$weight: String`, `weight: $weight`,
+				`$weightWildcardId: WeightWildcardId`, `weightWildcardId: $weightWildcardId`,
+				// Time filters
+				`$closedAfter: Time`, `closedAfter: $closedAfter`,
+				`$closedBefore: Time`, `closedBefore: $closedBefore`,
+				`$createdAfter: Time`, `createdAfter: $createdAfter`,
+				`$createdBefore: Time`, `createdBefore: $createdBefore`,
+				`$dueAfter: Time`, `dueAfter: $dueAfter`,
+				`$dueBefore: Time`, `dueBefore: $dueBefore`,
+				`$updatedAfter: Time`, `updatedAfter: $updatedAfter`,
+				`$updatedBefore: Time`, `updatedBefore: $updatedBefore`,
+				// Sorting
+				`$sort: WorkItemSort`, `sort: $sort`,
+				// Search
+				`$search: String`, `search: $search`,
+				`$in: [IssuableSearchableField!]`, `in: $in`,
+				// Pagination
+				`$after: String`, `after: $after`,
+				`$before: String`, `before: $before`,
+				`$first: Int`, `first: $first`,
+				`$last: Int`, `last: $last`,
 			},
 			want: nil,
 		},

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -210,77 +211,66 @@ query ($fullPath: ID!, $iid: String) {
 	return wiQL.unwrap(), resp, nil
 }
 
-/*
-workItems(
-
-	search: String
-	in: [IssuableSearchableField!]
-	ids: [WorkItemID!]
-	authorUsername: String
-	confidential: Boolean
-	assigneeUsernames: [String!]
-	assigneeWildcardId: AssigneeWildcardId
-	labelName: [String!]
-	milestoneTitle: [String!]
-	milestoneWildcardId: MilestoneWildcardId
-	myReactionEmoji: String
-	iids: [String!]
-	state: IssuableState
-	types: [IssueType!]
-	createdBefore: Time
-	createdAfter: Time
-	updatedBefore: Time
-	updatedAfter: Time
-	dueBefore: Time
-	dueAfter: Time
-	closedBefore: Time
-	closedAfter: Time
-	subscribed: SubscriptionStatus
-	not: NegatedWorkItemFilterInput
-	or: UnionedWorkItemFilterInput
-	parentIds: [WorkItemID!]
-	releaseTag: [String!]
-	releaseTagWildcardId: ReleaseTagWildcardId
-	crmContactId: String
-	crmOrganizationId: String
-	iid: String
-	sort: WorkItemSort = CREATED_DESC
-	verificationStatusWidget: VerificationStatusFilterInput
-	healthStatusFilter: HealthStatusFilter
-	weight: String
-	weightWildcardId: WeightWildcardId
-	iterationId: [ID]
-	iterationWildcardId: IterationWildcardId
-	iterationCadenceId: [IterationsCadenceID!]
-	includeAncestors: Boolean = false
-	includeDescendants: Boolean = false
-	timeframe: Timeframe
-	after: String
-	before: String
-	first: Int
-	last: Int
-
-): WorkItemConnection
-*/
-
 // ListWorkItemsOptions represents the available ListWorkItems() options.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/graphql/reference/#queryworkitems
 type ListWorkItemsOptions struct {
-	State          *string
-	AuthorUsername *string
-}
+	AssigneeUsernames    []string `gql:"assigneeUsernames [String!]"`
+	AssigneeWildcardID   *string  `gql:"assigneeWildcardId AssigneeWildcardId"`
+	AuthorUsername       *string  `gql:"authorUsername String"`
+	Confidential         *bool    `gql:"confidential Boolean"`
+	CRMContactID         *string  `gql:"crmContactId String"`
+	CRMOrganizationID    *string  `gql:"crmOrganizationId String"`
+	HealthStatusFilter   *string  `gql:"healthStatusFilter HealthStatusFilter"`
+	IDs                  []string `gql:"ids [WorkItemID!]"`
+	IIDs                 []string `gql:"iids [String!]"`
+	IncludeAncestors     *bool    `gql:"includeAncestors Boolean"`
+	IncludeDescendants   *bool    `gql:"includeDescendants Boolean"`
+	IterationCadenceID   []string `gql:"iterationCadenceId [IterationsCadenceID!]"`
+	IterationID          []string `gql:"iterationId [ID]"`
+	IterationWildcardID  *string  `gql:"iterationWildcardId IterationWildcardId"`
+	LabelName            []string `gql:"labelName [String!]"`
+	MilestoneTitle       []string `gql:"milestoneTitle [String!]"`
+	MilestoneWildcardID  *string  `gql:"milestoneWildcardId MilestoneWildcardId"`
+	MyReactionEmoji      *string  `gql:"myReactionEmoji String"`
+	ParentIDs            []string `gql:"parentIds [WorkItemID!]"`
+	ReleaseTag           []string `gql:"releaseTag [String!]"`
+	ReleaseTagWildcardID *string  `gql:"releaseTagWildcardId ReleaseTagWildcardId"`
+	State                *string  `gql:"state IssuableState"`
+	Subscribed           *string  `gql:"subscribed SubscriptionStatus"`
+	Types                []string `gql:"types [IssueType!]"`
+	Weight               *string  `gql:"weight String"`
+	WeightWildcardID     *string  `gql:"weightWildcardId WeightWildcardId"`
 
-var workItemFieldTypes = map[string]string{
-	"state":          "IssuableState",
-	"authorUsername": "String",
+	// Time filters
+	ClosedAfter   *time.Time `gql:"closedAfter Time"`
+	ClosedBefore  *time.Time `gql:"closedBefore Time"`
+	CreatedAfter  *time.Time `gql:"createdAfter Time"`
+	CreatedBefore *time.Time `gql:"createdBefore Time"`
+	DueAfter      *time.Time `gql:"dueAfter Time"`
+	DueBefore     *time.Time `gql:"dueBefore Time"`
+	UpdatedAfter  *time.Time `gql:"updatedAfter Time"`
+	UpdatedBefore *time.Time `gql:"updatedBefore Time"`
+
+	// Sorting
+	Sort *string `gql:"sort WorkItemSort"`
+
+	// Search
+	Search *string  `gql:"search String"`
+	In     []string `gql:"in [IssuableSearchableField!]"`
+
+	// Pagination
+	After  *string `gql:"after String"`
+	Before *string `gql:"before String"`
+	First  *int64  `gql:"first Int"`
+	Last   *int64  `gql:"last Int"`
 }
 
 var listWorkItemsTemplate = template.Must(template.New("ListWorkItems").Parse(`
-query ListWorkItems($fullPath: ID!{{ range .Fields }}, ${{ .Name }}: {{ .Type }}{{ end }}) {
+query ListWorkItems($fullPath: ID!, {{ .Variables.Definitions }}) {
   namespace(fullPath: $fullPath) {
-    workItems({{ range $i, $f := .Fields }}{{ if ne $i 0 }}, {{ end }}{{ $f.Name }}: ${{ $f.Name }}{{ end }}) {
+    workItems({{ .Variables.Arguments }}) {
       nodes {
         id
         iid
@@ -293,38 +283,22 @@ query ListWorkItems($fullPath: ID!{{ range .Fields }}, ${{ .Name }}: {{ .Type }}
 
 // ListWorkItems lists workitems in a given namespace (group or project).
 func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error) {
-	type fieldGQL struct {
-		Name string
-		Type string
-	}
-
-	var (
-		queryFields    []fieldGQL
-		queryVariables = map[string]any{
-			"fullPath": fullPath,
-		}
-	)
-
-	if opt != nil {
-		if opt.State != nil {
-			queryFields = append(queryFields, fieldGQL{"state", workItemFieldTypes["state"]})
-			queryVariables["state"] = opt.State
-		}
-		if opt.AuthorUsername != nil {
-			queryFields = append(queryFields, fieldGQL{"authorUsername", workItemFieldTypes["authorUsername"]})
-			queryVariables["authorUsername"] = opt.AuthorUsername
-		}
+	vars, err := gqlVariables(opt)
+	if err != nil {
+		return nil, nil, err
 	}
 
 	var queryBuilder strings.Builder
 
-	if err := listWorkItemsTemplate.Execute(&queryBuilder, map[string]any{"Fields": queryFields}); err != nil {
+	if err := listWorkItemsTemplate.Execute(&queryBuilder, map[string]any{
+		"Variables": vars,
+	}); err != nil {
 		return nil, nil, err
 	}
 
 	query := GraphQLQuery{
 		Query:     queryBuilder.String(),
-		Variables: queryVariables,
+		Variables: vars.asMap(map[string]any{"fullPath": fullPath}),
 	}
 
 	var result struct {
@@ -357,6 +331,133 @@ func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOpti
 	}
 
 	return ret, resp, nil
+}
+
+type variableGQL struct {
+	Name  string
+	Type  string
+	Value any
+}
+
+func (v variableGQL) definition() string {
+	return fmt.Sprintf("$%s: %s", v.Name, v.Type)
+}
+
+func (v variableGQL) argument() string {
+	return fmt.Sprintf("%s: $%s", v.Name, v.Name)
+}
+
+type variablesGQL []variableGQL
+
+func (vs variablesGQL) asMap(base map[string]any) map[string]any {
+	if base == nil {
+		base = make(map[string]any)
+	}
+
+	for _, f := range vs {
+		base[f.Name] = f.Value
+	}
+
+	return base
+}
+
+// Definitions generates the GraphQL query variable declarations for use in a query definition.
+// It returns a comma-separated string of parameter declarations in the format "$name: Type".
+// For example, if fieldsGQL contains fields with names "state" and "authorUsername" with types
+// "IssuableState" and "String", it returns: "$state: IssuableState, $authorUsername: String".
+// This is typically used in the query signature section of a GraphQL query.
+func (vs variablesGQL) Definitions() string {
+	var args []string
+
+	for _, v := range vs {
+		args = append(args, v.definition())
+	}
+
+	return strings.Join(args, ", ")
+}
+
+// Arguments generates the GraphQL argument assignments for use in a query body.
+// It returns a comma-separated string of argument assignments in the format "name: $name".
+// For example, if fieldsGQL contains fields with names "state" and "authorUsername", it returns:
+// "state: $state, authorUsername: $authorUsername".
+// This is typically used when passing variables to a GraphQL field or connection.
+func (vs variablesGQL) Arguments() string {
+	var args []string
+
+	for _, v := range vs {
+		args = append(args, v.argument())
+	}
+
+	return strings.Join(args, ", ")
+}
+
+// gqlVariables extracts GraphQL variable definitions from a struct's fields.
+// It accepts a pointer to a struct where each field is annotated with a `gql:"name type"` tag.
+// The tag specifies the GraphQL variable name and type (e.g., `gql:"state IssuableState"`).
+//
+// Fields can be excluded using `gql:"-"`. Only non-zero fields are included in the result.
+//
+// Returns a variablesGQL slice containing the variable name, GraphQL type, and value for each field.
+// This can be used to generate both variable definitions (for query signatures) and variable
+// arguments (for field parameters) in GraphQL queries.
+//
+// Returns an error if:
+//   - s is not a pointer to a struct
+//   - any field is missing a `gql` tag
+//   - a `gql` tag has invalid format (must be "name type", except those tagged with "-")
+//
+// Example:
+//
+//	type Options struct {
+//	    State  *string `gql:"state IssuableState"`
+//	    Author *string `gql:"authorUsername String"`
+//	}
+//	fields, err := gqlQueryArgs(&Options{State: Ptr("opened")})
+//	// Returns: [{Name: "state", Type: "IssuableState", Value: "opened"}]
+func gqlVariables(s any) (variablesGQL, error) {
+	if s == nil {
+		return nil, nil
+	}
+
+	structValue := reflect.ValueOf(s)
+	if structValue.Kind() != reflect.Ptr || structValue.Elem().Kind() != reflect.Struct {
+		return nil, fmt.Errorf("expected a pointer to a struct, got %T", s)
+	}
+
+	structValue = structValue.Elem() // Dereference the pointer to get the struct value
+	structType := structValue.Type()
+
+	var fields variablesGQL
+
+	for i := 0; i < structType.NumField(); i++ {
+		field := structType.Field(i)
+		gqlTag := field.Tag.Get("gql")
+
+		switch gqlTag {
+		case "":
+			return nil, fmt.Errorf("field %s.%s is missing a 'gql' tag", structType.Name(), field.Name)
+		case "-":
+			continue
+		}
+
+		parts := strings.Fields(gqlTag)
+		if len(parts) != 2 {
+			return nil, fmt.Errorf("invalid 'gql' tag format for field %s.%s: got %q, want \"name type\"", structType.Name(), field.Name, gqlTag)
+		}
+
+		fieldValue := structValue.Field(i)
+		if fieldValue.IsZero() {
+			continue
+		}
+
+		fields = append(fields, variableGQL{
+			Name:  parts[0],
+			Type:  parts[1],
+			Value: fieldValue.Interface(),
+		})
+	}
+
+	return fields, nil
 }
 
 // workItemGQL represents the JSON structure returned by the GraphQL query.
