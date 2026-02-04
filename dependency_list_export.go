@@ -1,6 +1,7 @@
 package gitlab
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"net/http"
@@ -107,11 +108,11 @@ func (s *DependencyListExportService) DownloadDependencyListExport(id int64, opt
 		return nil, nil, err
 	}
 
-	preserver := &bodyPreserver{}
-	resp, err := s.client.Do(req, preserver)
+	var sbomBuffer bytes.Buffer
+	resp, err := s.client.Do(req, &sbomBuffer)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return preserver.body, resp, nil
+	return &sbomBuffer, resp, nil
 }

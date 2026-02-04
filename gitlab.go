@@ -1136,25 +1136,11 @@ func (r *Response) populateLinkValues() {
 	}
 }
 
-// bodyPreserver is a special type that signals to Client.Do that we want to
-// preserve the response body without copying it. The body field will be set
-// to the actual response body, and the caller is responsible for closing it.
-type bodyPreserver struct {
-	body io.ReadCloser
-}
-
-// Write implements io.Writer but does nothing. This prevents Client.Do from
-// copying the body content.
-func (bp *bodyPreserver) Write(_ []byte) (n int, err error) {
-	return 0, nil
-}
-
 // Do sends an API request and returns the API response. The API response is
 // JSON decoded and stored in the value pointed to by v, or returned as an
 // error if an API error has occurred. If v implements the io.Writer
 // interface, the raw response body will be written to v, without attempting to
-// first decode it. If v is a *bodyPreserver, the response body is preserved
-// without copying and the caller is responsible for closing it.
+// first decode it.
 func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 	// Wait will block until the limiter can obtain a new token.
 	err := c.limiter.Wait(req.Context())
@@ -1190,14 +1176,10 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		return nil, err
 	}
 
-	// Check if v is a bodyPreserver before setting up the defer
-	preserver, isPreserver := v.(*bodyPreserver)
-	if !isPreserver {
-		defer func() {
-			io.Copy(io.Discard, resp.Body)
-			resp.Body.Close()
-		}()
-	}
+	defer func() {
+		io.Copy(io.Discard, resp.Body)
+		resp.Body.Close()
+	}()
 
 	// If not yet configured, try to configure the rate limiter
 	// using the response headers we just received. Fail silently
@@ -1210,19 +1192,11 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 	if err != nil {
 		// Even though there was an error, we still return the response
 		// in case the caller wants to inspect it further.
-		// If using bodyPreserver, still need to close the body on error
-		if isPreserver {
-			io.Copy(io.Discard, resp.Body)
-			resp.Body.Close()
-		}
 		return response, err
 	}
 
 	if v != nil {
-		if isPreserver {
-			// Preserve the body without copying
-			preserver.body = resp.Body
-		} else if w, ok := v.(io.Writer); ok {
+		if w, ok := v.(io.Writer); ok {
 			_, err = io.Copy(w, resp.Body)
 		} else {
 			err = json.NewDecoder(resp.Body).Decode(v)
