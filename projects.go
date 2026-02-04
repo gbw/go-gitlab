@@ -23,8 +23,6 @@ import (
 	"io"
 	"net/http"
 	"time"
-
-	"github.com/hashicorp/go-retryablehttp"
 )
 
 type (
@@ -754,33 +752,16 @@ func (s *ProjectsService) CreateProject(opt *CreateProjectOptions, options ...Re
 		opt.ContainerExpirationPolicyAttributes.NameRegex = opt.ContainerExpirationPolicyAttributes.NameRegexDelete
 	}
 
-	var err error
-	var req *retryablehttp.Request
-
-	if opt.Avatar == nil {
-		req, err = s.client.NewRequest(http.MethodPost, "projects", opt, options)
-	} else {
-		req, err = s.client.UploadRequest(
-			http.MethodPost,
-			"projects",
-			opt.Avatar.Image,
-			opt.Avatar.Filename,
-			UploadAvatar,
-			opt,
-			options,
-		)
+	reqOpts := []doOption{
+		withMethod(http.MethodPost),
+		withPath("projects"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	}
-	if err != nil {
-		return nil, nil, err
+	if opt.Avatar != nil {
+		reqOpts = append(reqOpts, withUpload(opt.Avatar.Image, opt.Avatar.Filename, UploadAvatar))
 	}
-
-	p := new(Project)
-	resp, err := s.client.Do(req, p)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return p, resp, nil
+	return do[*Project](s.client, reqOpts...)
 }
 
 // CreateProjectForUserOptions represents the available CreateProjectForUser()
@@ -802,34 +783,16 @@ func (s *ProjectsService) CreateProjectForUser(user int64, opt *CreateProjectFor
 		opt.ContainerExpirationPolicyAttributes.NameRegex = opt.ContainerExpirationPolicyAttributes.NameRegexDelete
 	}
 
-	var err error
-	var req *retryablehttp.Request
-	u := fmt.Sprintf("projects/user/%d", user)
-
-	if opt.Avatar == nil {
-		req, err = s.client.NewRequest(http.MethodPost, u, opt, options)
-	} else {
-		req, err = s.client.UploadRequest(
-			http.MethodPost,
-			u,
-			opt.Avatar.Image,
-			opt.Avatar.Filename,
-			UploadAvatar,
-			opt,
-			options,
-		)
+	reqOpts := []doOption{
+		withMethod(http.MethodPost),
+		withPath("projects/user/%d", user),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	}
-	if err != nil {
-		return nil, nil, err
+	if opt.Avatar != nil {
+		reqOpts = append(reqOpts, withUpload(opt.Avatar.Image, opt.Avatar.Filename, UploadAvatar))
 	}
-
-	p := new(Project)
-	resp, err := s.client.Do(req, p)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return p, resp, nil
+	return do[*Project](s.client, reqOpts...)
 }
 
 // EditProjectOptions represents the available EditProject() options.
@@ -960,38 +923,16 @@ func (s *ProjectsService) EditProject(pid any, opt *EditProjectOptions, options 
 		opt.ContainerExpirationPolicyAttributes.NameRegex = opt.ContainerExpirationPolicyAttributes.NameRegexDelete
 	}
 
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
+	reqOpts := []doOption{
+		withMethod(http.MethodPut),
+		withPath("projects/%s", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	}
-	u := fmt.Sprintf("projects/%s", PathEscape(project))
-
-	var req *retryablehttp.Request
-
-	if opt.Avatar == nil || (opt.Avatar.Filename == "" && opt.Avatar.Image == nil) {
-		req, err = s.client.NewRequest(http.MethodPut, u, opt, options)
-	} else {
-		req, err = s.client.UploadRequest(
-			http.MethodPut,
-			u,
-			opt.Avatar.Image,
-			opt.Avatar.Filename,
-			UploadAvatar,
-			opt,
-			options,
-		)
+	if opt.Avatar != nil && (opt.Avatar.Filename != "" || opt.Avatar.Image != nil) {
+		reqOpts = append(reqOpts, withUpload(opt.Avatar.Image, opt.Avatar.Filename, UploadAvatar))
 	}
-	if err != nil {
-		return nil, nil, err
-	}
-
-	p := new(Project)
-	resp, err := s.client.Do(req, p)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return p, resp, nil
+	return do[*Project](s.client, reqOpts...)
 }
 
 // ForkProjectOptions represents the available ForkProject() options.
@@ -1495,32 +1436,12 @@ func (s *ProjectsService) DeleteProjectForkRelation(pid any, options ...RequestO
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#upload-a-project-avatar
 func (s *ProjectsService) UploadAvatar(pid any, avatar io.Reader, filename string, options ...RequestOptionFunc) (*Project, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s", PathEscape(project))
-
-	req, err := s.client.UploadRequest(
-		http.MethodPut,
-		u,
-		avatar,
-		filename,
-		UploadAvatar,
-		nil,
-		options,
+	return do[*Project](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s", ProjectID{pid}),
+		withUpload(avatar, filename, UploadAvatar),
+		withRequestOpts(options...),
 	)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	p := new(Project)
-	resp, err := s.client.Do(req, p)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return p, resp, nil
 }
 
 // DownloadAvatar downloads an avatar.

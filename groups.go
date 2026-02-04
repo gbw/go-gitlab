@@ -26,8 +26,6 @@ import (
 	"net/url"
 	"strconv"
 	"time"
-
-	retryablehttp "github.com/hashicorp/go-retryablehttp"
 )
 
 type (
@@ -479,38 +477,19 @@ func (d *DefaultBranchProtectionDefaultsOptions) EncodeValues(key string, v *url
 //
 // GitLab API docs: https://docs.gitlab.com/api/groups/#create-a-group
 func (s *GroupsService) CreateGroup(opt *CreateGroupOptions, options ...RequestOptionFunc) (*Group, *Response, error) {
-	var err error
-	var req *retryablehttp.Request
-
-	if opt.Avatar == nil {
-		req, err = s.client.NewRequest(http.MethodPost, "groups", opt, options)
-	} else {
-		// since the Avatar is provided, check allowed_to_push and
-		// allowed_to_merge access levels and error if multiples are provided
+	reqOpts := []doOption{
+		withMethod(http.MethodPost),
+		withPath("groups"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	}
+	if opt.Avatar != nil {
 		if opt.DefaultBranchProtectionDefaults != nil && (len(*opt.DefaultBranchProtectionDefaults.AllowedToMerge) > 1 || len(*opt.DefaultBranchProtectionDefaults.AllowedToPush) > 1) {
 			return nil, nil, errors.New("multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior")
 		}
-		req, err = s.client.UploadRequest(
-			http.MethodPost,
-			"groups",
-			opt.Avatar.Image,
-			opt.Avatar.Filename,
-			UploadAvatar,
-			opt,
-			options,
-		)
+		reqOpts = append(reqOpts, withUpload(opt.Avatar.Image, opt.Avatar.Filename, UploadAvatar))
 	}
-	if err != nil {
-		return nil, nil, err
-	}
-
-	g := new(Group)
-	resp, err := s.client.Do(req, g)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return g, resp, nil
+	return do[*Group](s.client, reqOpts...)
 }
 
 // TransferGroup transfers a project to the Group namespace. Available only
@@ -603,43 +582,19 @@ type UpdateGroupOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/groups/#update-group-attributes
 func (s *GroupsService) UpdateGroup(gid any, opt *UpdateGroupOptions, options ...RequestOptionFunc) (*Group, *Response, error) {
-	group, err := parseID(gid)
-	if err != nil {
-		return nil, nil, err
+	reqOpts := []doOption{
+		withMethod(http.MethodPut),
+		withPath("groups/%s", GroupID{gid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	}
-	u := fmt.Sprintf("groups/%s", PathEscape(group))
-
-	var req *retryablehttp.Request
-
-	if opt.Avatar == nil || (opt.Avatar.Filename == "" && opt.Avatar.Image == nil) {
-		req, err = s.client.NewRequest(http.MethodPut, u, opt, options)
-	} else {
-		// since the Avatar is provided, check allowed_to_push and
-		// allowed_to_merge access levels and error if multiples are provided
+	if opt.Avatar != nil && (opt.Avatar.Filename != "" || opt.Avatar.Image != nil) {
 		if opt.DefaultBranchProtectionDefaults != nil && (len(*opt.DefaultBranchProtectionDefaults.AllowedToMerge) > 1 || len(*opt.DefaultBranchProtectionDefaults.AllowedToPush) > 1) {
 			return nil, nil, errors.New("multiple access levels for allowed_to_merge or allowed_to_push are not permitted when an Avatar is also specified as it will result in unexpected behavior")
 		}
-		req, err = s.client.UploadRequest(
-			http.MethodPut,
-			u,
-			opt.Avatar.Image,
-			opt.Avatar.Filename,
-			UploadAvatar,
-			opt,
-			options,
-		)
+		reqOpts = append(reqOpts, withUpload(opt.Avatar.Image, opt.Avatar.Filename, UploadAvatar))
 	}
-	if err != nil {
-		return nil, nil, err
-	}
-
-	g := new(Group)
-	resp, err := s.client.Do(req, g)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return g, resp, nil
+	return do[*Group](s.client, reqOpts...)
 }
 
 // UploadAvatar uploads a group avatar.
@@ -647,32 +602,12 @@ func (s *GroupsService) UpdateGroup(gid any, opt *UpdateGroupOptions, options ..
 // GitLab API docs:
 // https://docs.gitlab.com/api/groups/#upload-a-group-avatar
 func (s *GroupsService) UploadAvatar(gid any, avatar io.Reader, filename string, options ...RequestOptionFunc) (*Group, *Response, error) {
-	group, err := parseID(gid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("groups/%s", PathEscape(group))
-
-	req, err := s.client.UploadRequest(
-		http.MethodPut,
-		u,
-		avatar,
-		filename,
-		UploadAvatar,
-		nil,
-		options,
+	return do[*Group](s.client,
+		withMethod(http.MethodPut),
+		withPath("groups/%s", GroupID{gid}),
+		withUpload(avatar, filename, UploadAvatar),
+		withRequestOpts(options...),
 	)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	g := new(Group)
-	resp, err := s.client.Do(req, g)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return g, resp, nil
 }
 
 // DeleteGroupOptions represents the available DeleteGroup() options.
