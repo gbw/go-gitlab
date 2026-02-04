@@ -143,52 +143,13 @@ func TestGetWorkItemByID(t *testing.T) {
 
 	tests := []struct {
 		name     string
-		gid      any
+		gid      int64
 		response io.WriterTo
 		want     *WorkItem
 		wantErr  error // Must be a concrete error type!
 	}{
 		{
-			name:     "successful response with work item using string GID",
-			gid:      "gid://gitlab/WorkItem/179785913",
-			response: bytes.NewReader(getWorkItemByIDResponse),
-			want: &WorkItem{
-				ID:          179785913,
-				IID:         756,
-				Type:        "Task",
-				State:       "OPEN",
-				Status:      "New",
-				Title:       "Update Helm charts to use Argo Rollouts for progressive deployments",
-				Description: "## Overview\n\nUpdate Runway Helm charts to generate Argo Rollout resources ...",
-				CreatedAt:   Ptr(time.Date(2026, time.January, 6, 15, 9, 24, 0, time.UTC)),
-				UpdatedAt:   Ptr(time.Date(2026, time.January, 9, 13, 6, 8, 0, time.UTC)),
-				WebURL:      "https://gitlab.com/gitlab-com/gl-infra/platform/runway/team/-/work_items/756",
-				Author: &BasicUser{
-					ID:        5532616,
-					Username:  "swainaina",
-					Name:      "Silvester Wainaina",
-					State:     "active",
-					Locked:    false,
-					CreatedAt: Ptr(time.Date(2020, time.March, 2, 6, 29, 14, 0, time.UTC)),
-					AvatarURL: "/uploads/-/system/user/avatar/5532616/avatar.png",
-					WebURL:    "https://gitlab.com/swainaina",
-				},
-				Assignees: []*BasicUser{
-					{
-						ID:        5532616,
-						Username:  "swainaina",
-						Name:      "Silvester Wainaina",
-						State:     "active",
-						Locked:    false,
-						CreatedAt: Ptr(time.Date(2020, time.March, 2, 6, 29, 14, 0, time.UTC)),
-						AvatarURL: "/uploads/-/system/user/avatar/5532616/avatar.png",
-						WebURL:    "https://gitlab.com/swainaina",
-					},
-				},
-			},
-		},
-		{
-			name:     "successful response with work item using int64 GID",
+			name:     "successful response",
 			gid:      int64(179785913),
 			response: bytes.NewReader(getWorkItemByIDResponse),
 			want: &WorkItem{
@@ -227,8 +188,8 @@ func TestGetWorkItemByID(t *testing.T) {
 			},
 		},
 		{
-			name: "successful response with zero work item returns not found error",
-			gid:  "gid://gitlab/WorkItem/999",
+			name: "using a work item ID that doesn't exist returns an error",
+			gid:  9999,
 			response: strings.NewReader(`
 {
   "errors": [

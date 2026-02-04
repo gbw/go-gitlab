@@ -11,7 +11,7 @@ import (
 
 type (
 	WorkItemsServiceInterface interface {
-		GetWorkItemByID(gid any, options ...RequestOptionFunc) (*WorkItem, *Response, error)
+		GetWorkItemByID(gid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error)
 	}
@@ -102,27 +102,18 @@ features {
 // gid is either a string in the form of "gid://gitlab/WorkItem/<ID>", or an integer.
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#queryworkitem
-func (s *WorkItemsService) GetWorkItemByID(gid any, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
+func (s *WorkItemsService) GetWorkItemByID(gid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
 	q := GraphQLQuery{
 		Query: fmt.Sprintf(`
-query ($id: WorkItemID!) {
-	workItem(id: $id) {
-		%s
-	}
-}
+			query ($id: WorkItemID!) {
+				workItem(id: $id) {
+					%s
+				}
+			}
 		`, workItemQuery),
-		Variables: map[string]any{},
-	}
-
-	switch v := gid.(type) {
-	case string:
-		q.Variables["id"] = v
-
-	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
-		q.Variables["id"] = fmt.Sprintf("gid://gitlab/WorkItem/%d", v)
-
-	default:
-		return nil, nil, fmt.Errorf("invalid GID type: %T", gid)
+		Variables: map[string]any{
+			"id": fmt.Sprintf("gid://gitlab/WorkItem/%d", gid),
+		},
 	}
 
 	var result struct {
