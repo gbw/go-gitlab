@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -63,6 +64,8 @@ func TestUsageDataService_GetMetricDefinitionsAsYAML(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/usage_data/metric_definitions", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		assert.Contains(t, r.Header, "Accept")
+		assert.Equal(t, []string{"text/yaml"}, r.Header["Accept"])
 		w.Header().Set("Content-Type", "text/yaml")
 		fmt.Fprint(w, expectedYAML)
 	})

@@ -18,7 +18,6 @@ package gitlab
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -217,28 +216,15 @@ type GetRawFileOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/repository_files/#get-raw-file-from-repository
 func (s *RepositoryFilesService) GetRawFile(pid any, fileName string, opt *GetRawFileOptions, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf(
-		"projects/%s/repository/files/%s/raw",
-		PathEscape(project),
-		PathEscape(fileName),
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/repository/files/%s/raw", ProjectID{pid}, fileName),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var f bytes.Buffer
-	resp, err := s.client.Do(req, &f)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return f.Bytes(), resp, err
+	return buf.Bytes(), resp, nil
 }
 
 // GetRawFileMetaData gets the metadata of a raw file from a repository.

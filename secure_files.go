@@ -15,7 +15,6 @@ package gitlab
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -158,24 +157,14 @@ func (s SecureFilesService) CreateSecureFile(pid any, content io.Reader, opt *Cr
 // GitLab API docs:
 // https://docs.gitlab.com/api/secure_files/#download-secure-file
 func (s SecureFilesService) DownloadSecureFile(pid any, id int64, options ...RequestOptionFunc) (io.Reader, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/secure_files/%d/download", PathEscape(project), id)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var file bytes.Buffer
-	resp, err := s.client.Do(req, &file)
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/secure_files/%d/download", ProjectID{pid}, id),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return &file, resp, err
+	return &buf, resp, nil
 }
 
 // RemoveSecureFile removes a project's secure file.

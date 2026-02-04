@@ -18,7 +18,6 @@ package gitlab
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -145,24 +144,14 @@ func (s *ProjectImportExportService) ExportStatus(pid any, options ...RequestOpt
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_import_export/#export-download
 func (s *ProjectImportExportService) ExportDownload(pid any, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/export/download", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var b bytes.Buffer
-	resp, err := s.client.Do(req, &b)
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/export/download", ProjectID{pid}),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return b.Bytes(), resp, err
+	return buf.Bytes(), resp, nil
 }
 
 // ImportFileOptions represents the available ImportFile() options.

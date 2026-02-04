@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 )
 
 type (
@@ -93,24 +92,14 @@ func (s *RepositoriesService) ListTree(pid any, opt *ListTreeOptions, options ..
 // GitLab API docs:
 // https://docs.gitlab.com/api/repositories/#get-a-blob-from-repository
 func (s *RepositoriesService) Blob(pid any, sha string, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/repository/blobs/%s", PathEscape(project), url.PathEscape(sha))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var b bytes.Buffer
-	resp, err := s.client.Do(req, &b)
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/repository/blobs/%s", ProjectID{pid}, sha),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return b.Bytes(), resp, err
+	return buf.Bytes(), resp, nil
 }
 
 // RawBlobContent gets the raw file contents for a blob by blob SHA.
@@ -118,24 +107,14 @@ func (s *RepositoriesService) Blob(pid any, sha string, options ...RequestOption
 // GitLab API docs:
 // https://docs.gitlab.com/api/repositories/#raw-blob-content
 func (s *RepositoriesService) RawBlobContent(pid any, sha string, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/repository/blobs/%s/raw", PathEscape(project), url.PathEscape(sha))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var b bytes.Buffer
-	resp, err := s.client.Do(req, &b)
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/repository/blobs/%s/raw", ProjectID{pid}, sha),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return b.Bytes(), resp, err
+	return buf.Bytes(), resp, nil
 }
 
 // ArchiveOptions represents the available Archive() options.
@@ -153,29 +132,20 @@ type ArchiveOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/repositories/#get-file-archive
 func (s *RepositoriesService) Archive(pid any, opt *ArchiveOptions, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/repository/archive", PathEscape(project))
-
-	// Set an optional format for the archive.
+	suffix := ""
 	if opt != nil && opt.Format != nil {
-		u = fmt.Sprintf("%s.%s", u, *opt.Format)
+		suffix = "." + *opt.Format
 	}
 
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var b bytes.Buffer
-	resp, err := s.client.Do(req, &b)
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/repository/archive%s", ProjectID{pid}, NoEscape{suffix}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return b.Bytes(), resp, err
+	return buf.Bytes(), resp, nil
 }
 
 // StreamArchive streams an archive of the repository to the provided
