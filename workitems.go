@@ -53,52 +53,39 @@ func (wi WorkItem) GID() string {
 	}.String()
 }
 
-var (
-	// userCoreBasicTemplate defines the common fields for a user in GraphQL queries.
-	userCoreBasicTemplate = template.Must(template.New("UserCoreBasic").Parse(`
-		id
-		username
-		name
-		state
-		createdAt
-		avatarUrl
-		webUrl
-	`))
-
-	// workItemTemplate defines the common fields for a work item in GraphQL queries.
-	// It's chained from userCoreBasicTemplate so nested templates work.
-	workItemTemplate = template.Must(template.Must(userCoreBasicTemplate.Clone()).New("WorkItem").Parse(`
-		id
-		iid
-		workItemType {
-		  name
-		}
-		state
-		title
-		description
-		author {
-		  {{ template "UserCoreBasic" }}
-		}
-		createdAt
-		updatedAt
-		closedAt
-		webUrl
-		features {
-		  assignees {
-		    assignees {
-		      nodes {
-		        {{ template "UserCoreBasic" }}
-		      }
-		    }
-		  }
-		  status {
-		    status {
-		      name
-		    }
-		  }
-		}
-	`))
-)
+// workItemTemplate defines the common fields for a work item in GraphQL queries.
+// It's chained from userCoreBasicTemplate so nested templates work.
+var workItemTemplate = template.Must(template.Must(userCoreBasicTemplate.Clone()).New("WorkItem").Parse(`
+	id
+	iid
+	workItemType {
+	  name
+	}
+	state
+	title
+	description
+	author {
+	  {{ template "UserCoreBasic" }}
+	}
+	createdAt
+	updatedAt
+	closedAt
+	webUrl
+	features {
+	  assignees {
+	    assignees {
+	      nodes {
+	        {{ template "UserCoreBasic" }}
+	      }
+	    }
+	  }
+	  status {
+	    status {
+	      name
+	    }
+	  }
+	}
+`))
 
 // getWorkItemByIDTemplate is chained from workItemTemplate so it has access to both
 // UserCoreBasic and WorkItem templates.
@@ -351,7 +338,7 @@ type workItemGQL struct {
 	CreatedAt   *time.Time          `json:"createdAt"`
 	UpdatedAt   *time.Time          `json:"updatedAt"`
 	ClosedAt    *time.Time          `json:"closedAt"`
-	Author      userCoreGQL         `json:"author"`
+	Author      userCoreBasicGQL    `json:"author"`
 	Features    workItemFeaturesGQL `json:"features"`
 	WebURL      string              `json:"webUrl"`
 }
@@ -383,39 +370,12 @@ func (w workItemGQL) unwrap() *WorkItem {
 type workItemFeaturesGQL struct {
 	Assignees struct {
 		Assignees struct {
-			Nodes []userCoreGQL `json:"nodes"`
+			Nodes []userCoreBasicGQL `json:"nodes"`
 		} `json:"assignees"`
 	} `json:"assignees"`
 	Status struct {
 		Status struct {
 			Name string
 		}
-	}
-}
-
-type userCoreGQL struct {
-	ID        gidGQL     `json:"id"`
-	Username  string     `json:"username"`
-	Name      string     `json:"name"`
-	State     string     `json:"state"`
-	CreatedAt *time.Time `json:"createdAt"`
-	AvatarURL string     `json:"avatarUrl"`
-	WebURL    string     `json:"webUrl"`
-}
-
-func (u userCoreGQL) unwrap() *BasicUser {
-	if u.Username == "" {
-		return nil
-	}
-
-	return &BasicUser{
-		ID:        u.ID.Int64,
-		Username:  u.Username,
-		Name:      u.Name,
-		State:     u.State,
-		Locked:    u.State != "active",
-		CreatedAt: u.CreatedAt,
-		AvatarURL: u.AvatarURL,
-		WebURL:    u.WebURL,
 	}
 }
