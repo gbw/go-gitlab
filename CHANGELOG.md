@@ -1,3 +1,21 @@
+## 1.27.0
+
+### 🚀 Features
+
+- Trim leading `@` in user ids in `do()` requests paths ([!2736](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2736)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+### 🔄 Other Changes
+
+- Migrate endpoints with special status code handling to new `do` pattern ([!2733](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2733)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- Support file uploads in `do()` request handler ([!2732](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2732)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- Migrate more endpoints to the `do()` pattern ([!2731](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2731)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- Revert "refactor(http): preserve response body without copying in multiple services" ([!2730](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2730)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- chore(deps): update docker docker tag to v29.2.1 ([!2729](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2729)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.27.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.26.0...v1.27.0) (2026-02-04)
+
 ## 1.26.0
 
 ### 🚀 Features
