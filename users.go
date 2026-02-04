@@ -23,7 +23,6 @@ import (
 	"io"
 	"net"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -86,6 +85,9 @@ type (
 		// GitLab API docs: https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys
 		ListSSHKeys(opt *ListSSHKeysOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error)
 		// ListSSHKeysForUser gets a list of a specified user's SSH keys.
+		//
+		// uid can be either a user ID (int) or a username (string). If a username
+		// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys-for-a-user
@@ -606,26 +608,18 @@ func (s *UsersService) CurrentUserStatus(options ...RequestOptionFunc) (*UserSta
 	)
 }
 
+// GetUserStatus retrieves a user's status.
+//
+// uid can be either a user ID (int) or a username (string). If a username
+// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/users/#get-the-status-of-a-user
 func (s *UsersService) GetUserStatus(uid any, options ...RequestOptionFunc) (*UserStatus, *Response, error) {
-	user, err := parseID(uid)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	u := fmt.Sprintf("users/%s/status", strings.TrimPrefix(user, "@"))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	status := new(UserStatus)
-	resp, err := s.client.Do(req, status)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return status, resp, nil
+	return do[*UserStatus](s.client,
+		withPath("users/%s/status", UserID{uid}),
+		withRequestOpts(options...),
+	)
 }
 
 // UserStatusOptions represents the options required to set the status
@@ -705,6 +699,13 @@ type ListSSHKeysForUserOptions struct {
 	ListOptions
 }
 
+// ListSSHKeysForUser gets a list of a specified user's SSH keys.
+//
+// uid can be either a user ID (int) or a username (string). If a username
+// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/user_keys/#list-all-ssh-keys-for-a-user
 func (s *UsersService) ListSSHKeysForUser(uid any, opt *ListSSHKeysForUserOptions, options ...RequestOptionFunc) ([]*SSHKey, *Response, error) {
 	return do[[]*SSHKey](s.client,
 		withPath("users/%s/keys", UserID{uid}),

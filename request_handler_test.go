@@ -361,22 +361,74 @@ func TestDoRequestRunnerID(t *testing.T) {
 
 func TestDoRequestUserID(t *testing.T) {
 	t.Parallel()
-	mux, client := setup(t)
 
-	// GIVEN
-	mux.HandleFunc("/api/v4/users/test%2Fuser", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
-	})
+	tests := []struct {
+		name         string
+		uid          any
+		expectedPath string
+	}{
+		{
+			name:         "numeric user ID",
+			uid:          123,
+			expectedPath: "/api/v4/users/123/status",
+		},
+		{
+			name:         "username string",
+			uid:          "johndoe",
+			expectedPath: "/api/v4/users/johndoe/status",
+		},
+		{
+			name:         "username with @ prefix is trimmed",
+			uid:          "@johndoe",
+			expectedPath: "/api/v4/users/johndoe/status",
+		},
+		{
+			name:         "username with slash is escaped",
+			uid:          "test/user",
+			expectedPath: "/api/v4/users/test%2Fuser/status",
+		},
+		{
+			name:         "username with @ prefix and slash",
+			uid:          "@test/user",
+			expectedPath: "/api/v4/users/test%2Fuser/status",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			mux, client := setup(t)
+
+			// GIVEN
+			mux.HandleFunc(tt.expectedPath, func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(200)
+			})
+
+			// WHEN
+			_, resp, err := do[none](
+				client,
+				withPath("users/%s/status", UserID{tt.uid}),
+			)
+
+			// THEN
+			assert.NoError(t, err)
+			assert.Equal(t, 200, resp.StatusCode)
+		})
+	}
+}
+
+func TestDoRequestUserIDInvalidType(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
 
 	// WHEN
-	_, resp, err := do[none](
+	_, _, err := do[none](
 		client,
-		withPath("users/%s", UserID{"test/user"}),
+		withPath("users/%s/status", UserID{struct{ ID int }{ID: 1}}),
 	)
 
 	// THEN
-	assert.NoError(t, err)
-	assert.Equal(t, 200, resp.StatusCode)
+	assert.ErrorIs(t, err, ErrInvalidIDType)
 }
 
 func TestDoRequestUploadSuccess(t *testing.T) {

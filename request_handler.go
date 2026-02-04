@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/go-retryablehttp"
 )
@@ -52,6 +53,9 @@ func (i RunnerID) forPath() (string, error) {
 	return PathEscape(id), nil
 }
 
+// UserID represents a user identifier for API paths. It accepts either a
+// numeric user ID or a username string. If a username is provided with a
+// leading "@" character (e.g., "@johndoe"), the "@" will be trimmed.
 type UserID struct {
 	Value any
 }
@@ -62,7 +66,7 @@ func (i UserID) forPath() (string, error) {
 		return "", err
 	}
 
-	return PathEscape(id), nil
+	return PathEscape(strings.TrimPrefix(id, "@")), nil
 }
 
 type LabelID struct {
