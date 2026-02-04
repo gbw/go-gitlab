@@ -1,6 +1,7 @@
 package gitlab
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -76,21 +77,12 @@ func TestDownloadDependencyListExport(t *testing.T) {
 
 	sbomReader, _, err := client.DependencyListExport.DownloadDependencyListExport(5678)
 	require.NoError(t, err)
-	require.NotNil(t, sbomReader)
 
 	expectedSbom, err := os.ReadFile("testdata/download_dependency_list_export.json")
 	require.NoError(t, err)
 
-	// GIVEN: A reader is returned
-	// WHEN: We read the content
-	gotContent, err := io.ReadAll(sbomReader)
-	require.NoError(t, err)
+	var want bytes.Buffer
+	want.Write(expectedSbom)
 
-	// THEN: The content should match the expected SBOM
-	require.Equal(t, expectedSbom, gotContent)
-
-	// Clean up: Close the reader if it's a ReadCloser
-	if rc, ok := sbomReader.(io.Closer); ok {
-		rc.Close()
-	}
+	require.Equal(t, &want, sbomReader)
 }
