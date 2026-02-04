@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
+	"text/template"
 	"time"
 )
 
@@ -13,6 +15,7 @@ type (
 	WorkItemsServiceInterface interface {
 		GetWorkItemByID(gid any, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
+		ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error)
 	}
 
 	// WorkItemsService handles communication with the work item related methods
@@ -205,6 +208,155 @@ query ($fullPath: ID!, $iid: String) {
 	wiQL := result.Data.Namespace.WorkItems.Nodes[0]
 
 	return wiQL.unwrap(), resp, nil
+}
+
+/*
+workItems(
+
+	search: String
+	in: [IssuableSearchableField!]
+	ids: [WorkItemID!]
+	authorUsername: String
+	confidential: Boolean
+	assigneeUsernames: [String!]
+	assigneeWildcardId: AssigneeWildcardId
+	labelName: [String!]
+	milestoneTitle: [String!]
+	milestoneWildcardId: MilestoneWildcardId
+	myReactionEmoji: String
+	iids: [String!]
+	state: IssuableState
+	types: [IssueType!]
+	createdBefore: Time
+	createdAfter: Time
+	updatedBefore: Time
+	updatedAfter: Time
+	dueBefore: Time
+	dueAfter: Time
+	closedBefore: Time
+	closedAfter: Time
+	subscribed: SubscriptionStatus
+	not: NegatedWorkItemFilterInput
+	or: UnionedWorkItemFilterInput
+	parentIds: [WorkItemID!]
+	releaseTag: [String!]
+	releaseTagWildcardId: ReleaseTagWildcardId
+	crmContactId: String
+	crmOrganizationId: String
+	iid: String
+	sort: WorkItemSort = CREATED_DESC
+	verificationStatusWidget: VerificationStatusFilterInput
+	healthStatusFilter: HealthStatusFilter
+	weight: String
+	weightWildcardId: WeightWildcardId
+	iterationId: [ID]
+	iterationWildcardId: IterationWildcardId
+	iterationCadenceId: [IterationsCadenceID!]
+	includeAncestors: Boolean = false
+	includeDescendants: Boolean = false
+	timeframe: Timeframe
+	after: String
+	before: String
+	first: Int
+	last: Int
+
+): WorkItemConnection
+*/
+
+// ListWorkItemsOptions represents the available ListWorkItems() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/ee/api/graphql/reference/#queryworkitems
+type ListWorkItemsOptions struct {
+	State          *string
+	AuthorUsername *string
+}
+
+var workItemFieldTypes = map[string]string{
+	"state":          "IssuableState",
+	"authorUsername": "String",
+}
+
+var listWorkItemsTemplate = template.Must(template.New("ListWorkItems").Parse(`
+query ListWorkItems($fullPath: ID!{{ range .Fields }}, ${{ .Name }}: {{ .Type }}{{ end }}) {
+  namespace(fullPath: $fullPath) {
+    workItems({{ range $i, $f := .Fields }}{{ if ne $i 0 }}, {{ end }}{{ $f.Name }}: ${{ $f.Name }}{{ end }}) {
+      nodes {
+        id
+        iid
+        title
+      }
+    }
+  }
+}
+`))
+
+// ListWorkItems lists workitems in a given namespace (group or project).
+func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error) {
+	type fieldGQL struct {
+		Name string
+		Type string
+	}
+
+	var (
+		queryFields    []fieldGQL
+		queryVariables = map[string]any{
+			"fullPath": fullPath,
+		}
+	)
+
+	if opt != nil {
+		if opt.State != nil {
+			queryFields = append(queryFields, fieldGQL{"state", workItemFieldTypes["state"]})
+			queryVariables["state"] = opt.State
+		}
+		if opt.AuthorUsername != nil {
+			queryFields = append(queryFields, fieldGQL{"authorUsername", workItemFieldTypes["authorUsername"]})
+			queryVariables["authorUsername"] = opt.AuthorUsername
+		}
+	}
+
+	var queryBuilder strings.Builder
+
+	if err := listWorkItemsTemplate.Execute(&queryBuilder, map[string]any{"Fields": queryFields}); err != nil {
+		return nil, nil, err
+	}
+
+	query := GraphQLQuery{
+		Query:     queryBuilder.String(),
+		Variables: queryVariables,
+	}
+
+	var result struct {
+		Data struct {
+			Namespace struct {
+				WorkItems struct {
+					Nodes []workItemGQL `json:"nodes"`
+				} `json:"workItems"`
+			} `json:"namespace"`
+		}
+		GenericGraphQLErrors
+	}
+
+	resp, err := s.client.GraphQL.Do(query, &result, options...)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	if len(result.Errors) != 0 {
+		return nil, resp, &GraphQLResponseError{
+			Err:    errors.New("GraphQL query failed"),
+			Errors: result.GenericGraphQLErrors,
+		}
+	}
+
+	var ret []*WorkItem
+
+	for _, wi := range result.Data.Namespace.WorkItems.Nodes {
+		ret = append(ret, wi.unwrap())
+	}
+
+	return ret, resp, nil
 }
 
 // workItemGQL represents the JSON structure returned by the GraphQL query.

@@ -3,6 +3,8 @@ package gitlab
 import (
 	"bytes"
 	_ "embed"
+	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"strings"
@@ -269,6 +271,170 @@ func TestGetWorkItemByID(t *testing.T) {
 
 			if tt.wantErr != nil {
 				require.ErrorAs(t, err, &tt.wantErr) //nolint:testifylint
+				assert.Nil(t, got)
+
+				return
+			}
+
+			require.NoError(t, err)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestListWorkItems(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name            string
+		fullPath        string
+		opt             *ListWorkItemsOptions
+		response        io.WriterTo
+		wantQuerySubstr []string
+		want            []*WorkItem
+		wantErr         error
+	}{
+		{
+			name:     "successful query with authorUsername",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &ListWorkItemsOptions{
+				AuthorUsername: Ptr("fforster"),
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "namespace": {
+				      "workItems": {
+				        "nodes": [
+				          {
+				            "id": "gid://gitlab/WorkItem/181297786",
+				            "iid": "39",
+				            "title": "Phase 6: Rollout to Additional Services"
+				          },
+				          {
+				            "id": "gid://gitlab/WorkItem/181297779",
+				            "iid": "38",
+				            "title": "Phase 5: Dedicated Integration"
+				          }
+				        ]
+				      }
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			wantQuerySubstr: []string{
+				`query ListWorkItems($fullPath: ID!, $authorUsername: String)`,
+				`workItems(authorUsername: $authorUsername) {`,
+			},
+			want: []*WorkItem{
+				{
+					ID:    181297786,
+					IID:   39,
+					Title: "Phase 6: Rollout to Additional Services",
+				},
+				{
+					ID:    181297779,
+					IID:   38,
+					Title: "Phase 5: Dedicated Integration",
+				},
+			},
+		},
+		{
+			name:     "successful response with work item",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &ListWorkItemsOptions{
+				State:          Ptr("opened"),
+				AuthorUsername: Ptr("fforster"),
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "namespace": {
+				      "workItems": {
+				        "nodes": [
+				          {
+				            "id": "gid://gitlab/WorkItem/181297786",
+				            "iid": "39",
+				            "title": "Phase 6: Rollout to Additional Services"
+				          }
+				        ]
+				      }
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			wantQuerySubstr: []string{
+				`query ListWorkItems($fullPath: ID!, $state: IssuableState, $authorUsername: String)`,
+				`workItems(state: $state, authorUsername: $authorUsername) {`,
+			},
+			want: []*WorkItem{
+				{
+					ID:    181297786,
+					IID:   39,
+					Title: "Phase 6: Rollout to Additional Services",
+				},
+			},
+		},
+		{
+			name:     "empty response is not an error",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &ListWorkItemsOptions{
+				State:          Ptr("opened"),
+				AuthorUsername: Ptr("fforster"),
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "namespace": {
+				      "workItems": {
+				        "nodes": []
+				      }
+				    }
+				  }
+				}
+			`),
+			wantQuerySubstr: []string{
+				`query ListWorkItems($fullPath: ID!, $state: IssuableState, $authorUsername: String)`,
+				`workItems(state: $state, authorUsername: $authorUsername) {`,
+			},
+			want: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
+				defer r.Body.Close()
+
+				testMethod(t, r, http.MethodPost)
+
+				var q GraphQLQuery
+
+				if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				for _, ss := range tt.wantQuerySubstr {
+					if !strings.Contains(q.Query, ss) {
+						http.Error(w, fmt.Sprintf("want substring %q, got query %q", ss, q.Query), http.StatusBadRequest)
+						return
+					}
+				}
+
+				w.Header().Set("Content-Type", "application/json")
+				tt.response.WriteTo(w)
+			})
+
+			got, _, err := client.WorkItems.ListWorkItems(tt.fullPath, tt.opt)
+
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
 				assert.Nil(t, got)
 
 				return
