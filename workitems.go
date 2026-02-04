@@ -2,7 +2,6 @@ package gitlab
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 	"text/template"
@@ -11,7 +10,6 @@ import (
 
 type (
 	WorkItemsServiceInterface interface {
-		GetWorkItemByID(gid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error)
 	}
@@ -86,60 +84,6 @@ var workItemTemplate = template.Must(template.Must(userCoreBasicTemplate.Clone()
 	  }
 	}
 `))
-
-// getWorkItemByIDTemplate is chained from workItemTemplate so it has access to both
-// UserCoreBasic and WorkItem templates.
-var getWorkItemByIDTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("GetWorkItemByID").Parse(`
-	query GetWorkItemByID($id: WorkItemID!) {
-	  workItem(id: $id) {
-	    {{ template "WorkItem" }}
-	  }
-	}
-`))
-
-// GetWorkItemByID gets a single work item identified by its global ID.
-//
-// gid is either a string in the form of "gid://gitlab/WorkItem/<ID>", or an integer.
-//
-// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#queryworkitem
-func (s *WorkItemsService) GetWorkItemByID(gid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
-	var queryBuilder strings.Builder
-	if err := getWorkItemByIDTemplate.Execute(&queryBuilder, nil); err != nil {
-		return nil, nil, err
-	}
-
-	q := GraphQLQuery{
-		Query: queryBuilder.String(),
-		Variables: map[string]any{
-			"id": fmt.Sprintf("gid://gitlab/WorkItem/%d", gid),
-		},
-	}
-
-	var result struct {
-		Data struct {
-			WorkItem workItemGQL `json:"workItem"`
-		}
-		GenericGraphQLErrors
-	}
-
-	resp, err := s.client.GraphQL.Do(q, &result, options...)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	if len(result.Errors) != 0 {
-		return nil, resp, &GraphQLResponseError{
-			Err:    errors.New("GraphQL query failed"),
-			Errors: result.GenericGraphQLErrors,
-		}
-	}
-
-	if result.Data.WorkItem.ID.Int64 == 0 {
-		return nil, resp, ErrNotFound
-	}
-
-	return result.Data.WorkItem.unwrap(), resp, nil
-}
 
 // getWorkItemTemplate is chained from workItemTemplate so it has access to both
 // UserCoreBasic and WorkItem templates.

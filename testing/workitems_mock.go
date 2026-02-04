@@ -84,51 +84,6 @@ func (c *MockWorkItemsServiceInterfaceGetWorkItemCall) DoAndReturn(f func(string
 	return c
 }
 
-// GetWorkItemByID mocks base method.
-func (m *MockWorkItemsServiceInterface) GetWorkItemByID(gid int64, options ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{gid}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetWorkItemByID", varargs...)
-	ret0, _ := ret[0].(*gitlab.WorkItem)
-	ret1, _ := ret[1].(*gitlab.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// GetWorkItemByID indicates an expected call of GetWorkItemByID.
-func (mr *MockWorkItemsServiceInterfaceMockRecorder) GetWorkItemByID(gid any, options ...any) *MockWorkItemsServiceInterfaceGetWorkItemByIDCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{gid}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkItemByID", reflect.TypeOf((*MockWorkItemsServiceInterface)(nil).GetWorkItemByID), varargs...)
-	return &MockWorkItemsServiceInterfaceGetWorkItemByIDCall{Call: call}
-}
-
-// MockWorkItemsServiceInterfaceGetWorkItemByIDCall wrap *gomock.Call
-type MockWorkItemsServiceInterfaceGetWorkItemByIDCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockWorkItemsServiceInterfaceGetWorkItemByIDCall) Return(arg0 *gitlab.WorkItem, arg1 *gitlab.Response, arg2 error) *MockWorkItemsServiceInterfaceGetWorkItemByIDCall {
-	c.Call = c.Call.Return(arg0, arg1, arg2)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockWorkItemsServiceInterfaceGetWorkItemByIDCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceGetWorkItemByIDCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockWorkItemsServiceInterfaceGetWorkItemByIDCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceGetWorkItemByIDCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // ListWorkItems mocks base method.
 func (m *MockWorkItemsServiceInterface) ListWorkItems(fullPath string, opt *gitlab.ListWorkItemsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.WorkItem, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
