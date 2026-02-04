@@ -18,7 +18,6 @@ package gitlab
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -151,26 +150,21 @@ type DeleteLabelOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/labels/#delete-a-label
 func (s *LabelsService) DeleteLabel(pid any, lid any, opt *DeleteLabelOptions, options ...RequestOptionFunc) (*Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("projects/%s/labels", PathEscape(project))
+	reqOpts := make([]doOption, 0, 4)
+	reqOpts = append(reqOpts,
+		withMethod(http.MethodDelete),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 
 	if lid != nil {
-		label, err := parseID(lid)
-		if err != nil {
-			return nil, err
-		}
-		u = fmt.Sprintf("projects/%s/labels/%s", PathEscape(project), PathEscape(label))
+		reqOpts = append(reqOpts, withPath("projects/%s/labels/%s", ProjectID{pid}, LabelID{lid}))
+	} else {
+		reqOpts = append(reqOpts, withPath("projects/%s/labels", ProjectID{pid}))
 	}
 
-	req, err := s.client.NewRequest(http.MethodDelete, u, opt, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client, reqOpts...)
+	return resp, err
 }
 
 // UpdateLabelOptions represents the available UpdateLabel() options.
@@ -189,32 +183,20 @@ type UpdateLabelOptions struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/labels/#edit-an-existing-label
 func (s *LabelsService) UpdateLabel(pid any, lid any, opt *UpdateLabelOptions, options ...RequestOptionFunc) (*Label, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/labels", PathEscape(project))
+	reqOpts := make([]doOption, 0, 4)
+	reqOpts = append(reqOpts,
+		withMethod(http.MethodPut),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 
 	if lid != nil {
-		label, err := parseID(lid)
-		if err != nil {
-			return nil, nil, err
-		}
-		u = fmt.Sprintf("projects/%s/labels/%s", PathEscape(project), PathEscape(label))
+		reqOpts = append(reqOpts, withPath("projects/%s/labels/%s", ProjectID{pid}, LabelID{lid}))
+	} else {
+		reqOpts = append(reqOpts, withPath("projects/%s/labels", ProjectID{pid}))
 	}
 
-	req, err := s.client.NewRequest(http.MethodPut, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	l := new(Label)
-	resp, err := s.client.Do(req, l)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return l, resp, nil
+	return do[*Label](s.client, reqOpts...)
 }
 
 // SubscribeToLabel subscribes the authenticated user to a label to receive
