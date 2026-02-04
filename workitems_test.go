@@ -4,13 +4,16 @@ import (
 	"bytes"
 	_ "embed"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 	"time"
 
+	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -105,16 +108,29 @@ func TestGetWorkItem(t *testing.T) {
 		},
 	}
 
+	schema := loadSchema(t)
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			mux, client := setup(t)
 
 			mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
+				defer r.Body.Close()
+
 				testMethod(t, r, http.MethodPost)
 
-				io.Copy(io.Discard, r.Body)
-				r.Body.Close()
+				var q GraphQLQuery
+
+				if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				if err := validateSchema(schema, q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
 
 				w.Header().Set("Content-Type", "application/json")
 				tt.response.WriteTo(w)
@@ -281,7 +297,7 @@ func TestListWorkItems(t *testing.T) {
 				ReleaseTag:           []string{"v1.0.0"},
 				ReleaseTagWildcardID: Ptr("ANY"),
 				State:                Ptr("opened"),
-				Subscribed:           Ptr("SUBSCRIBED"),
+				Subscribed:           Ptr("EXPLICITLY_SUBSCRIBED"),
 				Types:                []string{"ISSUE", "TASK"},
 				Weight:               Ptr("5"),
 				WeightWildcardID:     Ptr("NONE"),
@@ -368,6 +384,8 @@ func TestListWorkItems(t *testing.T) {
 		},
 	}
 
+	schema := loadSchema(t)
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -381,6 +399,11 @@ func TestListWorkItems(t *testing.T) {
 				var q GraphQLQuery
 
 				if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				if err := validateSchema(schema, q); err != nil {
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
 				}
@@ -409,4 +432,47 @@ func TestListWorkItems(t *testing.T) {
 			assert.Equal(t, tt.want, got)
 		})
 	}
+}
+
+func loadSchema(t *testing.T) *graphql.Schema {
+	t.Helper()
+
+	const filename = "schema/gitlab.graphql"
+
+	fh, err := os.Open(filename)
+	switch {
+	case errors.Is(err, os.ErrNotExist):
+		t.Logf("GraphQL schema file %q is not available", filename)
+		return nil
+
+	case err != nil:
+		t.Fatalf("opening schema failed: %v", err)
+	}
+
+	data, err := io.ReadAll(fh)
+	if err != nil {
+		t.Fatalf("reading schema failed: %v", err)
+	}
+
+	schema, err := graphql.ParseSchema(string(data), nil)
+	if err != nil {
+		t.Fatalf("parsing schema failed: %v", err)
+	}
+
+	return schema
+}
+
+func validateSchema(schema *graphql.Schema, query GraphQLQuery) error {
+	if schema == nil {
+		return nil
+	}
+
+	queryErrors := schema.ValidateWithVariables(query.Query, query.Variables)
+
+	var errs error
+	for _, err := range queryErrors {
+		errs = errors.Join(errs, err)
+	}
+
+	return errs
 }
