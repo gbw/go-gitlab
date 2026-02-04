@@ -976,40 +976,30 @@ func (s *UsersService) DeleteEmailForUser(user, email int64, options ...RequestO
 }
 
 func (s *UsersService) BlockUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/block", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	_, doErr := s.client.Do(req, nil)
-	if doErr != nil {
-		return doErr
-	}
-
-	return nil
+	_, _, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/block", user),
+		withRequestOpts(options...),
+	)
+	return err
 }
 
 func (s *UsersService) UnblockUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/unblock", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/unblock", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 201:
+	case http.StatusCreated:
 		return nil
-	case 403:
+	case http.StatusForbidden:
 		return ErrUserUnblockPrevented
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
@@ -1017,22 +1007,19 @@ func (s *UsersService) UnblockUser(user int64, options ...RequestOptionFunc) err
 }
 
 func (s *UsersService) BanUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/ban", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/ban", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 201:
+	case http.StatusCreated:
 		return nil
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
@@ -1040,22 +1027,19 @@ func (s *UsersService) BanUser(user int64, options ...RequestOptionFunc) error {
 }
 
 func (s *UsersService) UnbanUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/unban", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/unban", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 201:
+	case http.StatusCreated:
 		return nil
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
@@ -1063,24 +1047,21 @@ func (s *UsersService) UnbanUser(user int64, options ...RequestOptionFunc) error
 }
 
 func (s *UsersService) DeactivateUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/deactivate", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/deactivate", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 201:
+	case http.StatusCreated:
 		return nil
-	case 403:
+	case http.StatusForbidden:
 		return ErrUserDeactivatePrevented
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
@@ -1088,24 +1069,21 @@ func (s *UsersService) DeactivateUser(user int64, options ...RequestOptionFunc) 
 }
 
 func (s *UsersService) ActivateUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/activate", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/activate", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 201:
+	case http.StatusCreated:
 		return nil
-	case 403:
+	case http.StatusForbidden:
 		return ErrUserActivatePrevented
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
@@ -1113,24 +1091,21 @@ func (s *UsersService) ActivateUser(user int64, options ...RequestOptionFunc) er
 }
 
 func (s *UsersService) ApproveUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/approve", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/approve", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 201:
+	case http.StatusCreated:
 		return nil
-	case 403:
+	case http.StatusForbidden:
 		return ErrUserApprovePrevented
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
@@ -1138,26 +1113,23 @@ func (s *UsersService) ApproveUser(user int64, options ...RequestOptionFunc) err
 }
 
 func (s *UsersService) RejectUser(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/reject", user)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("users/%d/reject", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 200:
+	case http.StatusOK:
 		return nil
-	case 403:
+	case http.StatusForbidden:
 		return ErrUserRejectPrevented
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
-	case 409:
+	case http.StatusConflict:
 		return ErrUserConflict
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
@@ -1331,26 +1303,23 @@ func (s *UsersService) GetUserMemberships(user int64, opt *GetUserMembershipOpti
 }
 
 func (s *UsersService) DisableTwoFactor(user int64, options ...RequestOptionFunc) error {
-	u := fmt.Sprintf("users/%d/disable_two_factor", user)
-
-	req, err := s.client.NewRequest(http.MethodPatch, u, nil, options)
-	if err != nil {
-		return err
-	}
-
-	resp, err := s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPatch),
+		withPath("users/%d/disable_two_factor", user),
+		withRequestOpts(options...),
+	)
 	if err != nil && resp == nil {
 		return err
 	}
 
 	switch resp.StatusCode {
-	case 204:
+	case http.StatusNoContent:
 		return nil
-	case 400:
+	case http.StatusBadRequest:
 		return ErrUserTwoFactorNotEnabled
-	case 403:
+	case http.StatusForbidden:
 		return ErrUserDisableTwoFactorPrevented
-	case 404:
+	case http.StatusNotFound:
 		return ErrUserNotFound
 	default:
 		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
