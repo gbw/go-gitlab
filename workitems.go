@@ -12,7 +12,7 @@ import (
 type (
 	WorkItemsServiceInterface interface {
 		GetWorkItemByID(gid any, options ...RequestOptionFunc) (*WorkItem, *Response, error)
-		GetWorkItem(projectPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
+		GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 	}
 
 	// WorkItemsService handles communication with the work item related methods
@@ -98,7 +98,7 @@ features {
 
 // GetWorkItemByID gets a single work item identified by its global ID.
 //
-// gid is either a string in the form of "git://gitlab/WorkItem/<ID>", or an integer.
+// gid is either a string in the form of "gid://gitlab/WorkItem/<ID>", or an integer.
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#queryworkitem
 func (s *WorkItemsService) GetWorkItemByID(gid any, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
@@ -296,14 +296,15 @@ type gidGQL struct {
 	ID   int64
 }
 
+var gidGQLRegex = regexp.MustCompile(`^gid://gitlab/([^/]+)/(\d+)$`)
+
 func (id *gidGQL) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err
 	}
 
-	re := regexp.MustCompile(`^gid://gitlab/([^/]+)/(\d+)$`)
-	m := re.FindStringSubmatch(s)
+	m := gidGQLRegex.FindStringSubmatch(s)
 	if len(m) != 3 {
 		return fmt.Errorf("invalid global ID format: %q", s)
 	}
