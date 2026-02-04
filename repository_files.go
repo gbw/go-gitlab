@@ -103,22 +103,12 @@ type GetFileMetaDataOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/repository_files/#get-file-from-repository
 func (s *RepositoryFilesService) GetFileMetaData(pid any, fileName string, opt *GetFileMetaDataOptions, options ...RequestOptionFunc) (*File, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf(
-		"projects/%s/repository/files/%s",
-		PathEscape(project),
-		PathEscape(fileName),
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodHead),
+		withPath("projects/%s/repository/files/%s", ProjectID{pid}, fileName),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	)
-
-	req, err := s.client.NewRequest(http.MethodHead, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	resp, err := s.client.Do(req, nil)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -256,22 +246,12 @@ func (s *RepositoryFilesService) GetRawFile(pid any, fileName string, opt *GetRa
 // GitLab API docs:
 // https://docs.gitlab.com/api/repository_files/#get-raw-file-from-repository
 func (s *RepositoryFilesService) GetRawFileMetaData(pid any, fileName string, opt *GetRawFileOptions, options ...RequestOptionFunc) (*File, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf(
-		"projects/%s/repository/files/%s/raw",
-		PathEscape(project),
-		PathEscape(fileName),
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodHead),
+		withPath("projects/%s/repository/files/%s/raw", ProjectID{pid}, fileName),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	)
-
-	req, err := s.client.NewRequest(http.MethodHead, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	resp, err := s.client.Do(req, nil)
 	if err != nil {
 		return nil, resp, err
 	}
