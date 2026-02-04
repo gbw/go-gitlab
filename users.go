@@ -25,8 +25,6 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
-	"github.com/hashicorp/go-retryablehttp"
 )
 
 type (
@@ -516,33 +514,16 @@ type CreateUserOptions struct {
 }
 
 func (s *UsersService) CreateUser(opt *CreateUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
-	var err error
-	var req *retryablehttp.Request
-
-	if opt.Avatar == nil {
-		req, err = s.client.NewRequest(http.MethodPost, "users", opt, options)
-	} else {
-		req, err = s.client.UploadRequest(
-			http.MethodPost,
-			"users",
-			opt.Avatar.Image,
-			opt.Avatar.Filename,
-			UploadAvatar,
-			opt,
-			options,
-		)
+	reqOpts := []doOption{
+		withMethod(http.MethodPost),
+		withPath("users"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	}
-	if err != nil {
-		return nil, nil, err
+	if opt.Avatar != nil {
+		reqOpts = append(reqOpts, withUpload(opt.Avatar.Image, opt.Avatar.Filename, UploadAvatar))
 	}
-
-	usr := new(User)
-	resp, err := s.client.Do(req, usr)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return usr, resp, nil
+	return do[*User](s.client, reqOpts...)
 }
 
 // ModifyUserOptions represents the available ModifyUser() options.
@@ -578,34 +559,16 @@ type ModifyUserOptions struct {
 }
 
 func (s *UsersService) ModifyUser(user int64, opt *ModifyUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
-	var err error
-	var req *retryablehttp.Request
-	u := fmt.Sprintf("users/%d", user)
-
-	if opt.Avatar == nil || (opt.Avatar.Filename == "" && opt.Avatar.Image == nil) {
-		req, err = s.client.NewRequest(http.MethodPut, u, opt, options)
-	} else {
-		req, err = s.client.UploadRequest(
-			http.MethodPut,
-			u,
-			opt.Avatar.Image,
-			opt.Avatar.Filename,
-			UploadAvatar,
-			opt,
-			options,
-		)
+	reqOpts := []doOption{
+		withMethod(http.MethodPut),
+		withPath("users/%d", user),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
 	}
-	if err != nil {
-		return nil, nil, err
+	if opt.Avatar != nil && (opt.Avatar.Filename != "" || opt.Avatar.Image != nil) {
+		reqOpts = append(reqOpts, withUpload(opt.Avatar.Image, opt.Avatar.Filename, UploadAvatar))
 	}
-
-	usr := new(User)
-	resp, err := s.client.Do(req, usr)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return usr, resp, nil
+	return do[*User](s.client, reqOpts...)
 }
 
 func (s *UsersService) DeleteUser(user int64, options ...RequestOptionFunc) (*Response, error) {
@@ -1422,28 +1385,12 @@ func (s *UsersService) ListServiceAccounts(opt *ListServiceAccountsOptions, opti
 }
 
 func (s *UsersService) UploadAvatar(avatar io.Reader, filename string, options ...RequestOptionFunc) (*User, *Response, error) {
-	u := "user/avatar"
-
-	req, err := s.client.UploadRequest(
-		http.MethodPut,
-		u,
-		avatar,
-		filename,
-		UploadAvatar,
-		nil,
-		options,
+	return do[*User](s.client,
+		withMethod(http.MethodPut),
+		withPath("user/avatar"),
+		withUpload(avatar, filename, UploadAvatar),
+		withRequestOpts(options...),
 	)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	usr := new(User)
-	resp, err := s.client.Do(req, usr)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return usr, resp, nil
 }
 
 func (s *UsersService) DeleteUserIdentity(user int64, provider string, options ...RequestOptionFunc) (*Response, error) {
