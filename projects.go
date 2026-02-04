@@ -32,8 +32,21 @@ type (
 	// GitLab API docs: https://docs.gitlab.com/api/projects/
 	ProjectsServiceInterface interface {
 		ListProjects(opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error)
+		// ListUserProjects gets a list of projects for the given user.
+		//
+		// uid can be either a user ID (int) or a username (string). If a username
+		// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
 		ListUserProjects(uid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error)
+		// ListUserContributedProjects gets a list of visible projects a given user
+		// has contributed to.
+		//
+		// uid can be either a user ID (int) or a username (string). If a username
+		// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
 		ListUserContributedProjects(uid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error)
+		// ListUserStarredProjects gets a list of projects starred by the given user.
+		//
+		// uid can be either a user ID (int) or a username (string). If a username
+		// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
 		ListUserStarredProjects(uid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error)
 		ListProjectsUsers(pid any, opt *ListProjectUserOptions, options ...RequestOptionFunc) ([]*ProjectUser, *Response, error)
 		ListProjectsGroups(pid any, opt *ListProjectGroupOptions, options ...RequestOptionFunc) ([]*ProjectGroup, *Response, error)
@@ -464,6 +477,9 @@ func (s *ProjectsService) ListProjects(opt *ListProjectsOptions, options ...Requ
 
 // ListUserProjects gets a list of projects for the given user.
 //
+// uid can be either a user ID (int) or a username (string). If a username
+// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
+//
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#list-a-users-projects
 func (s *ProjectsService) ListUserProjects(uid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error) {
@@ -474,7 +490,11 @@ func (s *ProjectsService) ListUserProjects(uid any, opt *ListProjectsOptions, op
 	)
 }
 
-// ListUserContributedProjects gets a list of visible projects a given user has contributed to.
+// ListUserContributedProjects gets a list of visible projects a given user has
+// contributed to.
+//
+// uid can be either a user ID (int) or a username (string). If a username
+// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#list-projects-a-user-has-contributed-to
@@ -487,6 +507,9 @@ func (s *ProjectsService) ListUserContributedProjects(uid any, opt *ListProjects
 }
 
 // ListUserStarredProjects gets a list of projects starred by the given user.
+//
+// uid can be either a user ID (int) or a username (string). If a username
+// is provided with a leading "@" (e.g., "@johndoe"), it will be trimmed.
 //
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_starring/#list-projects-starred-by-a-user
