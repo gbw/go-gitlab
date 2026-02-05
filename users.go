@@ -334,11 +334,24 @@ var (
 
 // BasicUser included in other service responses (such as merge requests, pipelines, etc).
 type BasicUser struct {
-	ID        int64      `json:"id"`
-	Username  string     `json:"username"`
-	Name      string     `json:"name"`
-	State     string     `json:"state"`
-	Locked    bool       `json:"locked"`
+	ID       int64  `json:"id"`
+	Username string `json:"username"`
+	Name     string `json:"name"`
+
+	// State represents the administrative status of the user account.
+	// Common values: "active", "blocked", "deactivated", "banned",
+	// "ldap_blocked", "blocked_pending_approval".
+	//
+	// This is independent from the Locked field: State tracks permanent
+	// administrative actions, while Locked handles temporary login failures.
+	State string `json:"state"`
+
+	// Locked indicates whether the user account is temporarily locked due to
+	// excessive failed login attempts. This is separate from administrative
+	// blocking (the State field). Locks automatically expire after a configured
+	// time period (default: 10 minutes).
+	Locked bool `json:"locked"`
+
 	CreatedAt *time.Time `json:"created_at"`
 	AvatarURL string     `json:"avatar_url"`
 	WebURL    string     `json:"web_url"`
