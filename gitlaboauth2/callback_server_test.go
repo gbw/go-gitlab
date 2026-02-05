@@ -298,7 +298,7 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		// Check HTTP response
 		assert.Equal(t, http.StatusOK, w.Code)
 		assert.Contains(t, w.Body.String(), "Authentication Successful!")
-		assert.Equal(t, "text/html", w.Header().Get("Content-Type"))
+		assert.Equal(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
 	})
 
 	t.Run("callback with invalid state", func(t *testing.T) { //nolint:paralleltest
