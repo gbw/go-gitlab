@@ -9,9 +9,9 @@ include:
   - template: Jobs/SAST.gitlab-ci.yml
   - component: ${CI_SERVER_FQDN}/components/dependency-scanning/main@0.8.0
   - component: ${CI_SERVER_FQDN}/components/dependency-scanning/main@0.8.0
-  - component: ${CI_SERVER_FQDN}/gitlab-org/components/danger-review/danger-review@2.0.0
+  - component: ${CI_SERVER_FQDN}/gitlab-com/gl-infra/common-ci-tasks/danger@v3.5.3
     inputs:
-      job_stage: lint
+      stage: lint
       job_allow_failure: true
 
   # NOTE: the two includes below are a hack to conditionally set the tags node
