@@ -157,11 +157,32 @@ verify-generated-code:
         exit 1;
       }
 
+Download GraphQL schema:
+  stage: test
+  needs: []
+  image: node:20-alpine
+  script:
+    - |
+      if [ ! -f schema/gitlab.graphql ]; then
+        mkdir schema
+        npm install -g get-graphql-schema
+        get-graphql-schema "${CI_API_GRAPHQL_URL}" --sdl >schema/gitlab.graphql
+      fi
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - schema/gitlab.graphql
+    policy: pull-push
+  artifacts:
+    paths:
+      - schema/gitlab.graphql
+
 tests:unit:
   extends:
     - .go:versions
   stage: test
-  needs: []
+  needs:
+    - Download GraphQL schema
   image: golang:$GOLANG_IMAGE_VERSION
   variables:
     # configure tooling versions
@@ -189,7 +210,6 @@ tests:unit:
         path: $COVERPROFILE_XML_FILENAME
         coverage_format: cobertura
     when: always
-
 
 tests:integration:
   stage: test
