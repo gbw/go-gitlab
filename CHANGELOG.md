@@ -1,3 +1,20 @@
+## 1.28.0
+
+### 🚀 Features
+
+- Add `destroy` attribute for pipeline schedule inputs ([!2702](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2702)) by [long nguyen huy](https://gitlab.com/n.h.long.9697)
+
+### 🔄 Other Changes
+
+- Migrate bytes endpoints to new `do` pattern ([!2738](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2738)) by [Timo Furrer](https://gitlab.com/timofurrer)
+- docs(users): document the `Locked` and `State` fields ([!2741](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2741)) by [Florian Forster](https://gitlab.com/fforster)
+- ci: migrate to Danger from `common-ci-tasks` ([!2742](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2742)) by [Florian Forster](https://gitlab.com/fforster)
+- chore(oauth): improve the look of the OAuth confirmation page ([!2739](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2739)) by [Tomas Vik](https://gitlab.com/viktomas)
+
+
+
+# [1.28.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.27.0...v1.28.0) (2026-02-05)
+
 ## 1.27.0
 
 ### 🚀 Features
