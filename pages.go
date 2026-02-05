@@ -23,8 +23,22 @@ import (
 
 type (
 	PagesServiceInterface interface {
+		// UnpublishPages unpublishes pages. The user must have admin privileges.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/pages/#unpublish-pages
 		UnpublishPages(gid any, options ...RequestOptionFunc) (*Response, error)
+		// GetPages lists Pages settings for a project. The user must have at least
+		// maintainer privileges.
+		//
+		// GitLab API Docs:
+		// https://docs.gitlab.com/api/pages/#get-pages-settings-for-a-project
 		GetPages(gid any, options ...RequestOptionFunc) (*Pages, *Response, error)
+		// UpdatePages updates Pages settings for a project. The user must have
+		// administrator privileges.
+		//
+		// GitLab API Docs:
+		// https://docs.gitlab.com/api/pages/#update-pages-settings-for-a-project
 		UpdatePages(pid any, opt UpdatePagesOptions, options ...RequestOptionFunc) (*Pages, *Response, error)
 	}
 
@@ -59,10 +73,6 @@ type PagesDeployment struct {
 	RootDirectory string    `json:"root_directory"`
 }
 
-// UnpublishPages unpublished pages. The user must have admin privileges.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/pages/#unpublish-pages
 func (s *PagesService) UnpublishPages(gid any, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodDelete),
@@ -72,11 +82,6 @@ func (s *PagesService) UnpublishPages(gid any, options ...RequestOptionFunc) (*R
 	return resp, err
 }
 
-// GetPages lists Pages settings for a project. The user must have at least
-// maintainer privileges.
-//
-// GitLab API Docs:
-// https://docs.gitlab.com/api/pages/#get-pages-settings-for-a-project
 func (s *PagesService) GetPages(gid any, options ...RequestOptionFunc) (*Pages, *Response, error) {
 	return do[*Pages](s.client,
 		withPath("projects/%s/pages", ProjectID{gid}),
@@ -93,11 +98,6 @@ type UpdatePagesOptions struct {
 	PagesHTTPSOnly           *bool `url:"pages_https_only,omitempty" json:"pages_https_only,omitempty"`
 }
 
-// UpdatePages updates Pages settings for a project. The user must have
-// administrator privileges.
-//
-// GitLab API Docs:
-// https://docs.gitlab.com/api/pages/#update-pages-settings-for-a-project
 func (s *PagesService) UpdatePages(pid any, opt UpdatePagesOptions, options ...RequestOptionFunc) (*Pages, *Response, error) {
 	return do[*Pages](s.client,
 		withMethod(http.MethodPatch),
