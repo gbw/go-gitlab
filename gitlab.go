@@ -963,8 +963,12 @@ func (c *Client) NewRequestToURL(method string, u *url.URL, opt any, options []R
 		}
 	}
 
-	// Set the request specific headers.
-	maps.Copy(req.Header, reqHeaders)
+	// Set the request specific headers if they don't yet exist.
+	for k, v := range reqHeaders {
+		if _, ok := req.Header[k]; !ok {
+			req.Header[k] = v
+		}
+	}
 
 	return req, nil
 }

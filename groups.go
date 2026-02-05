@@ -20,7 +20,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -369,24 +368,14 @@ func (s *GroupsService) GetGroup(gid any, opt *GetGroupOptions, options ...Reque
 // GitLab API docs:
 // https://docs.gitlab.com/api/groups/#download-a-group-avatar
 func (s *GroupsService) DownloadAvatar(gid any, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	group, err := parseID(gid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("groups/%s/avatar", PathEscape(group))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	avatar := new(bytes.Buffer)
-	resp, err := s.client.Do(req, avatar)
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("groups/%s/avatar", GroupID{gid}),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return bytes.NewReader(avatar.Bytes()), resp, err
+	return bytes.NewReader(buf.Bytes()), resp, nil
 }
 
 // CreateGroupOptions represents the available CreateGroup() options.

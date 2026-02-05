@@ -19,7 +19,6 @@ package gitlab
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -1472,24 +1471,14 @@ func (s *ProjectsService) UploadAvatar(pid any, avatar io.Reader, filename strin
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#download-a-project-avatar
 func (s *ProjectsService) DownloadAvatar(pid any, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/avatar", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	avatar := new(bytes.Buffer)
-	resp, err := s.client.Do(req, avatar)
+	buf, resp, err := do[bytes.Buffer](s.client,
+		withPath("projects/%s/avatar", ProjectID{pid}),
+		withRequestOpts(options...),
+	)
 	if err != nil {
 		return nil, resp, err
 	}
-
-	return bytes.NewReader(avatar.Bytes()), resp, err
+	return bytes.NewReader(buf.Bytes()), resp, nil
 }
 
 // ListProjectForks gets a list of project forks.
