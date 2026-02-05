@@ -18,7 +18,14 @@ package gitlab
 
 type (
 	ProjectTemplatesServiceInterface interface {
+		// ListTemplates gets a list of project templates.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/project_templates/#get-all-templates-of-a-particular-type
 		ListTemplates(pid any, templateType string, opt *ListProjectTemplatesOptions, options ...RequestOptionFunc) ([]*ProjectTemplate, *Response, error)
+		// GetProjectTemplate gets a single project template.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_templates/#get-one-template-of-a-particular-type
 		GetProjectTemplate(pid any, templateType string, templateName string, options ...RequestOptionFunc) (*ProjectTemplate, *Response, error)
 	}
 
@@ -64,9 +71,6 @@ type ListProjectTemplatesOptions struct {
 	Type *string `url:"type,omitempty" json:"type,omitempty"`
 }
 
-// ListTemplates gets a list of project templates.
-//
-// GitLab API docs: https://docs.gitlab.com/api/project_templates/#get-all-templates-of-a-particular-type
 func (s *ProjectTemplatesService) ListTemplates(pid any, templateType string, opt *ListProjectTemplatesOptions, options ...RequestOptionFunc) ([]*ProjectTemplate, *Response, error) {
 	return do[[]*ProjectTemplate](s.client,
 		withPath("projects/%s/templates/%s", ProjectID{pid}, templateType),
@@ -75,10 +79,6 @@ func (s *ProjectTemplatesService) ListTemplates(pid any, templateType string, op
 	)
 }
 
-// GetProjectTemplate gets a single project template.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_templates/#get-one-template-of-a-particular-type
 func (s *ProjectTemplatesService) GetProjectTemplate(pid any, templateType string, templateName string, options ...RequestOptionFunc) (*ProjectTemplate, *Response, error) {
 	return do[*ProjectTemplate](s.client,
 		withPath("projects/%s/templates/%s/%s", ProjectID{pid}, templateType, templateName),

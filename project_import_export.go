@@ -25,10 +25,30 @@ import (
 
 type (
 	ProjectImportExportServiceInterface interface {
+		// ScheduleExport schedules a project export.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_import_export/#schedule-an-export
 		ScheduleExport(pid any, opt *ScheduleExportOptions, options ...RequestOptionFunc) (*Response, error)
+		// ExportStatus gets the status of export.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_import_export/#export-status
 		ExportStatus(pid any, options ...RequestOptionFunc) (*ExportStatus, *Response, error)
+		// ExportDownload downloads the finished export.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_import_export/#export-download
 		ExportDownload(pid any, options ...RequestOptionFunc) ([]byte, *Response, error)
+		// ImportFromFile imports a project from an archive file.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_import_export/#import-a-file
 		ImportFromFile(archive io.Reader, opt *ImportFileOptions, options ...RequestOptionFunc) (*ImportStatus, *Response, error)
+		// ImportStatus gets the status of an import.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_import_export/#import-status
 		ImportStatus(pid any, options ...RequestOptionFunc) (*ImportStatus, *Response, error)
 	}
 
@@ -114,10 +134,6 @@ type ScheduleExportUploadOptions struct {
 	HTTPMethod *string `url:"http_method,omitempty" json:"http_method,omitempty"`
 }
 
-// ScheduleExport schedules a project export.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_import_export/#schedule-an-export
 func (s *ProjectImportExportService) ScheduleExport(pid any, opt *ScheduleExportOptions, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
@@ -128,10 +144,6 @@ func (s *ProjectImportExportService) ScheduleExport(pid any, opt *ScheduleExport
 	return resp, err
 }
 
-// ExportStatus get the status of export.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_import_export/#export-status
 func (s *ProjectImportExportService) ExportStatus(pid any, options ...RequestOptionFunc) (*ExportStatus, *Response, error) {
 	return do[*ExportStatus](s.client,
 		withPath("projects/%s/export", ProjectID{pid}),
@@ -139,10 +151,6 @@ func (s *ProjectImportExportService) ExportStatus(pid any, options ...RequestOpt
 	)
 }
 
-// ExportDownload download the finished export.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_import_export/#export-download
 func (s *ProjectImportExportService) ExportDownload(pid any, options ...RequestOptionFunc) ([]byte, *Response, error) {
 	buf, resp, err := do[bytes.Buffer](s.client,
 		withPath("projects/%s/export/download", ProjectID{pid}),
@@ -166,10 +174,6 @@ type ImportFileOptions struct {
 	OverrideParams *CreateProjectOptions `url:"override_params,omitempty" json:"override_params,omitempty"`
 }
 
-// ImportFromFile imports a project from an archive file.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_import_export/#import-a-file
 func (s *ProjectImportExportService) ImportFromFile(archive io.Reader, opt *ImportFileOptions, options ...RequestOptionFunc) (*ImportStatus, *Response, error) {
 	return do[*ImportStatus](s.client,
 		withMethod(http.MethodPost),
@@ -180,10 +184,6 @@ func (s *ProjectImportExportService) ImportFromFile(archive io.Reader, opt *Impo
 	)
 }
 
-// ImportStatus get the status of an import.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_import_export/#import-status
 func (s *ProjectImportExportService) ImportStatus(pid any, options ...RequestOptionFunc) (*ImportStatus, *Response, error) {
 	return do[*ImportStatus](s.client,
 		withPath("projects/%s/import", ProjectID{pid}),

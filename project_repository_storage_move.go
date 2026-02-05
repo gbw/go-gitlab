@@ -23,11 +23,37 @@ import (
 
 type (
 	ProjectRepositoryStorageMoveServiceInterface interface {
+		// RetrieveAllStorageMoves retrieves all project repository storage moves
+		// accessible by the authenticated user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_repository_storage_moves/#retrieve-all-project-repository-storage-moves
 		RetrieveAllStorageMoves(opts RetrieveAllProjectStorageMovesOptions, options ...RequestOptionFunc) ([]*ProjectRepositoryStorageMove, *Response, error)
+		// RetrieveAllStorageMovesForProject retrieves all repository storage moves for
+		// a single project accessible by the authenticated user.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_repository_storage_moves/#retrieve-all-repository-storage-moves-for-a-project
 		RetrieveAllStorageMovesForProject(project int64, opts RetrieveAllProjectStorageMovesOptions, options ...RequestOptionFunc) ([]*ProjectRepositoryStorageMove, *Response, error)
+		// GetStorageMove gets a single project repository storage move.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_repository_storage_moves/#get-a-single-project-repository-storage-move
 		GetStorageMove(repositoryStorage int64, options ...RequestOptionFunc) (*ProjectRepositoryStorageMove, *Response, error)
+		// GetStorageMoveForProject gets a single repository storage move for a project.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_repository_storage_moves/#get-a-single-repository-storage-move-for-a-project
 		GetStorageMoveForProject(project int64, repositoryStorage int64, options ...RequestOptionFunc) (*ProjectRepositoryStorageMove, *Response, error)
+		// ScheduleStorageMoveForProject schedule a repository to be moved for a project.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_repository_storage_moves/#schedule-a-repository-storage-move-for-a-project
 		ScheduleStorageMoveForProject(project int64, opts ScheduleStorageMoveForProjectOptions, options ...RequestOptionFunc) (*ProjectRepositoryStorageMove, *Response, error)
+		// ScheduleAllStorageMoves schedules all repositories to be moved.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/project_repository_storage_moves/#schedule-repository-storage-moves-for-all-projects-on-a-storage-shard
 		ScheduleAllStorageMoves(opts ScheduleAllProjectStorageMovesOptions, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -75,11 +101,6 @@ type RetrieveAllProjectStorageMovesOptions struct {
 	ListOptions
 }
 
-// RetrieveAllStorageMoves retrieves all project repository storage moves
-// accessible by the authenticated user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_repository_storage_moves/#retrieve-all-project-repository-storage-moves
 func (p ProjectRepositoryStorageMoveService) RetrieveAllStorageMoves(opts RetrieveAllProjectStorageMovesOptions, options ...RequestOptionFunc) ([]*ProjectRepositoryStorageMove, *Response, error) {
 	return do[[]*ProjectRepositoryStorageMove](p.client,
 		withPath("project_repository_storage_moves"),
@@ -88,11 +109,6 @@ func (p ProjectRepositoryStorageMoveService) RetrieveAllStorageMoves(opts Retrie
 	)
 }
 
-// RetrieveAllStorageMovesForProject retrieves all repository storage moves for
-// a single project accessible by the authenticated user.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_repository_storage_moves/#retrieve-all-repository-storage-moves-for-a-project
 func (p ProjectRepositoryStorageMoveService) RetrieveAllStorageMovesForProject(project int64, opts RetrieveAllProjectStorageMovesOptions, options ...RequestOptionFunc) ([]*ProjectRepositoryStorageMove, *Response, error) {
 	return do[[]*ProjectRepositoryStorageMove](p.client,
 		withPath("projects/%d/repository_storage_moves", project),
@@ -101,10 +117,6 @@ func (p ProjectRepositoryStorageMoveService) RetrieveAllStorageMovesForProject(p
 	)
 }
 
-// GetStorageMove gets a single project repository storage move.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_repository_storage_moves/#get-a-single-project-repository-storage-move
 func (p ProjectRepositoryStorageMoveService) GetStorageMove(repositoryStorage int64, options ...RequestOptionFunc) (*ProjectRepositoryStorageMove, *Response, error) {
 	return do[*ProjectRepositoryStorageMove](p.client,
 		withPath("project_repository_storage_moves/%d", repositoryStorage),
@@ -112,10 +124,6 @@ func (p ProjectRepositoryStorageMoveService) GetStorageMove(repositoryStorage in
 	)
 }
 
-// GetStorageMoveForProject gets a single repository storage move for a project.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_repository_storage_moves/#get-a-single-repository-storage-move-for-a-project
 func (p ProjectRepositoryStorageMoveService) GetStorageMoveForProject(project int64, repositoryStorage int64, options ...RequestOptionFunc) (*ProjectRepositoryStorageMove, *Response, error) {
 	return do[*ProjectRepositoryStorageMove](p.client,
 		withPath("projects/%d/repository_storage_moves/%d", project, repositoryStorage),
@@ -132,10 +140,6 @@ type ScheduleStorageMoveForProjectOptions struct {
 	DestinationStorageName *string `url:"destination_storage_name,omitempty" json:"destination_storage_name,omitempty"`
 }
 
-// ScheduleStorageMoveForProject schedule a repository to be moved for a project.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_repository_storage_moves/#schedule-a-repository-storage-move-for-a-project
 func (p ProjectRepositoryStorageMoveService) ScheduleStorageMoveForProject(project int64, opts ScheduleStorageMoveForProjectOptions, options ...RequestOptionFunc) (*ProjectRepositoryStorageMove, *Response, error) {
 	return do[*ProjectRepositoryStorageMove](p.client,
 		withMethod(http.MethodPost),
@@ -155,10 +159,6 @@ type ScheduleAllProjectStorageMovesOptions struct {
 	DestinationStorageName *string `url:"destination_storage_name,omitempty" json:"destination_storage_name,omitempty"`
 }
 
-// ScheduleAllStorageMoves schedules all repositories to be moved.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/project_repository_storage_moves/#schedule-repository-storage-moves-for-all-projects-on-a-storage-shard
 func (p ProjectRepositoryStorageMoveService) ScheduleAllStorageMoves(opts ScheduleAllProjectStorageMovesOptions, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](p.client,
 		withMethod(http.MethodPost),
