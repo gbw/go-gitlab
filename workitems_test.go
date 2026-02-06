@@ -583,6 +583,238 @@ func TestListWorkItems_Pagination(t *testing.T) {
 	assert.Equal(t, want, got)
 }
 
+func TestCreateWorkItem(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name     string
+		fullPath string
+		opt      *CreateWorkItemOptions
+		response io.WriterTo
+		want     *WorkItem
+		wantErr  error
+	}{
+		{
+			name:     "successful creation with title only",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &CreateWorkItemOptions{
+				Title:          Ptr("New Task"),
+				WorkItemTypeID: Ptr("gid://gitlab/WorkItems::Type/1"),
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "workItemCreate": {
+				      "workItem": {
+				        "id": "gid://gitlab/WorkItem/181297786",
+				        "iid": "40",
+				        "workItemType": {
+				          "name": "Task"
+				        },
+				        "state": "OPEN",
+				        "title": "New Task",
+				        "description": "",
+				        "author": {
+				          "id": "gid://gitlab/User/5532616",
+				          "username": "fforster",
+				          "name": "Florian Forster",
+				          "state": "active",
+				          "locked": false,
+				          "createdAt": "2020-03-02T06:29:14Z",
+				          "avatarUrl": "/uploads/-/system/user/avatar/5532616/avatar.png",
+				          "webUrl": "https://gitlab.com/fforster"
+				        },
+				        "createdAt": "2026-02-06T10:00:00Z",
+				        "updatedAt": "2026-02-06T10:00:00Z",
+				        "closedAt": null,
+				        "webUrl": "https://gitlab.com/gitlab-com/gl-infra/platform/runway/team/-/work_items/40",
+				        "features": {
+				          "assignees": {
+				            "assignees": {
+				              "nodes": []
+				            }
+				          },
+				          "status": {
+				            "status": {
+				              "name": "New"
+				            }
+				          }
+				        }
+				      },
+				      "errors": []
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			want: &WorkItem{
+				ID:          181297786,
+				IID:         40,
+				Type:        "Task",
+				State:       "OPEN",
+				Status:      Ptr("New"),
+				Title:       "New Task",
+				Description: "",
+				CreatedAt:   Ptr(time.Date(2026, time.February, 6, 10, 0, 0, 0, time.UTC)),
+				UpdatedAt:   Ptr(time.Date(2026, time.February, 6, 10, 0, 0, 0, time.UTC)),
+				WebURL:      "https://gitlab.com/gitlab-com/gl-infra/platform/runway/team/-/work_items/40",
+				Author: &BasicUser{
+					ID:        5532616,
+					Username:  "fforster",
+					Name:      "Florian Forster",
+					State:     "active",
+					CreatedAt: Ptr(time.Date(2020, time.March, 2, 6, 29, 14, 0, time.UTC)),
+					AvatarURL: "/uploads/-/system/user/avatar/5532616/avatar.png",
+					WebURL:    "https://gitlab.com/fforster",
+				},
+				Assignees: nil,
+			},
+		},
+		{
+			name:     "successful creation with description",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &CreateWorkItemOptions{
+				Title:          Ptr("New Issue"),
+				WorkItemTypeID: Ptr("gid://gitlab/WorkItems::Type/2"),
+				DescriptionWidget: &WorkItemWidgetDescriptionInput{
+					Description: Ptr("This is a detailed description"),
+				},
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "workItemCreate": {
+				      "workItem": {
+				        "id": "gid://gitlab/WorkItem/181297787",
+				        "iid": "41",
+				        "workItemType": {
+				          "name": "Issue"
+				        },
+				        "state": "OPEN",
+				        "title": "New Issue",
+				        "description": "This is a detailed description",
+				        "author": {
+				          "id": "gid://gitlab/User/5532616",
+				          "username": "fforster",
+				          "name": "Florian Forster",
+				          "state": "active",
+				          "locked": false,
+				          "createdAt": "2020-03-02T06:29:14Z",
+				          "avatarUrl": "/uploads/-/system/user/avatar/5532616/avatar.png",
+				          "webUrl": "https://gitlab.com/fforster"
+				        },
+				        "createdAt": "2026-02-06T10:00:00Z",
+				        "updatedAt": "2026-02-06T10:00:00Z",
+				        "closedAt": null,
+				        "webUrl": "https://gitlab.com/gitlab-com/gl-infra/platform/runway/team/-/work_items/41",
+				        "features": {
+				          "assignees": {
+				            "assignees": {
+				              "nodes": []
+				            }
+				          },
+				          "status": {
+				            "status": {
+				              "name": "New"
+				            }
+				          }
+				        }
+				      },
+				      "errors": []
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			want: &WorkItem{
+				ID:          181297787,
+				IID:         41,
+				Type:        "Issue",
+				State:       "OPEN",
+				Status:      Ptr("New"),
+				Title:       "New Issue",
+				Description: "This is a detailed description",
+				CreatedAt:   Ptr(time.Date(2026, time.February, 6, 10, 0, 0, 0, time.UTC)),
+				UpdatedAt:   Ptr(time.Date(2026, time.February, 6, 10, 0, 0, 0, time.UTC)),
+				WebURL:      "https://gitlab.com/gitlab-com/gl-infra/platform/runway/team/-/work_items/41",
+				Author: &BasicUser{
+					ID:        5532616,
+					Username:  "fforster",
+					Name:      "Florian Forster",
+					State:     "active",
+					CreatedAt: Ptr(time.Date(2020, time.March, 2, 6, 29, 14, 0, time.UTC)),
+					AvatarURL: "/uploads/-/system/user/avatar/5532616/avatar.png",
+					WebURL:    "https://gitlab.com/fforster",
+				},
+				Assignees: nil,
+			},
+		},
+		{
+			name:     "creation with errors",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &CreateWorkItemOptions{
+				Title:          Ptr(""),
+				WorkItemTypeID: Ptr("gid://gitlab/WorkItems::Type/1"),
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "workItemCreate": {
+				      "workItem": null,
+				      "errors": ["Title can't be blank"]
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			want:    nil,
+			wantErr: ErrWorkItemCreateFailed,
+		},
+	}
+
+	schema := loadSchema(t)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
+				defer r.Body.Close()
+
+				testMethod(t, r, http.MethodPost)
+
+				var q GraphQLQuery
+
+				if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				if err := validateSchema(schema, q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				w.Header().Set("Content-Type", "application/json")
+				tt.response.WriteTo(w)
+			})
+
+			got, _, err := client.WorkItems.CreateWorkItem(tt.fullPath, tt.opt)
+
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
+				assert.Nil(t, got)
+
+				return
+			}
+
+			require.NoError(t, err)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
 func loadSchema(t *testing.T) *graphql.Schema {
 	t.Helper()
 

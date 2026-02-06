@@ -12,6 +12,7 @@ import (
 
 type (
 	WorkItemsServiceInterface interface {
+		CreateWorkItem(fullPath string, opt *CreateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error)
 	}
@@ -498,6 +499,216 @@ func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOpti
 	resp.PageInfo = &result.Data.Namespace.WorkItems.PageInfo
 
 	return ret, resp, nil
+}
+
+// CreateWorkItemOptions represents the available CreateWorkItem() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/ee/api/graphql/reference/#workitemcreateinput
+type CreateWorkItemOptions struct {
+	AssigneesWidget       *WorkItemWidgetAssigneesInput         `gql:"assigneesWidget WorkItemWidgetAssigneesInput"`
+	Confidential          *bool                                 `gql:"confidential Boolean"`
+	DescriptionWidget     *WorkItemWidgetDescriptionInput       `gql:"descriptionWidget WorkItemWidgetDescriptionInput"`
+	MilestoneWidget       *WorkItemWidgetMilestoneInput         `gql:"milestoneWidget WorkItemWidgetMilestoneInput"`
+	CreateSource          *string                               `gql:"createSource String"`
+	CreatedAt             *time.Time                            `gql:"createdAt Time"`
+	CRMContactsWidget     *WorkItemWidgetCRMContactsCreateInput `gql:"crmContactsWidget WorkItemWidgetCrmContactsCreateInput"`
+	HierarchyWidget       *WorkItemWidgetHierarchyCreateInput   `gql:"hierarchyWidget WorkItemWidgetHierarchyCreateInput"`
+	LabelsWidget          *WorkItemWidgetLabelsCreateInput      `gql:"labelsWidget WorkItemWidgetLabelsCreateInput"`
+	LinkedItemsWidget     *WorkItemWidgetLinkedItemsCreateInput `gql:"linkedItemsWidget WorkItemWidgetLinkedItemsCreateInput"`
+	StartAndDueDateWidget *WorkItemWidgetStartAndDueDateInput   `gql:"startAndDueDateWidget WorkItemWidgetStartAndDueDateUpdateInput"`
+	Title                 *string                               `gql:"title String!"`
+	WorkItemTypeID        *string                               `gql:"workItemTypeId WorkItemsTypeID!"`
+	WeightWidget          *WorkItemWidgetWeightInput            `gql:"weightWidget WorkItemWidgetWeightInput"`
+	HealthStatusWidget    *WorkItemWidgetHealthStatusInput      `gql:"healthStatusWidget WorkItemWidgetHealthStatusInput"`
+	IterationWidget       *WorkItemWidgetIterationInput         `gql:"iterationWidget WorkItemWidgetIterationInput"`
+	ColorWidget           *WorkItemWidgetColorInput             `gql:"colorWidget WorkItemWidgetColorInput"`
+}
+
+// WorkItemWidgetAssigneesInput represents the assignees widget input.
+type WorkItemWidgetAssigneesInput struct {
+	AssigneeIDs []string `json:"assigneeIds,omitempty"`
+}
+
+// WorkItemWidgetDescriptionInput represents the description widget input.
+type WorkItemWidgetDescriptionInput struct {
+	Description *string `json:"description,omitempty"`
+}
+
+// WorkItemWidgetMilestoneInput represents the milestone widget input.
+type WorkItemWidgetMilestoneInput struct {
+	MilestoneID *string `json:"milestoneId,omitempty"`
+}
+
+// WorkItemWidgetCRMContactsCreateInput represents the CRM contacts widget input.
+type WorkItemWidgetCRMContactsCreateInput struct {
+	ContactIDs []string `json:"contactIds,omitempty"`
+}
+
+// WorkItemWidgetHierarchyCreateInput represents the hierarchy widget input.
+type WorkItemWidgetHierarchyCreateInput struct {
+	ParentID *string `json:"parentId,omitempty"`
+}
+
+// WorkItemWidgetLabelsCreateInput represents the labels widget input.
+type WorkItemWidgetLabelsCreateInput struct {
+	LabelIDs []string `json:"labelIds,omitempty"`
+}
+
+// WorkItemWidgetLinkedItemsCreateInput represents the linked items widget input.
+type WorkItemWidgetLinkedItemsCreateInput struct {
+	WorkItemIDs []string `json:"workItemIds,omitempty"`
+}
+
+// WorkItemWidgetStartAndDueDateInput represents the start and due date widget input.
+type WorkItemWidgetStartAndDueDateInput struct {
+	StartDate *string `json:"startDate,omitempty"`
+	DueDate   *string `json:"dueDate,omitempty"`
+}
+
+// WorkItemWidgetWeightInput represents the weight widget input.
+type WorkItemWidgetWeightInput struct {
+	Weight *int64 `json:"weight,omitempty"`
+}
+
+// WorkItemWidgetHealthStatusInput represents the health status widget input.
+type WorkItemWidgetHealthStatusInput struct {
+	HealthStatus *string `json:"healthStatus,omitempty"`
+}
+
+// WorkItemWidgetIterationInput represents the iteration widget input.
+type WorkItemWidgetIterationInput struct {
+	IterationID *string `json:"iterationId,omitempty"`
+}
+
+// WorkItemWidgetColorInput represents the color widget input.
+type WorkItemWidgetColorInput struct {
+	Color *string `json:"color,omitempty"`
+}
+
+// createWorkItemTemplate is chained from workItemTemplate so it has access to both
+// UserCoreBasic and WorkItem templates.
+var createWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("CreateWorkItem").Parse(`
+	mutation CreateWorkItem($input: WorkItemCreateInput!) {
+	  workItemCreate(input: $input) {
+	    workItem {
+	      {{ template "WorkItem" }}
+	    }
+	    errors
+	  }
+	}
+`))
+
+// CreateWorkItem creates a new work item.
+//
+// fullPath is the full path to either a group or project.
+// opt contains the options for creating the work item.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/ee/api/graphql/reference/#workitemcreateinput
+func (s *WorkItemsService) CreateWorkItem(fullPath string, opt *CreateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
+	var queryBuilder strings.Builder
+	if err := createWorkItemTemplate.Execute(&queryBuilder, nil); err != nil {
+		return nil, nil, err
+	}
+
+	input := map[string]any{
+		"namespacePath": fullPath,
+	}
+
+	if opt != nil {
+		if opt.Title != nil {
+			input["title"] = *opt.Title
+		}
+		if opt.WorkItemTypeID != nil {
+			input["workItemTypeId"] = *opt.WorkItemTypeID
+		}
+		if opt.Confidential != nil {
+			input["confidential"] = *opt.Confidential
+		}
+		if opt.DescriptionWidget != nil {
+			input["descriptionWidget"] = opt.DescriptionWidget
+		}
+		if opt.AssigneesWidget != nil {
+			input["assigneesWidget"] = opt.AssigneesWidget
+		}
+		if opt.MilestoneWidget != nil {
+			input["milestoneWidget"] = opt.MilestoneWidget
+		}
+		if opt.CreateSource != nil {
+			input["createSource"] = *opt.CreateSource
+		}
+		if opt.CreatedAt != nil {
+			input["createdAt"] = opt.CreatedAt
+		}
+		if opt.CRMContactsWidget != nil {
+			input["crmContactsWidget"] = opt.CRMContactsWidget
+		}
+		if opt.HierarchyWidget != nil {
+			input["hierarchyWidget"] = opt.HierarchyWidget
+		}
+		if opt.LabelsWidget != nil {
+			input["labelsWidget"] = opt.LabelsWidget
+		}
+		if opt.LinkedItemsWidget != nil {
+			input["linkedItemsWidget"] = opt.LinkedItemsWidget
+		}
+		if opt.StartAndDueDateWidget != nil {
+			input["startAndDueDateWidget"] = opt.StartAndDueDateWidget
+		}
+		if opt.WeightWidget != nil {
+			input["weightWidget"] = opt.WeightWidget
+		}
+		if opt.HealthStatusWidget != nil {
+			input["healthStatusWidget"] = opt.HealthStatusWidget
+		}
+		if opt.IterationWidget != nil {
+			input["iterationWidget"] = opt.IterationWidget
+		}
+		if opt.ColorWidget != nil {
+			input["colorWidget"] = opt.ColorWidget
+		}
+	}
+
+	q := GraphQLQuery{
+		Query: queryBuilder.String(),
+		Variables: map[string]any{
+			"input": input,
+		},
+	}
+
+	var result struct {
+		Data struct {
+			WorkItemCreate struct {
+				WorkItem *workItemGQL `json:"workItem"`
+				Errors   []string     `json:"errors"`
+			} `json:"workItemCreate"`
+		}
+		GenericGraphQLErrors
+	}
+
+	resp, err := s.client.GraphQL.Do(q, &result, options...)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	if len(result.Errors) != 0 {
+		return nil, resp, &GraphQLResponseError{
+			Err:    errors.New("GraphQL query failed"),
+			Errors: result.GenericGraphQLErrors,
+		}
+	}
+
+	if len(result.Data.WorkItemCreate.Errors) != 0 {
+		return nil, resp, ErrWorkItemCreateFailed
+	}
+
+	wiQL := result.Data.WorkItemCreate.WorkItem
+	if wiQL == nil {
+		return nil, resp, ErrWorkItemCreateFailed
+	}
+
+	return wiQL.unwrap(), resp, nil
 }
 
 // workItemGQL represents the JSON structure returned by the GraphQL query.
