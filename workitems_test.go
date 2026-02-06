@@ -676,9 +676,7 @@ func TestCreateWorkItem(t *testing.T) {
 			opt: &CreateWorkItemOptions{
 				Title:          Ptr("New Issue"),
 				WorkItemTypeID: Ptr("gid://gitlab/WorkItems::Type/2"),
-				DescriptionWidget: &WorkItemWidgetDescriptionInput{
-					Description: Ptr("This is a detailed description"),
-				},
+				Description:    Ptr("This is a detailed description"),
 			},
 			response: strings.NewReader(`
 				{

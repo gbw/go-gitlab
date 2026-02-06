@@ -506,84 +506,197 @@ func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOpti
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/graphql/reference/#workitemcreateinput
 type CreateWorkItemOptions struct {
-	AssigneesWidget       *WorkItemWidgetAssigneesInput         `gql:"assigneesWidget WorkItemWidgetAssigneesInput"`
-	Confidential          *bool                                 `gql:"confidential Boolean"`
-	DescriptionWidget     *WorkItemWidgetDescriptionInput       `gql:"descriptionWidget WorkItemWidgetDescriptionInput"`
-	MilestoneWidget       *WorkItemWidgetMilestoneInput         `gql:"milestoneWidget WorkItemWidgetMilestoneInput"`
-	CreateSource          *string                               `gql:"createSource String"`
-	CreatedAt             *time.Time                            `gql:"createdAt Time"`
-	CRMContactsWidget     *WorkItemWidgetCRMContactsCreateInput `gql:"crmContactsWidget WorkItemWidgetCrmContactsCreateInput"`
-	HierarchyWidget       *WorkItemWidgetHierarchyCreateInput   `gql:"hierarchyWidget WorkItemWidgetHierarchyCreateInput"`
-	LabelsWidget          *WorkItemWidgetLabelsCreateInput      `gql:"labelsWidget WorkItemWidgetLabelsCreateInput"`
-	LinkedItemsWidget     *WorkItemWidgetLinkedItemsCreateInput `gql:"linkedItemsWidget WorkItemWidgetLinkedItemsCreateInput"`
-	StartAndDueDateWidget *WorkItemWidgetStartAndDueDateInput   `gql:"startAndDueDateWidget WorkItemWidgetStartAndDueDateUpdateInput"`
-	Title                 *string                               `gql:"title String!"`
-	WorkItemTypeID        *string                               `gql:"workItemTypeId WorkItemsTypeID!"`
-	WeightWidget          *WorkItemWidgetWeightInput            `gql:"weightWidget WorkItemWidgetWeightInput"`
-	HealthStatusWidget    *WorkItemWidgetHealthStatusInput      `gql:"healthStatusWidget WorkItemWidgetHealthStatusInput"`
-	IterationWidget       *WorkItemWidgetIterationInput         `gql:"iterationWidget WorkItemWidgetIterationInput"`
-	ColorWidget           *WorkItemWidgetColorInput             `gql:"colorWidget WorkItemWidgetColorInput"`
+	Title          *string    `url:"title,omitempty" json:"title,omitempty"`
+	WorkItemTypeID *string    `url:"workItemTypeId,omitempty" json:"workItemTypeId,omitempty"`
+	Description    *string    `url:"description,omitempty" json:"description,omitempty"`
+	Confidential   *bool      `url:"confidential,omitempty" json:"confidential,omitempty"`
+	AssigneeIDs    []string   `url:"assigneeIds,omitempty" json:"assigneeIds,omitempty"`
+	MilestoneID    *string    `url:"milestoneId,omitempty" json:"milestoneId,omitempty"`
+	CreateSource   *string    `url:"createSource,omitempty" json:"createSource,omitempty"`
+	CreatedAt      *time.Time `url:"createdAt,omitempty" json:"createdAt,omitempty"`
+	ContactIDs     []string   `url:"contactIds,omitempty" json:"contactIds,omitempty"`
+	ParentID       *string    `url:"parentId,omitempty" json:"parentId,omitempty"`
+	LabelIDs       []string   `url:"labelIds,omitempty" json:"labelIds,omitempty"`
+	LinkedItemIDs  []string   `url:"linkedItemIds,omitempty" json:"linkedItemIds,omitempty"`
+	StartDate      *string    `url:"startDate,omitempty" json:"startDate,omitempty"`
+	DueDate        *string    `url:"dueDate,omitempty" json:"dueDate,omitempty"`
+	Weight         *int64     `url:"weight,omitempty" json:"weight,omitempty"`
+	HealthStatus   *string    `url:"healthStatus,omitempty" json:"healthStatus,omitempty"`
+	IterationID    *string    `url:"iterationId,omitempty" json:"iterationId,omitempty"`
+	Color          *string    `url:"color,omitempty" json:"color,omitempty"`
 }
 
-// WorkItemWidgetAssigneesInput represents the assignees widget input.
-type WorkItemWidgetAssigneesInput struct {
+// workItemCreateInputGQL represents the GraphQL input structure for creating a work item.
+type workItemCreateInputGQL struct {
+	AssigneesWidget       *workItemWidgetAssigneesInputGQL         `gql:"assigneesWidget WorkItemWidgetAssigneesInput"`
+	Confidential          *bool                                    `gql:"confidential Boolean"`
+	DescriptionWidget     *workItemWidgetDescriptionInputGQL       `gql:"descriptionWidget WorkItemWidgetDescriptionInput"`
+	MilestoneWidget       *workItemWidgetMilestoneInputGQL         `gql:"milestoneWidget WorkItemWidgetMilestoneInput"`
+	CreateSource          *string                                  `gql:"createSource String"`
+	CreatedAt             *time.Time                               `gql:"createdAt Time"`
+	CRMContactsWidget     *workItemWidgetCRMContactsCreateInputGQL `gql:"crmContactsWidget WorkItemWidgetCrmContactsCreateInput"`
+	HierarchyWidget       *workItemWidgetHierarchyCreateInputGQL   `gql:"hierarchyWidget WorkItemWidgetHierarchyCreateInput"`
+	LabelsWidget          *workItemWidgetLabelsCreateInputGQL      `gql:"labelsWidget WorkItemWidgetLabelsCreateInput"`
+	LinkedItemsWidget     *workItemWidgetLinkedItemsCreateInputGQL `gql:"linkedItemsWidget WorkItemWidgetLinkedItemsCreateInput"`
+	StartAndDueDateWidget *workItemWidgetStartAndDueDateInputGQL   `gql:"startAndDueDateWidget WorkItemWidgetStartAndDueDateUpdateInput"`
+	Title                 *string                                  `gql:"title String!"`
+	WorkItemTypeID        *string                                  `gql:"workItemTypeId WorkItemsTypeID!"`
+	WeightWidget          *workItemWidgetWeightInputGQL            `gql:"weightWidget WorkItemWidgetWeightInput"`
+	HealthStatusWidget    *workItemWidgetHealthStatusInputGQL      `gql:"healthStatusWidget WorkItemWidgetHealthStatusInput"`
+	IterationWidget       *workItemWidgetIterationInputGQL         `gql:"iterationWidget WorkItemWidgetIterationInput"`
+	ColorWidget           *workItemWidgetColorInputGQL             `gql:"colorWidget WorkItemWidgetColorInput"`
+}
+
+// workItemWidgetAssigneesInputGQL represents the assignees widget input.
+type workItemWidgetAssigneesInputGQL struct {
 	AssigneeIDs []string `json:"assigneeIds,omitempty"`
 }
 
-// WorkItemWidgetDescriptionInput represents the description widget input.
-type WorkItemWidgetDescriptionInput struct {
+// workItemWidgetDescriptionInputGQL represents the description widget input.
+type workItemWidgetDescriptionInputGQL struct {
 	Description *string `json:"description,omitempty"`
 }
 
-// WorkItemWidgetMilestoneInput represents the milestone widget input.
-type WorkItemWidgetMilestoneInput struct {
+// workItemWidgetMilestoneInputGQL represents the milestone widget input.
+type workItemWidgetMilestoneInputGQL struct {
 	MilestoneID *string `json:"milestoneId,omitempty"`
 }
 
-// WorkItemWidgetCRMContactsCreateInput represents the CRM contacts widget input.
-type WorkItemWidgetCRMContactsCreateInput struct {
+// workItemWidgetCRMContactsCreateInputGQL represents the CRM contacts widget input.
+type workItemWidgetCRMContactsCreateInputGQL struct {
 	ContactIDs []string `json:"contactIds,omitempty"`
 }
 
-// WorkItemWidgetHierarchyCreateInput represents the hierarchy widget input.
-type WorkItemWidgetHierarchyCreateInput struct {
+// workItemWidgetHierarchyCreateInputGQL represents the hierarchy widget input.
+type workItemWidgetHierarchyCreateInputGQL struct {
 	ParentID *string `json:"parentId,omitempty"`
 }
 
-// WorkItemWidgetLabelsCreateInput represents the labels widget input.
-type WorkItemWidgetLabelsCreateInput struct {
+// workItemWidgetLabelsCreateInputGQL represents the labels widget input.
+type workItemWidgetLabelsCreateInputGQL struct {
 	LabelIDs []string `json:"labelIds,omitempty"`
 }
 
-// WorkItemWidgetLinkedItemsCreateInput represents the linked items widget input.
-type WorkItemWidgetLinkedItemsCreateInput struct {
+// workItemWidgetLinkedItemsCreateInputGQL represents the linked items widget input.
+type workItemWidgetLinkedItemsCreateInputGQL struct {
 	WorkItemIDs []string `json:"workItemIds,omitempty"`
 }
 
-// WorkItemWidgetStartAndDueDateInput represents the start and due date widget input.
-type WorkItemWidgetStartAndDueDateInput struct {
+// workItemWidgetStartAndDueDateInputGQL represents the start and due date widget input.
+type workItemWidgetStartAndDueDateInputGQL struct {
 	StartDate *string `json:"startDate,omitempty"`
 	DueDate   *string `json:"dueDate,omitempty"`
 }
 
-// WorkItemWidgetWeightInput represents the weight widget input.
-type WorkItemWidgetWeightInput struct {
+// workItemWidgetWeightInputGQL represents the weight widget input.
+type workItemWidgetWeightInputGQL struct {
 	Weight *int64 `json:"weight,omitempty"`
 }
 
-// WorkItemWidgetHealthStatusInput represents the health status widget input.
-type WorkItemWidgetHealthStatusInput struct {
+// workItemWidgetHealthStatusInputGQL represents the health status widget input.
+type workItemWidgetHealthStatusInputGQL struct {
 	HealthStatus *string `json:"healthStatus,omitempty"`
 }
 
-// WorkItemWidgetIterationInput represents the iteration widget input.
-type WorkItemWidgetIterationInput struct {
+// workItemWidgetIterationInputGQL represents the iteration widget input.
+type workItemWidgetIterationInputGQL struct {
 	IterationID *string `json:"iterationId,omitempty"`
 }
 
-// WorkItemWidgetColorInput represents the color widget input.
-type WorkItemWidgetColorInput struct {
+// workItemWidgetColorInputGQL represents the color widget input.
+type workItemWidgetColorInputGQL struct {
 	Color *string `json:"color,omitempty"`
+}
+
+// newWorkItemCreateInput converts the user-facing CreateWorkItemOptions to the
+// backend-facing GraphQL-aligned workItemCreateInputGQL struct.
+func newWorkItemCreateInput(opt *CreateWorkItemOptions) *workItemCreateInputGQL {
+	if opt == nil {
+		return nil
+	}
+
+	input := &workItemCreateInputGQL{
+		Title:          opt.Title,
+		WorkItemTypeID: opt.WorkItemTypeID,
+		Confidential:   opt.Confidential,
+		CreateSource:   opt.CreateSource,
+		CreatedAt:      opt.CreatedAt,
+	}
+
+	if opt.Description != nil {
+		input.DescriptionWidget = &workItemWidgetDescriptionInputGQL{
+			Description: opt.Description,
+		}
+	}
+
+	if len(opt.AssigneeIDs) > 0 {
+		input.AssigneesWidget = &workItemWidgetAssigneesInputGQL{
+			AssigneeIDs: opt.AssigneeIDs,
+		}
+	}
+
+	if opt.MilestoneID != nil {
+		input.MilestoneWidget = &workItemWidgetMilestoneInputGQL{
+			MilestoneID: opt.MilestoneID,
+		}
+	}
+
+	if len(opt.ContactIDs) > 0 {
+		input.CRMContactsWidget = &workItemWidgetCRMContactsCreateInputGQL{
+			ContactIDs: opt.ContactIDs,
+		}
+	}
+
+	if opt.ParentID != nil {
+		input.HierarchyWidget = &workItemWidgetHierarchyCreateInputGQL{
+			ParentID: opt.ParentID,
+		}
+	}
+
+	if len(opt.LabelIDs) > 0 {
+		input.LabelsWidget = &workItemWidgetLabelsCreateInputGQL{
+			LabelIDs: opt.LabelIDs,
+		}
+	}
+
+	if len(opt.LinkedItemIDs) > 0 {
+		input.LinkedItemsWidget = &workItemWidgetLinkedItemsCreateInputGQL{
+			WorkItemIDs: opt.LinkedItemIDs,
+		}
+	}
+
+	if opt.StartDate != nil || opt.DueDate != nil {
+		input.StartAndDueDateWidget = &workItemWidgetStartAndDueDateInputGQL{
+			StartDate: opt.StartDate,
+			DueDate:   opt.DueDate,
+		}
+	}
+
+	if opt.Weight != nil {
+		input.WeightWidget = &workItemWidgetWeightInputGQL{
+			Weight: opt.Weight,
+		}
+	}
+
+	if opt.HealthStatus != nil {
+		input.HealthStatusWidget = &workItemWidgetHealthStatusInputGQL{
+			HealthStatus: opt.HealthStatus,
+		}
+	}
+
+	if opt.IterationID != nil {
+		input.IterationWidget = &workItemWidgetIterationInputGQL{
+			IterationID: opt.IterationID,
+		}
+	}
+
+	if opt.Color != nil {
+		input.ColorWidget = &workItemWidgetColorInputGQL{
+			Color: opt.Color,
+		}
+	}
+
+	return input
 }
 
 // createWorkItemTemplate is chained from workItemTemplate so it has access to both
@@ -612,61 +725,63 @@ func (s *WorkItemsService) CreateWorkItem(fullPath string, opt *CreateWorkItemOp
 		return nil, nil, err
 	}
 
+	gqlInput := newWorkItemCreateInput(opt)
+
 	input := map[string]any{
 		"namespacePath": fullPath,
 	}
 
-	if opt != nil {
-		if opt.Title != nil {
-			input["title"] = *opt.Title
+	if gqlInput != nil {
+		if gqlInput.Title != nil {
+			input["title"] = *gqlInput.Title
 		}
-		if opt.WorkItemTypeID != nil {
-			input["workItemTypeId"] = *opt.WorkItemTypeID
+		if gqlInput.WorkItemTypeID != nil {
+			input["workItemTypeId"] = *gqlInput.WorkItemTypeID
 		}
-		if opt.Confidential != nil {
-			input["confidential"] = *opt.Confidential
+		if gqlInput.Confidential != nil {
+			input["confidential"] = *gqlInput.Confidential
 		}
-		if opt.DescriptionWidget != nil {
-			input["descriptionWidget"] = opt.DescriptionWidget
+		if gqlInput.DescriptionWidget != nil {
+			input["descriptionWidget"] = gqlInput.DescriptionWidget
 		}
-		if opt.AssigneesWidget != nil {
-			input["assigneesWidget"] = opt.AssigneesWidget
+		if gqlInput.AssigneesWidget != nil {
+			input["assigneesWidget"] = gqlInput.AssigneesWidget
 		}
-		if opt.MilestoneWidget != nil {
-			input["milestoneWidget"] = opt.MilestoneWidget
+		if gqlInput.MilestoneWidget != nil {
+			input["milestoneWidget"] = gqlInput.MilestoneWidget
 		}
-		if opt.CreateSource != nil {
-			input["createSource"] = *opt.CreateSource
+		if gqlInput.CreateSource != nil {
+			input["createSource"] = *gqlInput.CreateSource
 		}
-		if opt.CreatedAt != nil {
-			input["createdAt"] = opt.CreatedAt
+		if gqlInput.CreatedAt != nil {
+			input["createdAt"] = gqlInput.CreatedAt
 		}
-		if opt.CRMContactsWidget != nil {
-			input["crmContactsWidget"] = opt.CRMContactsWidget
+		if gqlInput.CRMContactsWidget != nil {
+			input["crmContactsWidget"] = gqlInput.CRMContactsWidget
 		}
-		if opt.HierarchyWidget != nil {
-			input["hierarchyWidget"] = opt.HierarchyWidget
+		if gqlInput.HierarchyWidget != nil {
+			input["hierarchyWidget"] = gqlInput.HierarchyWidget
 		}
-		if opt.LabelsWidget != nil {
-			input["labelsWidget"] = opt.LabelsWidget
+		if gqlInput.LabelsWidget != nil {
+			input["labelsWidget"] = gqlInput.LabelsWidget
 		}
-		if opt.LinkedItemsWidget != nil {
-			input["linkedItemsWidget"] = opt.LinkedItemsWidget
+		if gqlInput.LinkedItemsWidget != nil {
+			input["linkedItemsWidget"] = gqlInput.LinkedItemsWidget
 		}
-		if opt.StartAndDueDateWidget != nil {
-			input["startAndDueDateWidget"] = opt.StartAndDueDateWidget
+		if gqlInput.StartAndDueDateWidget != nil {
+			input["startAndDueDateWidget"] = gqlInput.StartAndDueDateWidget
 		}
-		if opt.WeightWidget != nil {
-			input["weightWidget"] = opt.WeightWidget
+		if gqlInput.WeightWidget != nil {
+			input["weightWidget"] = gqlInput.WeightWidget
 		}
-		if opt.HealthStatusWidget != nil {
-			input["healthStatusWidget"] = opt.HealthStatusWidget
+		if gqlInput.HealthStatusWidget != nil {
+			input["healthStatusWidget"] = gqlInput.HealthStatusWidget
 		}
-		if opt.IterationWidget != nil {
-			input["iterationWidget"] = opt.IterationWidget
+		if gqlInput.IterationWidget != nil {
+			input["iterationWidget"] = gqlInput.IterationWidget
 		}
-		if opt.ColorWidget != nil {
-			input["colorWidget"] = opt.ColorWidget
+		if gqlInput.ColorWidget != nil {
+			input["colorWidget"] = gqlInput.ColorWidget
 		}
 	}
 
