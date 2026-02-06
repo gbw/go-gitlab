@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListNamespaces(t *testing.T) {
@@ -292,4 +293,56 @@ func TestSearchNamespace(t *testing.T) {
 		},
 	}
 	assert.Equal(t, want, namespaces)
+}
+
+func TestGetNamespaceWithSlashInID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a namespace with a slash in the ID (e.g., "my/namespace")
+	// WHEN GetNamespace is called with this ID
+	// THEN the URL should be encoded once as "my%2Fnamespace", not double-encoded as "my%252Fnamespace"
+	mux.HandleFunc("/api/v4/namespaces/my%2Fnamespace", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		// Only respond successfully if the path is correctly single-encoded
+		fmt.Fprintf(w, `{
+				"id": 5,
+				"name": "namespace",
+				"path": "namespace",
+				"kind": "group",
+				"full_path": "my/namespace",
+				"avatar_url": null,
+				"web_url": "https://gitlab.example.com/groups/my/namespace",
+				"members_count_with_descendants": 1,
+				"billable_members_count": 1,
+				"max_seats_used": 0,
+				"seats_in_use": 0,
+				"plan": "default",
+				"trial_ends_on": null,
+				"trial": false
+		 }`)
+	})
+
+	namespace, _, err := client.Namespaces.GetNamespace("my/namespace")
+	require.NoError(t, err)
+
+	want := &Namespace{
+		ID:                          5,
+		Name:                        "namespace",
+		Path:                        "namespace",
+		Kind:                        "group",
+		FullPath:                    "my/namespace",
+		AvatarURL:                   nil,
+		WebURL:                      "https://gitlab.example.com/groups/my/namespace",
+		MembersCountWithDescendants: 1,
+		BillableMembersCount:        1,
+		MaxSeatsUsed:                Ptr(int64(0)),
+		SeatsInUse:                  Ptr(int64(0)),
+		Plan:                        "default",
+		TrialEndsOn:                 nil,
+		Trial:                       false,
+	}
+
+	assert.Equal(t, want, namespace)
 }
