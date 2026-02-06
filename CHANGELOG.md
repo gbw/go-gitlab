@@ -1,3 +1,17 @@
+## 1.28.1
+
+### 🐛 Bug Fixes
+
+- Fix error where GetNamespace double escaped URL-encoded projects ([!2743](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2743)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+### 🔄 Other Changes
+
+- refactor: moved comments to interface ([!2716](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2716)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+
+
+## [1.28.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.28.0...v1.28.1) (2026-02-06)
+
 ## 1.28.0
 
 ### 🚀 Features
