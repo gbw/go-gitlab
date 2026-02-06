@@ -518,8 +518,8 @@ type CreateWorkItemOptions struct {
 	ParentID       *string    `url:"parentId,omitempty" json:"parentId,omitempty"`
 	LabelIDs       []string   `url:"labelIds,omitempty" json:"labelIds,omitempty"`
 	LinkedItemIDs  []string   `url:"linkedItemIds,omitempty" json:"linkedItemIds,omitempty"`
-	StartDate      *string    `url:"startDate,omitempty" json:"startDate,omitempty"`
-	DueDate        *string    `url:"dueDate,omitempty" json:"dueDate,omitempty"`
+	StartDate      *ISOTime   `url:"startDate,omitempty" json:"startDate,omitempty"`
+	DueDate        *ISOTime   `url:"dueDate,omitempty" json:"dueDate,omitempty"`
 	Weight         *int64     `url:"weight,omitempty" json:"weight,omitempty"`
 	HealthStatus   *string    `url:"healthStatus,omitempty" json:"healthStatus,omitempty"`
 	IterationID    *string    `url:"iterationId,omitempty" json:"iterationId,omitempty"`
@@ -666,10 +666,14 @@ func newWorkItemCreateInput(opt *CreateWorkItemOptions) *workItemCreateInputGQL 
 	}
 
 	if opt.StartDate != nil || opt.DueDate != nil {
-		input.StartAndDueDateWidget = &workItemWidgetStartAndDueDateInputGQL{
-			StartDate: opt.StartDate,
-			DueDate:   opt.DueDate,
+		widget := &workItemWidgetStartAndDueDateInputGQL{}
+		if opt.StartDate != nil {
+			widget.StartDate = Ptr(opt.StartDate.String())
 		}
+		if opt.DueDate != nil {
+			widget.DueDate = Ptr(opt.DueDate.String())
+		}
+		input.StartAndDueDateWidget = widget
 	}
 
 	if opt.Weight != nil {
