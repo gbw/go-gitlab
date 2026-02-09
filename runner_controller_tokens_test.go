@@ -111,6 +111,39 @@ func TestCreateRunnerControllerToken(t *testing.T) {
 	assert.Equal(t, want, token)
 }
 
+func TestRotateRunnerControllerToken(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a runner controller token exists
+	mux.HandleFunc("/api/v4/runner_controllers/1/tokens/1/rotate", func(w http.ResponseWriter, r *http.Request) {
+		// WHEN the rotate endpoint is called with POST
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"runner_controller_id": 1,
+			"description": "Rotated Token",
+			"token": "glrct-rotated123",
+			"created_at": "2020-02-14T00:00:00.000Z",
+			"updated_at": "2020-05-20T00:00:00.000Z"
+		}`)
+	})
+
+	token, _, err := client.RunnerControllerTokens.RotateRunnerControllerToken(1, 1)
+	assert.NoError(t, err)
+
+	// THEN the rotated token is returned with a new token value
+	want := &RunnerControllerToken{
+		ID:                 1,
+		RunnerControllerID: 1,
+		Description:        "Rotated Token",
+		Token:              "glrct-rotated123",
+		CreatedAt:          Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
+		UpdatedAt:          Ptr(time.Date(2020, time.May, 20, 0, 0, 0, 0, time.UTC)),
+	}
+	assert.Equal(t, want, token)
+}
+
 func TestRevokeRunnerControllerToken(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
