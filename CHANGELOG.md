@@ -1,3 +1,17 @@
+## 1.29.0
+
+### 🚀 Features
+
+- Update runner controllers to match latest state ([!2747](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2747)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+### 🔄 Other Changes
+
+- chore(deps): migrate from gopkg.in/yaml.v3 to go.yaml.in/yaml/v3 ([!2639](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2639)) by [Ville Skyttä](https://gitlab.com/scop)
+
+
+
+# [1.29.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.28.1...v1.29.0) (2026-02-09)
+
 ## 1.28.1
 
 ### 🐛 Bug Fixes
