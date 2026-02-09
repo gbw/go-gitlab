@@ -183,7 +183,7 @@ func (vs variablesGQL) Arguments() string {
 //	    State  *string `gql:"state IssuableState"`
 //	    Author *string `gql:"authorUsername String"`
 //	}
-//	fields, err := gqlQueryArgs(&Options{State: Ptr("opened")})
+//	fields, err := gqlVariables(&Options{State: Ptr("opened")})
 //	// Returns: [{Name: "state", Type: "IssuableState", Value: "opened"}]
 func gqlVariables(s any) (variablesGQL, error) {
 	if s == nil {
@@ -200,7 +200,7 @@ func gqlVariables(s any) (variablesGQL, error) {
 
 	var fields variablesGQL
 
-	for i := 0; i < structType.NumField(); i++ {
+	for i := range structType.NumField() {
 		field := structType.Field(i)
 		gqlTag := field.Tag.Get("gql")
 
@@ -211,8 +211,8 @@ func gqlVariables(s any) (variablesGQL, error) {
 			continue
 		}
 
-		parts := strings.Fields(gqlTag)
-		if len(parts) != 2 {
+		name, typ, ok := strings.Cut(gqlTag, " ")
+		if !ok {
 			return nil, fmt.Errorf("invalid 'gql' tag format for field %s.%s: got %q, want \"name type\"", structType.Name(), field.Name, gqlTag)
 		}
 
@@ -222,8 +222,8 @@ func gqlVariables(s any) (variablesGQL, error) {
 		}
 
 		fields = append(fields, variableGQL{
-			Name:  parts[0],
-			Type:  parts[1],
+			Name:  name,
+			Type:  typ,
 			Value: fieldValue.Interface(),
 		})
 	}
