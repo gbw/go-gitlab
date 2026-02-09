@@ -138,13 +138,13 @@ func (vs variablesGQL) asMap(base map[string]any) map[string]any {
 // "IssuableState" and "String", it returns: "$state: IssuableState, $authorUsername: String".
 // This is typically used in the query signature section of a GraphQL query.
 func (vs variablesGQL) Definitions() string {
-	var args []string
+	defs := make([]string, len(vs))
 
-	for _, v := range vs {
-		args = append(args, v.definition())
+	for i, v := range vs {
+		defs[i] = v.definition()
 	}
 
-	return strings.Join(args, ", ")
+	return strings.Join(defs, ", ")
 }
 
 // Arguments generates the GraphQL argument assignments for use in a query body.
@@ -153,10 +153,10 @@ func (vs variablesGQL) Definitions() string {
 // "state: $state, authorUsername: $authorUsername".
 // This is typically used when passing variables to a GraphQL field or connection.
 func (vs variablesGQL) Arguments() string {
-	var args []string
+	args := make([]string, len(vs))
 
-	for _, v := range vs {
-		args = append(args, v.argument())
+	for i, v := range vs {
+		args[i] = v.argument()
 	}
 
 	return strings.Join(args, ", ")
