@@ -598,8 +598,7 @@ func TestCreateWorkItem(t *testing.T) {
 			name:     "successful creation with title only",
 			fullPath: "gitlab-com/gl-infra/platform/runway/team",
 			opt: &CreateWorkItemOptions{
-				Title:          Ptr("New Task"),
-				WorkItemTypeID: Ptr("gid://gitlab/WorkItems::Type/1"),
+				Title: "New Task",
 			},
 			response: strings.NewReader(`
 				{
@@ -674,9 +673,8 @@ func TestCreateWorkItem(t *testing.T) {
 			name:     "successful creation with description",
 			fullPath: "gitlab-com/gl-infra/platform/runway/team",
 			opt: &CreateWorkItemOptions{
-				Title:          Ptr("New Issue"),
-				WorkItemTypeID: Ptr("gid://gitlab/WorkItems::Type/2"),
-				Description:    Ptr("This is a detailed description"),
+				Title:       "New Issue",
+				Description: Ptr("This is a detailed description"),
 			},
 			response: strings.NewReader(`
 				{
@@ -751,8 +749,7 @@ func TestCreateWorkItem(t *testing.T) {
 			name:     "creation with errors",
 			fullPath: "gitlab-com/gl-infra/platform/runway/team",
 			opt: &CreateWorkItemOptions{
-				Title:          Ptr(""),
-				WorkItemTypeID: Ptr("gid://gitlab/WorkItems::Type/1"),
+				Title: "",
 			},
 			response: strings.NewReader(`
 				{
@@ -798,7 +795,7 @@ func TestCreateWorkItem(t *testing.T) {
 				tt.response.WriteTo(w)
 			})
 
-			got, _, err := client.WorkItems.CreateWorkItem(tt.fullPath, tt.opt)
+			got, _, err := client.WorkItems.CreateWorkItem(tt.fullPath, "gid://gitlab/WorkItems::Type/1", tt.opt)
 
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
