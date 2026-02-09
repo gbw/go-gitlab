@@ -19,14 +19,14 @@ func TestListRunnerControllers(t *testing.T) {
 			{
 				"id": 1,
 				"description": "Controller 1",
-				"enabled": true,
+				"state": "enabled",
 				"created_at": "2020-02-14T00:00:00.000Z",
 				"updated_at": "2020-02-15T00:00:00.000Z"
 			},
 			{
 				"id": 2,
 				"description": "Controller 2",
-				"enabled": false,
+				"state": "disabled",
 				"created_at": "2020-03-14T00:00:00.000Z",
 				"updated_at": "2020-03-15T00:00:00.000Z"
 			}
@@ -40,14 +40,14 @@ func TestListRunnerControllers(t *testing.T) {
 		{
 			ID:          1,
 			Description: "Controller 1",
-			Enabled:     true,
+			State:       RunnerControllerStateEnabled,
 			CreatedAt:   Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 			UpdatedAt:   Ptr(time.Date(2020, time.February, 15, 0, 0, 0, 0, time.UTC)),
 		},
 		{
 			ID:          2,
 			Description: "Controller 2",
-			Enabled:     false,
+			State:       RunnerControllerStateDisabled,
 			CreatedAt:   Ptr(time.Date(2020, time.March, 14, 0, 0, 0, 0, time.UTC)),
 			UpdatedAt:   Ptr(time.Date(2020, time.March, 15, 0, 0, 0, 0, time.UTC)),
 		},
@@ -64,7 +64,7 @@ func TestGetRunnerController(t *testing.T) {
 		fmt.Fprint(w, `{
 			"id": 1,
 			"description": "Test Controller",
-			"enabled": true,
+			"state": "enabled",
 			"created_at": "2020-02-14T00:00:00.000Z",
 			"updated_at": "2020-02-15T00:00:00.000Z"
 		}`)
@@ -76,7 +76,7 @@ func TestGetRunnerController(t *testing.T) {
 	want := &RunnerController{
 		ID:          1,
 		Description: "Test Controller",
-		Enabled:     true,
+		State:       RunnerControllerStateEnabled,
 		CreatedAt:   Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 		UpdatedAt:   Ptr(time.Date(2020, time.February, 15, 0, 0, 0, 0, time.UTC)),
 	}
@@ -91,12 +91,12 @@ func TestCreateRunnerController(t *testing.T) {
 		testMethod(t, r, http.MethodPost)
 		testBodyJSON(t, r, map[string]any{
 			"description": "New Controller",
-			"enabled":     true,
+			"state":       "dry_run",
 		})
 		fmt.Fprint(w, `{
 			"id": 3,
 			"description": "New Controller",
-			"enabled": true,
+			"state": "dry_run",
 			"created_at": "2020-04-14T00:00:00.000Z",
 			"updated_at": "2020-04-14T00:00:00.000Z"
 		}`)
@@ -104,7 +104,7 @@ func TestCreateRunnerController(t *testing.T) {
 
 	opt := &CreateRunnerControllerOptions{
 		Description: Ptr("New Controller"),
-		Enabled:     Ptr(true),
+		State:       Ptr(RunnerControllerStateDryRun),
 	}
 	controller, _, err := client.RunnerControllers.CreateRunnerController(opt)
 	assert.NoError(t, err)
@@ -112,7 +112,7 @@ func TestCreateRunnerController(t *testing.T) {
 	want := &RunnerController{
 		ID:          3,
 		Description: "New Controller",
-		Enabled:     true,
+		State:       RunnerControllerStateDryRun,
 		CreatedAt:   Ptr(time.Date(2020, time.April, 14, 0, 0, 0, 0, time.UTC)),
 		UpdatedAt:   Ptr(time.Date(2020, time.April, 14, 0, 0, 0, 0, time.UTC)),
 	}
@@ -127,12 +127,12 @@ func TestUpdateRunnerController(t *testing.T) {
 		testMethod(t, r, http.MethodPut)
 		testBodyJSON(t, r, map[string]any{
 			"description": "Updated Controller",
-			"enabled":     false,
+			"state":       "disabled",
 		})
 		fmt.Fprint(w, `{
 			"id": 1,
 			"description": "Updated Controller",
-			"enabled": false,
+			"state": "disabled",
 			"created_at": "2020-02-14T00:00:00.000Z",
 			"updated_at": "2020-05-15T00:00:00.000Z"
 		}`)
@@ -140,7 +140,7 @@ func TestUpdateRunnerController(t *testing.T) {
 
 	opt := &UpdateRunnerControllerOptions{
 		Description: Ptr("Updated Controller"),
-		Enabled:     Ptr(false),
+		State:       Ptr(RunnerControllerStateDisabled),
 	}
 	controller, _, err := client.RunnerControllers.UpdateRunnerController(1, opt)
 	assert.NoError(t, err)
@@ -148,7 +148,7 @@ func TestUpdateRunnerController(t *testing.T) {
 	want := &RunnerController{
 		ID:          1,
 		Description: "Updated Controller",
-		Enabled:     false,
+		State:       RunnerControllerStateDisabled,
 		CreatedAt:   Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 		UpdatedAt:   Ptr(time.Date(2020, time.May, 15, 0, 0, 0, 0, time.UTC)),
 	}

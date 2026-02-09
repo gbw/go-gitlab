@@ -217,3 +217,48 @@ func (c *MockRunnerControllerTokensServiceInterfaceRevokeRunnerControllerTokenCa
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
+
+// RotateRunnerControllerToken mocks base method.
+func (m *MockRunnerControllerTokensServiceInterface) RotateRunnerControllerToken(rid, tokenID int64, options ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerToken, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{rid, tokenID}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RotateRunnerControllerToken", varargs...)
+	ret0, _ := ret[0].(*gitlab.RunnerControllerToken)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// RotateRunnerControllerToken indicates an expected call of RotateRunnerControllerToken.
+func (mr *MockRunnerControllerTokensServiceInterfaceMockRecorder) RotateRunnerControllerToken(rid, tokenID any, options ...any) *MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{rid, tokenID}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RotateRunnerControllerToken", reflect.TypeOf((*MockRunnerControllerTokensServiceInterface)(nil).RotateRunnerControllerToken), varargs...)
+	return &MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall{Call: call}
+}
+
+// MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall wrap *gomock.Call
+type MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall) Return(arg0 *gitlab.RunnerControllerToken, arg1 *gitlab.Response, arg2 error) *MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall) Do(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerToken, *gitlab.Response, error)) *MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall) DoAndReturn(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerToken, *gitlab.Response, error)) *MockRunnerControllerTokensServiceInterfaceRotateRunnerControllerTokenCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
