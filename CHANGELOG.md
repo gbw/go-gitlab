@@ -1,3 +1,18 @@
+## 1.30.0
+
+### 🚀 Features
+
+- Add missing query params to ListGroupsOptions ([!2726](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2726)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+
+### 🔄 Other Changes
+
+- chore(deps): update module buf.build/go/protovalidate to v1.1.1 ([!2750](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2750)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- docs(no-release): update url for community fork ([!2748](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2748)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+
+
+# [1.30.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.29.0...v1.30.0) (2026-02-10)
+
 ## 1.29.0
 
 ### 🚀 Features
