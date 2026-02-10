@@ -38,6 +38,41 @@ func TestListGroups(t *testing.T) {
 	}
 }
 
+func TestListGroups_Filtering(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		testParam(t, r, "active", "true")
+		testParam(t, r, "archived", "false")
+		testParam(t, r, "marked_for_deletion_on", "2023-10-01")
+
+		fmt.Fprint(w, `[{"id":1}]`)
+	})
+
+	active := true
+	archived := false
+	deletionDate := ISOTime(time.Date(2023, time.October, 1, 0, 0, 0, 0, time.UTC))
+
+	opt := &ListGroupsOptions{
+		Active:              &active,
+		Archived:            &archived,
+		MarkedForDeletionOn: &deletionDate,
+	}
+
+	groups, _, err := client.Groups.ListGroups(opt)
+	if err != nil {
+		t.Errorf("Groups.ListGroups returned error: %v", err)
+	}
+
+	want := []*Group{{ID: 1}}
+	if !reflect.DeepEqual(want, groups) {
+		t.Errorf("Groups.ListGroups returned %+v, want %+v", groups, want)
+	}
+}
+
 func TestGetGroup(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
