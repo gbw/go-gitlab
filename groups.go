@@ -253,6 +253,9 @@ type ListGroupsOptions struct {
 	MinAccessLevel       *AccessLevelValue `url:"min_access_level,omitempty" json:"min_access_level,omitempty"`
 	TopLevelOnly         *bool             `url:"top_level_only,omitempty" json:"top_level_only,omitempty"`
 	RepositoryStorage    *string           `url:"repository_storage,omitempty" json:"repository_storage,omitempty"`
+	MarkedForDeletionOn  *ISOTime          `url:"marked_for_deletion_on,omitempty" json:"marked_for_deletion_on,omitempty"`
+	Active               *bool             `url:"active,omitempty" json:"active,omitempty"`
+	Archived             *bool             `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
 // ListGroups gets a list of groups (as user: my groups, as admin: all groups).
