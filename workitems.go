@@ -102,7 +102,7 @@ var getWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).
 // fullPath is the full path to either a group or project.
 // iid is the internal ID of the work item.
 //
-// GitLab API docs:
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitem
 func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
 	var queryBuilder strings.Builder
 	if err := getWorkItemTemplate.Execute(&queryBuilder, nil); err != nil {
@@ -148,8 +148,7 @@ func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...Re
 
 // ListWorkItemsOptions represents the available ListWorkItems() options.
 //
-// GitLab API docs:
-// https://docs.gitlab.com/ee/api/graphql/reference/#queryworkitems
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
 type ListWorkItemsOptions struct {
 	AssigneeUsernames    []string `gql:"assigneeUsernames [String!]"`
 	AssigneeWildcardID   *string  `gql:"assigneeWildcardId AssigneeWildcardId"`
@@ -217,6 +216,8 @@ var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()
 `))
 
 // ListWorkItems lists workitems in a given namespace (group or project).
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
 func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error) {
 	vars, err := gqlVariables(opt)
 	if err != nil {
