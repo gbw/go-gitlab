@@ -1,3 +1,13 @@
+## 1.31.0
+
+### 🚀 Features
+
+- Add missing fields to emoji and milestone event types ([!2704](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2704)) by [Huijie Shi](https://gitlab.com/lcdlyxrqy)
+
+
+
+# [1.31.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.30.0...v1.31.0) (2026-02-11)
+
 ## 1.30.0
 
 ### 🚀 Features
