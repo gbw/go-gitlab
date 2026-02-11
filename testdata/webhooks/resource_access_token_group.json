@@ -3,7 +3,8 @@
   "group": {
     "group_name": "Twitter",
     "group_path": "twitter",
-    "group_id": 35
+    "group_id": 35,
+    "full_path": "twitter"
   },
   "object_attributes": {
     "user_id": 90,
