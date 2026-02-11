@@ -1,0 +1,65 @@
+{
+  "object_kind": "emoji",
+  "event_type": "award",
+  "user": {
+    "id": 1,
+    "name": "Administrator",
+    "username": "root",
+    "avatar_url": "https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+    "email": "admin@example.com"
+  },
+  "project_id": 7,
+  "project": {
+    "id": 7,
+    "name": "Flight",
+    "description": "Eum dolore maxime atque reprehenderit voluptatem.",
+    "web_url": "https://example.com/flightjs/Flight",
+    "avatar_url": null,
+    "git_ssh_url": "ssh://git@example.com/flightjs/Flight.git",
+    "git_http_url": "https://example.com/flightjs/Flight.git",
+    "namespace": "Flightjs",
+    "visibility_level": 0,
+    "path_with_namespace": "flightjs/Flight",
+    "default_branch": "master",
+    "ci_config_path": "",
+    "homepage": "https://example.com/flightjs/Flight",
+    "url": "ssh://git@example.com/flightjs/Flight.git",
+    "ssh_url": "ssh://git@example.com/flightjs/Flight.git",
+    "http_url": "https://example.com/flightjs/Flight.git"
+  },
+  "object_attributes": {
+    "user_id": 1,
+    "created_at": "2024-01-24 16:27:40 UTC",
+    "id": 42,
+    "name": "thumbsup",
+    "awardable_type": "Note",
+    "awardable_id": 792,
+    "updated_at": "2024-01-24 16:27:40 UTC",
+    "action": "award",
+    "awarded_on_url": "https://example.com/flightjs/Flight/-/commit/cfe32cf61b73a0d5e9f13e774abde7ff789b1660#note_792"
+  },
+  "note": {
+    "id": 792,
+    "note": "This is a comment on a commit",
+    "noteable_type": "Commit",
+    "noteable_id": null,
+    "commit_id": "cfe32cf61b73a0d5e9f13e774abde7ff789b1660",
+    "author_id": 1,
+    "project_id": 7,
+    "created_at": "2024-01-24 16:00:00 UTC",
+    "updated_at": "2024-01-24 16:00:00 UTC",
+    "description": "This is a comment on a commit",
+    "url": "https://example.com/flightjs/Flight/-/commit/cfe32cf61b73a0d5e9f13e774abde7ff789b1660#note_792"
+  },
+  "commit": {
+    "id": "cfe32cf61b73a0d5e9f13e774abde7ff789b1660",
+    "title": "Add submodule",
+    "message": "Add submodule\n\nSigned-off-by: Dmitriy Zaporozhets <dmitriy.zaporozhets@gmail.com>\n",
+    "timestamp": "2014-02-27T10:06:20+02:00",
+    "url": "https://example.com/flightjs/Flight/-/commit/cfe32cf61b73a0d5e9f13e774abde7ff789b1660",
+    "author": {
+      "name": "Dmitriy Zaporozhets",
+      "email": "dmitriy.zaporozhets@gmail.com"
+    }
+  }
+}

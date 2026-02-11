@@ -361,7 +361,7 @@ func TestParseWikiPageHook(t *testing.T) {
 
 func TestParseEmojiHook(t *testing.T) {
 	t.Parallel()
-	raw := loadFixture(t, "testdata/webhooks/emoji.json")
+	raw := loadFixture(t, "testdata/webhooks/emoji_issue.json")
 
 	parsedEvent, err := ParseWebhook("Emoji Hook", raw)
 	assert.NoError(t, err)
@@ -383,7 +383,7 @@ func TestParseEmojiHook(t *testing.T) {
 
 func TestParseMilestoneHook(t *testing.T) {
 	t.Parallel()
-	raw := loadFixture(t, "testdata/webhooks/milestone.json")
+	raw := loadFixture(t, "testdata/webhooks/milestone_project.json")
 
 	parsedEvent, err := ParseWebhook("Milestone Hook", raw)
 	assert.NoError(t, err)

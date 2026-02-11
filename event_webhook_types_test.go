@@ -327,6 +327,7 @@ func TestGroupResourceAccessTokenEventUnmarshal(t *testing.T) {
 	expected.Group.GroupID = 35
 	expected.Group.GroupName = "Twitter"
 	expected.Group.GroupPath = "twitter"
+	expected.Group.FullPath = "twitter"
 
 	expected.ObjectAttributes.ID = 25
 	expected.ObjectAttributes.UserID = 90
@@ -1421,7 +1422,7 @@ func TestEmojiEventUnmarshal(t *testing.T) {
 	t.Parallel()
 
 	// GIVEN an emoji event JSON payload
-	jsonObject := loadFixture(t, "testdata/webhooks/emoji.json")
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_issue.json")
 
 	// WHEN the JSON is unmarshaled
 	var event *EmojiEvent
@@ -1442,6 +1443,7 @@ func TestEmojiEventUnmarshal(t *testing.T) {
 	assert.Equal(t, "admin@example.com", event.User.Email)
 
 	// Project assertions
+	assert.NotNil(t, event.Project)
 	assert.Equal(t, int64(7), event.Project.ID)
 	assert.Equal(t, "Flight", event.Project.Name)
 	assert.Equal(t, "flightjs/Flight", event.Project.PathWithNamespace)
@@ -1469,11 +1471,210 @@ func TestEmojiEventUnmarshal(t *testing.T) {
 	assert.False(t, event.Issue.Confidential)
 }
 
+func TestEmojiEventUnmarshalMergeRequest(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a merge request
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_merge_request.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "MergeRequest", event.ObjectAttributes.AwardableType)
+
+	// MergeRequest assertions
+	assert.NotNil(t, event.MergeRequest)
+	assert.Equal(t, int64(123), event.MergeRequest.ID)
+	assert.Equal(t, int64(1), event.MergeRequest.IID)
+	assert.Equal(t, "Test Merge Request", event.MergeRequest.Title)
+	assert.Equal(t, "opened", event.MergeRequest.State)
+
+	// Issue and Snippet should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.ProjectSnippet)
+	assert.Nil(t, event.Note)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalSnippet(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a snippet
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_snippet.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Snippet", event.ObjectAttributes.AwardableType)
+
+	// Snippet assertions
+	assert.NotNil(t, event.ProjectSnippet)
+	assert.Equal(t, int64(456), event.ProjectSnippet.ID)
+	assert.Equal(t, "Test Snippet", event.ProjectSnippet.Title)
+	assert.Equal(t, "ProjectSnippet", event.ProjectSnippet.Type)
+
+	// Issue and MergeRequest should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.Note)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteIssue(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on an issue
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_issue.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(789), event.Note.ID)
+	assert.Equal(t, "Issue", event.Note.NoteableType)
+	assert.Equal(t, int64(123), event.Note.NoteableID)
+
+	// Issue assertions
+	assert.NotNil(t, event.Issue)
+	assert.Equal(t, int64(123), event.Issue.ID)
+
+	// MergeRequest and Snippet should be nil
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.ProjectSnippet)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteMergeRequest(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on a merge request
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_merge_request.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(790), event.Note.ID)
+	assert.Equal(t, "MergeRequest", event.Note.NoteableType)
+
+	// MergeRequest assertions
+	assert.NotNil(t, event.MergeRequest)
+	assert.Equal(t, int64(123), event.MergeRequest.ID)
+
+	// Issue and Snippet should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.ProjectSnippet)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteSnippet(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on a snippet
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_snippet.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(791), event.Note.ID)
+	assert.Equal(t, "Snippet", event.Note.NoteableType)
+
+	// Snippet assertions
+	assert.NotNil(t, event.ProjectSnippet)
+	assert.Equal(t, int64(456), event.ProjectSnippet.ID)
+
+	// Issue and MergeRequest should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteCommit(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on a commit
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_commit.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(792), event.Note.ID)
+	assert.Equal(t, "Commit", event.Note.NoteableType)
+	assert.NotNil(t, event.Note.CommitID)
+	assert.Equal(t, "cfe32cf61b73a0d5e9f13e774abde7ff789b1660", *event.Note.CommitID)
+
+	// Commit assertions
+	assert.NotNil(t, event.Commit)
+	assert.Equal(t, "cfe32cf61b73a0d5e9f13e774abde7ff789b1660", event.Commit.ID)
+	assert.Equal(t, "Add submodule", event.Commit.Title)
+
+	// Issue, MergeRequest and Snippet should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.ProjectSnippet)
+}
+
 func TestMilestoneWebhookEventUnmarshal(t *testing.T) {
 	t.Parallel()
 
 	// GIVEN a milestone webhook event JSON payload
-	jsonObject := loadFixture(t, "testdata/webhooks/milestone.json")
+	jsonObject := loadFixture(t, "testdata/webhooks/milestone_project.json")
 
 	// WHEN the JSON is unmarshaled
 	var event *MilestoneWebhookEvent
@@ -1487,11 +1688,15 @@ func TestMilestoneWebhookEventUnmarshal(t *testing.T) {
 	assert.Equal(t, "milestone", event.EventType)
 	assert.Equal(t, "create", event.Action)
 
-	// Project assertions
+	// Project assertions (project milestone)
+	assert.NotNil(t, event.Project)
 	assert.Equal(t, int64(7), event.Project.ID)
 	assert.Equal(t, "Flight", event.Project.Name)
 	assert.Equal(t, "flightjs/Flight", event.Project.PathWithNamespace)
 	assert.Equal(t, int64(0), event.Project.VisibilityLevel)
+
+	// Group should be nil for project milestone
+	assert.Nil(t, event.Group)
 
 	// Object attributes assertions
 	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
@@ -1501,6 +1706,51 @@ func TestMilestoneWebhookEventUnmarshal(t *testing.T) {
 	assert.Equal(t, "active", event.ObjectAttributes.State)
 	assert.Equal(t, int64(7), event.ObjectAttributes.ProjectID)
 	assert.Nil(t, event.ObjectAttributes.GroupID)
+
+	// Date assertions
+	dueDate, err := ParseISOTime("2024-03-01")
+	assert.NoError(t, err)
+	assert.Equal(t, &dueDate, event.ObjectAttributes.DueDate)
+
+	startDate, err := ParseISOTime("2024-01-01")
+	assert.NoError(t, err)
+	assert.Equal(t, &startDate, event.ObjectAttributes.StartDate)
+}
+
+func TestMilestoneWebhookEventUnmarshalGroup(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a group milestone webhook event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/milestone_group.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *MilestoneWebhookEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "milestone", event.ObjectKind)
+	assert.Equal(t, "milestone", event.EventType)
+	assert.Equal(t, "create", event.Action)
+
+	// Project should be empty for group milestone
+	assert.Empty(t, event.Project)
+
+	// Group assertions (group milestone)
+	assert.NotNil(t, event.Group)
+	assert.Equal(t, int64(35), event.Group.GroupID)
+	assert.Equal(t, "Flightjs", event.Group.GroupName)
+	assert.Equal(t, "flightjs", event.Group.GroupPath)
+	assert.Equal(t, "flightjs", event.Group.FullPath)
+
+	// Object attributes assertions
+	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
+	assert.Equal(t, int64(1), event.ObjectAttributes.IID)
+	assert.Equal(t, "v1.0.0", event.ObjectAttributes.Title)
+	assert.Equal(t, int64(35), *event.ObjectAttributes.GroupID)
+	assert.Equal(t, int64(0), event.ObjectAttributes.ProjectID)
 
 	// Date assertions
 	dueDate, err := ParseISOTime("2024-03-01")
@@ -1535,6 +1785,7 @@ func TestProjectWebhookEventUnmarshal(t *testing.T) {
 	assert.Equal(t, int64(7), event.ProjectID)
 	assert.Equal(t, int64(35), event.ProjectNamespaceID)
 	assert.Equal(t, "private", event.ProjectVisibility)
+	assert.Empty(t, event.OldPathWithNamespace)
 
 	// Owners assertions
 	assert.Len(t, event.Owners, 1)
