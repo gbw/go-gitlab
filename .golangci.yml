@@ -65,6 +65,11 @@ linters:
         - name: unused-parameter
         - name: use-errors-new
         - name: var-naming
+          arguments:
+           - []
+           - []
+           - - skip-package-name-collision-with-go-std: true
+
     staticcheck:
       checks:
         - ST1020
