@@ -57,31 +57,31 @@ var workItemTemplate = template.Must(template.Must(userCoreBasicTemplate.Clone()
 	id
 	iid
 	workItemType {
-	  name
+		name
 	}
 	state
 	title
 	description
 	author {
-	  {{ template "UserCoreBasic" }}
+		{{ template "UserCoreBasic" }}
 	}
 	createdAt
 	updatedAt
 	closedAt
 	webUrl
 	features {
-	  assignees {
-	    assignees {
-	      nodes {
-	        {{ template "UserCoreBasic" }}
-	      }
-	    }
-	  }
-	  status {
-	    status {
-	      name
-	    }
-	  }
+		assignees {
+			assignees {
+				nodes {
+					{{ template "UserCoreBasic" }}
+				}
+			}
+		}
+		status {
+			status {
+				name
+			}
+		}
 	}
 `))
 
@@ -89,11 +89,11 @@ var workItemTemplate = template.Must(template.Must(userCoreBasicTemplate.Clone()
 // UserCoreBasic and WorkItem templates.
 var getWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("GetWorkItem").Parse(`
 	query GetWorkItem($fullPath: ID!, $iid: String!) {
-	  namespace(fullPath: $fullPath) {
-	    workItem(iid: $iid) {
-	      {{ template "WorkItem" }}
-	    }
-	  }
+		namespace(fullPath: $fullPath) {
+			workItem(iid: $iid) {
+				{{ template "WorkItem" }}
+			}
+		}
 	}
 `))
 
@@ -205,104 +205,104 @@ type ListWorkItemsOptions struct {
 // UserCoreBasic and WorkItem templates.
 var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("ListWorkItems").Parse(`
 	query ListWorkItems(
-	  $fullPath: ID!
-	  $assigneeUsernames: [String!]
-	  $assigneeWildcardId: AssigneeWildcardId
-	  $authorUsername: String
-	  $confidential: Boolean
-	  $crmContactId: String
-	  $crmOrganizationId: String
-	  $healthStatusFilter: HealthStatusFilter
-	  $ids: [WorkItemID!]
-	  $iids: [String!]
-	  $includeAncestors: Boolean
-	  $includeDescendants: Boolean
-	  $iterationCadenceId: [IterationsCadenceID!]
-	  $iterationId: [ID]
-	  $iterationWildcardId: IterationWildcardId
-	  $labelName: [String!]
-	  $milestoneTitle: [String!]
-	  $milestoneWildcardId: MilestoneWildcardId
-	  $myReactionEmoji: String
-	  $parentIds: [WorkItemID!]
-	  $releaseTag: [String!]
-	  $releaseTagWildcardId: ReleaseTagWildcardId
-	  $state: IssuableState
-	  $subscribed: SubscriptionStatus
-	  $types: [IssueType!]
-	  $weight: String
-	  $weightWildcardId: WeightWildcardId
-	  $closedAfter: Time
-	  $closedBefore: Time
-	  $createdAfter: Time
-	  $createdBefore: Time
-	  $dueAfter: Time
-	  $dueBefore: Time
-	  $updatedAfter: Time
-	  $updatedBefore: Time
-	  $sort: WorkItemSort
-	  $search: String
-	  $in: [IssuableSearchableField!]
-	  $after: String
-	  $before: String
-	  $first: Int
-	  $last: Int
+		$fullPath: ID!
+		$assigneeUsernames: [String!]
+		$assigneeWildcardId: AssigneeWildcardId
+		$authorUsername: String
+		$confidential: Boolean
+		$crmContactId: String
+		$crmOrganizationId: String
+		$healthStatusFilter: HealthStatusFilter
+		$ids: [WorkItemID!]
+		$iids: [String!]
+		$includeAncestors: Boolean
+		$includeDescendants: Boolean
+		$iterationCadenceId: [IterationsCadenceID!]
+		$iterationId: [ID]
+		$iterationWildcardId: IterationWildcardId
+		$labelName: [String!]
+		$milestoneTitle: [String!]
+		$milestoneWildcardId: MilestoneWildcardId
+		$myReactionEmoji: String
+		$parentIds: [WorkItemID!]
+		$releaseTag: [String!]
+		$releaseTagWildcardId: ReleaseTagWildcardId
+		$state: IssuableState
+		$subscribed: SubscriptionStatus
+		$types: [IssueType!]
+		$weight: String
+		$weightWildcardId: WeightWildcardId
+		$closedAfter: Time
+		$closedBefore: Time
+		$createdAfter: Time
+		$createdBefore: Time
+		$dueAfter: Time
+		$dueBefore: Time
+		$updatedAfter: Time
+		$updatedBefore: Time
+		$sort: WorkItemSort
+		$search: String
+		$in: [IssuableSearchableField!]
+		$after: String
+		$before: String
+		$first: Int
+		$last: Int
 	) {
-	  namespace(fullPath: $fullPath) {
-	    workItems(
-	      assigneeUsernames: $assigneeUsernames
-	      assigneeWildcardId: $assigneeWildcardId
-	      authorUsername: $authorUsername
-	      confidential: $confidential
-	      crmContactId: $crmContactId
-	      crmOrganizationId: $crmOrganizationId
-	      healthStatusFilter: $healthStatusFilter
-	      ids: $ids
-	      iids: $iids
-	      includeAncestors: $includeAncestors
-	      includeDescendants: $includeDescendants
-	      iterationCadenceId: $iterationCadenceId
-	      iterationId: $iterationId
-	      iterationWildcardId: $iterationWildcardId
-	      labelName: $labelName
-	      milestoneTitle: $milestoneTitle
-	      milestoneWildcardId: $milestoneWildcardId
-	      myReactionEmoji: $myReactionEmoji
-	      parentIds: $parentIds
-	      releaseTag: $releaseTag
-	      releaseTagWildcardId: $releaseTagWildcardId
-	      state: $state
-	      subscribed: $subscribed
-	      types: $types
-	      weight: $weight
-	      weightWildcardId: $weightWildcardId
-	      closedAfter: $closedAfter
-	      closedBefore: $closedBefore
-	      createdAfter: $createdAfter
-	      createdBefore: $createdBefore
-	      dueAfter: $dueAfter
-	      dueBefore: $dueBefore
-	      updatedAfter: $updatedAfter
-	      updatedBefore: $updatedBefore
-	      sort: $sort
-	      search: $search
-	      in: $in
-	      after: $after
-	      before: $before
-	      first: $first
-	      last: $last
-	    ) {
-	      nodes {
-	        {{ template "WorkItem" }}
-	      }
-		  pageInfo {
-		    endCursor
-			hasNextPage
-			startCursor
-			hasPreviousPage
-		  }
-	    }
-	  }
+		namespace(fullPath: $fullPath) {
+			workItems(
+				assigneeUsernames: $assigneeUsernames
+				assigneeWildcardId: $assigneeWildcardId
+				authorUsername: $authorUsername
+				confidential: $confidential
+				crmContactId: $crmContactId
+				crmOrganizationId: $crmOrganizationId
+				healthStatusFilter: $healthStatusFilter
+				ids: $ids
+				iids: $iids
+				includeAncestors: $includeAncestors
+				includeDescendants: $includeDescendants
+				iterationCadenceId: $iterationCadenceId
+				iterationId: $iterationId
+				iterationWildcardId: $iterationWildcardId
+				labelName: $labelName
+				milestoneTitle: $milestoneTitle
+				milestoneWildcardId: $milestoneWildcardId
+				myReactionEmoji: $myReactionEmoji
+				parentIds: $parentIds
+				releaseTag: $releaseTag
+				releaseTagWildcardId: $releaseTagWildcardId
+				state: $state
+				subscribed: $subscribed
+				types: $types
+				weight: $weight
+				weightWildcardId: $weightWildcardId
+				closedAfter: $closedAfter
+				closedBefore: $closedBefore
+				createdAfter: $createdAfter
+				createdBefore: $createdBefore
+				dueAfter: $dueAfter
+				dueBefore: $dueBefore
+				updatedAfter: $updatedAfter
+				updatedBefore: $updatedBefore
+				sort: $sort
+				search: $search
+				in: $in
+				after: $after
+				before: $before
+				first: $first
+				last: $last
+			) {
+				nodes {
+					{{ template "WorkItem" }}
+				}
+				pageInfo {
+					endCursor
+					hasNextPage
+					startCursor
+					hasPreviousPage
+				}
+			}
+		}
 	}
 `))
 
