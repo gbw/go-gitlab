@@ -18,6 +18,8 @@ package gitlab
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"net/url"
 	"strconv"
 
@@ -96,6 +98,73 @@ func WithOffsetPaginationParameters(page int64) RequestOptionFunc {
 		q.Del("page")
 		q.Add("page", strconv.FormatInt(page, 10))
 		req.URL.RawQuery = q.Encode()
+		return nil
+	}
+}
+
+// withGraphQLPaginationParamters takes a PageInfo from a GraphQL response and
+// modifies the request to use that cursor for GraphQL pagination, overriding
+// any existing "after" variable.
+//
+// GraphQL API docs:
+// https://docs.gitlab.com/development/graphql_guide/pagination/
+func withGraphQLPaginationParamters(pi PageInfo) RequestOptionFunc {
+	if !pi.HasNextPage {
+		return nil
+	}
+
+	return func(req *retryablehttp.Request) error {
+		var q GraphQLQuery
+
+		data, err := req.BodyBytes()
+		if err != nil {
+			return fmt.Errorf("reading request body failed: %w", err)
+		}
+
+		if err := json.Unmarshal(data, &q); err != nil {
+			return fmt.Errorf("decoding request body failed: %w", err)
+		}
+
+		if q.Variables == nil {
+			q.Variables = make(map[string]any)
+		}
+
+		q.Variables["after"] = pi.EndCursor
+
+		data, err = json.Marshal(q)
+		if err != nil {
+			return fmt.Errorf("encoding request body failed: %w", err)
+		}
+
+		return req.SetBody(data)
+	}
+}
+
+// WithNext returns a RequestOptionFunc that configures the next page of a paginated
+// request based on pagination metadata from a previous response. It automatically
+// detects and handles all three pagination styles used by GitLab's APIs:
+//
+//   - GraphQL cursor pagination: Uses PageInfo.EndCursor with the "after" variable
+//   - REST keyset pagination: Extracts parameters from the "next" link header
+//   - REST offset pagination: Uses the NextPage number with "page" parameter
+//
+// If multiple pagination styles are present in the response, keyset/cursor pagination
+// is preferred over offset pagination for better performance and consistency.
+//
+// Returns nil if the response indicates there are no more pages (HasNextPage=false,
+// no NextLink, or NextPage=0).
+func WithNext(resp *Response) RequestOptionFunc {
+	switch {
+	case resp.PageInfo != nil:
+		return withGraphQLPaginationParamters(*resp.PageInfo)
+
+	case resp.NextLink != "":
+		return WithKeysetPaginationParameters(resp.NextLink)
+
+	case resp.NextPage != 0:
+		return WithOffsetPaginationParameters(resp.NextPage)
+
+	default:
 		return nil
 	}
 }

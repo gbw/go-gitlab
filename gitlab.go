@@ -1073,6 +1073,9 @@ type Response struct {
 	NextLink     string
 	FirstLink    string
 	LastLink     string
+
+	// GraphQL pagination.
+	PageInfo *PageInfo
 }
 
 // newResponse creates a new Response for the provided http.Response.

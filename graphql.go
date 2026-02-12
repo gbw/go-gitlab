@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -104,133 +103,6 @@ func (g *GraphQL) Do(query GraphQLQuery, response any, options ...RequestOptionF
 	return resp, nil
 }
 
-type variableGQL struct {
-	Name  string
-	Type  string
-	Value any
-}
-
-func (v variableGQL) definition() string {
-	return fmt.Sprintf("$%s: %s", v.Name, v.Type)
-}
-
-func (v variableGQL) argument() string {
-	return fmt.Sprintf("%s: $%s", v.Name, v.Name)
-}
-
-type variablesGQL []variableGQL
-
-func (vs variablesGQL) asMap(base map[string]any) map[string]any {
-	if base == nil {
-		base = make(map[string]any)
-	}
-
-	for _, f := range vs {
-		base[f.Name] = f.Value
-	}
-
-	return base
-}
-
-// Definitions generates the GraphQL query variable declarations for use in a query definition.
-// It returns a comma-separated string of parameter declarations in the format "$name: Type".
-// For example, if fieldsGQL contains fields with names "state" and "authorUsername" with types
-// "IssuableState" and "String", it returns: "$state: IssuableState, $authorUsername: String".
-// This is typically used in the query signature section of a GraphQL query.
-func (vs variablesGQL) Definitions() string {
-	defs := make([]string, len(vs))
-
-	for i, v := range vs {
-		defs[i] = v.definition()
-	}
-
-	return strings.Join(defs, ", ")
-}
-
-// Arguments generates the GraphQL argument assignments for use in a query body.
-// It returns a comma-separated string of argument assignments in the format "name: $name".
-// For example, if fieldsGQL contains fields with names "state" and "authorUsername", it returns:
-// "state: $state, authorUsername: $authorUsername".
-// This is typically used when passing variables to a GraphQL field or connection.
-func (vs variablesGQL) Arguments() string {
-	args := make([]string, len(vs))
-
-	for i, v := range vs {
-		args[i] = v.argument()
-	}
-
-	return strings.Join(args, ", ")
-}
-
-// gqlVariables extracts GraphQL variable definitions from a struct's fields.
-// It accepts a pointer to a struct where each field is annotated with a `gql:"name type"` tag.
-// The tag specifies the GraphQL variable name and type (e.g., `gql:"state IssuableState"`).
-//
-// Fields can be excluded using `gql:"-"`. Only non-zero fields are included in the result.
-//
-// Returns a variablesGQL slice containing the variable name, GraphQL type, and value for each field.
-// This can be used to generate both variable definitions (for query signatures) and variable
-// arguments (for field parameters) in GraphQL queries.
-//
-// Returns an error if:
-//   - s is not a pointer to a struct
-//   - any field is missing a `gql` tag
-//   - a `gql` tag has invalid format (must be "name type", except those tagged with "-")
-//
-// Example:
-//
-//	type Options struct {
-//	    State  *string `gql:"state IssuableState"`
-//	    Author *string `gql:"authorUsername String"`
-//	}
-//	fields, err := gqlVariables(&Options{State: Ptr("opened")})
-//	// Returns: [{Name: "state", Type: "IssuableState", Value: "opened"}]
-func gqlVariables(s any) (variablesGQL, error) {
-	if s == nil {
-		return nil, nil
-	}
-
-	structValue := reflect.ValueOf(s)
-	if structValue.Kind() != reflect.Ptr || structValue.Elem().Kind() != reflect.Struct {
-		return nil, fmt.Errorf("expected a pointer to a struct, got %T", s)
-	}
-
-	structValue = structValue.Elem() // Dereference the pointer to get the struct value
-	structType := structValue.Type()
-
-	var fields variablesGQL
-
-	for i := range structType.NumField() {
-		field := structType.Field(i)
-		gqlTag := field.Tag.Get("gql")
-
-		switch gqlTag {
-		case "":
-			return nil, fmt.Errorf("field %s.%s is missing a 'gql' tag", structType.Name(), field.Name)
-		case "-":
-			continue
-		}
-
-		name, typ, ok := strings.Cut(gqlTag, " ")
-		if !ok {
-			return nil, fmt.Errorf("invalid 'gql' tag format for field %s.%s: got %q, want \"name type\"", structType.Name(), field.Name, gqlTag)
-		}
-
-		fieldValue := structValue.Field(i)
-		if fieldValue.IsZero() {
-			continue
-		}
-
-		fields = append(fields, variableGQL{
-			Name:  name,
-			Type:  typ,
-			Value: fieldValue.Interface(),
-		})
-	}
-
-	return fields, nil
-}
-
 // gidGQL is a global ID. It is used by GraphQL to uniquely identify resources.
 type gidGQL struct {
 	Type  string
@@ -282,4 +154,38 @@ func (id *iidGQL) UnmarshalJSON(b []byte) error {
 
 	*id = iidGQL(i)
 	return nil
+}
+
+// PageInfo contains cursor-based pagination metadata for GraphQL connections following the Relay
+// cursor pagination specification. Use EndCursor and HasNextPage for forward pagination
+// (most common), or StartCursor and HasPreviousPage for backward pagination.
+//
+// Cursors are opaque strings that should not be parsed or constructed manually - always
+// use the cursors returned by the API.
+//
+// Note: GraphQL cursor pagination differs from GitLab's REST API keyset pagination.
+// In REST, the pagination link points to the first item of the next page. In GraphQL,
+// EndCursor points to the last item of the current page - you pass this to the "after"
+// parameter to fetch items after it (essentially an off-by-one difference in semantics).
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#pageinfo
+type PageInfo struct {
+	EndCursor       string `json:"endCursor"`       // Cursor of the last item in this page (pass to "after" for next page)
+	HasNextPage     bool   `json:"hasNextPage"`     // True if more items exist after this page
+	StartCursor     string `json:"startCursor"`     // Cursor of the first item in this page (pass to "before" for previous page)
+	HasPreviousPage bool   `json:"hasPreviousPage"` // True if items exist before this page
+}
+
+// connectionGQL represents a paginated GraphQL connection response following the Relay
+// cursor pagination specification. It wraps a list of nodes of any type T along with
+// pagination metadata. This type is used internally to unmarshal GraphQL responses from
+// GitLab's API, which consistently uses this connection pattern for all paginated fields.
+//
+// The PageInfo field provides cursors and flags for iterating through pages, while Nodes
+// contains the actual data items for the current page.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#connection-fields
+type connectionGQL[T any] struct {
+	PageInfo PageInfo `json:"pageInfo"`
+	Nodes    []T      `json:"nodes"`
 }

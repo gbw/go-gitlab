@@ -460,3 +460,36 @@ func ExampleWithRequestRetry_createMergeRequestAndSetAutoMerge() {
 		log.Fatal(err)
 	}
 }
+
+func ExampleWithNext() {
+	ctx := context.Background()
+
+	client, err := NewClient("yourtokengoeshere")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var (
+		projectName = "example/example"
+		opts        = ListProjectMergeRequestsOptions{
+			AuthorUsername: Ptr("me"),
+		}
+		page RequestOptionFunc
+	)
+
+	for {
+		mrs, resp, err := client.MergeRequests.ListProjectMergeRequests(projectName, &opts, WithContext(ctx), page)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Process mrs...
+		_ = mrs
+
+		page = WithNext(resp)
+		if page == nil {
+			// No more pages, break the loop
+			break
+		}
+	}
+}

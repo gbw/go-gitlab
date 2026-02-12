@@ -151,17 +151,20 @@ func TestGetWorkItem(t *testing.T) {
 	}
 }
 
+//go:embed testdata/list_work_items.json
+var listWorkItemResponse []byte
+
 func TestListWorkItems(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name            string
-		fullPath        string
-		opt             *ListWorkItemsOptions
-		response        io.WriterTo
-		wantQuerySubstr []string
-		want            []*WorkItem
-		wantErr         error
+		name         string
+		fullPath     string
+		opt          *ListWorkItemsOptions
+		response     io.WriterTo
+		want         []*WorkItem
+		wantPageInfo *PageInfo
+		wantErr      error
 	}{
 		{
 			name:     "successful query with authorUsername",
@@ -169,33 +172,7 @@ func TestListWorkItems(t *testing.T) {
 			opt: &ListWorkItemsOptions{
 				AuthorUsername: Ptr("fforster"),
 			},
-			response: strings.NewReader(`
-				{
-				  "data": {
-				    "namespace": {
-				      "workItems": {
-				        "nodes": [
-				          {
-				            "id": "gid://gitlab/WorkItem/181297786",
-				            "iid": "39",
-				            "title": "Phase 6: Rollout to Additional Services"
-				          },
-				          {
-				            "id": "gid://gitlab/WorkItem/181297779",
-				            "iid": "38",
-				            "title": "Phase 5: Dedicated Integration"
-				          }
-				        ]
-				      }
-				    }
-				  },
-				  "correlationId": "9c88d56b0061dfef-IAD"
-				}
-			`),
-			wantQuerySubstr: []string{
-				`query ListWorkItems($fullPath: ID!, $authorUsername: String)`,
-				`workItems(authorUsername: $authorUsername) {`,
-			},
+			response: bytes.NewReader(listWorkItemResponse),
 			want: []*WorkItem{
 				{
 					ID:    181297786,
@@ -207,6 +184,12 @@ func TestListWorkItems(t *testing.T) {
 					IID:   38,
 					Title: "Phase 5: Dedicated Integration",
 				},
+			},
+			wantPageInfo: &PageInfo{
+				EndCursor:       "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjo0Ny44NTEyMTUwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc3OSJ9",
+				HasNextPage:     true,
+				StartCursor:     "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjo1Ny43NjgxNzYwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc4NiJ9",
+				HasPreviousPage: false,
 			},
 		},
 		{
@@ -234,10 +217,6 @@ func TestListWorkItems(t *testing.T) {
 				  "correlationId": "9c88d56b0061dfef-IAD"
 				}
 			`),
-			wantQuerySubstr: []string{
-				`query ListWorkItems($fullPath: ID!, $authorUsername: String, $state: IssuableState)`,
-				`workItems(authorUsername: $authorUsername, state: $state) {`,
-			},
 			want: []*WorkItem{
 				{
 					ID:    181297786,
@@ -264,10 +243,6 @@ func TestListWorkItems(t *testing.T) {
 				  }
 				}
 			`),
-			wantQuerySubstr: []string{
-				`query ListWorkItems($fullPath: ID!, $authorUsername: String, $state: IssuableState)`,
-				`workItems(authorUsername: $authorUsername, state: $state) {`,
-			},
 			want: nil,
 		},
 		{
@@ -332,54 +307,6 @@ func TestListWorkItems(t *testing.T) {
 				  }
 				}
 			`),
-			wantQuerySubstr: []string{
-				// Main filters
-				`$assigneeUsernames: [String!]`, `assigneeUsernames: $assigneeUsernames`,
-				`$assigneeWildcardId: AssigneeWildcardId`, `assigneeWildcardId: $assigneeWildcardId`,
-				`$authorUsername: String`, `authorUsername: $authorUsername`,
-				`$confidential: Boolean`, `confidential: $confidential`,
-				`$crmContactId: String`, `crmContactId: $crmContactId`,
-				`$crmOrganizationId: String`, `crmOrganizationId: $crmOrganizationId`,
-				`$healthStatusFilter: HealthStatusFilter`, `healthStatusFilter: $healthStatusFilter`,
-				`$ids: [WorkItemID!]`, `ids: $ids`,
-				`$iids: [String!]`, `iids: $iids`,
-				`$includeAncestors: Boolean`, `includeAncestors: $includeAncestors`,
-				`$includeDescendants: Boolean`, `includeDescendants: $includeDescendants`,
-				`$iterationCadenceId: [IterationsCadenceID!]`, `iterationCadenceId: $iterationCadenceId`,
-				`$iterationId: [ID]`, `iterationId: $iterationId`,
-				`$iterationWildcardId: IterationWildcardId`, `iterationWildcardId: $iterationWildcardId`,
-				`$labelName: [String!]`, `labelName: $labelName`,
-				`$milestoneTitle: [String!]`, `milestoneTitle: $milestoneTitle`,
-				`$milestoneWildcardId: MilestoneWildcardId`, `milestoneWildcardId: $milestoneWildcardId`,
-				`$myReactionEmoji: String`, `myReactionEmoji: $myReactionEmoji`,
-				`$parentIds: [WorkItemID!]`, `parentIds: $parentIds`,
-				`$releaseTag: [String!]`, `releaseTag: $releaseTag`,
-				`$releaseTagWildcardId: ReleaseTagWildcardId`, `releaseTagWildcardId: $releaseTagWildcardId`,
-				`$state: IssuableState`, `state: $state`,
-				`$subscribed: SubscriptionStatus`, `subscribed: $subscribed`,
-				`$types: [IssueType!]`, `types: $types`,
-				`$weight: String`, `weight: $weight`,
-				`$weightWildcardId: WeightWildcardId`, `weightWildcardId: $weightWildcardId`,
-				// Time filters
-				`$closedAfter: Time`, `closedAfter: $closedAfter`,
-				`$closedBefore: Time`, `closedBefore: $closedBefore`,
-				`$createdAfter: Time`, `createdAfter: $createdAfter`,
-				`$createdBefore: Time`, `createdBefore: $createdBefore`,
-				`$dueAfter: Time`, `dueAfter: $dueAfter`,
-				`$dueBefore: Time`, `dueBefore: $dueBefore`,
-				`$updatedAfter: Time`, `updatedAfter: $updatedAfter`,
-				`$updatedBefore: Time`, `updatedBefore: $updatedBefore`,
-				// Sorting
-				`$sort: WorkItemSort`, `sort: $sort`,
-				// Search
-				`$search: String`, `search: $search`,
-				`$in: [IssuableSearchableField!]`, `in: $in`,
-				// Pagination
-				`$after: String`, `after: $after`,
-				`$before: String`, `before: $before`,
-				`$first: Int`, `first: $first`,
-				`$last: Int`, `last: $last`,
-			},
 			want: nil,
 		},
 	}
@@ -408,18 +335,11 @@ func TestListWorkItems(t *testing.T) {
 					return
 				}
 
-				for _, ss := range tt.wantQuerySubstr {
-					if !strings.Contains(q.Query, ss) {
-						http.Error(w, fmt.Sprintf("want substring %q, got query %q", ss, q.Query), http.StatusBadRequest)
-						return
-					}
-				}
-
 				w.Header().Set("Content-Type", "application/json")
 				tt.response.WriteTo(w)
 			})
 
-			got, _, err := client.WorkItems.ListWorkItems(tt.fullPath, tt.opt)
+			got, resp, err := client.WorkItems.ListWorkItems(tt.fullPath, tt.opt)
 
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
@@ -430,8 +350,194 @@ func TestListWorkItems(t *testing.T) {
 
 			require.NoError(t, err)
 			assert.Equal(t, tt.want, got)
+
+			if tt.wantPageInfo != nil {
+				assert.Equal(t, tt.wantPageInfo, resp.PageInfo)
+			}
 		})
 	}
+}
+
+func TestListWorkItems_Pagination(t *testing.T) {
+	t.Parallel()
+
+	responses := map[string]string{
+		/* page 0 */ "": `
+			{
+			  "data": {
+			    "namespace": {
+			      "workItems": {
+			        "nodes": [
+			          {
+			            "id": "gid://gitlab/WorkItem/181297786",
+			            "iid": "39",
+			            "title": "Phase 6: Rollout to Additional Services"
+			          },
+			          {
+			            "id": "gid://gitlab/WorkItem/181297779",
+			            "iid": "38",
+			            "title": "Phase 5: Dedicated Integration"
+			          }
+			        ],
+			        "pageInfo": {
+			          "endCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjo0Ny44NTEyMTUwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc3OSJ9",
+			          "hasNextPage": true,
+			          "startCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjo1Ny43NjgxNzYwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc4NiJ9",
+			          "hasPreviousPage": false
+			        }
+			      }
+			    }
+			  },
+			  "correlationId": "9ccb04130038971c-IAD"
+			}
+		`,
+		/* page 1 */ "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjo0Ny44NTEyMTUwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc3OSJ9": `
+			{
+			  "data": {
+			    "namespace": {
+			      "workItems": {
+			        "nodes": [
+			          {
+			            "id": "gid://gitlab/WorkItem/181297773",
+			            "iid": "37",
+			            "title": "Phase 4: Pilot Service Migration & Validation"
+			          },
+			          {
+			            "id": "gid://gitlab/WorkItem/181297769",
+			            "iid": "36",
+			            "title": "Phase 3: GitLab Helm Chart Integration & Values Management"
+			          }
+			        ],
+			        "pageInfo": {
+			          "endCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjozMS4yNTcxNzIwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc2OSJ9",
+			          "hasNextPage": true,
+			          "startCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjozOS4xMzMwOTEwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc3MyJ9",
+			          "hasPreviousPage": true
+			        }
+			      }
+			    }
+			  },
+			  "correlationId": "9ccb232d6071931b-IAD"
+			}
+		`,
+		/* page 2 */ "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjozMS4yNTcxNzIwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc2OSJ9": `
+			{
+			  "data": {
+			    "namespace": {
+			      "workItems": {
+			        "nodes": [
+			          {
+			            "id": "gid://gitlab/WorkItem/181297761",
+			            "iid": "35",
+			            "title": "Phase 2: Dual-Variant Chart Generation"
+			          },
+			          {
+			            "id": "gid://gitlab/WorkItem/181286354",
+			            "iid": "34",
+			            "title": "Phase 1: Foundation & Library Chart"
+			          }
+			        ],
+			        "pageInfo": {
+			          "endCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMDo0MDo1My42MTIyOTYwMDAgKzAwMDAiLCJpZCI6IjE4MTI4NjM1NCJ9",
+			          "hasNextPage": false,
+			          "startCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjoyMi41MDUyNTMwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc2MSJ9",
+			          "hasPreviousPage": true
+			        }
+			      }
+			    }
+			  },
+			  "correlationId": "9ccb265ff56b931b-IAD"
+			}
+		`,
+	}
+
+	schema := loadSchema(t)
+
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+
+		testMethod(t, r, http.MethodPost)
+
+		var q GraphQLQuery
+
+		if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		if err := validateSchema(schema, q); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		var after string
+		if a, ok := q.Variables["after"]; ok && a != nil {
+			after = a.(string)
+		}
+
+		resp, ok := responses[after]
+		if !ok {
+			http.Error(w, fmt.Sprintf("unexpected after cursor: %q", after), http.StatusBadRequest)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		_, err := io.WriteString(w, resp)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	})
+
+	opt := ListWorkItemsOptions{
+		State:          Ptr("opened"),
+		AuthorUsername: Ptr("fforster"),
+		First:          Ptr(int64(2)),
+	}
+
+	got, err := ScanAndCollect(func(p PaginationOptionFunc) ([]*WorkItem, *Response, error) {
+		return client.WorkItems.ListWorkItems("unit/test", &opt, p)
+	})
+
+	require.NoError(t, err)
+
+	want := []*WorkItem{
+		{
+			ID:    181297786,
+			IID:   39,
+			Title: "Phase 6: Rollout to Additional Services",
+		},
+		{
+			ID:    181297779,
+			IID:   38,
+			Title: "Phase 5: Dedicated Integration",
+		},
+		{
+			ID:    181297773,
+			IID:   37,
+			Title: "Phase 4: Pilot Service Migration & Validation",
+		},
+		{
+			ID:    181297769,
+			IID:   36,
+			Title: "Phase 3: GitLab Helm Chart Integration & Values Management",
+		},
+		{
+			ID:    181297761,
+			IID:   35,
+			Title: "Phase 2: Dual-Variant Chart Generation",
+		},
+		{
+			ID:    181286354,
+			IID:   34,
+			Title: "Phase 1: Foundation & Library Chart",
+		},
+	}
+
+	assert.Equal(t, want, got)
 }
 
 func loadSchema(t *testing.T) *graphql.Schema {

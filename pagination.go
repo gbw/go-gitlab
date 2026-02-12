@@ -119,12 +119,8 @@ func Scan2[T any](f func(p PaginationOptionFunc) ([]T, *Response, error)) iter.S
 			// the f request function was either configured for offset- or keyset-based
 			// pagination. We support both here, by checking if the next link is provided (keyset)
 			// or not. If both are provided, keyset-based pagination takes precedence.
-			switch {
-			case resp.NextLink != "":
-				nextOpt = WithKeysetPaginationParameters(resp.NextLink)
-			case resp.NextPage != 0:
-				nextOpt = WithOffsetPaginationParameters(resp.NextPage)
-			default:
+			nextOpt = WithNext(resp)
+			if nextOpt == nil {
 				// no more pages
 				break Pagination
 			}

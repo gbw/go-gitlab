@@ -150,66 +150,157 @@ func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...Re
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
 type ListWorkItemsOptions struct {
-	AssigneeUsernames    []string `gql:"assigneeUsernames [String!]"`
-	AssigneeWildcardID   *string  `gql:"assigneeWildcardId AssigneeWildcardId"`
-	AuthorUsername       *string  `gql:"authorUsername String"`
-	Confidential         *bool    `gql:"confidential Boolean"`
-	CRMContactID         *string  `gql:"crmContactId String"`
-	CRMOrganizationID    *string  `gql:"crmOrganizationId String"`
-	HealthStatusFilter   *string  `gql:"healthStatusFilter HealthStatusFilter"`
-	IDs                  []string `gql:"ids [WorkItemID!]"`
-	IIDs                 []string `gql:"iids [String!]"`
-	IncludeAncestors     *bool    `gql:"includeAncestors Boolean"`
-	IncludeDescendants   *bool    `gql:"includeDescendants Boolean"`
-	IterationCadenceID   []string `gql:"iterationCadenceId [IterationsCadenceID!]"`
-	IterationID          []string `gql:"iterationId [ID]"`
-	IterationWildcardID  *string  `gql:"iterationWildcardId IterationWildcardId"`
-	LabelName            []string `gql:"labelName [String!]"`
-	MilestoneTitle       []string `gql:"milestoneTitle [String!]"`
-	MilestoneWildcardID  *string  `gql:"milestoneWildcardId MilestoneWildcardId"`
-	MyReactionEmoji      *string  `gql:"myReactionEmoji String"`
-	ParentIDs            []string `gql:"parentIds [WorkItemID!]"`
-	ReleaseTag           []string `gql:"releaseTag [String!]"`
-	ReleaseTagWildcardID *string  `gql:"releaseTagWildcardId ReleaseTagWildcardId"`
-	State                *string  `gql:"state IssuableState"`
-	Subscribed           *string  `gql:"subscribed SubscriptionStatus"`
-	Types                []string `gql:"types [IssueType!]"`
-	Weight               *string  `gql:"weight String"`
-	WeightWildcardID     *string  `gql:"weightWildcardId WeightWildcardId"`
+	AssigneeUsernames    []string
+	AssigneeWildcardID   *string
+	AuthorUsername       *string
+	Confidential         *bool
+	CRMContactID         *string
+	CRMOrganizationID    *string
+	HealthStatusFilter   *string
+	IDs                  []string
+	IIDs                 []string
+	IncludeAncestors     *bool
+	IncludeDescendants   *bool
+	IterationCadenceID   []string
+	IterationID          []string
+	IterationWildcardID  *string
+	LabelName            []string
+	MilestoneTitle       []string
+	MilestoneWildcardID  *string
+	MyReactionEmoji      *string
+	ParentIDs            []string
+	ReleaseTag           []string
+	ReleaseTagWildcardID *string
+	State                *string
+	Subscribed           *string
+	Types                []string
+	Weight               *string
+	WeightWildcardID     *string
 
 	// Time filters
-	ClosedAfter   *time.Time `gql:"closedAfter Time"`
-	ClosedBefore  *time.Time `gql:"closedBefore Time"`
-	CreatedAfter  *time.Time `gql:"createdAfter Time"`
-	CreatedBefore *time.Time `gql:"createdBefore Time"`
-	DueAfter      *time.Time `gql:"dueAfter Time"`
-	DueBefore     *time.Time `gql:"dueBefore Time"`
-	UpdatedAfter  *time.Time `gql:"updatedAfter Time"`
-	UpdatedBefore *time.Time `gql:"updatedBefore Time"`
+	ClosedAfter   *time.Time
+	ClosedBefore  *time.Time
+	CreatedAfter  *time.Time
+	CreatedBefore *time.Time
+	DueAfter      *time.Time
+	DueBefore     *time.Time
+	UpdatedAfter  *time.Time
+	UpdatedBefore *time.Time
 
 	// Sorting
-	Sort *string `gql:"sort WorkItemSort"`
+	Sort *string
 
 	// Search
-	Search *string  `gql:"search String"`
-	In     []string `gql:"in [IssuableSearchableField!]"`
+	Search *string
+	In     []string
 
 	// Pagination
-	After  *string `gql:"after String"`
-	Before *string `gql:"before String"`
-	First  *int64  `gql:"first Int"`
-	Last   *int64  `gql:"last Int"`
+	After  *string
+	Before *string
+	First  *int64
+	Last   *int64
 }
 
 // listWorkItemsTemplate is chained from workItemTemplate so it has access to both
 // UserCoreBasic and WorkItem templates.
 var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("ListWorkItems").Parse(`
-	query ListWorkItems($fullPath: ID!, {{ .Variables.Definitions }}) {
+	query ListWorkItems(
+	  $fullPath: ID!
+	  $assigneeUsernames: [String!]
+	  $assigneeWildcardId: AssigneeWildcardId
+	  $authorUsername: String
+	  $confidential: Boolean
+	  $crmContactId: String
+	  $crmOrganizationId: String
+	  $healthStatusFilter: HealthStatusFilter
+	  $ids: [WorkItemID!]
+	  $iids: [String!]
+	  $includeAncestors: Boolean
+	  $includeDescendants: Boolean
+	  $iterationCadenceId: [IterationsCadenceID!]
+	  $iterationId: [ID]
+	  $iterationWildcardId: IterationWildcardId
+	  $labelName: [String!]
+	  $milestoneTitle: [String!]
+	  $milestoneWildcardId: MilestoneWildcardId
+	  $myReactionEmoji: String
+	  $parentIds: [WorkItemID!]
+	  $releaseTag: [String!]
+	  $releaseTagWildcardId: ReleaseTagWildcardId
+	  $state: IssuableState
+	  $subscribed: SubscriptionStatus
+	  $types: [IssueType!]
+	  $weight: String
+	  $weightWildcardId: WeightWildcardId
+	  $closedAfter: Time
+	  $closedBefore: Time
+	  $createdAfter: Time
+	  $createdBefore: Time
+	  $dueAfter: Time
+	  $dueBefore: Time
+	  $updatedAfter: Time
+	  $updatedBefore: Time
+	  $sort: WorkItemSort
+	  $search: String
+	  $in: [IssuableSearchableField!]
+	  $after: String
+	  $before: String
+	  $first: Int
+	  $last: Int
+	) {
 	  namespace(fullPath: $fullPath) {
-	    workItems({{ .Variables.Arguments }}) {
+	    workItems(
+	      assigneeUsernames: $assigneeUsernames
+	      assigneeWildcardId: $assigneeWildcardId
+	      authorUsername: $authorUsername
+	      confidential: $confidential
+	      crmContactId: $crmContactId
+	      crmOrganizationId: $crmOrganizationId
+	      healthStatusFilter: $healthStatusFilter
+	      ids: $ids
+	      iids: $iids
+	      includeAncestors: $includeAncestors
+	      includeDescendants: $includeDescendants
+	      iterationCadenceId: $iterationCadenceId
+	      iterationId: $iterationId
+	      iterationWildcardId: $iterationWildcardId
+	      labelName: $labelName
+	      milestoneTitle: $milestoneTitle
+	      milestoneWildcardId: $milestoneWildcardId
+	      myReactionEmoji: $myReactionEmoji
+	      parentIds: $parentIds
+	      releaseTag: $releaseTag
+	      releaseTagWildcardId: $releaseTagWildcardId
+	      state: $state
+	      subscribed: $subscribed
+	      types: $types
+	      weight: $weight
+	      weightWildcardId: $weightWildcardId
+	      closedAfter: $closedAfter
+	      closedBefore: $closedBefore
+	      createdAfter: $createdAfter
+	      createdBefore: $createdBefore
+	      dueAfter: $dueAfter
+	      dueBefore: $dueBefore
+	      updatedAfter: $updatedAfter
+	      updatedBefore: $updatedBefore
+	      sort: $sort
+	      search: $search
+	      in: $in
+	      after: $after
+	      before: $before
+	      first: $first
+	      last: $last
+	    ) {
 	      nodes {
 	        {{ template "WorkItem" }}
 	      }
+		  pageInfo {
+		    endCursor
+			hasNextPage
+			startCursor
+			hasPreviousPage
+		  }
 	    }
 	  }
 	}
@@ -219,30 +310,66 @@ var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
 func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error) {
-	vars, err := gqlVariables(opt)
-	if err != nil {
+	var queryBuilder strings.Builder
+
+	if err := listWorkItemsTemplate.Execute(&queryBuilder, nil); err != nil {
 		return nil, nil, err
 	}
 
-	var queryBuilder strings.Builder
-
-	if err := listWorkItemsTemplate.Execute(&queryBuilder, map[string]any{
-		"Variables": vars,
-	}); err != nil {
-		return nil, nil, err
+	vars := map[string]any{
+		"fullPath":             fullPath,
+		"assigneeUsernames":    opt.AssigneeUsernames,
+		"assigneeWildcardId":   opt.AssigneeWildcardID,
+		"authorUsername":       opt.AuthorUsername,
+		"confidential":         opt.Confidential,
+		"crmContactId":         opt.CRMContactID,
+		"crmOrganizationId":    opt.CRMOrganizationID,
+		"healthStatusFilter":   opt.HealthStatusFilter,
+		"ids":                  opt.IDs,
+		"iids":                 opt.IIDs,
+		"includeAncestors":     opt.IncludeAncestors,
+		"includeDescendants":   opt.IncludeDescendants,
+		"iterationCadenceId":   opt.IterationCadenceID,
+		"iterationId":          opt.IterationID,
+		"iterationWildcardId":  opt.IterationWildcardID,
+		"labelName":            opt.LabelName,
+		"milestoneTitle":       opt.MilestoneTitle,
+		"milestoneWildcardId":  opt.MilestoneWildcardID,
+		"myReactionEmoji":      opt.MyReactionEmoji,
+		"parentIds":            opt.ParentIDs,
+		"releaseTag":           opt.ReleaseTag,
+		"releaseTagWildcardId": opt.ReleaseTagWildcardID,
+		"state":                opt.State,
+		"subscribed":           opt.Subscribed,
+		"types":                opt.Types,
+		"weight":               opt.Weight,
+		"weightWildcardId":     opt.WeightWildcardID,
+		"closedAfter":          opt.ClosedAfter,
+		"closedBefore":         opt.ClosedBefore,
+		"createdAfter":         opt.CreatedAfter,
+		"createdBefore":        opt.CreatedBefore,
+		"dueAfter":             opt.DueAfter,
+		"dueBefore":            opt.DueBefore,
+		"updatedAfter":         opt.UpdatedAfter,
+		"updatedBefore":        opt.UpdatedBefore,
+		"sort":                 opt.Sort,
+		"search":               opt.Search,
+		"in":                   opt.In,
+		"after":                opt.After,
+		"before":               opt.Before,
+		"first":                opt.First,
+		"last":                 opt.Last,
 	}
 
 	query := GraphQLQuery{
 		Query:     queryBuilder.String(),
-		Variables: vars.asMap(map[string]any{"fullPath": fullPath}),
+		Variables: vars,
 	}
 
 	var result struct {
 		Data struct {
 			Namespace struct {
-				WorkItems struct {
-					Nodes []workItemGQL `json:"nodes"`
-				} `json:"workItems"`
+				WorkItems connectionGQL[workItemGQL] `json:"workItems"`
 			} `json:"namespace"`
 		}
 		GenericGraphQLErrors
@@ -265,6 +392,8 @@ func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOpti
 	for _, wi := range result.Data.Namespace.WorkItems.Nodes {
 		ret = append(ret, wi.unwrap())
 	}
+
+	resp.PageInfo = &result.Data.Namespace.WorkItems.PageInfo
 
 	return ret, resp, nil
 }

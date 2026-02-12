@@ -1,0 +1,27 @@
+{
+    "data": {
+        "namespace": {
+            "workItems": {
+                "nodes": [
+                    {
+                        "id": "gid://gitlab/WorkItem/181297786",
+                        "iid": "39",
+                        "title": "Phase 6: Rollout to Additional Services"
+                    },
+                    {
+                        "id": "gid://gitlab/WorkItem/181297779",
+                        "iid": "38",
+                        "title": "Phase 5: Dedicated Integration"
+                    }
+                ],
+                "pageInfo": {
+                    "endCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjo0Ny44NTEyMTUwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc3OSJ9",
+                    "hasNextPage": true,
+                    "startCursor": "eyJjcmVhdGVkX2F0IjoiMjAyNi0wMS0xNiAxMzozMjo1Ny43NjgxNzYwMDAgKzAwMDAiLCJpZCI6IjE4MTI5Nzc4NiJ9",
+                    "hasPreviousPage": false
+                }
+            }
+        }
+    },
+    "correlationId": "9ccb04130038971c-IAD"
+}
