@@ -119,6 +119,9 @@ linters:
         text: unused-parameter
         linters:
           - revive
+      - path: ^testing/
+        linters:
+          - revive
     paths:
       - third_party$
       - builtin$

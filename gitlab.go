@@ -276,6 +276,7 @@ type Client struct {
 	ResourceStateEvents              ResourceStateEventsServiceInterface
 	ResourceWeightEvents             ResourceWeightEventsServiceInterface
 	RunnerControllers                RunnerControllersServiceInterface
+	RunnerControllerScopes           RunnerControllerScopesServiceInterface
 	RunnerControllerTokens           RunnerControllerTokensServiceInterface
 	Runners                          RunnersServiceInterface
 	Search                           SearchServiceInterface
@@ -596,6 +597,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.ResourceStateEvents = &ResourceStateEventsService{client: c}
 	c.ResourceWeightEvents = &ResourceWeightEventsService{client: c}
 	c.RunnerControllers = &RunnerControllersService{client: c}
+	c.RunnerControllerScopes = &RunnerControllerScopesService{client: c}
 	c.RunnerControllerTokens = &RunnerControllerTokensService{client: c}
 	c.Runners = &RunnersService{client: c}
 	c.Search = &SearchService{client: c}
