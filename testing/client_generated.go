@@ -151,6 +151,7 @@ type testClientMocks struct {
 	MockResourceStateEvents              *MockResourceStateEventsServiceInterface
 	MockResourceWeightEvents             *MockResourceWeightEventsServiceInterface
 	MockRunnerControllers                *MockRunnerControllersServiceInterface
+	MockRunnerControllerScopes           *MockRunnerControllerScopesServiceInterface
 	MockRunnerControllerTokens           *MockRunnerControllerTokensServiceInterface
 	MockRunners                          *MockRunnersServiceInterface
 	MockSearch                           *MockSearchServiceInterface
@@ -313,6 +314,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockResourceStateEvents := NewMockResourceStateEventsServiceInterface(ctrl)
 	mockResourceWeightEvents := NewMockResourceWeightEventsServiceInterface(ctrl)
 	mockRunnerControllers := NewMockRunnerControllersServiceInterface(ctrl)
+	mockRunnerControllerScopes := NewMockRunnerControllerScopesServiceInterface(ctrl)
 	mockRunnerControllerTokens := NewMockRunnerControllerTokensServiceInterface(ctrl)
 	mockRunners := NewMockRunnersServiceInterface(ctrl)
 	mockSearch := NewMockSearchServiceInterface(ctrl)
@@ -474,6 +476,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		ResourceStateEvents:              mockResourceStateEvents,
 		ResourceWeightEvents:             mockResourceWeightEvents,
 		RunnerControllers:                mockRunnerControllers,
+		RunnerControllerScopes:           mockRunnerControllerScopes,
 		RunnerControllerTokens:           mockRunnerControllerTokens,
 		Runners:                          mockRunners,
 		Search:                           mockSearch,
@@ -647,6 +650,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockResourceStateEvents:              mockResourceStateEvents,
 			MockResourceWeightEvents:             mockResourceWeightEvents,
 			MockRunnerControllers:                mockRunnerControllers,
+			MockRunnerControllerScopes:           mockRunnerControllerScopes,
 			MockRunnerControllerTokens:           mockRunnerControllerTokens,
 			MockRunners:                          mockRunners,
 			MockSearch:                           mockSearch,
