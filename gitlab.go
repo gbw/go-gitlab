@@ -73,7 +73,13 @@ const (
 	PrivateToken
 )
 
-var ErrNotFound = errors.New("404 Not Found")
+var (
+	// ErrNotFound is returned for 404 Not Found errors
+	ErrNotFound = errors.New("404 Not Found")
+
+	// errUnauthenticated is an internal sentinel error to indicate that the auth source doesn't use any authentication
+	errUnauthenticated = errors.New("unauthenticated")
+)
 
 // URLValidationError wraps URL parsing errors with helpful context
 type URLValidationError struct {
@@ -1162,12 +1168,15 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 	}
 
 	authKey, authValue, err := c.authSource.Header(req.Context())
-	if err != nil {
+	switch err {
+	case nil:
+		if v := req.Header.Values(authKey); len(v) == 0 {
+			req.Header.Set(authKey, authValue)
+		}
+	case errUnauthenticated: //nolint:errorlint
+		// we simply skip using an auth header
+	default: // err != nil
 		return nil, err
-	}
-
-	if v := req.Header.Values(authKey); len(v) == 0 {
-		req.Header.Set(authKey, authValue)
 	}
 
 	client := c.client
@@ -1452,4 +1461,15 @@ func (as *PasswordCredentialsAuthSource) Init(ctx context.Context, client *Clien
 	}
 
 	return nil
+}
+
+// Unauthenticated is an authentication source for unauthenticated clients
+type Unauthenticated struct{}
+
+func (Unauthenticated) Init(context.Context, *Client) error {
+	return nil
+}
+
+func (u Unauthenticated) Header(context.Context) (string, string, error) {
+	return "", "", errUnauthenticated
 }

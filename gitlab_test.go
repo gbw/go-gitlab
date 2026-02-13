@@ -46,6 +46,7 @@ var timeLayout = "2006-01-02T15:04:05Z07:00"
 
 // Interface implementation checks.
 var (
+	_ AuthSource = Unauthenticated{}
 	_ AuthSource = OAuthTokenSource{}
 	_ AuthSource = JobTokenAuthSource{}
 	_ AuthSource = AccessTokenAuthSource{}
@@ -844,6 +845,38 @@ func TestNewAuthSourceClient(t *testing.T) {
 	if err != nil {
 		t.Fatalf("HTTP request failed: %v", err)
 	}
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, []*Project{}, projects)
+}
+
+func TestNewAuthSourceClient_Unauthenticated(t *testing.T) {
+	t.Parallel()
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		av := r.Header.Get("Authorization")
+		pv := r.Header.Get(AccessTokenHeaderName)
+		jv := r.Header.Get(JobTokenHeaderName)
+
+		if av != "" || pv != "" || jv != "" {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		fmt.Fprint(w, "[]")
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	t.Cleanup(server.Close)
+
+	client, err := NewAuthSourceClient(Unauthenticated{},
+		WithBaseURL(server.URL),
+		WithHTTPClient(server.Client()),
+	)
+	require.NoError(t, err)
+
+	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
+	require.NoError(t, err)
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, []*Project{}, projects)
