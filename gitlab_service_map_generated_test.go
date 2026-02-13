@@ -162,4 +162,5 @@ var serviceMap = map[any]any{
 	&ValidateService{}:                         (*ValidateServiceInterface)(nil),
 	&VersionService{}:                          (*VersionServiceInterface)(nil),
 	&WikisService{}:                            (*WikisServiceInterface)(nil),
+	&WorkItemsService{}:                        (*WorkItemsServiceInterface)(nil),
 }

@@ -23,6 +23,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"text/template"
 	"time"
 )
 
@@ -1383,4 +1384,44 @@ func (s *UsersService) DeleteUserIdentity(user int64, provider string, options .
 		withRequestOpts(options...),
 	)
 	return resp, err
+}
+
+// userCoreBasicTemplate defines the common fields for a user in GraphQL queries.
+var userCoreBasicTemplate = template.Must(template.New("UserCoreBasic").Parse(`
+	id
+	username
+	name
+	state
+	createdAt
+	avatarUrl
+	webUrl
+`))
+
+// userCoreBasicGQL represents the UserCore GraphQL type. It unwraps to a *BasicUser type.
+type userCoreBasicGQL struct {
+	ID        gidGQL     `json:"id"`
+	Username  string     `json:"username"`
+	Name      string     `json:"name"`
+	State     string     `json:"state"`
+	CreatedAt *time.Time `json:"createdAt"`
+	AvatarURL string     `json:"avatarUrl"`
+	WebURL    string     `json:"webUrl"`
+}
+
+// unwrap converts the GraphQL data structure to a *BasicUser.
+func (u userCoreBasicGQL) unwrap() *BasicUser {
+	if u.Username == "" {
+		return nil
+	}
+
+	return &BasicUser{
+		ID:        u.ID.Int64,
+		Username:  u.Username,
+		Name:      u.Name,
+		State:     u.State,
+		Locked:    u.State != "active",
+		CreatedAt: u.CreatedAt,
+		AvatarURL: u.AvatarURL,
+		WebURL:    u.WebURL,
+	}
 }

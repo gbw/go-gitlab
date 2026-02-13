@@ -162,3 +162,4 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=validate_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ValidateServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=version_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go VersionServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=wikis_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go WikisServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=workitems_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go WorkItemsServiceInterface
