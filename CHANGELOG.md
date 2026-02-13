@@ -1,3 +1,13 @@
+## 1.33.0
+
+### 🚀 Features
+
+- Support unauthenticated clients via Unauthenticated auth source ([!2761](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2761)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+
+
+# [1.33.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.32.0...v1.33.0) (2026-02-13)
+
 ## 1.32.0
 
 ### 🚀 Features
