@@ -1,3 +1,19 @@
+## 1.32.0
+
+### 🚀 Features
+
+- Implement endpoints for runner controller scopes ([!2758](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2758)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+### 🔄 Other Changes
+
+- test(namespaces): Address test feedback to simplify the test ([!2744](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2744)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+- chore(deps): update golangci/golangci-lint docker tag to v2.9.0 ([!2755](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2755)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update dependency golangci-lint to v2.9.0 ([!2754](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2754)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.32.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.31.0...v1.32.0) (2026-02-13)
+
 ## 1.31.0
 
 ### 🚀 Features
