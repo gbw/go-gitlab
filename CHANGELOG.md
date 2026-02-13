@@ -1,3 +1,31 @@
+## 1.34.0
+
+### 🚀 Features
+
+- feat(workitems): Add an initial "Work Items" service with "Get" and "List" methods. ([!2719](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2719)) by [Florian Forster](https://gitlab.com/fforster)
+
+### 🔄 Other Changes
+
+- refactor: migrate to math/rand/v2 ([!2759](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2759)) by [Ville Skyttä](https://gitlab.com/scop)
+
+
+
+# [1.34.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.33.0...v1.34.0) (2026-02-13)
+
+
+### Bug Fixes
+
+* **workitems:** Use `int64` for global work item IDs. ([f04e3d0](https://gitlab.com/gitlab-org/api/client-go/commit/f04e3d08a0e73f535f8049bab43b25753f62cbc0))
+
+
+### Features
+
+* **request_options:** Add boolean return value to `WithNext`. ([1cd1e1e](https://gitlab.com/gitlab-org/api/client-go/commit/1cd1e1e5ca3ad9c330ada3cbac4f48f22eab9e92))
+* **workitems:** Add comprehensive filtering to `ListWorkItemsOptions` ([052a897](https://gitlab.com/gitlab-org/api/client-go/commit/052a897891791acba55afb2fdc5e686ca14ad1df))
+* **workitems:** Add pagination support to `ListWorkItems`. ([cfdf5ee](https://gitlab.com/gitlab-org/api/client-go/commit/cfdf5ee61077951a6504b08dfe27033e9bccec5a))
+* **workitems:** Add WorkItems service with Get methods ([00925c2](https://gitlab.com/gitlab-org/api/client-go/commit/00925c26114c6a1fb2ad9758ce2ac8658e087f01)), closes [gitlab-org/api/client-go#2213](https://gitlab.com/gitlab-org/api/client-go/issues/2213)
+* **workitems:** Implement the `ListWorkItems` method. ([4f8a709](https://gitlab.com/gitlab-org/api/client-go/commit/4f8a7092a23298e3de951564cd0c46a8481c28d7))
+
 ## 1.33.0
 
 ### 🚀 Features
