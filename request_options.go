@@ -151,21 +151,22 @@ func withGraphQLPaginationParamters(pi PageInfo) RequestOptionFunc {
 // If multiple pagination styles are present in the response, keyset/cursor pagination
 // is preferred over offset pagination for better performance and consistency.
 //
-// Returns nil if the response indicates there are no more pages (HasNextPage=false,
-// no NextLink, or NextPage=0).
-func WithNext(resp *Response) RequestOptionFunc {
+// The boolean return value indicates whether more pages are available, similar to
+// the comma-ok idiom used for map accesses. When false, the returned
+// RequestOptionFunc is nil.
+func WithNext(resp *Response) (RequestOptionFunc, bool) {
 	switch {
 	case resp.PageInfo != nil:
-		return withGraphQLPaginationParamters(*resp.PageInfo)
+		return withGraphQLPaginationParamters(*resp.PageInfo), resp.PageInfo.HasNextPage
 
 	case resp.NextLink != "":
-		return WithKeysetPaginationParameters(resp.NextLink)
+		return WithKeysetPaginationParameters(resp.NextLink), true
 
 	case resp.NextPage != 0:
-		return WithOffsetPaginationParameters(resp.NextPage)
+		return WithOffsetPaginationParameters(resp.NextPage), true
 
 	default:
-		return nil
+		return nil, false
 	}
 }
 

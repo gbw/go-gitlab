@@ -486,10 +486,12 @@ func ExampleWithNext() {
 		// Process mrs...
 		_ = mrs
 
-		page = WithNext(resp)
-		if page == nil {
+		next, ok := WithNext(resp)
+		if !ok {
 			// No more pages, break the loop
 			break
 		}
+
+		page = next
 	}
 }
