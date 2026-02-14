@@ -11,6 +11,13 @@ Version 2.0 introduces breaking changes to improve API consistency, naming conve
 - New services for Work Items and Runner Controller Scopes
 - Removal of deprecated methods
 
+## Update minimum required Go version
+
+The client-go 2.0 major version upgrade aligns our supported Go versions to align to the Golang [Release Policy](https://go.dev/doc/devel/release#policy), and 
+changes the minimum required Go version to 1.24 (up from 1.23). 
+
+client-go 3.0 will release in roughly 6 months when Go version 1.27 releases, and will change the minimum required Go version to 1.25.
+
 ## Fix GetUser Function Parameter Naming
 
 The `GetUser` function had inconsistent naming for its options parameter. The struct name `GetUsersOptions` (plural) 
