@@ -764,3 +764,36 @@ func TestListGroupMergeRequests(t *testing.T) {
 		},
 	}, mr.LabelDetails)
 }
+
+func TestListGroupMergeRequests_search(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+	const groupID = "12345"
+
+	path := fmt.Sprintf("/%sgroups/%s/merge_requests", apiVersionPath, groupID)
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testFormBody(t, r, "search", "Renovate")
+		testFormBody(t, r, "in", "title,description")
+		testFormBody(t, r, "state", "merged")
+		testFormBody(t, r, "with_labels_details", "true")
+
+		mustWriteHTTPResponse(t, w, "testdata/list_group_merge_requests.json")
+	})
+
+	opts := ListGroupMergeRequestsOptions{
+		Search:            Ptr("Renovate"),
+		In:                Ptr("title,description"),
+		State:             Ptr("merged"),
+		WithLabelsDetails: Ptr(true),
+	}
+
+	mrs, resp, err := client.MergeRequests.ListGroupMergeRequests(groupID, &opts)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Len(t, mrs, 1)
+
+	mr := mrs[0]
+
+	assert.Contains(t, mr.Description, "Renovate")
+}

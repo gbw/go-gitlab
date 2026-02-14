@@ -21,10 +21,10 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -59,6 +59,9 @@ func TestListGroupHooks(t *testing.T) {
 		"alert_status": "executable",
 		"created_at": "2012-10-12T17:04:47Z",
 		"resource_access_token_events": true,
+		"project_events": true,
+		"milestone_events": true,
+		"vulnerability_events": true,
 		"custom_headers": [
 			{"key": "Authorization"},
 			{"key": "OtherHeader"}
@@ -95,6 +98,9 @@ func TestListGroupHooks(t *testing.T) {
 		AlertStatus:               "executable",
 		CreatedAt:                 &datePointer,
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key: "Authorization",
@@ -105,9 +111,7 @@ func TestListGroupHooks(t *testing.T) {
 		},
 	}}
 
-	if !reflect.DeepEqual(groupHooks, want) {
-		t.Errorf("listGroupHooks returned \ngot:\n%v\nwant:\n%v", Stringify(groupHooks), Stringify(want))
-	}
+	assert.Equal(t, want, groupHooks)
 }
 
 func TestGetGroupHook(t *testing.T) {
@@ -140,6 +144,9 @@ func TestGetGroupHook(t *testing.T) {
 	"alert_status": "executable",
 	"created_at": "2012-10-12T17:04:47Z",
 	"resource_access_token_events": true,
+	"project_events": true,
+	"milestone_events": true,
+	"vulnerability_events": true,
 	"custom_headers": [
 		{"key": "Authorization"},
 		{"key": "OtherHeader"}
@@ -175,6 +182,9 @@ func TestGetGroupHook(t *testing.T) {
 		AlertStatus:               "executable",
 		CreatedAt:                 &datePointer,
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key: "Authorization",
@@ -185,9 +195,7 @@ func TestGetGroupHook(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(groupHook, want) {
-		t.Errorf("getGroupHooks returned \ngot:\n%v\nwant:\n%v", Stringify(groupHook), Stringify(want))
-	}
+	assert.Equal(t, want, groupHook)
 }
 
 func TestResendGroupHookEvent(t *testing.T) {
@@ -235,6 +243,9 @@ func TestAddGroupHook(t *testing.T) {
 	"created_at": "2012-10-12T17:04:47Z",
 	"custom_webhook_template": "addTestValue",
 	"resource_access_token_events": true,
+	"project_events": true,
+	"milestone_events": true,
+	"vulnerability_events": true,
 	"custom_headers": [
 		{"key": "Authorization", "value": "testMe"},
 		{"key": "OtherHeader", "value": "otherTest"}
@@ -276,6 +287,9 @@ func TestAddGroupHook(t *testing.T) {
 		CreatedAt:                 &datePointer,
 		CustomWebhookTemplate:     "addTestValue",
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key:   "Authorization",
@@ -288,9 +302,7 @@ func TestAddGroupHook(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(groupHooks, want) {
-		t.Errorf("AddGroupHook returned \ngot:\n%v\nwant:\n%v", Stringify(groupHooks), Stringify(want))
-	}
+	assert.Equal(t, want, groupHooks)
 }
 
 func TestEditGroupHook(t *testing.T) {
@@ -323,6 +335,9 @@ func TestEditGroupHook(t *testing.T) {
 	"created_at": "2012-10-12T17:04:47Z",
 	"custom_webhook_template": "testValue",
 	"resource_access_token_events": true,
+	"project_events": true,
+	"milestone_events": true,
+	"vulnerability_events": true,
 	"custom_headers": [
 		{"key": "Authorization", "value": "testMe"},
 		{"key": "OtherHeader", "value": "otherTest"}
@@ -364,6 +379,9 @@ func TestEditGroupHook(t *testing.T) {
 		CreatedAt:                 &datePointer,
 		CustomWebhookTemplate:     "testValue",
 		ResourceAccessTokenEvents: true,
+		ProjectEvents:             true,
+		MilestoneEvents:           true,
+		VulnerabilityEvents:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key:   "Authorization",
@@ -376,9 +394,7 @@ func TestEditGroupHook(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(groupHooks, want) {
-		t.Errorf("EditGroupHook returned \ngot:\n%v\nwant:\n%v", Stringify(groupHooks), Stringify(want))
-	}
+	assert.Equal(t, want, groupHooks)
 }
 
 func TestDeleteGroupHook(t *testing.T) {
@@ -481,9 +497,7 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 
 		// validate that the `value` body is sent properly
 		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("Unable to read body properly. Error: %v", err)
-		}
+		assert.NoError(t, err)
 
 		// Unmarshal the body into JSON so we can check it
 		_ = json.Unmarshal(body, &bodyJSON)
@@ -492,12 +506,10 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 	})
 
 	req, err := client.Groups.SetGroupCustomHeader(1, 1, "Authorization", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
-	if err != nil {
-		t.Errorf("Groups.SetGroupCustomHeader returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	require.Equal(t, "testValue", bodyJSON["value"])
-	require.Equal(t, http.StatusNoContent, req.StatusCode)
+	assert.Equal(t, "testValue", bodyJSON["value"])
+	assert.Equal(t, http.StatusNoContent, req.StatusCode)
 }
 
 func TestDeleteGroupCustomHeader(t *testing.T) {

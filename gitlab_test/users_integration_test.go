@@ -359,7 +359,7 @@ func Test_UsersSetUserStatus_Integration(t *testing.T) {
 func Test_UsersCreateServiceAccountUser_Integration(t *testing.T) {
 	// GIVEN a GitLab instance
 	client := SetupIntegrationClient(t)
-	SkipIfRunningCE(t, client)
+	SkipIfNotLicensed(t, client)
 
 	// WHEN the CreateServiceAccountUser function is called
 	suffix := time.Now().UnixNano()
@@ -394,7 +394,7 @@ func Test_UsersCreateServiceAccountUser_Integration(t *testing.T) {
 func Test_UsersListServiceAccounts_Integration(t *testing.T) {
 	// GIVEN a GitLab instance with service accounts
 	client := SetupIntegrationClient(t)
-	SkipIfRunningCE(t, client)
+	SkipIfNotLicensed(t, client)
 
 	// Create a service account first
 	suffix := time.Now().UnixNano()

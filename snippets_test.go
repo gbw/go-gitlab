@@ -124,6 +124,22 @@ func TestSnippetsService_SnippetContent(t *testing.T) {
 	require.Equal(t, want, b)
 }
 
+func TestSnippetsService_SnippetFileContent(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/snippets/1/files/some%2Fref/filename%2Etest/raw", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, "Hello World")
+	})
+
+	b, _, err := client.Snippets.SnippetFileContent(1, "some/ref", "filename.test")
+	require.NoError(t, err)
+
+	want := []byte("Hello World")
+	require.Equal(t, want, b)
+}
+
 func TestSnippetsService_ExploreSnippets(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

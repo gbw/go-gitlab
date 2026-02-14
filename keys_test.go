@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetKeyWithUser(t *testing.T) {
@@ -62,9 +64,7 @@ func TestGetKeyWithUser(t *testing.T) {
 		})
 
 	key, _, err := client.Keys.GetKeyWithUser(1)
-	if err != nil {
-		t.Errorf("Keys.GetKeyWithUser returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Key{
 		ID:    1,
@@ -96,9 +96,7 @@ func TestGetKeyWithUser(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, key) {
-		t.Errorf("Keys.GetKeyWithUser returned %+v, want %+v", key, want)
-	}
+	assert.Equal(t, want, key)
 }
 
 func TestGetKeyByFingerprint(t *testing.T) {
@@ -148,9 +146,7 @@ func TestGetKeyByFingerprint(t *testing.T) {
 	key, _, err := client.Keys.GetKeyByFingerprint(&GetKeyByFingerprintOptions{
 		Fingerprint: "07:51:20:af:17:e4:a8:ab:22:79:9b:31:ae:a9:61:f3",
 	})
-	if err != nil {
-		t.Errorf("Keys.GetKeyWithUserByFingerprint returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Key{
 		ID:    1,
@@ -182,7 +178,5 @@ func TestGetKeyByFingerprint(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, key) {
-		t.Errorf("Keys.GetKeyWithUserByFingerprint returned %+v, want %+v", key, want)
-	}
+	assert.Equal(t, want, key)
 }

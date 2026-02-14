@@ -1,7 +1,6 @@
 package gitlab
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -71,24 +70,12 @@ type ListMergeTrainsOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_trains/#list-merge-trains-for-a-project
 func (s *MergeTrainsService) ListProjectMergeTrains(pid any, opt *ListMergeTrainsOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_trains", PathEscape(project))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mts []*MergeTrain
-	resp, err := s.client.Do(req, &mts)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mts, resp, nil
+	return do[[]*MergeTrain](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_trains", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // ListMergeRequestInMergeTrain gets a list of merge requests added to a merge
@@ -97,24 +84,12 @@ func (s *MergeTrainsService) ListProjectMergeTrains(pid any, opt *ListMergeTrain
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_trains/#list-merge-requests-in-a-merge-train
 func (s *MergeTrainsService) ListMergeRequestInMergeTrain(pid any, targetBranch string, opts *ListMergeTrainsOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_trains/%s", PathEscape(project), targetBranch)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, opts, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mts []*MergeTrain
-	resp, err := s.client.Do(req, &mts)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mts, resp, nil
+	return do[[]*MergeTrain](s.client,
+		withMethod(http.MethodGet),
+		withPath("projects/%s/merge_trains/%s", ProjectID{pid}, targetBranch),
+		withAPIOpts(opts),
+		withRequestOpts(options...),
+	)
 }
 
 // GetMergeRequestOnAMergeTrain Get merge train information for the requested
@@ -123,24 +98,10 @@ func (s *MergeTrainsService) ListMergeRequestInMergeTrain(pid any, targetBranch 
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_trains/#get-the-status-of-a-merge-request-on-a-merge-train
 func (s *MergeTrainsService) GetMergeRequestOnAMergeTrain(pid any, mergeRequest int64, options ...RequestOptionFunc) (*MergeTrain, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_trains/merge_requests/%d", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	mt := new(MergeTrain)
-	resp, err := s.client.Do(req, mt)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mt, resp, nil
+	return do[*MergeTrain](s.client,
+		withPath("projects/%s/merge_trains/merge_requests/%d", ProjectID{pid}, mergeRequest),
+		withRequestOpts(options...),
+	)
 }
 
 // AddMergeRequestToMergeTrainOptions represents the available
@@ -163,22 +124,10 @@ type AddMergeRequestToMergeTrainOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_trains/#add-a-merge-request-to-a-merge-train
 func (s *MergeTrainsService) AddMergeRequestToMergeTrain(pid any, mergeRequest int64, opts *AddMergeRequestToMergeTrainOptions, options ...RequestOptionFunc) ([]*MergeTrain, *Response, error) {
-	project, err := parseID(pid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("projects/%s/merge_trains/merge_requests/%d", PathEscape(project), mergeRequest)
-
-	req, err := s.client.NewRequest(http.MethodPost, u, opts, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mts []*MergeTrain
-	resp, err := s.client.Do(req, &mts)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mts, resp, nil
+	return do[[]*MergeTrain](s.client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/merge_trains/merge_requests/%d", ProjectID{pid}, mergeRequest),
+		withAPIOpts(opts),
+		withRequestOpts(options...),
+	)
 }

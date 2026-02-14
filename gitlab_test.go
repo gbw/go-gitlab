@@ -22,6 +22,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net"
 	"net/http"
 	"net/http/cookiejar"
@@ -45,6 +46,7 @@ var timeLayout = "2006-01-02T15:04:05Z07:00"
 
 // Interface implementation checks.
 var (
+	_ AuthSource = Unauthenticated{}
 	_ AuthSource = OAuthTokenSource{}
 	_ AuthSource = JobTokenAuthSource{}
 	_ AuthSource = AccessTokenAuthSource{}
@@ -361,7 +363,7 @@ func TestRequestWithContext(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(t.Context())
 	req, err := c.NewRequest(http.MethodGet, "test", nil, []RequestOptionFunc{WithContext(ctx)})
 	if err != nil {
 		t.Fatalf("Failed to create request: %v", err)
@@ -848,6 +850,38 @@ func TestNewAuthSourceClient(t *testing.T) {
 	assert.Equal(t, []*Project{}, projects)
 }
 
+func TestNewAuthSourceClient_Unauthenticated(t *testing.T) {
+	t.Parallel()
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		av := r.Header.Get("Authorization")
+		pv := r.Header.Get(AccessTokenHeaderName)
+		jv := r.Header.Get(JobTokenHeaderName)
+
+		if av != "" || pv != "" || jv != "" {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		fmt.Fprint(w, "[]")
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	t.Cleanup(server.Close)
+
+	client, err := NewAuthSourceClient(Unauthenticated{},
+		WithBaseURL(server.URL),
+		WithHTTPClient(server.Client()),
+	)
+	require.NoError(t, err)
+
+	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
+	require.NoError(t, err)
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, []*Project{}, projects)
+}
+
 func TestHasStatusCode(t *testing.T) {
 	t.Parallel()
 
@@ -1270,7 +1304,7 @@ func TestClient_DefaultRetryPolicy_RetryOnIdempotentRequests_ByMethod(t *testing
 			require.NoError(t, err)
 
 			// WHEN
-			retry, err := client.retryHTTPCheck(context.Background(), &http.Response{Request: &http.Request{Method: tt.method}}, errors.New("dummy"))
+			retry, err := client.retryHTTPCheck(t.Context(), &http.Response{Request: &http.Request{Method: tt.method}}, errors.New("dummy"))
 
 			// THEN
 			assert.Equal(t, tt.expectedRetry, retry)
@@ -1293,7 +1327,7 @@ func TestClient_DefaultRetryPolicy_RetryOnZeroStatusCode(t *testing.T) {
 	require.NoError(t, err)
 
 	// WHEN
-	retry, err := client.retryHTTPCheck(context.Background(), &http.Response{StatusCode: 0}, nil)
+	retry, err := client.retryHTTPCheck(t.Context(), &http.Response{StatusCode: 0}, nil)
 
 	// THEN
 	assert.True(t, retry)
@@ -1380,7 +1414,7 @@ func TestClient_DefaultRetryPolicy_RetryOnNetworkErrors(t *testing.T) {
 			}
 
 			// WHEN
-			retry, err := client.retryHTTPCheck(context.Background(), resp, tt.err)
+			retry, err := client.retryHTTPCheck(t.Context(), resp, tt.err)
 
 			// THEN
 			assert.Equal(t, tt.expectedRetry, retry, "Expected retry=%v for error: %v", tt.expectedRetry, tt.err)
@@ -1401,7 +1435,7 @@ func TestClient_DefaultRetryPolicy_ContextCancellation(t *testing.T) {
 		{
 			name: "context canceled",
 			ctx: func() context.Context {
-				ctx, cancel := context.WithCancel(context.Background())
+				ctx, cancel := context.WithCancel(t.Context())
 				cancel()
 				return ctx
 			},
@@ -1409,7 +1443,7 @@ func TestClient_DefaultRetryPolicy_ContextCancellation(t *testing.T) {
 		{
 			name: "context deadline exceeded",
 			ctx: func() context.Context {
-				ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(-time.Hour))
+				ctx, cancel := context.WithDeadline(t.Context(), time.Now().Add(-time.Hour))
 				defer cancel()
 				return ctx
 			},
@@ -1447,7 +1481,7 @@ func TestClient_DefaultRetryPolicy_RetriesDisabled(t *testing.T) {
 	client.disableRetries = true
 
 	// WHEN
-	retry, err := client.retryHTTPCheck(context.Background(), nil, errors.New("some error"))
+	retry, err := client.retryHTTPCheck(t.Context(), nil, errors.New("some error"))
 
 	// THEN
 	assert.False(t, retry)
@@ -1534,6 +1568,94 @@ func TestParseID(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 				assert.Equal(t, tt.expected, result)
+			}
+		})
+	}
+}
+
+func TestSetBaseURL(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name        string
+		input       string
+		wantBaseURL string
+	}{
+		{
+			name:        "valid HTTPS URL",
+			input:       "https://gitlab.com",
+			wantBaseURL: "https://gitlab.com/api/v4/",
+		},
+		{
+			name:        "valid URL with custom path and port",
+			input:       "https://git.company.com:8443/gitlab",
+			wantBaseURL: "https://git.company.com:8443/gitlab/api/v4/",
+		},
+		{
+			name:        "URL with trailing slash",
+			input:       "https://gitlab.com/",
+			wantBaseURL: "https://gitlab.com/api/v4/",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			c := &Client{}
+			err := c.setBaseURL(tt.input)
+
+			require.NoError(t, err)
+			require.NotNil(t, c.baseURL)
+			assert.Equal(t, tt.wantBaseURL, c.baseURL.String())
+		})
+	}
+}
+
+func TestSetBaseURL_ValidationWarnings(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name        string
+		input       string
+		expectError bool
+	}{
+		{
+			name:        "empty URL logs warning but continues",
+			input:       "",
+			expectError: false,
+		},
+		{
+			name:        "missing scheme logs warning but continues",
+			input:       "gitlab.com",
+			expectError: false,
+		},
+		{
+			name:        "wrong scheme logs warning but continues",
+			input:       "git://gitlab.com",
+			expectError: false,
+		},
+		{
+			name:        "unparseable URL returns error",
+			input:       "://invalid",
+			expectError: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			c := &Client{
+				urlWarningLogger: slog.New(slog.DiscardHandler),
+			}
+
+			err := c.setBaseURL(tt.input)
+
+			if tt.expectError {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
 			}
 		})
 	}

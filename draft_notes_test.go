@@ -18,8 +18,10 @@ package gitlab
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetDraftNote(t *testing.T) {
@@ -31,9 +33,7 @@ func TestGetDraftNote(t *testing.T) {
 	})
 
 	note, _, err := client.DraftNotes.GetDraftNote("1", 4329, 3)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &DraftNote{
 		ID:                37349978,
@@ -47,9 +47,7 @@ func TestGetDraftNote(t *testing.T) {
 		Position:          nil,
 	}
 
-	if !reflect.DeepEqual(note, want) {
-		t.Errorf("DraftNotes.GetDraftNote want %#v, got %#v", note, want)
-	}
+	assert.Equal(t, want, note)
 }
 
 func TestListDraftNotes(t *testing.T) {
@@ -61,9 +59,7 @@ func TestListDraftNotes(t *testing.T) {
 	})
 
 	notes, _, err := client.DraftNotes.ListDraftNotes("1", 4329, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*DraftNote{
 		{
@@ -110,9 +106,7 @@ func TestListDraftNotes(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(notes, want) {
-		t.Errorf("DraftNotes.GetDraftNote want %#v, got %#v", notes, want)
-	}
+	assert.Equal(t, want, notes)
 }
 
 func TestCreateDraftNote(t *testing.T) {
@@ -126,9 +120,7 @@ func TestCreateDraftNote(t *testing.T) {
 	note, _, err := client.DraftNotes.CreateDraftNote("1", 4329, &CreateDraftNoteOptions{
 		Note: Ptr("Some new draft note"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &DraftNote{
 		ID:                37349980,
@@ -142,9 +134,7 @@ func TestCreateDraftNote(t *testing.T) {
 		Position:          nil,
 	}
 
-	if !reflect.DeepEqual(note, want) {
-		t.Errorf("DraftNotes.GetDraftNote want %#v, got %#v", note, want)
-	}
+	assert.Equal(t, want, note)
 }
 
 func TestUpdateDraftNote(t *testing.T) {
@@ -158,9 +148,7 @@ func TestUpdateDraftNote(t *testing.T) {
 	note, _, err := client.DraftNotes.UpdateDraftNote("1", 4329, 3, &UpdateDraftNoteOptions{
 		Note: Ptr("Some changed draft note"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &DraftNote{
 		ID:                37349980,
@@ -174,9 +162,7 @@ func TestUpdateDraftNote(t *testing.T) {
 		Position:          nil,
 	}
 
-	if !reflect.DeepEqual(note, want) {
-		t.Errorf("DraftNotes.UpdateDraftNote want %#v, got %#v", note, want)
-	}
+	assert.Equal(t, want, note)
 }
 
 func TestDeleteDraftNote(t *testing.T) {
@@ -187,9 +173,7 @@ func TestDeleteDraftNote(t *testing.T) {
 	})
 
 	_, err := client.DraftNotes.DeleteDraftNote("1", 4329, 3)
-	if err != nil {
-		t.Errorf("DraftNotes.DeleteDraftNote returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestPublishDraftNote(t *testing.T) {
@@ -200,9 +184,7 @@ func TestPublishDraftNote(t *testing.T) {
 	})
 
 	_, err := client.DraftNotes.PublishDraftNote("1", 4329, 3)
-	if err != nil {
-		t.Errorf("DraftNotes.PublishDraftNote returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestPublishAllDraftNotes(t *testing.T) {
@@ -213,7 +195,5 @@ func TestPublishAllDraftNotes(t *testing.T) {
 	})
 
 	_, err := client.DraftNotes.PublishAllDraftNotes("1", 4329)
-	if err != nil {
-		t.Errorf("DraftNotes.PublishAllDraftNotes returned error: %v", err)
-	}
+	require.NoError(t, err)
 }

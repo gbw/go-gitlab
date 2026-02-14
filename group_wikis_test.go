@@ -3,8 +3,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListGroupWikis(t *testing.T) {
@@ -25,9 +27,7 @@ func TestListGroupWikis(t *testing.T) {
 		})
 
 	groupwikis, _, err := client.GroupWikis.ListGroupWikis(1, &ListGroupWikisOptions{})
-	if err != nil {
-		t.Errorf("GroupWikis.ListGroupWikis returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*GroupWiki{
 		{
@@ -37,9 +37,7 @@ func TestListGroupWikis(t *testing.T) {
 			Title:   "deploy title",
 		},
 	}
-	if !reflect.DeepEqual(want, groupwikis) {
-		t.Errorf("GroupWikis.ListGroupWikis returned %+v, want %+v", groupwikis, want)
-	}
+	assert.Equal(t, want, groupwikis)
 }
 
 func TestGetGroupWikiPage(t *testing.T) {
@@ -59,9 +57,7 @@ func TestGetGroupWikiPage(t *testing.T) {
 		})
 
 	groupwiki, _, err := client.GroupWikis.GetGroupWikiPage(1, "deploy", &GetGroupWikiPageOptions{})
-	if err != nil {
-		t.Errorf("GroupWikis.GetGroupWikiPage returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupWiki{
 		Content:  "content here",
@@ -70,9 +66,7 @@ func TestGetGroupWikiPage(t *testing.T) {
 		Slug:     "deploy",
 		Title:    "deploy title",
 	}
-	if !reflect.DeepEqual(want, groupwiki) {
-		t.Errorf("GroupWikis.GetGroupWikiPage returned %+v, want %+v", groupwiki, want)
-	}
+	assert.Equal(t, want, groupwiki)
 }
 
 func TestCreateGroupWikiPage(t *testing.T) {
@@ -95,9 +89,7 @@ func TestCreateGroupWikiPage(t *testing.T) {
 		Title:   Ptr("deploy title"),
 		Format:  Ptr(WikiFormatRDoc),
 	})
-	if err != nil {
-		t.Errorf("GroupWikis.CreateGroupWikiPage returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupWiki{
 		Content: "content here",
@@ -105,9 +97,7 @@ func TestCreateGroupWikiPage(t *testing.T) {
 		Slug:    "deploy",
 		Title:   "deploy title",
 	}
-	if !reflect.DeepEqual(want, groupwiki) {
-		t.Errorf("GroupWikis.CreateGroupWikiPage returned %+v, want %+v", groupwiki, want)
-	}
+	assert.Equal(t, want, groupwiki)
 }
 
 func TestEditGroupWikiPage(t *testing.T) {
@@ -130,9 +120,7 @@ func TestEditGroupWikiPage(t *testing.T) {
 		Title:   Ptr("deploy title"),
 		Format:  Ptr(WikiFormatRDoc),
 	})
-	if err != nil {
-		t.Errorf("GroupWikis.EditGroupWikiPage returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupWiki{
 		Content: "content here",
@@ -140,9 +128,7 @@ func TestEditGroupWikiPage(t *testing.T) {
 		Slug:    "deploy",
 		Title:   "deploy title",
 	}
-	if !reflect.DeepEqual(want, groupwiki) {
-		t.Errorf("GroupWikis.EditGroupWikiPage returned %+v, want %+v", groupwiki, want)
-	}
+	assert.Equal(t, want, groupwiki)
 }
 
 func TestDeleteGroupWikiPage(t *testing.T) {
@@ -156,10 +142,6 @@ func TestDeleteGroupWikiPage(t *testing.T) {
 		})
 
 	r, err := client.GroupWikis.DeleteGroupWikiPage(1, "deploy")
-	if err != nil {
-		t.Errorf("GroupWikis.DeleteGroupWikiPage returned error: %v", err)
-	}
-	if r.StatusCode != 204 {
-		t.Errorf("GroupWikis.DeleteGroupWikiPage returned wrong status code %d != 204", r.StatusCode)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, 204, r.StatusCode)
 }

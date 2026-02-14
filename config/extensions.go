@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"buf.build/go/protoyaml"
+	"go.yaml.in/yaml/v3"
 	"google.golang.org/protobuf/types/known/structpb"
-	"gopkg.in/yaml.v3"
 )
 
 type Extension[T any] struct {

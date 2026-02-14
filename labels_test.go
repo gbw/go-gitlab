@@ -21,6 +21,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateLabel(t *testing.T) {
@@ -190,4 +192,39 @@ func TestGetLabel(t *testing.T) {
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("Labels.GetLabel returned %+v, want %+v", label, want)
 	}
+}
+
+func TestDeleteLabelWithOptions(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with a label
+	// WHEN deleting the label using the Name option
+	mux.HandleFunc("/api/v4/projects/1/labels", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		testParam(t, r, "name", "MyLabel")
+	})
+
+	opt := &DeleteLabelOptions{Name: Ptr("MyLabel")}
+
+	// THEN the label should be deleted successfully
+	_, err := client.Labels.DeleteLabel("1", nil, opt)
+	assert.NoError(t, err)
+}
+
+func TestPromoteLabel(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with a label
+	// WHEN promoting the label to a group label
+	mux.HandleFunc("/api/v4/projects/1/labels/5/promote", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		w.WriteHeader(http.StatusOK)
+	})
+
+	// THEN the label should be promoted successfully
+	resp, err := client.Labels.PromoteLabel("1", 5)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
 }

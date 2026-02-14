@@ -1,7 +1,6 @@
 package gitlab
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -65,18 +64,12 @@ type MemberRole struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/member_roles/#get-all-instance-member-roles
 func (s *MemberRolesService) ListInstanceMemberRoles(options ...RequestOptionFunc) ([]*MemberRole, *Response, error) {
-	req, err := s.client.NewRequest(http.MethodGet, "member_roles", nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrs []*MemberRole
-	resp, err := s.client.Do(req, &mrs)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mrs, resp, nil
+	return do[[]*MemberRole](s.client,
+		withMethod(http.MethodGet),
+		withPath("member_roles"),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // CreateMemberRoleOptions represents the available CreateInstanceMemberRole()
@@ -116,18 +109,12 @@ type CreateMemberRoleOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/member_roles/#create-a-instance-member-role
 func (s *MemberRolesService) CreateInstanceMemberRole(opt *CreateMemberRoleOptions, options ...RequestOptionFunc) (*MemberRole, *Response, error) {
-	req, err := s.client.NewRequest(http.MethodPost, "member_roles", opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	mr := new(MemberRole)
-	resp, err := s.client.Do(req, mr)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mr, resp, nil
+	return do[*MemberRole](s.client,
+		withMethod(http.MethodPost),
+		withPath("member_roles"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // DeleteInstanceMemberRole deletes a member role from a specified group.
@@ -135,14 +122,13 @@ func (s *MemberRolesService) CreateInstanceMemberRole(opt *CreateMemberRoleOptio
 // GitLab API docs:
 // https://docs.gitlab.com/api/member_roles/#delete-an-instance-member-role
 func (s *MemberRolesService) DeleteInstanceMemberRole(memberRoleID int64, options ...RequestOptionFunc) (*Response, error) {
-	u := fmt.Sprintf("member_roles/%d", memberRoleID)
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("member_roles/%d", memberRoleID),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }
 
 // ListMemberRoles gets a list of member roles for a specified group.
@@ -150,24 +136,12 @@ func (s *MemberRolesService) DeleteInstanceMemberRole(memberRoleID int64, option
 // GitLab API docs:
 // https://docs.gitlab.com/api/member_roles/#get-all-group-member-roles
 func (s *MemberRolesService) ListMemberRoles(gid any, options ...RequestOptionFunc) ([]*MemberRole, *Response, error) {
-	group, err := parseID(gid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("groups/%s/member_roles", PathEscape(group))
-
-	req, err := s.client.NewRequest(http.MethodGet, u, nil, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	var mrs []*MemberRole
-	resp, err := s.client.Do(req, &mrs)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mrs, resp, nil
+	return do[[]*MemberRole](s.client,
+		withMethod(http.MethodGet),
+		withPath("groups/%s/member_roles", GroupID{gid}),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
 }
 
 // CreateMemberRole creates a new member role for a specified group.
@@ -175,24 +149,12 @@ func (s *MemberRolesService) ListMemberRoles(gid any, options ...RequestOptionFu
 // GitLab API docs:
 // https://docs.gitlab.com/api/member_roles/#add-a-member-role-to-a-group
 func (s *MemberRolesService) CreateMemberRole(gid any, opt *CreateMemberRoleOptions, options ...RequestOptionFunc) (*MemberRole, *Response, error) {
-	group, err := parseID(gid)
-	if err != nil {
-		return nil, nil, err
-	}
-	u := fmt.Sprintf("groups/%s/member_roles", PathEscape(group))
-
-	req, err := s.client.NewRequest(http.MethodPost, u, opt, options)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	mr := new(MemberRole)
-	resp, err := s.client.Do(req, mr)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return mr, resp, nil
+	return do[*MemberRole](s.client,
+		withMethod(http.MethodPost),
+		withPath("groups/%s/member_roles", GroupID{gid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
 }
 
 // DeleteMemberRole deletes a member role from a specified group.
@@ -200,16 +162,11 @@ func (s *MemberRolesService) CreateMemberRole(gid any, opt *CreateMemberRoleOpti
 // GitLab API docs:
 // https://docs.gitlab.com/api/member_roles/#remove-member-role-of-a-group
 func (s *MemberRolesService) DeleteMemberRole(gid any, memberRole int64, options ...RequestOptionFunc) (*Response, error) {
-	group, err := parseID(gid)
-	if err != nil {
-		return nil, err
-	}
-	u := fmt.Sprintf("groups/%s/member_roles/%d", PathEscape(group), memberRole)
-
-	req, err := s.client.NewRequest(http.MethodDelete, u, nil, options)
-	if err != nil {
-		return nil, err
-	}
-
-	return s.client.Do(req, nil)
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodDelete),
+		withPath("groups/%s/member_roles/%d", GroupID{gid}, memberRole),
+		withAPIOpts(nil),
+		withRequestOpts(options...),
+	)
+	return resp, err
 }

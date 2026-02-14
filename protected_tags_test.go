@@ -60,6 +60,40 @@ func TestListProtectedTags(t *testing.T) {
 	assert.Equal(t, expected, tags)
 }
 
+func TestListProtectedTagsWithDeployKey(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/protected_tags", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[{"name":"release-1-0", "create_access_levels": [{"id":1,"access_level": 40, "access_level_description": "Maintainers"},{"id":2,"access_level": 40, "access_level_description": "Deploy key", "deploy_key_id": 1}]}]`)
+	})
+
+	expected := []*ProtectedTag{
+		{
+			Name: "release-1-0",
+			CreateAccessLevels: []*TagAccessDescription{
+				{
+					ID:                     1,
+					AccessLevel:            40,
+					AccessLevelDescription: "Maintainers",
+				},
+				{
+					ID:                     2,
+					AccessLevel:            40,
+					DeployKeyID:            1,
+					AccessLevelDescription: "Deploy key",
+				},
+			},
+		},
+	}
+
+	opt := &ListProtectedTagsOptions{}
+	tags, _, err := client.ProtectedTags.ListProtectedTags(1, opt)
+	assert.NoError(t, err, "failed to get response")
+	assert.Equal(t, expected, tags)
+}
+
 func TestGetProtectedTag(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -82,6 +116,40 @@ func TestGetProtectedTag(t *testing.T) {
 				AccessLevel:            40,
 				GroupID:                300,
 				AccessLevelDescription: "Sample Group",
+			},
+		},
+	}
+
+	tag, _, err := client.ProtectedTags.GetProtectedTag(1, tagName)
+
+	assert.NoError(t, err, "failed to get response")
+	assert.Equal(t, expected, tag)
+}
+
+func TestGetProtectedTagWithDeployKey(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	tagName := "v1.0.0"
+
+	mux.HandleFunc(fmt.Sprintf("/api/v4/projects/1/protected_tags/%s", tagName), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"name":"v1.0.0", "create_access_levels": [{"id": 1, "access_level": 40, "access_level_description": "Maintainers"},{"id": 2, "access_level": 40, "access_level_description": "Deploy key", "deploy_key_id": 5}]}`)
+	})
+
+	expected := &ProtectedTag{
+		Name: tagName,
+		CreateAccessLevels: []*TagAccessDescription{
+			{
+				ID:                     1,
+				AccessLevel:            40,
+				AccessLevelDescription: "Maintainers",
+			},
+			{
+				ID:                     2,
+				AccessLevel:            40,
+				DeployKeyID:            5,
+				AccessLevelDescription: "Deploy key",
 			},
 		},
 	}
@@ -122,6 +190,51 @@ func TestProtectRepositoryTags(t *testing.T) {
 		AllowedToCreate: &[]*TagsPermissionOptions{
 			{
 				GroupID: Ptr(int64(300)),
+			},
+		},
+	}
+	tag, _, err := client.ProtectedTags.ProtectRepositoryTags(1, opt)
+
+	assert.NoError(t, err, "failed to get response")
+	assert.Equal(t, expected, tag)
+}
+
+func TestProtectRepositoryTagsWithDeployKey(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/protected_tags", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{"name":"*-stable", "create_access_levels": [{"id": 1, "access_level": 30, "user_id": 10, "access_level_description": "Administrator"},{"id": 2, "access_level": 40, "deploy_key_id": 20, "access_level_description": "Deploy key"}]}`)
+	})
+
+	expected := &ProtectedTag{
+		Name: "*-stable",
+		CreateAccessLevels: []*TagAccessDescription{
+			{
+				ID:                     1,
+				AccessLevel:            30,
+				UserID:                 10,
+				AccessLevelDescription: "Administrator",
+			},
+			{
+				ID:                     2,
+				AccessLevel:            40,
+				DeployKeyID:            20,
+				AccessLevelDescription: "Deploy key",
+			},
+		},
+	}
+
+	opt := &ProtectRepositoryTagsOptions{
+		Name:              Ptr("*-stable"),
+		CreateAccessLevel: Ptr(AccessLevelValue(30)),
+		AllowedToCreate: &[]*TagsPermissionOptions{
+			{
+				UserID: Ptr(int64(10)),
+			},
+			{
+				DeployKeyID: Ptr(int64(20)),
 			},
 		},
 	}

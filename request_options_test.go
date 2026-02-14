@@ -35,7 +35,7 @@ func TestWithContext(t *testing.T) {
 	})
 
 	// WithContext is called once
-	ctx1 := contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	ctx1 := contextWithCheckRetry(t.Context(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
 		if ctx.Err() != nil {
 			return false, ctx.Err()
 		}
@@ -60,7 +60,7 @@ func TestWithContext(t *testing.T) {
 	assert.NoError(t, err)
 
 	// WithContext is called twice
-	ctx1 = contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	ctx1 = contextWithCheckRetry(t.Context(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
 		if ctx.Err() != nil {
 			return false, ctx.Err()
 		}
@@ -72,7 +72,7 @@ func TestWithContext(t *testing.T) {
 		}
 		return false, nil
 	})
-	ctx2 := contextWithCheckRetry(context.Background(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	ctx2 := contextWithCheckRetry(t.Context(), func(ctx context.Context, resp *http.Response, err error) (bool, error) {
 		if ctx.Err() != nil {
 			return false, ctx.Err()
 		}
@@ -103,7 +103,7 @@ func TestWithContextAndWithRequestRetry(t *testing.T) {
 	retryCount := 0
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/success-on-3rd", func(w http.ResponseWriter, r *http.Request) {
-		retryCount += 1
+		retryCount++
 
 		if retryCount < 3 {
 			w.WriteHeader(http.StatusMethodNotAllowed)
@@ -113,7 +113,7 @@ func TestWithContextAndWithRequestRetry(t *testing.T) {
 	})
 
 	// retryableStatusCodes in context is restored when WithContext is called
-	newCtx := context.Background()
+	newCtx := t.Context()
 	req, err := client.NewRequest(
 		http.MethodGet,
 		"/success-on-3rd",
@@ -310,7 +310,7 @@ func TestWithRequestRetry(t *testing.T) {
 
 	mux, client := setup(t)
 	mux.HandleFunc("/api/v4/success-on-3rd", func(w http.ResponseWriter, r *http.Request) {
-		retryCount += 1
+		retryCount++
 		switch retryCount {
 		case 1:
 			w.WriteHeader(http.StatusMethodNotAllowed)
@@ -458,5 +458,40 @@ func ExampleWithRequestRetry_createMergeRequestAndSetAutoMerge() {
 	)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func ExampleWithNext() {
+	ctx := context.Background()
+
+	client, err := NewClient("yourtokengoeshere")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var (
+		projectName = "example/example"
+		opts        = ListProjectMergeRequestsOptions{
+			AuthorUsername: Ptr("me"),
+		}
+		page RequestOptionFunc
+	)
+
+	for {
+		mrs, resp, err := client.MergeRequests.ListProjectMergeRequests(projectName, &opts, WithContext(ctx), page)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Process mrs...
+		_ = mrs
+
+		next, ok := WithNext(resp)
+		if !ok {
+			// No more pages, break the loop
+			break
+		}
+
+		page = next
 	}
 }

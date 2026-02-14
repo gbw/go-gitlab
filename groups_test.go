@@ -11,6 +11,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/google/go-querystring/query"
 	"github.com/stretchr/testify/assert"
 )
@@ -31,6 +33,41 @@ func TestListGroups(t *testing.T) {
 	}
 
 	want := []*Group{{ID: 1}, {ID: 2}}
+	if !reflect.DeepEqual(want, groups) {
+		t.Errorf("Groups.ListGroups returned %+v, want %+v", groups, want)
+	}
+}
+
+func TestListGroups_Filtering(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		testParam(t, r, "active", "true")
+		testParam(t, r, "archived", "false")
+		testParam(t, r, "marked_for_deletion_on", "2023-10-01")
+
+		fmt.Fprint(w, `[{"id":1}]`)
+	})
+
+	active := true
+	archived := false
+	deletionDate := ISOTime(time.Date(2023, time.October, 1, 0, 0, 0, 0, time.UTC))
+
+	opt := &ListGroupsOptions{
+		Active:              &active,
+		Archived:            &archived,
+		MarkedForDeletionOn: &deletionDate,
+	}
+
+	groups, _, err := client.Groups.ListGroups(opt)
+	if err != nil {
+		t.Errorf("Groups.ListGroups returned error: %v", err)
+	}
+
+	want := []*Group{{ID: 1}}
 	if !reflect.DeepEqual(want, groups) {
 		t.Errorf("Groups.ListGroups returned %+v, want %+v", groups, want)
 	}
@@ -431,6 +468,29 @@ func TestListGroupProjects(t *testing.T) {
 
 	projects, _, err := client.Groups.ListGroupProjects(22,
 		&ListGroupProjectsOptions{})
+	if err != nil {
+		t.Errorf("Groups.ListGroupProjects returned error: %v", err)
+	}
+
+	want := []*Project{{ID: 1}, {ID: 2}}
+	if !reflect.DeepEqual(want, projects) {
+		t.Errorf("Groups.ListGroupProjects returned %+v, want %+v", projects, want)
+	}
+}
+
+func TestListGroupProjectsWithActive(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/22/projects",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testURL(t, r, "/api/v4/groups/22/projects?active=true")
+			fmt.Fprint(w, `[{"id":1},{"id":2}]`)
+		})
+
+	projects, _, err := client.Groups.ListGroupProjects(22,
+		&ListGroupProjectsOptions{Active: Ptr(true)})
 	if err != nil {
 		t.Errorf("Groups.ListGroupProjects returned error: %v", err)
 	}
@@ -1542,4 +1602,76 @@ func TestCreateGroupWithAvatar(t *testing.T) {
 	if !reflect.DeepEqual(want, group) {
 		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
 	}
+}
+
+func TestGroup_MergeSettings(t *testing.T) {
+	t.Parallel()
+
+	// Test GetGroup with merge settings
+	t.Run("GetGroup includes merge settings", func(t *testing.T) {
+		t.Parallel()
+
+		mux, client := setup(t) // Create a new mux for each subtest
+
+		mux.HandleFunc("/api/v4/groups/1", func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			fmt.Fprint(w, `{
+				"id": 1,
+				"name": "Test Group",
+				"path": "test-group",
+				"only_allow_merge_if_pipeline_succeeds": true,
+				"allow_merge_on_skipped_pipeline": false,
+				"only_allow_merge_if_all_discussions_are_resolved": true
+			}`)
+		})
+
+		group, _, err := client.Groups.GetGroup(1, nil)
+		require.NoError(t, err)
+
+		assert.True(t, group.OnlyAllowMergeIfPipelineSucceeds)
+		assert.False(t, group.AllowMergeOnSkippedPipeline)
+		assert.True(t, group.OnlyAllowMergeIfAllDiscussionsAreResolved)
+	})
+
+	// Test UpdateGroup with merge settings
+	t.Run("UpdateGroup with merge settings", func(t *testing.T) {
+		t.Parallel()
+
+		mux, client := setup(t) // Create a new mux for each subtest
+
+		mux.HandleFunc("/api/v4/groups/1", func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+
+			// Verify the request body contains the merge settings
+			body, _ := io.ReadAll(r.Body)
+			assert.Contains(t, string(body), "only_allow_merge_if_pipeline_succeeds")
+			assert.Contains(t, string(body), "allow_merge_on_skipped_pipeline")
+			assert.Contains(t, string(body), "only_allow_merge_if_all_discussions_are_resolved")
+
+			fmt.Fprint(w, `{
+				"id": 1,
+				"name": "Updated Group",
+				"path": "updated-group",
+				"only_allow_merge_if_pipeline_succeeds": false,
+				"allow_merge_on_skipped_pipeline": true,
+				"only_allow_merge_if_all_discussions_are_resolved": false
+			}`)
+		})
+
+		trueValue := true
+		falseValue := false
+
+		opt := &UpdateGroupOptions{
+			OnlyAllowMergeIfPipelineSucceeds:          &falseValue,
+			AllowMergeOnSkippedPipeline:               &trueValue,
+			OnlyAllowMergeIfAllDiscussionsAreResolved: &falseValue,
+		}
+
+		group, _, err := client.Groups.UpdateGroup(1, opt)
+		require.NoError(t, err)
+
+		assert.False(t, group.OnlyAllowMergeIfPipelineSucceeds)
+		assert.True(t, group.AllowMergeOnSkippedPipeline)
+		assert.False(t, group.OnlyAllowMergeIfAllDiscussionsAreResolved)
+	})
 }

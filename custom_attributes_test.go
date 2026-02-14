@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListCustomUserAttributes(t *testing.T) {
@@ -33,14 +35,10 @@ func TestListCustomUserAttributes(t *testing.T) {
 	})
 
 	customAttributes, _, err := client.CustomAttribute.ListCustomUserAttributes(2)
-	if err != nil {
-		t.Errorf("CustomAttribute.ListCustomUserAttributes returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*CustomAttribute{{Key: "testkey1", Value: "testvalue1"}, {Key: "testkey2", Value: "testvalue2"}}
-	if !reflect.DeepEqual(want, customAttributes) {
-		t.Errorf("CustomAttribute.ListCustomUserAttributes returned %+v, want %+v", customAttributes, want)
-	}
+	assert.Equal(t, want, customAttributes)
 }
 
 func TestListCustomGroupAttributes(t *testing.T) {
@@ -53,14 +51,10 @@ func TestListCustomGroupAttributes(t *testing.T) {
 	})
 
 	customAttributes, _, err := client.CustomAttribute.ListCustomGroupAttributes(2)
-	if err != nil {
-		t.Errorf("CustomAttribute.ListCustomGroupAttributes returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*CustomAttribute{{Key: "testkey1", Value: "testvalue1"}, {Key: "testkey2", Value: "testvalue2"}}
-	if !reflect.DeepEqual(want, customAttributes) {
-		t.Errorf("CustomAttribute.ListCustomGroupAttributes returned %+v, want %+v", customAttributes, want)
-	}
+	assert.Equal(t, want, customAttributes)
 }
 
 func TestListCustomProjectAttributes(t *testing.T) {
@@ -73,14 +67,10 @@ func TestListCustomProjectAttributes(t *testing.T) {
 	})
 
 	customAttributes, _, err := client.CustomAttribute.ListCustomProjectAttributes(2)
-	if err != nil {
-		t.Errorf("CustomAttribute.ListCustomProjectAttributes returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*CustomAttribute{{Key: "testkey1", Value: "testvalue1"}, {Key: "testkey2", Value: "testvalue2"}}
-	if !reflect.DeepEqual(want, customAttributes) {
-		t.Errorf("CustomAttribute.ListCustomProjectAttributes returned %+v, want %+v", customAttributes, want)
-	}
+	assert.Equal(t, want, customAttributes)
 }
 
 func TestGetCustomUserAttribute(t *testing.T) {
@@ -93,14 +83,10 @@ func TestGetCustomUserAttribute(t *testing.T) {
 	})
 
 	customAttribute, _, err := client.CustomAttribute.GetCustomUserAttribute(2, "testkey1")
-	if err != nil {
-		t.Errorf("CustomAttribute.GetCustomUserAttribute returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &CustomAttribute{Key: "testkey1", Value: "testvalue1"}
-	if !reflect.DeepEqual(want, customAttribute) {
-		t.Errorf("CustomAttribute.GetCustomUserAttribute returned %+v, want %+v", customAttribute, want)
-	}
+	assert.Equal(t, want, customAttribute)
 }
 
 func TestGetCustomGroupAttribute(t *testing.T) {
@@ -113,14 +99,10 @@ func TestGetCustomGroupAttribute(t *testing.T) {
 	})
 
 	customAttribute, _, err := client.CustomAttribute.GetCustomGroupAttribute(2, "testkey1")
-	if err != nil {
-		t.Errorf("CustomAttribute.GetCustomGroupAttribute returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &CustomAttribute{Key: "testkey1", Value: "testvalue1"}
-	if !reflect.DeepEqual(want, customAttribute) {
-		t.Errorf("CustomAttribute.GetCustomGroupAttribute returned %+v, want %+v", customAttribute, want)
-	}
+	assert.Equal(t, want, customAttribute)
 }
 
 func TestGetCustomProjectAttribute(t *testing.T) {
@@ -133,14 +115,10 @@ func TestGetCustomProjectAttribute(t *testing.T) {
 	})
 
 	customAttribute, _, err := client.CustomAttribute.GetCustomProjectAttribute(2, "testkey1")
-	if err != nil {
-		t.Errorf("CustomAttribute.GetCustomProjectAttribute returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &CustomAttribute{Key: "testkey1", Value: "testvalue1"}
-	if !reflect.DeepEqual(want, customAttribute) {
-		t.Errorf("CustomAttribute.GetCustomProjectAttribute returned %+v, want %+v", customAttribute, want)
-	}
+	assert.Equal(t, want, customAttribute)
 }
 
 func TestSetCustomUserAttribute(t *testing.T) {
@@ -156,14 +134,10 @@ func TestSetCustomUserAttribute(t *testing.T) {
 		Key:   "testkey1",
 		Value: "testvalue1",
 	})
-	if err != nil {
-		t.Errorf("CustomAttribute.SetCustomUserAttributes returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &CustomAttribute{Key: "testkey1", Value: "testvalue1"}
-	if !reflect.DeepEqual(want, customAttribute) {
-		t.Errorf("CustomAttribute.SetCustomUserAttributes returned %+v, want %+v", customAttribute, want)
-	}
+	assert.Equal(t, want, customAttribute)
 }
 
 func TestSetCustomGroupAttribute(t *testing.T) {
@@ -179,14 +153,10 @@ func TestSetCustomGroupAttribute(t *testing.T) {
 		Key:   "testkey1",
 		Value: "testvalue1",
 	})
-	if err != nil {
-		t.Errorf("CustomAttribute.SetCustomGroupAttributes returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &CustomAttribute{Key: "testkey1", Value: "testvalue1"}
-	if !reflect.DeepEqual(want, customAttribute) {
-		t.Errorf("CustomAttribute.SetCustomGroupAttributes returned %+v, want %+v", customAttribute, want)
-	}
+	assert.Equal(t, want, customAttribute)
 }
 
 func TestDeleteCustomUserAttribute(t *testing.T) {
@@ -199,15 +169,9 @@ func TestDeleteCustomUserAttribute(t *testing.T) {
 	})
 
 	resp, err := client.CustomAttribute.DeleteCustomUserAttribute(2, "testkey1")
-	if err != nil {
-		t.Errorf("CustomAttribute.DeleteCustomUserAttribute returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := http.StatusAccepted
-	got := resp.StatusCode
-	if got != want {
-		t.Errorf("CustomAttribute.DeleteCustomUserAttribute returned %d, want %d", got, want)
-	}
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
 
 func TestDeleteCustomGroupAttribute(t *testing.T) {
@@ -220,15 +184,9 @@ func TestDeleteCustomGroupAttribute(t *testing.T) {
 	})
 
 	resp, err := client.CustomAttribute.DeleteCustomGroupAttribute(2, "testkey1")
-	if err != nil {
-		t.Errorf("CustomAttribute.DeleteCustomGroupAttribute returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := http.StatusAccepted
-	got := resp.StatusCode
-	if got != want {
-		t.Errorf("CustomAttribute.DeleteCustomGroupAttribute returned %d, want %d", got, want)
-	}
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
 
 func TestDeleteCustomProjectAttribute(t *testing.T) {
@@ -241,13 +199,7 @@ func TestDeleteCustomProjectAttribute(t *testing.T) {
 	})
 
 	resp, err := client.CustomAttribute.DeleteCustomProjectAttribute(2, "testkey1")
-	if err != nil {
-		t.Errorf("CustomAttribute.DeleteCustomProjectAttribute returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := http.StatusAccepted
-	got := resp.StatusCode
-	if got != want {
-		t.Errorf("CustomAttribute.DeleteCustomProjectAttribute returned %d, want %d", got, want)
-	}
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }

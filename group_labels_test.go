@@ -21,6 +21,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateGroupGroupLabel(t *testing.T) {
@@ -74,6 +76,42 @@ func TestDeleteGroupLabelByName(t *testing.T) {
 	}
 }
 
+func TestDeleteGroupLabelWithOptions(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with a label
+	// WHEN deleting the label using the Name option
+	mux.HandleFunc("/api/v4/groups/1/labels", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		testParam(t, r, "name", "MyGroupLabel")
+	})
+
+	opt := &DeleteGroupLabelOptions{Name: Ptr("MyGroupLabel")}
+
+	// THEN the label should be deleted successfully
+	_, err := client.GroupLabels.DeleteGroupLabel("1", nil, opt)
+	assert.NoError(t, err)
+}
+
+func TestDeleteGroupLabelWithOptionsAndURLEncodedPath(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with URL-encoded path and a label
+	// WHEN deleting the label using the Name option with URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/my-org%2Fmy-group/labels", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		testParam(t, r, "name", "MyGroupLabel")
+	})
+
+	opt := &DeleteGroupLabelOptions{Name: Ptr("MyGroupLabel")}
+
+	// THEN the label should be deleted successfully using URL-encoded group path
+	_, err := client.GroupLabels.DeleteGroupLabel("my-org/my-group", nil, opt)
+	assert.NoError(t, err)
+}
+
 func TestUpdateGroupLabel(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -103,6 +141,33 @@ func TestUpdateGroupLabel(t *testing.T) {
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("GroupLabels.UpdateGroupLabel returned %+v, want %+v", label, want)
 	}
+}
+
+func TestUpdateGroupLabelWithNilID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with a label
+	// WHEN updating the label using the Name option
+	mux.HandleFunc("/api/v4/groups/1/labels", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{"id":1, "name": "NewLabel", "color" : "#11FF23" , "description":"This is updated label"}`)
+	})
+
+	l := &UpdateGroupLabelOptions{
+		Name:        Ptr("MyGroupLabel"),
+		NewName:     Ptr("NewLabel"),
+		Color:       Ptr("#11FF23"),
+		Description: Ptr("This is updated label"),
+	}
+
+	// THEN the label should be updated successfully
+	label, resp, err := client.GroupLabels.UpdateGroupLabel("1", nil, l)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := &GroupLabel{ID: 1, Name: "NewLabel", Color: "#11FF23", Description: "This is updated label"}
+	assert.Equal(t, want, label)
 }
 
 func TestSubscribeToGroupLabel(t *testing.T) {

@@ -407,6 +407,38 @@ func TestPipelineSchedules_EditPipelineSchedule(t *testing.T) {
 	assert.Equal(t, want, schedule)
 }
 
+func TestPipelineSchedules_EditPipelineScheduleWithDestroyInput(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/pipeline_schedules/2", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		// Validate that destroy: true is sent for the input
+		testBodyJSON(t, r, map[string]any{
+			"inputs": []any{
+				map[string]any{
+					"name":    "my_input_name",
+					"value":   "my_ci_value",
+					"destroy": true,
+				},
+			},
+		})
+		fmt.Fprint(w, `{"id": 13}`)
+	})
+
+	_, resp, err := client.PipelineSchedules.EditPipelineSchedule(1, 2, &EditPipelineScheduleOptions{
+		Inputs: []*PipelineInput{
+			{
+				Name:    "my_input_name",
+				Value:   "my_ci_value",
+				Destroy: Ptr(true),
+			},
+		},
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
 func TestPipelineSchedules_TakeOwnershipOfPipelineSchedule(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

@@ -3,10 +3,12 @@
 package testing
 
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=access_requests_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AccessRequestsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=admin_compliance_policy_settings_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AdminCompliancePolicySettingsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=alert_management_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AlertManagementServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=appearance_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AppearanceServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=application_statistics_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ApplicationStatisticsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=applications_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ApplicationsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=attestations_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AttestationsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=audit_events_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AuditEventsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=avatar_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AvatarRequestsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=award_emojis_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go AwardEmojiServiceInterface
@@ -52,6 +54,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_badges_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupBadgesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_boards_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupIssueBoardsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_clusters_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupClustersServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_credentials_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupCredentialsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_epic_boards_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupEpicBoardsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_import_export_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupImportExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_iterations_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupIterationsServiceInterface
@@ -59,6 +62,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_markdown_uploads_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupMarkdownUploadsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_members_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupMembersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_milestones_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupMilestonesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_protected_branches_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupProtectedBranchesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_protected_environments_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupProtectedEnvironmentsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_relations_export_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupRelationsExportServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=group_releases_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go GroupReleasesServiceInterface
@@ -137,6 +141,9 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=resource_milestone_events_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ResourceMilestoneEventsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=resource_state_events_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ResourceStateEventsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=resource_weight_events_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ResourceWeightEventsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=runner_controller_scopes_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go RunnerControllerScopesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=runner_controller_tokens_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go RunnerControllerTokensServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=runner_controllers_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go RunnerControllersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=runners_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go RunnersServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=search_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go SearchServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=secure_files_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go SecureFilesServiceInterface
@@ -155,3 +162,4 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=validate_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go ValidateServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=version_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go VersionServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=wikis_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go WikisServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=workitems_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go WorkItemsServiceInterface

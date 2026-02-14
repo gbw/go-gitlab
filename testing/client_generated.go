@@ -13,10 +13,12 @@ import (
 type testClientMocks struct {
 	MockGraphQL                          *MockGraphQLInterface
 	MockAccessRequests                   *MockAccessRequestsServiceInterface
+	MockAdminCompliancePolicySettings    *MockAdminCompliancePolicySettingsServiceInterface
 	MockAlertManagement                  *MockAlertManagementServiceInterface
 	MockAppearance                       *MockAppearanceServiceInterface
 	MockApplications                     *MockApplicationsServiceInterface
 	MockApplicationStatistics            *MockApplicationStatisticsServiceInterface
+	MockAttestations                     *MockAttestationsServiceInterface
 	MockAuditEvents                      *MockAuditEventsServiceInterface
 	MockAvatar                           *MockAvatarRequestsServiceInterface
 	MockAwardEmoji                       *MockAwardEmojiServiceInterface
@@ -60,6 +62,7 @@ type testClientMocks struct {
 	MockGroupActivityAnalytics           *MockGroupActivityAnalyticsServiceInterface
 	MockGroupBadges                      *MockGroupBadgesServiceInterface
 	MockGroupCluster                     *MockGroupClustersServiceInterface
+	MockGroupCredentials                 *MockGroupCredentialsServiceInterface
 	MockGroupEpicBoards                  *MockGroupEpicBoardsServiceInterface
 	MockGroupImportExport                *MockGroupImportExportServiceInterface
 	MockIntegrations                     *MockIntegrationsServiceInterface
@@ -70,6 +73,7 @@ type testClientMocks struct {
 	MockGroupMembers                     *MockGroupMembersServiceInterface
 	MockGroupMilestones                  *MockGroupMilestonesServiceInterface
 	MockGroupProtectedEnvironments       *MockGroupProtectedEnvironmentsServiceInterface
+	MockGroupProtectedBranches           *MockGroupProtectedBranchesServiceInterface
 	MockGroupRelationsExport             *MockGroupRelationsExportServiceInterface
 	MockGroupReleases                    *MockGroupReleasesServiceInterface
 	MockGroupRepositoryStorageMove       *MockGroupRepositoryStorageMoveServiceInterface
@@ -146,6 +150,9 @@ type testClientMocks struct {
 	MockResourceMilestoneEvents          *MockResourceMilestoneEventsServiceInterface
 	MockResourceStateEvents              *MockResourceStateEventsServiceInterface
 	MockResourceWeightEvents             *MockResourceWeightEventsServiceInterface
+	MockRunnerControllers                *MockRunnerControllersServiceInterface
+	MockRunnerControllerScopes           *MockRunnerControllerScopesServiceInterface
+	MockRunnerControllerTokens           *MockRunnerControllerTokensServiceInterface
 	MockRunners                          *MockRunnersServiceInterface
 	MockSearch                           *MockSearchServiceInterface
 	MockSecureFiles                      *MockSecureFilesServiceInterface
@@ -164,15 +171,18 @@ type testClientMocks struct {
 	MockValidate                         *MockValidateServiceInterface
 	MockVersion                          *MockVersionServiceInterface
 	MockWikis                            *MockWikisServiceInterface
+	MockWorkItems                        *MockWorkItemsServiceInterface
 }
 
 func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOptionFunc) *TestClient {
 	mockGraphQL := NewMockGraphQLInterface(ctrl)
 	mockAccessRequests := NewMockAccessRequestsServiceInterface(ctrl)
+	mockAdminCompliancePolicySettings := NewMockAdminCompliancePolicySettingsServiceInterface(ctrl)
 	mockAlertManagement := NewMockAlertManagementServiceInterface(ctrl)
 	mockAppearance := NewMockAppearanceServiceInterface(ctrl)
 	mockApplications := NewMockApplicationsServiceInterface(ctrl)
 	mockApplicationStatistics := NewMockApplicationStatisticsServiceInterface(ctrl)
+	mockAttestations := NewMockAttestationsServiceInterface(ctrl)
 	mockAuditEvents := NewMockAuditEventsServiceInterface(ctrl)
 	mockAvatar := NewMockAvatarRequestsServiceInterface(ctrl)
 	mockAwardEmoji := NewMockAwardEmojiServiceInterface(ctrl)
@@ -216,6 +226,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockGroupActivityAnalytics := NewMockGroupActivityAnalyticsServiceInterface(ctrl)
 	mockGroupBadges := NewMockGroupBadgesServiceInterface(ctrl)
 	mockGroupCluster := NewMockGroupClustersServiceInterface(ctrl)
+	mockGroupCredentials := NewMockGroupCredentialsServiceInterface(ctrl)
 	mockGroupEpicBoards := NewMockGroupEpicBoardsServiceInterface(ctrl)
 	mockGroupImportExport := NewMockGroupImportExportServiceInterface(ctrl)
 	mockIntegrations := NewMockIntegrationsServiceInterface(ctrl)
@@ -226,6 +237,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockGroupMembers := NewMockGroupMembersServiceInterface(ctrl)
 	mockGroupMilestones := NewMockGroupMilestonesServiceInterface(ctrl)
 	mockGroupProtectedEnvironments := NewMockGroupProtectedEnvironmentsServiceInterface(ctrl)
+	mockGroupProtectedBranches := NewMockGroupProtectedBranchesServiceInterface(ctrl)
 	mockGroupRelationsExport := NewMockGroupRelationsExportServiceInterface(ctrl)
 	mockGroupReleases := NewMockGroupReleasesServiceInterface(ctrl)
 	mockGroupRepositoryStorageMove := NewMockGroupRepositoryStorageMoveServiceInterface(ctrl)
@@ -302,6 +314,9 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockResourceMilestoneEvents := NewMockResourceMilestoneEventsServiceInterface(ctrl)
 	mockResourceStateEvents := NewMockResourceStateEventsServiceInterface(ctrl)
 	mockResourceWeightEvents := NewMockResourceWeightEventsServiceInterface(ctrl)
+	mockRunnerControllers := NewMockRunnerControllersServiceInterface(ctrl)
+	mockRunnerControllerScopes := NewMockRunnerControllerScopesServiceInterface(ctrl)
+	mockRunnerControllerTokens := NewMockRunnerControllerTokensServiceInterface(ctrl)
 	mockRunners := NewMockRunnersServiceInterface(ctrl)
 	mockSearch := NewMockSearchServiceInterface(ctrl)
 	mockSecureFiles := NewMockSecureFilesServiceInterface(ctrl)
@@ -320,14 +335,17 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockValidate := NewMockValidateServiceInterface(ctrl)
 	mockVersion := NewMockVersionServiceInterface(ctrl)
 	mockWikis := NewMockWikisServiceInterface(ctrl)
+	mockWorkItems := NewMockWorkItemsServiceInterface(ctrl)
 
 	c := &gitlab.Client{
 		GraphQL:                          mockGraphQL,
 		AccessRequests:                   mockAccessRequests,
+		AdminCompliancePolicySettings:    mockAdminCompliancePolicySettings,
 		AlertManagement:                  mockAlertManagement,
 		Appearance:                       mockAppearance,
 		Applications:                     mockApplications,
 		ApplicationStatistics:            mockApplicationStatistics,
+		Attestations:                     mockAttestations,
 		AuditEvents:                      mockAuditEvents,
 		Avatar:                           mockAvatar,
 		AwardEmoji:                       mockAwardEmoji,
@@ -371,6 +389,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		GroupActivityAnalytics:           mockGroupActivityAnalytics,
 		GroupBadges:                      mockGroupBadges,
 		GroupCluster:                     mockGroupCluster,
+		GroupCredentials:                 mockGroupCredentials,
 		GroupEpicBoards:                  mockGroupEpicBoards,
 		GroupImportExport:                mockGroupImportExport,
 		Integrations:                     mockIntegrations,
@@ -381,6 +400,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		GroupMembers:                     mockGroupMembers,
 		GroupMilestones:                  mockGroupMilestones,
 		GroupProtectedEnvironments:       mockGroupProtectedEnvironments,
+		GroupProtectedBranches:           mockGroupProtectedBranches,
 		GroupRelationsExport:             mockGroupRelationsExport,
 		GroupReleases:                    mockGroupReleases,
 		GroupRepositoryStorageMove:       mockGroupRepositoryStorageMove,
@@ -457,6 +477,9 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		ResourceMilestoneEvents:          mockResourceMilestoneEvents,
 		ResourceStateEvents:              mockResourceStateEvents,
 		ResourceWeightEvents:             mockResourceWeightEvents,
+		RunnerControllers:                mockRunnerControllers,
+		RunnerControllerScopes:           mockRunnerControllerScopes,
+		RunnerControllerTokens:           mockRunnerControllerTokens,
 		Runners:                          mockRunners,
 		Search:                           mockSearch,
 		SecureFiles:                      mockSecureFiles,
@@ -475,6 +498,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Validate:                         mockValidate,
 		Version:                          mockVersion,
 		Wikis:                            mockWikis,
+		WorkItems:                        mockWorkItems,
 	}
 	// Apply any given client options.
 	for _, fn := range options {
@@ -491,10 +515,12 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		testClientMocks: &testClientMocks{
 			MockGraphQL:                          mockGraphQL,
 			MockAccessRequests:                   mockAccessRequests,
+			MockAdminCompliancePolicySettings:    mockAdminCompliancePolicySettings,
 			MockAlertManagement:                  mockAlertManagement,
 			MockAppearance:                       mockAppearance,
 			MockApplications:                     mockApplications,
 			MockApplicationStatistics:            mockApplicationStatistics,
+			MockAttestations:                     mockAttestations,
 			MockAuditEvents:                      mockAuditEvents,
 			MockAvatar:                           mockAvatar,
 			MockAwardEmoji:                       mockAwardEmoji,
@@ -538,6 +564,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockGroupActivityAnalytics:           mockGroupActivityAnalytics,
 			MockGroupBadges:                      mockGroupBadges,
 			MockGroupCluster:                     mockGroupCluster,
+			MockGroupCredentials:                 mockGroupCredentials,
 			MockGroupEpicBoards:                  mockGroupEpicBoards,
 			MockGroupImportExport:                mockGroupImportExport,
 			MockIntegrations:                     mockIntegrations,
@@ -548,6 +575,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockGroupMembers:                     mockGroupMembers,
 			MockGroupMilestones:                  mockGroupMilestones,
 			MockGroupProtectedEnvironments:       mockGroupProtectedEnvironments,
+			MockGroupProtectedBranches:           mockGroupProtectedBranches,
 			MockGroupRelationsExport:             mockGroupRelationsExport,
 			MockGroupReleases:                    mockGroupReleases,
 			MockGroupRepositoryStorageMove:       mockGroupRepositoryStorageMove,
@@ -624,6 +652,9 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockResourceMilestoneEvents:          mockResourceMilestoneEvents,
 			MockResourceStateEvents:              mockResourceStateEvents,
 			MockResourceWeightEvents:             mockResourceWeightEvents,
+			MockRunnerControllers:                mockRunnerControllers,
+			MockRunnerControllerScopes:           mockRunnerControllerScopes,
+			MockRunnerControllerTokens:           mockRunnerControllerTokens,
 			MockRunners:                          mockRunners,
 			MockSearch:                           mockSearch,
 			MockSecureFiles:                      mockSecureFiles,
@@ -642,6 +673,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockValidate:                         mockValidate,
 			MockVersion:                          mockVersion,
 			MockWikis:                            mockWikis,
+			MockWorkItems:                        mockWorkItems,
 		},
 	}
 }

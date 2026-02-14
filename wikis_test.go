@@ -224,3 +224,152 @@ func TestUploadWikiAttachment(t *testing.T) {
 	assert.NotNil(t, resp)
 	assert.Equal(t, want, attachment)
 }
+
+func TestListWikis_WithStringProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded project path
+	mux.HandleFunc("/api/v4/projects/namespace%2Fproject/wikis", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `[
+			{
+			  "content": "Here is an instruction how to deploy this project.",
+			  "format": "markdown",
+			  "slug": "deploy",
+			  "title": "deploy"
+			}
+		  ]`)
+	})
+
+	// WHEN: Listing wikis with a string project ID
+	wikis, _, err := client.Wikis.ListWikis("namespace/project", &ListWikisOptions{WithContent: Ptr(true)})
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.Len(t, wikis, 1)
+	assert.Equal(t, "deploy", wikis[0].Title)
+}
+
+func TestGetWikiPage_WithStringProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded project path
+	mux.HandleFunc("/api/v4/projects/namespace%2Fproject/wikis/home", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprintf(w, `{
+			"content": "home page",
+			"format": "markdown",
+			"slug": "home",
+			"title": "home",
+			"encoding": "UTF-8"
+		  }`)
+	})
+
+	// WHEN: Getting a wiki page with a string project ID
+	wiki, _, err := client.Wikis.GetWikiPage("namespace/project", "home", &GetWikiPageOptions{})
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.Equal(t, "home", wiki.Title)
+}
+
+func TestCreateWikiPage_WithStringProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded project path
+	mux.HandleFunc("/api/v4/projects/namespace%2Fproject/wikis", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprintf(w, `{
+			"content": "Hello world",
+			"format": "markdown",
+			"slug": "Hello",
+			"title": "Hello"
+		  }`)
+	})
+
+	// WHEN: Creating a wiki page with a string project ID
+	wiki, _, err := client.Wikis.CreateWikiPage("namespace/project", &CreateWikiPageOptions{
+		Content: Ptr("Hello world"),
+		Title:   Ptr("Hello"),
+		Format:  Ptr(WikiFormatMarkdown),
+	})
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.Equal(t, "Hello", wiki.Title)
+}
+
+func TestEditWikiPage_WithStringProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded project path
+	mux.HandleFunc("/api/v4/projects/namespace%2Fproject/wikis/foo", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprintf(w, `{
+			"content": "documentation",
+			"format": "markdown",
+			"slug": "Docs",
+			"title": "Docs"
+		  }`)
+	})
+
+	// WHEN: Editing a wiki page with a string project ID
+	wiki, _, err := client.Wikis.EditWikiPage("namespace/project", "foo", &EditWikiPageOptions{
+		Content: Ptr("documentation"),
+		Format:  Ptr(WikiFormatMarkdown),
+		Title:   Ptr("Docs"),
+	})
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.Equal(t, "Docs", wiki.Title)
+}
+
+func TestDeleteWikiPage_WithStringProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded project path
+	mux.HandleFunc("/api/v4/projects/namespace%2Fproject/wikis/foo", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	// WHEN: Deleting a wiki page with a string project ID
+	_, err := client.Wikis.DeleteWikiPage("namespace/project", "foo")
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+}
+
+func TestUploadWikiAttachment_WithStringProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: A URL-encoded project path
+	mux.HandleFunc("/api/v4/projects/namespace%2Fproject/wikis/attachments", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `
+			{
+				"file_name" : "dk.png",
+				"file_path" : "uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png",
+				"branch" : "main",
+				"link" : {
+					"url" : "uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png",
+					"markdown" : "![A description of the attachment](uploads/6a061c4cf9f1c28cb22c384b4b8d4e3c/dk.png)"
+				}
+			}
+		`)
+	})
+
+	// WHEN: Uploading a wiki attachment with a string project ID
+	b := strings.NewReader("dummy")
+	attachment, _, err := client.Wikis.UploadWikiAttachment("namespace/project", b, "dk.png", nil)
+
+	// THEN: The request should succeed
+	assert.NoError(t, err)
+	assert.Equal(t, "dk.png", attachment.FileName)
+}

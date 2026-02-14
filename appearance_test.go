@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetAppearance(t *testing.T) {
@@ -51,9 +53,7 @@ func TestGetAppearance(t *testing.T) {
 	})
 
 	appearance, _, err := client.Appearance.GetAppearance()
-	if err != nil {
-		t.Errorf("Appearance.GetAppearance returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Appearance{
 		Title:                       "GitLab Test Instance",
@@ -75,9 +75,7 @@ func TestGetAppearance(t *testing.T) {
 		EmailHeaderAndFooterEnabled: false,
 	}
 
-	if !reflect.DeepEqual(want, appearance) {
-		t.Errorf("Appearance.GetAppearance returned %+v, want %+v", appearance, want)
-	}
+	assert.Equal(t, want, appearance)
 }
 
 func TestChangeAppearance(t *testing.T) {
@@ -128,9 +126,7 @@ func TestChangeAppearance(t *testing.T) {
 	}
 
 	appearance, _, err := client.Appearance.ChangeAppearance(opt)
-	if err != nil {
-		t.Errorf("Appearance.ChangeAppearance returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Appearance{
 		Title:                       "GitLab Test Instance - 001",
@@ -152,7 +148,5 @@ func TestChangeAppearance(t *testing.T) {
 		EmailHeaderAndFooterEnabled: false,
 	}
 
-	if !reflect.DeepEqual(want, appearance) {
-		t.Errorf("Appearance.GetAppearance returned %+v, want %+v", appearance, want)
-	}
+	assert.Equal(t, want, appearance)
 }

@@ -327,6 +327,7 @@ func TestGroupResourceAccessTokenEventUnmarshal(t *testing.T) {
 	expected.Group.GroupID = 35
 	expected.Group.GroupName = "Twitter"
 	expected.Group.GroupPath = "twitter"
+	expected.Group.FullPath = "twitter"
 
 	expected.ObjectAttributes.ID = 25
 	expected.ObjectAttributes.UserID = 90
@@ -1317,4 +1318,530 @@ func TestTagEventUnmarshal(t *testing.T) {
 	if event.Commits[0] == nil || event.Commits[0].Author.Name != exampleEventUserName {
 		t.Errorf("Commit Username is %s, want %s", event.UserName, exampleEventUserName)
 	}
+}
+
+func TestSnippetCommentEventUnmarshal(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a snippet comment event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/note_snippet.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *SnippetCommentEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "note", event.ObjectKind)
+	assert.Equal(t, "note", event.EventType)
+	assert.Equal(t, int64(5), event.ProjectID)
+
+	// User assertions
+	assert.Equal(t, int64(42), event.User.ID)
+	assert.Equal(t, "User1", event.User.Name)
+	assert.Equal(t, "user1", event.User.Username)
+
+	// Project assertions
+	assert.Equal(t, "Gitlab Test", event.Project.Name)
+	assert.Equal(t, "gitlab-org/gitlab-test", event.Project.PathWithNamespace)
+
+	// Repository assertions
+	assert.Equal(t, "Gitlab Test", event.Repository.Name)
+
+	// Object attributes assertions
+	assert.Equal(t, int64(1245), event.ObjectAttributes.ID)
+	assert.Equal(t, "Is this snippet doing what it's supposed to be doing?", event.ObjectAttributes.Note)
+	assert.Equal(t, "Snippet", event.ObjectAttributes.NoteableType)
+	assert.Equal(t, int64(1), event.ObjectAttributes.AuthorID)
+	assert.Equal(t, int64(53), event.ObjectAttributes.NoteableID)
+	assert.Equal(t, CommentEventActionCreate, event.ObjectAttributes.Action)
+	assert.Equal(t, "http://example.com/gitlab-org/gitlab-test/snippets/53#note_1245", event.ObjectAttributes.URL)
+
+	// Snippet assertions
+	assert.NotNil(t, event.Snippet)
+	assert.Equal(t, int64(53), event.Snippet.ID)
+	assert.Equal(t, "test", event.Snippet.Title)
+	assert.Equal(t, "puts 'Hello world'", event.Snippet.Content)
+	assert.Equal(t, int64(1), event.Snippet.AuthorID)
+	assert.Equal(t, int64(5), event.Snippet.ProjectID)
+	assert.Equal(t, "test.rb", event.Snippet.Filename)
+	assert.Equal(t, "ProjectSnippet", event.Snippet.Type)
+	assert.Equal(t, int64(0), event.Snippet.VisibilityLevel)
+	assert.Equal(t, "Prints 'Hello world'", event.Snippet.Description)
+	assert.False(t, event.Snippet.Secret)
+	assert.False(t, event.Snippet.RepositoryReadOnly)
+}
+
+func TestWikiPageEventUnmarshal(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a wiki page event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/wiki_page.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *WikiPageEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "wiki_page", event.ObjectKind)
+
+	// User assertions
+	assert.Equal(t, "User1", event.User.Name)
+	assert.Equal(t, "user1", event.User.Username)
+
+	// Project assertions
+	assert.Equal(t, "awesome-project", event.Project.Name)
+	assert.Equal(t, "This is awesome", event.Project.Description)
+	assert.Equal(t, "root/awesome-project", event.Project.PathWithNamespace)
+	assert.Equal(t, "master", event.Project.DefaultBranch)
+
+	// Wiki assertions
+	assert.Equal(t, "http://example.com/root/awesome-project/wikis/home", event.Wiki.WebURL)
+	assert.Equal(t, "git@example.com:root/awesome-project.wiki.git", event.Wiki.GitSSHURL)
+	assert.Equal(t, "http://example.com/root/awesome-project.wiki.git", event.Wiki.GitHTTPURL)
+	assert.Equal(t, "root/awesome-project.wiki", event.Wiki.PathWithNamespace)
+	assert.Equal(t, "master", event.Wiki.DefaultBranch)
+
+	// Object attributes assertions
+	assert.Equal(t, "Awesome", event.ObjectAttributes.Title)
+	assert.Equal(t, "awesome content goes here", event.ObjectAttributes.Content)
+	assert.Equal(t, "markdown", event.ObjectAttributes.Format)
+	assert.Equal(t, "adding an awesome page to the wiki", event.ObjectAttributes.Message)
+	assert.Equal(t, "awesome", event.ObjectAttributes.Slug)
+	assert.Equal(t, "http://example.com/root/awesome-project/wikis/awesome", event.ObjectAttributes.URL)
+	assert.Equal(t, "create", event.ObjectAttributes.Action)
+	assert.Equal(t, "http://example.com/root/awesome-project/wikis/awesome/diff", event.ObjectAttributes.DiffURL)
+}
+
+func TestEmojiEventUnmarshal(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_issue.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, int64(7), event.ProjectID)
+
+	// User assertions
+	assert.Equal(t, int64(1), event.User.ID)
+	assert.Equal(t, "Administrator", event.User.Name)
+	assert.Equal(t, "root", event.User.Username)
+	assert.Equal(t, "admin@example.com", event.User.Email)
+
+	// Project assertions
+	assert.NotNil(t, event.Project)
+	assert.Equal(t, int64(7), event.Project.ID)
+	assert.Equal(t, "Flight", event.Project.Name)
+	assert.Equal(t, "flightjs/Flight", event.Project.PathWithNamespace)
+	assert.Equal(t, int64(0), event.Project.VisibilityLevel)
+
+	// Object attributes assertions
+	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
+	assert.Equal(t, int64(1), event.ObjectAttributes.UserID)
+	assert.Equal(t, "thumbsup", event.ObjectAttributes.Name)
+	assert.Equal(t, "Issue", event.ObjectAttributes.AwardableType)
+	assert.Equal(t, int64(123), event.ObjectAttributes.AwardableID)
+	assert.Equal(t, "award", event.ObjectAttributes.Action)
+	assert.Equal(t, "https://example.com/flightjs/Flight/-/issues/1", event.ObjectAttributes.AwardedOnURL)
+
+	// Issue assertions
+	assert.NotNil(t, event.Issue)
+	assert.Equal(t, int64(123), event.Issue.ID)
+	assert.Equal(t, int64(1), event.Issue.IID)
+	assert.Equal(t, int64(7), event.Issue.ProjectID)
+	assert.Equal(t, "Test Issue", event.Issue.Title)
+	assert.Equal(t, "This is a test issue", event.Issue.Description)
+	assert.Equal(t, StateIDOpen, event.Issue.StateID)
+	assert.Equal(t, "opened", event.Issue.State)
+	assert.Equal(t, "unknown", event.Issue.Severity)
+	assert.False(t, event.Issue.Confidential)
+}
+
+func TestEmojiEventUnmarshalMergeRequest(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a merge request
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_merge_request.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "MergeRequest", event.ObjectAttributes.AwardableType)
+
+	// MergeRequest assertions
+	assert.NotNil(t, event.MergeRequest)
+	assert.Equal(t, int64(123), event.MergeRequest.ID)
+	assert.Equal(t, int64(1), event.MergeRequest.IID)
+	assert.Equal(t, "Test Merge Request", event.MergeRequest.Title)
+	assert.Equal(t, "opened", event.MergeRequest.State)
+
+	// Issue and Snippet should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.ProjectSnippet)
+	assert.Nil(t, event.Note)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalSnippet(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a snippet
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_snippet.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Snippet", event.ObjectAttributes.AwardableType)
+
+	// Snippet assertions
+	assert.NotNil(t, event.ProjectSnippet)
+	assert.Equal(t, int64(456), event.ProjectSnippet.ID)
+	assert.Equal(t, "Test Snippet", event.ProjectSnippet.Title)
+	assert.Equal(t, "ProjectSnippet", event.ProjectSnippet.Type)
+
+	// Issue and MergeRequest should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.Note)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteIssue(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on an issue
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_issue.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(789), event.Note.ID)
+	assert.Equal(t, "Issue", event.Note.NoteableType)
+	assert.Equal(t, int64(123), event.Note.NoteableID)
+
+	// Issue assertions
+	assert.NotNil(t, event.Issue)
+	assert.Equal(t, int64(123), event.Issue.ID)
+
+	// MergeRequest and Snippet should be nil
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.ProjectSnippet)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteMergeRequest(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on a merge request
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_merge_request.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(790), event.Note.ID)
+	assert.Equal(t, "MergeRequest", event.Note.NoteableType)
+
+	// MergeRequest assertions
+	assert.NotNil(t, event.MergeRequest)
+	assert.Equal(t, int64(123), event.MergeRequest.ID)
+
+	// Issue and Snippet should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.ProjectSnippet)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteSnippet(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on a snippet
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_snippet.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(791), event.Note.ID)
+	assert.Equal(t, "Snippet", event.Note.NoteableType)
+
+	// Snippet assertions
+	assert.NotNil(t, event.ProjectSnippet)
+	assert.Equal(t, int64(456), event.ProjectSnippet.ID)
+
+	// Issue and MergeRequest should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.Commit)
+}
+
+func TestEmojiEventUnmarshalNoteCommit(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN an emoji event JSON payload on a note on a commit
+	jsonObject := loadFixture(t, "testdata/webhooks/emoji_note_commit.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *EmojiEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "emoji", event.ObjectKind)
+	assert.Equal(t, "award", event.EventType)
+	assert.Equal(t, "Note", event.ObjectAttributes.AwardableType)
+
+	// Note assertions
+	assert.NotNil(t, event.Note)
+	assert.Equal(t, int64(792), event.Note.ID)
+	assert.Equal(t, "Commit", event.Note.NoteableType)
+	assert.NotNil(t, event.Note.CommitID)
+	assert.Equal(t, "cfe32cf61b73a0d5e9f13e774abde7ff789b1660", *event.Note.CommitID)
+
+	// Commit assertions
+	assert.NotNil(t, event.Commit)
+	assert.Equal(t, "cfe32cf61b73a0d5e9f13e774abde7ff789b1660", event.Commit.ID)
+	assert.Equal(t, "Add submodule", event.Commit.Title)
+
+	// Issue, MergeRequest and Snippet should be nil
+	assert.Nil(t, event.Issue)
+	assert.Nil(t, event.MergeRequest)
+	assert.Nil(t, event.ProjectSnippet)
+}
+
+func TestMilestoneWebhookEventUnmarshal(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a milestone webhook event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/milestone_project.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *MilestoneWebhookEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "milestone", event.ObjectKind)
+	assert.Equal(t, "milestone", event.EventType)
+	assert.Equal(t, "create", event.Action)
+
+	// Project assertions (project milestone)
+	assert.NotNil(t, event.Project)
+	assert.Equal(t, int64(7), event.Project.ID)
+	assert.Equal(t, "Flight", event.Project.Name)
+	assert.Equal(t, "flightjs/Flight", event.Project.PathWithNamespace)
+	assert.Equal(t, int64(0), event.Project.VisibilityLevel)
+
+	// Group should be nil for project milestone
+	assert.Nil(t, event.Group)
+
+	// Object attributes assertions
+	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
+	assert.Equal(t, int64(1), event.ObjectAttributes.IID)
+	assert.Equal(t, "v1.0.0", event.ObjectAttributes.Title)
+	assert.Equal(t, "First major release milestone", event.ObjectAttributes.Description)
+	assert.Equal(t, "active", event.ObjectAttributes.State)
+	assert.Equal(t, int64(7), event.ObjectAttributes.ProjectID)
+	assert.Nil(t, event.ObjectAttributes.GroupID)
+
+	// Date assertions
+	dueDate, err := ParseISOTime("2024-03-01")
+	assert.NoError(t, err)
+	assert.Equal(t, &dueDate, event.ObjectAttributes.DueDate)
+
+	startDate, err := ParseISOTime("2024-01-01")
+	assert.NoError(t, err)
+	assert.Equal(t, &startDate, event.ObjectAttributes.StartDate)
+}
+
+func TestMilestoneWebhookEventUnmarshalGroup(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a group milestone webhook event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/milestone_group.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *MilestoneWebhookEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "milestone", event.ObjectKind)
+	assert.Equal(t, "milestone", event.EventType)
+	assert.Equal(t, "create", event.Action)
+
+	// Project should be empty for group milestone
+	assert.Empty(t, event.Project)
+
+	// Group assertions (group milestone)
+	assert.NotNil(t, event.Group)
+	assert.Equal(t, int64(35), event.Group.GroupID)
+	assert.Equal(t, "Flightjs", event.Group.GroupName)
+	assert.Equal(t, "flightjs", event.Group.GroupPath)
+	assert.Equal(t, "flightjs", event.Group.FullPath)
+
+	// Object attributes assertions
+	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
+	assert.Equal(t, int64(1), event.ObjectAttributes.IID)
+	assert.Equal(t, "v1.0.0", event.ObjectAttributes.Title)
+	assert.Equal(t, int64(35), *event.ObjectAttributes.GroupID)
+	assert.Equal(t, int64(0), event.ObjectAttributes.ProjectID)
+
+	// Date assertions
+	dueDate, err := ParseISOTime("2024-03-01")
+	assert.NoError(t, err)
+	assert.Equal(t, &dueDate, event.ObjectAttributes.DueDate)
+
+	startDate, err := ParseISOTime("2024-01-01")
+	assert.NoError(t, err)
+	assert.Equal(t, &startDate, event.ObjectAttributes.StartDate)
+}
+
+func TestProjectWebhookEventUnmarshal(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a project webhook event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/project.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *ProjectWebhookEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "project_create", event.EventName)
+	assert.Equal(t, "2024-01-24 16:27:40 UTC", event.CreatedAt)
+	assert.Equal(t, "2024-01-24 16:27:40 UTC", event.UpdatedAt)
+	assert.Equal(t, "Flight", event.Name)
+	assert.Equal(t, "flight", event.Path)
+	assert.Equal(t, "flightjs/flight", event.PathWithNamespace)
+	assert.Equal(t, int64(7), event.ProjectID)
+	assert.Equal(t, int64(35), event.ProjectNamespaceID)
+	assert.Equal(t, "private", event.ProjectVisibility)
+	assert.Empty(t, event.OldPathWithNamespace)
+
+	// Owners assertions
+	assert.Len(t, event.Owners, 1)
+	assert.Equal(t, "Administrator", event.Owners[0].Name)
+	assert.Equal(t, "admin@example.com", event.Owners[0].Email)
+}
+
+func TestVulnerabilityEventUnmarshal(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a vulnerability event JSON payload
+	jsonObject := loadFixture(t, "testdata/webhooks/vulnerability.json")
+
+	// WHEN the JSON is unmarshaled
+	var event *VulnerabilityEvent
+	err := json.Unmarshal(jsonObject, &event)
+
+	// THEN no error should occur and the event should be populated correctly
+	assert.NoError(t, err)
+	assert.NotNil(t, event)
+
+	assert.Equal(t, "vulnerability", event.ObjectKind)
+
+	// Object attributes assertions
+	assert.Equal(t, int64(42), event.ObjectAttributes.ID)
+	assert.Equal(t, "https://example.com/flightjs/Flight/-/security/vulnerabilities/42", event.ObjectAttributes.URL)
+	assert.Equal(t, "Potential SQL Injection", event.ObjectAttributes.Title)
+	assert.Equal(t, "detected", event.ObjectAttributes.State)
+	assert.Equal(t, int64(7), event.ObjectAttributes.ProjectID)
+	assert.Equal(t, "high", event.ObjectAttributes.Severity)
+	assert.False(t, event.ObjectAttributes.SeverityOverridden)
+	assert.Equal(t, "sast", event.ObjectAttributes.ReportType)
+	assert.Equal(t, "high", event.ObjectAttributes.Confidence)
+	assert.False(t, event.ObjectAttributes.ConfidenceOverridden)
+	assert.Equal(t, int64(1), event.ObjectAttributes.ConfirmedByID)
+	assert.False(t, event.ObjectAttributes.AutoResolved)
+	assert.False(t, event.ObjectAttributes.ResolvedOnDefaultBranch)
+
+	// Location assertions
+	assert.Equal(t, "app/models/user.rb", event.ObjectAttributes.Location.File)
+	assert.Equal(t, "pg", event.ObjectAttributes.Location.Dependency.Package.Name)
+	assert.Equal(t, "1.2.3", event.ObjectAttributes.Location.Dependency.Version)
+
+	// CVSS assertions
+	assert.Len(t, event.ObjectAttributes.CVSS, 1)
+	assert.Equal(t, "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H", event.ObjectAttributes.CVSS[0].Vector)
+	assert.Equal(t, "GitLab", event.ObjectAttributes.CVSS[0].Vendor)
+
+	// Identifiers assertions
+	assert.Len(t, event.ObjectAttributes.Identifiers, 1)
+	assert.Equal(t, "CVE-2024-1234", event.ObjectAttributes.Identifiers[0].Name)
+	assert.Equal(t, "CVE-2024-1234", event.ObjectAttributes.Identifiers[0].ExternalID)
+	assert.Equal(t, "cve", event.ObjectAttributes.Identifiers[0].ExternalType)
+
+	// Issues assertions
+	assert.Len(t, event.ObjectAttributes.Issues, 1)
+	assert.Equal(t, "Fix SQL Injection vulnerability", event.ObjectAttributes.Issues[0].Title)
+	assert.Equal(t, "https://example.com/flightjs/Flight/-/issues/10", event.ObjectAttributes.Issues[0].URL)
 }

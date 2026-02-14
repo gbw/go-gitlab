@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetIssuesStatistics(t *testing.T) {
@@ -39,9 +41,7 @@ func TestGetIssuesStatistics(t *testing.T) {
 	}
 
 	issue, _, err := client.IssuesStatistics.GetIssuesStatistics(opt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &IssuesStatistics{
 		Statistics: IssuesStatisticsStatistics{
@@ -51,9 +51,7 @@ func TestGetIssuesStatistics(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("IssuesStatistics.GetIssuesStatistics returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestGetGroupIssuesStatistics(t *testing.T) {
@@ -72,9 +70,7 @@ func TestGetGroupIssuesStatistics(t *testing.T) {
 	}
 
 	issue, _, err := client.IssuesStatistics.GetGroupIssuesStatistics(1, opt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &IssuesStatistics{
 		Statistics: IssuesStatisticsStatistics{
@@ -84,9 +80,7 @@ func TestGetGroupIssuesStatistics(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("IssuesStatistics.GetGroupIssuesStatistics returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }
 
 func TestGetProjectIssuesStatistics(t *testing.T) {
@@ -105,9 +99,7 @@ func TestGetProjectIssuesStatistics(t *testing.T) {
 	}
 
 	issue, _, err := client.IssuesStatistics.GetProjectIssuesStatistics(1, opt)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &IssuesStatistics{
 		Statistics: IssuesStatisticsStatistics{
@@ -117,7 +109,5 @@ func TestGetProjectIssuesStatistics(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, issue) {
-		t.Errorf("IssuesStatistics.GetProjectIssuesStatistics returned %+v, want %+v", issue, want)
-	}
+	assert.Equal(t, want, issue)
 }

@@ -107,13 +107,15 @@ func TestUpdateServiceAccount(t *testing.T) {
       {
 	      "id": 57,
 	      "username": "service_account_group_345_6018816a18e515214e0c34c2b33523fc",
-	      "name": "Service account user"
+	      "name": "Service account user",
+		  "email": "service_account@example.com"
       }`)
 	})
 
 	sa, resp, err := client.Groups.UpdateServiceAccount(1, 57, &UpdateServiceAccountOptions{
 		Name:     Ptr("Service account user"),
 		Username: Ptr("service_account_group_345_6018816a18e515214e0c34c2b33523fc"),
+		Email:    Ptr("service_account@example.com"),
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -122,6 +124,7 @@ func TestUpdateServiceAccount(t *testing.T) {
 		ID:       57,
 		UserName: "service_account_group_345_6018816a18e515214e0c34c2b33523fc",
 		Name:     "Service account user",
+		Email:    "service_account@example.com",
 	}
 	assert.Equal(t, want, sa)
 }

@@ -174,6 +174,28 @@ func TestJobsService_ListProjectJobs(t *testing.T) {
 	assert.Equal(t, want, jobs)
 }
 
+func TestDownloadArtifactsFile(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	wantContent := []byte("This is the archive content")
+	mux.HandleFunc("/api/v4/projects/9/jobs/artifacts/abranch/download", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "job", "publish")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, `This is the archive content`)
+	})
+
+	opt := &DownloadArtifactsFileOptions{Job: Ptr("publish")}
+	reader, resp, err := client.Jobs.DownloadArtifactsFile(9, "abranch", opt)
+	assert.NoError(t, err)
+
+	content, err := io.ReadAll(reader)
+	assert.NoError(t, err)
+	assert.Equal(t, wantContent, content)
+	assert.Equal(t, 200, resp.StatusCode)
+}
+
 func TestDownloadSingleArtifactsFileByTagOrBranch(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

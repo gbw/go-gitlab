@@ -19,11 +19,11 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestPublishPackageFile(t *testing.T) {
@@ -33,16 +33,14 @@ func TestPublishPackageFile(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1234/packages/generic/foo/0.1.2/bar-baz.txt", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
 		fmt.Fprint(w, `
-		{
-			"message": "201 Created"
-		}
-	`)
+       {
+          "message": "201 Created"
+       }
+    `)
 	})
 
 	_, _, err := client.GenericPackages.PublishPackageFile(1234, "foo", "0.1.2", "bar-baz.txt", strings.NewReader("bar = baz"), &PublishPackageFileOptions{})
-	if err != nil {
-		t.Errorf("GenericPackages.PublishPackageFile returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestDownloadPackageFile(t *testing.T) {
@@ -52,19 +50,15 @@ func TestDownloadPackageFile(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1234/packages/generic/foo/0.1.2/bar-baz.txt", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, strings.TrimSpace(`
-		bar = baz
-	`))
+       bar = baz
+    `))
 	})
 
 	packageBytes, _, err := client.GenericPackages.DownloadPackageFile(1234, "foo", "0.1.2", "bar-baz.txt")
-	if err != nil {
-		t.Errorf("GenericPackages.DownloadPackageFile returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []byte("bar = baz")
-	if !reflect.DeepEqual(want, packageBytes) {
-		t.Errorf("GenericPackages.DownloadPackageFile returned %+v, want %+v", packageBytes, want)
-	}
+	assert.Equal(t, want, packageBytes)
 }
 
 func TestFormatPackageURL(t *testing.T) {
@@ -72,7 +66,7 @@ func TestFormatPackageURL(t *testing.T) {
 	_, client := setup(t)
 
 	url, err := client.GenericPackages.FormatPackageURL(1234, "foo", "0.1.2", "bar-baz.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	want := "projects/1234/packages/generic/foo/0%2E1%2E2/bar-baz%2Etxt"
 	assert.Equal(t, want, url)

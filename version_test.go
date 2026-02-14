@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetVersion(t *testing.T) {
@@ -34,12 +36,8 @@ func TestGetVersion(t *testing.T) {
 		})
 
 	version, _, err := client.Version.GetVersion()
-	if err != nil {
-		t.Errorf("Version.GetVersion returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Version{Version: "11.3.4-ee", Revision: "14d3a1d"}
-	if !reflect.DeepEqual(want, version) {
-		t.Errorf("Version.GetVersion returned %+v, want %+v", version, want)
-	}
+	assert.Equal(t, want, version)
 }

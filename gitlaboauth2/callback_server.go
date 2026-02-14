@@ -2,6 +2,7 @@ package gitlaboauth2
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -204,7 +205,7 @@ func (s *CallbackServer) callbackHandler(ctx context.Context, tokenChan chan *oa
 		// Check for correct state
 		state := r.URL.Query().Get("state")
 		if state != expectedState {
-			err := fmt.Errorf("invalid state")
+			err := errors.New("invalid state")
 			errorChan <- err
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -213,7 +214,7 @@ func (s *CallbackServer) callbackHandler(ctx context.Context, tokenChan chan *oa
 		// Extract authorization code
 		code := r.URL.Query().Get("code")
 		if code == "" {
-			err := fmt.Errorf("no authorization code received")
+			err := errors.New("no authorization code received")
 			errorChan <- err
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -229,15 +230,47 @@ func (s *CallbackServer) callbackHandler(ctx context.Context, tokenChan chan *oa
 
 		// Send success response
 		tokenChan <- token
-		w.Header().Set("Content-Type", "text/html")
-		_, _ = w.Write([]byte(`
-            <html>
-            <body style="text-align: center; padding: 50px;">
-                <h1 style="color: green;">Authentication Successful!</h1>
-                <p>You can close this window and return to the application.</p>
-            </body>
-            </html>
-        `))
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		_, _ = w.Write([]byte(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Successful</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #fafafa;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        h1 {
+            color: #108548;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }
+        p {
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✓ Authentication Successful!</h1>
+        <p>You can close this window and return to the application.</p>
+    </div>
+</body>
+</html>`))
 	}
 }
 

@@ -94,3 +94,23 @@ func TestDependencies_ListProjectDependencies(t *testing.T) {
 	assert.NotNil(t, resp)
 	assert.Equal(t, want, dependencies)
 }
+
+func TestDependencies_ListProjectDependencies_WithPackageManagers(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/dependencies", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		assert.Equal(t, "package_manager=go%2Cbundler", r.URL.RawQuery)
+
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintln(w, `[]`)
+	})
+
+	_, resp, err := client.Dependencies.ListProjectDependencies(1, &ListProjectDependenciesOptions{
+		PackageManager: []*DependencyPackageManagerValue{Ptr(Go), Ptr(Bundler)},
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+}

@@ -202,3 +202,491 @@ func TestSearchService_UsersByProject(t *testing.T) {
 		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 	})
 }
+
+func TestSearchService_Projects(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for projects
+	// WHEN searching for projects
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "projects")
+		testParam(t, r, "search", "gitlab")
+		fmt.Fprint(w, `[{"id": 1, "name": "gitlab-ce"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching projects should be returned
+	projects, resp, err := client.Search.Projects("gitlab", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, projects, 1)
+	assert.Equal(t, int64(1), projects[0].ID)
+	assert.Equal(t, "gitlab-ce", projects[0].Name)
+}
+
+func TestSearchService_ProjectsByGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group and a search query
+	// WHEN searching for projects in the group
+	mux.HandleFunc("/api/v4/groups/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "projects")
+		testParam(t, r, "search", "test")
+		fmt.Fprint(w, `[{"id": 2, "name": "test-project"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching projects in the group should be returned
+	projects, resp, err := client.Search.ProjectsByGroup(1, "test", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, projects, 1)
+	assert.Equal(t, int64(2), projects[0].ID)
+}
+
+func TestSearchService_Issues(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for issues
+	// WHEN searching for issues
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "issues")
+		testParam(t, r, "search", "bug")
+		fmt.Fprint(w, `[{"id": 1, "title": "Bug in login"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching issues should be returned
+	issues, resp, err := client.Search.Issues("bug", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, issues, 1)
+	assert.Equal(t, int64(1), issues[0].ID)
+}
+
+func TestSearchService_IssuesByGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group and a search query
+	// WHEN searching for issues in the group
+	mux.HandleFunc("/api/v4/groups/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "issues")
+		testParam(t, r, "search", "feature")
+		fmt.Fprint(w, `[{"id": 2, "title": "New feature request"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching issues in the group should be returned
+	issues, resp, err := client.Search.IssuesByGroup(1, "feature", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, issues, 1)
+}
+
+func TestSearchService_IssuesByProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project and a search query
+	// WHEN searching for issues in the project
+	mux.HandleFunc("/api/v4/projects/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "issues")
+		testParam(t, r, "search", "critical")
+		fmt.Fprint(w, `[{"id": 3, "title": "Critical bug"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching issues in the project should be returned
+	issues, resp, err := client.Search.IssuesByProject(1, "critical", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, issues, 1)
+}
+
+func TestSearchService_MergeRequests(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for merge requests
+	// WHEN searching for merge requests
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "merge_requests")
+		testParam(t, r, "search", "fix")
+		fmt.Fprint(w, `[{"id": 1, "title": "Fix authentication"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching merge requests should be returned
+	mrs, resp, err := client.Search.MergeRequests("fix", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, mrs, 1)
+}
+
+func TestSearchService_MergeRequestsByGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group and a search query
+	// WHEN searching for merge requests in the group
+	mux.HandleFunc("/api/v4/groups/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "merge_requests")
+		testParam(t, r, "search", "refactor")
+		fmt.Fprint(w, `[{"id": 2, "title": "Refactor code"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching merge requests in the group should be returned
+	mrs, resp, err := client.Search.MergeRequestsByGroup(1, "refactor", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, mrs, 1)
+}
+
+func TestSearchService_MergeRequestsByProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project and a search query
+	// WHEN searching for merge requests in the project
+	mux.HandleFunc("/api/v4/projects/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "merge_requests")
+		testParam(t, r, "search", "update")
+		fmt.Fprint(w, `[{"id": 3, "title": "Update dependencies"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching merge requests in the project should be returned
+	mrs, resp, err := client.Search.MergeRequestsByProject(1, "update", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, mrs, 1)
+}
+
+func TestSearchService_Milestones(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for milestones
+	// WHEN searching for milestones
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "milestones")
+		testParam(t, r, "search", "v1.0")
+		fmt.Fprint(w, `[{"id": 1, "title": "v1.0"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching milestones should be returned
+	milestones, resp, err := client.Search.Milestones("v1.0", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, milestones, 1)
+}
+
+func TestSearchService_MilestonesByGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group and a search query
+	// WHEN searching for milestones in the group
+	mux.HandleFunc("/api/v4/groups/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "milestones")
+		testParam(t, r, "search", "release")
+		fmt.Fprint(w, `[{"id": 2, "title": "Release 2.0"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching milestones in the group should be returned
+	milestones, resp, err := client.Search.MilestonesByGroup(1, "release", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, milestones, 1)
+}
+
+func TestSearchService_MilestonesByProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project and a search query
+	// WHEN searching for milestones in the project
+	mux.HandleFunc("/api/v4/projects/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "milestones")
+		testParam(t, r, "search", "sprint")
+		fmt.Fprint(w, `[{"id": 3, "title": "Sprint 1"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching milestones in the project should be returned
+	milestones, resp, err := client.Search.MilestonesByProject(1, "sprint", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, milestones, 1)
+}
+
+func TestSearchService_SnippetTitles(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for snippet titles
+	// WHEN searching for snippets
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "snippet_titles")
+		testParam(t, r, "search", "example")
+		fmt.Fprint(w, `[{"id": 1, "title": "Example snippet"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching snippets should be returned
+	snippets, resp, err := client.Search.SnippetTitles("example", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, snippets, 1)
+}
+
+func TestSearchService_NotesByProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project and a search query
+	// WHEN searching for notes in the project
+	mux.HandleFunc("/api/v4/projects/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "notes")
+		testParam(t, r, "search", "comment")
+		fmt.Fprint(w, `[{"id": 1, "body": "This is a comment"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching notes in the project should be returned
+	notes, resp, err := client.Search.NotesByProject(1, "comment", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, notes, 1)
+}
+
+func TestSearchService_WikiBlobs(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for wiki blobs
+	// WHEN searching for wiki blobs
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "wiki_blobs")
+		testParam(t, r, "search", "documentation")
+		fmt.Fprint(w, `[{"basename": "home", "data": "documentation content"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching wiki blobs should be returned
+	wikis, resp, err := client.Search.WikiBlobs("documentation", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, wikis, 1)
+}
+
+func TestSearchService_WikiBlobsByGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group and a search query
+	// WHEN searching for wiki blobs in the group
+	mux.HandleFunc("/api/v4/groups/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "wiki_blobs")
+		testParam(t, r, "search", "guide")
+		fmt.Fprint(w, `[{"basename": "guide", "data": "guide content"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching wiki blobs in the group should be returned
+	wikis, resp, err := client.Search.WikiBlobsByGroup(1, "guide", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, wikis, 1)
+}
+
+func TestSearchService_WikiBlobsByProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project and a search query
+	// WHEN searching for wiki blobs in the project
+	mux.HandleFunc("/api/v4/projects/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "wiki_blobs")
+		testParam(t, r, "search", "tutorial")
+		fmt.Fprint(w, `[{"basename": "tutorial", "data": "tutorial content"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching wiki blobs in the project should be returned
+	wikis, resp, err := client.Search.WikiBlobsByProject(1, "tutorial", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, wikis, 1)
+}
+
+func TestSearchService_Commits(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for commits
+	// WHEN searching for commits
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "commits")
+		testParam(t, r, "search", "fix")
+		fmt.Fprint(w, `[{"id": "abc123", "message": "fix: bug"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching commits should be returned
+	commits, resp, err := client.Search.Commits("fix", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, commits, 1)
+}
+
+func TestSearchService_CommitsByGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group and a search query
+	// WHEN searching for commits in the group
+	mux.HandleFunc("/api/v4/groups/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "commits")
+		testParam(t, r, "search", "feature")
+		fmt.Fprint(w, `[{"id": "def456", "message": "feat: new feature"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching commits in the group should be returned
+	commits, resp, err := client.Search.CommitsByGroup(1, "feature", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, commits, 1)
+}
+
+func TestSearchService_CommitsByProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project and a search query
+	// WHEN searching for commits in the project
+	mux.HandleFunc("/api/v4/projects/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "commits")
+		testParam(t, r, "search", "refactor")
+		fmt.Fprint(w, `[{"id": "ghi789", "message": "refactor: code cleanup"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching commits in the project should be returned
+	commits, resp, err := client.Search.CommitsByProject(1, "refactor", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, commits, 1)
+}
+
+func TestSearchService_Blobs(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a search query for blobs
+	// WHEN searching for blobs
+	mux.HandleFunc("/api/v4/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "blobs")
+		testParam(t, r, "search", "function")
+		fmt.Fprint(w, `[{"basename": "main.go", "data": "function code"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching blobs should be returned
+	blobs, resp, err := client.Search.Blobs("function", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, blobs, 1)
+}
+
+func TestSearchService_BlobsByGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group and a search query
+	// WHEN searching for blobs in the group
+	mux.HandleFunc("/api/v4/groups/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "blobs")
+		testParam(t, r, "search", "class")
+		fmt.Fprint(w, `[{"basename": "user.rb", "data": "class User"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching blobs in the group should be returned
+	blobs, resp, err := client.Search.BlobsByGroup(1, "class", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, blobs, 1)
+}
+
+func TestSearchService_BlobsByProject(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project and a search query
+	// WHEN searching for blobs in the project
+	mux.HandleFunc("/api/v4/projects/1/-/search", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testParam(t, r, "scope", "blobs")
+		testParam(t, r, "search", "interface")
+		fmt.Fprint(w, `[{"basename": "api.go", "data": "interface API"}]`)
+	})
+
+	opts := &SearchOptions{}
+
+	// THEN matching blobs in the project should be returned
+	blobs, resp, err := client.Search.BlobsByProject(1, "interface", opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Len(t, blobs, 1)
+}

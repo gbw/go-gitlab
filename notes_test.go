@@ -838,3 +838,146 @@ func TestCreateInternalNote(t *testing.T) {
 		t.Errorf("Notes.CreateNote returned %+v, want %+v", note, want)
 	}
 }
+
+func TestGetSnippetNote(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project with a snippet and a note
+	// WHEN getting the snippet note
+	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 3,
+			"body": "This is a snippet note",
+			"author": {
+				"id": 1,
+				"username": "jdoe",
+				"name": "John Doe"
+			}
+		}`)
+	})
+
+	// THEN the snippet note should be returned
+	note, _, err := client.Notes.GetSnippetNote(1, 2, 3)
+	assert.NoError(t, err)
+	assert.Equal(t, int64(3), note.ID)
+	assert.Equal(t, "This is a snippet note", note.Body)
+	assert.Equal(t, int64(1), note.Author.ID)
+}
+
+func TestListEpicNotes(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with an epic
+	// WHEN listing epic notes
+	mux.HandleFunc("/api/v4/groups/1/epics/2/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[
+			{
+				"id": 1,
+				"body": "First epic note",
+				"author": {
+					"id": 1,
+					"username": "jdoe",
+					"name": "John Doe"
+				}
+			},
+			{
+				"id": 2,
+				"body": "Second epic note",
+				"author": {
+					"id": 2,
+					"username": "asmith",
+					"name": "Alice Smith"
+				}
+			}
+		]`)
+	})
+
+	opt := &ListEpicNotesOptions{OrderBy: Ptr("created_at"), Sort: Ptr("asc")}
+
+	// THEN the epic notes should be returned
+	notes, _, err := client.Notes.ListEpicNotes(1, 2, opt)
+	assert.NoError(t, err)
+	assert.Len(t, notes, 2)
+	assert.Equal(t, int64(1), notes[0].ID)
+	assert.Equal(t, "First epic note", notes[0].Body)
+	assert.Equal(t, int64(2), notes[1].ID)
+	assert.Equal(t, "Second epic note", notes[1].Body)
+}
+
+func TestCreateEpicNote(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with an epic
+	// WHEN creating an epic note
+	mux.HandleFunc("/api/v4/groups/1/epics/2/notes", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{
+			"id": 3,
+			"body": "New epic note",
+			"author": {
+				"id": 1,
+				"username": "jdoe",
+				"name": "John Doe"
+			}
+		}`)
+	})
+
+	opt := &CreateEpicNoteOptions{Body: Ptr("New epic note")}
+
+	// THEN the epic note should be created successfully
+	note, _, err := client.Notes.CreateEpicNote(1, 2, opt)
+	assert.NoError(t, err)
+	assert.Equal(t, int64(3), note.ID)
+	assert.Equal(t, "New epic note", note.Body)
+}
+
+func TestUpdateEpicNote(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with an epic and a note
+	// WHEN updating the epic note
+	mux.HandleFunc("/api/v4/groups/1/epics/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 3,
+			"body": "Updated epic note",
+			"author": {
+				"id": 1,
+				"username": "jdoe",
+				"name": "John Doe"
+			}
+		}`)
+	})
+
+	opt := &UpdateEpicNoteOptions{Body: Ptr("Updated epic note")}
+
+	// THEN the epic note should be updated successfully
+	note, _, err := client.Notes.UpdateEpicNote(1, 2, 3, opt)
+	assert.NoError(t, err)
+	assert.Equal(t, int64(3), note.ID)
+	assert.Equal(t, "Updated epic note", note.Body)
+}
+
+func TestDeleteEpicNote(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with an epic and a note
+	// WHEN deleting the epic note
+	mux.HandleFunc("/api/v4/groups/1/epics/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// THEN the epic note should be deleted successfully
+	resp, err := client.Notes.DeleteEpicNote(1, 2, 3)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+}

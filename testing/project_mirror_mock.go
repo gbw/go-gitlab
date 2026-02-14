@@ -173,6 +173,50 @@ func (c *MockProjectMirrorServiceInterfaceEditProjectMirrorCall) DoAndReturn(f f
 	return c
 }
 
+// ForcePushMirrorUpdate mocks base method.
+func (m *MockProjectMirrorServiceInterface) ForcePushMirrorUpdate(pid any, mirror int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, mirror}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ForcePushMirrorUpdate", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ForcePushMirrorUpdate indicates an expected call of ForcePushMirrorUpdate.
+func (mr *MockProjectMirrorServiceInterfaceMockRecorder) ForcePushMirrorUpdate(pid, mirror any, options ...any) *MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, mirror}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ForcePushMirrorUpdate", reflect.TypeOf((*MockProjectMirrorServiceInterface)(nil).ForcePushMirrorUpdate), varargs...)
+	return &MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall{Call: call}
+}
+
+// MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall wrap *gomock.Call
+type MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectMirrorServiceInterfaceForcePushMirrorUpdateCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetProjectMirror mocks base method.
 func (m *MockProjectMirrorServiceInterface) GetProjectMirror(pid any, mirror int64, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectMirror, *gitlab.Response, error) {
 	m.ctrl.T.Helper()

@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetErrorTracking(t *testing.T) {
@@ -39,9 +41,7 @@ func TestGetErrorTracking(t *testing.T) {
 	})
 
 	et, _, err := client.ErrorTracking.GetErrorTrackingSettings(1)
-	if err != nil {
-		t.Errorf("ErrorTracking.GetErrorTracking returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ErrorTrackingSettings{
 		Active:            true,
@@ -51,9 +51,7 @@ func TestGetErrorTracking(t *testing.T) {
 		Integrated:        false,
 	}
 
-	if !reflect.DeepEqual(want, et) {
-		t.Errorf("ErrorTracking.GetErrorTracking returned %+v, want %+v", et, want)
-	}
+	assert.Equal(t, want, et)
 }
 
 func TestDisableErrorTracking(t *testing.T) {
@@ -78,9 +76,7 @@ func TestDisableErrorTracking(t *testing.T) {
 			Integrated: Ptr(false),
 		},
 	)
-	if err != nil {
-		t.Errorf("ErrorTracking.EnableDisableErrorTracking returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ErrorTrackingSettings{
 		Active:            false,
@@ -90,9 +86,7 @@ func TestDisableErrorTracking(t *testing.T) {
 		Integrated:        false,
 	}
 
-	if !reflect.DeepEqual(want, et) {
-		t.Errorf("ErrorTracking.EnableDisableErrorTracking returned %+v, want %+v", et, want)
-	}
+	assert.Equal(t, want, et)
 }
 
 func TestListErrorTrackingClientKeys(t *testing.T) {
@@ -117,9 +111,7 @@ func TestListErrorTrackingClientKeys(t *testing.T) {
 			PerPage: 10,
 		},
 	})
-	if err != nil {
-		t.Errorf("ErrorTracking.ListErrorTrackingClientKeys returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*ErrorTrackingClientKey{{
 		ID:        1,
@@ -128,9 +120,7 @@ func TestListErrorTrackingClientKeys(t *testing.T) {
 		SentryDsn: "https://glet_aa77551d849c083f76d0bc545ed053a3@gitlab.example.com/api/v4/error_tracking/collector/5",
 	}}
 
-	if !reflect.DeepEqual(want, cks) {
-		t.Errorf("ErrorTracking.ListErrorTrackingClientKeys returned %+v, want %+v", cks, want)
-	}
+	assert.Equal(t, want, cks)
 }
 
 func TestCreateClientKey(t *testing.T) {
@@ -148,9 +138,7 @@ func TestCreateClientKey(t *testing.T) {
 	})
 
 	ck, _, err := client.ErrorTracking.CreateClientKey(1)
-	if err != nil {
-		t.Errorf("ErrorTracking.CreateClientKey returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ErrorTrackingClientKey{
 		ID:        1,
@@ -159,9 +147,7 @@ func TestCreateClientKey(t *testing.T) {
 		SentryDsn: "https://glet_aa77551d849c083f76d0bc545ed053a3@gitlab.example.com/api/v4/error_tracking/collector/5",
 	}
 
-	if !reflect.DeepEqual(want, ck) {
-		t.Errorf("ErrorTracking.CreateClientKey returned %+v, want %+v", ck, want)
-	}
+	assert.Equal(t, want, ck)
 }
 
 func TestDeleteClientKey(t *testing.T) {
@@ -174,7 +160,5 @@ func TestDeleteClientKey(t *testing.T) {
 	})
 
 	_, err := client.ErrorTracking.DeleteClientKey(1, 3)
-	if err != nil {
-		t.Errorf("ErrorTracking.DeleteClientKey returned error: %v", err)
-	}
+	require.NoError(t, err)
 }

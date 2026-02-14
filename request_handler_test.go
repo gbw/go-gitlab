@@ -3,6 +3,7 @@ package gitlab
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -360,20 +361,247 @@ func TestDoRequestRunnerID(t *testing.T) {
 
 func TestDoRequestUserID(t *testing.T) {
 	t.Parallel()
+
+	tests := []struct {
+		name         string
+		uid          any
+		expectedPath string
+	}{
+		{
+			name:         "numeric user ID",
+			uid:          123,
+			expectedPath: "/api/v4/users/123/status",
+		},
+		{
+			name:         "username string",
+			uid:          "johndoe",
+			expectedPath: "/api/v4/users/johndoe/status",
+		},
+		{
+			name:         "username with @ prefix is trimmed",
+			uid:          "@johndoe",
+			expectedPath: "/api/v4/users/johndoe/status",
+		},
+		{
+			name:         "username with slash is escaped",
+			uid:          "test/user",
+			expectedPath: "/api/v4/users/test%2Fuser/status",
+		},
+		{
+			name:         "username with @ prefix and slash",
+			uid:          "@test/user",
+			expectedPath: "/api/v4/users/test%2Fuser/status",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			mux, client := setup(t)
+
+			// GIVEN
+			mux.HandleFunc(tt.expectedPath, func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(200)
+			})
+
+			// WHEN
+			_, resp, err := do[none](
+				client,
+				withPath("users/%s/status", UserID{tt.uid}),
+			)
+
+			// THEN
+			assert.NoError(t, err)
+			assert.Equal(t, 200, resp.StatusCode)
+		})
+	}
+}
+
+func TestDoRequestUserIDInvalidType(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	// WHEN
+	_, _, err := do[none](
+		client,
+		withPath("users/%s/status", UserID{struct{ ID int }{ID: 1}}),
+	)
+
+	// THEN
+	assert.ErrorIs(t, err, ErrInvalidIDType)
+}
+
+func TestDoRequestUploadSuccess(t *testing.T) {
+	t.Parallel()
 	mux, client := setup(t)
 
 	// GIVEN
-	mux.HandleFunc("/api/v4/users/test%2Fuser", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
+	path := "/api/v4/projects/1/uploads"
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, int64(-1), r.ContentLength)
+		w.WriteHeader(201)
+		w.Write([]byte(`{"id": 1, "name": "test.txt"}`))
 	})
 
+	content := strings.NewReader("file content")
+
 	// WHEN
-	_, resp, err := do[none](
+	type uploadResult struct {
+		ID   int64  `json:"id"`
+		Name string `json:"name"`
+	}
+	result, resp, err := do[*uploadResult](
 		client,
-		withPath("users/%s", UserID{"test/user"}),
+		withMethod(http.MethodPost),
+		withPath("projects/1/uploads"),
+		withUpload(content, "test.txt", UploadFile),
+	)
+
+	// THEN
+	assert.NoError(t, err)
+	assert.Equal(t, 201, resp.StatusCode)
+	assert.Equal(t, int64(1), result.ID)
+	assert.Equal(t, "test.txt", result.Name)
+}
+
+func TestDoRequestUploadWithAPIOpts(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	path := "/api/v4/projects/1/wikis/attachments"
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+
+		err := r.ParseMultipartForm(32 << 20)
+		assert.NoError(t, err)
+		assert.Equal(t, "main", r.FormValue("branch"))
+
+		w.WriteHeader(201)
+		w.Write([]byte(`{"file_name": "test.png"}`))
+	})
+
+	content := strings.NewReader("image data")
+	opts := struct {
+		Branch string `url:"branch" json:"branch"`
+	}{Branch: "main"}
+
+	// WHEN
+	type uploadResult struct {
+		FileName string `json:"file_name"`
+	}
+	result, resp, err := do[*uploadResult](
+		client,
+		withMethod(http.MethodPost),
+		withPath("projects/1/wikis/attachments"),
+		withUpload(content, "test.png", UploadFile),
+		withAPIOpts(opts),
+	)
+
+	// THEN
+	assert.NoError(t, err)
+	assert.Equal(t, 201, resp.StatusCode)
+	assert.Equal(t, "test.png", result.FileName)
+}
+
+func TestDoRequestUploadAvatar(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	path := "/api/v4/projects/1"
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+
+		err := r.ParseMultipartForm(32 << 20)
+		assert.NoError(t, err)
+
+		_, header, err := r.FormFile("avatar")
+		assert.NoError(t, err)
+		assert.Equal(t, "avatar.png", header.Filename)
+
+		w.WriteHeader(200)
+		w.Write([]byte(`{"id": 1}`))
+	})
+
+	content := strings.NewReader("avatar data")
+
+	// WHEN
+	result, resp, err := do[*testProject](
+		client,
+		withMethod(http.MethodPut),
+		withPath("projects/1"),
+		withUpload(content, "avatar.png", UploadAvatar),
 	)
 
 	// THEN
 	assert.NoError(t, err)
 	assert.Equal(t, 200, resp.StatusCode)
+	assert.Equal(t, int64(1), result.ID)
+}
+
+func TestDoRequestUploadErrorResponse(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	path := "/api/v4/projects/1/uploads"
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(413)
+		w.Write([]byte(`{"message": "File too large"}`))
+	})
+
+	content := strings.NewReader("file content")
+
+	// WHEN
+	type uploadResult struct {
+		ID int64 `json:"id"`
+	}
+	result, resp, err := do[*uploadResult](
+		client,
+		withMethod(http.MethodPost),
+		withPath("projects/1/uploads"),
+		withUpload(content, "large.txt", UploadFile),
+	)
+
+	// THEN
+	assert.Error(t, err)
+	assert.Equal(t, 413, resp.StatusCode)
+	assert.Nil(t, result)
+}
+
+func TestDoRequestUploadWithProjectID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN
+	mux.HandleFunc("/api/v4/projects/group%2Fproject/uploads", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		w.WriteHeader(201)
+		w.Write([]byte(`{"id": 1}`))
+	})
+
+	content := strings.NewReader("file content")
+
+	// WHEN
+	type uploadResult struct {
+		ID int64 `json:"id"`
+	}
+	result, resp, err := do[*uploadResult](
+		client,
+		withMethod(http.MethodPost),
+		withPath("projects/%s/uploads", ProjectID{"group/project"}),
+		withUpload(content, "test.txt", UploadFile),
+	)
+
+	// THEN
+	assert.NoError(t, err)
+	assert.Equal(t, 201, resp.StatusCode)
+	assert.Equal(t, int64(1), result.ID)
 }

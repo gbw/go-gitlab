@@ -19,8 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCreateApplication(t *testing.T) {
@@ -32,8 +34,8 @@ func TestCreateApplication(t *testing.T) {
 			testMethod(t, r, http.MethodPost)
 			fmt.Fprint(w, `
 {
-	"id":1,
-	"application_name":"testApplication"
+    "id":1,
+    "application_name":"testApplication"
 }`)
 		},
 	)
@@ -42,17 +44,13 @@ func TestCreateApplication(t *testing.T) {
 		Name: Ptr("testApplication"),
 	}
 	app, _, err := client.Applications.CreateApplication(opt)
-	if err != nil {
-		t.Errorf("Applications.CreateApplication returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Application{
 		ID:              1,
 		ApplicationName: "testApplication",
 	}
-	if !reflect.DeepEqual(want, app) {
-		t.Errorf("Applications.CreateApplication returned %+v, want %+v", app, want)
-	}
+	assert.Equal(t, want, app)
 }
 
 func TestListApplications(t *testing.T) {
@@ -63,24 +61,20 @@ func TestListApplications(t *testing.T) {
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
 			fmt.Fprint(w, `[
-	{"id":1},
-	{"id":2}
+    {"id":1},
+    {"id":2}
 ]`)
 		},
 	)
 
 	apps, _, err := client.Applications.ListApplications(&ListApplicationsOptions{})
-	if err != nil {
-		t.Errorf("Applications.ListApplications returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Application{
 		{ID: 1},
 		{ID: 2},
 	}
-	if !reflect.DeepEqual(want, apps) {
-		t.Errorf("Applications.ListApplications returned %+v, want %+v", apps, want)
-	}
+	assert.Equal(t, want, apps)
 }
 
 func TestDeleteApplication(t *testing.T) {
@@ -95,13 +89,7 @@ func TestDeleteApplication(t *testing.T) {
 	)
 
 	resp, err := client.Applications.DeleteApplication(4)
-	if err != nil {
-		t.Errorf("Applications.DeleteApplication returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := http.StatusAccepted
-	got := resp.StatusCode
-	if got != want {
-		t.Errorf("Applications.DeleteApplication returned status code %d, want %d", got, want)
-	}
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }

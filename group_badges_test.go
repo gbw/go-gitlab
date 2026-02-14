@@ -21,6 +21,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListGroupBadges(t *testing.T) {
@@ -130,4 +132,76 @@ func TestRemoveGroupBadge(t *testing.T) {
 	if got != want {
 		t.Errorf("GroupsBadges.DeleteGroupBadge returned %d, want %d", got, want)
 	}
+}
+
+func TestPreviewGroupBadge(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group
+	// WHEN previewing a badge with placeholder interpolation
+	mux.HandleFunc("/api/v4/groups/1/badges/render",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			fmt.Fprint(w, `{
+				"link_url": "https://example.com/project/%{project_path}",
+				"image_url": "https://shields.io/badge/coverage-95%25-green",
+				"rendered_link_url": "https://example.com/project/my-group/my-project",
+				"rendered_image_url": "https://shields.io/badge/coverage-95%25-green"
+			}`)
+		},
+	)
+
+	opt := &GroupBadgePreviewOptions{
+		LinkURL:  Ptr("https://example.com/project/%{project_path}"),
+		ImageURL: Ptr("https://shields.io/badge/coverage-95%25-green"),
+	}
+
+	// THEN the badge preview should be returned with rendered URLs
+	badge, _, err := client.GroupBadges.PreviewGroupBadge(1, opt)
+	assert.NoError(t, err)
+
+	want := &GroupBadge{
+		LinkURL:          "https://example.com/project/%{project_path}",
+		ImageURL:         "https://shields.io/badge/coverage-95%25-green",
+		RenderedLinkURL:  "https://example.com/project/my-group/my-project",
+		RenderedImageURL: "https://shields.io/badge/coverage-95%25-green",
+	}
+	assert.Equal(t, want, badge)
+}
+
+func TestPreviewGroupBadgeWithURLEncodedPath(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with URL-encoded path
+	// WHEN previewing a badge with placeholder interpolation using URL-encoded group path
+	mux.HandleFunc("/api/v4/groups/my-org%2Fmy-group/badges/render",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			fmt.Fprint(w, `{
+				"link_url": "https://example.com/project/%{project_path}",
+				"image_url": "https://shields.io/badge/build-passing-brightgreen",
+				"rendered_link_url": "https://example.com/project/my-org/my-group",
+				"rendered_image_url": "https://shields.io/badge/build-passing-brightgreen"
+			}`)
+		},
+	)
+
+	opt := &GroupBadgePreviewOptions{
+		LinkURL:  Ptr("https://example.com/project/%{project_path}"),
+		ImageURL: Ptr("https://shields.io/badge/build-passing-brightgreen"),
+	}
+
+	// THEN the badge preview should work with URL-encoded group path
+	badge, _, err := client.GroupBadges.PreviewGroupBadge("my-org/my-group", opt)
+	assert.NoError(t, err)
+
+	want := &GroupBadge{
+		LinkURL:          "https://example.com/project/%{project_path}",
+		ImageURL:         "https://shields.io/badge/build-passing-brightgreen",
+		RenderedLinkURL:  "https://example.com/project/my-org/my-group",
+		RenderedImageURL: "https://shields.io/badge/build-passing-brightgreen",
+	}
+	assert.Equal(t, want, badge)
 }

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -103,6 +104,41 @@ func TestProjectVariablesService_GetVariable(t *testing.T) {
 	require.Error(t, err)
 	require.Nil(t, pv)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+}
+
+func TestProjectVariablesService_GetVariable_EmptyEnvironmentScopeAttribute(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/variables/TEST_VARIABLE_1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		assert.False(t, r.URL.Query().Has("filter[environment_scope]"))
+		mustWriteJSONResponse(t, w, map[string]any{
+			"key":           "TEST_VARIABLE_1",
+			"variable_type": "env_var",
+			"value":         "TEST_1",
+			"protected":     false,
+			"masked":        true,
+			"hidden":        true,
+			"description":   "test variable 1",
+		})
+	})
+
+	want := &ProjectVariable{
+		Key:              "TEST_VARIABLE_1",
+		Value:            "TEST_1",
+		VariableType:     "env_var",
+		Protected:        false,
+		Masked:           true,
+		Hidden:           true,
+		EnvironmentScope: "",
+		Description:      "test variable 1",
+	}
+
+	pv, resp, err := client.ProjectVariables.GetVariable(1, "TEST_VARIABLE_1", &GetProjectVariableOptions{Filter: &VariableFilter{EnvironmentScope: ""}}, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, want, pv)
 }
 
 func TestProjectVariablesService_CreateVariable(t *testing.T) {

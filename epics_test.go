@@ -19,10 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetEpic(t *testing.T) {
@@ -35,9 +35,7 @@ func TestGetEpic(t *testing.T) {
 	})
 
 	epic, _, err := client.Epics.GetEpic("7", 8)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Epic{
 		ID:          8,
@@ -46,9 +44,7 @@ func TestGetEpic(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}
 
-	if !reflect.DeepEqual(want, epic) {
-		t.Errorf("Epics.GetEpic returned %+v, want %+v", epic, want)
-	}
+	assert.Equal(t, want, epic)
 }
 
 func TestDeleteEpic(t *testing.T) {
@@ -60,9 +56,7 @@ func TestDeleteEpic(t *testing.T) {
 	})
 
 	_, err := client.Epics.DeleteEpic("7", 8)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestListGroupEpics(t *testing.T) {
@@ -81,9 +75,7 @@ func TestListGroupEpics(t *testing.T) {
 	}
 
 	epics, _, err := client.Epics.ListGroupEpics("7", listGroupEpics)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*Epic{{
 		ID:          8,
@@ -92,9 +84,7 @@ func TestListGroupEpics(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}}
 
-	if !reflect.DeepEqual(want, epics) {
-		t.Errorf("Epics.ListGroupEpics returned %+v, want %+v", epics, want)
-	}
+	assert.Equal(t, want, epics)
 }
 
 func TestCreateEpic(t *testing.T) {
@@ -112,9 +102,7 @@ func TestCreateEpic(t *testing.T) {
 	}
 
 	epic, _, err := client.Epics.CreateEpic("7", createEpicOptions)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Epic{
 		ID:          8,
@@ -123,9 +111,7 @@ func TestCreateEpic(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}
 
-	if !reflect.DeepEqual(want, epic) {
-		t.Errorf("Epics.CreateEpic returned %+v, want %+v", epic, want)
-	}
+	assert.Equal(t, want, epic)
 }
 
 func TestUpdateEpic(t *testing.T) {
@@ -143,9 +129,7 @@ func TestUpdateEpic(t *testing.T) {
 	}
 
 	epic, _, err := client.Epics.UpdateEpic("7", 8, updateEpicOptions)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Epic{
 		ID:          8,
@@ -154,9 +138,7 @@ func TestUpdateEpic(t *testing.T) {
 		Author:      &EpicAuthor{ID: 26, Name: "jramsay"},
 	}
 
-	if !reflect.DeepEqual(want, epic) {
-		t.Errorf("Epics.UpdateEpic returned %+v, want %+v", epic, want)
-	}
+	assert.Equal(t, want, epic)
 }
 
 func TestGetEpicLinks(t *testing.T) {
@@ -169,7 +151,7 @@ func TestGetEpicLinks(t *testing.T) {
 	})
 
 	epics, _, err := client.Epics.GetEpicLinks("7", 8)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	want := []*Epic{{
 		ID:          9,
@@ -178,7 +160,147 @@ func TestGetEpicLinks(t *testing.T) {
 		Author:      &EpicAuthor{ID: 27, Name: "asmith"},
 	}}
 
-	if !reflect.DeepEqual(want, epics) {
-		t.Errorf("Epics.GetEpicLinks returned %+v, want %+v", epics, want)
+	assert.Equal(t, want, epics)
+}
+
+func TestGetEpicWithDateTimeFields(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/7/epics/10", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 10,
+			"title": "Epic with datetime fields",
+			"description": "Testing ISO 8601 datetime parsing",
+			"author": {"id": 26, "name": "jramsay"},
+			"start_date": "2026-06-13T00:00:00+00:00",
+			"due_date": "2026-12-31T23:59:59+00:00",
+			"start_date_fixed": "2026-06-13T00:00:00+00:00",
+			"due_date_fixed": "2026-12-31T23:59:59+00:00",
+			"start_date_from_milestones": "2026-06-01T00:00:00+00:00",
+			"due_date_from_milestones": "2026-12-31T00:00:00+00:00"
+		}`)
+	})
+
+	epic, _, err := client.Epics.GetEpic("7", 10)
+	require.NoError(t, err)
+
+	// Verify all datetime fields were parsed successfully
+	assert.NotNil(t, epic.StartDate, "Expected StartDate to be non-nil")
+	assert.NotNil(t, epic.DueDate, "Expected DueDate to be non-nil")
+	assert.NotNil(t, epic.StartDateFixed, "Expected StartDateFixed to be non-nil")
+	assert.NotNil(t, epic.DueDateFixed, "Expected DueDateFixed to be non-nil")
+	assert.NotNil(t, epic.StartDateFromMilestones, "Expected StartDateFromMilestones to be non-nil")
+	assert.NotNil(t, epic.DueDateFromMilestones, "Expected DueDateFromMilestones to be non-nil")
+
+	want := &Epic{
+		ID:                      10,
+		Title:                   "Epic with datetime fields",
+		Description:             "Testing ISO 8601 datetime parsing",
+		Author:                  &EpicAuthor{ID: 26, Name: "jramsay"},
+		StartDate:               epic.StartDate,
+		DueDate:                 epic.DueDate,
+		StartDateFixed:          epic.StartDateFixed,
+		DueDateFixed:            epic.DueDateFixed,
+		StartDateFromMilestones: epic.StartDateFromMilestones,
+		DueDateFromMilestones:   epic.DueDateFromMilestones,
 	}
+
+	assert.Equal(t, want, epic)
+}
+
+func TestListGroupEpics_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `[{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}]`)
+	})
+
+	// WHEN: Listing group epics with an integer group ID
+	epics, _, err := client.Epics.ListGroupEpics(123, nil)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Len(t, epics, 1)
+	require.Equal(t, int64(8), epics[0].ID)
+}
+
+func TestGetEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics/8", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}`)
+	})
+
+	// WHEN: Getting an epic with an integer group ID
+	epic, _, err := client.Epics.GetEpic(123, 8)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(8), epic.ID)
+}
+
+func TestCreateEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}`)
+	})
+
+	// WHEN: Creating an epic with an integer group ID
+	epic, _, err := client.Epics.CreateEpic(123, &CreateEpicOptions{
+		Title:       Ptr("Incredible idea"),
+		Description: Ptr("This is a test epic"),
+	})
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(8), epic.ID)
+}
+
+func TestUpdateEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics/8", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{"id":8, "title": "Incredible idea", "description": "This is a test epic", "author" : {"id" : 26, "name": "jramsay"}}`)
+	})
+
+	// WHEN: Updating an epic with an integer group ID
+	epic, _, err := client.Epics.UpdateEpic(123, 8, &UpdateEpicOptions{
+		Title:       Ptr("Incredible idea"),
+		Description: Ptr("This is a test epic"),
+	})
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.Equal(t, int64(8), epic.ID)
+}
+
+func TestDeleteEpic_WithIntGroupID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An integer group ID
+	mux.HandleFunc("/api/v4/groups/123/epics/8", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	// WHEN: Deleting an epic with an integer group ID
+	_, err := client.Epics.DeleteEpic(123, 8)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
 }

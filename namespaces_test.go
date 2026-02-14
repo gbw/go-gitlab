@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListNamespaces(t *testing.T) {
@@ -292,4 +293,25 @@ func TestSearchNamespace(t *testing.T) {
 		},
 	}
 	assert.Equal(t, want, namespaces)
+}
+
+func TestGetNamespaceWithSlashInID(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a namespace with a slash in the ID (e.g., "my/namespace")
+	mux.HandleFunc("/api/v4/namespaces/my%2Fnamespace", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		// Print a simple ID attribute since the point of the test is only the URL escaping
+		mustWriteJSONResponse(t, w, &Namespace{ID: 5})
+	})
+
+	// WHEN GetNamespace is called with this ID
+	namespace, _, err := client.Namespaces.GetNamespace("my/namespace")
+	require.NoError(t, err)
+
+	// THEN the URL should be encoded once as "my%2Fnamespace", not double-encoded as "my%252Fnamespace"
+	// Note - this is validated by getting the response back from the mux.
+	want := &Namespace{ID: 5}
+	assert.Equal(t, want, namespace)
 }

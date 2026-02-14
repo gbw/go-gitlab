@@ -7,6 +7,7 @@ import (
 	"github.com/MakeNowJust/heredoc/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	gitlab "gitlab.com/gitlab-org/api/client-go"
 	"gitlab.com/gitlab-org/api/client-go/config/v1beta1"
 )
 
@@ -1184,6 +1185,40 @@ func TestConfig_NilConfig_Methods(t *testing.T) {
 	assert.Nil(t, c.CurrentContext())
 	assert.Nil(t, c.Instance("test"))
 	assert.Nil(t, c.Auth("test"))
+}
+
+func TestConfig_NewClient_Success_OverrideBaseURL(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN
+	c, err := NewFromString(heredoc.Doc(`
+		instances:
+		  - name: custom-api-path
+		    server: https://gitlab.example.com/api/v4
+
+		auths:
+		  - name: pat-user
+		    auth_info:
+		      personal-access-token:
+		        token: test-token
+
+		contexts:
+		  - name: test-context
+		    instance: custom-api-path
+		    auth: pat-user
+
+		current-context: test-context
+	`))
+	require.NoError(t, err)
+	require.NotNil(t, c)
+
+	// WHEN
+	client, err := c.NewClient(gitlab.WithBaseURL("https://gitlab.com"))
+
+	// THEN
+	require.NoError(t, err)
+	require.NotNil(t, client)
+	assert.Equal(t, "https://gitlab.com/api/v4/", client.BaseURL().String())
 }
 
 func TestConfig_NewClientForContext_Success_PersonalAccessToken(t *testing.T) {

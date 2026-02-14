@@ -70,10 +70,9 @@ func TestCreateMergeRequestContextCommits(t *testing.T) {
 	assert.NotNil(t, resp)
 	assert.Len(t, commits, 1)
 
-	loc := time.FixedZone("", 2*60*60) // +02:00 timezone
-	createdAt := time.Date(2014, time.February, 27, 10, 5, 10, 0, loc)
-	authoredDate := time.Date(2014, time.February, 27, 10, 5, 10, 0, loc)
-	committedDate := time.Date(2014, time.February, 27, 10, 5, 10, 0, loc)
+	createdAt := time.Date(2014, time.February, 27, 10, 5, 10, 0, time.UTC)
+	authoredDate := time.Date(2014, time.February, 27, 10, 5, 10, 0, time.UTC)
+	committedDate := time.Date(2014, time.February, 27, 10, 5, 10, 0, time.UTC)
 	want := []*Commit{
 		{
 			ID:             "51856a574ac3302a95f82483d6c7396b1e0783cb",

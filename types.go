@@ -143,7 +143,7 @@ type AssigneeIDValue struct {
 // AssigneeID is a helper routine that creates a new AssigneeIDValue.
 func AssigneeID(v any) *AssigneeIDValue {
 	switch v.(type) {
-	case UserIDValue, int:
+	case UserIDValue, int, int64:
 		return &AssigneeIDValue{value: v}
 	default:
 		panic("Unsupported value passed as assignee ID")
@@ -157,6 +157,8 @@ func (a *AssigneeIDValue) EncodeValues(key string, v *url.Values) error {
 		v.Set(key, string(value))
 	case int:
 		v.Set(key, strconv.Itoa(value))
+	case int64:
+		v.Set(key, strconv.FormatInt(value, 10))
 	}
 	return nil
 }
@@ -179,7 +181,7 @@ type ReviewerIDValue struct {
 // ReviewerID is a helper routine that creates a new ReviewerIDValue.
 func ReviewerID(v any) *ReviewerIDValue {
 	switch v.(type) {
-	case UserIDValue, int:
+	case UserIDValue, int, int64:
 		return &ReviewerIDValue{value: v}
 	default:
 		panic("Unsupported value passed as reviewer ID")
@@ -193,6 +195,8 @@ func (a *ReviewerIDValue) EncodeValues(key string, v *url.Values) error {
 		v.Set(key, string(value))
 	case int:
 		v.Set(key, strconv.Itoa(value))
+	case int64:
+		v.Set(key, strconv.FormatInt(value, 10))
 	}
 	return nil
 }
@@ -477,10 +481,18 @@ func (t *ISOTime) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	isotime, err := time.Parse(`"`+iso8601+`"`, string(data))
-	*t = ISOTime(isotime)
+	// Try parsing as datetime first (ISO 8601 with time)
+	isotime, err := time.Parse(`"`+time.RFC3339+`"`, string(data))
+	if err != nil {
+		// If that fails, try parsing as date-only
+		isotime, err = time.Parse(`"`+iso8601+`"`, string(data))
+		if err != nil {
+			return err
+		}
+	}
 
-	return err
+	*t = ISOTime(isotime)
+	return nil
 }
 
 // EncodeValues implements the query.Encoder interface.
@@ -865,16 +877,10 @@ type BoolValue bool
 // https://github.com/gitlabhq/terraform-provider-gitlab/issues/348
 func (t *BoolValue) UnmarshalJSON(b []byte) error {
 	switch string(b) {
-	case `"1"`:
+	case `"1"`, `"true"`:
 		*t = true
 		return nil
-	case `"0"`:
-		*t = false
-		return nil
-	case `"true"`:
-		*t = true
-		return nil
-	case `"false"`:
+	case `"0"`, `"false"`:
 		*t = false
 		return nil
 	default:

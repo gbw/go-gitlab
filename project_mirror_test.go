@@ -231,3 +231,85 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 	require.Nil(t, pm)
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
 }
+
+func TestProjectMirrorService_ForcePushMirrorUpdate(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project ID and mirror ID
+	mux.HandleFunc("/api/v4/projects/42/remote_mirrors/101486/sync", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	// WHEN ForcePushMirrorUpdate is called
+	resp, err := client.ProjectMirrors.ForcePushMirrorUpdate(42, 101486, nil)
+
+	// THEN the response should be successful with No Content status
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, http.StatusNoContent, resp.StatusCode)
+}
+
+func TestProjectMirrorService_ForcePushMirrorUpdate_InvalidProjectID(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	// GIVEN an invalid project ID (float)
+	// WHEN ForcePushMirrorUpdate is called
+	resp, err := client.ProjectMirrors.ForcePushMirrorUpdate(42.01, 101486, nil)
+
+	// THEN an error should be returned
+	require.ErrorIs(t, err, ErrInvalidIDType)
+	require.Nil(t, resp)
+}
+
+func TestProjectMirrorService_ForcePushMirrorUpdate_OptionError(t *testing.T) {
+	t.Parallel()
+	_, client := setup(t)
+
+	// GIVEN a valid project ID and an error-returning option
+	// WHEN ForcePushMirrorUpdate is called
+	resp, err := client.ProjectMirrors.ForcePushMirrorUpdate(42, 101486, errorOption)
+
+	// THEN an error should be returned
+	require.ErrorIs(t, err, errRequestOptionFunc)
+	require.Nil(t, resp)
+}
+
+func TestProjectMirrorService_ForcePushMirrorUpdate_NotFound(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a non-existent project ID
+	mux.HandleFunc("/api/v4/projects/43/remote_mirrors/101486/sync", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusNotFound)
+	})
+
+	// WHEN ForcePushMirrorUpdate is called
+	resp, err := client.ProjectMirrors.ForcePushMirrorUpdate(43, 101486, nil)
+
+	// THEN an 404 error should be returned
+	require.Error(t, err)
+	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+}
+
+func TestProjectMirrorService_ForcePushMirrorUpdate_Forbidden(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a project ID and mirror ID
+	mux.HandleFunc("/api/v4/projects/42/remote_mirrors/101487/sync", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusForbidden)
+	})
+
+	// WHEN ForcePushMirrorUpdate is called and returns 403
+	resp, err := client.ProjectMirrors.ForcePushMirrorUpdate(42, 101487, nil)
+
+	// THEN the response should be successful with Forbidden status
+	require.Error(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, http.StatusForbidden, resp.StatusCode)
+}
