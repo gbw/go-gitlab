@@ -186,7 +186,8 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 						{
 							"access_level": 40
 						}
-					]
+					],
+					"code_owner_approval_required": true
 				}
 			}
 			`)
@@ -206,6 +207,7 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 					AccessLevel: Ptr(AccessLevelValue(40)),
 				},
 			},
+			CodeOwnerApprovalRequired: Ptr(true),
 		},
 	}
 
@@ -230,6 +232,7 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 					AccessLevel: Ptr(MaintainerPermissions),
 				},
 			},
+			CodeOwnerApprovalRequired: true,
 		},
 	}
 
@@ -240,8 +243,13 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 	// Validate the request does what we want it to
 	allowedToMerge := *jsonRequestBody.DefaultBranchProtectionDefaults.AllowedToMerge
 	allowedToPush := *jsonRequestBody.DefaultBranchProtectionDefaults.AllowedToPush
+
 	assert.Equal(t, Ptr(MaintainerPermissions), allowedToMerge[0].AccessLevel)
 	assert.Equal(t, Ptr(MaintainerPermissions), allowedToPush[0].AccessLevel)
+	assert.True(
+		t,
+		*jsonRequestBody.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired,
+	)
 }
 
 func TestTransferGroup(t *testing.T) {
@@ -1354,6 +1362,12 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 			testFormBody(t, r, "path", "g")
 			testFormBody(t, r, "default_branch_protection_defaults[allowed_to_push][][access_level]", "40")
 			testFormBody(t, r, "default_branch_protection_defaults[allowed_to_merge][][access_level]", "40")
+			testFormBody(
+				t,
+				r,
+				"default_branch_protection_defaults[code_owner_approval_required]",
+				"true",
+			)
 
 			fmt.Fprint(w, `
 			{
@@ -1371,7 +1385,8 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 						{
 							"access_level": 40
 						}
-					]
+					],
+					"code_owner_approval_required": true
 				},
 				"avatar_url":"http://localhost/uploads/-/system/group/avatar/999/avatar.png"
 			}
@@ -1398,6 +1413,7 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 					AccessLevel: Ptr(AccessLevelValue(40)),
 				},
 			},
+			CodeOwnerApprovalRequired: Ptr(true),
 		},
 	}
 
@@ -1425,6 +1441,7 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 					AccessLevel: Ptr(MaintainerPermissions),
 				},
 			},
+			CodeOwnerApprovalRequired: true,
 		},
 	}
 

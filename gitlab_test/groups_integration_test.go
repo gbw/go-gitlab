@@ -166,3 +166,56 @@ func Test_GroupProtectedBranches_Integration(t *testing.T) {
 	assert.Error(t, err)
 	assert.Equal(t, 404, resp.StatusCode)
 }
+
+func Test_GroupsCreateGroup_CodeOwnerApprovalRequired_Integration(t *testing.T) {
+	// GIVEN a GitLab client
+	client := SetupIntegrationClient(t)
+
+	// WHEN creating a group with CodeOwnerApprovalRequired enabled
+	group, _, err := client.Groups.CreateGroup(&gitlab.CreateGroupOptions{
+		Name: gitlab.Ptr("code-owner-create-test"),
+		Path: gitlab.Ptr("code-owner-create-test"),
+		DefaultBranchProtectionDefaults: &gitlab.DefaultBranchProtectionDefaultsOptions{
+			CodeOwnerApprovalRequired: gitlab.Ptr(true),
+		},
+	})
+	require.NoError(t, err, "Failed to create group")
+
+	// THEN the setting should be enabled
+	require.NotNil(t, group.DefaultBranchProtectionDefaults)
+	assert.True(t, group.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired)
+
+	// AND WHEN retrieving the group
+	retrievedGroup, _, err := client.Groups.GetGroup(group.ID, nil)
+	require.NoError(t, err)
+
+	// THEN it should persist
+	require.NotNil(t, retrievedGroup.DefaultBranchProtectionDefaults)
+	assert.True(t, retrievedGroup.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired)
+}
+
+func Test_GroupsUpdateGroup_CodeOwnerApprovalRequired_Integration(t *testing.T) {
+	// GIVEN a GitLab client and a test group
+	client := SetupIntegrationClient(t)
+	group := CreateTestGroup(t, client)
+
+	// WHEN updating CodeOwnerApprovalRequired to true
+	updatedGroup, _, err := client.Groups.UpdateGroup(group.ID, &gitlab.UpdateGroupOptions{
+		DefaultBranchProtectionDefaults: &gitlab.DefaultBranchProtectionDefaultsOptions{
+			CodeOwnerApprovalRequired: gitlab.Ptr(true),
+		},
+	})
+	require.NoError(t, err)
+
+	// THEN the update response should reflect the change
+	require.NotNil(t, updatedGroup.DefaultBranchProtectionDefaults)
+	assert.True(t, updatedGroup.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired)
+
+	// AND WHEN retrieving the group again
+	retrievedGroup, _, err := client.Groups.GetGroup(group.ID, nil)
+	require.NoError(t, err)
+
+	// THEN the setting should persist
+	require.NotNil(t, retrievedGroup.DefaultBranchProtectionDefaults)
+	assert.True(t, retrievedGroup.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired)
+}
