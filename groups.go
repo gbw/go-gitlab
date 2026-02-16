@@ -185,10 +185,11 @@ type SharedWithGroup struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/groups/#options-for-default_branch_protection_defaults
 type BranchProtectionDefaults struct {
-	AllowedToPush           []*GroupAccessLevel `json:"allowed_to_push,omitempty"`
-	AllowForcePush          bool                `json:"allow_force_push,omitempty"`
-	AllowedToMerge          []*GroupAccessLevel `json:"allowed_to_merge,omitempty"`
-	DeveloperCanInitialPush bool                `json:"developer_can_initial_push,omitempty"`
+	AllowedToPush             []*GroupAccessLevel `json:"allowed_to_push,omitempty"`
+	AllowForcePush            bool                `json:"allow_force_push,omitempty"`
+	AllowedToMerge            []*GroupAccessLevel `json:"allowed_to_merge,omitempty"`
+	DeveloperCanInitialPush   bool                `json:"developer_can_initial_push,omitempty"`
+	CodeOwnerApprovalRequired bool                `json:"code_owner_approval_required,omitempty"`
 }
 
 // GroupAccessLevel represents default branch protection defaults access levels.
@@ -421,10 +422,11 @@ type CreateGroupOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/groups/#options-for-default_branch_protection_defaults
 type DefaultBranchProtectionDefaultsOptions struct {
-	AllowedToPush           *[]*GroupAccessLevel `url:"allowed_to_push,omitempty" json:"allowed_to_push,omitempty"`
-	AllowForcePush          *bool                `url:"allow_force_push,omitempty" json:"allow_force_push,omitempty"`
-	AllowedToMerge          *[]*GroupAccessLevel `url:"allowed_to_merge,omitempty" json:"allowed_to_merge,omitempty"`
-	DeveloperCanInitialPush *bool                `url:"developer_can_initial_push,omitempty" json:"developer_can_initial_push,omitempty"`
+	AllowedToPush             *[]*GroupAccessLevel `url:"allowed_to_push,omitempty" json:"allowed_to_push,omitempty"`
+	AllowForcePush            *bool                `url:"allow_force_push,omitempty" json:"allow_force_push,omitempty"`
+	AllowedToMerge            *[]*GroupAccessLevel `url:"allowed_to_merge,omitempty" json:"allowed_to_merge,omitempty"`
+	DeveloperCanInitialPush   *bool                `url:"developer_can_initial_push,omitempty" json:"developer_can_initial_push,omitempty"`
+	CodeOwnerApprovalRequired *bool                `url:"code_owner_approval_required,omitempty" json:"code_owner_approval_required,omitempty"`
 }
 
 // EncodeValues implements the query.Encoder interface
@@ -434,6 +436,9 @@ func (d *DefaultBranchProtectionDefaultsOptions) EncodeValues(key string, v *url
 	}
 	if d.DeveloperCanInitialPush != nil {
 		v.Add(key+"[developer_can_initial_push]", strconv.FormatBool(*d.DeveloperCanInitialPush))
+	}
+	if d.CodeOwnerApprovalRequired != nil {
+		v.Add(key+"[code_owner_approval_required]", strconv.FormatBool(*d.CodeOwnerApprovalRequired))
 	}
 	// The GitLab API only accepts one value for `allowed_to_merge` even when multiples are
 	// provided on the request.  The API will take the highest permission level.  For instance,
@@ -455,6 +460,7 @@ func (d *DefaultBranchProtectionDefaultsOptions) EncodeValues(key string, v *url
 			}
 		}
 	}
+
 	return nil
 }
 
