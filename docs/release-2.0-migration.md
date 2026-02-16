@@ -8,15 +8,18 @@ Version 2.0 introduces breaking changes to improve API consistency, naming conve
 
 - Consistent return signatures for user moderation methods to return the "response" object along with errors
 - New `Nullable[T]` generic type for explicit null handling, which allows users to differentiate explicit "null" vs empty, and make it easier to send explicit "null"
-- New services for Work Items and Runner Controller Scopes
+- New services for Work Items
 - Removal of deprecated methods
 
 ## Update minimum required Go version
 
 The client-go 2.0 major version upgrade aligns our supported Go versions to align to the Golang [Release Policy](https://go.dev/doc/devel/release#policy), and 
-changes the minimum required Go version to 1.24 (up from 1.23). 
+changes the minimum required Go version to 1.25 (up from 1.24). 
 
-client-go 3.0 will release in roughly 6 months when Go version 1.27 releases, and will change the minimum required Go version to 1.25.
+client-go 3.0 will release in roughly 6 months when Go version 1.27 releases, and will change the minimum required Go version to 1.26. 
+
+With the future release of client-go 3.0, we will be removing the `gitlab.Ptr` function and aligning with the usage of `new()` that is now native to Go 1.26. We
+encourage users who have already migrated to go 1.26 to use the `new()` function instead of `gitlab.Ptr`
 
 ## Fix GetUser Function Parameter Naming
 
@@ -33,8 +36,8 @@ changed from a value type to a pointer for consistency with other API methods.
 user, _, err := client.Users.GetUser(1, GetUsersOptions{
     WithCustomAttributes: Ptr(true),
 })
-// After (v2.0):
 
+// After (v2.0):
 user, _, err := client.Users.GetUser(1, &GetUserOptions{
     WithCustomAttributes: Ptr(true),
 })
