@@ -1,3 +1,27 @@
+## 1.35.0
+
+### 🚀 Features
+
+- feat(groups): add code_owner_approval_required in a group's default_branch_protection_defaults ([!2725](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2725)) by [Preethi Atchudan](https://gitlab.com/preethiatchudan)
+
+### 🐛 Bug Fixes
+
+- fix(integration): Add missing json tags to ms teams struct ([!2703](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2703)) by [aishahsofea](https://gitlab.com/aishahsofea)
+
+### 🔄 Other Changes
+
+- chore(deps): update module buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go to v1.36.11-20260209202127-80ab13bee0bf.1 ([!2749](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2749)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update node docker tag to v25 ([!2762](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2762)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.35.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.34.0...v1.35.0) (2026-02-16)
+
+
+### Bug Fixes
+
+* **integration:** Add missing json tags to ms teams struct ([dafd6fd](https://gitlab.com/gitlab-org/api/client-go/commit/dafd6fd9937246278d151e0858aa6cd2a0e8343a))
+
 ## 1.34.0
 
 ### 🚀 Features
