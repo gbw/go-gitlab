@@ -1,3 +1,22 @@
+## 1.36.0
+
+### 🚀 Features
+
+- feat: add support for google chat APIs ([!2766](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2766)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+### 🔄 Other Changes
+
+- chore(deps): update module buf.build/go/protovalidate to v1.1.2 ([!2757](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2757)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.36.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.35.0...v1.36.0) (2026-02-17)
+
+
+### Features
+
+* add support for google chat APIs ([81e58cb](https://gitlab.com/gitlab-org/api/client-go/commit/81e58cbc5296f1ed7651498de367ee42f1a46b1f))
+
 ## 1.35.0
 
 ### 🚀 Features
