@@ -1023,3 +1023,75 @@ func TestDisableGroupWebexTeams(t *testing.T) {
 	require.NoError(t, err)
 	assert.NotNil(t, resp)
 }
+
+func TestSetProjectGoogleChatSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/hangouts-chat", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		testBodyJSON(t, r, map[string]any{
+			"webhook":                      "https://chat.googleapis.com/v1/spaces/XXXXXX",
+			"notify_only_broken_pipelines": true,
+			"branches_to_be_notified":      "default",
+		})
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Google Chat",
+			"slug": "hangouts-chat",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "default"
+			}
+		}`)
+	})
+
+	opt := &SetProjectGoogleChatOptions{
+		Webhook:                   Ptr("https://chat.googleapis.com/v1/spaces/XXXXXX"),
+		NotifyOnlyBrokenPipelines: Ptr(true),
+		BranchesToBeNotified:      Ptr("default"),
+	}
+
+	integration, resp, err := client.Integrations.SetProjectGoogleChatSettings(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "Google Chat", integration.Title)
+}
+
+func TestDisableProjectGoogleChat(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/hangouts-chat", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Integrations.DisableProjectGoogleChat(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestGetProjectGoogleChatSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/hangouts-chat", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Google Chat",
+			"slug": "hangouts-chat",
+			"properties": {
+				"branches_to_be_notified": "default"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetProjectGoogleChatSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "default", integration.Properties.BranchesToBeNotified)
+}

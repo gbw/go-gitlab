@@ -133,6 +133,25 @@ type (
 		// https://docs.gitlab.com/api/group_integrations/#google-chat
 		GetGroupGoogleChatSettings(gid any, options ...RequestOptionFunc) (*GoogleChatIntegration, *Response, error)
 
+		// SetProjectGoogleChatSettings sets up the Google Chat integration for a project.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/integrations.html#set-up-google-chat
+		SetProjectGoogleChatSettings(pid any, opt *SetProjectGoogleChatOptions, options ...RequestOptionFunc) (*GoogleChatIntegration, *Response, error)
+
+		// DisableProjectGoogleChat disables the Google Chat integration for a project.
+		// Integration settings are reset.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/integrations.html#disable-google-chat
+		DisableProjectGoogleChat(pid any, options ...RequestOptionFunc) (*Response, error)
+
+		// GetProjectGoogleChatSettings gets the Google Chat integration settings for a project.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/integrations.html#get-google-chat-settings
+		GetProjectGoogleChatSettings(pid any, options ...RequestOptionFunc) (*GoogleChatIntegration, *Response, error)
+
 		// GetGroupMattermostIntegration retrieves the Mattermost integration for a group.
 		//
 		// GitLab API docs:
@@ -362,8 +381,19 @@ type GoogleChatIntegration struct {
 
 // GoogleChatIntegrationProperties represents Google Chat specific properties.
 type GoogleChatIntegrationProperties struct {
-	NotifyOnlyBrokenPipelines bool   `json:"notify_only_broken_pipelines,omitempty"`
-	BranchesToBeNotified      string `json:"branches_to_be_notified,omitempty"`
+	NotifyOnlyBrokenPipelines           bool   `json:"notify_only_broken_pipelines,omitempty"`
+	NotifyOnlyWhenPipelineStatusChanges bool   `json:"notify_only_when_pipeline_status_changes,omitempty"`
+	NotifyOnlyDefaultBranch             bool   `json:"notify_only_default_branch,omitempty"`
+	BranchesToBeNotified                string `json:"branches_to_be_notified,omitempty"`
+	PushEvents                          bool   `json:"push_events,omitempty"`
+	IssuesEvents                        bool   `json:"issues_events,omitempty"`
+	ConfidentialIssuesEvents            bool   `json:"confidential_issues_events,omitempty"`
+	MergeRequestsEvents                 bool   `json:"merge_requests_events,omitempty"`
+	TagPushEvents                       bool   `json:"tag_push_events,omitempty"`
+	NoteEvents                          bool   `json:"note_events,omitempty"`
+	ConfidentialNoteEvents              bool   `json:"confidential_note_events,omitempty"`
+	PipelineEvents                      bool   `json:"pipeline_events,omitempty"`
+	WikiPageEvents                      bool   `json:"wiki_page_events,omitempty"`
 }
 
 // WebexTeamsIntegration represents the WebexTeams integration settings.
@@ -388,6 +418,28 @@ type WebexTeamsIntegrationProperties struct {
 type SetGroupWebexTeamsOptions struct {
 	NotifyOnlyBrokenPipelines *bool   `url:"notify_only_broken_pipelines,omitempty" json:"notify_only_broken_pipelines,omitempty"`
 	BranchesToBeNotified      *string `url:"branches_to_be_notified,omitempty" json:"branches_to_be_notified,omitempty"`
+}
+
+// SetProjectGoogleChatOptions represents the available SetProjectGoogleChatSettings() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/integrations.html#set-up-google-chat
+type SetProjectGoogleChatOptions struct {
+	Webhook                             *string `url:"webhook,omitempty" json:"webhook,omitempty"`
+	NotifyOnlyBrokenPipelines           *bool   `url:"notify_only_broken_pipelines,omitempty" json:"notify_only_broken_pipelines,omitempty"`
+	NotifyOnlyWhenPipelineStatusChanges *bool   `url:"notify_only_when_pipeline_status_changes,omitempty" json:"notify_only_when_pipeline_status_changes,omitempty"`
+	NotifyOnlyDefaultBranch             *bool   `url:"notify_only_default_branch,omitempty" json:"notify_only_default_branch,omitempty"`
+	BranchesToBeNotified                *string `url:"branches_to_be_notified,omitempty" json:"branches_to_be_notified,omitempty"`
+	PushEvents                          *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
+	IssuesEvents                        *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
+	ConfidentialIssuesEvents            *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
+	MergeRequestsEvents                 *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
+	TagPushEvents                       *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
+	NoteEvents                          *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
+	ConfidentialNoteEvents              *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
+	PipelineEvents                      *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
+	WikiPageEvents                      *bool   `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
+	UseInheritedSettings                *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
 }
 
 // ListActiveIntegrationsOptions represents the available
@@ -652,6 +704,35 @@ func (s *IntegrationsService) GetGroupGoogleChatSettings(gid any, options ...Req
 	return do[*GoogleChatIntegration](
 		s.client,
 		withPath("groups/%s/integrations/hangouts-chat", GroupID{gid}),
+		withMethod(http.MethodGet),
+		withRequestOpts(options...),
+	)
+}
+
+func (s *IntegrationsService) SetProjectGoogleChatSettings(pid any, opt *SetProjectGoogleChatOptions, options ...RequestOptionFunc) (*GoogleChatIntegration, *Response, error) {
+	return do[*GoogleChatIntegration](
+		s.client,
+		withPath("projects/%s/integrations/hangouts-chat", ProjectID{pid}),
+		withMethod(http.MethodPut),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+func (s *IntegrationsService) DisableProjectGoogleChat(pid any, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](
+		s.client,
+		withPath("projects/%s/integrations/hangouts-chat", ProjectID{pid}),
+		withMethod(http.MethodDelete),
+		withRequestOpts(options...),
+	)
+	return resp, err
+}
+
+func (s *IntegrationsService) GetProjectGoogleChatSettings(pid any, options ...RequestOptionFunc) (*GoogleChatIntegration, *Response, error) {
+	return do[*GoogleChatIntegration](
+		s.client,
+		withPath("projects/%s/integrations/hangouts-chat", ProjectID{pid}),
 		withMethod(http.MethodGet),
 		withRequestOpts(options...),
 	)
