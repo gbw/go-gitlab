@@ -18,8 +18,8 @@ changes the minimum required Go version to 1.25 (up from 1.24).
 
 client-go 3.0 will release in roughly 6 months when Go version 1.27 releases, and will change the minimum required Go version to 1.26. 
 
-With the future release of client-go 3.0, we will be removing the `gitlab.Ptr` function and aligning with the usage of `new()` that is now native to Go 1.26. We
-encourage users who have already migrated to go 1.26 to use the `new()` function instead of `gitlab.Ptr`
+With the future release of client-go 3.0, we will be deprecating the `gitlab.Ptr` function and aligning with the usage of `new()` that is now native to Go 1.26. We
+encourage users who have already migrated to go 1.26 to use the `new()` function instead of `gitlab.Ptr`.
 
 ## Fix GetUser Function Parameter Naming
 
