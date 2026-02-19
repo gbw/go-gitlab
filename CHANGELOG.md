@@ -1,3 +1,25 @@
+## 1.38.0
+
+### 🚀 Features
+
+- feat(events): Add missing parameters for label operations and update documentation links ([!2781](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2781)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+- feat(labels): add missing params and edit links ([!2778](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2778)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+
+### 🔄 Other Changes
+
+- docs: Fix broken GitLab docs anchors for alert_management API ([!2777](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2777)) by [Mohamed Othman](https://gitlab.com/mohamed.othman27)
+- docs: Fix broken documentation links in attestations.go ([!2779](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2779)) by [Mohamed Othman](https://gitlab.com/mohamed.othman27)
+
+
+
+# [1.38.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.37.0...v1.38.0) (2026-02-19)
+
+
+### Features
+
+* **events:** Add missing parameters for label operations and update documentation links ([11b9f08](https://gitlab.com/gitlab-org/api/client-go/commit/11b9f08b37a4c2ada9413259282f163f28b94051))
+* **labels:** add missing params and edit links ([ec1b92b](https://gitlab.com/gitlab-org/api/client-go/commit/ec1b92bff403c10446ab1ff6566a3a638871bb7e))
+
 ## 1.37.0
 
 ### 🚀 Features
