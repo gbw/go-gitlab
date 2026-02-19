@@ -1,3 +1,21 @@
+## 1.37.0
+
+### 🚀 Features
+
+- Support system & system_action fields for merge event attributes ([!2737](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2737)) by [Artem Mikheev](https://gitlab.com/renbou)
+
+### 🔄 Other Changes
+
+- Update links of geo_sites.go ([!2782](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2782)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+- chore(deps): update dependency golangci-lint to v2.10.1 ([!2770](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2770)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update golangci/golangci-lint docker tag to v2.10.1 ([!2771](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2771)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update golangci/golangci-lint docker tag to v2.10.0 ([!2769](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2769)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update dependency golangci-lint to v2.10.0 ([!2768](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2768)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.37.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.36.0...v1.37.0) (2026-02-19)
+
 ## 1.36.0
 
 ### 🚀 Features
