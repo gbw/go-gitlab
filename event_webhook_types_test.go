@@ -878,6 +878,9 @@ func TestMergeEventUnmarshal(t *testing.T) {
 
 	assert.Equal(t, "2017-09-15 16:50:55 UTC", event.Changes.UpdatedAt.Previous)
 	assert.Equal(t, "2017-09-15 16:52:00 UTC", event.Changes.UpdatedAt.Current)
+
+	assert.True(t, event.ObjectAttributes.System)
+	assert.Equal(t, "code_owner_approvals_reset_on_push", event.ObjectAttributes.SystemAction)
 }
 
 func TestMemberEventUnmarshal(t *testing.T) {

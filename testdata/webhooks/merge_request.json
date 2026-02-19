@@ -117,7 +117,9 @@
       "group_id": 41
     }],
     "action": "open",
-    "detailed_merge_status": "mergeable"
+    "detailed_merge_status": "mergeable",
+    "system": true,
+    "system_action": "code_owner_approvals_reset_on_push"
   },
   "labels": [{
     "id": 206,
