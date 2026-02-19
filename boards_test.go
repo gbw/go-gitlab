@@ -98,7 +98,9 @@ func TestIssueBoardsService_UpdateIssueBoard(t *testing.T) {
 				"milestone": null,
 				"assignee" : null,
 				"labels" : [],
-				"weight" : null
+				"weight" : null,
+				"hide_backlog_list": true,
+				"hide_closed_list": false
 			  }
 		`)
 	})
@@ -115,8 +117,10 @@ func TestIssueBoardsService_UpdateIssueBoard(t *testing.T) {
 			Path:              "diaspora-project-site",
 			PathWithNamespace: "diaspora/diaspora-project-site",
 		},
-		Lists:  []*BoardList{},
-		Labels: []*LabelDetails{},
+		Lists:           []*BoardList{},
+		Labels:          []*LabelDetails{},
+		HideBacklogList: true,
+		HideClosedList:  false,
 	}
 
 	ib, resp, err := client.Boards.UpdateIssueBoard(5, 1, nil, nil)
