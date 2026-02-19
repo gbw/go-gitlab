@@ -1,3 +1,20 @@
+## 1.39.0
+
+### 🚀 Features
+
+- feat: Add hide backlog and closed list properties to IssueBoards ([!2780](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2780)) by [Mohamed Othman](https://gitlab.com/mohamed.othman27)
+- feat(groups): Add provider to AddGroupSAMLLinkOptions ([!2776](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2776)) by [Mohamed Othman](https://gitlab.com/mohamed.othman27)
+
+
+
+# [1.39.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.38.0...v1.39.0) (2026-02-19)
+
+
+### Features
+
+* Add hide backlog and closed list properties to IssueBoards ([a66984e](https://gitlab.com/gitlab-org/api/client-go/commit/a66984ee5934bc55b9618f83d16272b6a4ebf94f))
+* **groups:** Add provider to AddGroupSAMLLinkOptions ([bb97c7f](https://gitlab.com/gitlab-org/api/client-go/commit/bb97c7f334ab6cab3eb7153457f14a71b9ff0c55))
+
 ## 1.38.0
 
 ### 🚀 Features
