@@ -869,6 +869,38 @@ func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
 	}
 }
 
+func TestAddGroupSAMLLinkWithProvider(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/saml_group_links",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			fmt.Fprint(w, `
+{
+    "access_level":30,
+    "name":"gitlab_group_example_developer",
+    "provider":"example_saml_provider"
+}`)
+		})
+
+	opt := &AddGroupSAMLLinkOptions{
+		SAMLGroupName: Ptr("gitlab_group_example_developer"),
+		AccessLevel:   Ptr(DeveloperPermissions),
+		Provider:      Ptr("example_saml_provider"),
+	}
+
+	link, _, err := client.Groups.AddGroupSAMLLink(1, opt)
+	require.NoError(t, err)
+
+	want := &SAMLGroupLink{
+		AccessLevel: DeveloperPermissions,
+		Name:        "gitlab_group_example_developer",
+		Provider:    "example_saml_provider",
+	}
+	assert.Equal(t, want, link)
+}
+
 func TestGroupsService_ListGroupSharedProjects(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

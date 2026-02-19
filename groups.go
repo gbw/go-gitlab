@@ -236,6 +236,7 @@ type SAMLGroupLink struct {
 	Name         string           `json:"name"`
 	AccessLevel  AccessLevelValue `json:"access_level"`
 	MemberRoleID int64            `json:"member_role_id,omitempty"`
+	Provider     string           `json:"provider,omitempty"`
 }
 
 // ListGroupsOptions represents the available ListGroups() options.
@@ -839,6 +840,7 @@ type AddGroupSAMLLinkOptions struct {
 	SAMLGroupName *string           `url:"saml_group_name,omitempty" json:"saml_group_name,omitempty"`
 	AccessLevel   *AccessLevelValue `url:"access_level,omitempty" json:"access_level,omitempty"`
 	MemberRoleID  *int64            `url:"member_role_id,omitempty" json:"member_role_id,omitempty"`
+	Provider      *string           `url:"provider,omitempty" json:"provider,omitempty"`
 }
 
 // AddGroupSAMLLink creates a new group SAML link. Available only for users who
