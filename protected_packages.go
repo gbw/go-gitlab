@@ -66,10 +66,10 @@ type ListPackageProtectionRulesOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_packages_protection_rules/#create-a-package-protection-rule
 type CreatePackageProtectionRulesOptions struct {
-	PackageNamePattern          *string `url:"package_name_pattern" json:"package_name_pattern"`
-	PackageType                 *string `url:"package_type" json:"package_type"`
-	MinimumAccessLevelForDelete *int64  `url:"minimum_access_level_for_delete" json:"minimum_access_level_for_delete"`
-	MinimumAccessLevelForPush   *int64  `url:"minimum_access_level_for_push" json:"minimum_access_level_for_push"`
+	PackageNamePattern          *string                             `url:"package_name_pattern" json:"package_name_pattern"`
+	PackageType                 *string                             `url:"package_type" json:"package_type"`
+	MinimumAccessLevelForDelete Nullable[ProtectionRuleAccessLevel] `url:"minimum_access_level_for_delete,omitempty" json:"minimum_access_level_for_delete,omitempty"`
+	MinimumAccessLevelForPush   Nullable[ProtectionRuleAccessLevel] `url:"minimum_access_level_for_push,omitempty" json:"minimum_access_level_for_push,omitempty"`
 }
 
 // UpdatePackageProtectionRulesOptions represents the available
@@ -78,10 +78,10 @@ type CreatePackageProtectionRulesOptions struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_packages_protection_rules/#update-a-package-protection-rule
 type UpdatePackageProtectionRulesOptions struct {
-	PackageNamePattern          *string `url:"package_name_pattern" json:"package_name_pattern"`
-	PackageType                 *string `url:"package_type" json:"package_type"`
-	MinimumAccessLevelForDelete *int64  `url:"minimum_access_level_for_delete" json:"minimum_access_level_for_delete"`
-	MinimumAccessLevelForPush   *int64  `url:"minimum_access_level_for_push" json:"minimum_access_level_for_push"`
+	PackageNamePattern          *string                             `url:"package_name_pattern" json:"package_name_pattern"`
+	PackageType                 *string                             `url:"package_type" json:"package_type"`
+	MinimumAccessLevelForDelete Nullable[ProtectionRuleAccessLevel] `url:"minimum_access_level_for_delete,omitempty" json:"minimum_access_level_for_delete,omitempty"`
+	MinimumAccessLevelForPush   Nullable[ProtectionRuleAccessLevel] `url:"minimum_access_level_for_push,omitempty" json:"minimum_access_level_for_push,omitempty"`
 }
 
 func (s *ProtectedPackagesService) ListPackageProtectionRules(pid any, opts *ListPackageProtectionRulesOptions, options ...RequestOptionFunc) ([]*PackageProtectionRule, *Response, error) {

@@ -73,8 +73,8 @@ func TestProtectedPackagesService_CreatePackageProtectionRules(t *testing.T) {
 	opts := &CreatePackageProtectionRulesOptions{
 		PackageNamePattern:          Ptr("@my-scope/my-package-*"),
 		PackageType:                 Ptr("npm"),
-		MinimumAccessLevelForDelete: Ptr(int64(MaintainerPermissions)),
-		MinimumAccessLevelForPush:   Ptr(int64(OwnerPermissions)),
+		MinimumAccessLevelForDelete: NewNullableWithValue(ProtectionRuleAccessLevelMaintainer),
+		MinimumAccessLevelForPush:   NewNullableWithValue(ProtectionRuleAccessLevelOwner),
 	}
 
 	rule, resp, err := client.ProtectedPackages.CreatePackageProtectionRules(1, opts)
@@ -112,7 +112,54 @@ func TestProtectedPackagesService_UpdatePackageProtectionRules(t *testing.T) {
 
 	opts := &UpdatePackageProtectionRulesOptions{
 		PackageNamePattern:        Ptr("@my-scope/my-package-updated"),
-		MinimumAccessLevelForPush: Ptr(int64(OwnerPermissions)),
+		MinimumAccessLevelForPush: NewNullableWithValue(ProtectionRuleAccessLevelOwner),
+	}
+
+	rule, resp, err := client.ProtectedPackages.UpdatePackageProtectionRules(1, int64(123), opts)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, want, rule)
+}
+
+func TestProtectedPackagesService_UpdatePackageProtectionRulesWithNullValues(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/packages/protection/rules/123", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPatch)
+		testJSONBody(t, r, `{
+			"package_name_pattern": "@my-scope/my-package-updated",
+			"package_type": "npm",
+			"minimum_access_level_for_delete": null,
+			"minimum_access_level_for_push": null
+		}`)
+
+		fmt.Fprint(w, `
+			{
+				"id": 123,
+				"project_id": 1,
+				"package_name_pattern": "@my-scope/my-package-updated",
+				"package_type": "npm",
+				"minimum_access_level_for_delete": "maintainer",
+				"minimum_access_level_for_push": "developer"
+			}
+		`)
+	})
+
+	want := &PackageProtectionRule{
+		ID:                          123,
+		ProjectID:                   1,
+		PackageNamePattern:          "@my-scope/my-package-updated",
+		PackageType:                 "npm",
+		MinimumAccessLevelForDelete: "maintainer",
+		MinimumAccessLevelForPush:   "developer",
+	}
+
+	opts := &UpdatePackageProtectionRulesOptions{
+		PackageNamePattern:          Ptr("@my-scope/my-package-updated"),
+		PackageType:                 Ptr("npm"),
+		MinimumAccessLevelForPush:   NewNullNullable[ProtectionRuleAccessLevel](),
+		MinimumAccessLevelForDelete: NewNullNullable[ProtectionRuleAccessLevel](),
 	}
 
 	rule, resp, err := client.ProtectedPackages.UpdatePackageProtectionRules(1, int64(123), opts)
