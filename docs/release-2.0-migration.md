@@ -221,3 +221,32 @@ membership := &gitlab.BillableUserMembership{
 
 **Note:** `ISOTime` is used for fields that only support year-month-day formatting, while `*time.Time` is used for full timestamps.
 
+## API Update for PackageProtectionRule
+
+The variable type for `MinimumAccessLevelForDelete` and `MinimumAccessLevelForPush` were previously `int64`, and have been changed to a `string` to align with the documentation. In addition, they use a new `Nullable[string]` type that allows explicit `null` values to be sent to the API, since `null` is a valid and intentional value for this API call.
+
+**Changes:**
+- Parameter type: Changed from `*int64` to `Nullable[ProtectionRuleAccessLevel]` ( string, nullable )
+
+```go
+// Before (v1.x)
+rule, resp, err := client.ProtectedPackages.CreatePackageProtectionRules(1, &CreatePackageProtectionRulesOptions{
+		PackageNamePattern:          Ptr("@my-scope/my-package-*"),
+		PackageType:                 Ptr("npm"),
+		MinimumAccessLevelForDelete: Ptr(int64(MaintainerPermissions)),
+		MinimumAccessLevelForPush:   nil, // Ignored when sent to the API, preventing sending "null"
+})
+
+// After (v2.0):
+rule, resp, err := client.ProtectedPackages.CreatePackageProtectionRules(1, &CreatePackageProtectionRulesOptions{
+		PackageNamePattern:          Ptr("@my-scope/my-package-*"),
+		PackageType:                 Ptr("npm"),
+		MinimumAccessLevelForDelete: NewNullableWithValue(ProtectionRuleAccessLevelMaintainer),
+		MinimumAccessLevelForPush:   NewNullNullable[ProtectionRuleAccessLevel](), // sends "null" to the API to reset the value to default
+})
+```
+
+
+### Merge Requests That Implement This Change
+- [Fix Package Protection Access Level Variable Type](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2728) by @deepflame
+
