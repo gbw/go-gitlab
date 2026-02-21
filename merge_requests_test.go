@@ -446,6 +446,8 @@ func TestListMergeRequestDiffs(t *testing.T) {
 			NewFile:     false,
 			RenamedFile: false,
 			DeletedFile: false,
+			Collapsed:   false,
+			TooLarge:    false,
 		},
 		{
 			OldPath:     "VERSION",
@@ -456,6 +458,8 @@ func TestListMergeRequestDiffs(t *testing.T) {
 			NewFile:     false,
 			RenamedFile: false,
 			DeletedFile: false,
+			Collapsed:   false,
+			TooLarge:    false,
 		},
 	}
 
