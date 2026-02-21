@@ -73,6 +73,30 @@ func TestListGroups_Filtering(t *testing.T) {
 	}
 }
 
+func TestListGroups_Visibility(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		testParam(t, r, "visibility", "public")
+
+		fmt.Fprint(w, `[{"id":1}]`)
+	})
+
+	opt := &ListGroupsOptions{
+		Visibility: Ptr(PublicVisibility),
+	}
+
+	groups, _, err := client.Groups.ListGroups(opt)
+
+	require.NoError(t, err)
+
+	want := []*Group{{ID: 1}}
+	assert.Equal(t, want, groups)
+}
+
 func TestGetGroup(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

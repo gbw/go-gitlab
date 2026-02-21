@@ -249,6 +249,7 @@ type ListGroupsOptions struct {
 	OrderBy              *string           `url:"order_by,omitempty" json:"order_by,omitempty"`
 	Sort                 *string           `url:"sort,omitempty" json:"sort,omitempty"`
 	Statistics           *bool             `url:"statistics,omitempty" json:"statistics,omitempty"`
+	Visibility           *VisibilityValue  `url:"visibility,omitempty" json:"visibility,omitempty"`
 	WithCustomAttributes *bool             `url:"with_custom_attributes,omitempty" json:"with_custom_attributes,omitempty"`
 	Owned                *bool             `url:"owned,omitempty" json:"owned,omitempty"`
 	MinAccessLevel       *AccessLevelValue `url:"min_access_level,omitempty" json:"min_access_level,omitempty"`
