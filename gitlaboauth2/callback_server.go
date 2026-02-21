@@ -2,6 +2,7 @@ package gitlaboauth2
 
 import (
 	"context"
+	_ "embed"
 	"errors"
 	"fmt"
 	"net/http"
@@ -12,6 +13,9 @@ import (
 
 	"golang.org/x/oauth2"
 )
+
+//go:embed success.html
+var successHTML []byte
 
 // CallbackServer handles the OAuth2 callback flow for GitLab authentication.
 //
@@ -231,46 +235,7 @@ func (s *CallbackServer) callbackHandler(ctx context.Context, tokenChan chan *oa
 		// Send success response
 		tokenChan <- token
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		_, _ = w.Write([]byte(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentication Successful</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background: #fafafa;
-        }
-        .container {
-            text-align: center;
-            padding: 2rem;
-        }
-        h1 {
-            color: #108548;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 0 0 0.5rem 0;
-        }
-        p {
-            color: #666;
-            margin: 0;
-            line-height: 1.5;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>✓ Authentication Successful!</h1>
-        <p>You can close this window and return to the application.</p>
-    </div>
-</body>
-</html>`))
+		_, _ = w.Write(successHTML)
 	}
 }
 
