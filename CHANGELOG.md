@@ -1,3 +1,13 @@
+## 1.40.1
+
+### 🐛 Bug Fixes
+
+- Add missing group API parameters to Go SDK structs ([!2764](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2764)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+
+
+
+## [1.40.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.40.0...v1.40.1) (2026-02-21)
+
 ## 1.40.0
 
 ### 🚀 Features
