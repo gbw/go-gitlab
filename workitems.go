@@ -617,6 +617,13 @@ type workItemWidgetColorInputGQL struct {
 // newWorkItemCreateInput converts the user-facing CreateWorkItemOptions to the
 // backend-facing GraphQL-aligned workItemCreateInputGQL struct.
 func (opt *CreateWorkItemOptions) wrap(namespacePath string, workItemTypeID WorkItemTypeID) *workItemCreateInputGQL {
+	if opt == nil {
+		return &workItemCreateInputGQL{
+			NamespacePath:  namespacePath,
+			WorkItemTypeID: workItemTypeID,
+		}
+	}
+
 	input := &workItemCreateInputGQL{
 		NamespacePath:  namespacePath,
 		WorkItemTypeID: workItemTypeID,
@@ -625,10 +632,6 @@ func (opt *CreateWorkItemOptions) wrap(namespacePath string, workItemTypeID Work
 		Confidential: opt.Confidential,
 		CreateSource: opt.CreateSource,
 		CreatedAt:    opt.CreatedAt,
-	}
-
-	if opt == nil {
-		return input
 	}
 
 	if opt.Description != nil {

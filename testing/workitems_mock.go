@@ -40,9 +40,9 @@ func (m *MockWorkItemsServiceInterface) EXPECT() *MockWorkItemsServiceInterfaceM
 }
 
 // CreateWorkItem mocks base method.
-func (m *MockWorkItemsServiceInterface) CreateWorkItem(fullPath string, opt *gitlab.CreateWorkItemOptions, options ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error) {
+func (m *MockWorkItemsServiceInterface) CreateWorkItem(fullPath string, workItemTypeID gitlab.WorkItemTypeID, opt *gitlab.CreateWorkItemOptions, options ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
-	varargs := []any{fullPath, opt}
+	varargs := []any{fullPath, workItemTypeID, opt}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
@@ -54,9 +54,9 @@ func (m *MockWorkItemsServiceInterface) CreateWorkItem(fullPath string, opt *git
 }
 
 // CreateWorkItem indicates an expected call of CreateWorkItem.
-func (mr *MockWorkItemsServiceInterfaceMockRecorder) CreateWorkItem(fullPath, opt any, options ...any) *MockWorkItemsServiceInterfaceCreateWorkItemCall {
+func (mr *MockWorkItemsServiceInterfaceMockRecorder) CreateWorkItem(fullPath, workItemTypeID, opt any, options ...any) *MockWorkItemsServiceInterfaceCreateWorkItemCall {
 	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{fullPath, opt}, options...)
+	varargs := append([]any{fullPath, workItemTypeID, opt}, options...)
 	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateWorkItem", reflect.TypeOf((*MockWorkItemsServiceInterface)(nil).CreateWorkItem), varargs...)
 	return &MockWorkItemsServiceInterfaceCreateWorkItemCall{Call: call}
 }
@@ -73,13 +73,13 @@ func (c *MockWorkItemsServiceInterfaceCreateWorkItemCall) Return(arg0 *gitlab.Wo
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockWorkItemsServiceInterfaceCreateWorkItemCall) Do(f func(string, *gitlab.CreateWorkItemOptions, ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceCreateWorkItemCall {
+func (c *MockWorkItemsServiceInterfaceCreateWorkItemCall) Do(f func(string, gitlab.WorkItemTypeID, *gitlab.CreateWorkItemOptions, ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceCreateWorkItemCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockWorkItemsServiceInterfaceCreateWorkItemCall) DoAndReturn(f func(string, *gitlab.CreateWorkItemOptions, ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceCreateWorkItemCall {
+func (c *MockWorkItemsServiceInterfaceCreateWorkItemCall) DoAndReturn(f func(string, gitlab.WorkItemTypeID, *gitlab.CreateWorkItemOptions, ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceCreateWorkItemCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
