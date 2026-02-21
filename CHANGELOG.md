@@ -1,3 +1,23 @@
+## 1.40.0
+
+### 🚀 Features
+
+- feat: Add visibility option to listgroupoptions ([!2775](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2775)) by [Mohamed Othman](https://gitlab.com/mohamed.othman27)
+- Add missing parameters to MergeRequestDiff struct ([!2767](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2767)) by [Alekhin Sergey](https://gitlab.com/a.sergey)
+
+### 🔄 Other Changes
+
+- chore(oauth): use go:embed to extract the html ([!2740](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2740)) by [Tomas Vik](https://gitlab.com/viktomas)
+
+
+
+# [1.40.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.39.0...v1.40.0) (2026-02-21)
+
+
+### Features
+
+* Add visibility option to listgroupoptions ([ca08a62](https://gitlab.com/gitlab-org/api/client-go/commit/ca08a62935f8d946dc52e35fcef5528c5950c104))
+
 ## 1.39.0
 
 ### 🚀 Features
