@@ -416,6 +416,11 @@ type CreateGroupOptions struct {
 
 	// Deprecated: User DefaultBranchProtectionDefaults instead
 	DefaultBranchProtection *int64 `url:"default_branch_protection,omitempty" json:"default_branch_protection,omitempty"`
+
+	EnabledGitAccessProtocol  *EnabledGitAccessProtocolValue `url:"enabled_git_access_protocol,omitempty" json:"enabled_git_access_protocol,omitempty"`
+	OrganizationID            *int64                         `url:"organization_id,omitempty" json:"organization_id,omitempty"`
+	DuoAvailability           *DuoAvailabilityValue          `url:"duo_availability,omitempty" json:"duo_availability,omitempty"`
+	ExperimentFeaturesEnabled *bool                          `url:"experiment_features_enabled,omitempty" json:"experiment_features_enabled,omitempty"`
 }
 
 // DefaultBranchProtectionDefaultsOptions represents the available options for
@@ -568,7 +573,25 @@ type UpdateGroupOptions struct {
 	EmailsDisabled *bool `url:"emails_disabled,omitempty" json:"emails_disabled,omitempty"`
 
 	// Deprecated: Use DefaultBranchProtectionDefaults instead
-	DefaultBranchProtection *int64 `url:"default_branch_protection,omitempty" json:"default_branch_protection,omitempty"`
+	DefaultBranchProtection         *int64                         `url:"default_branch_protection,omitempty" json:"default_branch_protection,omitempty"`
+	EnabledGitAccessProtocol        *EnabledGitAccessProtocolValue `url:"enabled_git_access_protocol,omitempty" json:"enabled_git_access_protocol,omitempty"`
+	StepUpAuthRequiredOAuthProvider *string                        `url:"step_up_auth_required_oauth_provider,omitempty" json:"step_up_auth_required_oauth_provider,omitempty"`
+	// The following fields are Premium and Ultimate only.
+	UniqueProjectDownloadLimit                  *int64    `url:"unique_project_download_limit,omitempty" json:"unique_project_download_limit,omitempty"`
+	UniqueProjectDownloadLimitIntervalInSeconds *int64    `url:"unique_project_download_limit_interval_in_seconds,omitempty" json:"unique_project_download_limit_interval_in_seconds,omitempty"`
+	UniqueProjectDownloadLimitAllowlist         *[]string `url:"unique_project_download_limit_allowlist,omitempty" json:"unique_project_download_limit_allowlist,omitempty"`
+	UniqueProjectDownloadLimitAlertlist         *[]int64  `url:"unique_project_download_limit_alertlist,omitempty" json:"unique_project_download_limit_alertlist,omitempty"`
+	AutoBanUserOnExcessiveProjectsDownload      *bool     `url:"auto_ban_user_on_excessive_projects_download,omitempty" json:"auto_ban_user_on_excessive_projects_download,omitempty"`
+
+	DuoAvailability                *DuoAvailabilityValue `url:"duo_availability,omitempty" json:"duo_availability,omitempty"`
+	ExperimentFeaturesEnabled      *bool                 `url:"experiment_features_enabled,omitempty" json:"experiment_features_enabled,omitempty"`
+	MathRenderingLimitsEnabled     *bool                 `url:"math_rendering_limits_enabled,omitempty" json:"math_rendering_limits_enabled,omitempty"`
+	LockMathRenderingLimitsEnabled *bool                 `url:"lock_math_rendering_limits_enabled,omitempty" json:"lock_math_rendering_limits_enabled,omitempty"`
+	DuoFeaturesEnabled             *bool                 `url:"duo_features_enabled,omitempty" json:"duo_features_enabled,omitempty"`
+	LockDuoFeaturesEnabled         *bool                 `url:"lock_duo_features_enabled,omitempty" json:"lock_duo_features_enabled,omitempty"`
+
+	WebBasedCommitSigningEnabled *bool `url:"web_based_commit_signing_enabled,omitempty" json:"web_based_commit_signing_enabled,omitempty"`
+	AllowPersonalSnippets        *bool `url:"allow_personal_snippets,omitempty" json:"allow_personal_snippets,omitempty"`
 }
 
 // UpdateGroup updates an existing group; only available to group owners and
