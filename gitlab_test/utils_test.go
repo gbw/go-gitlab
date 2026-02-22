@@ -275,3 +275,27 @@ func CreateTestEpicWithOptions(t *testing.T, client *gitlab.Client, gid any, opt
 
 	return epic, nil
 }
+
+// CreateTestWorkItem creates a test work item in the provided group or project.
+// TODO: will require the DeleteWorkItem() func from the delete branch
+func CreateTestWorkItem(t *testing.T, client *gitlab.Client, fullPath string) (*gitlab.WorkItem, error) {
+	t.Helper()
+
+	suffix := time.Now().UnixNano()
+	return CreateTestWorkItemWithOptions(t, client, fullPath, gitlab.WorkItemTypeTask, &gitlab.CreateWorkItemOptions{
+		Title: fmt.Sprintf("Test work item %d", suffix),
+	})
+}
+
+// CreateTestWorkItemWithOptions creates a test work item with the provided options
+// TODO: will require DeleteWorkItem() func from the delete branch
+func CreateTestWorkItemWithOptions(t *testing.T, client *gitlab.Client, fullPath string, workItemTypeID gitlab.WorkItemTypeID, opts *gitlab.CreateWorkItemOptions) (*gitlab.WorkItem, error) {
+	t.Helper()
+
+	wi, _, err := client.WorkItems.CreateWorkItem(fullPath, workItemTypeID, opts, gitlab.WithContext(t.Context()))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create work item: %w", err)
+	}
+
+	return wi, nil
+}
