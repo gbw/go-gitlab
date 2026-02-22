@@ -812,6 +812,20 @@ func TestSetGroupSlackSettings(t *testing.T) {
 		AlertChannel:                    Ptr("alert-channel"),
 		GroupMentionChannel:             Ptr("mention-channel"),
 		GroupConfidentialMentionChannel: Ptr("conf-mention-channel"),
+		PushEvents:                      Ptr(true),
+		IssuesEvents:                    Ptr(true),
+		ConfidentialIssuesEvents:        Ptr(true),
+		MergeRequestsEvents:             Ptr(true),
+		TagPushEvents:                   Ptr(true),
+		NoteEvents:                      Ptr(true),
+		ConfidentialNoteEvents:          Ptr(true),
+		PipelineEvents:                  Ptr(true),
+		WikiPageEvents:                  Ptr(true),
+		JobEvents:                       Ptr(true),
+		AlertEvents:                     Ptr(true),
+		CommitEvents:                    Ptr(true),
+		DeploymentEvents:                Ptr(false),
+		IncidentEvents:                  Ptr(false),
 	}
 
 	integration, resp, err := client.Integrations.SetGroupSlackSettings(1, opt)
