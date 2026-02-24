@@ -1,3 +1,22 @@
+## 1.41.1
+
+### 🐛 Bug Fixes
+
+- fix: Fixed a set of endpoints where inputs were escaped and should not be escaped ([!2772](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2772)) by [kilianpaquier](https://gitlab.com/u.kilianpaquier)
+
+### 🔄 Other Changes
+
+- Add `primary_domain` and `pages_primary_domain` to Pages structs ([!2786](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2786)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+
+
+
+## [1.41.1](https://gitlab.com/gitlab-org/api/client-go/compare/v1.41.0...v1.41.1) (2026-02-24)
+
+
+### Bug Fixes
+
+* Fixed a set of endpoints where inputs were escaped and should not be escaped ([d6d7b17](https://gitlab.com/gitlab-org/api/client-go/commit/d6d7b17f0c4d63c2613ae2aed2ea2901e87c7b8b))
+
 ## 1.41.0
 
 ### 🚀 Features
