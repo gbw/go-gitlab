@@ -556,25 +556,26 @@ func TestPipelineSchedules_EditPipelineScheduleVariable(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/pipeline_schedules/2/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/pipeline_schedules/2/variables/NEW_VARIABLE.NAME", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
+		testURL(t, r, r.Pattern)
 		fmt.Fprint(w, `
 		{
-			"key": "NEW_VARIABLE",
+			"key": "NEW_VARIABLE.NAME",
 			"variable_type": "env_var",
 			"value": "new value"
 		}
 		`)
 	})
 
-	variable, resp, err := client.PipelineSchedules.EditPipelineScheduleVariable(1, 2, "NEW_VARIABLE", &EditPipelineScheduleVariableOptions{
+	variable, resp, err := client.PipelineSchedules.EditPipelineScheduleVariable(1, 2, "NEW_VARIABLE.NAME", &EditPipelineScheduleVariableOptions{
 		Value: Ptr("new value"),
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
 	want := &PipelineVariable{
-		Key:          "NEW_VARIABLE",
+		Key:          "NEW_VARIABLE.NAME",
 		Value:        "new value",
 		VariableType: "env_var",
 	}
@@ -585,23 +586,24 @@ func TestPipelineSchedules_DeletePipelineScheduleVariable(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/pipeline_schedules/2/variables/NEW_VARIABLE", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/pipeline_schedules/2/variables/NEW_VARIABLE.NAME", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
+		testURL(t, r, r.Pattern)
 		fmt.Fprint(w, `
 		{
-			"key": "NEW_VARIABLE",
+			"key": "NEW_VARIABLE.NAME",
 			"variable_type": "env_var",
 			"value": "new value"
 		}
 		`)
 	})
 
-	variable, resp, err := client.PipelineSchedules.DeletePipelineScheduleVariable(1, 2, "NEW_VARIABLE")
+	variable, resp, err := client.PipelineSchedules.DeletePipelineScheduleVariable(1, 2, "NEW_VARIABLE.NAME")
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 
 	want := &PipelineVariable{
-		Key:          "NEW_VARIABLE",
+		Key:          "NEW_VARIABLE.NAME",
 		Value:        "new value",
 		VariableType: "env_var",
 	}

@@ -12,8 +12,9 @@ func TestProjectTemplatesService_ListTemplates(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/templates/issues", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/templates/issues.templates", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testURL(t, r, r.Pattern)
 		fmt.Fprintf(w, `
 			[
 				{
@@ -39,7 +40,7 @@ func TestProjectTemplatesService_ListTemplates(t *testing.T) {
 		},
 	}
 
-	ss, resp, err := client.ProjectTemplates.ListTemplates(1, "issues", nil, nil)
+	ss, resp, err := client.ProjectTemplates.ListTemplates(1, "issues.templates", nil, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, ss)
@@ -49,22 +50,23 @@ func TestProjectTemplatesService_GetProjectTemplate(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	mux.HandleFunc("/api/v4/projects/1/templates/issues/test_issue", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/projects/1/templates/issues.templates/test_issue.template", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testURL(t, r, r.Pattern)
 		fmt.Fprintf(w, `
 			{
-			  "name": "test_issue",
+			  "name": "test_issue.template",
 			  "content": "## Test"
 			}
 		`)
 	})
 
 	want := &ProjectTemplate{
-		Name:    "test_issue",
+		Name:    "test_issue.template",
 		Content: "## Test",
 	}
 
-	ss, resp, err := client.ProjectTemplates.GetProjectTemplate(1, "issues", "test_issue", nil, nil)
+	ss, resp, err := client.ProjectTemplates.GetProjectTemplate(1, "issues.templates", "test_issue.template", nil, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, ss)

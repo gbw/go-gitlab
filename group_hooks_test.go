@@ -491,8 +491,9 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 	var bodyJSON map[string]any
 
 	// Removed most of the arguments to keep test slim
-	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization.Header", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
+		testURL(t, r, r.Pattern)
 		w.WriteHeader(http.StatusNoContent)
 
 		// validate that the `value` body is sent properly
@@ -505,7 +506,7 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 		fmt.Fprint(w, ``)
 	})
 
-	req, err := client.Groups.SetGroupCustomHeader(1, 1, "Authorization", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
+	req, err := client.Groups.SetGroupCustomHeader(1, 1, "Authorization.Header", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
 	require.NoError(t, err)
 
 	assert.Equal(t, "testValue", bodyJSON["value"])
@@ -515,11 +516,12 @@ func TestSetGroupWebhookHeader(t *testing.T) {
 func TestDeleteGroupCustomHeader(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/custom_headers/Authorization.Header", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
+		testURL(t, r, r.Pattern)
 	})
 
-	resp, err := client.Groups.DeleteGroupCustomHeader(1, 1, "Authorization")
+	resp, err := client.Groups.DeleteGroupCustomHeader(1, 1, "Authorization.Header")
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 }
@@ -527,11 +529,12 @@ func TestDeleteGroupCustomHeader(t *testing.T) {
 func TestSetGroupHookURLVariable(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY.NAME", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
+		testURL(t, r, r.Pattern)
 	})
 
-	resp, err := client.Groups.SetGroupHookURLVariable(1, 1, "KEY", &SetHookURLVariableOptions{Value: Ptr("VALUE")})
+	resp, err := client.Groups.SetGroupHookURLVariable(1, 1, "KEY.NAME", &SetHookURLVariableOptions{Value: Ptr("VALUE")})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 }
@@ -539,11 +542,12 @@ func TestSetGroupHookURLVariable(t *testing.T) {
 func TestDeleteGroupHookURLVariable(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v4/groups/1/hooks/1/url_variables/KEY.NAME", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
+		testURL(t, r, r.Pattern)
 	})
 
-	resp, err := client.Groups.DeleteGroupHookURLVariable(1, 1, "KEY")
+	resp, err := client.Groups.DeleteGroupHookURLVariable(1, 1, "KEY.NAME")
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 }
