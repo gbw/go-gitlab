@@ -91,6 +91,7 @@ func TestLicenseTemplatesService_GetLicenseTemplate(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/templates/licenses/apache-2.0", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testURL(t, r, r.Pattern)
 		fmt.Fprintf(w, `
 			{
 				"key": "apache-2.0",
