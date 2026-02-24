@@ -1,3 +1,18 @@
+## 1.42.0
+
+### 🚀 Features
+
+- feat: Add public_email to CreateUserOptions ([!2787](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2787)) by [Mohamed Othman](https://gitlab.com/mohamed.othman27)
+
+
+
+# [1.42.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.41.1...v1.42.0) (2026-02-24)
+
+
+### Features
+
+* Add public_email to CreateUserOptions ([ab1ec31](https://gitlab.com/gitlab-org/api/client-go/commit/ab1ec3131687de457c8518c60150c254cc56fd83))
+
 ## 1.41.1
 
 ### 🐛 Bug Fixes
