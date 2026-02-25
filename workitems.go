@@ -4,7 +4,6 @@ package gitlab
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 	"text/template"
@@ -767,20 +766,23 @@ func (s *WorkItemsService) CreateWorkItem(fullPath string, workItemTypeID WorkIt
 
 	if len(result.Errors) != 0 {
 		return nil, resp, &GraphQLResponseError{
-			Err:    errors.New("GraphQL query failed"),
+			Err:    errors.New("Mutation.workItemCreate failed"),
 			Errors: result.GenericGraphQLErrors,
 		}
 	}
 
 	if len(result.Data.WorkItemCreate.Errors) != 0 {
-		err := fmt.Errorf("%w: %s", ErrWorkItemCreateFailed, strings.Join(result.Data.WorkItemCreate.Errors, "; "))
+		err := &ErrorResponse{
+			Message:  strings.Join(result.Data.WorkItemCreate.Errors, "; "),
+			Response: resp.Response,
+		}
 
 		return nil, resp, err
 	}
 
 	wiQL := result.Data.WorkItemCreate.WorkItem
 	if wiQL == nil {
-		return nil, resp, ErrWorkItemCreateFailed
+		return nil, resp, ErrEmptyResponse
 	}
 
 	return wiQL.unwrap(), resp, nil

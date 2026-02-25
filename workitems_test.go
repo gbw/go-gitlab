@@ -587,12 +587,12 @@ func TestCreateWorkItem(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name     string
-		fullPath string
-		opt      *CreateWorkItemOptions
-		response io.WriterTo
-		want     *WorkItem
-		wantErr  error
+		name            string
+		fullPath        string
+		opt             *CreateWorkItemOptions
+		response        io.WriterTo
+		want            *WorkItem
+		wantErrContains string
 	}{
 		{
 			name:     "successful creation with title only",
@@ -762,8 +762,8 @@ func TestCreateWorkItem(t *testing.T) {
 				  "correlationId": "9c88d56b0061dfef-IAD"
 				}
 			`),
-			want:    nil,
-			wantErr: ErrWorkItemCreateFailed,
+			want:            nil,
+			wantErrContains: "Title can't be blank",
 		},
 	}
 
@@ -797,8 +797,8 @@ func TestCreateWorkItem(t *testing.T) {
 
 			got, _, err := client.WorkItems.CreateWorkItem(tt.fullPath, "gid://gitlab/WorkItems::Type/1", tt.opt)
 
-			if tt.wantErr != nil {
-				require.ErrorIs(t, err, tt.wantErr)
+			if tt.wantErrContains != "" {
+				require.ErrorContains(t, err, tt.wantErrContains)
 				assert.Nil(t, got)
 
 				return
