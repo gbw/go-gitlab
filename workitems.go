@@ -1097,7 +1097,6 @@ func (w *workItemWidgetWeightGQL) unwrap() *int64 {
 
 type WorkItemTypeID string
 
-// TODO: Work item IDs are now static. We need to look them up at runtime.
 const (
 	WorkItemTypeIssue       WorkItemTypeID = `gid://gitlab/WorkItems::Type/1`
 	WorkItemTypeIncident    WorkItemTypeID = `gid://gitlab/WorkItems::Type/2`
