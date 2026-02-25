@@ -1,3 +1,18 @@
+## 1.43.0
+
+### 🚀 Features
+
+- feat(pagination): Add `ScanAndCollectN` to collect at most _n_ results. ([!2788](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2788)) by [Florian Forster](https://gitlab.com/fforster)
+
+
+
+# [1.43.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.42.0...v1.43.0) (2026-02-25)
+
+
+### Features
+
+* **pagination:** Add `ScanAndCollectN` to collect at most _n_ results. ([f821c08](https://gitlab.com/gitlab-org/api/client-go/commit/f821c08c2a460755a0ae4db08fa468b54cbb4be1))
+
 ## 1.42.0
 
 ### 🚀 Features
