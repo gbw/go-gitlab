@@ -814,7 +814,7 @@ func TestCreateWorkItem(t *testing.T) {
 			},
 		},
 		{
-			name:     "creation with errors",
+			name:     "mutation workItemCreate error",
 			fullPath: "gitlab-com/gl-infra/platform/runway/team",
 			opt: &CreateWorkItemOptions{
 				Title: "",
@@ -832,6 +832,63 @@ func TestCreateWorkItem(t *testing.T) {
 			`),
 			want:            nil,
 			wantErrContains: "Title can't be blank",
+		},
+		{
+			name:     "mutation workItemCreate error",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &CreateWorkItemOptions{
+				Title: "",
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "workItemCreate": {
+				      "workItem": null,
+				      "errors": ["Title can't be blank"]
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			want:            nil,
+			wantErrContains: "Title can't be blank",
+		},
+		{
+			name:     "GraphQL error",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &CreateWorkItemOptions{
+				Title: "New Issue",
+			},
+			response: strings.NewReader(`
+				{
+				  "errors": [
+				    {
+				      "message": "Your GraphQL is bad and you should feel bad"
+				    }
+				  ]
+				}
+			`),
+			want:            nil,
+			wantErrContains: "Your GraphQL is bad and you should feel bad",
+		},
+		{
+			name:     "empty response",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			opt: &CreateWorkItemOptions{
+				Title: "New Issue",
+			},
+			response: strings.NewReader(`
+				{
+				  "data": {
+				    "workItemCreate": {
+				      "workItem": null
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			want:            nil,
+			wantErrContains: ErrEmptyResponse.Error(),
 		},
 	}
 
