@@ -1,3 +1,17 @@
+## 1.44.0
+
+### 🚀 Features
+
+- Implement runner controller instance-level runner scope support ([!2765](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2765)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+### 🔄 Other Changes
+
+- chore(deps): update module github.com/graph-gophers/graphql-go to v1.9.0 ([!2789](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2789)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [1.44.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.43.0...v1.44.0) (2026-02-26)
+
 ## 1.43.0
 
 ### 🚀 Features
