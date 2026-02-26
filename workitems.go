@@ -511,20 +511,25 @@ type CreateWorkItemOptions struct {
 
 	Description   *string
 	Confidential  *bool
-	AssigneeIDs   []string
-	MilestoneID   *string
+	AssigneeIDs   []int64
+	MilestoneID   *int64
 	CreateSource  *string
 	CreatedAt     *time.Time
-	ContactIDs    []string
-	ParentID      *string
-	LabelIDs      []string
-	LinkedItemIDs []string
+	CRMContactIDs []int64
+	ParentID      *int64
+	LabelIDs      []int64
+	LinkedItems   *CreateWorkItemOptionsLinkedItems
 	StartDate     *ISOTime
 	DueDate       *ISOTime
 	Weight        *int64
-	HealthStatus  *string
-	IterationID   *string
+	HealthStatus  *string // enum: atRisk, needsAttention, onTrack
+	IterationID   *int64
 	Color         *string
+}
+
+type CreateWorkItemOptionsLinkedItems struct {
+	LinkType    *string // enum: BLOCKED_BY, BLOCKS, RELATED
+	WorkItemIDs []int64
 }
 
 // workItemCreateInputGQL represents the GraphQL input structure for creating a work item.
@@ -584,7 +589,8 @@ type workItemWidgetLabelsCreateInputGQL struct {
 
 // workItemWidgetLinkedItemsCreateInputGQL represents the linked items widget input.
 type workItemWidgetLinkedItemsCreateInputGQL struct {
-	WorkItemIDs []string `json:"workItemIds,omitempty"`
+	LinkType    *string  `json:"linkType,omitempty"`
+	WorkItemIDs []string `json:"workItemsIds,omitempty"`
 }
 
 // workItemWidgetStartAndDueDateInputGQL represents the start and due date widget input.
@@ -641,37 +647,38 @@ func (opt *CreateWorkItemOptions) wrap(namespacePath string, workItemTypeID Work
 
 	if len(opt.AssigneeIDs) > 0 {
 		input.AssigneesWidget = &workItemWidgetAssigneesInputGQL{
-			AssigneeIDs: opt.AssigneeIDs,
+			AssigneeIDs: newGIDStrings("User", opt.AssigneeIDs...),
 		}
 	}
 
 	if opt.MilestoneID != nil {
 		input.MilestoneWidget = &workItemWidgetMilestoneInputGQL{
-			MilestoneID: opt.MilestoneID,
+			MilestoneID: Ptr(gidGQL{"Milestone", *opt.MilestoneID}.String()),
 		}
 	}
 
-	if len(opt.ContactIDs) > 0 {
+	if len(opt.CRMContactIDs) > 0 {
 		input.CRMContactsWidget = &workItemWidgetCRMContactsCreateInputGQL{
-			ContactIDs: opt.ContactIDs,
+			ContactIDs: newGIDStrings("CustomerRelations::Contact", opt.CRMContactIDs...),
 		}
 	}
 
 	if opt.ParentID != nil {
 		input.HierarchyWidget = &workItemWidgetHierarchyCreateInputGQL{
-			ParentID: opt.ParentID,
+			ParentID: Ptr(gidGQL{"WorkItem", *opt.ParentID}.String()),
 		}
 	}
 
 	if len(opt.LabelIDs) > 0 {
 		input.LabelsWidget = &workItemWidgetLabelsCreateInputGQL{
-			LabelIDs: opt.LabelIDs,
+			LabelIDs: newGIDStrings("Label", opt.LabelIDs...),
 		}
 	}
 
-	if len(opt.LinkedItemIDs) > 0 {
+	if opt.LinkedItems != nil && len(opt.LinkedItems.WorkItemIDs) > 0 {
 		input.LinkedItemsWidget = &workItemWidgetLinkedItemsCreateInputGQL{
-			WorkItemIDs: opt.LinkedItemIDs,
+			LinkType:    opt.LinkedItems.LinkType,
+			WorkItemIDs: newGIDStrings("WorkItem", opt.LinkedItems.WorkItemIDs...),
 		}
 	}
 
@@ -700,7 +707,7 @@ func (opt *CreateWorkItemOptions) wrap(namespacePath string, workItemTypeID Work
 
 	if opt.IterationID != nil {
 		input.IterationWidget = &workItemWidgetIterationInputGQL{
-			IterationID: opt.IterationID,
+			IterationID: Ptr(gidGQL{"Iteration", *opt.IterationID}.String()),
 		}
 	}
 

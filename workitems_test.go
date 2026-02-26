@@ -591,6 +591,7 @@ func TestCreateWorkItem(t *testing.T) {
 		fullPath        string
 		opt             *CreateWorkItemOptions
 		response        io.WriterTo
+		wantInputs      map[string]any
 		want            *WorkItem
 		wantErrContains string
 	}{
@@ -646,6 +647,9 @@ func TestCreateWorkItem(t *testing.T) {
 				  "correlationId": "9c88d56b0061dfef-IAD"
 				}
 			`),
+			wantInputs: map[string]any{
+				"title": "New Task",
+			},
 			want: &WorkItem{
 				ID:          181297786,
 				IID:         40,
@@ -670,11 +674,75 @@ func TestCreateWorkItem(t *testing.T) {
 			},
 		},
 		{
-			name:     "successful creation with description",
+			name:     "successful creation with all options",
 			fullPath: "gitlab-com/gl-infra/platform/runway/team",
 			opt: &CreateWorkItemOptions{
-				Title:       "New Issue",
-				Description: Ptr("This is a detailed description"),
+				// Required
+				Title: "New Issue",
+				// Optional
+				Description:   Ptr("This is a detailed description"),
+				Confidential:  Ptr(true),
+				AssigneeIDs:   []int64{123, 456},
+				MilestoneID:   Ptr(int64(234)),
+				CreateSource:  Ptr("api"),
+				CreatedAt:     Ptr(time.Date(2026, time.February, 5, 10, 0, 0, 0, time.UTC)),
+				CRMContactIDs: []int64{1001, 1002},
+				ParentID:      Ptr(int64(100)),
+				LabelIDs:      []int64{789, 790},
+				LinkedItems: &CreateWorkItemOptionsLinkedItems{
+					LinkType:    Ptr("RELATED"),
+					WorkItemIDs: []int64{1101},
+				},
+				StartDate:    Ptr(ISOTime(time.Date(2026, time.February, 1, 0, 0, 0, 0, time.UTC))),
+				DueDate:      Ptr(ISOTime(time.Date(2026, time.March, 1, 0, 0, 0, 0, time.UTC))),
+				Weight:       Ptr(int64(5)),
+				HealthStatus: Ptr("onTrack"),
+				IterationID:  Ptr(int64(567)),
+				Color:        Ptr("#FF0000"),
+			},
+			wantInputs: map[string]any{
+				"title":        "New Issue",
+				"confidential": true,
+				"createSource": "api",
+				"createdAt":    "2026-02-05T10:00:00Z",
+				"descriptionWidget": map[string]any{
+					"description": "This is a detailed description",
+				},
+				"assigneesWidget": map[string]any{
+					"assigneeIds": []any{"gid://gitlab/User/123", "gid://gitlab/User/456"},
+				},
+				"milestoneWidget": map[string]any{
+					"milestoneId": "gid://gitlab/Milestone/234",
+				},
+				"crmContactsWidget": map[string]any{
+					"contactIds": []any{"gid://gitlab/CustomerRelations::Contact/1001", "gid://gitlab/CustomerRelations::Contact/1002"},
+				},
+				"hierarchyWidget": map[string]any{
+					"parentId": "gid://gitlab/WorkItem/100",
+				},
+				"labelsWidget": map[string]any{
+					"labelIds": []any{"gid://gitlab/Label/789", "gid://gitlab/Label/790"},
+				},
+				"linkedItemsWidget": map[string]any{
+					"linkType":     "RELATED",
+					"workItemsIds": []any{"gid://gitlab/WorkItem/1101"},
+				},
+				"startAndDueDateWidget": map[string]any{
+					"startDate": "2026-02-01",
+					"dueDate":   "2026-03-01",
+				},
+				"weightWidget": map[string]any{
+					"weight": float64(5),
+				},
+				"healthStatusWidget": map[string]any{
+					"healthStatus": "onTrack",
+				},
+				"iterationWidget": map[string]any{
+					"iterationId": "gid://gitlab/Iteration/567",
+				},
+				"colorWidget": map[string]any{
+					"color": "#FF0000",
+				},
 			},
 			response: strings.NewReader(`
 				{
@@ -791,11 +859,18 @@ func TestCreateWorkItem(t *testing.T) {
 					return
 				}
 
+				t.Logf("q.Variables = %q", q.Variables)
+
+				gotInputs := q.Variables["input"].(map[string]any)
+				for k, v := range tt.wantInputs {
+					assert.Equal(t, v, gotInputs[k], "input %q mismatch", k)
+				}
+
 				w.Header().Set("Content-Type", "application/json")
 				tt.response.WriteTo(w)
 			})
 
-			got, _, err := client.WorkItems.CreateWorkItem(tt.fullPath, "gid://gitlab/WorkItems::Type/1", tt.opt)
+			got, _, err := client.WorkItems.CreateWorkItem(tt.fullPath, WorkItemTypeIssue, tt.opt)
 
 			if tt.wantErrContains != "" {
 				require.ErrorContains(t, err, tt.wantErrContains)
