@@ -269,7 +269,7 @@ func CreateTestEpicWithOptions(t *testing.T, client *gitlab.Client, gid any, opt
 
 	// Add a cleanup function
 	t.Cleanup(func() {
-		_, err := client.Epics.DeleteEpic(gid, epic.ID, gitlab.WithContext(context.Background()))
+		_, err := client.Epics.DeleteEpic(gid, epic.IID, gitlab.WithContext(context.Background()))
 		require.NoError(t, err, "Failed to delete test epic")
 	})
 
