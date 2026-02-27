@@ -506,25 +506,56 @@ func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOpti
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/graphql/reference/#workitemcreateinput
 type CreateWorkItemOptions struct {
-	// Required
+	// Title of the work item. Required.
 	Title string
 
-	Description   *string
-	Confidential  *bool
-	AssigneeIDs   []int64
-	MilestoneID   *int64
-	CreateSource  *string
-	CreatedAt     *time.Time
+	// Description of the work item.
+	Description *string
+
+	// Sets the work item confidentiality.
+	Confidential *bool
+
+	// Global IDs of assignees.
+	AssigneeIDs []int64
+
+	// Global ID of the milestone to assign to the work item.
+	MilestoneID *int64
+
+	// Source which triggered the creation of the work item. Used only for tracking purposes.
+	CreateSource *string
+
+	// Timestamp when the work item was created. Available only for admins and project owners.
+	CreatedAt *time.Time // admins and project owners only
+
+	// CRM contact IDs to set.
 	CRMContactIDs []int64
-	ParentID      *int64
-	LabelIDs      []int64
-	LinkedItems   *CreateWorkItemOptionsLinkedItems
-	StartDate     *ISOTime
-	DueDate       *ISOTime
-	Weight        *int64
-	HealthStatus  *string // enum: atRisk, needsAttention, onTrack
-	IterationID   *int64
-	Color         *string
+
+	// Global ID of the parent work item.
+	ParentID *int64
+
+	// Global IDs of labels to be added to the work item.
+	LabelIDs []int64
+
+	// Linked work items to be added to the work item.
+	LinkedItems *CreateWorkItemOptionsLinkedItems
+
+	// Start date for the work item.
+	StartDate *ISOTime
+
+	// Due date for the work item.
+	DueDate *ISOTime
+
+	// Weight of the work item.
+	Weight *int64
+
+	// Health status to be assigned to the work item. Possible values: onTrack, needsAttention, atRisk
+	HealthStatus *string
+
+	// Global ID of the iteration to assign to the work item.
+	IterationID *int64
+
+	// Color of the work item, represented as a hex code or named color. Example: "#fefefe"
+	Color *string
 }
 
 type CreateWorkItemOptionsLinkedItems struct {
