@@ -1,3 +1,22 @@
+## 1.45.0
+
+### 🚀 Features
+
+- Add LockMembershipsToSAML support to Application Settings ([!2791](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2791)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+
+### 🔄 Other Changes
+
+- test(integration): Use epic IID instead of ID in `DeleteEpic` cleanup. ([!2794](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2794)) by [Florian Forster](https://gitlab.com/fforster)
+
+
+
+# [1.45.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.44.0...v1.45.0) (2026-02-27)
+
+
+### Bug Fixes
+
+* **test:** Use epic IID instead of ID in `DeleteEpic` cleanup. ([49dea05](https://gitlab.com/gitlab-org/api/client-go/commit/49dea0587894cd75d5962e69080974fccedde406))
+
 ## 1.44.0
 
 ### 🚀 Features
