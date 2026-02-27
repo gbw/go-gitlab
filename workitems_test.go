@@ -68,6 +68,51 @@ func TestGetWorkItem(t *testing.T) {
 						WebURL:    "https://gitlab.com/swainaina",
 					},
 				},
+				DueDate:      Ptr(ISOTime(time.Date(2026, time.July, 31, 0, 0, 0, 0, time.UTC))),
+				HealthStatus: Ptr("onTrack"),
+				IterationID:  Ptr(int64(2748074)),
+				Labels: []LabelDetails{
+					{
+						ID:              32754251,
+						Name:            "Category:Runway",
+						Color:           "#6699cc",
+						Description:     "",
+						DescriptionHTML: "",
+						TextColor:       "#FFFFFF",
+					},
+					{
+						ID:              32832335,
+						Name:            "Service::Runway",
+						Color:           "#d1d100",
+						Description:     "",
+						DescriptionHTML: "",
+						TextColor:       "#1F1E24",
+					},
+					{
+						ID:              12970969,
+						Name:            "workflow-infra::Triage",
+						Color:           "#FEAF09",
+						Description:     "For @gitlab-com/gl-infra/managers to triage, prioritize, and assign.",
+						DescriptionHTML: "For <a href=\"/gitlab-com/gl-infra/managers\" data-reference-type=\"user\" data-group=\"4684757\" data-container=\"body\" data-placement=\"top\" class=\"gfm gfm-project_member js-user-link\" title=\"GitLab.com / GitLab Infrastructure Team / Infrastructure Managers\">@gitlab-com/gl-infra/managers</a> to triage, prioritize, and assign.",
+						TextColor:       "#1F1E24",
+					},
+				},
+				LinkedItems: []*WorkItemLinkedItem{
+					{
+						WorkItemIID: WorkItemIID{
+							NamespacePath: "gitlab-com/gl-infra/platform/runway/team",
+							IID:           774,
+						},
+						LinkType: "relates_to",
+					},
+				},
+				MilestoneID: Ptr(int64(6161376)),
+				ParentID: &WorkItemIID{
+					NamespacePath: "gitlab-com/gl-infra/platform/runway/team",
+					IID:           673,
+				},
+				StartDate: Ptr(ISOTime(time.Date(2025, time.August, 1, 0, 0, 0, 0, time.UTC))),
+				Weight:    Ptr(int64(8)),
 			},
 		},
 		{

@@ -19,6 +19,7 @@ package gitlab
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 )
 
 type (
@@ -83,6 +84,30 @@ func (l *Label) UnmarshalJSON(data []byte) error {
 
 func (l Label) String() string {
 	return Stringify(l)
+}
+
+type labelGQL struct {
+	Archived        bool      `json:"archived"`
+	Color           string    `json:"color"`
+	CreatedAt       time.Time `json:"createdAt"`
+	Description     *string   `json:"description"`
+	DescriptionHTML *string   `json:"descriptionHtml"`
+	ID              gidGQL    `json:"id"`
+	LockOnMerge     bool      `json:"lockOnMerge"`
+	TextColor       string    `json:"textColor"`
+	Title           string    `json:"title"`
+	UpdatedAt       time.Time `json:"updatedAt"`
+}
+
+func (l *labelGQL) unwrap() LabelDetails {
+	return LabelDetails{
+		ID:              l.ID.Int64,
+		Name:            l.Title,
+		Color:           l.Color,
+		Description:     deref(l.Description),
+		DescriptionHTML: deref(l.DescriptionHTML),
+		TextColor:       l.TextColor,
+	}
 }
 
 // ListLabelsOptions represents the available ListLabels() options.
