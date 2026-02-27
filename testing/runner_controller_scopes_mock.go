@@ -84,6 +84,51 @@ func (c *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerInstanceSc
 	return c
 }
 
+// AddRunnerControllerRunnerScope mocks base method.
+func (m *MockRunnerControllerScopesServiceInterface) AddRunnerControllerRunnerScope(rid, runnerID int64, options ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerRunnerLevelScoping, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{rid, runnerID}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddRunnerControllerRunnerScope", varargs...)
+	ret0, _ := ret[0].(*gitlab.RunnerControllerRunnerLevelScoping)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// AddRunnerControllerRunnerScope indicates an expected call of AddRunnerControllerRunnerScope.
+func (mr *MockRunnerControllerScopesServiceInterfaceMockRecorder) AddRunnerControllerRunnerScope(rid, runnerID any, options ...any) *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{rid, runnerID}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddRunnerControllerRunnerScope", reflect.TypeOf((*MockRunnerControllerScopesServiceInterface)(nil).AddRunnerControllerRunnerScope), varargs...)
+	return &MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall{Call: call}
+}
+
+// MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall wrap *gomock.Call
+type MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall) Return(arg0 *gitlab.RunnerControllerRunnerLevelScoping, arg1 *gitlab.Response, arg2 error) *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall) Do(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerRunnerLevelScoping, *gitlab.Response, error)) *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall) DoAndReturn(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerRunnerLevelScoping, *gitlab.Response, error)) *MockRunnerControllerScopesServiceInterfaceAddRunnerControllerRunnerScopeCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListRunnerControllerScopes mocks base method.
 func (m *MockRunnerControllerScopesServiceInterface) ListRunnerControllerScopes(rid int64, options ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerScopes, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -169,6 +214,50 @@ func (c *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerInstanc
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerInstanceScopeCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerInstanceScopeCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// RemoveRunnerControllerRunnerScope mocks base method.
+func (m *MockRunnerControllerScopesServiceInterface) RemoveRunnerControllerRunnerScope(rid, runnerID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{rid, runnerID}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RemoveRunnerControllerRunnerScope", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RemoveRunnerControllerRunnerScope indicates an expected call of RemoveRunnerControllerRunnerScope.
+func (mr *MockRunnerControllerScopesServiceInterfaceMockRecorder) RemoveRunnerControllerRunnerScope(rid, runnerID any, options ...any) *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{rid, runnerID}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveRunnerControllerRunnerScope", reflect.TypeOf((*MockRunnerControllerScopesServiceInterface)(nil).RemoveRunnerControllerRunnerScope), varargs...)
+	return &MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall{Call: call}
+}
+
+// MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall wrap *gomock.Call
+type MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall) Return(arg0 *gitlab.Response, arg1 error) *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall) Do(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall) DoAndReturn(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockRunnerControllerScopesServiceInterfaceRemoveRunnerControllerRunnerScopeCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -186,6 +186,35 @@ func TestPagination_ScanAndCollect_Error(t *testing.T) {
 	require.Nil(t, projects)
 }
 
+func TestPagination_ScanAndCollectN(t *testing.T) {
+	t.Parallel()
+
+	mux, client := setup(t)
+	handleTwoPagesSuccessfully(t, mux)
+
+	opt := &ListProjectsOptions{}
+	projects, err := ScanAndCollectN(func(p PaginationOptionFunc) ([]*Project, *Response, error) {
+		return client.Projects.ListProjects(opt, p)
+	}, 1)
+	require.NoError(t, err)
+	want := []*Project{{ID: 1}}
+	assert.Equal(t, want, projects)
+}
+
+func TestPagination_ScanAndCollectN_Zero(t *testing.T) {
+	t.Parallel()
+
+	mux, client := setup(t)
+	handleTwoPagesSuccessfully(t, mux)
+
+	opt := &ListProjectsOptions{}
+	projects, err := ScanAndCollectN(func(p PaginationOptionFunc) ([]*Project, *Response, error) {
+		return client.Projects.ListProjects(opt, p)
+	}, 0)
+	require.NoError(t, err)
+	assert.Nil(t, projects)
+}
+
 func handleTwoPagesSuccessfully(t *testing.T, mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
 		page := r.URL.Query().Get("page")

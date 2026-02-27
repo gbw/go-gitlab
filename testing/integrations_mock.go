@@ -347,6 +347,50 @@ func (c *MockIntegrationsServiceInterfaceDisableGroupWebexTeamsCall) DoAndReturn
 	return c
 }
 
+// DisableProjectGoogleChat mocks base method.
+func (m *MockIntegrationsServiceInterface) DisableProjectGoogleChat(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DisableProjectGoogleChat", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DisableProjectGoogleChat indicates an expected call of DisableProjectGoogleChat.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) DisableProjectGoogleChat(pid any, options ...any) *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DisableProjectGoogleChat", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).DisableProjectGoogleChat), varargs...)
+	return &MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall) Return(arg0 *gitlab.Response, arg1 error) *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetGroupDiscordSettings mocks base method.
 func (m *MockIntegrationsServiceInterface) GetGroupDiscordSettings(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.DiscordIntegration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -887,6 +931,51 @@ func (c *MockIntegrationsServiceInterfaceGetGroupWebexTeamsSettingsCall) DoAndRe
 	return c
 }
 
+// GetProjectGoogleChatSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) GetProjectGoogleChatSettings(pid any, options ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetProjectGoogleChatSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.GoogleChatIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetProjectGoogleChatSettings indicates an expected call of GetProjectGoogleChatSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetProjectGoogleChatSettings(pid any, options ...any) *MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProjectGoogleChatSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetProjectGoogleChatSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall) Return(arg0 *gitlab.GoogleChatIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetProjectGoogleChatSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListActiveGroupIntegrations mocks base method.
 func (m *MockIntegrationsServiceInterface) ListActiveGroupIntegrations(gid any, opt *gitlab.ListActiveIntegrationsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Integration, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -1153,6 +1242,51 @@ func (c *MockIntegrationsServiceInterfaceSetGroupWebexTeamsSettingsCall) Do(f fu
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceSetGroupWebexTeamsSettingsCall) DoAndReturn(f func(any, *gitlab.SetGroupWebexTeamsOptions, ...gitlab.RequestOptionFunc) (*gitlab.WebexTeamsIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupWebexTeamsSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetProjectGoogleChatSettings mocks base method.
+func (m *MockIntegrationsServiceInterface) SetProjectGoogleChatSettings(pid any, opt *gitlab.SetProjectGoogleChatOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetProjectGoogleChatSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.GoogleChatIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// SetProjectGoogleChatSettings indicates an expected call of SetProjectGoogleChatSettings.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) SetProjectGoogleChatSettings(pid, opt any, options ...any) *MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetProjectGoogleChatSettings", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).SetProjectGoogleChatSettings), varargs...)
+	return &MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall) Return(arg0 *gitlab.GoogleChatIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall) Do(f func(any, *gitlab.SetProjectGoogleChatOptions, ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall) DoAndReturn(f func(any, *gitlab.SetProjectGoogleChatOptions, ...gitlab.RequestOptionFunc) (*gitlab.GoogleChatIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetProjectGoogleChatSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

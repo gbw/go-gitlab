@@ -73,6 +73,30 @@ func TestListGroups_Filtering(t *testing.T) {
 	}
 }
 
+func TestListGroups_Visibility(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+
+		testParam(t, r, "visibility", "public")
+
+		fmt.Fprint(w, `[{"id":1}]`)
+	})
+
+	opt := &ListGroupsOptions{
+		Visibility: Ptr(PublicVisibility),
+	}
+
+	groups, _, err := client.Groups.ListGroups(opt)
+
+	require.NoError(t, err)
+
+	want := []*Group{{ID: 1}}
+	assert.Equal(t, want, groups)
+}
+
 func TestGetGroup(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -221,7 +245,8 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 						{
 							"access_level": 40
 						}
-					]
+					],
+					"code_owner_approval_required": true
 				}
 			}
 			`)
@@ -241,6 +266,7 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 					AccessLevel: Ptr(AccessLevelValue(40)),
 				},
 			},
+			CodeOwnerApprovalRequired: Ptr(true),
 		},
 	}
 
@@ -265,6 +291,7 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 					AccessLevel: Ptr(MaintainerPermissions),
 				},
 			},
+			CodeOwnerApprovalRequired: true,
 		},
 	}
 
@@ -275,8 +302,13 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 	// Validate the request does what we want it to
 	allowedToMerge := *jsonRequestBody.DefaultBranchProtectionDefaults.AllowedToMerge
 	allowedToPush := *jsonRequestBody.DefaultBranchProtectionDefaults.AllowedToPush
+
 	assert.Equal(t, Ptr(MaintainerPermissions), allowedToMerge[0].AccessLevel)
 	assert.Equal(t, Ptr(MaintainerPermissions), allowedToPush[0].AccessLevel)
+	assert.True(
+		t,
+		*jsonRequestBody.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired,
+	)
 }
 
 func TestTransferGroup(t *testing.T) {
@@ -861,6 +893,38 @@ func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
 	}
 }
 
+func TestAddGroupSAMLLinkWithProvider(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/saml_group_links",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			fmt.Fprint(w, `
+{
+    "access_level":30,
+    "name":"gitlab_group_example_developer",
+    "provider":"example_saml_provider"
+}`)
+		})
+
+	opt := &AddGroupSAMLLinkOptions{
+		SAMLGroupName: Ptr("gitlab_group_example_developer"),
+		AccessLevel:   Ptr(DeveloperPermissions),
+		Provider:      Ptr("example_saml_provider"),
+	}
+
+	link, _, err := client.Groups.AddGroupSAMLLink(1, opt)
+	require.NoError(t, err)
+
+	want := &SAMLGroupLink{
+		AccessLevel: DeveloperPermissions,
+		Name:        "gitlab_group_example_developer",
+		Provider:    "example_saml_provider",
+	}
+	assert.Equal(t, want, link)
+}
+
 func TestGroupsService_ListGroupSharedProjects(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -1389,6 +1453,12 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 			testFormBody(t, r, "path", "g")
 			testFormBody(t, r, "default_branch_protection_defaults[allowed_to_push][][access_level]", "40")
 			testFormBody(t, r, "default_branch_protection_defaults[allowed_to_merge][][access_level]", "40")
+			testFormBody(
+				t,
+				r,
+				"default_branch_protection_defaults[code_owner_approval_required]",
+				"true",
+			)
 
 			fmt.Fprint(w, `
 			{
@@ -1406,7 +1476,8 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 						{
 							"access_level": 40
 						}
-					]
+					],
+					"code_owner_approval_required": true
 				},
 				"avatar_url":"http://localhost/uploads/-/system/group/avatar/999/avatar.png"
 			}
@@ -1433,6 +1504,7 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 					AccessLevel: Ptr(AccessLevelValue(40)),
 				},
 			},
+			CodeOwnerApprovalRequired: Ptr(true),
 		},
 	}
 
@@ -1460,6 +1532,7 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 					AccessLevel: Ptr(MaintainerPermissions),
 				},
 			},
+			CodeOwnerApprovalRequired: true,
 		},
 	}
 

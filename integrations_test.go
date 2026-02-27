@@ -380,6 +380,18 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
+		testBodyJSON(t, r, map[string]any{
+			"webhook":                      "https://outlook.office.com/webhook/test",
+			"notify_only_broken_pipelines": true,
+			"branches_to_be_notified":      "all",
+			"push_events":                  true,
+			"issues_events":                true,
+			"merge_requests_events":        true,
+			"tag_push_events":              true,
+			"note_events":                  true,
+			"pipeline_events":              true,
+			"wiki_page_events":             false,
+		})
 		fmt.Fprint(w, `{
 			"id": 1,
 			"title": "Microsoft Teams",
@@ -409,7 +421,21 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 			}
 		}`)
 	})
-	integration, resp, err := client.Integrations.SetGroupMicrosoftTeamsNotifications(1, nil)
+
+	opt := &SetMicrosoftTeamsNotificationsOptions{
+		Webhook:                   Ptr("https://outlook.office.com/webhook/test"),
+		NotifyOnlyBrokenPipelines: Ptr(true),
+		BranchesToBeNotified:      Ptr("all"),
+		PushEvents:                Ptr(true),
+		IssuesEvents:              Ptr(true),
+		MergeRequestsEvents:       Ptr(true),
+		TagPushEvents:             Ptr(true),
+		NoteEvents:                Ptr(true),
+		PipelineEvents:            Ptr(true),
+		WikiPageEvents:            Ptr(false),
+	}
+
+	integration, resp, err := client.Integrations.SetGroupMicrosoftTeamsNotifications(1, opt)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
@@ -936,6 +962,20 @@ func TestSetGroupSlackSettings(t *testing.T) {
 		AlertChannel:                    Ptr("alert-channel"),
 		GroupMentionChannel:             Ptr("mention-channel"),
 		GroupConfidentialMentionChannel: Ptr("conf-mention-channel"),
+		PushEvents:                      Ptr(true),
+		IssuesEvents:                    Ptr(true),
+		ConfidentialIssuesEvents:        Ptr(true),
+		MergeRequestsEvents:             Ptr(true),
+		TagPushEvents:                   Ptr(true),
+		NoteEvents:                      Ptr(true),
+		ConfidentialNoteEvents:          Ptr(true),
+		PipelineEvents:                  Ptr(true),
+		WikiPageEvents:                  Ptr(true),
+		JobEvents:                       Ptr(true),
+		AlertEvents:                     Ptr(true),
+		CommitEvents:                    Ptr(true),
+		DeploymentEvents:                Ptr(false),
+		IncidentEvents:                  Ptr(false),
 	}
 
 	integration, resp, err := client.Integrations.SetGroupSlackSettings(1, opt)
@@ -1146,4 +1186,76 @@ func TestDisableGroupWebexTeams(t *testing.T) {
 	resp, err := client.Integrations.DisableGroupWebexTeams(1)
 	require.NoError(t, err)
 	assert.NotNil(t, resp)
+}
+
+func TestSetProjectGoogleChatSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/hangouts-chat", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		testBodyJSON(t, r, map[string]any{
+			"webhook":                      "https://chat.googleapis.com/v1/spaces/XXXXXX",
+			"notify_only_broken_pipelines": true,
+			"branches_to_be_notified":      "default",
+		})
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Google Chat",
+			"slug": "hangouts-chat",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "default"
+			}
+		}`)
+	})
+
+	opt := &SetProjectGoogleChatOptions{
+		Webhook:                   Ptr("https://chat.googleapis.com/v1/spaces/XXXXXX"),
+		NotifyOnlyBrokenPipelines: Ptr(true),
+		BranchesToBeNotified:      Ptr("default"),
+	}
+
+	integration, resp, err := client.Integrations.SetProjectGoogleChatSettings(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "Google Chat", integration.Title)
+}
+
+func TestDisableProjectGoogleChat(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/hangouts-chat", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	resp, err := client.Integrations.DisableProjectGoogleChat(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
+
+func TestGetProjectGoogleChatSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/integrations/hangouts-chat", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Google Chat",
+			"slug": "hangouts-chat",
+			"properties": {
+				"branches_to_be_notified": "default"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetProjectGoogleChatSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, "default", integration.Properties.BranchesToBeNotified)
 }

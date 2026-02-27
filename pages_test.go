@@ -56,7 +56,8 @@ func TestGetPages(t *testing.T) {
 			  }
 			],
 			"is_unique_domain_enabled": false,
-			"force_https": false
+			"force_https": false,
+			"primary_domain": "https://custom.example.com"
 		  }
 		`)
 	})
@@ -65,6 +66,7 @@ func TestGetPages(t *testing.T) {
 		URL:                   "https://ssl.domain.example",
 		IsUniqueDomainEnabled: false,
 		ForceHTTPS:            false,
+		PrimaryDomain:         "https://custom.example.com",
 		Deployments: []*PagesDeployment{
 			{
 				CreatedAt:     time.Date(2021, time.April, 27, 21, 27, 38, 584000000, time.UTC),
