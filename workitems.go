@@ -33,7 +33,7 @@ type WorkItem struct {
 	IID         int64
 	Type        string
 	State       string
-	Status      string
+	Status      *string
 	Title       string
 	Description string
 	CreatedAt   *time.Time
@@ -424,12 +424,18 @@ func (w workItemGQL) unwrap() *WorkItem {
 		assignees = append(assignees, a.unwrap())
 	}
 
+	var status *string
+
+	if w.Features.Status != nil && w.Features.Status.Status != nil {
+		status = w.Features.Status.Status.Name
+	}
+
 	return &WorkItem{
 		ID:          w.ID.Int64,
 		IID:         int64(w.IID),
 		Type:        w.WorkItemType.Name,
 		State:       w.State,
-		Status:      w.Features.Status.Status.Name,
+		Status:      status,
 		Title:       w.Title,
 		Description: w.Description,
 		CreatedAt:   w.CreatedAt,
@@ -447,9 +453,9 @@ type workItemFeaturesGQL struct {
 			Nodes []userCoreBasicGQL `json:"nodes"`
 		} `json:"assignees"`
 	} `json:"assignees"`
-	Status struct {
-		Status struct {
-			Name string
+	Status *struct {
+		Status *struct {
+			Name *string
 		}
 	}
 }

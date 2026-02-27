@@ -42,7 +42,7 @@ func TestGetWorkItem(t *testing.T) {
 				IID:         756,
 				Type:        "Task",
 				State:       "OPEN",
-				Status:      "New",
+				Status:      Ptr("New"),
 				Title:       "Update Helm charts to use Argo Rollouts for progressive deployments",
 				Description: "## Overview\n\nUpdate Runway Helm charts to generate Argo Rollout resources ...",
 				CreatedAt:   Ptr(time.Date(2026, time.January, 6, 15, 9, 24, 0, time.UTC)),
