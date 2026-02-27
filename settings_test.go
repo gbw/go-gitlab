@@ -239,3 +239,47 @@ func TestSettings_SentryEnabled(t *testing.T) {
 	assert.NoError(t, err)
 	assert.True(t, updated.SentryEnabled)
 }
+
+func TestUpdateSettings_LockMembershipsToSAML(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	var requestBody map[string]any
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		err := json.NewDecoder(r.Body).Decode(&requestBody)
+		assert.NoError(t, err)
+
+		fmt.Fprint(w, `{"id":1, "lock_memberships_to_saml": true}`)
+	})
+
+	_, _, err := client.Settings.UpdateSettings(&UpdateSettingsOptions{
+		LockMembershipsToSAML: Ptr(true),
+	})
+	require.NoError(t, err)
+
+	want := map[string]any{
+		"lock_memberships_to_saml": true,
+	}
+
+	assert.Equal(t, want["lock_memberships_to_saml"], requestBody["lock_memberships_to_saml"])
+}
+
+func TestGetSettings_LockMembershipsToSAML(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"lock_memberships_to_saml": true
+		}`)
+	})
+
+	settings, _, err := client.Settings.GetSettings()
+	require.NoError(t, err)
+
+	assert.True(t, settings.LockMembershipsToSAML)
+}
