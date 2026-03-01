@@ -31,7 +31,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#set-up-harbor
-		SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
+		SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*HarborIntegration, *Response, error)
 
 		// DisableGroupHarbor disables the Harbor integration for a group.
 		// Integration settings are reset.
@@ -542,8 +542,8 @@ type SetUpHarborOptions struct {
 	UseInheritedSettings *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
 }
 
-func (s *IntegrationsService) SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*HarborIntegration, *Response, error) {
+	return do[*HarborIntegration](
 		s.client,
 		withPath("groups/%s/integrations/harbor", GroupID{gid}),
 		withMethod(http.MethodPut),

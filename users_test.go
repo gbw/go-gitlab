@@ -168,7 +168,6 @@ func TestCreatedBy(t *testing.T) {
 			Username:  "john_smith",
 			Name:      "John Smith",
 			State:     "active",
-			Locked:    false,
 			WebURL:    "http://localhost:3000/john_smith",
 			AvatarURL: "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 		},
@@ -797,7 +796,6 @@ func TestCreateServiceAccountUser(t *testing.T) {
 		Name:      "Test Service Account",
 		Email:     "serviceaccount@test.com",
 		State:     "active",
-		Locked:    false,
 		AvatarURL: "http://localhost:3000/uploads/user/avatar/999/cd8.jpeg",
 		WebURL:    "http://localhost:3000/serviceaccount",
 	}
