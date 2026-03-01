@@ -82,10 +82,11 @@ fmt.Println(jiraIntegration.Properties.URL)
 
 ## Harbor Group Integration
 
-The `GetGroupHarborSettings` method now returns a `*HarborIntegration` struct instead of the generic `*Integration` struct. This provides strongly typed access to Harbor-specific properties.
+The Harbor integration methods now return a `*HarborIntegration` struct instead of the generic `*Integration` struct. This provides strongly typed access to Harbor-specific properties.
 
 **Changes:**
-- Return type: Changed from `*Integration` to `*HarborIntegration`
+- `GetGroupHarborSettings` return type: Changed from `*Integration` to `*HarborIntegration`
+- `SetUpGroupHarbor` return type: Changed from `*Integration` to `*HarborIntegration`
 - Properties: The `Properties` field in `HarborIntegration` is now of type `HarborIntegrationProperties`, containing fields like `URL`, `ProjectName`, `Username`, etc.
 
 ```go
@@ -93,10 +94,53 @@ The `GetGroupHarborSettings` method now returns a `*HarborIntegration` struct in
 integration, _, err := client.Integrations.GetGroupHarborSettings(gid)
 // integration.Properties was generic/untyped
 
+integration, _, err := client.Integrations.SetUpGroupHarbor(gid, opts)
+// integration.Properties was generic/untyped
+
 // After (v2.0)
 harborIntegration, _, err := client.Integrations.GetGroupHarborSettings(gid)
 fmt.Println(harborIntegration.Properties.URL)
+
+harborIntegration, _, err := client.Integrations.SetUpGroupHarbor(gid, opts)
+fmt.Println(harborIntegration.Properties.ProjectName)
 ```
+
+### Merge Requests That Implement This Change
+- [Add Harbor integration properties support](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2670) by @HamzaHassanain
+- [Refactor SetUpGroupHarbor Group Integration](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2796) by @PatrickRice
+
+## BasicUser.Locked Field Removed
+
+The `Locked` field has been removed from the `BasicUser` struct. This field was not consistently returned by the GitLab API and was incorrectly populated in some cases.
+
+**Changes:**
+- Removed: `BasicUser.Locked` field
+- The `State` field continues to represent the administrative status of the user account
+
+```go
+// Before (v1.x)
+user := &BasicUser{
+    ID:       1,
+    Username: "john_smith",
+    Name:     "John Smith",
+    State:    "active",
+    Locked:   false, // This field is removed
+}
+
+// After (v2.0)
+user := &BasicUser{
+    ID:       1,
+    Username: "john_smith",
+    Name:     "John Smith",
+    State:    "active",
+    // Locked field no longer exists
+}
+```
+
+**Note:** The `State` field continues to track the administrative status of the user account with values like "active", "blocked", "deactivated", "banned", "ldap_blocked", and "blocked_pending_approval".
+
+### Merge Requests That Implement This Change
+- [Additional 2.0 Changes](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2796) by @PatrickRice
 
 ## User Moderation Methods Return Signature Changes
 
