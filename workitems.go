@@ -55,7 +55,7 @@ type WorkItem struct {
 	Labels       []LabelDetails
 	LinkedItems  []*WorkItemLinkedItem
 	MilestoneID  *int64
-	ParentID     *WorkItemIID
+	Parent       *WorkItemIID
 	StartDate    *ISOTime
 	Weight       *int64
 }
@@ -562,7 +562,7 @@ func (f workItemFeaturesGQL) unwrap(wi *WorkItem) {
 	wi.Assignees = f.Assignees.unwrap()
 	wi.Color = f.Color.unwrap()
 	wi.HealthStatus = f.HealthStatus.unwrap()
-	wi.ParentID = f.Hierarchy.unwrap()
+	wi.Parent = f.Hierarchy.unwrap()
 	wi.IterationID = f.Iteration.unwrap()
 	wi.Labels = f.Labels.unwrap()
 	wi.LinkedItems = f.LinkedItems.unwrap()

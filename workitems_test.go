@@ -107,7 +107,7 @@ func TestGetWorkItem(t *testing.T) {
 					},
 				},
 				MilestoneID: Ptr(int64(6161376)),
-				ParentID: &WorkItemIID{
+				Parent: &WorkItemIID{
 					NamespacePath: "gitlab-com/gl-infra/platform/runway/team",
 					IID:           673,
 				},
