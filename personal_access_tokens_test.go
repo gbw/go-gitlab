@@ -264,18 +264,6 @@ func TestRotatePersonalAccessTokenSelf(t *testing.T) {
 	assert.Equal(t, want, rotatedToken)
 }
 
-func TestRevokePersonalAccessToken(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	mux.HandleFunc("/api/v4/personal_access_tokens/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-	})
-
-	_, err := client.PersonalAccessTokens.RevokePersonalAccessToken(1)
-	require.NoError(t, err)
-}
-
 func TestRevokePersonalAccessTokenByID(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

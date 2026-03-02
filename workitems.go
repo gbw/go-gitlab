@@ -18,6 +18,8 @@ type (
 	// of the GitLab API.
 	//
 	// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitem
+	//
+	// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
 	WorkItemsService struct {
 		client *Client
 	}
@@ -28,12 +30,14 @@ var _ WorkItemsServiceInterface = (*WorkItemsService)(nil)
 // WorkItem represents a GitLab work item.
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitem
+//
+// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
 type WorkItem struct {
 	ID          int64
 	IID         int64
 	Type        string
 	State       string
-	Status      string
+	Status      *string
 	Title       string
 	Description string
 	CreatedAt   *time.Time
@@ -103,6 +107,8 @@ var getWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).
 // iid is the internal ID of the work item.
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitem
+//
+// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
 func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
 	var queryBuilder strings.Builder
 	if err := getWorkItemTemplate.Execute(&queryBuilder, nil); err != nil {
@@ -149,6 +155,8 @@ func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...Re
 // ListWorkItemsOptions represents the available ListWorkItems() options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
+//
+// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
 type ListWorkItemsOptions struct {
 	AssigneeUsernames    []string
 	AssigneeWildcardID   *string
@@ -309,6 +317,8 @@ var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()
 // ListWorkItems lists workitems in a given namespace (group or project).
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
+//
+// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
 func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error) {
 	var queryBuilder strings.Builder
 
@@ -424,12 +434,18 @@ func (w workItemGQL) unwrap() *WorkItem {
 		assignees = append(assignees, a.unwrap())
 	}
 
+	var status *string
+
+	if w.Features.Status != nil && w.Features.Status.Status != nil {
+		status = w.Features.Status.Status.Name
+	}
+
 	return &WorkItem{
 		ID:          w.ID.Int64,
 		IID:         int64(w.IID),
 		Type:        w.WorkItemType.Name,
 		State:       w.State,
-		Status:      w.Features.Status.Status.Name,
+		Status:      status,
 		Title:       w.Title,
 		Description: w.Description,
 		CreatedAt:   w.CreatedAt,
@@ -447,9 +463,9 @@ type workItemFeaturesGQL struct {
 			Nodes []userCoreBasicGQL `json:"nodes"`
 		} `json:"assignees"`
 	} `json:"assignees"`
-	Status struct {
-		Status struct {
-			Name string
+	Status *struct {
+		Status *struct {
+			Name *string
 		}
 	}
 }

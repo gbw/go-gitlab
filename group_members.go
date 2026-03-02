@@ -133,7 +133,7 @@ type BillableUserMembership struct {
 	SourceFullName   string              `json:"source_full_name"`
 	SourceMembersURL string              `json:"source_members_url"`
 	CreatedAt        *time.Time          `json:"created_at"`
-	ExpiresAt        *time.Time          `json:"expires_at"`
+	ExpiresAt        *ISOTime            `json:"expires_at"`
 	AccessLevel      *AccessLevelDetails `json:"access_level"`
 }
 

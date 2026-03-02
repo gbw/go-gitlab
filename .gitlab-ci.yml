@@ -66,8 +66,8 @@ stages:
   parallel:
     matrix:
       - GOLANG_IMAGE_VERSION:
-        - '1.24'
         - '1.25'
+        - '1.26'
 
 .go:base:
   extends:
@@ -235,8 +235,8 @@ tests:integration:
     GITLAB_TOKEN: "glpat-ACCTEST1234567890123"
 
     # configure tooling versions
-    GOTESTSUM_VERSION: 'v1.12.0'
-    GOCOVER_COBERTURA_VERSION: 'v1.2.1-0.20240107185409-0818f3538137'
+    GOTESTSUM_VERSION: 'v1.13.0'
+    GOCOVER_COBERTURA_VERSION: 'v1.4.0'
     MISE_VERSION: v2025.6.1
 
     # configure artifact files

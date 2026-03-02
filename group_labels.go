@@ -89,10 +89,10 @@ func (s *GroupLabelsService) GetGroupLabel(gid any, lid any, options ...RequestO
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_labels/#create-a-new-group-label
 type CreateGroupLabelOptions struct {
-	Name        *string `url:"name,omitempty" json:"name,omitempty"`
-	Color       *string `url:"color,omitempty" json:"color,omitempty"`
-	Description *string `url:"description,omitempty" json:"description,omitempty"`
-	Priority    *int64  `url:"priority,omitempty" json:"priority,omitempty"`
+	Name        *string         `url:"name,omitempty" json:"name,omitempty"`
+	Color       *string         `url:"color,omitempty" json:"color,omitempty"`
+	Description *string         `url:"description,omitempty" json:"description,omitempty"`
+	Priority    Nullable[int64] `url:"priority,omitempty" json:"priority,omitempty"`
 }
 
 // CreateGroupLabel creates a new label for given group with given name and
@@ -144,11 +144,11 @@ func (s *GroupLabelsService) DeleteGroupLabel(gid any, lid any, opt *DeleteGroup
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_labels/#update-a-group-label
 type UpdateGroupLabelOptions struct {
-	Name        *string `url:"name,omitempty" json:"name,omitempty"`
-	NewName     *string `url:"new_name,omitempty" json:"new_name,omitempty"`
-	Color       *string `url:"color,omitempty" json:"color,omitempty"`
-	Description *string `url:"description,omitempty" json:"description,omitempty"`
-	Priority    *int64  `url:"priority,omitempty" json:"priority,omitempty"`
+	Name        *string         `url:"name,omitempty" json:"name,omitempty"`
+	NewName     *string         `url:"new_name,omitempty" json:"new_name,omitempty"`
+	Color       *string         `url:"color,omitempty" json:"color,omitempty"`
+	Description *string         `url:"description,omitempty" json:"description,omitempty"`
+	Priority    Nullable[int64] `url:"priority,omitempty" json:"priority,omitempty"`
 }
 
 // UpdateGroupLabel updates an existing label with new name or now color. At least

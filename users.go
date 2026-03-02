@@ -36,7 +36,7 @@ type (
 		// GetUser gets a single user.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/users/#get-a-single-user
-		GetUser(user int64, opt GetUsersOptions, options ...RequestOptionFunc) (*User, *Response, error)
+		GetUser(user int64, opt *GetUserOptions, options ...RequestOptionFunc) (*User, *Response, error)
 		// CreateUser creates a new user. Note only administrators can create new users.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/users/#create-a-user
@@ -201,35 +201,35 @@ type (
 		// BlockUser blocks the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#block-access-to-a-user
-		BlockUser(user int64, options ...RequestOptionFunc) error
+		BlockUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// UnblockUser unblocks the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#unblock-access-to-a-user
-		UnblockUser(user int64, options ...RequestOptionFunc) error
+		UnblockUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// BanUser bans the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#ban-a-user
-		BanUser(user int64, options ...RequestOptionFunc) error
+		BanUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// UnbanUser unbans the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#unban-a-user
-		UnbanUser(user int64, options ...RequestOptionFunc) error
+		UnbanUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// DeactivateUser deactivate the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#deactivate-a-user
-		DeactivateUser(user int64, options ...RequestOptionFunc) error
+		DeactivateUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// ActivateUser activate the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#reactivate-a-user
-		ActivateUser(user int64, options ...RequestOptionFunc) error
+		ActivateUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// ApproveUser approve the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#approve-access-to-a-user
-		ApproveUser(user int64, options ...RequestOptionFunc) error
+		ApproveUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// RejectUser reject the specified user. Available only for admin.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/user_moderation/#reject-access-to-a-user
-		RejectUser(user int64, options ...RequestOptionFunc) error
+		RejectUser(user int64, options ...RequestOptionFunc) (*Response, error)
 		// GetAllImpersonationTokens retrieves all impersonation tokens of a user.
 		//
 		// GitLab API docs:
@@ -274,7 +274,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/users/#disable-two-factor-authentication-for-a-user
-		DisableTwoFactor(user int64, options ...RequestOptionFunc) error
+		DisableTwoFactor(user int64, options ...RequestOptionFunc) (*Response, error)
 		// CreateUserRunner creates a runner linked to the current user.
 		//
 		// GitLab API docs:
@@ -342,16 +342,7 @@ type BasicUser struct {
 	// State represents the administrative status of the user account.
 	// Common values: "active", "blocked", "deactivated", "banned",
 	// "ldap_blocked", "blocked_pending_approval".
-	//
-	// This is independent from the Locked field: State tracks permanent
-	// administrative actions, while Locked handles temporary login failures.
 	State string `json:"state"`
-
-	// Locked indicates whether the user account is temporarily locked due to
-	// excessive failed login attempts. This is separate from administrative
-	// blocking (the State field). Locks automatically expire after a configured
-	// time period (default: 10 minutes).
-	Locked bool `json:"locked"`
 
 	CreatedAt *time.Time `json:"created_at"`
 	AvatarURL string     `json:"avatar_url"`
@@ -482,14 +473,14 @@ func (s *UsersService) ListUsers(opt *ListUsersOptions, options ...RequestOption
 	)
 }
 
-// GetUsersOptions represents the available GetUser() options.
+// GetUserOptions represents the available GetUser() options.
 //
 // GitLab API docs: https://docs.gitlab.com/api/users/#get-a-single-user
-type GetUsersOptions struct {
+type GetUserOptions struct {
 	WithCustomAttributes *bool `url:"with_custom_attributes,omitempty" json:"with_custom_attributes,omitempty"`
 }
 
-func (s *UsersService) GetUser(user int64, opt GetUsersOptions, options ...RequestOptionFunc) (*User, *Response, error) {
+func (s *UsersService) GetUser(user int64, opt *GetUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
 	return do[*User](s.client,
 		withPath("users/%d", user),
 		withAPIOpts(opt),
@@ -954,164 +945,164 @@ func (s *UsersService) DeleteEmailForUser(user, email int64, options ...RequestO
 	return resp, err
 }
 
-func (s *UsersService) BlockUser(user int64, options ...RequestOptionFunc) error {
-	_, _, err := do[none](s.client,
+func (s *UsersService) BlockUser(user int64, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/block", user),
 		withRequestOpts(options...),
 	)
-	return err
+	return resp, err
 }
 
-func (s *UsersService) UnblockUser(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) UnblockUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/unblock", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusCreated:
-		return nil
+		return resp, nil
 	case http.StatusForbidden:
-		return ErrUserUnblockPrevented
+		return resp, ErrUserUnblockPrevented
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
-func (s *UsersService) BanUser(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) BanUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/ban", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusCreated:
-		return nil
+		return resp, nil
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
-func (s *UsersService) UnbanUser(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) UnbanUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/unban", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusCreated:
-		return nil
+		return resp, nil
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
-func (s *UsersService) DeactivateUser(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) DeactivateUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/deactivate", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusCreated:
-		return nil
+		return resp, nil
 	case http.StatusForbidden:
-		return ErrUserDeactivatePrevented
+		return resp, ErrUserDeactivatePrevented
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
-func (s *UsersService) ActivateUser(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) ActivateUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/activate", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusCreated:
-		return nil
+		return resp, nil
 	case http.StatusForbidden:
-		return ErrUserActivatePrevented
+		return resp, ErrUserActivatePrevented
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
-func (s *UsersService) ApproveUser(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) ApproveUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/approve", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusCreated:
-		return nil
+		return resp, nil
 	case http.StatusForbidden:
-		return ErrUserApprovePrevented
+		return resp, ErrUserApprovePrevented
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
-func (s *UsersService) RejectUser(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) RejectUser(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
 		withPath("users/%d/reject", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusOK:
-		return nil
+		return resp, nil
 	case http.StatusForbidden:
-		return ErrUserRejectPrevented
+		return resp, ErrUserRejectPrevented
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	case http.StatusConflict:
-		return ErrUserConflict
+		return resp, ErrUserConflict
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
@@ -1156,11 +1147,6 @@ func (s *UsersService) GetImpersonationToken(user, token int64, options ...Reque
 	)
 }
 
-// CreateImpersonationTokenOptions represents the available
-// CreateImpersonationToken() options.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/user_tokens/#create-an-impersonation-token
 type CreateImpersonationTokenOptions struct {
 	Name      *string    `url:"name,omitempty" json:"name,omitempty"`
 	Scopes    *[]string  `url:"scopes,omitempty" json:"scopes,omitempty"`
@@ -1281,27 +1267,27 @@ func (s *UsersService) GetUserMemberships(user int64, opt *GetUserMembershipOpti
 	)
 }
 
-func (s *UsersService) DisableTwoFactor(user int64, options ...RequestOptionFunc) error {
+func (s *UsersService) DisableTwoFactor(user int64, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPatch),
 		withPath("users/%d/disable_two_factor", user),
 		withRequestOpts(options...),
 	)
 	if err != nil && resp == nil {
-		return err
+		return nil, err
 	}
 
 	switch resp.StatusCode {
 	case http.StatusNoContent:
-		return nil
+		return resp, nil
 	case http.StatusBadRequest:
-		return ErrUserTwoFactorNotEnabled
+		return resp, ErrUserTwoFactorNotEnabled
 	case http.StatusForbidden:
-		return ErrUserDisableTwoFactorPrevented
+		return resp, ErrUserDisableTwoFactorPrevented
 	case http.StatusNotFound:
-		return ErrUserNotFound
+		return resp, ErrUserNotFound
 	default:
-		return fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
+		return resp, fmt.Errorf("%w: %d", errUnexpectedResultCode, resp.StatusCode)
 	}
 }
 
@@ -1420,7 +1406,6 @@ func (u userCoreBasicGQL) unwrap() *BasicUser {
 		Username:  u.Username,
 		Name:      u.Name,
 		State:     u.State,
-		Locked:    u.State != "active",
 		CreatedAt: u.CreatedAt,
 		AvatarURL: u.AvatarURL,
 		WebURL:    u.WebURL,

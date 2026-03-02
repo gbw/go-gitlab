@@ -165,13 +165,11 @@ func (s *CallbackServer) GetToken(ctx context.Context) (*oauth2.Token, error) {
 	defer wg.Wait()
 
 	// Start server
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		if err := s.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			errorChan <- fmt.Errorf("server failed: %w", err)
 		}
-	}()
+	})
 
 	if err := s.browser(authURL); err != nil {
 		errorChan <- fmt.Errorf("failed to open browser: %w", err)

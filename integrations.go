@@ -31,7 +31,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#set-up-harbor
-		SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
+		SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*HarborIntegration, *Response, error)
 
 		// DisableGroupHarbor disables the Harbor integration for a group.
 		// Integration settings are reset.
@@ -44,13 +44,13 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#get-harbor-settings
-		GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
+		GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*HarborIntegration, *Response, error)
 
 		// SetGroupMicrosoftTeamsNotifications sets up Microsoft Teams notifications for a group.
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#set-up-microsoft-teams-notifications
-		SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
+		SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error)
 
 		// DisableGroupMicrosoftTeamsNotifications disables Microsoft Teams notifications
 		// for a group. Integration settings are reset.
@@ -63,13 +63,13 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#get-microsoft-teams-notifications-settings
-		GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
+		GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error)
 
 		// SetUpGroupJira sets up the Jira integration for a group.
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#set-up-jira
-		SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*Integration, *Response, error)
+		SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*JiraIntegration, *Response, error)
 
 		// DisableGroupJira disables the Jira integration for a group.
 		// Integration settings are reset.
@@ -82,7 +82,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
-		GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error)
+		GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*JiraIntegration, *Response, error)
 
 		// GetGroupSlackSettings gets the Slack integration for a group.
 		//
@@ -250,6 +250,74 @@ type Integration struct {
 	WikiPageEvents                 bool       `json:"wiki_page_events"`
 	CommentOnEventEnabled          bool       `json:"comment_on_event_enabled"`
 	Inherited                      bool       `json:"inherited"`
+}
+
+// HarborIntegration represents the Harbor integration settings.
+// It embeds the generic Integration struct and adds Harbor-specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-harbor-settings
+type HarborIntegration struct {
+	Integration
+	Properties HarborIntegrationProperties `json:"properties"`
+}
+
+// HarborIntegrationProperties represents Harbor specific properties
+// returned by the GitLab API.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-harbor-settings
+type HarborIntegrationProperties struct {
+	URL         string `json:"url"`
+	ProjectName string `json:"project_name"`
+	Username    string `json:"username"`
+}
+
+// MicrosoftTeamsIntegration represents the Microsoft Teams integration settings.
+// It embeds the generic Integration struct and adds Microsoft Teams-specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-microsoft-teams-notifications-settings
+type MicrosoftTeamsIntegration struct {
+	Integration
+	Properties MicrosoftTeamsIntegrationProperties `json:"properties"`
+}
+
+// MicrosoftTeamsIntegrationProperties represents Microsoft Teams specific properties
+// returned by the GitLab API.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-microsoft-teams-notifications-settings
+type MicrosoftTeamsIntegrationProperties struct {
+	NotifyOnlyBrokenPipelines bool   `json:"notify_only_broken_pipelines"`
+	BranchesToBeNotified      string `json:"branches_to_be_notified"`
+}
+
+// JiraIntegration represents the Jira integration settings.
+// It embeds the generic Integration struct and adds Jira-specific properties.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
+type JiraIntegration struct {
+	Integration
+	Properties JiraIntegrationProperties `json:"properties"`
+}
+
+// JiraIntegrationProperties represents Jira specific properties
+// returned by the GitLab API.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#get-jira-settings
+type JiraIntegrationProperties struct {
+	URL                   string   `json:"url"`
+	APIURL                *string  `json:"api_url"`
+	JiraAuthType          int64    `json:"jira_auth_type"`
+	Username              string   `json:"username"`
+	JiraIssueRegex        *string  `json:"jira_issue_regex"`
+	JiraIssuePrefix       *string  `json:"jira_issue_prefix"`
+	JiraIssueTransitionID *string  `json:"jira_issue_transition_id"`
+	IssuesEnabled         bool     `json:"issues_enabled"`
+	ProjectKeys           []string `json:"project_keys"`
 }
 
 // SlackIntegration represents the Slack integration settings.
@@ -474,8 +542,8 @@ type SetUpHarborOptions struct {
 	UseInheritedSettings *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
 }
 
-func (s *IntegrationsService) SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) SetUpGroupHarbor(gid any, opt *SetUpHarborOptions, options ...RequestOptionFunc) (*HarborIntegration, *Response, error) {
+	return do[*HarborIntegration](
 		s.client,
 		withPath("groups/%s/integrations/harbor", GroupID{gid}),
 		withMethod(http.MethodPut),
@@ -494,8 +562,8 @@ func (s *IntegrationsService) DisableGroupHarbor(gid any, options ...RequestOpti
 	return resp, err
 }
 
-func (s *IntegrationsService) GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) GetGroupHarborSettings(gid any, options ...RequestOptionFunc) (*HarborIntegration, *Response, error) {
+	return do[*HarborIntegration](
 		s.client,
 		withPath("groups/%s/integrations/harbor", GroupID{gid}),
 		withMethod(http.MethodGet),
@@ -526,8 +594,8 @@ type SetMicrosoftTeamsNotificationsOptions struct {
 	UseInheritedSettings      *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
 }
 
-func (s *IntegrationsService) SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) SetGroupMicrosoftTeamsNotifications(gid any, opt *SetMicrosoftTeamsNotificationsOptions, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error) {
+	return do[*MicrosoftTeamsIntegration](
 		s.client,
 		withPath("groups/%s/integrations/microsoft-teams", GroupID{gid}),
 		withMethod(http.MethodPut),
@@ -546,8 +614,8 @@ func (s *IntegrationsService) DisableGroupMicrosoftTeamsNotifications(gid any, o
 	return resp, err
 }
 
-func (s *IntegrationsService) GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) GetGroupMicrosoftTeamsNotifications(gid any, options ...RequestOptionFunc) (*MicrosoftTeamsIntegration, *Response, error) {
+	return do[*MicrosoftTeamsIntegration](
 		s.client,
 		withPath("groups/%s/integrations/microsoft-teams", GroupID{gid}),
 		withMethod(http.MethodGet),
@@ -578,8 +646,8 @@ type SetUpJiraOptions struct {
 	UseInheritedSettings         *bool     `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
 }
 
-func (s *IntegrationsService) SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) SetUpGroupJira(gid any, opt *SetUpJiraOptions, options ...RequestOptionFunc) (*JiraIntegration, *Response, error) {
+	return do[*JiraIntegration](
 		s.client,
 		withPath("groups/%s/integrations/jira", GroupID{gid}),
 		withMethod(http.MethodPut),
@@ -598,8 +666,8 @@ func (s *IntegrationsService) DisableGroupJira(gid any, options ...RequestOption
 	return resp, err
 }
 
-func (s *IntegrationsService) GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*Integration, *Response, error) {
-	return do[*Integration](
+func (s *IntegrationsService) GetGroupJiraSettings(gid any, options ...RequestOptionFunc) (*JiraIntegration, *Response, error) {
+	return do[*JiraIntegration](
 		s.client,
 		withPath("groups/%s/integrations/jira", GroupID{gid}),
 		withMethod(http.MethodGet),

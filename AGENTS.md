@@ -76,7 +76,7 @@ func TestGetUser(t *testing.T) {
         mustWriteHTTPResponse(t, w, "testdata/get_user.json")
     })
 
-    user, _, err := client.Users.GetUser(1, GetUsersOptions{})
+    user, _, err := client.Users.GetUser(1, &GetUserOptions{})
     assert.NoError(t, err)
     // ... assertions
 }

@@ -173,50 +173,6 @@ func (c *MockPersonalAccessTokensServiceInterfaceListPersonalAccessTokensCall) D
 	return c
 }
 
-// RevokePersonalAccessToken mocks base method.
-func (m *MockPersonalAccessTokensServiceInterface) RevokePersonalAccessToken(token int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{token}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "RevokePersonalAccessToken", varargs...)
-	ret0, _ := ret[0].(*gitlab.Response)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// RevokePersonalAccessToken indicates an expected call of RevokePersonalAccessToken.
-func (mr *MockPersonalAccessTokensServiceInterfaceMockRecorder) RevokePersonalAccessToken(token any, options ...any) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{token}, options...)
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokePersonalAccessToken", reflect.TypeOf((*MockPersonalAccessTokensServiceInterface)(nil).RevokePersonalAccessToken), varargs...)
-	return &MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall{Call: call}
-}
-
-// MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall wrap *gomock.Call
-type MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall struct {
-	*gomock.Call
-}
-
-// Return rewrite *gomock.Call.Return
-func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) Return(arg0 *gitlab.Response, arg1 error) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
-	c.Call = c.Call.Return(arg0, arg1)
-	return c
-}
-
-// Do rewrite *gomock.Call.Do
-func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
-	c.Call = c.Call.Do(f)
-	return c
-}
-
-// DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockPersonalAccessTokensServiceInterfaceRevokePersonalAccessTokenCall {
-	c.Call = c.Call.DoAndReturn(f)
-	return c
-}
-
 // RevokePersonalAccessTokenByID mocks base method.
 func (m *MockPersonalAccessTokensServiceInterface) RevokePersonalAccessTokenByID(token int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()

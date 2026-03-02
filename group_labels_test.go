@@ -183,7 +183,7 @@ func TestSubscribeToGroupLabel(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := &GroupLabel{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true}
+	want := &GroupLabel{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("GroupLabels.SubscribeToGroupLabel returned %+v, want %+v", label, want)
 	}
@@ -222,7 +222,7 @@ func TestListGroupLabels(t *testing.T) {
 	if err != nil {
 		t.Log(err.Error() == "invalid ID type 1.1, the ID must be an int64 or a string")
 	}
-	want := []*GroupLabel{{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true}}
+	want := []*GroupLabel{{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}}
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("GroupLabels.ListGroupLabels returned %+v, want %+v", label, want)
 	}
@@ -242,7 +242,7 @@ func TestGetGroupLabel(t *testing.T) {
 		t.Log(err)
 	}
 
-	want := &GroupLabel{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true}
+	want := &GroupLabel{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
 	if !reflect.DeepEqual(want, label) {
 		t.Errorf("GroupLabels.GetGroupLabel returned %+v, want %+v", label, want)
 	}

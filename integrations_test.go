@@ -10,6 +10,98 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestGroupIntegrationUnmarshalHarborProperties(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/harbor", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 45,
+			"title": "Harbor",
+			"slug": "harbor",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"url": "https://demo.goharbor.io",
+				"project_name": "library",
+				"username": "testuser"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupHarborSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotNil(t, integration.Properties)
+	assert.Equal(t, "https://demo.goharbor.io", integration.Properties.URL)
+	assert.Equal(t, "library", integration.Properties.ProjectName)
+	assert.Equal(t, "testuser", integration.Properties.Username)
+}
+
+func TestGroupIntegrationUnmarshalMicrosoftTeamsProperties(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/microsoft-teams", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 46,
+			"title": "Microsoft Teams notifications",
+			"slug": "microsoft-teams",
+			"created_at": "2023-01-01T00:00:00.000Z",
+			"updated_at": "2023-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"notify_only_broken_pipelines": false,
+				"branches_to_be_notified": "all"
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupMicrosoftTeamsNotifications(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotNil(t, integration.Properties)
+	assert.False(t, integration.Properties.NotifyOnlyBrokenPipelines)
+	assert.Equal(t, "all", integration.Properties.BranchesToBeNotified)
+}
+
+func TestGroupIntegrationUnmarshalJiraProperties(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"title": "Jira",
+			"slug": "jira",
+			"created_at": "2025-01-01T00:00:00.000Z",
+			"updated_at": "2025-01-02T00:00:00.000Z",
+			"active": true,
+			"properties": {
+				"url": "https://jira.example.com",
+				"jira_auth_type": 0,
+				"username": "testuser",
+				"issues_enabled": false,
+				"project_keys": ["KEY1", "KEY2"]
+			}
+		}`)
+	})
+
+	integration, resp, err := client.Integrations.GetGroupJiraSettings(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotNil(t, integration.Properties)
+	assert.Equal(t, "https://jira.example.com", integration.Properties.URL)
+	assert.Equal(t, "testuser", integration.Properties.Username)
+	assert.Equal(t, int64(0), integration.Properties.JiraAuthType)
+	assert.False(t, integration.Properties.IssuesEnabled)
+	assert.Equal(t, []string{"KEY1", "KEY2"}, integration.Properties.ProjectKeys)
+}
+
 func TestListActiveGroupIntegrations(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -167,29 +259,31 @@ func TestSetUpGroupHarbor(t *testing.T) {
 	assert.NotNil(t, resp)
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Harbor",
-		Slug:                     "harbor",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &HarborIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Harbor",
+			Slug:                     "harbor",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
 	}
 	assert.Equal(t, want, integration)
 }
@@ -234,7 +328,12 @@ func TestGetGroupHarborSettings(t *testing.T) {
 			"job_events": false,
 			"comment_on_event_enabled": true,
 			"inherited": false,
-			"vulnerability_events": false
+			"vulnerability_events": false,
+			"properties": {
+				"url": "https://demo.goharbor.io",
+				"project_name": "library",
+				"username": "testuser"
+			}
 		}`)
 	})
 	integration, resp, err := client.Integrations.GetGroupHarborSettings(1)
@@ -243,29 +342,36 @@ func TestGetGroupHarborSettings(t *testing.T) {
 
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Harbor",
-		Slug:                     "harbor",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &HarborIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Harbor",
+			Slug:                     "harbor",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
+		Properties: HarborIntegrationProperties{
+			URL:         "https://demo.goharbor.io",
+			ProjectName: "library",
+			Username:    "testuser",
+		},
 	}
 	assert.Equal(t, want, integration)
 }
@@ -310,7 +416,11 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 			"job_events": false,
 			"comment_on_event_enabled": true,
 			"inherited": false,
-			"vulnerability_events": false
+			"vulnerability_events": false,
+			"properties": {
+				"notify_only_broken_pipelines": true,
+				"branches_to_be_notified": "default"
+			}
 		}`)
 	})
 
@@ -332,29 +442,35 @@ func TestSetGroupMicrosoftTeamsNotifications(t *testing.T) {
 	assert.NotNil(t, resp)
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Microsoft Teams",
-		Slug:                     "microsoft-teams",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &MicrosoftTeamsIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Microsoft Teams",
+			Slug:                     "microsoft-teams",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
+		Properties: MicrosoftTeamsIntegrationProperties{
+			NotifyOnlyBrokenPipelines: true,
+			BranchesToBeNotified:      "default",
+		},
 	}
 	assert.Equal(t, want, integration)
 }
@@ -399,7 +515,11 @@ func TestGetGroupMicrosoftTeamsNotifications(t *testing.T) {
 			"job_events": false,
 			"comment_on_event_enabled": true,
 			"inherited": false,
-			"vulnerability_events": false
+			"vulnerability_events": false,
+			"properties": {
+				"notify_only_broken_pipelines": false,
+				"branches_to_be_notified": "all"
+			}
 		}`)
 	})
 	integration, resp, err := client.Integrations.GetGroupMicrosoftTeamsNotifications(1)
@@ -408,29 +528,35 @@ func TestGetGroupMicrosoftTeamsNotifications(t *testing.T) {
 
 	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Microsoft Teams",
-		Slug:                     "microsoft-teams",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &MicrosoftTeamsIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Microsoft Teams",
+			Slug:                     "microsoft-teams",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
+		Properties: MicrosoftTeamsIntegrationProperties{
+			NotifyOnlyBrokenPipelines: false,
+			BranchesToBeNotified:      "all",
+		},
 	}
 	assert.Equal(t, want, integration)
 }
@@ -471,29 +597,31 @@ func TestSetUpGroupJira(t *testing.T) {
 	assert.NotNil(t, resp)
 	createdAt, _ := time.Parse(time.RFC3339, "2025-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2025-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Jira",
-		Slug:                     "jira",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &JiraIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Jira",
+			Slug:                     "jira",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
 	}
 	assert.Equal(t, want, integration)
 }
@@ -538,7 +666,18 @@ func TestGetGroupJiraSettings(t *testing.T) {
 			"job_events": false,
 			"comment_on_event_enabled": true,
 			"inherited": false,
-			"vulnerability_events": false
+			"vulnerability_events": false,
+			"properties": {
+				"url": "https://jira.example.com",
+				"api_url": null,
+				"jira_auth_type": 0,
+				"username": "testuser",
+				"jira_issue_regex": null,
+				"jira_issue_prefix": null,
+				"jira_issue_transition_id": null,
+				"issues_enabled": false,
+				"project_keys": []
+			}
 		}`)
 	})
 	integration, resp, err := client.Integrations.GetGroupJiraSettings(1)
@@ -547,29 +686,42 @@ func TestGetGroupJiraSettings(t *testing.T) {
 
 	createdAt, _ := time.Parse(time.RFC3339, "2025-01-01T00:00:00.000Z")
 	updatedAt, _ := time.Parse(time.RFC3339, "2025-01-02T00:00:00.000Z")
-	want := &Integration{
-		ID:                       1,
-		Title:                    "Jira",
-		Slug:                     "jira",
-		CreatedAt:                &createdAt,
-		UpdatedAt:                &updatedAt,
-		Active:                   true,
-		CommitEvents:             true,
-		PushEvents:               true,
-		IssuesEvents:             true,
-		AlertEvents:              false,
-		ConfidentialIssuesEvents: false,
-		MergeRequestsEvents:      true,
-		TagPushEvents:            true,
-		DeploymentEvents:         false,
-		NoteEvents:               true,
-		ConfidentialNoteEvents:   false,
-		PipelineEvents:           true,
-		WikiPageEvents:           false,
-		JobEvents:                false,
-		CommentOnEventEnabled:    true,
-		Inherited:                false,
-		VulnerabilityEvents:      false,
+	want := &JiraIntegration{
+		Integration: Integration{
+			ID:                       1,
+			Title:                    "Jira",
+			Slug:                     "jira",
+			CreatedAt:                &createdAt,
+			UpdatedAt:                &updatedAt,
+			Active:                   true,
+			CommitEvents:             true,
+			PushEvents:               true,
+			IssuesEvents:             true,
+			AlertEvents:              false,
+			ConfidentialIssuesEvents: false,
+			MergeRequestsEvents:      true,
+			TagPushEvents:            true,
+			DeploymentEvents:         false,
+			NoteEvents:               true,
+			ConfidentialNoteEvents:   false,
+			PipelineEvents:           true,
+			WikiPageEvents:           false,
+			JobEvents:                false,
+			CommentOnEventEnabled:    true,
+			Inherited:                false,
+			VulnerabilityEvents:      false,
+		},
+		Properties: JiraIntegrationProperties{
+			URL:                   "https://jira.example.com",
+			APIURL:                nil,
+			JiraAuthType:          0,
+			Username:              "testuser",
+			JiraIssueRegex:        nil,
+			JiraIssuePrefix:       nil,
+			JiraIssueTransitionID: nil,
+			IssuesEnabled:         false,
+			ProjectKeys:           []string{},
+		},
 	}
 	assert.Equal(t, want, integration)
 }
