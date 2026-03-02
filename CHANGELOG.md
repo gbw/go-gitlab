@@ -1,3 +1,38 @@
+## 2.0.0
+
+### 💥 Breaking Changes
+
+- Release client-go 2.0 ([!2763](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2763)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+### 🔄 Other Changes
+
+- Addtl 2 0 changes ([!2796](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2796)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+
+
+# [2.0.0](https://gitlab.com/gitlab-org/api/client-go/compare/v1.46.0...v2.0.0) (2026-03-02)
+
+
+* Release client-go 2.0 ([47b65ee](https://gitlab.com/gitlab-org/api/client-go/commit/47b65ee9079e2cdb328eb381a7b9bd1ef6801dd0))
+
+
+### Bug Fixes
+
+* **ci:** update gocover-cobertura to v1.4.0 for Go 1.24+ compatibility ([1d03b20](https://gitlab.com/gitlab-org/api/client-go/commit/1d03b20802fb2fcb64e5c7a322bbea7b475fd11c))
+* **group_members:** using ISOTime instead of time.Time for BillableUserMembership.ExpiresAt ([e7e58c6](https://gitlab.com/gitlab-org/api/client-go/commit/e7e58c69c1c22c91aa75f85816dd835e0163b839))
+* package protection access level variable type ([5574bbb](https://gitlab.com/gitlab-org/api/client-go/commit/5574bbbf2f63b47d67ddfbf98528a3f1bad8e3c3))
+* **workitems:** Handle absent status widget in `WorkItem`. ([859fb26](https://gitlab.com/gitlab-org/api/client-go/commit/859fb26f2896ae803343366ad575656a8b7aafad))
+
+
+### Features
+
+* use Nullable[int64] for label priority ([096ed09](https://gitlab.com/gitlab-org/api/client-go/commit/096ed098d18dd1e5445bf5d9a953290f2b08a6dc))
+
+
+### BREAKING CHANGES
+
+* Release 2.0
+
 ## 1.46.0
 
 ### 🚀 Features
