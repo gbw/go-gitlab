@@ -97,7 +97,7 @@ func TestGetWorkItem(t *testing.T) {
 						TextColor:       "#1F1E24",
 					},
 				},
-				LinkedItems: []*WorkItemLinkedItem{
+				LinkedItems: []LinkedWorkItem{
 					{
 						WorkItemIID: WorkItemIID{
 							NamespacePath: "gitlab-com/gl-infra/platform/runway/team",

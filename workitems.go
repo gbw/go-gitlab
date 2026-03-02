@@ -53,7 +53,7 @@ type WorkItem struct {
 	HealthStatus *string
 	IterationID  *int64
 	Labels       []LabelDetails
-	LinkedItems  []*WorkItemLinkedItem
+	LinkedItems  []LinkedWorkItem
 	MilestoneID  *int64
 	Parent       *WorkItemIID
 	StartDate    *ISOTime
@@ -73,8 +73,8 @@ type WorkItemIID struct {
 	IID           int64
 }
 
-// WorkItemLinkedItem represents a linked work item with its relationship type.
-type WorkItemLinkedItem struct {
+// LinkedWorkItem represents a linked work item with its relationship type.
+type LinkedWorkItem struct {
 	WorkItemIID
 
 	// LinkType is the type of relationship between the work items.
@@ -704,12 +704,12 @@ type workItemWidgetLinkedItemsGQL struct {
 	}] `json:"linkedItems"`
 }
 
-func (li *workItemWidgetLinkedItemsGQL) unwrap() []*WorkItemLinkedItem {
+func (li *workItemWidgetLinkedItemsGQL) unwrap() []LinkedWorkItem {
 	if li == nil || li.LinkedItems == nil {
 		return nil
 	}
 
-	var ret []*WorkItemLinkedItem
+	var ret []LinkedWorkItem
 
 	for _, item := range li.LinkedItems.Nodes {
 		if item.WorkItem == nil {
@@ -721,7 +721,7 @@ func (li *workItemWidgetLinkedItemsGQL) unwrap() []*WorkItemLinkedItem {
 			continue
 		}
 
-		ret = append(ret, &WorkItemLinkedItem{
+		ret = append(ret, LinkedWorkItem{
 			WorkItemIID: WorkItemIID{
 				NamespacePath: item.WorkItem.Namespace.FullPath,
 				IID:           iid,
