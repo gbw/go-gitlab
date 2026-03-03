@@ -908,11 +908,11 @@ func (f workItemFeaturesGQL) unwrap(wi *WorkItem) {
 //
 // API docs: https://docs.gitlab.com/api/graphql/reference/#workitemwidgetassignees
 type workItemWidgetAssigneesGQL struct {
-	Assignees connectionGQL[userCoreBasicGQL] `json:"assignees"`
+	Assignees *connectionGQL[userCoreBasicGQL] `json:"assignees"`
 }
 
 func (a *workItemWidgetAssigneesGQL) unwrap() []*BasicUser {
-	if a == nil {
+	if a == nil || a.Assignees == nil || len(a.Assignees.Nodes) == 0 {
 		return nil
 	}
 
@@ -1010,7 +1010,7 @@ type workItemWidgetLabelsGQL struct {
 }
 
 func (l *workItemWidgetLabelsGQL) unwrap() []LabelDetails {
-	if l == nil || l.Labels == nil {
+	if l == nil || l.Labels == nil || len(l.Labels.Nodes) == 0 {
 		return nil
 	}
 
