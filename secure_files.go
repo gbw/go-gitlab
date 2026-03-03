@@ -14,7 +14,6 @@
 package gitlab
 
 import (
-	"bytes"
 	"io"
 	"net/http"
 	"time"
@@ -25,7 +24,14 @@ type (
 		ListProjectSecureFiles(pid any, opt *ListProjectSecureFilesOptions, options ...RequestOptionFunc) ([]*SecureFile, *Response, error)
 		ShowSecureFileDetails(pid any, id int64, options ...RequestOptionFunc) (*SecureFile, *Response, error)
 		CreateSecureFile(pid any, content io.Reader, opt *CreateSecureFileOptions, options ...RequestOptionFunc) (*SecureFile, *Response, error)
-		DownloadSecureFile(pid any, id int64, options ...RequestOptionFunc) (io.Reader, *Response, error)
+		// DownloadSecureFile downloads the contents of a project's secure file.
+		//
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/secure_files/#download-secure-file
+		DownloadSecureFile(pid any, id int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
 		RemoveSecureFile(pid any, id int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -154,17 +160,20 @@ func (s SecureFilesService) CreateSecureFile(pid any, content io.Reader, opt *Cr
 
 // DownloadSecureFile downloads the contents of a project's secure file.
 //
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+//
 // GitLab API docs:
 // https://docs.gitlab.com/api/secure_files/#download-secure-file
-func (s SecureFilesService) DownloadSecureFile(pid any, id int64, options ...RequestOptionFunc) (io.Reader, *Response, error) {
-	buf, resp, err := do[bytes.Buffer](s.client,
+func (s SecureFilesService) DownloadSecureFile(pid any, id int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	r, resp, err := do[bodyReader](s.client,
 		withPath("projects/%s/secure_files/%d/download", ProjectID{pid}, id),
 		withRequestOpts(options...),
 	)
 	if err != nil {
 		return nil, resp, err
 	}
-	return &buf, resp, nil
+	return &r, resp, nil
 }
 
 // RemoveSecureFile removes a project's secure file.

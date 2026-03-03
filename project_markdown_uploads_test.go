@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 	"testing"
@@ -162,10 +163,15 @@ func TestMarkdownUploads_DownloadProjectMarkdownUploadByID(t *testing.T) {
 
 	want := []byte("bar = baz")
 
-	bytes, resp, err := client.ProjectMarkdownUploads.DownloadProjectMarkdownUploadByID(1, 2)
+	reader, resp, err := client.ProjectMarkdownUploads.DownloadProjectMarkdownUploadByID(1, 2)
 	assert.NoError(t, err)
+	defer reader.Close()
+
 	assert.NotNil(t, resp)
-	assert.Equal(t, want, bytes)
+
+	got, err := io.ReadAll(reader)
+	assert.NoError(t, err)
+	assert.Equal(t, want, got)
 }
 
 func TestMarkdownUploads_DownloadProjectMarkdownUploadBySecretAndFilename(t *testing.T) {
@@ -181,10 +187,15 @@ func TestMarkdownUploads_DownloadProjectMarkdownUploadBySecretAndFilename(t *tes
 
 	want := []byte("bar = baz")
 
-	bytes, resp, err := client.ProjectMarkdownUploads.DownloadProjectMarkdownUploadBySecretAndFilename(1, "secret", "filename")
+	reader, resp, err := client.ProjectMarkdownUploads.DownloadProjectMarkdownUploadBySecretAndFilename(1, "secret", "filename")
 	assert.NoError(t, err)
+	defer reader.Close()
+
 	assert.NotNil(t, resp)
-	assert.Equal(t, want, bytes)
+
+	got, err := io.ReadAll(reader)
+	assert.NoError(t, err)
+	assert.Equal(t, want, got)
 }
 
 func TestMarkdownUploads_DeleteProjectMarkdownUploadByID(t *testing.T) {

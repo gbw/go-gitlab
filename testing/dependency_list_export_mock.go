@@ -86,14 +86,14 @@ func (c *MockDependencyListExportServiceInterfaceCreateDependencyListExportCall)
 }
 
 // DownloadDependencyListExport mocks base method.
-func (m *MockDependencyListExportServiceInterface) DownloadDependencyListExport(id int64, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
+func (m *MockDependencyListExportServiceInterface) DownloadDependencyListExport(id int64, options ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{id}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "DownloadDependencyListExport", varargs...)
-	ret0, _ := ret[0].(io.Reader)
+	ret0, _ := ret[0].(io.ReadCloser)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -113,19 +113,19 @@ type MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall st
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) Return(arg0 io.Reader, arg1 *gitlab.Response, arg2 error) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) Return(arg0 io.ReadCloser, arg1 *gitlab.Response, arg2 error) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
+func (c *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockDependencyListExportServiceInterfaceDownloadDependencyListExportCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

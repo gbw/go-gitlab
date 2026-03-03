@@ -1660,3 +1660,63 @@ func TestSetBaseURL_ValidationWarnings(t *testing.T) {
 		})
 	}
 }
+
+func TestClientDo_bodyReader(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An endpoint that returns test content
+	expectedContent := []byte("test response body content")
+	mux.HandleFunc("/api/v4/test", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		w.Write(expectedContent)
+	})
+
+	// WHEN: We make a request using bodyReader
+	req, err := client.NewRequest(http.MethodGet, "test", nil, nil)
+	require.NoError(t, err)
+
+	reader := &bodyReader{}
+	resp, err := client.Do(req, reader)
+
+	// THEN: The request should succeed
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotNil(t, reader.ReadCloser)
+
+	// AND: We should be able to read the content from the reader
+	gotContent, err := io.ReadAll(reader)
+	require.NoError(t, err)
+	assert.Equal(t, expectedContent, gotContent)
+
+	// AND: We are responsible for closing the reader
+	err = reader.Close()
+	assert.NoError(t, err)
+}
+
+func TestClientDo_bodyReaderWithError(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN: An endpoint that returns an error
+	mux.HandleFunc("/api/v4/test", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		w.WriteHeader(http.StatusNotFound)
+		mustWriteErrorResponse(t, w, errors.New("not found"))
+	})
+
+	// WHEN: We make a request using bodyReader that results in an error
+	req, err := client.NewRequest(http.MethodGet, "test", nil, nil)
+	require.NoError(t, err)
+
+	reader := &bodyReader{}
+	resp, err := client.Do(req, reader)
+
+	// THEN: We should get an error
+	require.Error(t, err)
+	require.NotNil(t, resp)
+
+	// AND: The body should have been closed by Client.Do (error path)
+	// We verify this by checking that the ReadCloser was not set
+	assert.Nil(t, reader.ReadCloser)
+}

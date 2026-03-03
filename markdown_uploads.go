@@ -17,7 +17,7 @@
 package gitlab
 
 import (
-	"bytes"
+	"io"
 	"net/http"
 	"time"
 )
@@ -78,26 +78,36 @@ func listMarkdownUploads[T any](client *Client, resourceType ResourceType, id Pa
 	)
 }
 
-// downloadMarkdownUploadByID downloads a specific upload by ID
-func downloadMarkdownUploadByID(client *Client, resourceType ResourceType, id Pather, uploadID int64, options []RequestOptionFunc) (*bytes.Buffer, *Response, error) {
-	file, resp, err := do[bytes.Buffer](client,
+// downloadMarkdownUploadByID downloads a specific upload by ID.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+func downloadMarkdownUploadByID(client *Client, resourceType ResourceType, id Pather, uploadID int64, options []RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	r, resp, err := do[bodyReader](client,
 		withMethod(http.MethodGet),
 		withPath("%s/%s/uploads/%d", resourceType, id, uploadID),
 		withRequestOpts(options...),
 	)
-
-	return &file, resp, err
+	if err != nil {
+		return nil, resp, err
+	}
+	return &r, resp, nil
 }
 
-// downloadMarkdownUploadBySecretAndFilename downloads a specific upload by secret and filename
-func downloadMarkdownUploadBySecretAndFilename(client *Client, resourceType ResourceType, id Pather, secret string, filename string, options []RequestOptionFunc) (*bytes.Buffer, *Response, error) {
-	file, resp, err := do[bytes.Buffer](client,
+// downloadMarkdownUploadBySecretAndFilename downloads a specific upload by secret and filename.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+func downloadMarkdownUploadBySecretAndFilename(client *Client, resourceType ResourceType, id Pather, secret string, filename string, options []RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	r, resp, err := do[bodyReader](client,
 		withMethod(http.MethodGet),
 		withPath("%s/%s/uploads/%s/%s", resourceType, id, secret, filename),
 		withRequestOpts(options...),
 	)
-
-	return &file, resp, err
+	if err != nil {
+		return nil, resp, err
+	}
+	return &r, resp, nil
 }
 
 // deleteMarkdownUploadByID deletes an upload by ID

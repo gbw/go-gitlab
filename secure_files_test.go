@@ -1,8 +1,8 @@
 package gitlab
 
 import (
-	"bytes"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 	"testing"
@@ -188,13 +188,17 @@ func TestSecureFiles_DownloadSecureFile(t *testing.T) {
 		`))
 	})
 
-	var want bytes.Buffer
-	want.Write([]byte("bar = baz"))
+	want := []byte("bar = baz")
 
-	bytes, resp, err := client.SecureFiles.DownloadSecureFile(1, 2)
+	reader, resp, err := client.SecureFiles.DownloadSecureFile(1, 2)
 	assert.NoError(t, err)
+	defer reader.Close()
+
 	assert.NotNil(t, resp)
-	assert.Equal(t, &want, bytes)
+
+	got, err := io.ReadAll(reader)
+	assert.NoError(t, err)
+	assert.Equal(t, want, got)
 }
 
 func TestSecureFiles_RemoveSecureFile(t *testing.T) {

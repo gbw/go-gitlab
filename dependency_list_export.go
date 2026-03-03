@@ -1,7 +1,6 @@
 package gitlab
 
 import (
-	"bytes"
 	"io"
 	"net/http"
 )
@@ -28,7 +27,10 @@ type (
 
 		// DownloadDependencyListExport downloads a single dependency list export.
 		//
-		// The github.com/CycloneDX/cyclonedx-go package can be used to parse the data from the returned io.Reader.
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
+		// The github.com/CycloneDX/cyclonedx-go package can be used to parse the data from the returned io.ReadCloser.
 		//
 		//	sbom := new(cdx.BOM)
 		//	decoder := cdx.NewBOMDecoder(reader, cdx.BOMFileFormatJSON)
@@ -39,7 +41,7 @@ type (
 		//
 		// GitLab docs:
 		// https://docs.gitlab.com/api/dependency_list_export/#download-dependency-list-export
-		DownloadDependencyListExport(id int64, options ...RequestOptionFunc) (io.Reader, *Response, error)
+		DownloadDependencyListExport(id int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
 	}
 
 	// DependencyListExportService handles communication with the dependency list export
@@ -98,13 +100,13 @@ func (s *DependencyListExportService) GetDependencyListExport(id int64, options 
 	)
 }
 
-func (s *DependencyListExportService) DownloadDependencyListExport(id int64, options ...RequestOptionFunc) (io.Reader, *Response, error) {
-	buf, resp, err := do[bytes.Buffer](s.client,
+func (s *DependencyListExportService) DownloadDependencyListExport(id int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	r, resp, err := do[bodyReader](s.client,
 		withPath("dependency_list_exports/%d/download", id),
 		withRequestOpts(options...),
 	)
 	if err != nil {
 		return nil, resp, err
 	}
-	return &buf, resp, nil
+	return &r, resp, nil
 }

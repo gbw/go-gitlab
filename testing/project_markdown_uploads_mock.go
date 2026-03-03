@@ -129,14 +129,14 @@ func (c *MockProjectMarkdownUploadsServiceInterfaceDeleteProjectMarkdownUploadBy
 }
 
 // DownloadProjectMarkdownUploadByID mocks base method.
-func (m *MockProjectMarkdownUploadsServiceInterface) DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
+func (m *MockProjectMarkdownUploadsServiceInterface) DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, uploadID}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "DownloadProjectMarkdownUploadByID", varargs...)
-	ret0, _ := ret[0].([]byte)
+	ret0, _ := ret[0].(io.ReadCloser)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -156,32 +156,32 @@ type MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByID
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) Return(arg0 []byte, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) Return(arg0 io.ReadCloser, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) Do(f func(any, int64, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadByIDCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DownloadProjectMarkdownUploadBySecretAndFilename mocks base method.
-func (m *MockProjectMarkdownUploadsServiceInterface) DownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret, filename string, options ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error) {
+func (m *MockProjectMarkdownUploadsServiceInterface) DownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret, filename string, options ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, secret, filename}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "DownloadProjectMarkdownUploadBySecretAndFilename", varargs...)
-	ret0, _ := ret[0].([]byte)
+	ret0, _ := ret[0].(io.ReadCloser)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -201,19 +201,19 @@ type MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySe
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall) Return(arg0 []byte, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall) Return(arg0 io.ReadCloser, arg1 *gitlab.Response, arg2 error) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall) Do(f func(any, string, string, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall) Do(f func(any, string, string, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall) DoAndReturn(f func(any, string, string, ...gitlab.RequestOptionFunc) ([]byte, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall {
+func (c *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall) DoAndReturn(f func(any, string, string, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockProjectMarkdownUploadsServiceInterfaceDownloadProjectMarkdownUploadBySecretAndFilenameCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
