@@ -590,7 +590,7 @@ func (a *workItemWidgetAssigneesGQL) unwrap() []*BasicUser {
 		return nil
 	}
 
-	var ret []*BasicUser
+	ret := make([]*BasicUser, 0, len(a.Assignees.Nodes))
 
 	for _, assignee := range a.Assignees.Nodes {
 		ret = append(ret, assignee.unwrap())
@@ -630,6 +630,8 @@ func (h *workItemWidgetHealthStatusGQL) unwrap() *string {
 	return h.HealthStatus
 }
 
+// workItemWidgetHierarchyGQL represents a hierarchy widget.
+//
 // API docs: https://docs.gitlab.com/api/graphql/reference/#workitemwidgethierarchy
 type workItemWidgetHierarchyGQL struct {
 	HasParent bool `json:"hasParent"`
@@ -686,7 +688,7 @@ func (l *workItemWidgetLabelsGQL) unwrap() []LabelDetails {
 		return nil
 	}
 
-	var ret []LabelDetails
+	ret := make([]LabelDetails, 0, len(l.Labels.Nodes))
 
 	for _, label := range l.Labels.Nodes {
 		ret = append(ret, label.unwrap())
