@@ -113,7 +113,7 @@ type gidGQL struct {
 // This is useful when getting a slice of int64 ids from the user and having to
 // populate a string slice for GraphQL.
 func newGIDStrings(typ string, ids ...int64) []string {
-	var ret []string
+	ret := make([]string, 0, len(ids))
 
 	for _, id := range ids {
 		ret = append(ret, gidGQL{typ, id}.String())
