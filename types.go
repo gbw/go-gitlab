@@ -33,6 +33,15 @@ func Ptr[T any](v T) *T {
 	return &v
 }
 
+// deref is a helper function that safely dereferences a pointer and returns the
+// zero value if the pointer is nil.
+func deref[T any](ptr *T) (val T) {
+	if ptr != nil {
+		return *ptr
+	}
+	return
+}
+
 // AccessControlValue represents an access control value within GitLab,
 // used for managing access to certain project features.
 //

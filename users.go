@@ -1396,8 +1396,8 @@ type userCoreBasicGQL struct {
 }
 
 // unwrap converts the GraphQL data structure to a *BasicUser.
-func (u userCoreBasicGQL) unwrap() *BasicUser {
-	if u.Username == "" {
+func (u *userCoreBasicGQL) unwrap() *BasicUser {
+	if u == nil || u.Username == "" {
 		return nil
 	}
 

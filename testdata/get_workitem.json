@@ -10,6 +10,7 @@
                 "state": "OPEN",
                 "title": "Update Helm charts to use Argo Rollouts for progressive deployments",
                 "description": "## Overview\n\nUpdate Runway Helm charts to generate Argo Rollout resources ...",
+                "confidential": false,
                 "author": {
                     "id": "gid://gitlab/User/5532616",
                     "username": "swainaina",
@@ -39,14 +40,89 @@
                             ]
                         }
                     },
+                    "color": null,
+                    "healthStatus": {
+                        "healthStatus": "onTrack"
+                    },
+                    "hierarchy": {
+                        "hasParent": true,
+                        "parent": {
+                            "iid": "673",
+                            "namespace": {
+                                "fullPath": "gitlab-com/gl-infra/platform/runway/team"
+                            }
+                        }
+                    },
+                    "iteration": {
+                        "iteration": {
+                            "id": "gid://gitlab/Iteration/2748074"
+                        }
+                    },
+                    "labels": {
+                        "labels": {
+                            "nodes": [
+                                {
+                                    "id": "gid://gitlab/GroupLabel/32754251",
+                                    "title": "Category:Runway",
+                                    "color": "#6699cc",
+                                    "description": "",
+                                    "descriptionHtml": "",
+                                    "textColor": "#FFFFFF"
+                                },
+                                {
+                                    "id": "gid://gitlab/GroupLabel/32832335",
+                                    "title": "Service::Runway",
+                                    "color": "#d1d100",
+                                    "description": "",
+                                    "descriptionHtml": "",
+                                    "textColor": "#1F1E24"
+                                },
+                                {
+                                    "id": "gid://gitlab/GroupLabel/12970969",
+                                    "title": "workflow-infra::Triage",
+                                    "color": "#FEAF09",
+                                    "description": "For @gitlab-com/gl-infra/managers to triage, prioritize, and assign.",
+                                    "descriptionHtml": "For <a href=\"/gitlab-com/gl-infra/managers\" data-reference-type=\"user\" data-group=\"4684757\" data-container=\"body\" data-placement=\"top\" class=\"gfm gfm-project_member js-user-link\" title=\"GitLab.com / GitLab Infrastructure Team / Infrastructure Managers\">@gitlab-com/gl-infra/managers</a> to triage, prioritize, and assign.",
+                                    "textColor": "#1F1E24"
+                                }
+                            ]
+                        }
+                    },
+                    "linkedItems": {
+                        "linkedItems": {
+                            "nodes": [
+                                {
+                                    "workItem": {
+                                        "iid": "774",
+                                        "namespace": {
+                                            "fullPath": "gitlab-com/gl-infra/platform/runway/team"
+                                        }
+                                    },
+                                    "linkType": "relates_to"
+                                }
+                            ]
+                        }
+                    },
+                    "milestone": {
+                        "milestone": {
+                            "id": "gid://gitlab/Milestone/6161376"
+                        }
+                    },
+                    "startAndDueDate": {
+                        "startDate": "2025-08-01",
+                        "dueDate": "2026-07-31"
+                    },
                     "status": {
                         "status": {
                             "name": "New"
                         }
+                    },
+                    "weight": {
+                        "weight": 8
                     }
                 }
             }
         }
     },
-    "correlationId": "9c8b606d64ef170e-MUC"
+    "correlationId": "9d48044d12265148-MUC"
 }
