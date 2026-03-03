@@ -1133,8 +1133,14 @@ func (w *workItemWidgetWeightGQL) unwrap() *int64 {
 	return w.Weight
 }
 
+// WorkItemTypeID represents the global ID of a work item type.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitemtype
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 type WorkItemTypeID string
 
+// WorkItemTypeID constants for the system-defined work item types.
 const (
 	WorkItemTypeIssue       WorkItemTypeID = `gid://gitlab/WorkItems::Type/1`
 	WorkItemTypeIncident    WorkItemTypeID = `gid://gitlab/WorkItems::Type/2`
