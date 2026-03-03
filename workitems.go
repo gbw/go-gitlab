@@ -1,3 +1,5 @@
+// EXPERIMENTAL(#2213): The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
+
 package gitlab
 
 import (
@@ -19,7 +21,7 @@ type (
 	//
 	// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitem
 	//
-	// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
+	// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 	WorkItemsService struct {
 		client *Client
 	}
@@ -31,7 +33,7 @@ var _ WorkItemsServiceInterface = (*WorkItemsService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitem
 //
-// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 type WorkItem struct {
 	ID          int64
 	IID         int64
@@ -68,12 +70,16 @@ func (wi WorkItem) GID() string {
 }
 
 // WorkItemIID identifies a work item by its namespace path and internal ID.
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 type WorkItemIID struct {
 	NamespacePath string
 	IID           int64
 }
 
 // LinkedWorkItem represents a linked work item with its relationship type.
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 type LinkedWorkItem struct {
 	WorkItemIID
 
@@ -194,7 +200,7 @@ var getWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitem
 //
-// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
 	var queryBuilder strings.Builder
 	if err := getWorkItemTemplate.Execute(&queryBuilder, nil); err != nil {
@@ -242,7 +248,7 @@ func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...Re
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
 //
-// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
+// Experimental: The Work Item API is work in progress and subject to change even between minor versions.
 type ListWorkItemsOptions struct {
 	AssigneeUsernames    []string
 	AssigneeWildcardID   *string
@@ -404,7 +410,7 @@ var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
 //
-// Attention: This API is experimental and may be subject to breaking changes to improve the API in the future.
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error) {
 	var queryBuilder strings.Builder
 
