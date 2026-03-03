@@ -35,15 +35,21 @@ type (
 		ListProjectMarkdownUploads(pid any, options ...RequestOptionFunc) ([]*ProjectMarkdownUpload, *Response, error)
 		// DownloadProjectMarkdownUploadByID downloads a specific upload by ID.
 		//
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
 		// GitLab API Docs:
 		// https://docs.gitlab.com/api/project_markdown_uploads/#download-an-uploaded-file-by-id
-		DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...RequestOptionFunc) ([]byte, *Response, error)
+		DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
 		// DownloadProjectMarkdownUploadBySecretAndFilename downloads a specific upload
 		// by secret and filename.
 		//
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
 		// GitLab API Docs:
 		// https://docs.gitlab.com/api/project_markdown_uploads/#download-an-uploaded-file-by-secret-and-filename
-		DownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret string, filename string, options ...RequestOptionFunc) ([]byte, *Response, error)
+		DownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret string, filename string, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
 		// DeleteProjectMarkdownUploadByID deletes an upload by ID.
 		//
 		// GitLab API Docs:
@@ -88,20 +94,27 @@ func (s *ProjectMarkdownUploadsService) ListProjectMarkdownUploads(pid any, opti
 	return listMarkdownUploads[ProjectMarkdownUpload](s.client, ProjectResource, ProjectID{pid}, nil, options)
 }
 
-func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	buffer, resp, err := downloadMarkdownUploadByID(s.client, ProjectResource, ProjectID{pid}, uploadID, options)
-	if err != nil {
-		return nil, resp, err
-	}
-	return buffer.Bytes(), resp, nil
+// DownloadProjectMarkdownUploadByID downloads a specific upload by ID.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+//
+// GitLab API Docs:
+// https://docs.gitlab.com/api/project_markdown_uploads/#download-an-uploaded-file-by-id
+func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadByID(pid any, uploadID int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	return downloadMarkdownUploadByID(s.client, ProjectResource, ProjectID{pid}, uploadID, options)
 }
 
-func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret string, filename string, options ...RequestOptionFunc) ([]byte, *Response, error) {
-	buffer, resp, err := downloadMarkdownUploadBySecretAndFilename(s.client, ProjectResource, ProjectID{pid}, secret, filename, options)
-	if err != nil {
-		return nil, resp, err
-	}
-	return buffer.Bytes(), resp, nil
+// DownloadProjectMarkdownUploadBySecretAndFilename downloads a specific upload
+// by secret and filename.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+//
+// GitLab API Docs:
+// https://docs.gitlab.com/api/project_markdown_uploads/#download-an-uploaded-file-by-secret-and-filename
+func (s *ProjectMarkdownUploadsService) DownloadProjectMarkdownUploadBySecretAndFilename(pid any, secret string, filename string, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	return downloadMarkdownUploadBySecretAndFilename(s.client, ProjectResource, ProjectID{pid}, secret, filename, options)
 }
 
 func (s *ProjectMarkdownUploadsService) DeleteProjectMarkdownUploadByID(pid any, uploadID int64, options ...RequestOptionFunc) (*Response, error) {

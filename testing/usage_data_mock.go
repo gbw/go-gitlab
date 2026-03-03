@@ -41,14 +41,14 @@ func (m *MockUsageDataServiceInterface) EXPECT() *MockUsageDataServiceInterfaceM
 }
 
 // GetMetricDefinitionsAsYAML mocks base method.
-func (m *MockUsageDataServiceInterface) GetMetricDefinitionsAsYAML(options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
+func (m *MockUsageDataServiceInterface) GetMetricDefinitionsAsYAML(options ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetMetricDefinitionsAsYAML", varargs...)
-	ret0, _ := ret[0].(io.Reader)
+	ret0, _ := ret[0].(io.ReadCloser)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -67,19 +67,19 @@ type MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall) Return(arg0 io.Reader, arg1 *gitlab.Response, arg2 error) *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall {
+func (c *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall) Return(arg0 io.ReadCloser, arg1 *gitlab.Response, arg2 error) *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall) Do(f func(...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall {
+func (c *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall) Do(f func(...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall) DoAndReturn(f func(...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall {
+func (c *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall) DoAndReturn(f func(...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockUsageDataServiceInterfaceGetMetricDefinitionsAsYAMLCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

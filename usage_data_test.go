@@ -1,7 +1,6 @@
 package gitlab
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"net/http"
@@ -70,13 +69,13 @@ func TestUsageDataService_GetMetricDefinitionsAsYAML(t *testing.T) {
 		fmt.Fprint(w, expectedYAML)
 	})
 
-	yaml, _, err := client.UsageData.GetMetricDefinitionsAsYAML()
+	reader, _, err := client.UsageData.GetMetricDefinitionsAsYAML()
 	require.NoError(t, err)
+	defer reader.Close()
 
-	var want bytes.Buffer
-	want.Write([]byte(expectedYAML))
-
-	require.Equal(t, &want, yaml)
+	got, err := io.ReadAll(reader)
+	require.NoError(t, err)
+	require.YAMLEq(t, expectedYAML, string(got))
 }
 
 func TestUsageDataService_GetQueries(t *testing.T) {

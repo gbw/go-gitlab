@@ -129,14 +129,14 @@ func (c *MockTerraformStatesServiceInterfaceDeleteVersionCall) DoAndReturn(f fun
 }
 
 // Download mocks base method.
-func (m *MockTerraformStatesServiceInterface) Download(pid any, name string, serial uint64, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
+func (m *MockTerraformStatesServiceInterface) Download(pid any, name string, serial uint64, options ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, name, serial}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "Download", varargs...)
-	ret0, _ := ret[0].(io.Reader)
+	ret0, _ := ret[0].(io.ReadCloser)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -156,32 +156,32 @@ type MockTerraformStatesServiceInterfaceDownloadCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockTerraformStatesServiceInterfaceDownloadCall) Return(arg0 io.Reader, arg1 *gitlab.Response, arg2 error) *MockTerraformStatesServiceInterfaceDownloadCall {
+func (c *MockTerraformStatesServiceInterfaceDownloadCall) Return(arg0 io.ReadCloser, arg1 *gitlab.Response, arg2 error) *MockTerraformStatesServiceInterfaceDownloadCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTerraformStatesServiceInterfaceDownloadCall) Do(f func(any, string, uint64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadCall {
+func (c *MockTerraformStatesServiceInterfaceDownloadCall) Do(f func(any, string, uint64, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTerraformStatesServiceInterfaceDownloadCall) DoAndReturn(f func(any, string, uint64, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadCall {
+func (c *MockTerraformStatesServiceInterfaceDownloadCall) DoAndReturn(f func(any, string, uint64, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
 
 // DownloadLatest mocks base method.
-func (m *MockTerraformStatesServiceInterface) DownloadLatest(pid any, name string, options ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error) {
+func (m *MockTerraformStatesServiceInterface) DownloadLatest(pid any, name string, options ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{pid, name}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "DownloadLatest", varargs...)
-	ret0, _ := ret[0].(io.Reader)
+	ret0, _ := ret[0].(io.ReadCloser)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -201,19 +201,19 @@ type MockTerraformStatesServiceInterfaceDownloadLatestCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockTerraformStatesServiceInterfaceDownloadLatestCall) Return(arg0 io.Reader, arg1 *gitlab.Response, arg2 error) *MockTerraformStatesServiceInterfaceDownloadLatestCall {
+func (c *MockTerraformStatesServiceInterfaceDownloadLatestCall) Return(arg0 io.ReadCloser, arg1 *gitlab.Response, arg2 error) *MockTerraformStatesServiceInterfaceDownloadLatestCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockTerraformStatesServiceInterfaceDownloadLatestCall) Do(f func(any, string, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadLatestCall {
+func (c *MockTerraformStatesServiceInterfaceDownloadLatestCall) Do(f func(any, string, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadLatestCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockTerraformStatesServiceInterfaceDownloadLatestCall) DoAndReturn(f func(any, string, ...gitlab.RequestOptionFunc) (io.Reader, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadLatestCall {
+func (c *MockTerraformStatesServiceInterfaceDownloadLatestCall) DoAndReturn(f func(any, string, ...gitlab.RequestOptionFunc) (io.ReadCloser, *gitlab.Response, error)) *MockTerraformStatesServiceInterfaceDownloadLatestCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

@@ -90,6 +90,13 @@ func (e *URLValidationError) Error() string {
 	return msg
 }
 
+// bodyReader is a special type that signals to Client.Do that we want to
+// preserve the response body without copying it. The embedded ReadCloser will be set
+// to the actual response body, and the caller is responsible for closing it.
+type bodyReader struct {
+	io.ReadCloser
+}
+
 // A Client manages communication with the GitLab API.
 type Client struct {
 	// HTTP client used to communicate with the API.
@@ -1144,7 +1151,8 @@ func (r *Response) populateLinkValues() {
 // JSON decoded and stored in the value pointed to by v, or returned as an
 // error if an API error has occurred. If v implements the io.Writer
 // interface, the raw response body will be written to v, without attempting to
-// first decode it.
+// first decode it. If v is a *bodyReader, the response body is preserved
+// without copying and the caller is responsible for closing it.
 func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 	// Wait will block until the limiter can obtain a new token.
 	err := c.limiter.Wait(req.Context())
@@ -1180,10 +1188,14 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		return nil, err
 	}
 
-	defer func() {
-		io.Copy(io.Discard, resp.Body)
-		resp.Body.Close()
-	}()
+	// Check if v is a bodyReader before setting up the defer
+	_, isReader := v.(*bodyReader)
+	if !isReader {
+		defer func() {
+			io.Copy(io.Discard, resp.Body)
+			resp.Body.Close()
+		}()
+	}
 
 	// If not yet configured, try to configure the rate limiter
 	// using the response headers we just received. Fail silently
@@ -1196,13 +1208,22 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 	if err != nil {
 		// Even though there was an error, we still return the response
 		// in case the caller wants to inspect it further.
+		// If using bodyReader, still need to close the body on error
+		if isReader {
+			io.Copy(io.Discard, resp.Body)
+			resp.Body.Close()
+		}
 		return response, err
 	}
 
 	if v != nil {
-		if w, ok := v.(io.Writer); ok {
-			_, err = io.Copy(w, resp.Body)
-		} else {
+		switch v := v.(type) {
+		case *bodyReader:
+			// Preserve the body without copying
+			v.ReadCloser = resp.Body
+		case io.Writer:
+			_, err = io.Copy(v, resp.Body)
+		default:
 			err = json.NewDecoder(resp.Body).Decode(v)
 		}
 	}

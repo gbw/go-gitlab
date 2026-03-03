@@ -157,6 +157,7 @@ func TestTerraformState_DownloadLatest(t *testing.T) {
 
 	r, _, err := client.TerraformStates.DownloadLatest(20, "production")
 	require.NoError(t, err)
+	defer r.Close()
 
 	data, err := io.ReadAll(r)
 	require.NoError(t, err)
@@ -175,6 +176,7 @@ func TestTerraformState_Download(t *testing.T) {
 
 	r, _, err := client.TerraformStates.Download(20, "production", 42)
 	require.NoError(t, err)
+	defer r.Close()
 
 	data, err := io.ReadAll(r)
 	require.NoError(t, err)

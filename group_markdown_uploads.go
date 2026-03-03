@@ -29,15 +29,21 @@ type (
 		ListGroupMarkdownUploads(gid any, opt *ListMarkdownUploadsOptions, options ...RequestOptionFunc) ([]*GroupMarkdownUpload, *Response, error)
 		// DownloadGroupMarkdownUploadByID downloads a specific upload by ID.
 		//
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
 		// GitLab API Docs:
 		// https://docs.gitlab.com/api/group_markdown_uploads/#download-an-uploaded-file-by-id
-		DownloadGroupMarkdownUploadByID(gid any, uploadID int64, options ...RequestOptionFunc) (io.Reader, *Response, error)
+		DownloadGroupMarkdownUploadByID(gid any, uploadID int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
 		// DownloadGroupMarkdownUploadBySecretAndFilename downloads a specific upload
 		// by secret and filename.
 		//
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
 		// GitLab API Docs:
 		// https://docs.gitlab.com/api/group_markdown_uploads/#download-an-uploaded-file-by-secret-and-filename
-		DownloadGroupMarkdownUploadBySecretAndFilename(gid any, secret string, filename string, options ...RequestOptionFunc) (io.Reader, *Response, error)
+		DownloadGroupMarkdownUploadBySecretAndFilename(gid any, secret string, filename string, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
 		// DeleteGroupMarkdownUploadByID deletes an upload by ID.
 		//
 		// GitLab API Docs:
@@ -72,20 +78,27 @@ func (s *GroupMarkdownUploadsService) ListGroupMarkdownUploads(gid any, opt *Lis
 	return listMarkdownUploads[GroupMarkdownUpload](s.client, GroupResource, GroupID{gid}, opt, options)
 }
 
-func (s *GroupMarkdownUploadsService) DownloadGroupMarkdownUploadByID(gid any, uploadID int64, options ...RequestOptionFunc) (io.Reader, *Response, error) {
-	buffer, resp, err := downloadMarkdownUploadByID(s.client, GroupResource, GroupID{gid}, uploadID, options)
-	if err != nil {
-		return nil, resp, err
-	}
-	return buffer, resp, nil
+// DownloadGroupMarkdownUploadByID downloads a specific upload by ID.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+//
+// GitLab API Docs:
+// https://docs.gitlab.com/api/group_markdown_uploads/#download-an-uploaded-file-by-id
+func (s *GroupMarkdownUploadsService) DownloadGroupMarkdownUploadByID(gid any, uploadID int64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	return downloadMarkdownUploadByID(s.client, GroupResource, GroupID{gid}, uploadID, options)
 }
 
-func (s *GroupMarkdownUploadsService) DownloadGroupMarkdownUploadBySecretAndFilename(gid any, secret string, filename string, options ...RequestOptionFunc) (io.Reader, *Response, error) {
-	buffer, resp, err := downloadMarkdownUploadBySecretAndFilename(s.client, GroupResource, GroupID{gid}, secret, filename, options)
-	if err != nil {
-		return nil, resp, err
-	}
-	return buffer, resp, nil
+// DownloadGroupMarkdownUploadBySecretAndFilename downloads a specific upload
+// by secret and filename.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+//
+// GitLab API Docs:
+// https://docs.gitlab.com/api/group_markdown_uploads/#download-an-uploaded-file-by-secret-and-filename
+func (s *GroupMarkdownUploadsService) DownloadGroupMarkdownUploadBySecretAndFilename(gid any, secret string, filename string, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	return downloadMarkdownUploadBySecretAndFilename(s.client, GroupResource, GroupID{gid}, secret, filename, options)
 }
 
 func (s *GroupMarkdownUploadsService) DeleteGroupMarkdownUploadByID(gid any, uploadID int64, options ...RequestOptionFunc) (*Response, error) {

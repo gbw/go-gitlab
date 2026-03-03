@@ -1,7 +1,6 @@
 package gitlab
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"net/http"
@@ -12,8 +11,20 @@ type (
 	TerraformStatesServiceInterface interface {
 		List(projectFullPath string, options ...RequestOptionFunc) ([]TerraformState, *Response, error)
 		Get(projectFullPath string, name string, options ...RequestOptionFunc) (*TerraformState, *Response, error)
-		Download(pid any, name string, serial uint64, options ...RequestOptionFunc) (io.Reader, *Response, error)
-		DownloadLatest(pid any, name string, options ...RequestOptionFunc) (io.Reader, *Response, error)
+		// Download downloads a specific version of a Terraform state file.
+		//
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
+		// GitLab API docs: https://docs.gitlab.com/user/infrastructure/iac/terraform_state/
+		Download(pid any, name string, serial uint64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
+		// DownloadLatest downloads the latest version of a Terraform state file.
+		//
+		// The returned io.ReadCloser must be closed by the caller to avoid
+		// leaking the underlying response body.
+		//
+		// GitLab API docs: https://docs.gitlab.com/user/infrastructure/iac/terraform_state/
+		DownloadLatest(pid any, name string, options ...RequestOptionFunc) (io.ReadCloser, *Response, error)
 		Delete(pid any, name string, options ...RequestOptionFunc) (*Response, error)
 		DeleteVersion(pid any, name string, serial uint64, options ...RequestOptionFunc) (*Response, error)
 		Lock(pid any, name string, options ...RequestOptionFunc) (*Response, error)
@@ -140,26 +151,38 @@ func (s *TerraformStatesService) Get(projectFullPath string, name string, option
 	return response.Data.Project.TerraformState, resp, nil
 }
 
-func (s *TerraformStatesService) DownloadLatest(pid any, name string, options ...RequestOptionFunc) (io.Reader, *Response, error) {
-	buf, resp, err := do[bytes.Buffer](s.client,
+// DownloadLatest downloads the latest version of a Terraform state file.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+//
+// GitLab API docs: https://docs.gitlab.com/user/infrastructure/iac/terraform_state/
+func (s *TerraformStatesService) DownloadLatest(pid any, name string, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	r, resp, err := do[bodyReader](s.client,
 		withPath("projects/%s/terraform/state/%s", ProjectID{pid}, name),
 		withRequestOpts(options...),
 	)
 	if err != nil {
 		return nil, resp, err
 	}
-	return &buf, resp, nil
+	return &r, resp, nil
 }
 
-func (s *TerraformStatesService) Download(pid any, name string, serial uint64, options ...RequestOptionFunc) (io.Reader, *Response, error) {
-	buf, resp, err := do[bytes.Buffer](s.client,
+// Download downloads a specific version of a Terraform state file.
+//
+// The returned io.ReadCloser must be closed by the caller to avoid
+// leaking the underlying response body.
+//
+// GitLab API docs: https://docs.gitlab.com/user/infrastructure/iac/terraform_state/
+func (s *TerraformStatesService) Download(pid any, name string, serial uint64, options ...RequestOptionFunc) (io.ReadCloser, *Response, error) {
+	r, resp, err := do[bodyReader](s.client,
 		withPath("projects/%s/terraform/state/%s/versions/%d", ProjectID{pid}, name, serial),
 		withRequestOpts(options...),
 	)
 	if err != nil {
 		return nil, resp, err
 	}
-	return &buf, resp, nil
+	return &r, resp, nil
 }
 
 // Delete deletes a single Terraform state

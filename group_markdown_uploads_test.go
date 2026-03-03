@@ -1,8 +1,8 @@
 package gitlab
 
 import (
-	"bytes"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 	"testing"
@@ -80,13 +80,17 @@ func TestGroupMarkdownUploads_DownloadGroupMarkdownUploadByID(t *testing.T) {
 		`))
 	})
 
-	var want bytes.Buffer
-	want.Write([]byte("bar = baz"))
+	want := []byte("bar = baz")
 
-	bytes, resp, err := client.GroupMarkdownUploads.DownloadGroupMarkdownUploadByID(1, 2)
+	reader, resp, err := client.GroupMarkdownUploads.DownloadGroupMarkdownUploadByID(1, 2)
 	assert.NoError(t, err)
+	defer reader.Close()
+
 	assert.NotNil(t, resp)
-	assert.Equal(t, &want, bytes)
+
+	got, err := io.ReadAll(reader)
+	assert.NoError(t, err)
+	assert.Equal(t, want, got)
 }
 
 func TestGroupMarkdownUploads_DownloadGroupMarkdownUploadBySecretAndFilename(t *testing.T) {
@@ -100,13 +104,17 @@ func TestGroupMarkdownUploads_DownloadGroupMarkdownUploadBySecretAndFilename(t *
 		`))
 	})
 
-	var want bytes.Buffer
-	want.Write([]byte("bar = baz"))
+	want := []byte("bar = baz")
 
-	bytes, resp, err := client.GroupMarkdownUploads.DownloadGroupMarkdownUploadBySecretAndFilename(1, "secret", "filename")
+	reader, resp, err := client.GroupMarkdownUploads.DownloadGroupMarkdownUploadBySecretAndFilename(1, "secret", "filename")
 	assert.NoError(t, err)
+	defer reader.Close()
+
 	assert.NotNil(t, resp)
-	assert.Equal(t, &want, bytes)
+
+	got, err := io.ReadAll(reader)
+	assert.NoError(t, err)
+	assert.Equal(t, want, got)
 }
 
 func TestGroupMarkdownUploads_DeleteGroupMarkdownUploadByID(t *testing.T) {
