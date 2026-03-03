@@ -1,3 +1,22 @@
+## 2.1.0
+
+### 🚀 Features
+
+- feat(workitems): Add more fields to WorkItem ([!2795](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2795)) by [Florian Forster](https://gitlab.com/fforster)
+
+### 🔄 Other Changes
+
+- Implement body preserver to enable HTTP response body streaming ([!2746](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2746)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+
+
+# [2.1.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.0.0...v2.1.0) (2026-03-03)
+
+
+### Features
+
+* **workitems:** Add more fields to WorkItem ([7088f6f](https://gitlab.com/gitlab-org/api/client-go/commit/7088f6f22945efd7b87a473e0e5ec9dade34c811))
+
 ## 2.0.0
 
 ### 💥 Breaking Changes
