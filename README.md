@@ -18,7 +18,7 @@ in a major release version to follow SemVar. For the release 2.0 migration guide
 ## Usage
 
 ```go
-import "gitlab.com/gitlab-org/api/client-go"
+import "gitlab.com/gitlab-org/api/client-go/v2"
 ```
 
 Construct a new GitLab client, then use the various services on the client to
@@ -64,7 +64,7 @@ package main
 import (
 	"log"
 
-	"gitlab.com/gitlab-org/api/client-go"
+	"gitlab.com/gitlab-org/api/client-go/v2"
 )
 
 func main() {
@@ -102,7 +102,7 @@ func main() {
 
 #### Use OAuth2 helper package
 
-The following example demonstrates how to use the `gitlab.com/gitlab-org/api/client-go/oauth2` package:
+The following example demonstrates how to use the `gitlab.com/gitlab-org/api/client-go/v2/oauth2` package:
 
 ```go
 package main
@@ -112,8 +112,8 @@ import (
 	"fmt"
 	"os/exec"
 
-	gitlab "gitlab.com/gitlab-org/api/client-go"
-	"gitlab.com/gitlab-org/api/client-go/gitlaboauth2"
+	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
+	"gitlab.com/gitlab-org/api/client-go/v2/gitlaboauth2"
 )
 
 func main() {
@@ -192,8 +192,8 @@ import (
 	"fmt"
 	"log"
 
-	"gitlab.com/gitlab-org/api/client-go"
-	"gitlab.com/gitlab-org/api/client-go/config"
+	"gitlab.com/gitlab-org/api/client-go/v2"
+	"gitlab.com/gitlab-org/api/client-go/v2/config"
 )
 
 func main() {
@@ -240,12 +240,12 @@ For complete usage of go-gitlab, see the full [package docs](https://pkg.go.dev/
 To install the library, use the following command:
 
 ```go
-go get gitlab.com/gitlab-org/api/client-go
+go get gitlab.com/gitlab-org/api/client-go/v2
 ```
 
 ## Testing
 
-The `client-go` project comes with a `testing` package at `gitlab.com/gitlab-org/api/client-go/testing`
+The `client-go` project comes with a `testing` package at `gitlab.com/gitlab-org/api/client-go/v2/testing`
 which contains a `TestClient` with [gomock](https://github.com/uber-go/mock) mocks for the individual services.
 
 You can use them like this:

@@ -1,4 +1,4 @@
-module gitlab.com/gitlab-org/api/client-go
+module gitlab.com/gitlab-org/api/client-go/v2
 
 go 1.25.0
 

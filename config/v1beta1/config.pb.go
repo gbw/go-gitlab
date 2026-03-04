@@ -1735,7 +1735,7 @@ const file_config_v1beta1_config_proto_rawDesc = "" +
 	"\xbaH\a\xc8\x01\x01r\x02\x10\x01R\x04user:\xbb\x01\n" +
 	"\funique_names\x12\x1b.buf.validate.RepeatedRules\x18\xaa\xe8\x92& \x01(\bBx\xc2Hu\n" +
 	"s\n" +
-	"\funique_names\x12\x18all names must be unique\x1aIthis.map(i, i.name).all(name, this.filter(j, j.name == name).size() == 1)R\vuniqueNamesB4Z2gitlab.com/gitlab-org/api/client-go/config/v1beta1b\beditionsp\xe8\a"
+	"\funique_names\x12\x18all names must be unique\x1aIthis.map(i, i.name).all(name, this.filter(j, j.name == name).size() == 1)R\vuniqueNamesB7Z5gitlab.com/gitlab-org/api/client-go/v2/config/v1beta1b\beditionsp\xe8\a"
 
 var (
 	file_config_v1beta1_config_proto_rawDescOnce sync.Once

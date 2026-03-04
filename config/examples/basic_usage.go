@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/MakeNowJust/heredoc/v2"
-	"gitlab.com/gitlab-org/api/client-go"
-	"gitlab.com/gitlab-org/api/client-go/config"
+	"gitlab.com/gitlab-org/api/client-go/v2"
+	"gitlab.com/gitlab-org/api/client-go/v2/config"
 )
 
 func main() {

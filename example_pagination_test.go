@@ -3,7 +3,7 @@ package gitlab_test
 import (
 	"fmt"
 
-	gitlab "gitlab.com/gitlab-org/api/client-go"
+	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 )
 
 // Example_pagination demonstrates standard offset-based pagination.
