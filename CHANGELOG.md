@@ -1,3 +1,24 @@
+## 2.2.0
+
+### 🚀 Features
+
+- feat(workitems): Implement `CreateWorkItem()`. ([!2751](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2751)) by [Florian Forster](https://gitlab.com/fforster)
+
+
+
+# [2.2.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.1.0...v2.2.0) (2026-03-04)
+
+
+### Bug Fixes
+
+* **workitems:** move nil guard to top of wrap() and regenerate mock ([01f38fc](https://gitlab.com/gitlab-org/api/client-go/commit/01f38fcad23e0f6fbee3b26a733cb5fa4369f95a))
+
+
+### Features
+
+* **workitems:** add CreateTestWorkItem helpers to utils_test.go ([10ff8a3](https://gitlab.com/gitlab-org/api/client-go/commit/10ff8a3586d6832e00560ab018ec2c203e829e56))
+* **workitems:** Implement `CreateWorkItem()`. ([07ee38c](https://gitlab.com/gitlab-org/api/client-go/commit/07ee38c53690c1bc68b7efc5f5c2e6259b30a93c))
+
 ## 2.1.0
 
 ### 🚀 Features
