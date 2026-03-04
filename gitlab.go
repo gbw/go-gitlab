@@ -77,6 +77,9 @@ var (
 	// ErrNotFound is returned for 404 Not Found errors
 	ErrNotFound = errors.New("404 Not Found")
 
+	// ErrEmptyResponse is returned when the API response is empty but expected to contain data
+	ErrEmptyResponse = errors.New("unexpected empty response")
+
 	// errUnauthenticated is an internal sentinel error to indicate that the auth source doesn't use any authentication
 	errUnauthenticated = errors.New("unauthenticated")
 )

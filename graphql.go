@@ -109,6 +109,19 @@ type gidGQL struct {
 	Int64 int64
 }
 
+// newGIDStrings creates a slice of global IDs from a type and a slice of IDs.
+// This is useful when getting a slice of int64 ids from the user and having to
+// populate a string slice for GraphQL.
+func newGIDStrings(typ string, ids ...int64) []string {
+	ret := make([]string, 0, len(ids))
+
+	for _, id := range ids {
+		ret = append(ret, gidGQL{typ, id}.String())
+	}
+
+	return ret
+}
+
 var gidGQLRegex = regexp.MustCompile(`^gid://gitlab/([^/]+)/(\d+)$`)
 
 func (id *gidGQL) UnmarshalJSON(b []byte) error {
