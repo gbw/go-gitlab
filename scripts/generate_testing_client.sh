@@ -37,7 +37,7 @@ done
   echo ''
   echo '   "go.uber.org/mock/gomock"'
   echo ''
-  echo '   gitlab "gitlab.com/gitlab-org/api/client-go"'
+  echo '   gitlab "gitlab.com/gitlab-org/api/client-go/v2"'
   echo ')'
   echo ''
   echo 'type testClientMocks struct {'

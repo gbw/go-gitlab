@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	gitlab "gitlab.com/gitlab-org/api/client-go"
+	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 )
 
 // setupBasicAuthMock creates a mock server for BasicAuth example

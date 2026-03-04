@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	gitlab "gitlab.com/gitlab-org/api/client-go"
+	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 )
 
 func ExampleScan2() {
