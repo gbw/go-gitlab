@@ -1,3 +1,18 @@
+## 2.2.1
+
+### 🐛 Bug Fixes
+
+- fix: Add `/v2` suffix to module path. ([!2801](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2801)) by [Florian Forster](https://gitlab.com/fforster)
+
+
+
+## [2.2.1](https://gitlab.com/gitlab-org/api/client-go/compare/v2.2.0...v2.2.1) (2026-03-04)
+
+
+### Bug Fixes
+
+* Add `/v2` suffix to module path. ([4237f6a](https://gitlab.com/gitlab-org/api/client-go/commit/4237f6aa292dd8a8eeeca64adeac1a1f121293a6)), closes [#2239](https://gitlab.com/gitlab-org/api/client-go/issues/2239)
+
 ## 2.2.0
 
 ### 🚀 Features
