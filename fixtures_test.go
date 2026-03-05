@@ -63,6 +63,34 @@ const (
 		"locked": false
 	}`
 
+	// exampleListRunnerManagersResponse provides fixture for ListRunnerManagers tests.
+	exampleListRunnerManagersResponse = `[
+		{
+			"id": 1,
+			"system_id": "s_89e5e9956577",
+			"version": "16.11.1",
+			"revision": "535ced5f",
+			"platform": "linux",
+			"architecture": "amd64",
+			"created_at": "2024-06-09T11:12:02.507Z",
+			"contacted_at": "2024-06-09T06:30:09.355Z",
+			"ip_address": "127.0.0.1",
+			"status": "offline"
+		},
+		{
+			"id": 2,
+			"system_id": "runner-2",
+			"version": "16.11.0",
+			"revision": "91a27b2a",
+			"platform": "linux",
+			"architecture": "amd64",
+			"created_at": "2024-06-09T09:12:02.507Z",
+			"contacted_at": "2024-06-09T06:30:09.355Z",
+			"ip_address": "127.0.0.1",
+			"status": "offline"
+		}
+	]`
+
 	// exampleEventUserName provides a fixture for a event user's name.
 	exampleEventUserName = "John Smith"
 

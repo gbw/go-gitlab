@@ -441,6 +441,51 @@ func (c *MockRunnersServiceInterfaceListRunnerJobsCall) DoAndReturn(f func(any, 
 	return c
 }
 
+// ListRunnerManagers mocks base method.
+func (m *MockRunnersServiceInterface) ListRunnerManagers(rid any, options ...gitlab.RequestOptionFunc) ([]*gitlab.RunnerManager, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{rid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListRunnerManagers", varargs...)
+	ret0, _ := ret[0].([]*gitlab.RunnerManager)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListRunnerManagers indicates an expected call of ListRunnerManagers.
+func (mr *MockRunnersServiceInterfaceMockRecorder) ListRunnerManagers(rid any, options ...any) *MockRunnersServiceInterfaceListRunnerManagersCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{rid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListRunnerManagers", reflect.TypeOf((*MockRunnersServiceInterface)(nil).ListRunnerManagers), varargs...)
+	return &MockRunnersServiceInterfaceListRunnerManagersCall{Call: call}
+}
+
+// MockRunnersServiceInterfaceListRunnerManagersCall wrap *gomock.Call
+type MockRunnersServiceInterfaceListRunnerManagersCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockRunnersServiceInterfaceListRunnerManagersCall) Return(arg0 []*gitlab.RunnerManager, arg1 *gitlab.Response, arg2 error) *MockRunnersServiceInterfaceListRunnerManagersCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockRunnersServiceInterfaceListRunnerManagersCall) Do(f func(any, ...gitlab.RequestOptionFunc) ([]*gitlab.RunnerManager, *gitlab.Response, error)) *MockRunnersServiceInterfaceListRunnerManagersCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockRunnersServiceInterfaceListRunnerManagersCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) ([]*gitlab.RunnerManager, *gitlab.Response, error)) *MockRunnersServiceInterfaceListRunnerManagersCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListRunners mocks base method.
 func (m *MockRunnersServiceInterface) ListRunners(opt *gitlab.ListRunnersOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Runner, *gitlab.Response, error) {
 	m.ctrl.T.Helper()

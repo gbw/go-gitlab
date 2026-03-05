@@ -39,6 +39,58 @@ func TestDisableRunner(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestListRunnerManagers(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a runner ID and a mocked API that returns runner managers
+	mux.HandleFunc("/api/v4/runners/1/managers", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, exampleListRunnerManagersResponse)
+	})
+
+	// WHEN ListRunnerManagers is called for that runner
+	managers, resp, err := client.Runners.ListRunnerManagers(1)
+
+	// THEN no error is returned and the response contains the expected managers
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	assert.Len(t, managers, 2)
+
+	createdAt1 := time.Date(2024, time.June, 9, 11, 12, 2, 507000000, time.UTC)
+	contactedAt1 := time.Date(2024, time.June, 9, 6, 30, 9, 355000000, time.UTC)
+	createdAt2 := time.Date(2024, time.June, 9, 9, 12, 2, 507000000, time.UTC)
+	contactedAt2 := time.Date(2024, time.June, 9, 6, 30, 9, 355000000, time.UTC)
+
+	want := []*RunnerManager{
+		{
+			ID:           1,
+			SystemID:     "s_89e5e9956577",
+			Version:      "16.11.1",
+			Revision:     "535ced5f",
+			Platform:     "linux",
+			Architecture: "amd64",
+			CreatedAt:    &createdAt1,
+			ContactedAt:  &contactedAt1,
+			IPAddress:    "127.0.0.1",
+			Status:       "offline",
+		},
+		{
+			ID:           2,
+			SystemID:     "runner-2",
+			Version:      "16.11.0",
+			Revision:     "91a27b2a",
+			Platform:     "linux",
+			Architecture: "amd64",
+			CreatedAt:    &createdAt2,
+			ContactedAt:  &contactedAt2,
+			IPAddress:    "127.0.0.1",
+			Status:       "offline",
+		},
+	}
+	assert.Equal(t, want, managers)
+}
+
 func TestListRunnersJobs(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

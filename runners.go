@@ -55,6 +55,11 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/runners/#list-jobs-processed-by-a-runner
 		ListRunnerJobs(rid any, opt *ListRunnerJobsOptions, options ...RequestOptionFunc) ([]*Job, *Response, error)
+		// ListRunnerManagers lists all the managers of a runner.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/runners/#list-all-runners-managers
+		ListRunnerManagers(rid any, options ...RequestOptionFunc) ([]*RunnerManager, *Response, error)
 		// ListProjectRunners gets a list of runners accessible by the authenticated user.
 		//
 		// GitLab API docs:
@@ -208,6 +213,22 @@ type RunnerDetailsGroup struct {
 	WebURL string `json:"web_url"`
 }
 
+// RunnerManager represents a GitLab CI runner manager.
+//
+// GitLab API docs: https://docs.gitlab.com/api/runners/#list-all-runners-managers
+type RunnerManager struct {
+	ID           int64      `json:"id"`
+	SystemID     string     `json:"system_id"`
+	Version      string     `json:"version"`
+	Revision     string     `json:"revision"`
+	Platform     string     `json:"platform"`
+	Architecture string     `json:"architecture"`
+	CreatedAt    *time.Time `json:"created_at"`
+	ContactedAt  *time.Time `json:"contacted_at"`
+	IPAddress    string     `json:"ip_address"`
+	Status       string     `json:"status"`
+}
+
 // ListRunnersOptions represents the available ListRunners() options.
 //
 // GitLab API docs:
@@ -320,6 +341,18 @@ func (s *RunnersService) ListRunnerJobs(rid any, opt *ListRunnerJobsOptions, opt
 		withMethod(http.MethodGet),
 		withPath("runners/%s/jobs", RunnerID{rid}),
 		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+	if err != nil {
+		return nil, resp, err
+	}
+	return res, resp, nil
+}
+
+func (s *RunnersService) ListRunnerManagers(rid any, options ...RequestOptionFunc) ([]*RunnerManager, *Response, error) {
+	res, resp, err := do[[]*RunnerManager](s.client,
+		withMethod(http.MethodGet),
+		withPath("runners/%s/managers", RunnerID{rid}),
 		withRequestOpts(options...),
 	)
 	if err != nil {
