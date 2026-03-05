@@ -19,12 +19,14 @@ func TestListRunnerControllerTokens(t *testing.T) {
 			{
 				"id": 1,
 				"description": "Token 1",
+				"last_used_at": "2020-02-16T00:00:00.000Z",
 				"created_at": "2020-02-14T00:00:00.000Z",
 				"updated_at": "2020-02-15T00:00:00.000Z"
 			},
 			{
 				"id": 2,
 				"description": "Token 2",
+				"last_used_at": "2020-03-17T00:00:00.000Z",
 				"created_at": "2020-03-15T00:00:00.000Z",
 				"updated_at": "2020-03-16T00:00:00.000Z"
 			}
@@ -38,12 +40,14 @@ func TestListRunnerControllerTokens(t *testing.T) {
 		{
 			ID:          1,
 			Description: "Token 1",
+			LastUsedAt:  Ptr(time.Date(2020, time.February, 16, 0, 0, 0, 0, time.UTC)),
 			CreatedAt:   Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 			UpdatedAt:   Ptr(time.Date(2020, time.February, 15, 0, 0, 0, 0, time.UTC)),
 		},
 		{
 			ID:          2,
 			Description: "Token 2",
+			LastUsedAt:  Ptr(time.Date(2020, time.March, 17, 0, 0, 0, 0, time.UTC)),
 			CreatedAt:   Ptr(time.Date(2020, time.March, 15, 0, 0, 0, 0, time.UTC)),
 			UpdatedAt:   Ptr(time.Date(2020, time.March, 16, 0, 0, 0, 0, time.UTC)),
 		},
@@ -60,6 +64,7 @@ func TestGetRunnerControllerToken(t *testing.T) {
 		fmt.Fprint(w, `{
 			"id": 1,
 			"description": "Test Token",
+			"last_used_at": "2020-02-16T00:00:00.000Z",
 			"created_at": "2020-02-14T00:00:00.000Z",
 			"updated_at": "2020-02-15T00:00:00.000Z"
 		}`)
@@ -71,6 +76,7 @@ func TestGetRunnerControllerToken(t *testing.T) {
 	want := &RunnerControllerToken{
 		ID:          1,
 		Description: "Test Token",
+		LastUsedAt:  Ptr(time.Date(2020, time.February, 16, 0, 0, 0, 0, time.UTC)),
 		CreatedAt:   Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 		UpdatedAt:   Ptr(time.Date(2020, time.February, 15, 0, 0, 0, 0, time.UTC)),
 	}
@@ -89,6 +95,7 @@ func TestCreateRunnerControllerToken(t *testing.T) {
 		fmt.Fprint(w, `{
 			"id": 3,
 			"description": "New Token",
+			"last_used_at": null,
 			"token": "glrct-abc123def456",
 			"created_at": "2020-04-16T00:00:00.000Z",
 			"updated_at": "2020-04-16T00:00:00.000Z"
@@ -123,6 +130,7 @@ func TestRotateRunnerControllerToken(t *testing.T) {
 			"id": 1,
 			"runner_controller_id": 1,
 			"description": "Rotated Token",
+			"last_used_at": "2020-05-19T00:00:00.000Z",
 			"token": "glrct-rotated123",
 			"created_at": "2020-02-14T00:00:00.000Z",
 			"updated_at": "2020-05-20T00:00:00.000Z"
@@ -137,6 +145,7 @@ func TestRotateRunnerControllerToken(t *testing.T) {
 		ID:                 1,
 		RunnerControllerID: 1,
 		Description:        "Rotated Token",
+		LastUsedAt:         Ptr(time.Date(2020, time.May, 19, 0, 0, 0, 0, time.UTC)),
 		Token:              "glrct-rotated123",
 		CreatedAt:          Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 		UpdatedAt:          Ptr(time.Date(2020, time.May, 20, 0, 0, 0, 0, time.UTC)),

@@ -65,6 +65,7 @@ func TestGetRunnerController(t *testing.T) {
 			"id": 1,
 			"description": "Test Controller",
 			"state": "enabled",
+			"connected": true,
 			"created_at": "2020-02-14T00:00:00.000Z",
 			"updated_at": "2020-02-15T00:00:00.000Z"
 		}`)
@@ -73,12 +74,15 @@ func TestGetRunnerController(t *testing.T) {
 	controller, _, err := client.RunnerControllers.GetRunnerController(1)
 	assert.NoError(t, err)
 
-	want := &RunnerController{
-		ID:          1,
-		Description: "Test Controller",
-		State:       RunnerControllerStateEnabled,
-		CreatedAt:   Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
-		UpdatedAt:   Ptr(time.Date(2020, time.February, 15, 0, 0, 0, 0, time.UTC)),
+	want := &RunnerControllerDetails{
+		RunnerController: RunnerController{
+			ID:          1,
+			Description: "Test Controller",
+			State:       RunnerControllerStateEnabled,
+			CreatedAt:   Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
+			UpdatedAt:   Ptr(time.Date(2020, time.February, 15, 0, 0, 0, 0, time.UTC)),
+		},
+		Connected: true,
 	}
 	assert.Equal(t, want, controller)
 }

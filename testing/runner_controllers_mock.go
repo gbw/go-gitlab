@@ -129,14 +129,14 @@ func (c *MockRunnerControllersServiceInterfaceDeleteRunnerControllerCall) DoAndR
 }
 
 // GetRunnerController mocks base method.
-func (m *MockRunnerControllersServiceInterface) GetRunnerController(rid int64, options ...gitlab.RequestOptionFunc) (*gitlab.RunnerController, *gitlab.Response, error) {
+func (m *MockRunnerControllersServiceInterface) GetRunnerController(rid int64, options ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerDetails, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{rid}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetRunnerController", varargs...)
-	ret0, _ := ret[0].(*gitlab.RunnerController)
+	ret0, _ := ret[0].(*gitlab.RunnerControllerDetails)
 	ret1, _ := ret[1].(*gitlab.Response)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
@@ -156,19 +156,19 @@ type MockRunnerControllersServiceInterfaceGetRunnerControllerCall struct {
 }
 
 // Return rewrite *gomock.Call.Return
-func (c *MockRunnerControllersServiceInterfaceGetRunnerControllerCall) Return(arg0 *gitlab.RunnerController, arg1 *gitlab.Response, arg2 error) *MockRunnerControllersServiceInterfaceGetRunnerControllerCall {
+func (c *MockRunnerControllersServiceInterfaceGetRunnerControllerCall) Return(arg0 *gitlab.RunnerControllerDetails, arg1 *gitlab.Response, arg2 error) *MockRunnerControllersServiceInterfaceGetRunnerControllerCall {
 	c.Call = c.Call.Return(arg0, arg1, arg2)
 	return c
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockRunnerControllersServiceInterfaceGetRunnerControllerCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerController, *gitlab.Response, error)) *MockRunnerControllersServiceInterfaceGetRunnerControllerCall {
+func (c *MockRunnerControllersServiceInterfaceGetRunnerControllerCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerDetails, *gitlab.Response, error)) *MockRunnerControllersServiceInterfaceGetRunnerControllerCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockRunnerControllersServiceInterfaceGetRunnerControllerCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerController, *gitlab.Response, error)) *MockRunnerControllersServiceInterfaceGetRunnerControllerCall {
+func (c *MockRunnerControllersServiceInterfaceGetRunnerControllerCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.RunnerControllerDetails, *gitlab.Response, error)) *MockRunnerControllersServiceInterfaceGetRunnerControllerCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
