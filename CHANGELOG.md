@@ -1,3 +1,18 @@
+## 2.3.0
+
+### 🚀 Features
+
+- feat: add new endpoint for fetching all the runner manager information ([!2802](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2802)) by [Aayush](https://gitlab.com/Aayush-Saini)
+
+
+
+# [2.3.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.2.1...v2.3.0) (2026-03-05)
+
+
+### Features
+
+* add new endpoint for fetching all the runner manager information ([d4755b7](https://gitlab.com/gitlab-org/api/client-go/commit/d4755b7966efe4d0c9c7c849f4918d8f21e92163))
+
 ## 2.2.1
 
 ### 🐛 Bug Fixes
