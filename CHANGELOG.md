@@ -1,3 +1,17 @@
+## 2.4.0
+
+### 🚀 Features
+
+- Reflect latest runner controller API changes ([!2803](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2803)) by [Timo Furrer](https://gitlab.com/timofurrer)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.3.0 ([!2804](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2804)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.4.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.3.0...v2.4.0) (2026-03-06)
+
 ## 2.3.0
 
 ### 🚀 Features
