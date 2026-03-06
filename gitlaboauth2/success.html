@@ -34,7 +34,21 @@
 <body>
     <div class="container">
         <h1>✓ Authentication Successful!</h1>
-        <p>You can close this window and return to the application.</p>
+        <p class="close">You can close this window and return to the application.</p>
     </div>
+    <script>
+        // Browser windows can only close themselves if they were opened programatically
+        // (we weren't) or if there's a single history entry (e.g. no page navigation event
+        // has happened yet). https://developer.mozilla.org/en-US/docs/Web/API/Window/close
+        //
+        // If the user had to interact with GitLab (e.g. to auth), then we cannot safely
+        // close this window. If the browser already had a valid GitLab session, then
+        // window.history.length will be 1 and we can close it.
+
+        if (window.history.length === 1) {
+            document.querySelector('.close').innerText = 'This window will now close automatically.';
+            setTimeout(() => window.close(), 1500);
+        }
+    </script>
 </body>
 </html>
