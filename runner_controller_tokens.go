@@ -62,6 +62,7 @@ type RunnerControllerToken struct {
 	ID                 int64      `json:"id"`
 	RunnerControllerID int64      `json:"runner_controller_id"`
 	Description        string     `json:"description"`
+	LastUsedAt         *time.Time `json:"last_used_at"`
 	Token              string     `json:"token,omitempty"`
 	CreatedAt          *time.Time `json:"created_at"`
 	UpdatedAt          *time.Time `json:"updated_at"`

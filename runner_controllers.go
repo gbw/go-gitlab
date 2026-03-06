@@ -22,7 +22,7 @@ type (
 		// admin-only endpoint.
 		//
 		// GitLab API docs: https://docs.gitlab.com/api/runner_controllers/#retrieve-a-single-runner-controller
-		GetRunnerController(rid int64, options ...RequestOptionFunc) (*RunnerController, *Response, error)
+		GetRunnerController(rid int64, options ...RequestOptionFunc) (*RunnerControllerDetails, *Response, error)
 		// CreateRunnerController registers a new runner controller. This is an
 		// admin-only endpoint.
 		//
@@ -76,6 +76,16 @@ type RunnerController struct {
 	UpdatedAt   *time.Time                 `json:"updated_at"`
 }
 
+// RunnerControllerDetails represents a GitLab runner controller with
+// additional detail fields only available when fetching a single
+// runner controller.
+//
+// GitLab API docs: https://docs.gitlab.com/api/runner_controllers/#retrieve-a-single-runner-controller
+type RunnerControllerDetails struct {
+	RunnerController
+	Connected bool `json:"connected"`
+}
+
 // ListRunnerControllersOptions represents the available
 // ListRunnerControllers() options.
 //
@@ -92,8 +102,8 @@ func (s *RunnerControllersService) ListRunnerControllers(opt *ListRunnerControll
 	)
 }
 
-func (s *RunnerControllersService) GetRunnerController(rid int64, options ...RequestOptionFunc) (*RunnerController, *Response, error) {
-	return do[*RunnerController](s.client,
+func (s *RunnerControllersService) GetRunnerController(rid int64, options ...RequestOptionFunc) (*RunnerControllerDetails, *Response, error) {
+	return do[*RunnerControllerDetails](s.client,
 		withPath("runner_controllers/%d", rid),
 		withRequestOpts(options...),
 	)
