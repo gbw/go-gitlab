@@ -1,0 +1,26 @@
+{
+  "data": {
+    "workItemUpdate": {
+      "workItem": {
+          "id": "gid://gitlab/WorkItem/179785913",
+          "iid": "756",
+          "workItemType": {
+              "name": "Task"
+          },
+          "state": "OPEN",
+          "title": "test title update",
+          "description": "## Overview\n\nUpdate Runway Helm charts to generate Argo Rollout resources ...",
+          "author": {
+              "id": "gid://gitlab/User/5532616",
+              "username": "swainaina",
+              "name": "Silvester Wainaina",
+              "state": "active",
+              "createdAt": "2020-03-02T06:29:14Z",
+              "avatarUrl": "/uploads/-/system/user/avatar/5532616/avatar.png",
+              "webUrl": "https://gitlab.com/swainaina"
+          }
+      },
+      "errors": []
+    }
+  }
+}

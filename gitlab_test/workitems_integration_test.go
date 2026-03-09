@@ -10,7 +10,7 @@ import (
 	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 )
 
-func TestCreateWorkItem(t *testing.T) {
+func TestCreateGetUpdateWorkItem(t *testing.T) {
 	t.Parallel()
 
 	client := SetupIntegrationClient(t)
@@ -19,22 +19,75 @@ func TestCreateWorkItem(t *testing.T) {
 	// GIVEN a test group
 	group := CreateTestGroup(t, client)
 
-	// AND a work item creation options
-	opt := gitlab.CreateWorkItemOptions{
-		Title:       "Test Work Item",
-		Description: gitlab.Ptr("This is a test work item"),
-		Weight:      gitlab.Ptr(int64(100)),
+	// STEP 1: Create a work item
+	// WHEN creating a new work item with initial options
+	createOpt := gitlab.CreateWorkItemOptions{
+		Title:        "Integration Test Work Item",
+		Description:  gitlab.Ptr("Initial description"),
+		HealthStatus: gitlab.Ptr("onTrack"),
+		Color:        gitlab.Ptr("green"),
 	}
 
-	// WHEN creating a new work item with the given options
-	wi, err := CreateTestWorkItem(t, client, group.FullPath, gitlab.WorkItemTypeEpic, &opt)
+	createdWI, err := CreateTestWorkItem(t, client, group.FullPath, gitlab.WorkItemTypeEpic, &createOpt)
 	require.NoError(t, err, "CreateWorkItem failed")
+	require.NotNil(t, createdWI)
 
-	// THEN the work item should be created successfully
-	assert.NotNil(t, wi)
+	// THEN the work item should have the provided fields set correctly
+	assert.Equal(t, "Integration Test Work Item", createdWI.Title, "Field: Title")
+	assert.Equal(t, "Initial description", createdWI.Description, "Field: Description")
+	assert.Equal(t, "onTrack", deref(t, createdWI.HealthStatus), "Field: HealthStatus")
+	assert.Equal(t, "#008000", deref(t, createdWI.Color), "Field: Color")
 
-	// AND all provided fields should be set correctly
-	assert.Equal(t, "Test Work Item", wi.Title)
-	assert.Equal(t, "This is a test work item", wi.Description)
-	// assert.Equal(t, int64(100), wi.Weight)
+	// STEP 2: Get the work item
+	// WHEN retrieving the work item by full path and IID
+	gotWI, _, err := client.WorkItems.GetWorkItem(group.FullPath, createdWI.IID)
+	require.NoError(t, err, "GetWorkItem failed")
+	require.NotNil(t, gotWI)
+
+	// THEN the retrieved work item should have the same provided fields
+	assert.Equal(t, createdWI.Title, gotWI.Title, "Field: Title")
+	assert.Equal(t, createdWI.Description, gotWI.Description, "Field: Description")
+	assert.Equal(t, deref(t, createdWI.HealthStatus), deref(t, gotWI.HealthStatus), "Field: HealthStatus")
+	assert.Equal(t, deref(t, createdWI.Color), deref(t, gotWI.Color), "Field: Color")
+
+	// STEP 3: Update the work item
+	// WHEN updating the work item with new values
+	updateOpt := gitlab.UpdateWorkItemOptions{
+		Title:        gitlab.Ptr("Updated Work Item Title"),
+		Description:  gitlab.Ptr("Updated description"),
+		HealthStatus: gitlab.Ptr("needsAttention"),
+		Color:        gitlab.Ptr("red"),
+	}
+
+	updatedWI, _, err := client.WorkItems.UpdateWorkItem(group.FullPath, createdWI.IID, &updateOpt)
+	require.NoError(t, err, "UpdateWorkItem failed")
+	require.NotNil(t, updatedWI)
+
+	// THEN the work item should have the updated fields set correctly
+	assert.Equal(t, "Updated Work Item Title", updatedWI.Title, "Field: Title")
+	assert.Equal(t, "Updated description", updatedWI.Description, "Field: Description")
+	assert.Equal(t, "needsAttention", deref(t, updatedWI.HealthStatus), "Field: HealthStatus")
+	assert.Equal(t, "#FF0000", deref(t, updatedWI.Color), "Field: Color")
+
+	// STEP 4: Get the work item again
+	// WHEN retrieving the work item after update
+	finalWI, _, err := client.WorkItems.GetWorkItem(group.FullPath, createdWI.IID)
+	require.NoError(t, err, "GetWorkItem after update failed")
+	require.NotNil(t, finalWI)
+
+	// THEN the retrieved work item should have the same updated fields
+	assert.Equal(t, updatedWI.Title, finalWI.Title, "Field: Title")
+	assert.Equal(t, updatedWI.Description, finalWI.Description, "Field: Description")
+	assert.Equal(t, deref(t, updatedWI.HealthStatus), deref(t, finalWI.HealthStatus), "Field: HealthStatus")
+	assert.Equal(t, deref(t, updatedWI.Color), deref(t, finalWI.Color), "Field: Color")
+}
+
+func deref(t *testing.T, ptr *string) string {
+	t.Helper()
+
+	if ptr == nil {
+		t.Fatal("pointer is nil")
+	}
+
+	return *ptr
 }

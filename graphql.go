@@ -146,6 +146,10 @@ func (id *gidGQL) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+func (id gidGQL) IsZero() bool {
+	return id.Type == "" && id.Int64 == 0
+}
+
 func (id gidGQL) String() string {
 	return fmt.Sprintf("gid://gitlab/%s/%d", id.Type, id.Int64)
 }

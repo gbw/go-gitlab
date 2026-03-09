@@ -21,6 +21,9 @@ import (
 //go:embed testdata/get_workitem.json
 var getWorkItemResponse []byte
 
+//go:embed testdata/update_workitem.json
+var updateWorkItemResponse []byte
+
 func TestGetWorkItem(t *testing.T) {
 	t.Parallel()
 
@@ -932,7 +935,312 @@ func TestCreateWorkItem(t *testing.T) {
 			if tt.wantErrContains != "" {
 				require.ErrorContains(t, err, tt.wantErrContains)
 				assert.Nil(t, got)
+				return
+			}
 
+			require.NoError(t, err)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestUpdateWorkItem(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name        string
+		fullPath    string
+		iid         int64
+		opt         *UpdateWorkItemOptions
+		idResponse  string
+		mutResponse io.WriterTo
+		wantInputs  map[string]any
+		want        *WorkItem
+		wantErr     error
+	}{
+		{
+			name:     "successfully update work item title and get response",
+			fullPath: "testing/unittest",
+			iid:      117869168,
+			opt: &UpdateWorkItemOptions{
+				Title: Ptr("test title"),
+			},
+			idResponse:  `{"data":{"namespace":{"workItem":{"id":"gid://gitlab/WorkItem/179785913"}}}}`,
+			mutResponse: bytes.NewReader(updateWorkItemResponse),
+			wantInputs: map[string]any{
+				"title": "test title",
+			},
+			want: &WorkItem{
+				ID:          179785913,
+				IID:         756,
+				Type:        "Task",
+				State:       "OPEN",
+				Title:       "test title update",
+				Description: "## Overview\n\nUpdate Runway Helm charts to generate Argo Rollout resources ...",
+				Author: &BasicUser{
+					ID:        5532616,
+					Username:  "swainaina",
+					Name:      "Silvester Wainaina",
+					State:     "active",
+					CreatedAt: Ptr(time.Date(2020, time.March, 2, 6, 29, 14, 0, time.UTC)),
+					AvatarURL: "/uploads/-/system/user/avatar/5532616/avatar.png",
+					WebURL:    "https://gitlab.com/swainaina",
+				},
+			},
+		},
+		{
+			name:     "successfully update work item with all options",
+			fullPath: "gitlab-com/gl-infra/platform/runway/team",
+			iid:      756,
+			opt: &UpdateWorkItemOptions{
+				Title:          Ptr("Updated Title"),
+				StateEvent:     Ptr(WorkItemStateEventClose),
+				Description:    Ptr("Updated description"),
+				AssigneeIDs:    []int64{123, 456},
+				MilestoneID:    Ptr(int64(789)),
+				CRMContactIDs:  []int64{1001, 1002},
+				ParentID:       Ptr(int64(100)),
+				AddLabelIDs:    []int64{201, 202},
+				RemoveLabelIDs: []int64{203, 204},
+				StartDate:      Ptr(ISOTime(time.Date(2026, time.March, 1, 0, 0, 0, 0, time.UTC))),
+				DueDate:        Ptr(ISOTime(time.Date(2026, time.April, 1, 0, 0, 0, 0, time.UTC))),
+				Weight:         Ptr(int64(8)),
+				HealthStatus:   Ptr("needsAttention"),
+				IterationID:    Ptr(int64(567)),
+				Color:          Ptr("#00FF00"),
+				Status:         Ptr(WorkItemStatusInProgress),
+			},
+			idResponse: `{"data":{"namespace":{"workItem":{"id":"gid://gitlab/WorkItem/179785913"}}}}`,
+			wantInputs: map[string]any{
+				"title":      "Updated Title",
+				"stateEvent": "CLOSE",
+				"descriptionWidget": map[string]any{
+					"description": "Updated description",
+				},
+				"assigneesWidget": map[string]any{
+					"assigneeIds": []any{"gid://gitlab/User/123", "gid://gitlab/User/456"},
+				},
+				"milestoneWidget": map[string]any{
+					"milestoneId": "gid://gitlab/Milestone/789",
+				},
+				"crmContactsWidget": map[string]any{
+					"contactIds":    []any{"gid://gitlab/CustomerRelations::Contact/1001", "gid://gitlab/CustomerRelations::Contact/1002"},
+					"operationMode": "REPLACE",
+				},
+				"hierarchyWidget": map[string]any{
+					"parentId": "gid://gitlab/WorkItem/100",
+				},
+				"labelsWidget": map[string]any{
+					"addLabelIds":    []any{"gid://gitlab/Label/201", "gid://gitlab/Label/202"},
+					"removeLabelIds": []any{"gid://gitlab/Label/203", "gid://gitlab/Label/204"},
+				},
+				"startAndDueDateWidget": map[string]any{
+					"startDate": "2026-03-01",
+					"dueDate":   "2026-04-01",
+				},
+				"weightWidget": map[string]any{
+					"weight": float64(8),
+				},
+				"healthStatusWidget": map[string]any{
+					"healthStatus": "needsAttention",
+				},
+				"iterationWidget": map[string]any{
+					"iterationId": "gid://gitlab/Iteration/567",
+				},
+				"colorWidget": map[string]any{
+					"color": "#00FF00",
+				},
+				"statusWidget": map[string]any{
+					"status": "gid://gitlab/WorkItems::Statuses::SystemDefined::Status/2",
+				},
+			},
+			mutResponse: strings.NewReader(`
+				{
+				  "data": {
+				    "workItemUpdate": {
+				      "workItem": {
+				        "id": "gid://gitlab/WorkItem/179785913",
+				        "iid": "756",
+				        "workItemType": {
+				          "name": "Task"
+				        },
+				        "state": "CLOSED",
+				        "title": "Updated Title",
+				        "description": "Updated description",
+				        "author": {
+				          "id": "gid://gitlab/User/5532616",
+				          "username": "swainaina",
+				          "name": "Silvester Wainaina",
+				          "state": "active",
+				          "locked": false,
+				          "createdAt": "2020-03-02T06:29:14Z",
+				          "avatarUrl": "/uploads/-/system/user/avatar/5532616/avatar.png",
+				          "webUrl": "https://gitlab.com/swainaina"
+				        },
+				        "createdAt": "2026-01-06T15:09:24Z",
+				        "updatedAt": "2026-01-09T13:06:08Z",
+				        "closedAt": "2026-01-09T13:06:08Z",
+				        "webUrl": "https://gitlab.com/gitlab-com/gl-infra/platform/runway/team/-/work_items/756",
+				        "features": {
+				          "assignees": {
+				            "assignees": {
+				              "nodes": [
+				                {
+				                  "id": "gid://gitlab/User/123",
+				                  "username": "user1",
+				                  "name": "User One",
+				                  "state": "active",
+				                  "locked": false,
+				                  "createdAt": "2020-01-01T00:00:00Z",
+				                  "avatarUrl": "/avatar1.png",
+				                  "webUrl": "https://gitlab.com/user1"
+				                },
+				                {
+				                  "id": "gid://gitlab/User/456",
+				                  "username": "user2",
+				                  "name": "User Two",
+				                  "state": "active",
+				                  "locked": false,
+				                  "createdAt": "2020-01-02T00:00:00Z",
+				                  "avatarUrl": "/avatar2.png",
+				                  "webUrl": "https://gitlab.com/user2"
+				                }
+				              ]
+				            }
+				          },
+				          "status": {
+				            "status": {
+				              "name": "In Progress"
+				            }
+				          }
+				        }
+				      },
+				      "errors": []
+				    }
+				  },
+				  "correlationId": "9c88d56b0061dfef-IAD"
+				}
+			`),
+			want: &WorkItem{
+				ID:          179785913,
+				IID:         756,
+				Type:        "Task",
+				State:       "CLOSED",
+				Status:      Ptr("In Progress"),
+				Title:       "Updated Title",
+				Description: "Updated description",
+				CreatedAt:   Ptr(time.Date(2026, time.January, 6, 15, 9, 24, 0, time.UTC)),
+				UpdatedAt:   Ptr(time.Date(2026, time.January, 9, 13, 6, 8, 0, time.UTC)),
+				ClosedAt:    Ptr(time.Date(2026, time.January, 9, 13, 6, 8, 0, time.UTC)),
+				WebURL:      "https://gitlab.com/gitlab-com/gl-infra/platform/runway/team/-/work_items/756",
+				Author: &BasicUser{
+					ID:        5532616,
+					Username:  "swainaina",
+					Name:      "Silvester Wainaina",
+					State:     "active",
+					CreatedAt: Ptr(time.Date(2020, time.March, 2, 6, 29, 14, 0, time.UTC)),
+					AvatarURL: "/uploads/-/system/user/avatar/5532616/avatar.png",
+					WebURL:    "https://gitlab.com/swainaina",
+				},
+				Assignees: []*BasicUser{
+					{
+						ID:        123,
+						Username:  "user1",
+						Name:      "User One",
+						State:     "active",
+						CreatedAt: Ptr(time.Date(2020, time.January, 1, 0, 0, 0, 0, time.UTC)),
+						AvatarURL: "/avatar1.png",
+						WebURL:    "https://gitlab.com/user1",
+					},
+					{
+						ID:        456,
+						Username:  "user2",
+						Name:      "User Two",
+						State:     "active",
+						CreatedAt: Ptr(time.Date(2020, time.January, 2, 0, 0, 0, 0, time.UTC)),
+						AvatarURL: "/avatar2.png",
+						WebURL:    "https://gitlab.com/user2",
+					},
+				},
+			},
+		},
+		{
+			name:       "work item not found during ID lookup",
+			fullPath:   "testing/unittest",
+			iid:        117869168,
+			opt:        &UpdateWorkItemOptions{},
+			idResponse: `{"data":{"namespace":{"workItem":null}}}`,
+			wantErr:    ErrEmptyResponse,
+		},
+		{
+			name:        "mutation returns null work item",
+			fullPath:    "testing/unittest",
+			iid:         117869168,
+			opt:         &UpdateWorkItemOptions{},
+			idResponse:  `{"data":{"namespace":{"workItem":{"id":"gid://gitlab/WorkItem/179785913"}}}}`,
+			mutResponse: strings.NewReader(`{"data":{"workItemUpdate":{"workItem":null,"errors":[]}}}`),
+			wantErr:     ErrNotFound,
+		},
+		{
+			name:        "mutation return error",
+			fullPath:    "testing/unittest",
+			iid:         117869168,
+			opt:         &UpdateWorkItemOptions{},
+			idResponse:  `{"data":{"namespace":{"workItem":{"id":"gid://gitlab/WorkItem/179785913"}}}}`,
+			mutResponse: strings.NewReader(`{"data":{"workItemUpdate":{"workItem":null,"errors":["User doesn't have permission to update this work item"]}}}`),
+			wantErr:     errors.New("User doesn't have permission to update this work item"),
+		},
+	}
+
+	schema := loadSchema(t)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
+				defer r.Body.Close()
+
+				testMethod(t, r, http.MethodPost)
+
+				var q GraphQLQuery
+
+				if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				if err := validateSchema(schema, q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				w.Header().Set("Content-Type", "application/json")
+
+				if strings.Contains(q.Query, "GetWorkItemID") {
+					io.WriteString(w, tt.idResponse)
+					return
+				}
+
+				// Verify inputs if wantInputs is specified
+				if len(tt.wantInputs) > 0 {
+					gotInput := q.Variables["input"].(map[string]any)
+					for k, v := range tt.wantInputs {
+						assert.Equal(t, v, gotInput[k], "input %q mismatch", k)
+					}
+				}
+
+				if tt.mutResponse != nil {
+					tt.mutResponse.WriteTo(w)
+				}
+			})
+
+			got, _, err := client.WorkItems.UpdateWorkItem(tt.fullPath, tt.iid, tt.opt)
+
+			if tt.wantErr != nil {
+				require.ErrorContains(t, err, tt.wantErr.Error())
+				assert.Nil(t, got)
 				return
 			}
 

@@ -4,6 +4,7 @@ package gitlab
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"text/template"
@@ -15,6 +16,7 @@ type (
 		CreateWorkItem(fullPath string, workItemTypeID WorkItemTypeID, opt *CreateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error)
+		UpdateWorkItem(fullPath string, iid int64, opt *UpdateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 	}
 
 	// WorkItemsService handles communication with the work item related methods
@@ -88,6 +90,14 @@ type LinkedWorkItem struct {
 	// Possible values: blocks, is_blocked_by, relates_to
 	LinkType string
 }
+
+// WorkItemStateEvent represents a state change event for a work item.
+type WorkItemStateEvent string
+
+const (
+	WorkItemStateEventClose  WorkItemStateEvent = "CLOSE"
+	WorkItemStateEventReopen WorkItemStateEvent = "REOPEN"
+)
 
 // workItemTemplate defines the common fields for a work item in GraphQL queries.
 // It's chained from userCoreBasicTemplate so nested templates work.
@@ -249,7 +259,7 @@ func (s *WorkItemsService) GetWorkItem(fullPath string, iid int64, options ...Re
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitems
 //
-// Experimental: The Work Item API is work in progress and subject to change even between minor versions.
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 type ListWorkItemsOptions struct {
 	AssigneeUsernames    []string
 	AssigneeWildcardID   *string
@@ -505,6 +515,8 @@ func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOpti
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/graphql/reference/#workitemcreateinput
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 type CreateWorkItemOptions struct {
 	// Title of the work item. Required.
 	Title string
@@ -558,6 +570,9 @@ type CreateWorkItemOptions struct {
 	Color *string
 }
 
+// CreateWorkItemOptionsLinkedItems represents linked items to be added to a work item.
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 type CreateWorkItemOptionsLinkedItems struct {
 	LinkType    *string // enum: BLOCKED_BY, BLOCKS, RELATED
 	WorkItemIDs []int64
@@ -648,6 +663,37 @@ type workItemWidgetIterationInputGQL struct {
 // workItemWidgetColorInputGQL represents the color widget input.
 type workItemWidgetColorInputGQL struct {
 	Color *string `json:"color,omitempty"`
+}
+
+// workItemWidgetCRMContactsUpdateInputGQL represents the CRM contacts widget input for updates.
+type workItemWidgetCRMContactsUpdateInputGQL struct {
+	ContactIDs    []string `json:"contactIds,omitempty"`
+	OperationMode *string  `json:"operationMode,omitempty"`
+}
+
+// workItemWidgetHierarchyUpdateInputGQL represents the hierarchy widget input for updates.
+type workItemWidgetHierarchyUpdateInputGQL struct {
+	ParentID           *string  `json:"parentId,omitempty"`
+	AdjacentWorkItemID *string  `json:"adjacentWorkItemId,omitempty"`
+	ChildrenIDs        []string `json:"childrenIds,omitempty"`
+	RelativePosition   *string  `json:"relativePosition,omitempty"`
+}
+
+// workItemWidgetLabelsUpdateInputGQL represents the labels widget input for updates.
+type workItemWidgetLabelsUpdateInputGQL struct {
+	AddLabelIDs    []string `json:"addLabelIds,omitempty"`
+	RemoveLabelIDs []string `json:"removeLabelIds,omitempty"`
+}
+
+// workItemWidgetStartAndDueDateUpdateInputGQL represents the start and due date widget input for updates.
+type workItemWidgetStartAndDueDateUpdateInputGQL struct {
+	StartDate *string `json:"startDate,omitempty"`
+	DueDate   *string `json:"dueDate,omitempty"`
+}
+
+// workItemWidgetStatusInputGQL represents the status widget input.
+type workItemWidgetStatusInputGQL struct {
+	Status *WorkItemStatusID `json:"status,omitempty"`
 }
 
 // newWorkItemCreateInput converts the user-facing CreateWorkItemOptions to the
@@ -751,6 +797,31 @@ func (opt *CreateWorkItemOptions) wrap(namespacePath string, workItemTypeID Work
 	return input
 }
 
+// updateWorkItemTemplate is chained from workItemTemplate so it has access to both
+// UserCoreBasic and WorkItem templates.
+var updateWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("UpdateWorkItem").Parse(`
+	mutation UpdateWorkItem($input: WorkItemUpdateInput!) {
+		workItemUpdate(input: $input) {
+			workItem {
+				{{ template "WorkItem" }}
+			}
+			errors
+		}
+	}
+`))
+
+const (
+	getWorkItemIDQuery = `
+		query GetWorkItemID($fullPath: ID!, $iid: String!) {
+			namespace(fullPath: $fullPath) {
+				workItem(iid: $iid) {
+					id
+				}
+			}
+		}
+	`
+)
+
 // createWorkItemTemplate is chained from workItemTemplate so it has access to both
 // UserCoreBasic and WorkItem templates.
 var createWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("CreateWorkItem").Parse(`
@@ -772,6 +843,8 @@ var createWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone(
 //
 // GitLab API docs:
 // https://docs.gitlab.com/ee/api/graphql/reference/#workitemcreateinput
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 func (s *WorkItemsService) CreateWorkItem(fullPath string, workItemTypeID WorkItemTypeID, opt *CreateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
 	var queryBuilder strings.Builder
 	if err := createWorkItemTemplate.Execute(&queryBuilder, nil); err != nil {
@@ -824,6 +897,280 @@ func (s *WorkItemsService) CreateWorkItem(fullPath string, workItemTypeID WorkIt
 	}
 
 	return wiQL.unwrap(), resp, nil
+}
+
+// UpdateWorkItemOptions represents the available UpdateWorkItem() options.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#mutationworkitemupdate
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
+type UpdateWorkItemOptions struct {
+	// Title of the work item.
+	Title *string
+
+	// State event for the work item. Possible values: CLOSE, REOPEN
+	StateEvent *WorkItemStateEvent
+
+	// Description of the work item.
+	Description *string
+
+	// Global IDs of assignees. An empty (non-nil) slice can be used to remove all assignees.
+	AssigneeIDs []int64
+
+	// Global ID of the milestone to assign to the work item.
+	MilestoneID *int64
+
+	// CRM contact IDs to set. An empty (non-nil) slice can be used to remove all contacts.
+	CRMContactIDs []int64
+
+	// Global ID of the parent work item.
+	ParentID *int64
+
+	// Global IDs of labels to be added to the work item.
+	AddLabelIDs []int64
+
+	// Global IDs of labels to be removed from the work item.
+	RemoveLabelIDs []int64
+
+	// Start date for the work item.
+	StartDate *ISOTime
+
+	// Due date for the work item.
+	DueDate *ISOTime
+
+	// Weight of the work item.
+	Weight *int64
+
+	// Health status to be assigned to the work item. Possible values: onTrack, needsAttention, atRisk
+	HealthStatus *string
+
+	// Global ID of the iteration to assign to the work item.
+	IterationID *int64
+
+	// Color of the work item, represented as a hex code or named color. Example: "#fefefe"
+	Color *string
+
+	// Global ID of the work item status.
+	Status *WorkItemStatusID
+}
+
+func (opt *UpdateWorkItemOptions) wrap(gid gidGQL) *workItemUpdateInputGQL {
+	if opt == nil {
+		return &workItemUpdateInputGQL{
+			ID: gid.String(),
+		}
+	}
+
+	input := &workItemUpdateInputGQL{
+		ID:         gid.String(),
+		Title:      opt.Title,
+		StateEvent: opt.StateEvent,
+	}
+
+	if opt.Description != nil {
+		input.DescriptionWidget = &workItemWidgetDescriptionInputGQL{
+			Description: opt.Description,
+		}
+	}
+
+	if len(opt.AssigneeIDs) > 0 {
+		input.AssigneesWidget = &workItemWidgetAssigneesInputGQL{
+			AssigneeIDs: newGIDStrings("User", opt.AssigneeIDs...),
+		}
+	}
+
+	if opt.MilestoneID != nil {
+		input.MilestoneWidget = &workItemWidgetMilestoneInputGQL{
+			MilestoneID: Ptr(gidGQL{"Milestone", *opt.MilestoneID}.String()),
+		}
+	}
+
+	if len(opt.CRMContactIDs) > 0 {
+		input.CRMContactsWidget = &workItemWidgetCRMContactsUpdateInputGQL{
+			ContactIDs:    newGIDStrings("CustomerRelations::Contact", opt.CRMContactIDs...),
+			OperationMode: Ptr("REPLACE"),
+		}
+	}
+
+	if opt.ParentID != nil {
+		input.HierarchyWidget = &workItemWidgetHierarchyUpdateInputGQL{
+			ParentID: Ptr(gidGQL{"WorkItem", *opt.ParentID}.String()),
+		}
+	}
+
+	if len(opt.AddLabelIDs) > 0 || len(opt.RemoveLabelIDs) > 0 {
+		widget := &workItemWidgetLabelsUpdateInputGQL{}
+		if len(opt.AddLabelIDs) > 0 {
+			widget.AddLabelIDs = newGIDStrings("Label", opt.AddLabelIDs...)
+		}
+		if len(opt.RemoveLabelIDs) > 0 {
+			widget.RemoveLabelIDs = newGIDStrings("Label", opt.RemoveLabelIDs...)
+		}
+		input.LabelsWidget = widget
+	}
+
+	if opt.StartDate != nil || opt.DueDate != nil {
+		widget := &workItemWidgetStartAndDueDateUpdateInputGQL{}
+		if opt.StartDate != nil {
+			widget.StartDate = Ptr(opt.StartDate.String())
+		}
+		if opt.DueDate != nil {
+			widget.DueDate = Ptr(opt.DueDate.String())
+		}
+		input.StartAndDueDateWidget = widget
+	}
+
+	if opt.Weight != nil {
+		input.WeightWidget = &workItemWidgetWeightInputGQL{
+			Weight: opt.Weight,
+		}
+	}
+
+	if opt.HealthStatus != nil {
+		input.HealthStatusWidget = &workItemWidgetHealthStatusInputGQL{
+			HealthStatus: opt.HealthStatus,
+		}
+	}
+
+	if opt.IterationID != nil {
+		input.IterationWidget = &workItemWidgetIterationInputGQL{
+			IterationID: Ptr(gidGQL{"Iteration", *opt.IterationID}.String()),
+		}
+	}
+
+	if opt.Color != nil {
+		input.ColorWidget = &workItemWidgetColorInputGQL{
+			Color: opt.Color,
+		}
+	}
+
+	if opt.Status != nil {
+		input.StatusWidget = &workItemWidgetStatusInputGQL{
+			Status: opt.Status,
+		}
+	}
+
+	return input
+}
+
+// UpdateWorkItem updates a work item by fullPath and iid.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#mutationworkitemupdate
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
+func (s *WorkItemsService) UpdateWorkItem(fullPath string, iid int64, opt *UpdateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error) {
+	gid, resp, err := s.workItemGID(fullPath, iid, options...)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	var queryBuilder strings.Builder
+	if err := updateWorkItemTemplate.Execute(&queryBuilder, nil); err != nil {
+		return nil, nil, err
+	}
+
+	q := GraphQLQuery{
+		Query: queryBuilder.String(),
+		Variables: map[string]any{
+			"input": opt.wrap(gid),
+		},
+	}
+
+	var result struct {
+		Data struct {
+			WorkItemUpdate struct {
+				WorkItem *workItemGQL `json:"workItem"`
+				Errors   []string     `json:"errors"`
+			} `json:"workItemUpdate"`
+		}
+		GenericGraphQLErrors
+	}
+
+	resp, err = s.client.GraphQL.Do(q, &result, options...)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	if len(result.Errors) != 0 {
+		return nil, resp, &GraphQLResponseError{
+			Err:    errors.New("GraphQL query failed"),
+			Errors: result.GenericGraphQLErrors,
+		}
+	}
+
+	if len(result.Data.WorkItemUpdate.Errors) != 0 {
+		return nil, resp, errors.New(result.Data.WorkItemUpdate.Errors[0])
+	}
+
+	wiQL := result.Data.WorkItemUpdate.WorkItem
+	if wiQL == nil {
+		return nil, resp, ErrNotFound
+	}
+
+	return wiQL.unwrap(), resp, nil
+}
+
+// workItemUpdateInputGQL represents the GraphQL input structure for updating a work item.
+type workItemUpdateInputGQL struct {
+	ID                    string                                       `json:"id"`
+	Title                 *string                                      `json:"title,omitempty"`
+	StateEvent            *WorkItemStateEvent                          `json:"stateEvent,omitempty"`
+	DescriptionWidget     *workItemWidgetDescriptionInputGQL           `json:"descriptionWidget,omitempty"`
+	AssigneesWidget       *workItemWidgetAssigneesInputGQL             `json:"assigneesWidget,omitempty"`
+	MilestoneWidget       *workItemWidgetMilestoneInputGQL             `json:"milestoneWidget,omitempty"`
+	CRMContactsWidget     *workItemWidgetCRMContactsUpdateInputGQL     `json:"crmContactsWidget,omitempty"`
+	HierarchyWidget       *workItemWidgetHierarchyUpdateInputGQL       `json:"hierarchyWidget,omitempty"`
+	LabelsWidget          *workItemWidgetLabelsUpdateInputGQL          `json:"labelsWidget,omitempty"`
+	StartAndDueDateWidget *workItemWidgetStartAndDueDateUpdateInputGQL `json:"startAndDueDateWidget,omitempty"`
+	WeightWidget          *workItemWidgetWeightInputGQL                `json:"weightWidget,omitempty"`
+	HealthStatusWidget    *workItemWidgetHealthStatusInputGQL          `json:"healthStatusWidget,omitempty"`
+	IterationWidget       *workItemWidgetIterationInputGQL             `json:"iterationWidget,omitempty"`
+	ColorWidget           *workItemWidgetColorInputGQL                 `json:"colorWidget,omitempty"`
+	StatusWidget          *workItemWidgetStatusInputGQL                `json:"statusWidget,omitempty"`
+}
+
+// workItemGID queries for a work item's Global ID using fullPath and iid.
+// Returns the Global ID string or ErrNotFound if the work item doesn't exist.
+//
+// API docs: https://docs.gitlab.com/api/graphql/reference/#namespaceworkitem
+func (s *WorkItemsService) workItemGID(fullPath string, iid int64, options ...RequestOptionFunc) (gidGQL, *Response, error) {
+	q := GraphQLQuery{
+		Query: getWorkItemIDQuery,
+		Variables: map[string]any{
+			"fullPath": fullPath,
+			"iid":      strconv.FormatInt(iid, 10),
+		},
+	}
+
+	var result struct {
+		Data struct {
+			Namespace struct {
+				WorkItem struct {
+					ID gidGQL `json:"id"`
+				} `json:"workItem"`
+			}
+		}
+		GenericGraphQLErrors
+	}
+
+	resp, err := s.client.GraphQL.Do(q, &result, options...)
+	if err != nil {
+		return gidGQL{}, resp, err
+	}
+
+	if len(result.Errors) != 0 {
+		return gidGQL{}, resp, &GraphQLResponseError{
+			Err:    fmt.Errorf("looking up global ID of %s#%d failed", fullPath, iid),
+			Errors: result.GenericGraphQLErrors,
+		}
+	}
+
+	id := result.Data.Namespace.WorkItem.ID
+	if id.IsZero() {
+		return gidGQL{}, resp, fmt.Errorf("looking up global ID of %s#%d failed: %w", fullPath, iid, ErrEmptyResponse)
+	}
+
+	return id, resp, nil
 }
 
 // workItemGQL represents the JSON structure returned by the GraphQL query.
@@ -1151,4 +1498,20 @@ const (
 	WorkItemTypeKeyResult   WorkItemTypeID = `gid://gitlab/WorkItems::Type/7`
 	WorkItemTypeEpic        WorkItemTypeID = `gid://gitlab/WorkItems::Type/8`
 	WorkItemTypeTicket      WorkItemTypeID = `gid://gitlab/WorkItems::Type/9`
+)
+
+// WorkItemStatusID represents the global ID of a work item status.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitemsstatus
+//
+// Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
+type WorkItemStatusID string
+
+// WorkItemStatusID constants for the system-defined work item statuses.
+const (
+	WorkItemStatusToDo       WorkItemStatusID = `gid://gitlab/WorkItems::Statuses::SystemDefined::Status/1`
+	WorkItemStatusInProgress WorkItemStatusID = `gid://gitlab/WorkItems::Statuses::SystemDefined::Status/2`
+	WorkItemStatusDone       WorkItemStatusID = `gid://gitlab/WorkItems::Statuses::SystemDefined::Status/3`
+	WorkItemStatusWontDo     WorkItemStatusID = `gid://gitlab/WorkItems::Statuses::SystemDefined::Status/4`
+	WorkItemStatusDuplicate  WorkItemStatusID = `gid://gitlab/WorkItems::Statuses::SystemDefined::Status/5`
 )
