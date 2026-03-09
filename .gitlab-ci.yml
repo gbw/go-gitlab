@@ -121,7 +121,7 @@ golangci-lint:
   needs: []
   variables:
     REPORT_FILENAME: "gl-code-quality-report.json"
-  image: golangci/golangci-lint:v2.10.1
+  image: golang:1.25-bookworm
   script:
     - golangci-lint run
   artifacts:
@@ -249,13 +249,13 @@ tests:integration:
     # Install mise
     - curl --retry 3 https://mise.run | MISE_VERSION=${MISE_VERSION} MISE_INSTALL_PATH=/usr/local/bin/mise sh
     - eval "$(mise activate bash --shims)"
-    
+
     # Install Go and other tools with mise
     - mise install
 
     # Copy the license to the correct location
     - test -f "${GITLAB_LICENSE}" && cp "${GITLAB_LICENSE}" "${CI_PROJECT_DIR}/Gitlab-license.txt"
-        
+
     # Start GitLab instance
     - make testacc-up SERVICE=gitlab-ee
   script:
