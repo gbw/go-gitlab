@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListTemplates(t *testing.T) {
@@ -200,9 +201,7 @@ func TestListTemplates(t *testing.T) {
 			Name: "Concrete5",
 		},
 	}
-	if !reflect.DeepEqual(want, templates) {
-		t.Errorf("GitIgnoreTemplates.ListTemplates returned %+v, want %+v", templates, want)
-	}
+	assert.Equal(t, want, templates)
 }
 
 func TestGetTemplates(t *testing.T) {
@@ -226,7 +225,5 @@ func TestGetTemplates(t *testing.T) {
 		Name:    "Ruby",
 		Content: "*.gem\n*.rbc\n/.config\n/coverage/\n/InstalledFiles\n/pkg/\n/spec/reports/",
 	}
-	if !reflect.DeepEqual(want, template) {
-		t.Errorf("GitIgnoreTemplates.GetTemplate returned %+v, want %+v", template, want)
-	}
+	assert.Equal(t, want, template)
 }

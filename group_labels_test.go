@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -43,9 +42,7 @@ func TestCreateGroupGroupLabel(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := &GroupLabel{ID: 1, Name: "MyGroupLabel", Color: "#11FF22"}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("GroupLabels.CreateGroupLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestDeleteGroupLabelByID(t *testing.T) {
@@ -138,9 +135,7 @@ func TestUpdateGroupLabel(t *testing.T) {
 
 	want := &GroupLabel{ID: 1, Name: "NewLabel", Color: "#11FF23", Description: "This is updated label"}
 
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("GroupLabels.UpdateGroupLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestUpdateGroupLabelWithNilID(t *testing.T) {
@@ -184,9 +179,7 @@ func TestSubscribeToGroupLabel(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := &GroupLabel{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("GroupLabels.SubscribeToGroupLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestUnsubscribeFromGroupLabel(t *testing.T) {
@@ -223,9 +216,7 @@ func TestListGroupLabels(t *testing.T) {
 		t.Log(err.Error() == "invalid ID type 1.1, the ID must be an int64 or a string")
 	}
 	want := []*GroupLabel{{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("GroupLabels.ListGroupLabels returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestGetGroupLabel(t *testing.T) {
@@ -243,7 +234,5 @@ func TestGetGroupLabel(t *testing.T) {
 	}
 
 	want := &GroupLabel{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("GroupLabels.GetGroupLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }

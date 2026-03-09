@@ -20,7 +20,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 
@@ -256,9 +255,7 @@ func TestRunPipelineTrigger(t *testing.T) {
 			}
 
 			want := &Pipeline{ID: 1, Status: "pending"}
-			if !reflect.DeepEqual(want, pipeline) {
-				t.Errorf("PipelineTriggers.RunPipelineTrigger returned %+v, want %+v", pipeline, want)
-			}
+			assert.Equal(t, want, pipeline)
 		})
 	}
 }

@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -41,9 +40,7 @@ func TestListGroupBadges(t *testing.T) {
 	}
 
 	want := []*GroupBadge{{ID: 1, Name: "one", Kind: GroupBadgeKind}, {ID: 2, Name: "two", Kind: GroupBadgeKind}}
-	if !reflect.DeepEqual(want, badges) {
-		t.Errorf("GroupBadges.ListGroupBadges returned %+v, want %+v", badges, want)
-	}
+	assert.Equal(t, want, badges)
 }
 
 func TestGetGroupBadge(t *testing.T) {
@@ -62,9 +59,7 @@ func TestGetGroupBadge(t *testing.T) {
 	}
 
 	want := &GroupBadge{ID: 2, Name: "two", Kind: GroupBadgeKind}
-	if !reflect.DeepEqual(want, badge) {
-		t.Errorf("GroupBadges.GetGroupBadge returned %+v, want %+v", badge, want)
-	}
+	assert.Equal(t, want, badge)
 }
 
 func TestAddGroupBadge(t *testing.T) {
@@ -84,9 +79,7 @@ func TestAddGroupBadge(t *testing.T) {
 	}
 
 	want := &GroupBadge{ID: 3, Name: "three", ImageURL: "IMAGE", LinkURL: "LINK", Kind: GroupBadgeKind}
-	if !reflect.DeepEqual(want, badge) {
-		t.Errorf("GroupBadges.AddGroupBadge returned %+v, want %+v", badge, want)
-	}
+	assert.Equal(t, want, badge)
 }
 
 func TestEditGroupBadge(t *testing.T) {
@@ -106,9 +99,7 @@ func TestEditGroupBadge(t *testing.T) {
 	}
 
 	want := &GroupBadge{ID: 2, Name: "two", ImageURL: "NEW_IMAGE", LinkURL: "NEW_LINK", Kind: GroupBadgeKind}
-	if !reflect.DeepEqual(want, badge) {
-		t.Errorf("GroupBadges.EditGroupBadge returned %+v, want %+v", badge, want)
-	}
+	assert.Equal(t, want, badge)
 }
 
 func TestRemoveGroupBadge(t *testing.T) {

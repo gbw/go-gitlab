@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListProjectRegistryRepositories(t *testing.T) {
@@ -76,9 +77,7 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 			CleanupPolicyStartedAt: mustParseTime("2020-08-17T03:12:35.489Z"),
 		},
 	}
-	if !reflect.DeepEqual(want, repositories) {
-		t.Errorf("ContainerRepository.ListProjectRegistryRepositories returned %+v, want %+v", repositories, want)
-	}
+	assert.Equal(t, want, repositories)
 }
 
 func TestListGroupRegistryRepositories(t *testing.T) {
@@ -134,9 +133,7 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 			CleanupPolicyStartedAt: mustParseTime("2020-08-17T03:12:35.489Z"),
 		},
 	}
-	if !reflect.DeepEqual(want, repositories) {
-		t.Errorf("ContainerRepository.ListGroupRegistryRepositories returned %+v, want %+v", repositories, want)
-	}
+	assert.Equal(t, want, repositories)
 }
 
 func TestGetSingleRegistryRepository(t *testing.T) {
@@ -170,9 +167,7 @@ func TestGetSingleRegistryRepository(t *testing.T) {
 		CreatedAt:              mustParseTime("2019-01-10T13:38:57.391Z"),
 		CleanupPolicyStartedAt: mustParseTime("2020-01-10T15:40:57.391Z"),
 	}
-	if !reflect.DeepEqual(want, repository) {
-		t.Errorf("ContainerRepository.GetSingleRegistryRepository returned %+v, want %+v", repository, want)
-	}
+	assert.Equal(t, want, repository)
 }
 
 func TestDeleteRegistryRepository(t *testing.T) {
@@ -227,9 +222,7 @@ func TestListRegistryRepositoryTags(t *testing.T) {
 			Location: "gitlab.example.com:5000/group/project:latest",
 		},
 	}
-	if !reflect.DeepEqual(want, registryRepositoryTags) {
-		t.Errorf("ContainerRepository.ListRegistryRepositoryTags returned %+v, want %+v", registryRepositoryTags, want)
-	}
+	assert.Equal(t, want, registryRepositoryTags)
 }
 
 func TestGetRegistryRepositoryTagDetail(t *testing.T) {
@@ -265,9 +258,7 @@ func TestGetRegistryRepositoryTagDetail(t *testing.T) {
 		CreatedAt:     mustParseTime("2019-01-06T16:49:51.272+00:00"),
 		TotalSize:     350224384,
 	}
-	if !reflect.DeepEqual(want, repositoryTag) {
-		t.Errorf("ContainerRepository.ListRegistryRepositories returned %+v, want %+v", repositoryTag, want)
-	}
+	assert.Equal(t, want, repositoryTag)
 }
 
 func TestDeleteRegistryRepositoryTag(t *testing.T) {

@@ -19,7 +19,6 @@ package gitlab
 import (
 	"errors"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -45,9 +44,7 @@ func TestListProjectPipelines(t *testing.T) {
 	}
 
 	want := []*PipelineInfo{{ID: 1, Name: "test"}, {ID: 2}, {ID: 3, Status: "success", Ref: "master", CreatedAt: mustParseTime("2023-05-02T12:00:00Z")}}
-	if !reflect.DeepEqual(want, pipelines) {
-		t.Errorf("Pipelines.ListProjectPipelines returned %+v, want %+v", pipelines, want)
-	}
+	assert.Equal(t, want, pipelines)
 }
 
 func TestGetPipeline(t *testing.T) {
@@ -65,9 +62,7 @@ func TestGetPipeline(t *testing.T) {
 	}
 
 	want := &Pipeline{ID: 1, Status: "success", Source: "api"}
-	if !reflect.DeepEqual(want, pipeline) {
-		t.Errorf("Pipelines.GetPipeline returned %+v, want %+v", pipeline, want)
-	}
+	assert.Equal(t, want, pipeline)
 }
 
 func TestGetPipelineVariables(t *testing.T) {
@@ -88,9 +83,7 @@ func TestGetPipelineVariables(t *testing.T) {
 	}
 
 	want := []*PipelineVariable{{Key: "RUN_NIGHTLY_BUILD", Value: "true", VariableType: "env_var"}, {Key: "foo", Value: "bar"}}
-	if !reflect.DeepEqual(want, variables) {
-		t.Errorf("Pipelines.GetPipelineVariables returned %+v, want %+v", variables, want)
-	}
+	assert.Equal(t, want, variables)
 }
 
 func TestGetPipelineTestReport(t *testing.T) {
@@ -175,9 +168,7 @@ func TestGetPipelineTestReport(t *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(want, testreport) {
-		t.Errorf("Pipelines.GetPipelineTestReport returned %+v, want %+v", testreport, want)
-	}
+	assert.Equal(t, want, testreport)
 }
 
 func TestGetPipelineTestReportSummary(t *testing.T) {
@@ -219,9 +210,7 @@ func TestGetPipelineTestReportSummary(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, testreport) {
-		t.Errorf("Pipelines.GetPipelineTestReportSummary returned %+v, want %+v", testreport, want)
-	}
+	assert.Equal(t, want, testreport)
 }
 
 func TestGetLatestPipeline(t *testing.T) {
@@ -355,9 +344,7 @@ func TestCreatePipeline(t *testing.T) {
 			}
 
 			want := &Pipeline{ID: 1, Status: "pending"}
-			if !reflect.DeepEqual(want, pipeline) {
-				t.Errorf("Pipelines.CreatePipeline returned %+v, want %+v", pipeline, want)
-			}
+			assert.Equal(t, want, pipeline)
 		})
 	}
 }
@@ -377,9 +364,7 @@ func TestRetryPipelineBuild(t *testing.T) {
 	}
 
 	want := &Pipeline{ID: 1, Status: "pending"}
-	if !reflect.DeepEqual(want, pipeline) {
-		t.Errorf("Pipelines.RetryPipelineBuild returned %+v, want %+v", pipeline, want)
-	}
+	assert.Equal(t, want, pipeline)
 }
 
 func TestCancelPipelineBuild(t *testing.T) {
@@ -397,9 +382,7 @@ func TestCancelPipelineBuild(t *testing.T) {
 	}
 
 	want := &Pipeline{ID: 1, Status: "canceled"}
-	if !reflect.DeepEqual(want, pipeline) {
-		t.Errorf("Pipelines.CancelPipelineBuild returned %+v, want %+v", pipeline, want)
-	}
+	assert.Equal(t, want, pipeline)
 }
 
 func TestDeletePipeline(t *testing.T) {
@@ -432,7 +415,5 @@ func TestUpdateMetadata(t *testing.T) {
 	}
 
 	want := &Pipeline{ID: 1, Status: "running"}
-	if !reflect.DeepEqual(want, pipeline) {
-		t.Errorf("Pipelines.UpdatePipelineMetadata returned %+v, want %+v", pipeline, want)
-	}
+	assert.Equal(t, want, pipeline)
 }

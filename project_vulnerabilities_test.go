@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListProjectVulnerabilities(t *testing.T) {
@@ -42,9 +43,7 @@ func TestListProjectVulnerabilities(t *testing.T) {
 	}
 
 	want := []*ProjectVulnerability{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projectVulnerabilities) {
-		t.Errorf("ProjectVulnerabilities.ListProjectVulnerabilities returned %+v, want %+v", projectVulnerabilities, want)
-	}
+	assert.Equal(t, want, projectVulnerabilities)
 }
 
 func TestCreateVulnerability(t *testing.T) {
@@ -66,7 +65,5 @@ func TestCreateVulnerability(t *testing.T) {
 	}
 
 	want := &ProjectVulnerability{ID: 1}
-	if !reflect.DeepEqual(want, projectVulnerability) {
-		t.Errorf("ProjectVulnerabilities.CreateVulnerability returned %+v, want %+v", projectVulnerability, want)
-	}
+	assert.Equal(t, want, projectVulnerability)
 }

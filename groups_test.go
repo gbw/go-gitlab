@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
 	"testing"
 	"time"
 
@@ -33,9 +32,7 @@ func TestListGroups(t *testing.T) {
 	}
 
 	want := []*Group{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, groups) {
-		t.Errorf("Groups.ListGroups returned %+v, want %+v", groups, want)
-	}
+	assert.Equal(t, want, groups)
 }
 
 func TestListGroups_Filtering(t *testing.T) {
@@ -68,9 +65,7 @@ func TestListGroups_Filtering(t *testing.T) {
 	}
 
 	want := []*Group{{ID: 1}}
-	if !reflect.DeepEqual(want, groups) {
-		t.Errorf("Groups.ListGroups returned %+v, want %+v", groups, want)
-	}
+	assert.Equal(t, want, groups)
 }
 
 func TestListGroups_Visibility(t *testing.T) {
@@ -135,9 +130,7 @@ func TestGetGroup(t *testing.T) {
 	}
 	want := &Group{ID: 1, Name: "g", DefaultBranch: "branch", SharedWithGroups: shares}
 
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.GetGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestGetGroupWithFileTemplateId(t *testing.T) {
@@ -156,9 +149,7 @@ func TestGetGroupWithFileTemplateId(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, Name: "g", FileTemplateProjectID: 12345}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.GetGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestCreateGroup(t *testing.T) {
@@ -182,9 +173,7 @@ func TestCreateGroup(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, Name: "g", Path: "g"}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestCreateGroupWithDefaultBranch(t *testing.T) {
@@ -209,9 +198,7 @@ func TestCreateGroupWithDefaultBranch(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, Name: "g", Path: "g", DefaultBranch: "branch"}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestCreateGroupDefaultBranchSettings(t *testing.T) {
@@ -295,9 +282,7 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 
 	// Validate the request does what we want it to
 	allowedToMerge := *jsonRequestBody.DefaultBranchProtectionDefaults.AllowedToMerge
@@ -327,9 +312,7 @@ func TestTransferGroup(t *testing.T) {
 	}
 
 	want := &Group{ID: 1}
-	if !reflect.DeepEqual(group, want) {
-		t.Errorf("Groups.TransferGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestTransferSubGroup(t *testing.T) {
@@ -352,9 +335,7 @@ func TestTransferSubGroup(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, ParentID: 2}
-	if !reflect.DeepEqual(group, want) {
-		t.Errorf("Groups.TransferSubGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestDeleteGroup(t *testing.T) {
@@ -437,9 +418,7 @@ func TestSearchGroup(t *testing.T) {
 	}
 
 	want := []*Group{{ID: 1, Name: "Foobar Group"}}
-	if !reflect.DeepEqual(want, groups) {
-		t.Errorf("Groups.SearchGroup returned +%v, want %+v", groups, want)
-	}
+	assert.Equal(t, want, groups)
 }
 
 func TestUpdateGroup(t *testing.T) {
@@ -458,9 +437,7 @@ func TestUpdateGroup(t *testing.T) {
 	}
 
 	want := &Group{ID: 1}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.UpdatedGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestUpdateGroupWithDefaultBranch(t *testing.T) {
@@ -483,9 +460,7 @@ func TestUpdateGroupWithDefaultBranch(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, DefaultBranch: "branch"}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.UpdatedGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestListGroupProjects(t *testing.T) {
@@ -505,9 +480,7 @@ func TestListGroupProjects(t *testing.T) {
 	}
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Groups.ListGroupProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListGroupProjectsWithActive(t *testing.T) {
@@ -528,9 +501,7 @@ func TestListGroupProjectsWithActive(t *testing.T) {
 	}
 
 	want := []*Project{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Groups.ListGroupProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestListSubGroups(t *testing.T) {
@@ -549,9 +520,7 @@ func TestListSubGroups(t *testing.T) {
 	}
 
 	want := []*Group{{ID: 1}, {ID: 2}}
-	if !reflect.DeepEqual(want, groups) {
-		t.Errorf("Groups.ListSubGroups returned %+v, want %+v", groups, want)
-	}
+	assert.Equal(t, want, groups)
 }
 
 func TestListGroupLDAPLinks(t *testing.T) {
@@ -728,9 +697,7 @@ func TestListGroupSAMLLinks(t *testing.T) {
 			Name:        "gitlab_group_example_maintainer",
 		},
 	}
-	if !reflect.DeepEqual(want, links) {
-		t.Errorf("Groups.ListGroupSAMLLinks returned %+v, want %+v", links, want)
-	}
+	assert.Equal(t, want, links)
 }
 
 func TestListGroupSAMLLinksCustomRole(t *testing.T) {
@@ -761,9 +728,7 @@ func TestListGroupSAMLLinksCustomRole(t *testing.T) {
 			MemberRoleID: 123,
 		},
 	}
-	if !reflect.DeepEqual(want, links) {
-		t.Errorf("Groups.ListGroupSAMLLinks returned %+v, want %+v", links, want)
-	}
+	assert.Equal(t, want, links)
 }
 
 func TestGetGroupSAMLLink(t *testing.T) {
@@ -789,9 +754,7 @@ func TestGetGroupSAMLLink(t *testing.T) {
 		AccessLevel: DeveloperPermissions,
 		Name:        "gitlab_group_example_developer",
 	}
-	if !reflect.DeepEqual(want, links) {
-		t.Errorf("Groups.GetGroupSAMLLink returned %+v, want %+v", links, want)
-	}
+	assert.Equal(t, want, links)
 }
 
 func TestGetGroupSAMLLinkCustomRole(t *testing.T) {
@@ -819,9 +782,7 @@ func TestGetGroupSAMLLinkCustomRole(t *testing.T) {
 		Name:         "gitlab_group_example_developer",
 		MemberRoleID: 123,
 	}
-	if !reflect.DeepEqual(want, links) {
-		t.Errorf("Groups.GetGroupSAMLLink returned %+v, want %+v", links, want)
-	}
+	assert.Equal(t, want, links)
 }
 
 func TestAddGroupSAMLLink(t *testing.T) {
@@ -852,9 +813,7 @@ func TestAddGroupSAMLLink(t *testing.T) {
 		AccessLevel: DeveloperPermissions,
 		Name:        "gitlab_group_example_developer",
 	}
-	if !reflect.DeepEqual(want, link) {
-		t.Errorf("Groups.AddGroupSAMLLink returned %+v, want %+v", link, want)
-	}
+	assert.Equal(t, want, link)
 }
 
 func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
@@ -888,9 +847,7 @@ func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
 		Name:         "gitlab_group_example_developer",
 		MemberRoleID: 123,
 	}
-	if !reflect.DeepEqual(want, link) {
-		t.Errorf("Groups.AddGroupSAMLLink returned %+v, want %+v", link, want)
-	}
+	assert.Equal(t, want, link)
 }
 
 func TestAddGroupSAMLLinkWithProvider(t *testing.T) {
@@ -980,9 +937,7 @@ func TestGroupsService_ListGroupSharedProjects(t *testing.T) {
 			CreatedAt:         Ptr(time.Date(2020, time.January, 1, 0, 0, 0, 0, time.UTC)),
 		},
 	}
-	if !reflect.DeepEqual(want, projects) {
-		t.Errorf("Groups.ListGroupSharedProjects returned %+v, want %+v", projects, want)
-	}
+	assert.Equal(t, want, projects)
 }
 
 func TestRestoreGroup(t *testing.T) {
@@ -999,9 +954,7 @@ func TestRestoreGroup(t *testing.T) {
 		t.Errorf("Groups.RestoreGroup returned error: %v", err)
 	}
 	want := &Group{ID: 1, Name: "g"}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.RestoreGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestShareGroupWithGroup(t *testing.T) {
@@ -1036,9 +989,7 @@ func TestShareGroupWithGroup(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, Name: "g"}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.ShareGroupWithGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 
 	assert.Equal(t, int64(1), *input.MemberRoleID)
 }
@@ -1096,9 +1047,7 @@ func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, IPRestrictionRanges: ipRange}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.UpdatedGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestGetGroupWithEmailsEnabled(t *testing.T) {
@@ -1262,9 +1211,7 @@ func TestGetGroupPushRules(t *testing.T) {
 		RejectNonDCOCommits:        false,
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Groups.GetGroupPushRules returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestAddGroupPushRules(t *testing.T) {
@@ -1329,9 +1276,7 @@ func TestAddGroupPushRules(t *testing.T) {
 		RejectNonDCOCommits:        false,
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Groups.AddGroupPushRule returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestEditGroupPushRules(t *testing.T) {
@@ -1396,9 +1341,7 @@ func TestEditGroupPushRules(t *testing.T) {
 		RejectNonDCOCommits:        false,
 	}
 
-	if !reflect.DeepEqual(want, rule) {
-		t.Errorf("Groups.EditGroupPushRule returned %+v, want %+v", rule, want)
-	}
+	assert.Equal(t, want, rule)
 }
 
 func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
@@ -1436,9 +1379,7 @@ func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
 	}
 
 	want := &Group{ID: 1, AllowedEmailDomainsList: domain}
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.UpdatedGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
@@ -1536,9 +1477,7 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 // Test to ensure an error occurs when providing an avatar and multiple
@@ -1672,9 +1611,7 @@ func TestCreateGroupWithAvatar(t *testing.T) {
 		AvatarURL: "http://localhost/uploads/-/system/group/avatar/999/avatar.png",
 	}
 
-	if !reflect.DeepEqual(want, group) {
-		t.Errorf("Groups.CreateGroup returned %+v, want %+v", group, want)
-	}
+	assert.Equal(t, want, group)
 }
 
 func TestGroup_MergeSettings(t *testing.T) {

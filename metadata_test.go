@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetMetadata(t *testing.T) {
@@ -57,7 +58,5 @@ func TestGetMetadata(t *testing.T) {
 		},
 		Enterprise: true,
 	}
-	if !reflect.DeepEqual(want, version) {
-		t.Errorf("Metadata.GetMetadata returned %+v, want %+v", version, want)
-	}
+	assert.Equal(t, want, version)
 }

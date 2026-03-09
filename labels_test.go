@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -45,9 +44,7 @@ func TestCreateLabel(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := &Label{ID: 1, Name: "MyLabel", Color: "#11FF22", Priority: NewNullableWithValue(int64(2))}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("Labels.CreateLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestDeleteLabelbyID(t *testing.T) {
@@ -112,9 +109,7 @@ func TestUpdateLabel(t *testing.T) {
 
 	want := &Label{ID: 1, Name: "New Label", Color: "#11FF23", Description: "This is updated label", Priority: NewNullableWithValue(int64(42))}
 
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("Labels.UpdateLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestSubscribeToLabel(t *testing.T) {
@@ -131,9 +126,7 @@ func TestSubscribeToLabel(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("Labels.SubscribeToLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestUnsubscribeFromLabel(t *testing.T) {
@@ -170,9 +163,7 @@ func TestListLabels(t *testing.T) {
 		t.Log(err.Error() == "invalid ID type 1.1, the ID must be an int or a string")
 	}
 	want := []*Label{{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("Labels.ListLabels returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestGetLabel(t *testing.T) {
@@ -189,9 +180,7 @@ func TestGetLabel(t *testing.T) {
 		t.Log(err)
 	}
 	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
-	if !reflect.DeepEqual(want, label) {
-		t.Errorf("Labels.GetLabel returned %+v, want %+v", label, want)
-	}
+	assert.Equal(t, want, label)
 }
 
 func TestDeleteLabelWithOptions(t *testing.T) {

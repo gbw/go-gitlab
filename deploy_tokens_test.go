@@ -19,9 +19,10 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListAllDeployTokens(t *testing.T) {
@@ -70,9 +71,7 @@ func TestListAllDeployTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, deployTokens) {
-		t.Errorf("DeployTokens.ListAllDeployTokens returned %+v, want %+v", deployTokens, want)
-	}
+	assert.Equal(t, want, deployTokens)
 }
 
 func TestListProjectDeployTokens(t *testing.T) {
@@ -117,9 +116,7 @@ func TestListProjectDeployTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, deployTokens) {
-		t.Errorf("DeployTokens.ListProjectDeployTokens returned %+v, want %+v", deployTokens, want)
-	}
+	assert.Equal(t, want, deployTokens)
 }
 
 func TestGetProjectDeployTokens(t *testing.T) {
@@ -160,9 +157,7 @@ func TestGetProjectDeployTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, deployToken) {
-		t.Errorf("DeployTokens.GetProjectDeployToken returned %+v, want %+v", deployToken, want)
-	}
+	assert.Equal(t, want, deployToken)
 }
 
 func TestCreateProjectDeployToken(t *testing.T) {
@@ -210,9 +205,7 @@ func TestCreateProjectDeployToken(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, deployToken) {
-		t.Errorf("DeployTokens.CreateProjectDeployToken returned %+v, want %+v", deployToken, want)
-	}
+	assert.Equal(t, want, deployToken)
 }
 
 func TestDeleteProjectDeployToken(t *testing.T) {
@@ -279,9 +272,7 @@ func TestListGroupDeployTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, deployTokens) {
-		t.Errorf("DeployTokens.ListGroupDeployTokens returned %+v, want %+v", deployTokens, want)
-	}
+	assert.Equal(t, want, deployTokens)
 }
 
 func TestGetGroupDeployTokens(t *testing.T) {
@@ -322,9 +313,7 @@ func TestGetGroupDeployTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, deployToken) {
-		t.Errorf("DeployTokens.GetGroupDeployToken returned %+v, want %+v", deployToken, want)
-	}
+	assert.Equal(t, want, deployToken)
 }
 
 func TestCreateGroupDeployToken(t *testing.T) {
@@ -372,9 +361,7 @@ func TestCreateGroupDeployToken(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, deployToken) {
-		t.Errorf("DeployTokens.CreateGroupDeployToken returned %+v, want %+v", deployToken, want)
-	}
+	assert.Equal(t, want, deployToken)
 }
 
 func TestDeleteGroupDeployToken(t *testing.T) {

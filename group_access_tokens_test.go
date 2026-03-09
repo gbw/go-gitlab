@@ -18,9 +18,10 @@ package gitlab
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListGroupAccessTokens(t *testing.T) {
@@ -67,9 +68,7 @@ func TestListGroupAccessTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, groupAccessTokens) {
-		t.Errorf("GroupAccessTokens.ListGroupAccessTokens returned %+v, want %+v", groupAccessTokens, want)
-	}
+	assert.Equal(t, want, groupAccessTokens)
 }
 
 func TestGetGroupAccessToken(t *testing.T) {
@@ -100,9 +99,7 @@ func TestGetGroupAccessToken(t *testing.T) {
 		AccessLevel: AccessLevelValue(40),
 	}
 
-	if !reflect.DeepEqual(want, groupAccessToken) {
-		t.Errorf("GroupAccessTokens.GetGroupAccessToken returned %+v, want %+v", groupAccessToken, want)
-	}
+	assert.Equal(t, want, groupAccessToken)
 }
 
 func TestCreateGroupAccessToken(t *testing.T) {
@@ -135,9 +132,7 @@ func TestCreateGroupAccessToken(t *testing.T) {
 		AccessLevel: AccessLevelValue(40),
 	}
 
-	if !reflect.DeepEqual(want, groupAccessToken) {
-		t.Errorf("GroupAccessTokens.CreateGroupAccessToken returned %+v, want %+v", groupAccessToken, want)
-	}
+	assert.Equal(t, want, groupAccessToken)
 }
 
 func TestRotateGroupAccessToken(t *testing.T) {
@@ -171,9 +166,7 @@ func TestRotateGroupAccessToken(t *testing.T) {
 		AccessLevel: AccessLevelValue(30),
 	}
 
-	if !reflect.DeepEqual(want, rotatedToken) {
-		t.Errorf("GroupAccessTokens.RotateGroupAccessToken returned %+v, want %+v", rotatedToken, want)
-	}
+	assert.Equal(t, want, rotatedToken)
 }
 
 func TestRotateGroupAccessTokenSelf(t *testing.T) {
@@ -207,9 +200,7 @@ func TestRotateGroupAccessTokenSelf(t *testing.T) {
 		AccessLevel: AccessLevelValue(30),
 	}
 
-	if !reflect.DeepEqual(want, rotatedToken) {
-		t.Errorf("GroupAccessTokens.RotateGroupAccessTokenSelf returned %+v, want %+v", rotatedToken, want)
-	}
+	assert.Equal(t, want, rotatedToken)
 }
 
 func TestRevokeGroupAccessToken(t *testing.T) {

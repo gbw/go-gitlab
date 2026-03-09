@@ -20,7 +20,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 
@@ -352,9 +351,7 @@ func TestGetMergeRequestParticipants(t *testing.T) {
 		{ID: 2, Name: "User2", Username: "User2", State: "active", AvatarURL: "https://localhost/uploads/-/system/user/avatar/2/avatar.png", WebURL: "https://localhost/User2"},
 	}
 
-	if !reflect.DeepEqual(want, mergeRequestParticipants) {
-		t.Errorf("Issues.GetMergeRequestParticipants returned %+v, want %+v", mergeRequestParticipants, want)
-	}
+	assert.Equal(t, want, mergeRequestParticipants)
 }
 
 func TestGetMergeRequestReviewers(t *testing.T) {
@@ -463,9 +460,7 @@ func TestListMergeRequestDiffs(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, diffs) {
-		t.Errorf("MergeRequests.ListMergeRequestDiffs returned %+v, want %+v", diffs, want)
-	}
+	assert.Equal(t, want, diffs)
 }
 
 func TestShowMergeRequestRawDiffs(t *testing.T) {
@@ -608,9 +603,7 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 		},
 		ProjectID: 7,
 	}
-	if dependencies == nil || !reflect.DeepEqual(*want, *dependencies) {
-		t.Fatalf("MergeRequestDependencies.GetMergeRequestDependencies returned %+v, want %+v", dependencies, want)
-	}
+	assert.Equal(t, want, dependencies)
 }
 
 func TestGetMergeRequestDependencies(t *testing.T) {
