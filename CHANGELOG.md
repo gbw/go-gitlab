@@ -1,3 +1,26 @@
+## 2.5.0
+
+### 🚀 Features
+
+- feat(workitems): Implement `UpdateWorkItem()` ([!2793](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2793)) by [Carlos Corona](https://gitlab.com/ccorona2)
+
+### 🔄 Other Changes
+
+- chore(deps): update dependency golangci-lint to v2.11.2 ([!2810](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2810)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- test(no-release): replace reflect.DeepEqual with testify ([!2809](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2809)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- feat: allow OAuth success callback page to self-close when possible ([!2808](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2808)) by [Case Taintor](https://gitlab.com/case.taintor)
+- chore(deps): update dependency golangci-lint to v2.11.1 ([!2806](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2806)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.5.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.4.0...v2.5.0) (2026-03-09)
+
+
+### Features
+
+* allow OAuth success callback page to self-close when possible ([dca2e12](https://gitlab.com/gitlab-org/api/client-go/commit/dca2e12095fe0c2f185784469a8ea904db1a1be5))
+* **workitems:** Implement `UpdateWorkItem()` ([b93a55e](https://gitlab.com/gitlab-org/api/client-go/commit/b93a55e316ae95db3d23ff404c46c081db0ad3c7))
+
 ## 2.4.0
 
 ### 🚀 Features
