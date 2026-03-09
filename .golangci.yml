@@ -24,6 +24,7 @@ linters:
     - errorlint
     - goconst
     - godoclint
+    - forbidigo
     - misspell
     - modernize
     - nakedret
@@ -41,6 +42,10 @@ linters:
   disable:
     - errcheck
   settings:
+    forbidigo:
+      forbid:
+        - pattern: ^reflect\.DeepEqual$
+          msg: "Do not use `reflect.DeepEqual` in tests, use testify instead"
     misspell:
       locale: US
       ignore-rules:
@@ -127,6 +132,10 @@ linters:
       - path: ^testing/
         linters:
           - revive
+      # Enable forbidigo only in tests.
+      - path-except: _test\.go$
+        linters:
+          - forbidigo
     paths:
       - third_party$
       - builtin$

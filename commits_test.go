@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 
@@ -90,9 +89,7 @@ func TestGetCommitStatuses_NoOptions(t *testing.T) {
 	}
 
 	want := []*CommitStatus{{ID: 1}}
-	if !reflect.DeepEqual(want, statuses) {
-		t.Errorf("Commits.GetCommitStatuses returned %+v, want %+v", statuses, want)
-	}
+	assert.Equal(t, want, statuses)
 }
 
 func TestGetCommitStatuses_WithOptions(t *testing.T) {
@@ -127,9 +124,7 @@ func TestGetCommitStatuses_WithOptions(t *testing.T) {
 	}
 
 	want := []*CommitStatus{{ID: 1}}
-	if !reflect.DeepEqual(want, statuses) {
-		t.Errorf("Commits.GetCommitStatuses returned %+v, want %+v", statuses, want)
-	}
+	assert.Equal(t, want, statuses)
 }
 
 func TestSetCommitStatus(t *testing.T) {
@@ -166,9 +161,7 @@ func TestSetCommitStatus(t *testing.T) {
 	}
 
 	want := &CommitStatus{ID: 1}
-	if !reflect.DeepEqual(want, status) {
-		t.Errorf("Commits.SetCommitStatus returned %+v, want %+v", status, want)
-	}
+	assert.Equal(t, want, status)
 }
 
 func TestRevertCommit_NoOptions(t *testing.T) {

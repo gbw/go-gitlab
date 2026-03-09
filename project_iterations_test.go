@@ -3,8 +3,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListProjectIterations(t *testing.T) {
@@ -43,7 +44,5 @@ func TestListProjectIterations(t *testing.T) {
 		State:       2,
 		WebURL:      "http://gitlab.example.com/groups/my-group/-/iterations/13",
 	}}
-	if !reflect.DeepEqual(want, iterations) {
-		t.Errorf("ProjectIterations.ListProjectIterations returned %+v, want %+v", iterations, want)
-	}
+	assert.Equal(t, want, iterations)
 }

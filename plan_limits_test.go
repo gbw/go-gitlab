@@ -19,8 +19,9 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetCurrentPlanLimits(t *testing.T) {
@@ -60,9 +61,7 @@ func TestGetCurrentPlanLimits(t *testing.T) {
 		TerraformModuleMaxFileSize: 1073741824,
 	}
 
-	if !reflect.DeepEqual(want, planlimit) {
-		t.Errorf("PlanLimits.GetCurrentPlanLimits returned %+v, want %+v", planlimit, want)
-	}
+	assert.Equal(t, want, planlimit)
 }
 
 func TestChangePlanLimits(t *testing.T) {
@@ -103,7 +102,5 @@ func TestChangePlanLimits(t *testing.T) {
 		TerraformModuleMaxFileSize: 1073741824,
 	}
 
-	if !reflect.DeepEqual(want, planlimit) {
-		t.Errorf("PlanLimits.ChangePlanLimits returned %+v, want %+v", planlimit, want)
-	}
+	assert.Equal(t, want, planlimit)
 }

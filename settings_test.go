@@ -20,7 +20,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -42,9 +41,7 @@ func TestGetSettings(t *testing.T) {
 	}
 
 	want := &Settings{ID: 1, DefaultProjectsLimit: 100000}
-	if !reflect.DeepEqual(settings, want) {
-		t.Errorf("Settings.GetSettings returned %+v, want %+v", settings, want)
-	}
+	assert.Equal(t, want, settings)
 }
 
 func TestUpdateSettings(t *testing.T) {
@@ -65,9 +62,7 @@ func TestUpdateSettings(t *testing.T) {
 	}
 
 	want := &Settings{DefaultProjectsLimit: 100}
-	if !reflect.DeepEqual(settings, want) {
-		t.Errorf("Settings.UpdateSettings returned %+v, want %+v", settings, want)
-	}
+	assert.Equal(t, want, settings)
 }
 
 func TestSettingsWithEmptyContainerRegistry(t *testing.T) {
@@ -85,9 +80,7 @@ func TestSettingsWithEmptyContainerRegistry(t *testing.T) {
 	}
 
 	want := &Settings{ID: 1, ContainerRegistryImportCreatedBefore: nil}
-	if !reflect.DeepEqual(settings, want) {
-		t.Errorf("Settings.UpdateSettings returned %+v, want %+v", settings, want)
-	}
+	assert.Equal(t, want, settings)
 }
 
 func TestSettingsDefaultBranchProtectionDefaults(t *testing.T) {

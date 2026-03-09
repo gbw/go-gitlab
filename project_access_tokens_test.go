@@ -18,9 +18,10 @@ package gitlab
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListProjectAccessTokens(t *testing.T) {
@@ -67,9 +68,7 @@ func TestListProjectAccessTokens(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(want, projectAccessTokens) {
-		t.Errorf("ProjectAccessTokens.ListProjectAccessTokens returned %+v, want %+v", projectAccessTokens, want)
-	}
+	assert.Equal(t, want, projectAccessTokens)
 }
 
 func TestGetProjectAccessToken(t *testing.T) {
@@ -100,9 +99,7 @@ func TestGetProjectAccessToken(t *testing.T) {
 		AccessLevel: AccessLevelValue(40),
 	}
 
-	if !reflect.DeepEqual(want, projectAccessToken) {
-		t.Errorf("ProjectAccessTokens.GetProjectAccessToken returned %+v, want %+v", projectAccessToken, want)
-	}
+	assert.Equal(t, want, projectAccessToken)
 }
 
 func TestCreateProjectAccessToken(t *testing.T) {
@@ -135,9 +132,7 @@ func TestCreateProjectAccessToken(t *testing.T) {
 		AccessLevel: AccessLevelValue(40),
 	}
 
-	if !reflect.DeepEqual(want, projectAccessToken) {
-		t.Errorf("ProjectAccessTokens.CreateProjectAccessToken returned %+v, want %+v", projectAccessToken, want)
-	}
+	assert.Equal(t, want, projectAccessToken)
 }
 
 func TestRotateProjectAccessToken(t *testing.T) {
@@ -171,9 +166,7 @@ func TestRotateProjectAccessToken(t *testing.T) {
 		AccessLevel: AccessLevelValue(30),
 	}
 
-	if !reflect.DeepEqual(want, rotatedToken) {
-		t.Errorf("ProjectAccessTokens.RotateProjectAccessTokens returned %+v, want %+v", rotatedToken, want)
-	}
+	assert.Equal(t, want, rotatedToken)
 }
 
 func TestRotateProjectAccessTokenSelf(t *testing.T) {
@@ -207,9 +200,7 @@ func TestRotateProjectAccessTokenSelf(t *testing.T) {
 		AccessLevel: AccessLevelValue(30),
 	}
 
-	if !reflect.DeepEqual(want, rotatedToken) {
-		t.Errorf("ProjectAccessTokens.RotateProjectAccessTokenSelf returned %+v, want %+v", rotatedToken, want)
-	}
+	assert.Equal(t, want, rotatedToken)
 }
 
 func TestRevokeProjectAccessToken(t *testing.T) {

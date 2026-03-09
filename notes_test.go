@@ -19,7 +19,6 @@ package gitlab
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 
@@ -805,9 +804,7 @@ func TestCreateNote(t *testing.T) {
 		Internal: false,
 	}
 
-	if !reflect.DeepEqual(want, note) {
-		t.Errorf("Notes.CreateNote returned %+v, want %+v", note, want)
-	}
+	assert.Equal(t, want, note)
 }
 
 func TestCreateInternalNote(t *testing.T) {
@@ -834,9 +831,7 @@ func TestCreateInternalNote(t *testing.T) {
 		Internal: true,
 	}
 
-	if !reflect.DeepEqual(want, note) {
-		t.Errorf("Notes.CreateNote returned %+v, want %+v", note, want)
-	}
+	assert.Equal(t, want, note)
 }
 
 func TestGetSnippetNote(t *testing.T) {
