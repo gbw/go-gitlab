@@ -445,7 +445,7 @@ func (a *UserAvatar) MarshalJSON() ([]byte, error) {
 
 // ListUsersOptions represents the available ListUsers() options.
 //
-// GitLab API docs: https://docs.gitlab.com/api/users/#list-users
+// GitLab API docs: https://docs.gitlab.com/api/users/#list-all-users
 type ListUsersOptions struct {
 	ListOptions
 	Active          *bool   `url:"active,omitempty" json:"active,omitempty"`
@@ -528,6 +528,17 @@ type CreateUserOptions struct {
 	WebsiteURL          *string     `url:"website_url,omitempty" json:"website_url,omitempty"`
 	ViewDiffsFileByFile *bool       `url:"view_diffs_file_by_file,omitempty" json:"view_diffs_file_by_file,omitempty"`
 	PublicEmail         *string     `url:"public_email,omitempty" json:"public_email,omitempty"`
+	Auditor             *bool       `url:"auditor,omitempty" json:"auditor,omitempty"`
+	ColorSchemeID       *int        `url:"color_scheme_id,omitempty" json:"color_scheme_id,omitempty"`
+	CommitEmail         *string     `url:"commit_email,omitempty" json:"commit_email,omitempty"`
+	Discord             *string     `url:"discord,omitempty" json:"discord,omitempty"`
+	// ExtraSharedRunnersMinutesLimit can only be set by administrators. Premium and Ultimate only.
+	ExtraSharedRunnersMinutesLimit *int    `url:"extra_shared_runners_minutes_limit,omitempty" json:"extra_shared_runners_minutes_limit,omitempty"`
+	Github                         *string `url:"github,omitempty" json:"github,omitempty"`
+	GroupIDForSAML                 *int    `url:"group_id_for_saml,omitempty" json:"group_id_for_saml,omitempty"`
+	Pronouns                       *string `url:"pronouns,omitempty" json:"pronouns,omitempty"`
+	// SharedRunnersMinutesLimit can only be set by administrators. Premium and Ultimate only.
+	SharedRunnersMinutesLimit *int `url:"shared_runners_minutes_limit,omitempty" json:"shared_runners_minutes_limit,omitempty"`
 }
 
 func (s *UsersService) CreateUser(opt *CreateUserOptions, options ...RequestOptionFunc) (*User, *Response, error) {
@@ -607,7 +618,7 @@ func (s *UsersService) CurrentUser(options ...RequestOptionFunc) (*User, *Respon
 // UserStatus represents the current status of a user
 //
 // GitLab API docs:
-// https://docs.gitlab.com/api/users/#get-your-user-status
+// https://docs.gitlab.com/api/users/#retrieve-your-user-status
 type UserStatus struct {
 	Emoji         string            `json:"emoji"`
 	Availability  AvailabilityValue `json:"availability"`
@@ -660,7 +671,7 @@ func (s *UsersService) SetUserStatus(opt *UserStatusOptions, options ...RequestO
 // UserAssociationsCount represents the user associations count.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/api/users/#get-a-count-of-a-users-projects-groups-issues-and-merge-requests
+// https://docs.gitlab.com/api/users/#retrieve-a-count-of-a-users-projects-groups-issues-and-merge-requests
 type UserAssociationsCount struct {
 	GroupsCount        int64 `json:"groups_count"`
 	ProjectsCount      int64 `json:"projects_count"`
