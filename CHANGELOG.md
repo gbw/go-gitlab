@@ -1,3 +1,17 @@
+## 2.6.0
+
+### 🚀 Features
+
+- Add missing fields to CreateUserOptions struct ([!2790](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2790)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+
+### 🔄 Other Changes
+
+- chore(deps): update dependency golangci-lint to v2.11.3 ([!2811](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2811)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.6.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.5.0...v2.6.0) (2026-03-15)
+
 ## 2.5.0
 
 ### 🚀 Features
