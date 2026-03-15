@@ -1224,3 +1224,67 @@ func TestModifyUserWithViewDiffsFileByFile(t *testing.T) {
 	}
 	assert.Equal(t, want, user)
 }
+
+func TestCreateUserWithNewFields(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	path := "/api/v4/users"
+
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
+			t.Fatalf("Users.CreateUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
+		}
+		if r.ContentLength == -1 {
+			t.Fatalf("Users.CreateUser request content-length is -1")
+		}
+
+		testJSONBody(t, r, `{
+			"email": "user999@example.com",
+			"name": "Firstname Lastname",
+			"username": "user",
+			"auditor": true,
+			"color_scheme_id": 2,
+			"commit_email": "commit@example.com",
+			"discord": "discorduser",
+			"extra_shared_runners_minutes_limit": 100,
+			"github": "githubuser",
+			"group_id_for_saml": 1,
+			"pronouns": "they/them",
+			"shared_runners_minutes_limit": 200
+		}`)
+
+		w.WriteHeader(http.StatusCreated)
+		fmt.Fprint(w, `{
+			"email": "user999@example.com",
+			"id": 999,
+			"name":"Firstname Lastname",
+			"username":"user"
+		}`)
+	})
+
+	user, _, err := client.Users.CreateUser(&CreateUserOptions{
+		Email:                          Ptr("user999@example.com"),
+		Name:                           Ptr("Firstname Lastname"),
+		Username:                       Ptr("user"),
+		Auditor:                        Ptr(true),
+		ColorSchemeID:                  Ptr(2),
+		CommitEmail:                    Ptr("commit@example.com"),
+		Discord:                        Ptr("discorduser"),
+		ExtraSharedRunnersMinutesLimit: Ptr(100),
+		Github:                         Ptr("githubuser"),
+		GroupIDForSAML:                 Ptr(1),
+		Pronouns:                       Ptr("they/them"),
+		SharedRunnersMinutesLimit:      Ptr(200),
+	})
+	assert.NoError(t, err)
+
+	want := &User{
+		Email:    "user999@example.com",
+		ID:       999,
+		Name:     "Firstname Lastname",
+		Username: "user",
+	}
+	assert.Equal(t, want, user)
+}
