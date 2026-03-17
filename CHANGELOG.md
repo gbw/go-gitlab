@@ -1,3 +1,18 @@
+## 2.7.0
+
+### 🚀 Features
+
+- feat(workitems): add DeleteWorkItem method ([!2756](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2756)) by [Carlos Corona](https://gitlab.com/ccorona2)
+
+
+
+# [2.7.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.6.0...v2.7.0) (2026-03-17)
+
+
+### Features
+
+* **workitems:** add DeleteWorkItem method ([8362993](https://gitlab.com/gitlab-org/api/client-go/commit/83629939ccc78da1edd15f2a51579b283d2bbe4f))
+
 ## 2.6.0
 
 ### 🚀 Features
