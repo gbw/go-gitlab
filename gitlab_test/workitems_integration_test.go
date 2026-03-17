@@ -3,6 +3,8 @@
 package gitlab_test
 
 import (
+	"context"
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,7 +12,7 @@ import (
 	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 )
 
-func TestCreateGetUpdateWorkItem(t *testing.T) {
+func TestWorkItemLifeCycle(t *testing.T) {
 	t.Parallel()
 
 	client := SetupIntegrationClient(t)
@@ -28,9 +30,18 @@ func TestCreateGetUpdateWorkItem(t *testing.T) {
 		Color:        gitlab.Ptr("green"),
 	}
 
-	createdWI, err := CreateTestWorkItem(t, client, group.FullPath, gitlab.WorkItemTypeEpic, &createOpt)
+	createdWI, _, err := client.WorkItems.CreateWorkItem(group.FullPath, gitlab.WorkItemTypeEpic, &createOpt)
 	require.NoError(t, err, "CreateWorkItem failed")
 	require.NotNil(t, createdWI)
+
+	// clean up in case test fails too early
+	t.Cleanup(func() {
+		_, err := client.WorkItems.DeleteWorkItem(group.FullPath, createdWI.IID, gitlab.WithContext(context.Background()))
+		if err != nil && errors.Is(err, gitlab.ErrNotFound) {
+			return
+		}
+		require.NoError(t, err, "Failed to delete test work item in cleanup")
+	})
 
 	// THEN the work item should have the provided fields set correctly
 	assert.Equal(t, "Integration Test Work Item", createdWI.Title, "Field: Title")
@@ -80,6 +91,15 @@ func TestCreateGetUpdateWorkItem(t *testing.T) {
 	assert.Equal(t, updatedWI.Description, finalWI.Description, "Field: Description")
 	assert.Equal(t, deref(t, updatedWI.HealthStatus), deref(t, finalWI.HealthStatus), "Field: HealthStatus")
 	assert.Equal(t, deref(t, updatedWI.Color), deref(t, finalWI.Color), "Field: Color")
+
+	// STEP 5: Delete the work item
+	// WHEN deleting the work item
+	_, err = client.WorkItems.DeleteWorkItem(group.FullPath, createdWI.IID)
+	require.NoError(t, err, "DeleteWorkItem failed")
+
+	// THEN the work item should no longer be retrievable
+	_, _, err = client.WorkItems.GetWorkItem(group.FullPath, createdWI.IID)
+	require.ErrorIs(t, err, gitlab.ErrNotFound)
 }
 
 func deref(t *testing.T, ptr *string) string {

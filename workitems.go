@@ -17,6 +17,7 @@ type (
 		GetWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error)
 		UpdateWorkItem(fullPath string, iid int64, opt *UpdateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error)
+		DeleteWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// WorkItemsService handles communication with the work item related methods
@@ -105,14 +106,14 @@ var workItemTemplate = template.Must(template.Must(userCoreBasicTemplate.Clone()
 	id
 	iid
 	workItemType {
-		name
+	  name
 	}
 	state
 	title
 	description
 	confidential
 	author {
-		{{ template "UserCoreBasic" }}
+	  {{ template "UserCoreBasic" }}
 	}
 	createdAt
 	updatedAt
@@ -203,6 +204,26 @@ var getWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).
 		}
 	}
 `))
+
+const (
+	getWorkItemIDQuery = `
+			query GetWorkItemID($fullPath: ID!, $iid: String!) {
+				namespace(fullPath: $fullPath) {
+					workItem(iid: $iid) {
+						  id
+					}
+				}
+			}
+	`
+
+	deleteWorkItemQuery = `
+			mutation DeleteWorkItem($id: WorkItemID!) {
+					workItemDelete(input: { id: $id }) {
+							errors
+					}
+			}
+	`
+)
 
 // GetWorkItem gets a single work item.
 //
@@ -810,18 +831,6 @@ var updateWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone(
 	}
 `))
 
-const (
-	getWorkItemIDQuery = `
-		query GetWorkItemID($fullPath: ID!, $iid: String!) {
-			namespace(fullPath: $fullPath) {
-				workItem(iid: $iid) {
-					id
-				}
-			}
-		}
-	`
-)
-
 // createWorkItemTemplate is chained from workItemTemplate so it has access to both
 // UserCoreBasic and WorkItem templates.
 var createWorkItemTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("CreateWorkItem").Parse(`
@@ -1129,6 +1138,54 @@ type workItemUpdateInputGQL struct {
 	StatusWidget          *workItemWidgetStatusInputGQL                `json:"statusWidget,omitempty"`
 }
 
+// DeleteWorkItem deletes a single work item.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#mutationworkitemdelete
+func (s *WorkItemsService) DeleteWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*Response, error) {
+	// get the global ID
+	gid, resp, err := s.workItemGID(fullPath, iid, options...)
+	if err != nil {
+		if errors.Is(err, ErrEmptyResponse) {
+			return resp, ErrNotFound
+		}
+		return resp, err
+	}
+
+	mutation := GraphQLQuery{
+		Query: deleteWorkItemQuery,
+		Variables: map[string]any{
+			"id": gid.String(),
+		},
+	}
+
+	var result struct {
+		Data struct {
+			WorkItemDelete struct {
+				Errors []string `json:"errors"`
+			} `json:"workItemDelete"`
+		}
+		GenericGraphQLErrors
+	}
+
+	resp, err = s.client.GraphQL.Do(mutation, &result, options...)
+	if err != nil {
+		return resp, err
+	}
+
+	if len(result.Errors) != 0 {
+		return resp, &GraphQLResponseError{
+			Err:    errors.New("Mutation.workItemDelete failed"),
+			Errors: result.GenericGraphQLErrors,
+		}
+	}
+
+	if len(result.Data.WorkItemDelete.Errors) != 0 {
+		return resp, errors.New(strings.Join(result.Data.WorkItemDelete.Errors, ", "))
+	}
+
+	return resp, nil
+}
+
 // workItemGID queries for a work item's Global ID using fullPath and iid.
 // Returns the Global ID string or ErrNotFound if the work item doesn't exist.
 //
@@ -1148,8 +1205,8 @@ func (s *WorkItemsService) workItemGID(fullPath string, iid int64, options ...Re
 				WorkItem struct {
 					ID gidGQL `json:"id"`
 				} `json:"workItem"`
-			}
-		}
+			} `json:"namespace"`
+		} `json:"data"`
 		GenericGraphQLErrors
 	}
 
