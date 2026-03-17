@@ -1250,6 +1250,147 @@ func TestUpdateWorkItem(t *testing.T) {
 	}
 }
 
+func TestDeleteWorkItem(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name           string
+		fullPath       string
+		iid            int64
+		getIDResponse  io.WriterTo
+		deleteResponse io.WriterTo
+		wantErr        error
+	}{
+		{
+			name:     "successfully deletes work item",
+			fullPath: "test-gitlab-org/gitlab",
+			iid:      123,
+			getIDResponse: strings.NewReader(`{
+				"data": {
+					"namespace": {
+						"workItem": {
+							"id": "gid://gitlab/WorkItem/183771442"
+						}
+					}
+				}
+			}`),
+			deleteResponse: strings.NewReader(`{
+				"data": {
+					"workItemDelete": {
+						"clientMutationId": null,
+						"errors": [],
+						"namespace": {
+							"id": "gid://gitlab/Namespaces::ProjectNamespace/124736349"
+						}
+					}
+				}
+			}`),
+			wantErr: nil,
+		},
+		{
+			name:     "work item not found returns error",
+			fullPath: "test-gitlab-org/gitlab",
+			iid:      999,
+			getIDResponse: strings.NewReader(`{
+				 "data": {
+					 "namespace": {
+						 "workItem": null
+					 }
+				 }
+			 }`),
+			deleteResponse: nil,
+			wantErr:        ErrNotFound,
+		},
+		{
+			name:     "namespace not found returns error",
+			fullPath: "does/not/exist",
+			iid:      123,
+			getIDResponse: strings.NewReader(`{
+				 "data": {
+					 "namespace": null
+				 }
+			 }`),
+			deleteResponse: nil,
+			wantErr:        ErrNotFound,
+		},
+		{
+			name:     "delete mutation returns errors",
+			fullPath: "test-gitlab-org/gitlab",
+			iid:      123,
+			getIDResponse: strings.NewReader(`{
+				 "data": {
+					 "namespace": {
+						 "workItem": {
+							 "id": "gid://gitlab/WorkItem/123"
+						 }
+					 }
+				 }
+			 }`),
+			deleteResponse: strings.NewReader(`{
+				 "data": {
+					 "workItemDelete": {
+						 "clientMutationId": null,
+						 "errors": ["Work item cannot be deleted"],
+						 "namespace": null
+					 }
+				 }
+			 }`),
+			wantErr: errors.New("Work item cannot be deleted"),
+		},
+	}
+
+	schema := loadSchema(t)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			mux, client := setup(t)
+
+			mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
+				defer r.Body.Close()
+
+				testMethod(t, r, http.MethodPost)
+
+				var q GraphQLQuery
+				if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				if err := validateSchema(schema, q); err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+
+				w.Header().Set("Content-Type", "application/json")
+
+				switch {
+				case strings.Contains(q.Query, "GetWorkItemID"):
+					tt.getIDResponse.WriteTo(w)
+				case strings.Contains(q.Query, "DeleteWorkItem"):
+					if tt.deleteResponse == nil {
+						t.Errorf("unexpected DeleteWorkItem request: deleteResponse is nil")
+						http.Error(w, "unexpected request", http.StatusInternalServerError)
+						return
+					}
+					tt.deleteResponse.WriteTo(w)
+				default:
+					t.Errorf("unexpected query: %s", q.Query)
+					http.Error(w, "unexpected query", http.StatusBadRequest)
+				}
+			})
+
+			_, err := client.WorkItems.DeleteWorkItem(tt.fullPath, tt.iid)
+
+			if tt.wantErr != nil {
+				require.ErrorContains(t, err, tt.wantErr.Error())
+				return
+			}
+			require.NoError(t, err)
+		})
+	}
+}
+
 func loadSchema(t *testing.T) *graphql.Schema {
 	t.Helper()
 
@@ -1258,8 +1399,9 @@ func loadSchema(t *testing.T) *graphql.Schema {
 	fh, err := os.Open(filename)
 	switch {
 	case errors.Is(err, os.ErrNotExist):
-		t.Logf("GraphQL schema file %q is not available", filename)
-		return nil
+		t.Skipf("GraphQL schema file %q is not available; generate it with: "+
+			"npm install -g get-graphql-schema && "+
+			"get-graphql-schema https://gitlab.com/api/graphql --sdl > schema/gitlab.graphql", filename)
 
 	case err != nil:
 		t.Fatalf("opening schema failed: %v", err)
@@ -1272,7 +1414,7 @@ func loadSchema(t *testing.T) *graphql.Schema {
 
 	schema, err := graphql.ParseSchema(string(data), nil)
 	if err != nil {
-		t.Fatalf("parsing schema failed: %v", err)
+		t.Fatalf("parsing schema %q failed (schema file may be corrupt): %v", filename, err)
 	}
 
 	return schema

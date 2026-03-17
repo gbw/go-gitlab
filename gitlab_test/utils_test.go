@@ -275,17 +275,3 @@ func CreateTestEpicWithOptions(t *testing.T, client *gitlab.Client, gid any, opt
 
 	return epic, nil
 }
-
-// CreateTestWorkItemWithOptions creates a work item with the provided options.
-func CreateTestWorkItem(t *testing.T, client *gitlab.Client, fullPath string, workItemTypeID gitlab.WorkItemTypeID, opts *gitlab.CreateWorkItemOptions) (*gitlab.WorkItem, error) {
-	t.Helper()
-
-	wi, _, err := client.WorkItems.CreateWorkItem(fullPath, workItemTypeID, opts, gitlab.WithContext(t.Context()))
-	if err != nil {
-		return nil, err
-	}
-
-	// TODO: install a t.Cleanup() function once DeleteWorkItem has been implemented.
-
-	return wi, nil
-}

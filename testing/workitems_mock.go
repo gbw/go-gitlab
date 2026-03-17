@@ -84,6 +84,50 @@ func (c *MockWorkItemsServiceInterfaceCreateWorkItemCall) DoAndReturn(f func(str
 	return c
 }
 
+// DeleteWorkItem mocks base method.
+func (m *MockWorkItemsServiceInterface) DeleteWorkItem(fullPath string, iid int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{fullPath, iid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteWorkItem", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteWorkItem indicates an expected call of DeleteWorkItem.
+func (mr *MockWorkItemsServiceInterfaceMockRecorder) DeleteWorkItem(fullPath, iid any, options ...any) *MockWorkItemsServiceInterfaceDeleteWorkItemCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{fullPath, iid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteWorkItem", reflect.TypeOf((*MockWorkItemsServiceInterface)(nil).DeleteWorkItem), varargs...)
+	return &MockWorkItemsServiceInterfaceDeleteWorkItemCall{Call: call}
+}
+
+// MockWorkItemsServiceInterfaceDeleteWorkItemCall wrap *gomock.Call
+type MockWorkItemsServiceInterfaceDeleteWorkItemCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockWorkItemsServiceInterfaceDeleteWorkItemCall) Return(arg0 *gitlab.Response, arg1 error) *MockWorkItemsServiceInterfaceDeleteWorkItemCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockWorkItemsServiceInterfaceDeleteWorkItemCall) Do(f func(string, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockWorkItemsServiceInterfaceDeleteWorkItemCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockWorkItemsServiceInterfaceDeleteWorkItemCall) DoAndReturn(f func(string, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockWorkItemsServiceInterfaceDeleteWorkItemCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetWorkItem mocks base method.
 func (m *MockWorkItemsServiceInterface) GetWorkItem(fullPath string, iid int64, options ...gitlab.RequestOptionFunc) (*gitlab.WorkItem, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
