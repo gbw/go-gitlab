@@ -160,3 +160,64 @@ func Test_ProjectsMaxArtifactsSize_Integration(t *testing.T) {
 	// THEN MaxArtifactsSize should persist
 	assert.Equal(t, int64(150), retrievedProject.MaxArtifactsSize)
 }
+
+func TestCreateProjectWithMergeRequestTitleRegex_Integration(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a GitLab client
+	client := SetupIntegrationClient(t)
+
+	suffix := time.Now().UnixNano()
+	projectName := fmt.Sprintf("test-project-%d", suffix)
+	mergeTitle := fmt.Sprintf("^ABC-.*%d", suffix)
+	mergeTitleDescription := fmt.Sprintf("Title must start with ABC- %d", suffix)
+
+	// WHEN creating the project
+	project, _, err := client.Projects.CreateProject(&gitlab.CreateProjectOptions{
+		Name:                              gitlab.Ptr(projectName),
+		MergeRequestTitleRegex:            gitlab.Ptr(mergeTitle),
+		MergeRequestTitleRegexDescription: gitlab.Ptr(mergeTitleDescription),
+	})
+	require.NoError(t, err, "Failed to create project")
+
+	// THEN verify values returned from create API
+	assert.Equal(t, mergeTitle, project.MergeRequestTitleRegex)
+	assert.Equal(t, mergeTitleDescription, project.MergeRequestTitleRegexDescription)
+
+	// AND verify by retrieving the project again
+	retrievedProject, _, err := client.Projects.GetProject(project.ID, nil)
+	require.NoError(t, err, "Failed to retrieve project")
+
+	assert.Equal(t, mergeTitle, retrievedProject.MergeRequestTitleRegex)
+	assert.Equal(t, mergeTitleDescription, retrievedProject.MergeRequestTitleRegexDescription)
+}
+
+func TestEditMergeRequestTitleRegex_Integration(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a GitLab client and a test project
+	client := SetupIntegrationClient(t)
+	project := CreateTestProject(t, client)
+
+	suffix := time.Now().UnixNano()
+	mergeTitle := fmt.Sprintf("^ABC-.*%d", suffix)
+	mergeTitleDescription := fmt.Sprintf("Title must start with ABC- %d", suffix)
+
+	// WHEN editing the project
+	editProj, _, err := client.Projects.EditProject(project.ID, &gitlab.EditProjectOptions{
+		MergeRequestTitleRegex:            gitlab.Ptr(mergeTitle),
+		MergeRequestTitleRegexDescription: gitlab.Ptr(mergeTitleDescription),
+	})
+	require.NoError(t, err, "Failed to edit MergeRequestTitleRegex")
+
+	// THEN verify values returned from edit API
+	assert.Equal(t, mergeTitle, editProj.MergeRequestTitleRegex)
+	assert.Equal(t, mergeTitleDescription, editProj.MergeRequestTitleRegexDescription)
+
+	// AND verify by retrieving the project again
+	retrievedProject, _, err := client.Projects.GetProject(project.ID, nil)
+	require.NoError(t, err, "Failed to retrieve project after edit")
+
+	assert.Equal(t, mergeTitle, retrievedProject.MergeRequestTitleRegex)
+	assert.Equal(t, mergeTitleDescription, retrievedProject.MergeRequestTitleRegexDescription)
+}

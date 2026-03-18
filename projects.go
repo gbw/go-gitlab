@@ -465,7 +465,8 @@ type Project struct {
 	ModelRegistryAccessLevel                  AccessControlValue                          `json:"model_registry_access_level"`
 	PreReceiveSecretDetectionEnabled          bool                                        `json:"pre_receive_secret_detection_enabled"`
 	AutoDuoCodeReviewEnabled                  bool                                        `json:"auto_duo_code_review_enabled"`
-
+	MergeRequestTitleRegex                    string                                      `json:"merge_request_title_regex"`
+	MergeRequestTitleRegexDescription         string                                      `json:"merge_request_title_regex_description"`
 	// Deprecated: use Topics instead
 	TagList []string `json:"tag_list"`
 	// Deprecated: use IssuesAccessLevel instead
@@ -889,7 +890,8 @@ type CreateProjectOptions struct {
 	UseCustomTemplate                         *bool                                `url:"use_custom_template,omitempty" json:"use_custom_template,omitempty"`
 	Visibility                                *VisibilityValue                     `url:"visibility,omitempty" json:"visibility,omitempty"`
 	WikiAccessLevel                           *AccessControlValue                  `url:"wiki_access_level,omitempty" json:"wiki_access_level,omitempty"`
-
+	MergeRequestTitleRegex                    *string                              `url:"merge_request_title_regex,omitempty" json:"merge_request_title_regex,omitempty"`
+	MergeRequestTitleRegexDescription         *string                              `url:"merge_request_title_regex_description,omitempty" json:"merge_request_title_regex_description,omitempty"`
 	// Deprecated: use Merge Request Approvals API instead
 	ApprovalsBeforeMerge *int64 `url:"approvals_before_merge,omitempty" json:"approvals_before_merge,omitempty"`
 	// Deprecated: use PublicJobs instead
@@ -1091,7 +1093,8 @@ type EditProjectOptions struct {
 	Topics                                    *[]string                                    `url:"topics,omitempty" json:"topics,omitempty"`
 	Visibility                                *VisibilityValue                             `url:"visibility,omitempty" json:"visibility,omitempty"`
 	WikiAccessLevel                           *AccessControlValue                          `url:"wiki_access_level,omitempty" json:"wiki_access_level,omitempty"`
-
+	MergeRequestTitleRegex                    *string                                      `url:"merge_request_title_regex,omitempty" json:"merge_request_title_regex,omitempty"`
+	MergeRequestTitleRegexDescription         *string                                      `url:"merge_request_title_regex_description,omitempty" json:"merge_request_title_regex_description,omitempty"`
 	// Deprecated: use Merge Request Approvals API instead
 	ApprovalsBeforeMerge *int64 `url:"approvals_before_merge,omitempty" json:"approvals_before_merge,omitempty"`
 	// Deprecated: use PublicJobs instead
