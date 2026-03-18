@@ -2409,3 +2409,61 @@ func TestListProjectStarrers(t *testing.T) {
 
 	assert.Equal(t, want, starrers)
 }
+
+func TestCreateMergeRequestTitleRegex(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+
+		body, err := io.ReadAll(r.Body)
+		assert.NoError(t, err)
+		assert.Contains(t, string(body), "merge_request_title_regex")
+		assert.Contains(t, string(body), "merge_request_title_regex_description")
+
+		fmt.Fprint(w, `{"id":1}`)
+	})
+
+	opt := &CreateProjectOptions{
+		Name:                              Ptr("n"),
+		MergeRequestTitleRegex:            Ptr("^ABC-.*"),
+		MergeRequestTitleRegexDescription: Ptr("Title must start with ABC-"),
+	}
+
+	project, resp, err := client.Projects.CreateProject(opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := &Project{ID: 1}
+	assert.Equal(t, want, project)
+}
+
+func TestEditMergeRequestTitleRegex(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		body, err := io.ReadAll(r.Body)
+		assert.NoError(t, err)
+
+		assert.Contains(t, string(body), "merge_request_title_regex")
+		assert.Contains(t, string(body), "merge_request_title_regex_description")
+
+		fmt.Fprint(w, `{"id":1}`)
+	})
+
+	opt := &EditProjectOptions{
+		MergeRequestTitleRegex:            Ptr("^ABC-.*"),
+		MergeRequestTitleRegexDescription: Ptr("Title must start with ABC-"),
+	}
+
+	project, resp, err := client.Projects.EditProject(1, opt)
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	want := &Project{ID: 1}
+	assert.Equal(t, want, project)
+}
