@@ -2,11 +2,8 @@ package gitlab
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"net/url"
 	"testing"
 	"time"
 
@@ -27,9 +24,7 @@ func TestListGroups(t *testing.T) {
 		})
 
 	groups, _, err := client.Groups.ListGroups(&ListGroupsOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListGroups returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Group{{ID: 1}, {ID: 2}}
 	assert.Equal(t, want, groups)
@@ -60,9 +55,7 @@ func TestListGroups_Filtering(t *testing.T) {
 	}
 
 	groups, _, err := client.Groups.ListGroups(opt)
-	if err != nil {
-		t.Errorf("Groups.ListGroups returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Group{{ID: 1}}
 	assert.Equal(t, want, groups)
@@ -116,9 +109,7 @@ func TestGetGroup(t *testing.T) {
 		})
 
 	group, _, err := client.Groups.GetGroup("g", &GetGroupOptions{})
-	if err != nil {
-		t.Errorf("Groups.GetGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Create the group shares struct to test.
 	shares := []SharedWithGroup{
@@ -144,9 +135,7 @@ func TestGetGroupWithFileTemplateId(t *testing.T) {
 		})
 
 	group, _, err := client.Groups.GetGroup("g", &GetGroupOptions{})
-	if err != nil {
-		t.Errorf("Groups.GetGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, Name: "g", FileTemplateProjectID: 12345}
 	assert.Equal(t, want, group)
@@ -168,9 +157,7 @@ func TestCreateGroup(t *testing.T) {
 	}
 
 	group, _, err := client.Groups.CreateGroup(opt, nil)
-	if err != nil {
-		t.Errorf("Groups.CreateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, Name: "g", Path: "g"}
 	assert.Equal(t, want, group)
@@ -193,9 +180,7 @@ func TestCreateGroupWithDefaultBranch(t *testing.T) {
 	}
 
 	group, _, err := client.Groups.CreateGroup(opt, nil)
-	if err != nil {
-		t.Errorf("Groups.CreateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, Name: "g", Path: "g", DefaultBranch: "branch"}
 	assert.Equal(t, want, group)
@@ -205,16 +190,26 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	var jsonRequestBody CreateGroupOptions
 	mux.HandleFunc("/api/v4/groups",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-
-			testData, _ := io.ReadAll(r.Body)
-			err := json.Unmarshal(testData, &jsonRequestBody)
-			if err != nil {
-				t.Fatal("Failed to unmarshal request body into an interface.")
-			}
+			testBodyJSON(t, r, &CreateGroupOptions{
+				Name: Ptr("g"),
+				Path: Ptr("g"),
+				DefaultBranchProtectionDefaults: &DefaultBranchProtectionDefaultsOptions{
+					AllowedToPush: &[]*GroupAccessLevel{
+						{
+							AccessLevel: Ptr(MaintainerPermissions),
+						},
+					},
+					AllowedToMerge: &[]*GroupAccessLevel{
+						{
+							AccessLevel: Ptr(MaintainerPermissions),
+						},
+					},
+					CodeOwnerApprovalRequired: Ptr(true),
+				},
+			})
 
 			fmt.Fprint(w, `
 			{
@@ -258,9 +253,7 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 	}
 
 	group, _, err := client.Groups.CreateGroup(opt, nil)
-	if err != nil {
-		t.Errorf("Groups.CreateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Create the group that we want to get back
 	want := &Group{
@@ -283,17 +276,6 @@ func TestCreateGroupDefaultBranchSettings(t *testing.T) {
 	}
 
 	assert.Equal(t, want, group)
-
-	// Validate the request does what we want it to
-	allowedToMerge := *jsonRequestBody.DefaultBranchProtectionDefaults.AllowedToMerge
-	allowedToPush := *jsonRequestBody.DefaultBranchProtectionDefaults.AllowedToPush
-
-	assert.Equal(t, Ptr(MaintainerPermissions), allowedToMerge[0].AccessLevel)
-	assert.Equal(t, Ptr(MaintainerPermissions), allowedToPush[0].AccessLevel)
-	assert.True(
-		t,
-		*jsonRequestBody.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired,
-	)
 }
 
 func TestTransferGroup(t *testing.T) {
@@ -307,9 +289,7 @@ func TestTransferGroup(t *testing.T) {
 		})
 
 	group, _, err := client.Groups.TransferGroup(1, 2)
-	if err != nil {
-		t.Errorf("Groups.TransferGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1}
 	assert.Equal(t, want, group)
@@ -330,9 +310,7 @@ func TestTransferSubGroup(t *testing.T) {
 	}
 
 	group, _, err := client.Groups.TransferSubGroup(1, opt)
-	if err != nil {
-		t.Errorf("Groups.TransferSubGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, ParentID: 2}
 	assert.Equal(t, want, group)
@@ -349,57 +327,32 @@ func TestDeleteGroup(t *testing.T) {
 		})
 
 	resp, err := client.Groups.DeleteGroup(1, nil)
-	if err != nil {
-		t.Errorf("Groups.DeleteGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := http.StatusAccepted
-	got := resp.StatusCode
-	if got != want {
-		t.Errorf("Groups.DeleteGroup returned %d, want %d", got, want)
-	}
+	require.NotNil(t, resp)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
 
 func TestDeleteGroup_WithPermanentDelete(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	var params url.Values
 
 	mux.HandleFunc("/api/v4/groups/1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodDelete)
 			w.WriteHeader(http.StatusAccepted)
-
-			// Get the request parameters
-			parsedParams, err := url.ParseQuery(r.URL.RawQuery)
-			if err != nil {
-				t.Errorf("Groups.DeleteGroup returned error when parsing test parameters: %v", err)
-			}
-			params = parsedParams
+			testParam(t, r, "permanently_remove", "true")
+			testParam(t, r, "full_path", "testPath")
 		})
 
 	resp, err := client.Groups.DeleteGroup(1, &DeleteGroupOptions{
 		PermanentlyRemove: Ptr(true),
 		FullPath:          Ptr("testPath"),
 	})
-	if err != nil {
-		t.Errorf("Groups.DeleteGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	// Test that our status code matches
-	if resp.StatusCode != http.StatusAccepted {
-		t.Errorf("Groups.DeleteGroup returned %d, want %d", resp.StatusCode, http.StatusAccepted)
-	}
-
-	// Test that "permanently_remove" is set to true
-	if params.Get("permanently_remove") != "true" {
-		t.Errorf("Groups.DeleteGroup returned %v, want %v", params.Get("permanently_remove"), true)
-	}
-
-	// Test that "full_path" is set to "testPath"
-	if params.Get("full_path") != "testPath" {
-		t.Errorf("Groups.DeleteGroup returned %v, want %v", params.Get("full_path"), "testPath")
-	}
+	require.NotNil(t, resp)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
 
 func TestSearchGroup(t *testing.T) {
@@ -413,9 +366,7 @@ func TestSearchGroup(t *testing.T) {
 		})
 
 	groups, _, err := client.Groups.SearchGroup("foobar")
-	if err != nil {
-		t.Errorf("Groups.SearchGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Group{{ID: 1, Name: "Foobar Group"}}
 	assert.Equal(t, want, groups)
@@ -432,9 +383,7 @@ func TestUpdateGroup(t *testing.T) {
 		})
 
 	group, _, err := client.Groups.UpdateGroup(1, &UpdateGroupOptions{})
-	if err != nil {
-		t.Errorf("Groups.UpdateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1}
 	assert.Equal(t, want, group)
@@ -455,9 +404,7 @@ func TestUpdateGroupWithDefaultBranch(t *testing.T) {
 	}
 
 	group, _, err := client.Groups.UpdateGroup(1, opt)
-	if err != nil {
-		t.Errorf("Groups.UpdateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, DefaultBranch: "branch"}
 	assert.Equal(t, want, group)
@@ -475,9 +422,7 @@ func TestListGroupProjects(t *testing.T) {
 
 	projects, _, err := client.Groups.ListGroupProjects(22,
 		&ListGroupProjectsOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListGroupProjects returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
 	assert.Equal(t, want, projects)
@@ -496,9 +441,7 @@ func TestListGroupProjectsWithActive(t *testing.T) {
 
 	projects, _, err := client.Groups.ListGroupProjects(22,
 		&ListGroupProjectsOptions{Active: Ptr(true)})
-	if err != nil {
-		t.Errorf("Groups.ListGroupProjects returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Project{{ID: 1}, {ID: 2}}
 	assert.Equal(t, want, projects)
@@ -515,9 +458,7 @@ func TestListSubGroups(t *testing.T) {
 		})
 
 	groups, _, err := client.Groups.ListSubGroups(1, &ListSubGroupsOptions{})
-	if err != nil {
-		t.Errorf("Groups.ListSubGroups returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Group{{ID: 1}, {ID: 2}}
 	assert.Equal(t, want, groups)
@@ -683,9 +624,7 @@ func TestListGroupSAMLLinks(t *testing.T) {
 		})
 
 	links, _, err := client.Groups.ListGroupSAMLLinks(1)
-	if err != nil {
-		t.Errorf("Groups.ListGroupSAMLLinks returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*SAMLGroupLink{
 		{
@@ -717,9 +656,7 @@ func TestListGroupSAMLLinksCustomRole(t *testing.T) {
 		})
 
 	links, _, err := client.Groups.ListGroupSAMLLinks(1)
-	if err != nil {
-		t.Errorf("Groups.ListGroupSAMLLinks returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*SAMLGroupLink{
 		{
@@ -746,9 +683,7 @@ func TestGetGroupSAMLLink(t *testing.T) {
 		})
 
 	links, _, err := client.Groups.GetGroupSAMLLink(1, "gitlab_group_example_developer")
-	if err != nil {
-		t.Errorf("Groups.GetGroupSAMLLinks returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &SAMLGroupLink{
 		AccessLevel: DeveloperPermissions,
@@ -773,9 +708,7 @@ func TestGetGroupSAMLLinkCustomRole(t *testing.T) {
 		})
 
 	links, _, err := client.Groups.GetGroupSAMLLink(1, "gitlab_group_example_developer")
-	if err != nil {
-		t.Errorf("Groups.GetGroupSAMLLinks returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &SAMLGroupLink{
 		AccessLevel:  DeveloperPermissions,
@@ -805,9 +738,7 @@ func TestAddGroupSAMLLink(t *testing.T) {
 	}
 
 	link, _, err := client.Groups.AddGroupSAMLLink(1, opt)
-	if err != nil {
-		t.Errorf("Groups.AddGroupSAMLLink returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &SAMLGroupLink{
 		AccessLevel: DeveloperPermissions,
@@ -838,9 +769,7 @@ func TestAddGroupSAMLLinkCustomRole(t *testing.T) {
 	}
 
 	link, _, err := client.Groups.AddGroupSAMLLink(1, opt)
-	if err != nil {
-		t.Errorf("Groups.AddGroupSAMLLink returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &SAMLGroupLink{
 		AccessLevel:  DeveloperPermissions,
@@ -913,9 +842,7 @@ func TestGroupsService_ListGroupSharedProjects(t *testing.T) {
 
 	opt := &ListGroupSharedProjectsOptions{ListOptions: ListOptions{Page: 2, PerPage: 3}}
 	projects, _, err := client.Groups.ListGroupSharedProjects(1, opt)
-	if err != nil {
-		t.Errorf("Groups.ListGroupSharedProjects returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*Project{
 		{
@@ -950,9 +877,7 @@ func TestRestoreGroup(t *testing.T) {
 		})
 
 	group, _, err := client.Groups.RestoreGroup(1)
-	if err != nil {
-		t.Errorf("Groups.RestoreGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 	want := &Group{ID: 1, Name: "g"}
 	assert.Equal(t, want, group)
 }
@@ -961,18 +886,13 @@ func TestShareGroupWithGroup(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	var input ShareGroupWithGroupOptions
 	mux.HandleFunc("/api/v4/groups/1/share",
 		func(w http.ResponseWriter, r *http.Request) {
-			// Parse the options so we can test them
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("Unable to read request body. Err: %v", err)
-			}
-			err = json.Unmarshal(body, &input)
-			if err != nil {
-				t.Fatalf("Unable to unmarshal request body. Err: %v", err)
-			}
+			testBodyJSON(t, r, map[string]any{
+				"group_id":       float64(1),
+				"group_access":   float64(30),
+				"member_role_id": float64(1),
+			})
 
 			// Return group details
 			testMethod(t, r, http.MethodPost)
@@ -984,14 +904,10 @@ func TestShareGroupWithGroup(t *testing.T) {
 		GroupAccess:  Ptr(DeveloperPermissions),
 		MemberRoleID: Ptr(int64(1)),
 	})
-	if err != nil {
-		t.Errorf("Groups.ShareGroupWithGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, Name: "g"}
 	assert.Equal(t, want, group)
-
-	assert.Equal(t, int64(1), *input.MemberRoleID)
 }
 
 func TestUnshareGroupFromGroup(t *testing.T) {
@@ -1004,12 +920,9 @@ func TestUnshareGroupFromGroup(t *testing.T) {
 		})
 
 	r, err := client.Groups.UnshareGroupFromGroup(1, 2)
-	if err != nil {
-		t.Errorf("Groups.UnshareGroupFromGroup returned error: %v", err)
-	}
-	if r.StatusCode != 204 {
-		t.Errorf("Groups.UnshareGroupFromGroup returned status code %d", r.StatusCode)
-	}
+	require.NoError(t, err)
+	require.NotNil(t, r)
+	assert.Equal(t, http.StatusNoContent, r.StatusCode)
 }
 
 func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
@@ -1020,21 +933,9 @@ func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("Failed to read the request body. Error: %v", err)
-			}
-
-			var bodyJSON map[string]any
-			err = json.Unmarshal(body, &bodyJSON)
-			if err != nil {
-				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
-			}
-
-			if bodyJSON["ip_restriction_ranges"] != ipRange {
-				t.Fatalf("Test failed. `ip_restriction_ranges` expected to be '%v', got %v", ipRange, bodyJSON["ip_restriction_ranges"])
-			}
+			testBodyJSON(t, r, map[string]any{
+				"ip_restriction_ranges": ipRange,
+			})
 
 			fmt.Fprintf(w, `{"id": 1, "ip_restriction_ranges" : "%v"}`, ipRange)
 		})
@@ -1042,9 +943,7 @@ func TestUpdateGroupWithIPRestrictionRanges(t *testing.T) {
 	group, _, err := client.Groups.UpdateGroup(1, &UpdateGroupOptions{
 		IPRestrictionRanges: Ptr(ipRange),
 	})
-	if err != nil {
-		t.Errorf("Groups.UpdateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, IPRestrictionRanges: ipRange}
 	assert.Equal(t, want, group)
@@ -1086,13 +985,9 @@ func TestGetGroupWithEmailsEnabled(t *testing.T) {
 		})
 
 	group, _, err := client.Groups.GetGroup(1, &GetGroupOptions{})
-	if err != nil {
-		t.Errorf("Groups.UpdateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	if !group.EmailsEnabled {
-		t.Fatalf("Failed to parse `emails_enabled`. Wanted true, got %v", group.EmailsEnabled)
-	}
+	assert.True(t, group.EmailsEnabled)
 }
 
 func TestCreateGroupWithEmailsEnabled(t *testing.T) {
@@ -1102,32 +997,14 @@ func TestCreateGroupWithEmailsEnabled(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("Failed to read the request body. Error: %v", err)
-			}
-
-			// unmarshal into generic JSON since we don't want to test CreateGroupOptions using itself to validate.
-			var bodyJSON map[string]any
-			err = json.Unmarshal(body, &bodyJSON)
-			if err != nil {
-				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
-			}
-
-			if bodyJSON["emails_enabled"] != true {
-				t.Fatalf("Test failed. `emails_enabled` expected to be true, got %v", bodyJSON["emails_enabled"])
-			}
-
+			testBodyJSON(t, r, map[string]bool{"emails_enabled": true})
 			// Response is tested via the "GET" test, only test the actual request here.
 			fmt.Fprint(w, `
 			{}`)
 		})
 
 	_, _, err := client.Groups.CreateGroup(&CreateGroupOptions{EmailsEnabled: Ptr(true)})
-	if err != nil {
-		t.Errorf("Groups.CreateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestUpdateGroupWithEmailsEnabled(t *testing.T) {
@@ -1137,32 +1014,14 @@ func TestUpdateGroupWithEmailsEnabled(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("Failed to read the request body. Error: %v", err)
-			}
-
-			// unmarshal into generic JSON since we don't want to test UpdateGroupOptions using itself to validate.
-			var bodyJSON map[string]any
-			err = json.Unmarshal(body, &bodyJSON)
-			if err != nil {
-				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
-			}
-
-			if bodyJSON["emails_enabled"] != true {
-				t.Fatalf("Test failed. `emails_enabled` expected to be true, got %v", bodyJSON["emails_enabled"])
-			}
-
+			testBodyJSON(t, r, map[string]bool{"emails_enabled": true})
 			// Response is tested via the "GET" test, only test the actual request here.
 			fmt.Fprint(w, `
 			{}`)
 		})
 
 	_, _, err := client.Groups.UpdateGroup(1, &UpdateGroupOptions{EmailsEnabled: Ptr(true)})
-	if err != nil {
-		t.Errorf("Groups.UpdateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestGetGroupPushRules(t *testing.T) {
@@ -1190,9 +1049,7 @@ func TestGetGroupPushRules(t *testing.T) {
 	})
 
 	rule, _, err := client.Groups.GetGroupPushRules(1)
-	if err != nil {
-		t.Errorf("Groups.GetGroupPushRules returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupPushRules{
 		ID:                         1,
@@ -1255,9 +1112,7 @@ func TestAddGroupPushRules(t *testing.T) {
 	}
 
 	rule, _, err := client.Groups.AddGroupPushRule(1, opt)
-	if err != nil {
-		t.Errorf("Groups.AddGroupPushRule returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupPushRules{
 		ID:                         1,
@@ -1320,9 +1175,7 @@ func TestEditGroupPushRules(t *testing.T) {
 	}
 
 	rule, _, err := client.Groups.EditGroupPushRule(1, opt)
-	if err != nil {
-		t.Errorf("Groups.EditGroupPushRule returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupPushRules{
 		ID:                         1,
@@ -1352,21 +1205,7 @@ func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("Failed to read the request body. Error: %v", err)
-			}
-
-			var bodyJSON map[string]any
-			err = json.Unmarshal(body, &bodyJSON)
-			if err != nil {
-				t.Fatalf("Failed to parse the request body into JSON. Error: %v", err)
-			}
-
-			if bodyJSON["allowed_email_domains_list"] != domain {
-				t.Fatalf("Test failed. `allowed_email_domains_list` expected to be '%v', got %v", domain, bodyJSON["allowed_email_domains_list"])
-			}
+			testBodyJSON(t, r, map[string]string{"allowed_email_domains_list": domain})
 
 			fmt.Fprintf(w, `{"id": 1, "allowed_email_domains_list" : "%v"}`, domain)
 		})
@@ -1374,9 +1213,7 @@ func TestUpdateGroupWithAllowedEmailDomainsList(t *testing.T) {
 	group, _, err := client.Groups.UpdateGroup(1, &UpdateGroupOptions{
 		AllowedEmailDomainsList: Ptr(domain),
 	})
-	if err != nil {
-		t.Errorf("Groups.UpdateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Group{ID: 1, AllowedEmailDomainsList: domain}
 	assert.Equal(t, want, group)
@@ -1452,9 +1289,7 @@ func TestCreateGroupDefaultBranchSettingsWithAvatar(t *testing.T) {
 	var _ query.Encoder = &DefaultBranchProtectionDefaultsOptions{}
 
 	group, _, err := client.Groups.CreateGroup(opt, nil)
-	if err != nil {
-		t.Errorf("Groups.CreateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Create the group that we want to get back
 	want := &Group{
@@ -1599,9 +1434,7 @@ func TestCreateGroupWithAvatar(t *testing.T) {
 	}
 
 	group, _, err := client.Groups.CreateGroup(opt, nil)
-	if err != nil {
-		t.Errorf("Groups.CreateGroup returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Create the group that we want to get back
 	want := &Group{
@@ -1652,11 +1485,11 @@ func TestGroup_MergeSettings(t *testing.T) {
 		mux.HandleFunc("/api/v4/groups/1", func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
 
-			// Verify the request body contains the merge settings
-			body, _ := io.ReadAll(r.Body)
-			assert.Contains(t, string(body), "only_allow_merge_if_pipeline_succeeds")
-			assert.Contains(t, string(body), "allow_merge_on_skipped_pipeline")
-			assert.Contains(t, string(body), "only_allow_merge_if_all_discussions_are_resolved")
+			testBodyJSON(t, r, map[string]bool{
+				"only_allow_merge_if_pipeline_succeeds":            false,
+				"allow_merge_on_skipped_pipeline":                  true,
+				"only_allow_merge_if_all_discussions_are_resolved": false,
+			})
 
 			fmt.Fprint(w, `{
 				"id": 1,
@@ -1668,13 +1501,10 @@ func TestGroup_MergeSettings(t *testing.T) {
 			}`)
 		})
 
-		trueValue := true
-		falseValue := false
-
 		opt := &UpdateGroupOptions{
-			OnlyAllowMergeIfPipelineSucceeds:          &falseValue,
-			AllowMergeOnSkippedPipeline:               &trueValue,
-			OnlyAllowMergeIfAllDiscussionsAreResolved: &falseValue,
+			OnlyAllowMergeIfPipelineSucceeds:          Ptr(false),
+			AllowMergeOnSkippedPipeline:               Ptr(true),
+			OnlyAllowMergeIfAllDiscussionsAreResolved: Ptr(false),
 		}
 
 		group, _, err := client.Groups.UpdateGroup(1, opt)
