@@ -17,9 +17,7 @@
 package gitlab
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"testing"
 	"time"
@@ -28,8 +26,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 )
-
-var testRevertCommitTargetBranch = "release"
 
 func TestGetCommit(t *testing.T) {
 	t.Parallel()
@@ -41,12 +37,9 @@ func TestGetCommit(t *testing.T) {
 	})
 
 	commit, resp, err := client.Commits.GetCommit("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", nil)
-	if err != nil {
-		t.Fatalf("Commits.GetCommit returned error: %v, response: %v", err, resp)
-	}
+	require.NoError(t, err)
 
-	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
-	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
+	require.NotNil(t, resp)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -65,8 +58,8 @@ func TestGetCommit(t *testing.T) {
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
-			UpdatedAt: &updatedAt,
-			CreatedAt: &createdAt,
+			UpdatedAt: Ptr(time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)),
+			CreatedAt: Ptr(time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)),
 		},
 		ProjectID: 13083,
 	}
@@ -84,9 +77,7 @@ func TestGetCommitStatuses_NoOptions(t *testing.T) {
 	})
 
 	statuses, _, err := client.Commits.GetCommitStatuses("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", nil)
-	if err != nil {
-		t.Errorf("Commits.GetCommitStatuses returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*CommitStatus{{ID: 1}}
 	assert.Equal(t, want, statuses)
@@ -108,20 +99,17 @@ func TestGetCommitStatuses_WithOptions(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/repository/commits/b0b3a907f41409829b307a28b82fdbd552ee5a27/statuses", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 
-		query := r.URL.Query()
-		assert.Equal(t, *opt.Ref, query.Get("ref"))
-		assert.Equal(t, *opt.Stage, query.Get("stage"))
-		assert.Equal(t, *opt.Name, query.Get("name"))
-		assert.Equal(t, fmt.Sprintf("%d", *opt.PipelineID), query.Get("pipeline_id"))
-		assert.Equal(t, fmt.Sprintf("%t", *opt.All), query.Get("all"))
+		testParam(t, r, "ref", *opt.Ref)
+		testParam(t, r, "stage", *opt.Stage)
+		testParam(t, r, "name", *opt.Name)
+		testParam(t, r, "pipeline_id", fmt.Sprintf("%d", *opt.PipelineID))
+		testParam(t, r, "all", fmt.Sprintf("%t", *opt.All))
 
 		fmt.Fprint(w, `[{"id":1}]`)
 	})
 
 	statuses, _, err := client.Commits.GetCommitStatuses("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", opt)
-	if err != nil {
-		t.Errorf("Commits.GetCommitStatuses returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*CommitStatus{{ID: 1}}
 	assert.Equal(t, want, statuses)
@@ -133,19 +121,19 @@ func TestSetCommitStatus(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/statuses/b0b3a907f41409829b307a28b82fdbd552ee5a27", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		body, err := io.ReadAll(r.Body)
-		assert.NoError(t, err)
+		testBodyJSON(t, r, map[string]any{
+			"state":       "running",
+			"ref":         "master",
+			"name":        "ci/jenkins",
+			"context":     "",
+			"target_url":  "http://abc",
+			"description": "build",
+			"coverage":    99.0,
+		})
 
-		var content SetCommitStatusOptions
-		err = json.Unmarshal(body, &content)
-		assert.NoError(t, err)
-
-		assert.Equal(t, "ci/jenkins", *content.Name)
-		assert.Equal(t, 99.9, *content.Coverage)
 		fmt.Fprint(w, `{"id":1}`)
 	})
 
-	cov := 99.9
 	opt := &SetCommitStatusOptions{
 		State:       Running,
 		Ref:         Ptr("master"),
@@ -153,12 +141,10 @@ func TestSetCommitStatus(t *testing.T) {
 		Context:     Ptr(""),
 		TargetURL:   Ptr("http://abc"),
 		Description: Ptr("build"),
-		Coverage:    &cov,
+		Coverage:    Ptr(99.0),
 	}
 	status, _, err := client.Commits.SetCommitStatus("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", opt)
-	if err != nil {
-		t.Errorf("Commits.SetCommitStatus returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &CommitStatus{ID: 1}
 	assert.Equal(t, want, status)
@@ -174,12 +160,9 @@ func TestRevertCommit_NoOptions(t *testing.T) {
 	})
 
 	commit, resp, err := client.Commits.RevertCommit("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", nil)
-	if err != nil {
-		t.Fatalf("Commits.RevertCommit returned error: %v, response: %v", err, resp)
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
-	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
-	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -198,8 +181,8 @@ func TestRevertCommit_NoOptions(t *testing.T) {
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
-			UpdatedAt: &updatedAt,
-			CreatedAt: &createdAt,
+			UpdatedAt: Ptr(time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)),
+			CreatedAt: Ptr(time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)),
 		},
 		ProjectID: 13083,
 	}
@@ -220,14 +203,11 @@ func TestRevertCommit_WithOptions(t *testing.T) {
 	})
 
 	commit, resp, err := client.Commits.RevertCommit("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", &RevertCommitOptions{
-		Branch: &testRevertCommitTargetBranch,
+		Branch: Ptr("release"),
 	})
-	if err != nil {
-		t.Fatalf("Commits.RevertCommit returned error: %v, response: %v", err, resp)
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
-	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
-	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -246,8 +226,8 @@ func TestRevertCommit_WithOptions(t *testing.T) {
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
-			UpdatedAt: &updatedAt,
-			CreatedAt: &createdAt,
+			UpdatedAt: Ptr(time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)),
+			CreatedAt: Ptr(time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)),
 		},
 		ProjectID: 13083,
 	}
@@ -265,9 +245,8 @@ func TestGetGPGSignature(t *testing.T) {
 	})
 
 	sig, resp, err := client.Commits.GetGPGSignature("1", "b0b3a907f41409829b307a28b82fdbd552ee5a27", nil)
-	if err != nil {
-		t.Fatalf("Commits.GetGPGSignature returned error: %v, response: %v", err, resp)
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	want := &GPGSignature{
 		KeyID:              7977,
@@ -322,8 +301,6 @@ func TestCommitsService_ListCommits(t *testing.T) {
 		`)
 	})
 
-	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
-	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := []*Commit{{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -342,8 +319,8 @@ func TestCommitsService_ListCommits(t *testing.T) {
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
-			UpdatedAt: &updatedAt,
-			CreatedAt: &createdAt,
+			UpdatedAt: Ptr(time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)),
+			CreatedAt: Ptr(time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)),
 		},
 		ProjectID: 13083,
 	}}
@@ -464,8 +441,6 @@ func TestCommitsService_CreateCommit(t *testing.T) {
 		`)
 	})
 
-	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
-	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -484,8 +459,8 @@ func TestCommitsService_CreateCommit(t *testing.T) {
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
-			UpdatedAt: &updatedAt,
-			CreatedAt: &createdAt,
+			UpdatedAt: Ptr(time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)),
+			CreatedAt: Ptr(time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)),
 		},
 		ProjectID: 13083,
 	}
@@ -913,8 +888,6 @@ func TestCommitsService_CherryPickCommit(t *testing.T) {
 		`)
 	})
 
-	updatedAt := time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)
-	createdAt := time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)
 	want := &Commit{
 		ID:             "6104942438c14ec7bd21c6cd5bd995272b3faff6",
 		ShortID:        "6104942438c",
@@ -933,8 +906,8 @@ func TestCommitsService_CherryPickCommit(t *testing.T) {
 			SHA:       "2dc6aa325a317eda67812f05600bdf0fcdc70ab0",
 			Status:    "created",
 			WebURL:    "https://gitlab.com/gitlab-org/gitlab-ce/pipelines/54268416",
-			UpdatedAt: &updatedAt,
-			CreatedAt: &createdAt,
+			UpdatedAt: Ptr(time.Date(2019, time.November, 4, 15, 39, 3, 935000000, time.UTC)),
+			CreatedAt: Ptr(time.Date(2019, time.November, 4, 15, 38, 53, 154000000, time.UTC)),
 		},
 		ProjectID: 13083,
 	}
