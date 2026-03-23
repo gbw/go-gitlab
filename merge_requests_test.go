@@ -28,16 +28,41 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var (
-	ajk = BasicUser{
+func TestGetMergeRequest(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	path := `/api/v4/projects/namespace%2Fname/merge_requests/123`
+
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_merge_request.json")
+	})
+
+	mergeRequest, _, err := client.MergeRequests.GetMergeRequest("namespace/name", 123, &GetMergeRequestsOptions{})
+	require.NoError(t, err)
+	require.NotNil(t, mergeRequest)
+
+	require.Equal(t, int64(33092005), mergeRequest.ID)
+	require.Equal(t, "8e0b45049b6253b8984cde9241830d2851168142", mergeRequest.SHA)
+	require.Equal(t, int64(14656), mergeRequest.IID)
+	require.Equal(t, int64(278964), mergeRequest.ProjectID)
+	require.Equal(t, "delete-designs-v2", mergeRequest.SourceBranch)
+	require.Equal(t, int64(9), mergeRequest.TaskCompletionStatus.Count)
+	require.Equal(t, int64(8), mergeRequest.TaskCompletionStatus.CompletedCount)
+	require.Equal(t, "Add deletion support for designs", mergeRequest.Title)
+	require.Equal(t, "## What does this MR do?\r\n\r\nThis adds the capability to destroy/hide designs.", mergeRequest.Description)
+	require.Equal(t, "https://gitlab.com/gitlab-org/gitlab-ee/merge_requests/14656", mergeRequest.WebURL)
+	require.Equal(t, "mergeable", mergeRequest.DetailedMergeStatus)
+	require.Equal(t, &BasicUser{
 		ID:        3614858,
 		Name:      "Alex Kalderimis",
 		Username:  "alexkalderimis",
 		State:     "active",
 		AvatarURL: "https://assets.gitlab-static.net/uploads/-/system/user/avatar/3614858/avatar.png",
 		WebURL:    "https://gitlab.com/alexkalderimis",
-	}
-	tk = BasicUser{
+	}, mergeRequest.Author)
+	tk := BasicUser{
 		ID:        2535118,
 		Name:      "Thong Kuah",
 		Username:  "tkuah",
@@ -45,8 +70,10 @@ var (
 		AvatarURL: "https://secure.gravatar.com/avatar/f7b51bdd49a4914d29504d7ff4c3f7b9?s=80&d=identicon",
 		WebURL:    "https://gitlab.com/tkuah",
 	}
-	getOpts = GetMergeRequestsOptions{}
-	labels  = Labels{
+	require.Equal(t, &tk, mergeRequest.Assignee)
+	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Assignees)
+	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Reviewers)
+	require.Equal(t, Labels{
 		"GitLab Enterprise Edition",
 		"backend",
 		"database",
@@ -56,33 +83,39 @@ var (
 		"frontend",
 		"group::knowledge",
 		"missed:12.1",
-	}
-	pipelineCreation = time.Date(2019, time.August, 19, 9, 50, 58, 157000000, time.UTC)
-	pipelineUpdate   = time.Date(2019, time.August, 19, 19, 22, 29, 647000000, time.UTC)
-	pipelineBasic    = PipelineInfo{
+	}, mergeRequest.Labels)
+	require.True(t, mergeRequest.Squash)
+	require.Equal(t, int64(245), mergeRequest.UserNotesCount)
+	pipelineBasic := PipelineInfo{
 		ID:        77056819,
 		SHA:       "8e0b45049b6253b8984cde9241830d2851168142",
 		Ref:       "delete-designs-v2",
 		Status:    "success",
 		WebURL:    "https://gitlab.com/gitlab-org/gitlab-ee/pipelines/77056819",
-		CreatedAt: &pipelineCreation,
-		UpdatedAt: &pipelineUpdate,
+		CreatedAt: Ptr(time.Date(2019, time.August, 19, 9, 50, 58, 157000000, time.UTC)),
+		UpdatedAt: Ptr(time.Date(2019, time.August, 19, 19, 22, 29, 647000000, time.UTC)),
 	}
-	pipelineStarted  = time.Date(2019, time.August, 19, 9, 51, 6, 545000000, time.UTC)
-	pipelineFinished = time.Date(2019, time.August, 19, 19, 22, 29, 632000000, time.UTC)
-	pipelineDetailed = Pipeline{
-		ID:         77056819,
-		SHA:        "8e0b45049b6253b8984cde9241830d2851168142",
-		Ref:        "delete-designs-v2",
-		Status:     "success",
-		WebURL:     "https://gitlab.com/gitlab-org/gitlab-ee/pipelines/77056819",
-		BeforeSHA:  "3fe568caacb261b63090886f5b879ca0d9c6f4c3",
-		Tag:        false,
-		User:       &ajk,
-		CreatedAt:  &pipelineCreation,
-		UpdatedAt:  &pipelineUpdate,
-		StartedAt:  &pipelineStarted,
-		FinishedAt: &pipelineFinished,
+	require.Equal(t, &pipelineBasic, mergeRequest.Pipeline)
+	pipelineDetailed := Pipeline{
+		ID:        77056819,
+		SHA:       "8e0b45049b6253b8984cde9241830d2851168142",
+		Ref:       "delete-designs-v2",
+		Status:    "success",
+		WebURL:    "https://gitlab.com/gitlab-org/gitlab-ee/pipelines/77056819",
+		BeforeSHA: "3fe568caacb261b63090886f5b879ca0d9c6f4c3",
+		Tag:       false,
+		User: &BasicUser{
+			ID:        3614858,
+			Name:      "Alex Kalderimis",
+			Username:  "alexkalderimis",
+			State:     "active",
+			AvatarURL: "https://assets.gitlab-static.net/uploads/-/system/user/avatar/3614858/avatar.png",
+			WebURL:    "https://gitlab.com/alexkalderimis",
+		},
+		CreatedAt:  Ptr(time.Date(2019, time.August, 19, 9, 50, 58, 157000000, time.UTC)),
+		UpdatedAt:  Ptr(time.Date(2019, time.August, 19, 19, 22, 29, 647000000, time.UTC)),
+		StartedAt:  Ptr(time.Date(2019, time.August, 19, 9, 51, 6, 545000000, time.UTC)),
+		FinishedAt: Ptr(time.Date(2019, time.August, 19, 19, 22, 29, 632000000, time.UTC)),
 		Duration:   4916,
 		Coverage:   "82.68",
 		DetailedStatus: &DetailedStatus{
@@ -96,42 +129,6 @@ var (
 			Favicon:     "https://gitlab.com/assets/ci_favicons/favicon_status_success-8451333011eee8ce9f2ab25dc487fe24a8758c694827a582f17f42b0a90446a2.png",
 		},
 	}
-)
-
-func TestGetMergeRequest(t *testing.T) {
-	t.Parallel()
-	mux, client := setup(t)
-
-	path := `/api/v4/projects/namespace%2Fname/merge_requests/123`
-
-	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		mustWriteHTTPResponse(t, w, "testdata/get_merge_request.json")
-	})
-
-	mergeRequest, _, err := client.MergeRequests.GetMergeRequest("namespace/name", 123, &getOpts)
-
-	require.NoError(t, err)
-
-	require.Equal(t, int64(33092005), mergeRequest.ID)
-	require.Equal(t, "8e0b45049b6253b8984cde9241830d2851168142", mergeRequest.SHA)
-	require.Equal(t, int64(14656), mergeRequest.IID)
-	require.Equal(t, int64(278964), mergeRequest.ProjectID)
-	require.Equal(t, "delete-designs-v2", mergeRequest.SourceBranch)
-	require.Equal(t, int64(9), mergeRequest.TaskCompletionStatus.Count)
-	require.Equal(t, int64(8), mergeRequest.TaskCompletionStatus.CompletedCount)
-	require.Equal(t, "Add deletion support for designs", mergeRequest.Title)
-	require.Equal(t, "## What does this MR do?\r\n\r\nThis adds the capability to destroy/hide designs.", mergeRequest.Description)
-	require.Equal(t, "https://gitlab.com/gitlab-org/gitlab-ee/merge_requests/14656", mergeRequest.WebURL)
-	require.Equal(t, "mergeable", mergeRequest.DetailedMergeStatus)
-	require.Equal(t, &ajk, mergeRequest.Author)
-	require.Equal(t, &tk, mergeRequest.Assignee)
-	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Assignees)
-	require.Equal(t, []*BasicUser{&tk}, mergeRequest.Reviewers)
-	require.Equal(t, labels, mergeRequest.Labels)
-	require.True(t, mergeRequest.Squash)
-	require.Equal(t, int64(245), mergeRequest.UserNotesCount)
-	require.Equal(t, &pipelineBasic, mergeRequest.Pipeline)
 	require.Equal(t, &pipelineDetailed, mergeRequest.HeadPipeline)
 	mrCreation := time.Date(2019, time.July, 11, 22, 34, 43, 500000000, time.UTC)
 	require.Equal(t, &mrCreation, mergeRequest.CreatedAt)
@@ -321,9 +318,7 @@ func TestCreateMergeRequestPipeline(t *testing.T) {
 	})
 
 	pipeline, _, err := client.MergeRequests.CreateMergeRequestPipeline(1, 1)
-	if err != nil {
-		t.Errorf("MergeRequests.CreateMergeRequestPipeline returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	assert.Equal(t, int64(1), pipeline.ID)
 	assert.Equal(t, "pending", pipeline.Status)
@@ -342,9 +337,7 @@ func TestGetMergeRequestParticipants(t *testing.T) {
 	})
 
 	mergeRequestParticipants, _, err := client.MergeRequests.GetMergeRequestParticipants("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := []*BasicUser{
 		{ID: 1, Name: "User1", Username: "User1", State: "active", AvatarURL: "", WebURL: "https://localhost/User1"},
@@ -366,9 +359,7 @@ func TestGetMergeRequestReviewers(t *testing.T) {
 	})
 
 	mergeRequestReviewers, _, err := client.MergeRequests.GetMergeRequestReviewers("1", 5)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	createdAt := time.Date(2022, time.July, 27, 17, 3, 27, 684000000, time.UTC)
 	user1 := BasicUser{ID: 1, Name: "John Doe1", Username: "user1", State: "active", AvatarURL: "http://www.gravatar.com/avatar/c922747a93b40d1ea88262bf1aebee62?s=80&d=identicon", WebURL: "http://localhost/user1"}
@@ -429,9 +420,7 @@ func TestListMergeRequestDiffs(t *testing.T) {
 	}
 
 	diffs, _, err := client.MergeRequests.ListMergeRequestDiffs(1, 1, opts)
-	if err != nil {
-		t.Errorf("MergeRequests.ListMergeRequestDiffs returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*MergeRequestDiff{
 		{
@@ -475,9 +464,7 @@ func TestShowMergeRequestRawDiffs(t *testing.T) {
 	opts := &ShowMergeRequestRawDiffsOptions{}
 
 	rawDiff, _, err := client.MergeRequests.ShowMergeRequestRawDiffs(1, 1, opts)
-	if err != nil {
-		t.Errorf("MergeRequests.ShowMergeRequestRawDiffs returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := `diff --git a/also_testing b/also_testing
 index d4d510b..2a2c3b1 100644
@@ -573,7 +560,6 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 	mux, client := setup(t)
 	const project = "12345"
 	const mergeRequest = 1
-	blockingMergeRequest := int64(2)
 
 	path := fmt.Sprintf("/%sprojects/%s/merge_requests/%d/blocks", apiVersionPath, project, mergeRequest)
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
@@ -584,17 +570,12 @@ func TestCreateMergeRequestDependency(t *testing.T) {
 	})
 
 	opts := CreateMergeRequestDependencyOptions{
-		BlockingMergeRequestID: &blockingMergeRequest,
+		BlockingMergeRequestID: Ptr(int64(2)),
 	}
 	dependencies, resp, err := client.MergeRequests.CreateMergeRequestDependency(project, mergeRequest, opts, nil)
-	if err != nil {
-		t.Errorf("MergeRequestDependencies.CreateMergeRequestDependency returned error: %v", err)
-	}
-	if resp != nil {
-		if resp.StatusCode != http.StatusCreated {
-			t.Errorf("MergeRequestDependencies.CreateMergeRequestDependency = %v, want %v", resp.StatusCode, http.StatusCreated)
-		}
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
 
 	want := &MergeRequestDependency{
 		ID: 1,
@@ -619,15 +600,9 @@ func TestGetMergeRequestDependencies(t *testing.T) {
 	})
 
 	dependencies, resp, err := client.MergeRequests.GetMergeRequestDependencies(project, mergeRequest, nil)
-	if err != nil {
-		t.Errorf("MergeRequestDependencies.GetMergeRequestDependencies returned error: %v", err)
-	}
-	if resp == nil {
-		t.Error("MergeRequestDependencies.GetMergeRequestDependencies did not return a response")
-	}
-	if len(dependencies) != 1 {
-		t.Errorf("MergeRequestDependencies.GetMergeRequestDependencies returned %d dependencies, want 1", len(dependencies))
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	assert.Len(t, dependencies, 1)
 }
 
 func TestDeleteMergeRequestDependency(t *testing.T) {
@@ -644,14 +619,9 @@ func TestDeleteMergeRequestDependency(t *testing.T) {
 	})
 
 	resp, err := client.MergeRequests.DeleteMergeRequestDependency(project, mergeRequest, blockingMergeRequest, nil)
-	if err != nil {
-		t.Errorf("MergeRequestDependencies.DeleteMergeRequestDependency returned error: %v", err)
-	}
-	if resp != nil {
-		if resp.StatusCode != http.StatusNoContent {
-			t.Errorf("MergeRequestDependencies.DeleteMergeRequestDependency = %v, want %v", resp.StatusCode, http.StatusNoContent)
-		}
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
 func TestAcceptMergeRequest(t *testing.T) {
