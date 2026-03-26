@@ -1,3 +1,28 @@
+## 2.8.0
+
+### 🚀 Features
+
+- feat: add GraphQL support for project targetBranchRules ([!2819](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2819)) by [Kai Armstrong](https://gitlab.com/phikai)
+
+### 🔄 Other Changes
+
+- test(no-release): refactor event tests ([!2821](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2821)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- chore(deps): update module github.com/zalando/go-keyring to v0.2.8 ([!2820](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2820)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module github.com/zalando/go-keyring to v0.2.7 ([!2816](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2816)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- test(no-release): refactor commit and mr tests ([!2814](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2814)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- chore(deps): update dependency golangci-lint to v2.11.4 ([!2817](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2817)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- test(no-release): refactor group tests ([!2813](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2813)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- Add mergerequesttitleregex ([!2812](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2812)) by [Preethi Atchudan](https://gitlab.com/preethiatchudan)
+
+
+
+# [2.8.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.7.0...v2.8.0) (2026-03-26)
+
+
+### Features
+
+* add GraphQL support for project targetBranchRules ([4cedd83](https://gitlab.com/gitlab-org/api/client-go/commit/4cedd83e6a2dbfa52f9c352ad00388f79e6fc887))
+
 ## 2.7.0
 
 ### 🚀 Features
