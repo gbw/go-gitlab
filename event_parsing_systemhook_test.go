@@ -20,6 +20,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestParseSystemhookPush(t *testing.T) {
@@ -27,14 +28,10 @@ func TestParseSystemhookPush(t *testing.T) {
 	payload := loadFixture(t, "testdata/systemhooks/push.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
-	if err != nil {
-		t.Errorf("Error parsing build hook: %s", err)
-	}
+	require.NoError(t, err)
 
 	event, ok := parsedEvent.(*PushSystemEvent)
-	if !ok {
-		t.Errorf("Expected PushSystemHookEvent, but parsing produced %T", parsedEvent)
-	}
+	require.True(t, ok)
 	assert.Equal(t, eventObjectKindPush, event.EventName)
 }
 
@@ -43,14 +40,10 @@ func TestParseSystemhookTagPush(t *testing.T) {
 	payload := loadFixture(t, "testdata/systemhooks/tag_push.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
-	if err != nil {
-		t.Errorf("Error parsing build hook: %s", err)
-	}
+	require.NoError(t, err)
 
 	event, ok := parsedEvent.(*TagPushSystemEvent)
-	if !ok {
-		t.Errorf("Expected TagPushSystemHookEvent, but parsing produced %T", parsedEvent)
-	}
+	require.True(t, ok)
 	assert.Equal(t, eventObjectKindTagPush, event.EventName)
 }
 
@@ -59,14 +52,10 @@ func TestParseSystemhookMergeRequest(t *testing.T) {
 	payload := loadFixture(t, "testdata/systemhooks/merge_request.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
-	if err != nil {
-		t.Errorf("Error parsing build hook: %s", err)
-	}
+	require.NoError(t, err)
 
 	event, ok := parsedEvent.(*MergeEvent)
-	if !ok {
-		t.Errorf("Expected MergeRequestSystemHookEvent, but parsing produced %T", parsedEvent)
-	}
+	require.True(t, ok)
 	assert.Equal(t, eventObjectKindMergeRequest, event.ObjectKind)
 }
 
@@ -75,14 +64,10 @@ func TestParseSystemhookRepositoryUpdate(t *testing.T) {
 	payload := loadFixture(t, "testdata/systemhooks/repository_update.json")
 
 	parsedEvent, err := ParseSystemhook(payload)
-	if err != nil {
-		t.Errorf("Error parsing build hook: %s", err)
-	}
+	require.NoError(t, err)
 
 	event, ok := parsedEvent.(*RepositoryUpdateSystemEvent)
-	if !ok {
-		t.Errorf("Expected RepositoryUpdateSystemHookEvent, but parsing produced %T", parsedEvent)
-	}
+	require.True(t, ok)
 	assert.Equal(t, "repository_update", event.EventName)
 }
 
@@ -103,13 +88,9 @@ func TestParseSystemhookProject(t *testing.T) {
 			t.Parallel()
 
 			parsedEvent, err := ParseSystemhook(tc.payload)
-			if err != nil {
-				t.Errorf("Error parsing build hook: %s", err)
-			}
+			require.NoError(t, err)
 			event, ok := parsedEvent.(*ProjectSystemEvent)
-			if !ok {
-				t.Errorf("Expected ProjectSystemHookEvent, but parsing produced %T", parsedEvent)
-			}
+			require.True(t, ok)
 			assert.Equal(t, tc.event, event.EventName)
 		})
 	}
@@ -130,13 +111,9 @@ func TestParseSystemhookGroup(t *testing.T) {
 			t.Parallel()
 
 			parsedEvent, err := ParseSystemhook(tc.payload)
-			if err != nil {
-				t.Errorf("Error parsing build hook: %s", err)
-			}
+			require.NoError(t, err)
 			event, ok := parsedEvent.(*GroupSystemEvent)
-			if !ok {
-				t.Errorf("Expected GroupSystemHookEvent, but parsing produced %T", parsedEvent)
-			}
+			require.True(t, ok)
 			assert.Equal(t, tc.event, event.EventName)
 		})
 	}
@@ -158,13 +135,9 @@ func TestParseSystemhookUser(t *testing.T) {
 			t.Parallel()
 
 			parsedEvent, err := ParseSystemhook(tc.payload)
-			if err != nil {
-				t.Errorf("Error parsing build hook: %s", err)
-			}
+			require.NoError(t, err)
 			event, ok := parsedEvent.(*UserSystemEvent)
-			if !ok {
-				t.Errorf("Expected UserSystemHookEvent, but parsing produced %T", parsedEvent)
-			}
+			require.True(t, ok)
 			assert.Equal(t, tc.event, event.EventName)
 		})
 	}
@@ -185,13 +158,9 @@ func TestParseSystemhookUserGroup(t *testing.T) {
 			t.Parallel()
 
 			parsedEvent, err := ParseSystemhook(tc.payload)
-			if err != nil {
-				t.Errorf("Error parsing build hook: %s", err)
-			}
+			require.NoError(t, err)
 			event, ok := parsedEvent.(*UserGroupSystemEvent)
-			if !ok {
-				t.Errorf("Expected UserGroupSystemHookEvent, but parsing produced %T", parsedEvent)
-			}
+			require.True(t, ok)
 			assert.Equal(t, tc.event, event.EventName)
 		})
 	}
@@ -212,13 +181,9 @@ func TestParseSystemhookUserTeam(t *testing.T) {
 			t.Parallel()
 
 			parsedEvent, err := ParseSystemhook(tc.payload)
-			if err != nil {
-				t.Errorf("Error parsing build hook: %s", err)
-			}
+			require.NoError(t, err)
 			event, ok := parsedEvent.(*UserTeamSystemEvent)
-			if !ok {
-				t.Errorf("Expected UserTeamSystemHookEvent, but parsing produced %T", parsedEvent)
-			}
+			require.True(t, ok)
 			assert.Equal(t, tc.event, event.EventName)
 		})
 	}
@@ -227,12 +192,8 @@ func TestParseSystemhookUserTeam(t *testing.T) {
 func TestParseHookSystemHook(t *testing.T) {
 	t.Parallel()
 	parsedEvent1, err := ParseHook("System Hook", loadFixture(t, "testdata/systemhooks/merge_request.json"))
-	if err != nil {
-		t.Errorf("Error parsing build hook: %s", err)
-	}
+	require.NoError(t, err)
 	parsedEvent2, err := ParseSystemhook(loadFixture(t, "testdata/systemhooks/merge_request.json"))
-	if err != nil {
-		t.Errorf("Error parsing build hook: %s", err)
-	}
+	require.NoError(t, err)
 	assert.Equal(t, parsedEvent1, parsedEvent2)
 }
