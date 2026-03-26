@@ -22,12 +22,6 @@ const (
     "notes": "## 1.0.0 (2021-11-17)\n\n### feature (2 changes)\n\n- [Title 2](namespace13/project13@ad608eb642124f5b3944ac0ac772fecaf570a6bf) ([merge request](namespace13/project13!2))\n- [Title 1](namespace13/project13@3c6b80ff7034fa0d585314e1571cc780596ce3c8) ([merge request](namespace13/project13!1))\n"
   }`
 
-	// exampleCommitMessage provides fixture for a commit message.
-	exampleCommitMessage = "Merge branch 'some-feature' into 'master'\n\nRelease v1.0.0\n\nSee merge request jsmith/example!1"
-
-	// exampleCommitTitle provides fixture for a commit title.
-	exampleCommitTitle = "Merge branch 'some-feature' into 'master'"
-
 	// exampleDetailResponse provides fixture for Runners tests.
 	exampleDetailResponse = `{
 		"active": true,
@@ -175,9 +169,6 @@ const (
       }
     }
   ]`
-
-	// exampleProjectName provides a fixture for a project name.
-	exampleProjectName = "example-project"
 
 	// exampleProjectStatusChecksList provides a fixture for project external status checks.
 	exampleProjectStatusChecksList = `[
