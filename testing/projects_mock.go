@@ -446,6 +446,51 @@ func (c *MockProjectsServiceInterfaceCreateProjectForkRelationCall) DoAndReturn(
 	return c
 }
 
+// CreateTargetBranchRule mocks base method.
+func (m *MockProjectsServiceInterface) CreateTargetBranchRule(pid int64, opt *gitlab.CreateTargetBranchRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.TargetBranchRule, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CreateTargetBranchRule", varargs...)
+	ret0, _ := ret[0].(*gitlab.TargetBranchRule)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateTargetBranchRule indicates an expected call of CreateTargetBranchRule.
+func (mr *MockProjectsServiceInterfaceMockRecorder) CreateTargetBranchRule(pid, opt any, options ...any) *MockProjectsServiceInterfaceCreateTargetBranchRuleCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTargetBranchRule", reflect.TypeOf((*MockProjectsServiceInterface)(nil).CreateTargetBranchRule), varargs...)
+	return &MockProjectsServiceInterfaceCreateTargetBranchRuleCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceCreateTargetBranchRuleCall wrap *gomock.Call
+type MockProjectsServiceInterfaceCreateTargetBranchRuleCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceCreateTargetBranchRuleCall) Return(arg0 *gitlab.TargetBranchRule, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceCreateTargetBranchRuleCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceCreateTargetBranchRuleCall) Do(f func(int64, *gitlab.CreateTargetBranchRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.TargetBranchRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateTargetBranchRuleCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceCreateTargetBranchRuleCall) DoAndReturn(f func(int64, *gitlab.CreateTargetBranchRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.TargetBranchRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateTargetBranchRuleCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteProject mocks base method.
 func (m *MockProjectsServiceInterface) DeleteProject(pid any, opt *gitlab.DeleteProjectOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -794,6 +839,50 @@ func (c *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall) Do(f func
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall) DoAndReturn(f func(any, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteSharedProjectFromGroupCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// DeleteTargetBranchRule mocks base method.
+func (m *MockProjectsServiceInterface) DeleteTargetBranchRule(id int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{id}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteTargetBranchRule", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTargetBranchRule indicates an expected call of DeleteTargetBranchRule.
+func (mr *MockProjectsServiceInterfaceMockRecorder) DeleteTargetBranchRule(id any, options ...any) *MockProjectsServiceInterfaceDeleteTargetBranchRuleCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{id}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTargetBranchRule", reflect.TypeOf((*MockProjectsServiceInterface)(nil).DeleteTargetBranchRule), varargs...)
+	return &MockProjectsServiceInterfaceDeleteTargetBranchRuleCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceDeleteTargetBranchRuleCall wrap *gomock.Call
+type MockProjectsServiceInterfaceDeleteTargetBranchRuleCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceDeleteTargetBranchRuleCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectsServiceInterfaceDeleteTargetBranchRuleCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceDeleteTargetBranchRuleCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteTargetBranchRuleCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceDeleteTargetBranchRuleCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteTargetBranchRuleCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1559,6 +1648,51 @@ func (c *MockProjectsServiceInterfaceListProjectStarrersCall) Do(f func(any, *gi
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockProjectsServiceInterfaceListProjectStarrersCall) DoAndReturn(f func(any, *gitlab.ListProjectStarrersOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStarrer, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectStarrersCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListProjectTargetBranchRules mocks base method.
+func (m *MockProjectsServiceInterface) ListProjectTargetBranchRules(projectFullPath string, options ...gitlab.RequestOptionFunc) ([]gitlab.TargetBranchRule, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{projectFullPath}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListProjectTargetBranchRules", varargs...)
+	ret0, _ := ret[0].([]gitlab.TargetBranchRule)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListProjectTargetBranchRules indicates an expected call of ListProjectTargetBranchRules.
+func (mr *MockProjectsServiceInterfaceMockRecorder) ListProjectTargetBranchRules(projectFullPath any, options ...any) *MockProjectsServiceInterfaceListProjectTargetBranchRulesCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{projectFullPath}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListProjectTargetBranchRules", reflect.TypeOf((*MockProjectsServiceInterface)(nil).ListProjectTargetBranchRules), varargs...)
+	return &MockProjectsServiceInterfaceListProjectTargetBranchRulesCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceListProjectTargetBranchRulesCall wrap *gomock.Call
+type MockProjectsServiceInterfaceListProjectTargetBranchRulesCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceListProjectTargetBranchRulesCall) Return(arg0 []gitlab.TargetBranchRule, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceListProjectTargetBranchRulesCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceListProjectTargetBranchRulesCall) Do(f func(string, ...gitlab.RequestOptionFunc) ([]gitlab.TargetBranchRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectTargetBranchRulesCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceListProjectTargetBranchRulesCall) DoAndReturn(f func(string, ...gitlab.RequestOptionFunc) ([]gitlab.TargetBranchRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectTargetBranchRulesCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
