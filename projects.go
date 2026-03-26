@@ -320,6 +320,21 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/project_starring/#list-users-who-starred-a-project
 		ListProjectStarrers(pid any, opts *ListProjectStarrersOptions, options ...RequestOptionFunc) ([]*ProjectStarrer, *Response, error)
+		// ListProjectTargetBranchRules returns the target branch rules for a
+		// project. projectFullPath must be the full namespace/project path
+		// string, as the GitLab GraphQL project(fullPath:) field does not
+		// accept numeric IDs.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#projecttargetbranchruleconnection
+		ListProjectTargetBranchRules(projectFullPath string, options ...RequestOptionFunc) ([]TargetBranchRule, *Response, error)
+		// CreateTargetBranchRule creates a new target branch rule for a project.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#mutationprojecttargetbranchrulecreate
+		CreateTargetBranchRule(pid int64, opt *CreateTargetBranchRuleOptions, options ...RequestOptionFunc) (*TargetBranchRule, *Response, error)
+		// DeleteTargetBranchRule deletes a target branch rule.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#mutationprojecttargetbranchruledestroy
+		DeleteTargetBranchRule(id int64, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// ProjectsService handles communication with the repositories related methods
