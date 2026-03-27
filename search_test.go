@@ -115,12 +115,7 @@ func TestSearchService_UsersByGroup(t *testing.T) {
 
 		mux.HandleFunc("/api/v4/groups/3/-/search", func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
-
-			query := r.URL.Query()
-			if got := query.Get("search"); got != "doe" {
-				t.Errorf("expected query 'search=doe', got 'search=%s'", got)
-			}
-
+			testParam(t, r, "search", "doe")
 			mustWriteHTTPResponse(t, w, "testdata/search_users.json")
 		})
 

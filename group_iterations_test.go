@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListGroupIterations(t *testing.T) {
@@ -30,9 +31,7 @@ func TestListGroupIterations(t *testing.T) {
 		})
 
 	iterations, _, err := client.GroupIterations.ListGroupIterations(5, &ListGroupIterationsOptions{})
-	if err != nil {
-		t.Errorf("GroupIterations.ListGroupIterations returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*GroupIteration{{
 		ID:          53,

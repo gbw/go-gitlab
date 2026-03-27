@@ -290,9 +290,9 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 			assert.NotNil(t, token)
 			assert.Equal(t, "test-access-token", token.AccessToken)
 		case err := <-errorChan:
-			t.Fatalf("Expected token but got error: %v", err)
+			require.NoError(t, err, "Expected token but got error")
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for token")
+			require.Fail(t, "Timeout waiting for token")
 		}
 
 		// Check HTTP response
@@ -326,12 +326,12 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		// Check that error was received
 		select {
 		case <-tokenChan:
-			t.Fatal("Expected error but got token")
+			require.Fail(t, "Expected error but got token")
 		case err := <-errorChan:
 			assert.Error(t, err)
 			assert.Contains(t, err.Error(), "invalid state")
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for error")
+			require.Fail(t, "Timeout waiting for error")
 		}
 
 		// Check HTTP response
@@ -364,12 +364,12 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		// Check that error was received
 		select {
 		case <-tokenChan:
-			t.Fatal("Expected error but got token")
+			require.Fail(t, "Expected error but got token")
 		case err := <-errorChan:
 			assert.Error(t, err)
 			assert.Contains(t, err.Error(), "no authorization code received")
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for error")
+			require.Fail(t, "Timeout waiting for error")
 		}
 
 		// Check HTTP response
@@ -402,12 +402,12 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		// Check that error was received
 		select {
 		case <-tokenChan:
-			t.Fatal("Expected error but got token")
+			require.Fail(t, "Expected error but got token")
 		case err := <-errorChan:
 			assert.Error(t, err)
 			assert.Contains(t, err.Error(), "authorization error: access_denied")
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for error")
+			require.Fail(t, "Timeout waiting for error")
 		}
 
 		// Check HTTP response
@@ -452,11 +452,11 @@ func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
 		// Check that error was received
 		select {
 		case <-tokenChan:
-			t.Fatal("Expected error but got token")
+			require.Fail(t, "Expected error but got token")
 		case err := <-errorChan:
 			assert.Error(t, err)
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for error")
+			require.Fail(t, "Timeout waiting for error")
 		}
 
 		// Check HTTP response
@@ -547,12 +547,12 @@ func TestCallbackServer_EdgeCases(t *testing.T) { //nolint:paralleltest
 		// Should receive error for missing code
 		select {
 		case <-tokenChan:
-			t.Fatal("Expected error but got token")
+			require.Fail(t, "Expected error but got token")
 		case err := <-errorChan:
 			assert.Error(t, err)
 			assert.Contains(t, err.Error(), "invalid state")
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for error")
+			require.Fail(t, "Timeout waiting for error")
 		}
 	})
 
@@ -625,12 +625,12 @@ func TestCallbackServer_ErrorHandling(t *testing.T) { //nolint:paralleltest
 		// Should receive error for invalid state (empty != expected)
 		select {
 		case <-tokenChan:
-			t.Fatal("Expected error but got token")
+			require.Fail(t, "Expected error but got token")
 		case err := <-errorChan:
 			assert.Error(t, err)
 			assert.Contains(t, err.Error(), "invalid state")
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for error")
+			require.Fail(t, "Timeout waiting for error")
 		}
 
 		assert.Equal(t, http.StatusBadRequest, w.Code)
@@ -658,12 +658,12 @@ func TestCallbackServer_ErrorHandling(t *testing.T) { //nolint:paralleltest
 		// Should receive error for OAuth error
 		select {
 		case <-tokenChan:
-			t.Fatal("Expected error but got token")
+			require.Fail(t, "Expected error but got token")
 		case err := <-errorChan:
 			assert.Error(t, err)
 			assert.Contains(t, err.Error(), "authorization error: access_denied")
 		case <-time.After(1 * time.Second):
-			t.Fatal("Timeout waiting for error")
+			require.Fail(t, "Timeout waiting for error")
 		}
 
 		assert.Equal(t, http.StatusBadRequest, w.Code)

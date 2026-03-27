@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListTemplates(t *testing.T) {
@@ -115,9 +116,7 @@ func TestListTemplates(t *testing.T) {
 	})
 
 	templates, _, err := client.GitIgnoreTemplates.ListTemplates(&ListTemplatesOptions{})
-	if err != nil {
-		t.Errorf("GitIgnoreTemplates.ListTemplates returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*GitIgnoreTemplateListItem{
 		{
@@ -217,9 +216,7 @@ func TestGetTemplates(t *testing.T) {
 	})
 
 	template, _, err := client.GitIgnoreTemplates.GetTemplate("Ruby")
-	if err != nil {
-		t.Errorf("GitIgnoreTemplates.GetTemplate returned an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GitIgnoreTemplate{
 		Name:    "Ruby",

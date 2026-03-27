@@ -143,13 +143,8 @@ func TestReleaseLinksService_GetReleaseLink(t *testing.T) {
 		})
 
 	releaseLink, _, err := client.ReleaseLinks.GetReleaseLink(1, exampleTagName, 1)
-	if err != nil {
-		t.Error(err)
-	}
-	if releaseLink.Name != exampleReleaseName {
-		t.Errorf("release link name, expected '%s', got '%s'", exampleReleaseName,
-			releaseLink.Name)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleReleaseName, releaseLink.Name)
 }
 
 func TestReleaseLinksService_UpdateReleaseLink(t *testing.T) {
@@ -193,11 +188,6 @@ func TestReleaseLinksService_DeleteReleaseLink(t *testing.T) {
 		})
 
 	releaseLink, _, err := client.ReleaseLinks.DeleteReleaseLink(1, exampleTagName, 1)
-	if err != nil {
-		t.Error(err)
-	}
-	if releaseLink.Name != exampleReleaseName {
-		t.Errorf("release link name, expected '%s', got '%s'", exampleReleaseName,
-			releaseLink.Name)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleReleaseName, releaseLink.Name)
 }

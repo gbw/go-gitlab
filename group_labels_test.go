@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCreateGroupGroupLabel(t *testing.T) {
@@ -38,9 +39,7 @@ func TestCreateGroupGroupLabel(t *testing.T) {
 		Color: Ptr("#11FF22"),
 	}
 	label, _, err := client.GroupLabels.CreateGroupLabel("1", l)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	want := &GroupLabel{ID: 1, Name: "MyGroupLabel", Color: "#11FF22"}
 	assert.Equal(t, want, label)
 }
@@ -54,9 +53,7 @@ func TestDeleteGroupLabelByID(t *testing.T) {
 	})
 
 	_, err := client.GroupLabels.DeleteGroupLabel("1", "1", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestDeleteGroupLabelByName(t *testing.T) {
@@ -68,9 +65,7 @@ func TestDeleteGroupLabelByName(t *testing.T) {
 	})
 
 	_, err := client.GroupLabels.DeleteGroupLabel("1", "MyGroupLabel", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestDeleteGroupLabelWithOptions(t *testing.T) {
@@ -125,13 +120,8 @@ func TestUpdateGroupLabel(t *testing.T) {
 	}
 
 	label, resp, err := client.GroupLabels.UpdateGroupLabel("1", "MyGroupLabel", l)
-
-	if resp == nil {
-		t.Fatal(err)
-	}
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
 	want := &GroupLabel{ID: 1, Name: "NewLabel", Color: "#11FF23", Description: "This is updated label"}
 
@@ -175,9 +165,7 @@ func TestSubscribeToGroupLabel(t *testing.T) {
 	})
 
 	label, _, err := client.GroupLabels.SubscribeToGroupLabel("1", "5")
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	want := &GroupLabel{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
 	assert.Equal(t, want, label)
 }
@@ -191,9 +179,7 @@ func TestUnsubscribeFromGroupLabel(t *testing.T) {
 	})
 
 	_, err := client.GroupLabels.UnsubscribeFromGroupLabel("1", "5")
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestListGroupLabels(t *testing.T) {

@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProjectRegistryRepositories(t *testing.T) {
@@ -53,9 +54,7 @@ func TestListProjectRegistryRepositories(t *testing.T) {
 	})
 
 	repositories, _, err := client.ContainerRegistry.ListProjectRegistryRepositories(5, &ListProjectRegistryRepositoriesOptions{})
-	if err != nil {
-		t.Errorf("ContainerRegistry.ListProjectRegistryRepositories returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*RegistryRepository{
 		{
@@ -109,9 +108,7 @@ func TestListGroupRegistryRepositories(t *testing.T) {
 	})
 
 	repositories, _, err := client.ContainerRegistry.ListGroupRegistryRepositories(5, &ListGroupRegistryRepositoriesOptions{})
-	if err != nil {
-		t.Errorf("ContainerRegistry.ListGroupRegistryRepositories returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*RegistryRepository{
 		{
@@ -154,9 +151,7 @@ func TestGetSingleRegistryRepository(t *testing.T) {
 	})
 
 	repository, _, err := client.ContainerRegistry.GetSingleRegistryRepository(5, &GetSingleRegistryRepositoryOptions{})
-	if err != nil {
-		t.Errorf("ContainerRegistry.GetSingleRegistryRepository returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &RegistryRepository{
 		ID:                     1,
@@ -179,9 +174,7 @@ func TestDeleteRegistryRepository(t *testing.T) {
 	})
 
 	_, err := client.ContainerRegistry.DeleteRegistryRepository(5, 2)
-	if err != nil {
-		t.Errorf("ContainerRegistry.DeleteRegistryRepository returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestListRegistryRepositoryTags(t *testing.T) {
@@ -206,9 +199,7 @@ func TestListRegistryRepositoryTags(t *testing.T) {
 
 	opt := &ListRegistryRepositoryTagsOptions{}
 	registryRepositoryTags, _, err := client.ContainerRegistry.ListRegistryRepositoryTags(5, 2, opt)
-	if err != nil {
-		t.Errorf("ContainerRegistry.ListRegistryRepositoryTags returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*RegistryRepositoryTag{
 		{
@@ -244,9 +235,7 @@ func TestGetRegistryRepositoryTagDetail(t *testing.T) {
 	})
 
 	repositoryTag, _, err := client.ContainerRegistry.GetRegistryRepositoryTagDetail(5, 2, "v10.0.0")
-	if err != nil {
-		t.Errorf("ContainerRegistry.GetRegistryRepositoryTagDetail returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &RegistryRepositoryTag{
 		Name:          "v10.0.0",
@@ -270,9 +259,7 @@ func TestDeleteRegistryRepositoryTag(t *testing.T) {
 	})
 
 	_, err := client.ContainerRegistry.DeleteRegistryRepositoryTag(5, 2, "v10.0.0")
-	if err != nil {
-		t.Errorf("ContainerRepository.DeleteRegistryRepositoryTag returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestDeleteRegistryRepositoryTags(t *testing.T) {
@@ -330,9 +317,7 @@ func TestDeleteRegistryRepositoryTags(t *testing.T) {
 				OlderThan:        &tc.olderThan,
 			}
 			_, err := client.ContainerRegistry.DeleteRegistryRepositoryTags(5, 2, opt)
-			if err != nil {
-				t.Errorf("ContainerRegistry.DeleteRegistryRepositoryTags returned error: %v", err)
-			}
+			require.NoError(t, err)
 		})
 	}
 }

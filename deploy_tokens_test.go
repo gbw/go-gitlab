@@ -23,6 +23,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListAllDeployTokens(t *testing.T) {
@@ -50,9 +51,7 @@ func TestListAllDeployTokens(t *testing.T) {
 	})
 
 	deployTokens, _, err := client.DeployTokens.ListAllDeployTokens()
-	if err != nil {
-		t.Errorf("DeployTokens.ListAllDeployTokens returned an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
 
@@ -97,18 +96,14 @@ func TestListProjectDeployTokens(t *testing.T) {
 	})
 
 	deployTokens, _, err := client.DeployTokens.ListProjectDeployTokens(1, nil)
-	if err != nil {
-		t.Errorf("DeployTokens.ListProjectDeployTokens returned an error: %v", err)
-	}
-
-	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
+	require.NoError(t, err)
 
 	want := []*DeployToken{
 		{
 			ID:        1,
 			Name:      "MyToken",
 			Username:  "gitlab+deploy-token-1",
-			ExpiresAt: &wantExpiresAt,
+			ExpiresAt: Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 			Scopes: []string{
 				"read_repository",
 				"read_registry",
@@ -140,17 +135,13 @@ func TestGetProjectDeployTokens(t *testing.T) {
 	})
 
 	deployToken, _, err := client.DeployTokens.GetProjectDeployToken(1, 1)
-	if err != nil {
-		t.Errorf("DeployTokens.GetProjectDeployToken returned an error: %v", err)
-	}
-
-	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
+	require.NoError(t, err)
 
 	want := &DeployToken{
 		ID:        1,
 		Name:      "MyToken",
 		Username:  "gitlab+deploy-token-1",
-		ExpiresAt: &wantExpiresAt,
+		ExpiresAt: Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 		Scopes: []string{
 			"read_repository",
 			"read_registry",
@@ -180,25 +171,21 @@ func TestCreateProjectDeployToken(t *testing.T) {
 `)
 	})
 
-	expiresAt := time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)
-
 	deployToken, _, err := client.DeployTokens.CreateProjectDeployToken(5, &CreateProjectDeployTokenOptions{
 		Name:      Ptr("My deploy token"),
 		Username:  Ptr("custom-user"),
-		ExpiresAt: &expiresAt,
+		ExpiresAt: Ptr(time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)),
 		Scopes: &[]string{
 			"read_repository",
 		},
 	})
-	if err != nil {
-		t.Errorf("DeployTokens.CreateProjectDeployToken returned an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &DeployToken{
 		ID:        1,
 		Name:      "My deploy token",
 		Username:  "custom-user",
-		ExpiresAt: &expiresAt,
+		ExpiresAt: Ptr(time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)),
 		Token:     "jMRvtPNxrn3crTAGukpZ",
 		Scopes: []string{
 			"read_repository",
@@ -218,16 +205,8 @@ func TestDeleteProjectDeployToken(t *testing.T) {
 	})
 
 	resp, err := client.DeployTokens.DeleteProjectDeployToken(5, 13)
-	if err != nil {
-		t.Errorf("DeployTokens.DeleteProjectDeployToken returned an error: %v", err)
-	}
-
-	want := http.StatusAccepted
-	got := resp.StatusCode
-
-	if want != got {
-		t.Errorf("DeployTokens.DeleteProjectDeployToken returned %+v, want %+v", got, want)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
 
 func TestListGroupDeployTokens(t *testing.T) {
@@ -253,18 +232,14 @@ func TestListGroupDeployTokens(t *testing.T) {
 	})
 
 	deployTokens, _, err := client.DeployTokens.ListGroupDeployTokens(1, nil)
-	if err != nil {
-		t.Errorf("DeployTokens.ListGroupDeployTokens returned an error: %v", err)
-	}
-
-	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
+	require.NoError(t, err)
 
 	want := []*DeployToken{
 		{
 			ID:        1,
 			Name:      "MyToken",
 			Username:  "gitlab+deploy-token-1",
-			ExpiresAt: &wantExpiresAt,
+			ExpiresAt: Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 			Scopes: []string{
 				"read_repository",
 				"read_registry",
@@ -296,17 +271,13 @@ func TestGetGroupDeployTokens(t *testing.T) {
 	})
 
 	deployToken, _, err := client.DeployTokens.GetGroupDeployToken(1, 1)
-	if err != nil {
-		t.Errorf("DeployTokens.GetGroupDeployToken returned an error: %v", err)
-	}
-
-	wantExpiresAt := time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)
+	require.NoError(t, err)
 
 	want := &DeployToken{
 		ID:        1,
 		Name:      "MyToken",
 		Username:  "gitlab+deploy-token-1",
-		ExpiresAt: &wantExpiresAt,
+		ExpiresAt: Ptr(time.Date(2020, time.February, 14, 0, 0, 0, 0, time.UTC)),
 		Scopes: []string{
 			"read_repository",
 			"read_registry",
@@ -336,25 +307,21 @@ func TestCreateGroupDeployToken(t *testing.T) {
 `)
 	})
 
-	expiresAt := time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)
-
 	deployToken, _, err := client.DeployTokens.CreateGroupDeployToken(5, &CreateGroupDeployTokenOptions{
 		Name:      Ptr("My deploy token"),
 		Username:  Ptr("custom-user"),
-		ExpiresAt: &expiresAt,
+		ExpiresAt: Ptr(time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)),
 		Scopes: &[]string{
 			"read_repository",
 		},
 	})
-	if err != nil {
-		t.Errorf("DeployTokens.CreateGroupDeployToken returned an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &DeployToken{
 		ID:        1,
 		Name:      "My deploy token",
 		Username:  "custom-user",
-		ExpiresAt: &expiresAt,
+		ExpiresAt: Ptr(time.Date(2021, time.January, 1, 0, 0, 0, 0, time.UTC)),
 		Token:     "jMRvtPNxrn3crTAGukpZ",
 		Scopes: []string{
 			"read_repository",
@@ -374,14 +341,6 @@ func TestDeleteGroupDeployToken(t *testing.T) {
 	})
 
 	resp, err := client.DeployTokens.DeleteGroupDeployToken(5, 13)
-	if err != nil {
-		t.Errorf("DeployTokens.DeleteGroupDeployToken returned an error: %v", err)
-	}
-
-	want := http.StatusAccepted
-	got := resp.StatusCode
-
-	if want != got {
-		t.Errorf("DeployTokens.DeleteGroupDeployToken returned %+v, want %+v", got, want)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }

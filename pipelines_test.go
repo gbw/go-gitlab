@@ -17,11 +17,11 @@
 package gitlab
 
 import (
-	"errors"
 	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProjectPipelines(t *testing.T) {
@@ -39,9 +39,7 @@ func TestListProjectPipelines(t *testing.T) {
 
 	opt := &ListProjectPipelinesOptions{Ref: Ptr("master"), CreatedAfter: mustParseTime("2023-05-01T15:00:00Z")}
 	pipelines, _, err := client.Pipelines.ListProjectPipelines(1, opt)
-	if err != nil {
-		t.Errorf("Pipelines.ListProjectPipelines returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*PipelineInfo{{ID: 1, Name: "test"}, {ID: 2}, {ID: 3, Status: "success", Ref: "master", CreatedAt: mustParseTime("2023-05-02T12:00:00Z")}}
 	assert.Equal(t, want, pipelines)
@@ -57,9 +55,7 @@ func TestGetPipeline(t *testing.T) {
 	})
 
 	pipeline, _, err := client.Pipelines.GetPipeline(1, 5949167)
-	if err != nil {
-		t.Errorf("Pipelines.GetPipeline returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Pipeline{ID: 1, Status: "success", Source: "api"}
 	assert.Equal(t, want, pipeline)
@@ -78,9 +74,7 @@ func TestGetPipelineVariables(t *testing.T) {
 	})
 
 	variables, _, err := client.Pipelines.GetPipelineVariables(1, 5949167)
-	if err != nil {
-		t.Errorf("Pipelines.GetPipelineVariables returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*PipelineVariable{{Key: "RUN_NIGHTLY_BUILD", Value: "true", VariableType: "env_var"}, {Key: "foo", Value: "bar"}}
 	assert.Equal(t, want, variables)
@@ -96,9 +90,7 @@ func TestGetPipelineTestReport(t *testing.T) {
 	})
 
 	testreport, _, err := client.Pipelines.GetPipelineTestReport(1, 123456)
-	if err != nil {
-		t.Errorf("Pipelines.GetPipelineTestReport returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PipelineTestReport{
 		TotalTime:    61.502,
@@ -181,9 +173,7 @@ func TestGetPipelineTestReportSummary(t *testing.T) {
 	})
 
 	testreport, _, err := client.Pipelines.GetPipelineTestReportSummary(1, 123456)
-	if err != nil {
-		t.Errorf("Pipelines.GetPipelineTestReportSummary returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PipelineTestReportSummary{
 		Total: PipelineTotalSummary{
@@ -254,10 +244,9 @@ func TestCreatePipeline(t *testing.T) {
 	t.Parallel()
 
 	cases := []struct {
-		name    string
-		opt     *CreatePipelineOptions
-		want    map[string]any
-		wantErr error
+		name string
+		opt  *CreatePipelineOptions
+		want map[string]any
 	}{
 		{
 			name: "base",
@@ -335,13 +324,7 @@ func TestCreatePipeline(t *testing.T) {
 			})
 
 			pipeline, _, err := client.Pipelines.CreatePipeline(1, tc.opt)
-			if !errors.Is(err, tc.wantErr) {
-				t.Errorf("Pipelines.CreatePipeline() = error %v, want error %v", err, tc.wantErr)
-			}
-
-			if err != nil {
-				return
-			}
+			require.NoError(t, err)
 
 			want := &Pipeline{ID: 1, Status: "pending"}
 			assert.Equal(t, want, pipeline)
@@ -359,9 +342,7 @@ func TestRetryPipelineBuild(t *testing.T) {
 	})
 
 	pipeline, _, err := client.Pipelines.RetryPipelineBuild(1, 5949167)
-	if err != nil {
-		t.Errorf("Pipelines.RetryPipelineBuild returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Pipeline{ID: 1, Status: "pending"}
 	assert.Equal(t, want, pipeline)
@@ -377,9 +358,7 @@ func TestCancelPipelineBuild(t *testing.T) {
 	})
 
 	pipeline, _, err := client.Pipelines.CancelPipelineBuild(1, 5949167)
-	if err != nil {
-		t.Errorf("Pipelines.CancelPipelineBuild returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Pipeline{ID: 1, Status: "canceled"}
 	assert.Equal(t, want, pipeline)
@@ -394,9 +373,7 @@ func TestDeletePipeline(t *testing.T) {
 	})
 
 	_, err := client.Pipelines.DeletePipeline("1", 5949167)
-	if err != nil {
-		t.Errorf("Pipelines.DeletePipeline returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestUpdateMetadata(t *testing.T) {
@@ -410,9 +387,7 @@ func TestUpdateMetadata(t *testing.T) {
 
 	opt := &UpdatePipelineMetadataOptions{Name: Ptr("new pipeline title")}
 	pipeline, _, err := client.Pipelines.UpdatePipelineMetadata("1", 234, opt)
-	if err != nil {
-		t.Errorf("Pipelines.UpdatePipelineMetadata returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Pipeline{ID: 1, Status: "running"}
 	assert.Equal(t, want, pipeline)

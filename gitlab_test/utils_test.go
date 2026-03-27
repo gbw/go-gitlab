@@ -139,9 +139,7 @@ func CreateTestProjectWithOptions(t *testing.T, client *gitlab.Client, opts *git
 	t.Helper()
 
 	project, _, err := client.Projects.CreateProject(opts, gitlab.WithContext(t.Context()))
-	if err != nil {
-		t.Fatalf("Failed to create project: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Add a cleanup function
 	t.Cleanup(func() {
@@ -232,9 +230,7 @@ func CreateTestGroupWithOptions(t *testing.T, client *gitlab.Client, opts *gitla
 	t.Helper()
 
 	group, _, err := client.Groups.CreateGroup(opts, gitlab.WithContext(t.Context()))
-	if err != nil {
-		t.Fatalf("Failed to create group: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Add a cleanup function
 	t.Cleanup(func() {

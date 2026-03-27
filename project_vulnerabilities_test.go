@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProjectVulnerabilities(t *testing.T) {
@@ -38,9 +39,7 @@ func TestListProjectVulnerabilities(t *testing.T) {
 	}
 
 	projectVulnerabilities, _, err := client.ProjectVulnerabilities.ListProjectVulnerabilities(1, opt)
-	if err != nil {
-		t.Errorf("ProjectVulnerabilities.ListProjectVulnerabilities returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*ProjectVulnerability{{ID: 1}, {ID: 2}}
 	assert.Equal(t, want, projectVulnerabilities)
@@ -60,9 +59,7 @@ func TestCreateVulnerability(t *testing.T) {
 	}
 
 	projectVulnerability, _, err := client.ProjectVulnerabilities.CreateVulnerability(1, opt)
-	if err != nil {
-		t.Errorf("ProjectVulnerabilities.CreateVulnerability returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ProjectVulnerability{ID: 1}
 	assert.Equal(t, want, projectVulnerability)

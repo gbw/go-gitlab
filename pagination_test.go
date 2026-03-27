@@ -226,7 +226,7 @@ func handleTwoPagesSuccessfully(t *testing.T, mux *http.ServeMux) {
 			w.Header().Add("X-Next-Page", "0")
 			fmt.Fprint(w, `[{"id":2}]`)
 		default:
-			assert.Fail(t, fmt.Sprintf("received request for unexpected page '%s'", page))
+			assert.Failf(t, "received request for unexpected page '%s'", page)
 		}
 	})
 }

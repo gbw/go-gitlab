@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetCurrentPlanLimits(t *testing.T) {
@@ -46,9 +47,7 @@ func TestGetCurrentPlanLimits(t *testing.T) {
 		PlanName: Ptr("default"),
 	}
 	planlimit, _, err := client.PlanLimits.GetCurrentPlanLimits(opt)
-	if err != nil {
-		t.Errorf("PlanLimits.GetCurrentPlanLimits returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PlanLimit{
 		ConanMaxFileSize:           3221225472,
@@ -87,9 +86,7 @@ func TestChangePlanLimits(t *testing.T) {
 		ConanMaxFileSize: Ptr(int64(3221225472)),
 	}
 	planlimit, _, err := client.PlanLimits.ChangePlanLimits(opt)
-	if err != nil {
-		t.Errorf("PlanLimits.ChangePlanLimits returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &PlanLimit{
 		ConanMaxFileSize:           3221225472,

@@ -36,9 +36,7 @@ func TestGetSettings(t *testing.T) {
 	})
 
 	settings, _, err := client.Settings.GetSettings()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Settings{ID: 1, DefaultProjectsLimit: 100000}
 	assert.Equal(t, want, settings)
@@ -57,9 +55,7 @@ func TestUpdateSettings(t *testing.T) {
 		DefaultProjectsLimit: Ptr(int64(100)),
 	}
 	settings, _, err := client.Settings.UpdateSettings(options)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Settings{DefaultProjectsLimit: 100}
 	assert.Equal(t, want, settings)
@@ -75,9 +71,7 @@ func TestSettingsWithEmptyContainerRegistry(t *testing.T) {
 	})
 
 	settings, _, err := client.Settings.GetSettings()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Settings{ID: 1, ContainerRegistryImportCreatedBefore: nil}
 	assert.Equal(t, want, settings)
@@ -87,15 +81,15 @@ func TestSettingsDefaultBranchProtectionDefaults(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	var requestBody map[string]any
 	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-
-		// Read the request body into `requestBody` by unmarshalling it
-		err := json.NewDecoder(r.Body).Decode(&requestBody)
-		if err != nil {
-			t.Fatal(err)
-		}
+		testBodyJSON(t, r, map[string]any{
+			"default_branch_protection_defaults": map[string]any{
+				"allowed_to_push": []any{
+					map[string]any{"access_level": float64(30)},
+				},
+			},
+		})
 
 		fmt.Fprint(w, `{"id":1,    "default_projects_limit" : 100000}`)
 	})
@@ -107,36 +101,18 @@ func TestSettingsDefaultBranchProtectionDefaults(t *testing.T) {
 			},
 		},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// This is the payload that should be produced. Float vs int won't matter when converted to a JSON string, so don't bother investigating why
-	// it uses float instead of int when unmarshalled.
-	want := map[string]any{
-		"default_branch_protection_defaults": map[string]any{
-			"allowed_to_push": []any{
-				map[string]any{"access_level": float64(30)},
-			},
-		},
-	}
-
-	assert.Equal(t, want["default_branch_protection_defaults"], requestBody["default_branch_protection_defaults"])
+	require.NoError(t, err)
 }
 
 func TestSettings_RequestBody(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	var requestBody map[string]any
 	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-
-		// Read the request body into `requestBody` by unmarshalling it
-		err := json.NewDecoder(r.Body).Decode(&requestBody)
-		if err != nil {
-			t.Fatal(err)
-		}
+		testBodyJSON(t, r, map[string]any{
+			"enforce_ci_inbound_job_token_scope_enabled": true,
+		})
 
 		fmt.Fprint(w, `{"id":1, "default_projects_limit" : 100000, "enforce_ci_inbound_job_token_scope_enabled": true}`)
 	})
@@ -144,29 +120,18 @@ func TestSettings_RequestBody(t *testing.T) {
 	_, _, err := client.Settings.UpdateSettings(&UpdateSettingsOptions{
 		EnforceCIInboundJobTokenScopeEnabled: Ptr(true),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// This is the payload that should be produced. This allows us to test that the request produced matches our options input.
-	want := map[string]any{
-		"enforce_ci_inbound_job_token_scope_enabled": true,
-	}
-
-	assert.Equal(t, want["enforce_ci_inbound_job_token_scope_enabled"], requestBody["enforce_ci_inbound_job_token_scope_enabled"])
+	require.NoError(t, err)
 }
 
 func TestUpdateSettings_AnonymousSearchesAllowed(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	var requestBody map[string]any
 	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-
-		// Read the request body into `requestBody` by unmarshalling it
-		err := json.NewDecoder(r.Body).Decode(&requestBody)
-		assert.NoError(t, err)
+		testBodyJSON(t, r, map[string]any{
+			"anonymous_searches_allowed": true,
+		})
 
 		fmt.Fprint(w, `{"id":1,   "anonymous_searches_allowed" : true}`)
 	})
@@ -175,13 +140,6 @@ func TestUpdateSettings_AnonymousSearchesAllowed(t *testing.T) {
 		AnonymousSearchesAllowed: Ptr(true),
 	})
 	require.NoError(t, err)
-
-	// This is the payload that should be produced. This allows us to test that the request produced matches our options input.
-	want := map[string]any{
-		"anonymous_searches_allowed": true,
-	}
-
-	assert.Equal(t, want["anonymous_searches_allowed"], requestBody["anonymous_searches_allowed"])
 }
 
 func TestGetSettings_AnonymousSearchesAllowed(t *testing.T) {

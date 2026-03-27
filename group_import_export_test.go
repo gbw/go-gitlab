@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGroupScheduleExport(t *testing.T) {
@@ -53,9 +54,8 @@ func TestGroupImport(t *testing.T) {
 
 	content := []byte("temporary file's content")
 	tmpfile := filepath.Join(t.TempDir(), "example.tar.gz")
-	if err := os.WriteFile(tmpfile, content, os.ModePerm); err != nil {
-		t.Fatal(err)
-	}
+	err := os.WriteFile(tmpfile, content, os.ModePerm)
+	require.NoError(t, err)
 
 	mux.HandleFunc("/api/v4/groups/import",
 		func(w http.ResponseWriter, r *http.Request) {

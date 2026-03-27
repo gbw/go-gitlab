@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListGroupAccessTokens(t *testing.T) {
@@ -34,9 +35,7 @@ func TestListGroupAccessTokens(t *testing.T) {
 	})
 
 	groupAccessTokens, _, err := client.GroupAccessTokens.ListGroupAccessTokens(1, &ListGroupAccessTokensOptions{ListOptions: ListOptions{Page: 1, PerPage: 20}})
-	if err != nil {
-		t.Errorf("GroupAccessTokens.ListGroupAccessTokens returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*GroupAccessToken{
 		{
@@ -81,9 +80,7 @@ func TestGetGroupAccessToken(t *testing.T) {
 	})
 
 	groupAccessToken, _, err := client.GroupAccessTokens.GetGroupAccessToken(1, 1)
-	if err != nil {
-		t.Errorf("GroupAccessTokens.GetGroupAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -112,9 +109,7 @@ func TestCreateGroupAccessToken(t *testing.T) {
 	})
 
 	groupAccessToken, _, err := client.GroupAccessTokens.CreateGroupAccessToken(1, nil)
-	if err != nil {
-		t.Errorf("GroupAccessTokens.CreateGroupAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -146,9 +141,7 @@ func TestRotateGroupAccessToken(t *testing.T) {
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotateGroupAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.GroupAccessTokens.RotateGroupAccessToken(1, 42, opts)
-	if err != nil {
-		t.Errorf("GroupAccessTokens.RotateGroupAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -180,9 +173,7 @@ func TestRotateGroupAccessTokenSelf(t *testing.T) {
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotateGroupAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.GroupAccessTokens.RotateGroupAccessTokenSelf(1, opts)
-	if err != nil {
-		t.Errorf("GroupAccessTokens.RotateGroupAccessTokenSelf returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -212,7 +203,5 @@ func TestRevokeGroupAccessToken(t *testing.T) {
 	})
 
 	_, err := client.GroupAccessTokens.RevokeGroupAccessToken("1", 1234)
-	if err != nil {
-		t.Errorf("GroupAccessTokens.RevokeGroupAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 }

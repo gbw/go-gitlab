@@ -1368,14 +1368,11 @@ func TestDeleteWorkItem(t *testing.T) {
 				case strings.Contains(q.Query, "GetWorkItemID"):
 					tt.getIDResponse.WriteTo(w)
 				case strings.Contains(q.Query, "DeleteWorkItem"):
-					if tt.deleteResponse == nil {
-						t.Errorf("unexpected DeleteWorkItem request: deleteResponse is nil")
-						http.Error(w, "unexpected request", http.StatusInternalServerError)
-						return
+					if assert.NotNil(t, tt.deleteResponse) {
+						tt.deleteResponse.WriteTo(w)
 					}
-					tt.deleteResponse.WriteTo(w)
 				default:
-					t.Errorf("unexpected query: %s", q.Query)
+					assert.Failf(t, "unexpected query: %s", q.Query)
 					http.Error(w, "unexpected query", http.StatusBadRequest)
 				}
 			})
@@ -1397,25 +1394,18 @@ func loadSchema(t *testing.T) *graphql.Schema {
 	const filename = "schema/gitlab.graphql"
 
 	fh, err := os.Open(filename)
-	switch {
-	case errors.Is(err, os.ErrNotExist):
+	if errors.Is(err, os.ErrNotExist) {
 		t.Skipf("GraphQL schema file %q is not available; generate it with: "+
 			"npm install -g get-graphql-schema && "+
 			"get-graphql-schema https://gitlab.com/api/graphql --sdl > schema/gitlab.graphql", filename)
-
-	case err != nil:
-		t.Fatalf("opening schema failed: %v", err)
 	}
+	require.NoError(t, err, "opening schema")
 
 	data, err := io.ReadAll(fh)
-	if err != nil {
-		t.Fatalf("reading schema failed: %v", err)
-	}
+	require.NoError(t, err)
 
 	schema, err := graphql.ParseSchema(string(data), nil)
-	if err != nil {
-		t.Fatalf("parsing schema %q failed (schema file may be corrupt): %v", filename, err)
-	}
+	require.NoError(t, err)
 
 	return schema
 }

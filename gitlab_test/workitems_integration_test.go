@@ -105,9 +105,6 @@ func TestWorkItemLifeCycle(t *testing.T) {
 func deref(t *testing.T, ptr *string) string {
 	t.Helper()
 
-	if ptr == nil {
-		t.Fatal("pointer is nil")
-	}
-
+	require.NotNil(t, ptr)
 	return *ptr
 }
