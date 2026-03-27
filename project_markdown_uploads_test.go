@@ -17,12 +17,8 @@ func TestMarkdownUploads_UploadProjectMarkdown(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/uploads", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Projects.UploadFile request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Projects.UploadFile request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, -1, r.ContentLength)
 		fmt.Fprint(w, `
 			{
 				"id": 5,
@@ -60,12 +56,8 @@ func TestMarkdownUploads_UploadProjectMarkdown_Retry(t *testing.T) {
 			isFirstRequest = false
 			return
 		}
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Projects.UploadFile request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Projects.UploadFile request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, -1, r.ContentLength)
 		fmt.Fprint(w, `
 			{
 				"id": 5,

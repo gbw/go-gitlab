@@ -21,6 +21,9 @@ import (
 	"fmt"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // mustParseTime is a helper that returns a time.Time pointer to v
@@ -77,13 +80,10 @@ func TestBoolValue(t *testing.T) {
 			t.Parallel()
 
 			var b BoolValue
-			if err := json.Unmarshal(testCase.data, &b); err != nil {
-				t.Fatalf("Unexpected error: %v", err)
-			}
+			err := json.Unmarshal(testCase.data, &b)
+			require.NoError(t, err)
 
-			if bool(b) != testCase.expected {
-				t.Fatalf("Expected %v but got %v", testCase.expected, b)
-			}
+			assert.Equal(t, testCase.expected, bool(b))
 		})
 	}
 }

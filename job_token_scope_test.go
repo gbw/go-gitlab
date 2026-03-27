@@ -15,9 +15,7 @@
 package gitlab
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"testing"
 
@@ -52,19 +50,9 @@ func TestPatchProjectJobTokenAccessSettings(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPatch)
-
-		// Read the request to determine which target project is passed in
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("JobTokenScope.PatchProjectJobTokenAccessSettings failed to read body")
-		}
-
-		// Parse to object to ensure it's sent on the request appropriately.
-		var options PatchProjectJobTokenAccessSettingsOptions
-		err = json.Unmarshal(body, &options)
-		if err != nil {
-			t.Fatalf("JobTokenScope.PatchProjectJobTokenAccessSettings failed to unmarshal body: %v", err)
-		}
+		testBodyJSON(t, r, map[string]any{
+			"enabled": false,
+		})
 
 		// Ensure we provide the proper response
 		w.WriteHeader(http.StatusNoContent)
@@ -115,19 +103,9 @@ func TestAddProjectToJobScopeAllowList(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/allowlist", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-
-		// Read the request to determine which target project is passed in
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("JobTokenScope.AddProjectToJobScopeAllowList failed to read body")
-		}
-
-		// Parse to object to ensure it's sent on the request appropriately.
-		var createTokenRequest JobTokenInboundAllowOptions
-		err = json.Unmarshal(body, &createTokenRequest)
-		if err != nil {
-			t.Fatalf("JobTokenScope.AddProjectToJobScopeAllowList failed to unmarshal body: %v", err)
-		}
+		testBodyJSON(t, r, map[string]any{
+			"target_project_id": 2.0,
+		})
 
 		// Ensure we provide the proper response
 		w.WriteHeader(http.StatusCreated)
@@ -135,8 +113,8 @@ func TestAddProjectToJobScopeAllowList(t *testing.T) {
 		// Print on the response with the proper target project
 		fmt.Fprintf(w, `{
 			"source_project_id": 1,
-			"target_project_id": %d
-		}`, *createTokenRequest.TargetProjectID)
+			"target_project_id": 2
+		}`)
 	})
 
 	want := &JobTokenInboundAllowItem{
@@ -159,17 +137,6 @@ func TestRemoveProjectFromJobScopeAllowList(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/allowlist/2", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-
-		// Read the request to determine which target project is passed in
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("JobTokenScope.RemoveProjectFromJobScopeAllowList failed to read body")
-		}
-
-		// The body should be empty since all attributes are passed in the path
-		if body != nil && string(body) != "" {
-			t.Fatalf("JobTokenScope.RemoveProjectFromJobScopeAllowList failed to unmarshal body: %v", err)
-		}
 
 		// Ensure we provide the proper response
 		w.WriteHeader(http.StatusNoContent)
@@ -215,19 +182,9 @@ func TestAddGroupToJobTokenAllowlist(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/groups_allowlist", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-
-		// Read the request to determine which target group is passed in
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("JobTokenScope.AddGroupToJobTokenAllowlist failed to read body")
-		}
-
-		// Parse to object to ensure it's sent on the request appropriately.
-		var createTokenRequest AddGroupToJobTokenAllowlistOptions
-		err = json.Unmarshal(body, &createTokenRequest)
-		if err != nil {
-			t.Fatalf("JobTokenScope.AddGroupToJobTokenAllowlist failed to unmarshal body: %v", err)
-		}
+		testBodyJSON(t, r, map[string]any{
+			"target_group_id": 2.0,
+		})
 
 		// Ensure we provide the proper response
 		w.WriteHeader(http.StatusCreated)
@@ -235,8 +192,8 @@ func TestAddGroupToJobTokenAllowlist(t *testing.T) {
 		// Print on the response with the proper target group
 		fmt.Fprintf(w, `{
 			"source_project_id": 1,
-			"target_group_id": %d
-		}`, *createTokenRequest.TargetGroupID)
+			"target_group_id": 2
+		}`)
 	})
 
 	want := &JobTokenAllowlistItem{
@@ -259,17 +216,6 @@ func TestRemoveGroupFromJobTokenAllowlist(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/job_token_scope/groups_allowlist/2", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-
-		// Read the request to determine which target group is passed in
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("JobTokenScope.RemoveGroupFromJobTokenAllowlist failed to read body")
-		}
-
-		// The body should be empty since all attributes are passed in the path
-		if body != nil && string(body) != "" {
-			t.Fatalf("JobTokenScope.RemoveGroupFromJobTokenAllowlist failed to unmarshal body: %v", err)
-		}
 
 		// Ensure we provide the proper response
 		w.WriteHeader(http.StatusNoContent)

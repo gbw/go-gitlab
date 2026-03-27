@@ -1,9 +1,7 @@
 package gitlab
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"testing"
 
@@ -305,20 +303,12 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
-	var requestOpts AddProjectMemberOptions
 	mux.HandleFunc("/api/v4/projects/1/members", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-
-		// Read the input arguments and unmarshal them into requestOpts
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("Failed to read request body: %v", err)
-		}
-
-		err = json.Unmarshal(body, &requestOpts)
-		if err != nil {
-			t.Fatalf("Failed to unmarshal request body: %v", err)
-		}
+		testBodyJSON(t, r, map[string]any{
+			"username":   "venkatesh_thalluri",
+			"expires_at": any(nil),
+		})
 
 		fmt.Fprintf(w, `
 			{
@@ -372,7 +362,6 @@ func TestProjectMembersService_AddProjectMember(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Equal(t, want, pm)
-	require.Equal(t, "venkatesh_thalluri", *requestOpts.Username)
 
 	pm, resp, err = client.ProjectMembers.AddProjectMember(1.01, nil, nil)
 	require.ErrorIs(t, err, ErrInvalidIDType)

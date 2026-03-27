@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTagsService_ListTags(t *testing.T) {
@@ -238,9 +239,7 @@ func TestTagsService_GetTagSignature(t *testing.T) {
 	})
 
 	signature, _, err := client.Tags.GetTagSignature(1, "v1.0.0/rc-1", nil)
-	if err != nil {
-		t.Errorf("Tags.GetTagSignature returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	serialNumber, _ := big.NewInt(0).SetString("278969561018901340486471282831158785578", 10)
 	want := &X509Signature{

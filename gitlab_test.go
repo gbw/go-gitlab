@@ -72,39 +72,30 @@ func setup(t *testing.T) (*http.ServeMux, *Client) {
 			return 0
 		}),
 	)
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	return mux, client
 }
 
 func testURL(t *testing.T, r *http.Request, want string) {
-	if got := r.RequestURI; got != want {
-		t.Errorf("Request url: %+v, want %s", got, want)
-	}
+	assert.Equal(t, want, r.RequestURI)
 }
 
 func testMethod(t *testing.T, r *http.Request, want string) {
-	if got := r.Method; got != want {
-		t.Errorf("Request method: %s, want %s", got, want)
-	}
+	assert.Equal(t, want, r.Method)
 }
 
 // Tests that a given form attribute has a value in a form request. Useful
 // for testing file upload API requests.
 func testFormBody(t *testing.T, r *http.Request, key string, want string) {
-	if got := r.FormValue(key); got != want {
-		t.Errorf("Request body for key %s got: %s, want %s", key, got, want)
-	}
+	assert.Equal(t, want, r.FormValue(key))
 }
 
 // testBodyJSON tests that the JSON request body is what we expect. The want
 // argument is typically either a struct, a map[string]string, or a
 // map[string]any, though other types are handled as well.
 //
-// Calls t.Fatal if decoding the request body fails, failing the test
-// immediately.
+// Fatals if decoding the request body fails.
 //
 // When the request body is not equal to "want", the error is reported but the
 // test is allowed to continue. You can use the return value to end the test on
@@ -112,11 +103,8 @@ func testFormBody(t *testing.T, r *http.Request, key string, want string) {
 // otherwise.
 func testBodyJSON[T any](t *testing.T, r *http.Request, want T) bool {
 	var got T
-
-	if err := json.NewDecoder(r.Body).Decode(&got); err != nil {
-		t.Fatalf("Failed to decode JSON from request body: %v", err)
-	}
-
+	err := json.NewDecoder(r.Body).Decode(&got)
+	require.NoError(t, err)
 	return assert.Equal(t, want, got)
 }
 
@@ -129,27 +117,23 @@ func testParam(t *testing.T, r *http.Request, key, value string) {
 
 func mustWriteHTTPResponse(t *testing.T, w io.Writer, fixturePath string) {
 	f, err := os.Open(fixturePath)
-	if err != nil {
-		t.Fatalf("error opening fixture file: %v", err)
-	}
+	require.NoError(t, err)
 	defer f.Close()
 
-	if _, err = io.Copy(w, f); err != nil {
-		t.Fatalf("error writing response: %v", err)
-	}
+	_, err = io.Copy(w, f)
+	require.NoError(t, err)
 }
 
 // mustWriteJSONResponse writes a JSON response to w.
-// It uses t.Fatal to stop the test and report an error if encoding the response fails.
+// Fatals if encoding the response fails.
 // This helper is useful when implementing handlers in unit tests.
 func mustWriteJSONResponse(t *testing.T, w io.Writer, response any) {
-	if err := json.NewEncoder(w).Encode(response); err != nil {
-		t.Fatalf("Failed to write response: %v", err)
-	}
+	err := json.NewEncoder(w).Encode(response)
+	require.NoError(t, err)
 }
 
 // mustWriteErrorResponse writes an error response to w in a format that CheckResponse can parse.
-// It uses t.Fatal to stop the test and report an error if encoding the response fails.
+// Fatals if encoding the response fails.
 // This is useful when testing error conditions.
 func mustWriteErrorResponse(t *testing.T, w io.Writer, err error) {
 	mustWriteJSONResponse(t, w, map[string]any{
@@ -169,35 +153,23 @@ func TestNewClient(t *testing.T) {
 	t.Run("Default Configuration", func(t *testing.T) {
 		t.Parallel()
 		c, err := NewClient("")
-		if err != nil {
-			t.Fatalf("Failed to create client: %v", err)
-		}
+		require.NoError(t, err)
+		require.NotNil(t, c, "Client is nil")
 
 		expectedBaseURL := defaultBaseURL + apiVersionPath
-
-		if c.BaseURL().String() != expectedBaseURL {
-			t.Errorf("NewClient BaseURL is %s, want %s", c.BaseURL().String(), expectedBaseURL)
-		}
-		if c.UserAgent != userAgent {
-			t.Errorf("NewClient UserAgent is %s, want %s", c.UserAgent, userAgent)
-		}
+		assert.Equal(t, expectedBaseURL, c.BaseURL().String())
+		assert.Equal(t, userAgent, c.UserAgent)
 	})
 
 	t.Run("Custom UserAgent", func(t *testing.T) {
 		t.Parallel()
 		c, err := NewClient("", WithUserAgent("any-custom-user-agent"))
-		if err != nil {
-			t.Fatalf("Failed to create client: %v", err)
-		}
+		require.NoError(t, err)
+		require.NotNil(t, c, "Client is nil")
 
 		expectedBaseURL := defaultBaseURL + apiVersionPath
-
-		if c.BaseURL().String() != expectedBaseURL {
-			t.Errorf("NewClient BaseURL is %s, want %s", c.BaseURL().String(), expectedBaseURL)
-		}
-		if c.UserAgent != "any-custom-user-agent" {
-			t.Errorf("NewClient UserAgent is %s, want any-custom-user-agent", c.UserAgent)
-		}
+		assert.Equal(t, expectedBaseURL, c.BaseURL().String())
+		assert.Equal(t, "any-custom-user-agent", c.UserAgent)
 	})
 
 	t.Run("Custom Base URL", func(t *testing.T) {
@@ -246,14 +218,10 @@ func TestSendingUserAgent_Custom(t *testing.T) {
 func TestCheckResponse(t *testing.T) {
 	t.Parallel()
 	c, err := NewClient("")
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	req, err := c.NewRequest(http.MethodGet, "test", nil, nil)
-	if err != nil {
-		t.Fatalf("Failed to create request: %v", err)
-	}
+	require.NoError(t, err)
 
 	resp := &http.Response{
 		Request:    req.Request,
@@ -285,28 +253,18 @@ func TestCheckResponse(t *testing.T) {
 	}
 
 	errResp := CheckResponse(resp)
-	if errResp == nil {
-		t.Fatal("Expected error response.")
-	}
 
 	want := "GET https://gitlab.com/api/v4/test: 400 {error: message 1}, {message: {embed1: {prop3: [msg 1, msg2]}}, {embed2: {prop4: [some msg]}}, {prop1: [message 1, message 2]}, {prop2: [message 3]}}"
-
-	if errResp.Error() != want {
-		t.Errorf("Expected error: %s, got %s", want, errResp.Error())
-	}
+	assert.EqualError(t, errResp, want)
 }
 
 func TestCheckResponseOnUnknownErrorFormat(t *testing.T) {
 	t.Parallel()
 	c, err := NewClient("")
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	req, err := c.NewRequest(http.MethodGet, "test", nil, nil)
-	if err != nil {
-		t.Fatalf("Failed to create request: %v", err)
-	}
+	require.NoError(t, err)
 
 	resp := &http.Response{
 		Request:    req.Request,
@@ -315,28 +273,18 @@ func TestCheckResponseOnUnknownErrorFormat(t *testing.T) {
 	}
 
 	errResp := CheckResponse(resp)
-	if errResp == nil {
-		t.Fatal("Expected error response.")
-	}
 
 	want := "GET https://gitlab.com/api/v4/test: 400 failed to parse unknown error format: some error message but not JSON"
-
-	if errResp.Error() != want {
-		t.Errorf("Expected error: %s, got %s", want, errResp.Error())
-	}
+	assert.EqualError(t, errResp, want)
 }
 
 func TestCheckResponseOnHeadRequestError(t *testing.T) {
 	t.Parallel()
 	c, err := NewClient("")
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	req, err := c.NewRequest(http.MethodHead, "test", nil, nil)
-	if err != nil {
-		t.Fatalf("Failed to create request: %v", err)
-	}
+	require.NoError(t, err)
 
 	resp := &http.Response{
 		Request:    req.Request,
@@ -345,42 +293,28 @@ func TestCheckResponseOnHeadRequestError(t *testing.T) {
 	}
 
 	errResp := CheckResponse(resp)
-	if errResp == nil {
-		t.Fatal("Expected error response.")
-	}
 
 	want := "404 Not Found"
-
-	if errResp.Error() != want {
-		t.Errorf("Expected error: %s, got %s", want, errResp.Error())
-	}
+	assert.EqualError(t, errResp, want)
 }
 
 func TestRequestWithContext(t *testing.T) {
 	t.Parallel()
 	c, err := NewClient("")
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	ctx, cancel := context.WithCancel(t.Context())
 	req, err := c.NewRequest(http.MethodGet, "test", nil, []RequestOptionFunc{WithContext(ctx)})
-	if err != nil {
-		t.Fatalf("Failed to create request: %v", err)
-	}
+	require.NoError(t, err)
 	defer cancel()
 
-	if req.Context() != ctx {
-		t.Fatal("Context was not set correctly")
-	}
+	assert.Equal(t, ctx, req.Context())
 }
 
 func loadFixture(t *testing.T, filePath string) []byte {
 	t.Helper()
 	content, err := os.ReadFile(filePath)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	return content
 }
@@ -389,9 +323,7 @@ func TestPathEscape(t *testing.T) {
 	t.Parallel()
 	want := "diaspora%2Fdiaspora"
 	got := PathEscape("diaspora/diaspora")
-	if want != got {
-		t.Errorf("Expected: %s, got %s", want, got)
-	}
+	assert.Equal(t, want, got)
 }
 
 func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
@@ -423,11 +355,7 @@ func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
 		xNextPage:   r.NextPage,
 		xPrevPage:   r.PreviousPage,
 	}
-	for k, v := range wantPageHeaders {
-		if v != gotPageHeaders[k] {
-			t.Errorf("For %s, expected %d, got %d", k, v, gotPageHeaders[k])
-		}
-	}
+	assert.Equal(t, wantPageHeaders, gotPageHeaders)
 
 	gotLinkHeaders := map[string]string{
 		linkPrev:  r.PreviousLink,
@@ -435,11 +363,7 @@ func TestPaginationPopulatePageValuesEmpty(t *testing.T) {
 		linkFirst: r.FirstLink,
 		linkLast:  r.LastLink,
 	}
-	for k, v := range wantLinkHeaders {
-		if v != gotLinkHeaders[k] {
-			t.Errorf("For %s, expected %s, got %s", k, v, gotLinkHeaders[k])
-		}
-	}
+	assert.Equal(t, wantLinkHeaders, gotLinkHeaders)
 }
 
 func TestPaginationPopulatePageValuesOffset(t *testing.T) {
@@ -483,11 +407,7 @@ func TestPaginationPopulatePageValuesOffset(t *testing.T) {
 		xNextPage:   r.NextPage,
 		xPrevPage:   r.PreviousPage,
 	}
-	for k, v := range wantPageHeaders {
-		if v != gotPageHeaders[k] {
-			t.Errorf("For %s, expected %d, got %d", k, v, gotPageHeaders[k])
-		}
-	}
+	assert.Equal(t, wantPageHeaders, gotPageHeaders)
 
 	gotLinkHeaders := map[string]string{
 		linkPrev:  r.PreviousLink,
@@ -495,11 +415,7 @@ func TestPaginationPopulatePageValuesOffset(t *testing.T) {
 		linkFirst: r.FirstLink,
 		linkLast:  r.LastLink,
 	}
-	for k, v := range wantLinkHeaders {
-		if v != gotLinkHeaders[k] {
-			t.Errorf("For %s, expected %s, got %s", k, v, gotLinkHeaders[k])
-		}
-	}
+	assert.Equal(t, wantLinkHeaders, gotLinkHeaders)
 }
 
 func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
@@ -542,11 +458,7 @@ func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
 		xNextPage:   r.NextPage,
 		xPrevPage:   r.PreviousPage,
 	}
-	for k, v := range wantPageHeaders {
-		if v != gotPageHeaders[k] {
-			t.Errorf("For %s, expected %d, got %d", k, v, gotPageHeaders[k])
-		}
-	}
+	assert.Equal(t, wantPageHeaders, gotPageHeaders)
 }
 
 func TestNewRetryableHTTPClientWithRetryCheck(t *testing.T) {
@@ -612,9 +524,7 @@ func TestExponentialBackoffLogic(t *testing.T) {
 	client, err := NewClient("",
 		WithBaseURL(server.URL),
 	)
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Create a method that returns 429
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
@@ -631,13 +541,9 @@ func TestExponentialBackoffLogic(t *testing.T) {
 	end := time.Now()
 
 	// The test should run for _at least_ 3,200 milliseconds
-	duration := float64(end.Sub(start))
-	if duration < float64(3200*time.Millisecond) {
-		t.Fatal("Wait was shorter than expected. Expected a minimum of 5 retries taking 3200 milliseconds, got:", duration)
-	}
-	if resp.StatusCode != 429 {
-		t.Fatal("Expected to get a 429 code given the server is hard-coded to return this. Received instead:", resp.StatusCode)
-	}
+	duration := end.Sub(start)
+	assert.GreaterOrEqual(t, duration, 3200*time.Millisecond)
+	assert.Equal(t, 429, resp.StatusCode)
 }
 
 func TestErrorResponsePreservesURLEncoding(t *testing.T) {
@@ -693,14 +599,10 @@ func TestNewClient_auth(t *testing.T) {
 		WithBaseURL(server.URL),
 		WithHTTPClient(server.Client()),
 	)
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
-	if err != nil {
-		t.Fatalf("HTTP request failed: %v", err)
-	}
+	require.NoError(t, err)
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, []*Project{}, projects)
@@ -728,14 +630,10 @@ func TestNewJobClient_auth(t *testing.T) {
 		WithBaseURL(server.URL),
 		WithHTTPClient(server.Client()),
 	)
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
-	if err != nil {
-		t.Fatalf("HTTP request failed: %v", err)
-	}
+	require.NoError(t, err)
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, []*Project{}, projects)
@@ -799,14 +697,10 @@ func TestNewBasicAuthClient_auth(t *testing.T) {
 		WithBaseURL(server.URL),
 		WithHTTPClient(server.Client()),
 	)
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
-	if err != nil {
-		t.Fatalf("HTTP request failed: %v", err)
-	}
+	require.NoError(t, err)
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, []*Project{}, projects)
@@ -837,14 +731,10 @@ func TestNewAuthSourceClient(t *testing.T) {
 		WithBaseURL(server.URL),
 		WithHTTPClient(server.Client()),
 	)
-	if err != nil {
-		t.Fatalf("Failed to create client: %v", err)
-	}
+	require.NoError(t, err)
 
 	projects, resp, err := client.Projects.ListProjects(&ListProjectsOptions{})
-	if err != nil {
-		t.Fatalf("HTTP request failed: %v", err)
-	}
+	require.NoError(t, err)
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, []*Project{}, projects)

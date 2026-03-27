@@ -24,7 +24,6 @@ import (
 	"io"
 	"net/http"
 	"strconv"
-	"strings"
 	"testing"
 	"time"
 
@@ -334,21 +333,13 @@ func TestEditProject(t *testing.T) {
 		CIPipelineVariablesMinimumOverrideRole: Ptr(developerPipelineVariablesRole),
 	}
 
-	// Store whether we've seen all the attributes we set
-	attributesFound := false
-
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-
-		// Check that our request properly included ci_restrict_pipeline_cancellation_role
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("Unable to read body properly. Error: %v", err)
-		}
-
-		// Set the value to check if our value is included
-		attributesFound = strings.Contains(string(body), "ci_restrict_pipeline_cancellation_role") &&
-			strings.Contains(string(body), "ci_pipeline_variables_minimum_override_role")
+		testBodyJSON(t, r, map[string]any{
+			"max_artifacts_size":                          100.0,
+			"ci_restrict_pipeline_cancellation_role":      "developer",
+			"ci_pipeline_variables_minimum_override_role": "developer",
+		})
 
 		// Print the start of the mock example from https://docs.gitlab.com/api/projects/#edit-a-project
 		// including the attribute we edited
@@ -372,7 +363,6 @@ func TestEditProject(t *testing.T) {
 	project, resp, err := client.Projects.EditProject(1, opt)
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.True(t, attributesFound)
 	assert.Equal(t, developerRole, project.CIRestrictPipelineCancellationRole)
 	assert.Equal(t, developerPipelineVariablesRole, project.CIPipelineVariablesMinimumOverrideRole)
 	assert.Equal(t, int64(14), project.CIDeletePipelinesInSeconds)
@@ -548,12 +538,8 @@ func TestUploadAvatar(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Projects.UploadAvatar request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Projects.UploadAvatar request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, -1, r.ContentLength)
 		fmt.Fprint(w, `{}`)
 	})
 
@@ -574,12 +560,8 @@ func TestUploadAvatar_Retry(t *testing.T) {
 			isFirstRequest = false
 			return
 		}
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Projects.UploadAvatar request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Projects.UploadAvatar request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, -1, r.ContentLength)
 		fmt.Fprint(w, `{}`)
 	})
 
@@ -1708,20 +1690,25 @@ func TestEditProjectHook(t *testing.T) {
 func TestAddProjectHook_CustomTemplateStuff(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	customWebhookSet := false
-	authValueSet := false
 
 	mux.HandleFunc("/api/v4/projects/1/hooks",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			w.WriteHeader(http.StatusCreated)
+			testBodyJSON(t, r, map[string]any{
+				"custom_webhook_template": `{"example":"{{object_kind}}"}`,
+				"custom_headers": []any{
+					map[string]any{
+						"key":   "Authorization",
+						"value": "stuff",
+					},
+					map[string]any{
+						"key":   "Favorite-Pet",
+						"value": "Cats",
+					},
+				},
+			})
 
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("Unable to read body properly. Error: %v", err)
-			}
-			customWebhookSet = strings.Contains(string(body), "custom_webhook_template")
-			authValueSet = strings.Contains(string(body), `"value":"stuff"`)
+			w.WriteHeader(http.StatusCreated)
 
 			fmt.Fprint(w, `{
 				"custom_webhook_template": "testValue",
@@ -1753,8 +1740,6 @@ func TestAddProjectHook_CustomTemplateStuff(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusCreated, resp.StatusCode)
-	assert.True(t, customWebhookSet)
-	assert.True(t, authValueSet)
 	assert.Equal(t, "testValue", hook.CustomWebhookTemplate)
 	assert.Len(t, hook.CustomHeaders, 2)
 }
@@ -1763,20 +1748,25 @@ func TestAddProjectHook_CustomTemplateStuff(t *testing.T) {
 func TestEditProjectHook_CustomTemplateStuff(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	customWebhookSet := false
-	authValueSet := false
 
 	mux.HandleFunc("/api/v4/projects/1/hooks/1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-			w.WriteHeader(http.StatusOK)
+			testBodyJSON(t, r, map[string]any{
+				"custom_webhook_template": `{"example":"{{object_kind}}"}`,
+				"custom_headers": []any{
+					map[string]any{
+						"key":   "Authorization",
+						"value": "stuff",
+					},
+					map[string]any{
+						"key":   "Favorite-Pet",
+						"value": "Cats",
+					},
+				},
+			})
 
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("Unable to read body properly. Error: %v", err)
-			}
-			customWebhookSet = strings.Contains(string(body), "custom_webhook_template")
-			authValueSet = strings.Contains(string(body), `"value":"stuff"`)
+			w.WriteHeader(http.StatusOK)
 
 			fmt.Fprint(w, `{
 				"custom_webhook_template": "testValue",
@@ -1807,8 +1797,6 @@ func TestEditProjectHook_CustomTemplateStuff(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.True(t, customWebhookSet)
-	assert.True(t, authValueSet)
 	assert.Equal(t, "testValue", hook.CustomWebhookTemplate)
 	assert.Len(t, hook.CustomHeaders, 2)
 }
@@ -2080,21 +2068,15 @@ func TestGetProjectWebhookHeader(t *testing.T) {
 func TestSetProjectWebhookHeader(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
-	var bodyJSON map[string]any
 
 	// Removed most of the arguments to keep test slim
 	mux.HandleFunc("/api/v4/projects/1/hooks/1/custom_headers/Authorization", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
+		testBodyJSON(t, r, map[string]any{
+			"value": "testValue",
+		})
+
 		w.WriteHeader(http.StatusNoContent)
-
-		// validate that the `value` body is sent properly
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("Unable to read body properly. Error: %v", err)
-		}
-
-		// Unmarshal the body into JSON so we can check it
-		_ = json.Unmarshal(body, &bodyJSON)
 
 		fmt.Fprint(w, ``)
 	})
@@ -2102,7 +2084,6 @@ func TestSetProjectWebhookHeader(t *testing.T) {
 	resp, err := client.Projects.SetProjectCustomHeader(1, 1, "Authorization", &SetHookCustomHeaderOptions{Value: Ptr("testValue")})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	assert.Equal(t, "testValue", bodyJSON["value"])
 	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 }
 
@@ -2275,20 +2256,11 @@ func TestEditProject_DuoReviewEnabledSetting(t *testing.T) {
 		AutoDuoCodeReviewEnabled: Ptr(true),
 	}
 
-	// Store whether we've seen all the attributes we set
-	attributeFound := false
-
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-
-		// Check that our request properly included auto_duo_code_review_enabled
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("Unable to read body properly. Error: %v", err)
-		}
-
-		// Set the value to check if our value is included
-		attributeFound = strings.Contains(string(body), "auto_duo_code_review_enabled")
+		testBodyJSON(t, r, map[string]any{
+			"auto_duo_code_review_enabled": true,
+		})
 
 		// Print the start of the mock example from https://docs.gitlab.com/api/projects/#edit-a-project
 		// including the attribute we edited
@@ -2310,7 +2282,6 @@ func TestEditProject_DuoReviewEnabledSetting(t *testing.T) {
 	project, resp, err := client.Projects.EditProject(1, opt)
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.True(t, attributeFound)
 	assert.True(t, project.AutoDuoCodeReviewEnabled)
 }
 
@@ -2322,20 +2293,11 @@ func TestEditProject_ResourceGroupDefaultProcessModeSetting(t *testing.T) {
 		ResourceGroupDefaultProcessMode: Ptr(OldestFirst),
 	}
 
-	// Store whether we've seen all the attributes we set
-	attributeFound := false
-
 	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-
-		// Check that our request properly included resource_group_default_process_mode
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			t.Fatalf("Unable to read body properly. Error: %v", err)
-		}
-
-		// Set the value to check if our value is included
-		attributeFound = strings.Contains(string(body), "resource_group_default_process_mode")
+		testBodyJSON(t, r, map[string]any{
+			"resource_group_default_process_mode": "oldest_first",
+		})
 
 		// Print the start of the mock example from https://docs.gitlab.com/api/projects/#edit-a-project
 		// including the attribute we edited
@@ -2357,7 +2319,6 @@ func TestEditProject_ResourceGroupDefaultProcessModeSetting(t *testing.T) {
 	project, resp, err := client.Projects.EditProject(1, opt)
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.True(t, attributeFound)
 	assert.Equal(t, OldestFirst, project.ResourceGroupDefaultProcessMode)
 }
 

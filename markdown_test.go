@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRender(t *testing.T) {
@@ -12,6 +15,7 @@ func TestRender(t *testing.T) {
 	tests := []struct {
 		name       string
 		options    *RenderOptions
+		wantBody   map[string]any
 		wantHTML   string
 		statusCode int
 	}{
@@ -19,6 +23,9 @@ func TestRender(t *testing.T) {
 			name: "Basic Markdown",
 			options: &RenderOptions{
 				Text: Ptr("# Testing"),
+			},
+			wantBody: map[string]any{
+				"text": "# Testing",
 			},
 			wantHTML:   "<h1>Testing</h1>",
 			statusCode: http.StatusOK,
@@ -29,6 +36,11 @@ func TestRender(t *testing.T) {
 				Text:                    Ptr("**bold**"),
 				GitlabFlavouredMarkdown: Ptr(true),
 				Project:                 Ptr("group/project"),
+			},
+			wantBody: map[string]any{
+				"text":    "**bold**",
+				"gfm":     true,
+				"project": "group/project",
 			},
 			wantHTML:   "<p><strong>bold</strong></p>",
 			statusCode: http.StatusOK,
@@ -43,29 +55,17 @@ func TestRender(t *testing.T) {
 
 			mux.HandleFunc("/api/v4/markdown", func(w http.ResponseWriter, r *http.Request) {
 				testMethod(t, r, http.MethodPost)
-
-				var body map[string]any
-				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-					t.Fatalf("Failed to decode request body: %v", err)
-				}
-				if body["text"] == nil {
-					t.Errorf("Expected 'text' field in request body, got nil")
-				}
-
+				testBodyJSON(t, r, tc.wantBody)
 				w.WriteHeader(tc.statusCode)
 				_ = json.NewEncoder(w).Encode(Markdown{HTML: tc.wantHTML})
 			})
 
 			md, resp, err := client.Markdown.Render(tc.options)
-			if err != nil {
-				t.Fatalf("Render failed: %v", err)
-			}
-			if resp.StatusCode != tc.statusCode {
-				t.Fatalf("Expected status %d, got %d", tc.statusCode, resp.StatusCode)
-			}
-			if md == nil || md.HTML != tc.wantHTML {
-				t.Fatalf("Expected HTML %q, got %q", tc.wantHTML, md.HTML)
-			}
+			require.NoError(t, err)
+			require.NotNil(t, resp)
+			require.Equal(t, tc.statusCode, resp.StatusCode)
+			require.NotNil(t, md)
+			assert.Equal(t, tc.wantHTML, md.HTML)
 		})
 	}
 }

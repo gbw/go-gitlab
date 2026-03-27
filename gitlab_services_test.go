@@ -4,6 +4,8 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // TestServiceMethodsInInterface ensures that all exported methods on Service structs
@@ -16,8 +18,14 @@ func TestServiceMethodsInInterface(t *testing.T) {
 		serviceName := concreteType.Elem().Name()
 
 		// Check that the concrete service implements the interface
-		if !reflect.TypeOf(concreteService).Implements(interfaceTyp) {
-			t.Errorf("%s doesn't implement %s", serviceName, interfaceTyp.Name())
+		if !assert.Implements(
+			t,
+			interfaceType,
+			concreteService,
+			"%s doesn't implement %s",
+			serviceName,
+			interfaceTyp.Name(),
+		) {
 			continue
 		}
 
@@ -49,14 +57,14 @@ func TestServiceMethodsInInterface(t *testing.T) {
 			}
 		}
 
-		if len(notInInterface) > 0 {
-			t.Errorf(
-				"%s has exported methods not in %s: %s",
-				serviceName,
-				interfaceTyp.Name(),
-				strings.Join(notInInterface, ", "),
-			)
-		}
+		assert.Emptyf(
+			t,
+			notInInterface,
+			"%s has exported methods not in %s: %s",
+			serviceName,
+			interfaceTyp.Name(),
+			strings.Join(notInInterface, ", "),
+		)
 	}
 }
 

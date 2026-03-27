@@ -18,11 +18,12 @@ package gitlab
 
 import (
 	"fmt"
-	"io"
 	"net/http"
-	"strings"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestReleasesService_ListReleases(t *testing.T) {
@@ -37,12 +38,8 @@ func TestReleasesService_ListReleases(t *testing.T) {
 
 	opt := &ListReleasesOptions{}
 	releases, _, err := client.Releases.ListReleases(1, opt)
-	if err != nil {
-		t.Error(err)
-	}
-	if len(releases) != 2 {
-		t.Error("expected 2 releases")
-	}
+	require.NoError(t, err)
+	assert.Len(t, releases, 2)
 }
 
 func TestReleasesService_GetRelease(t *testing.T) {
@@ -56,12 +53,8 @@ func TestReleasesService_GetRelease(t *testing.T) {
 		})
 
 	release, _, err := client.Releases.GetRelease(1, exampleTagName)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_CreateRelease(t *testing.T) {
@@ -71,26 +64,11 @@ func TestReleasesService_CreateRelease(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if !strings.Contains(string(b), exampleTagName) {
-				t.Errorf("expected request body to contain %s, got %s",
-					exampleTagName, string(b))
-			}
-			if strings.Contains(string(b), "assets") {
-				t.Errorf("expected request body not to have assets, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body not to have milestones, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body not to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]string{
+				"name":        "name",
+				"tag_name":    exampleTagName,
+				"description": "Description",
+			})
 			fmt.Fprint(w, exampleReleaseResponse)
 		})
 
@@ -101,12 +79,8 @@ func TestReleasesService_CreateRelease(t *testing.T) {
 	}
 
 	release, _, err := client.Releases.CreateRelease(1, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_CreateReleaseWithAsset(t *testing.T) {
@@ -116,26 +90,22 @@ func TestReleasesService_CreateReleaseWithAsset(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if !strings.Contains(string(b), exampleTagName) {
-				t.Errorf("expected request body to contain %s, got %s",
-					exampleTagName, string(b))
-			}
-			if !strings.Contains(string(b), "assets") {
-				t.Errorf("expected request body to have assets, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body not to have milestones, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body not to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]any{
+				"name":        "name",
+				"tag_name":    exampleTagName,
+				"description": "Description",
+				"assets": map[string]any{
+					"links": []any{
+						map[string]any{
+							"name":              "sldkf",
+							"url":               "sldkfj",
+							"filepath":          "sldkfh",
+							"direct_asset_path": "direct-asset-path",
+							"link_type":         "other",
+						},
+					},
+				},
+			})
 			fmt.Fprint(w, exampleReleaseResponse)
 		})
 
@@ -145,18 +115,20 @@ func TestReleasesService_CreateReleaseWithAsset(t *testing.T) {
 		Description: Ptr("Description"),
 		Assets: &ReleaseAssetsOptions{
 			Links: []*ReleaseAssetLinkOptions{
-				{Ptr("sldkf"), Ptr("sldkfj"), Ptr("sldkfh"), Ptr("direct-asset-path"), Ptr(OtherLinkType)},
+				{
+					Name:            Ptr("sldkf"),
+					URL:             Ptr("sldkfj"),
+					FilePath:        Ptr("sldkfh"),
+					DirectAssetPath: Ptr("direct-asset-path"),
+					LinkType:        Ptr(OtherLinkType),
+				},
 			},
 		},
 	}
 
 	release, _, err := client.Releases.CreateRelease(1, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_CreateReleaseWithAssetAndNameMetadata(t *testing.T) {
@@ -166,26 +138,22 @@ func TestReleasesService_CreateReleaseWithAssetAndNameMetadata(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if !strings.Contains(string(b), exampleTagNameWithMetadata) {
-				t.Errorf("expected request body to contain %s, got %s",
-					exampleTagNameWithMetadata, string(b))
-			}
-			if !strings.Contains(string(b), "assets") {
-				t.Errorf("expected request body to have assets, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body not to have milestones, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body not to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]any{
+				"name":        "name",
+				"tag_name":    exampleTagNameWithMetadata,
+				"description": "Description",
+				"assets": map[string]any{
+					"links": []any{
+						map[string]any{
+							"name":              "sldkf",
+							"url":               "sldkfj",
+							"filepath":          "sldkfh",
+							"direct_asset_path": "direct-asset-path",
+							"link_type":         "other",
+						},
+					},
+				},
+			})
 			fmt.Fprint(w, exampleReleaseWithMetadataResponse)
 		})
 
@@ -195,18 +163,20 @@ func TestReleasesService_CreateReleaseWithAssetAndNameMetadata(t *testing.T) {
 		Description: Ptr("Description"),
 		Assets: &ReleaseAssetsOptions{
 			Links: []*ReleaseAssetLinkOptions{
-				{Ptr("sldkf"), Ptr("sldkfj"), Ptr("sldkfh"), Ptr("direct-asset-path"), Ptr(OtherLinkType)},
+				{
+					Name:            Ptr("sldkf"),
+					URL:             Ptr("sldkfj"),
+					FilePath:        Ptr("sldkfh"),
+					DirectAssetPath: Ptr("direct-asset-path"),
+					LinkType:        Ptr(OtherLinkType),
+				},
 			},
 		},
 	}
 
 	release, _, err := client.Releases.CreateRelease(1, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagNameWithMetadata {
-		t.Errorf("expected tag %s, got %s", exampleTagNameWithMetadata, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagNameWithMetadata, release.TagName)
 }
 
 func TestReleasesService_CreateReleaseWithMilestones(t *testing.T) {
@@ -216,26 +186,12 @@ func TestReleasesService_CreateReleaseWithMilestones(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if !strings.Contains(string(b), exampleTagName) {
-				t.Errorf("expected request body to contain %s, got %s",
-					exampleTagName, string(b))
-			}
-			if strings.Contains(string(b), "assets") {
-				t.Errorf("expected request body not to have assets, got %s",
-					string(b))
-			}
-			if !strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body to have milestones, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body not to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]any{
+				"name":        "name",
+				"tag_name":    exampleTagName,
+				"description": "Description",
+				"milestones":  []any{exampleTagName, "v0.1.0"},
+			})
 			fmt.Fprint(w, exampleReleaseResponse)
 		})
 
@@ -247,12 +203,8 @@ func TestReleasesService_CreateReleaseWithMilestones(t *testing.T) {
 	}
 
 	release, _, err := client.Releases.CreateRelease(1, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_CreateReleaseWithReleasedAt(t *testing.T) {
@@ -262,26 +214,12 @@ func TestReleasesService_CreateReleaseWithReleasedAt(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if !strings.Contains(string(b), exampleTagName) {
-				t.Errorf("expected request body to contain %s, got %s",
-					exampleTagName, string(b))
-			}
-			if strings.Contains(string(b), "assets") {
-				t.Errorf("expected request body not to have assets, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body not to have milestones, got %s",
-					string(b))
-			}
-			if !strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]any{
+				"name":        "name",
+				"tag_name":    exampleTagName,
+				"description": "Description",
+				"released_at": "0001-01-01T00:00:00Z",
+			})
 			fmt.Fprint(w, exampleReleaseResponse)
 		})
 
@@ -293,12 +231,8 @@ func TestReleasesService_CreateReleaseWithReleasedAt(t *testing.T) {
 	}
 
 	release, _, err := client.Releases.CreateRelease(1, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_UpdateRelease(t *testing.T) {
@@ -308,18 +242,10 @@ func TestReleasesService_UpdateRelease(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body not to have milestones, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body not to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]any{
+				"name":        "name",
+				"description": "Description",
+			})
 			fmt.Fprint(w, exampleReleaseResponse)
 		})
 
@@ -329,12 +255,8 @@ func TestReleasesService_UpdateRelease(t *testing.T) {
 	}
 
 	release, _, err := client.Releases.UpdateRelease(1, exampleTagName, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_UpdateReleaseWithMilestones(t *testing.T) {
@@ -344,18 +266,11 @@ func TestReleasesService_UpdateReleaseWithMilestones(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if !strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body to have milestones, got %s",
-					string(b))
-			}
-			if strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body not to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]any{
+				"name":        "name",
+				"description": "Description",
+				"milestones":  []any{exampleTagName, "v0.1.0"},
+			})
 			fmt.Fprint(w, exampleReleaseResponse)
 		})
 
@@ -366,12 +281,8 @@ func TestReleasesService_UpdateReleaseWithMilestones(t *testing.T) {
 	}
 
 	release, _, err := client.Releases.UpdateRelease(1, exampleTagName, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_UpdateReleaseWithReleasedAt(t *testing.T) {
@@ -381,18 +292,11 @@ func TestReleasesService_UpdateReleaseWithReleasedAt(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/1/releases/v0.1",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPut)
-			b, err := io.ReadAll(r.Body)
-			if err != nil {
-				t.Fatalf("unable to read request body")
-			}
-			if strings.Contains(string(b), "milestones") {
-				t.Errorf("expected request body not to have milestones, got %s",
-					string(b))
-			}
-			if !strings.Contains(string(b), "released_at") {
-				t.Errorf("expected request body to have released_at, got %s",
-					string(b))
-			}
+			testBodyJSON(t, r, map[string]any{
+				"name":        "name",
+				"description": "Description",
+				"released_at": "0001-01-01T00:00:00Z",
+			})
 			fmt.Fprint(w, exampleReleaseResponse)
 		})
 
@@ -403,12 +307,8 @@ func TestReleasesService_UpdateReleaseWithReleasedAt(t *testing.T) {
 	}
 
 	release, _, err := client.Releases.UpdateRelease(1, exampleTagName, opts)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }
 
 func TestReleasesService_DeleteRelease(t *testing.T) {
@@ -422,10 +322,6 @@ func TestReleasesService_DeleteRelease(t *testing.T) {
 		})
 
 	release, _, err := client.Releases.DeleteRelease(1, exampleTagName)
-	if err != nil {
-		t.Error(err)
-	}
-	if release.TagName != exampleTagName {
-		t.Errorf("expected tag %s, got %s", exampleTagName, release.TagName)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, exampleTagName, release.TagName)
 }

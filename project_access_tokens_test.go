@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProjectAccessTokens(t *testing.T) {
@@ -34,9 +35,7 @@ func TestListProjectAccessTokens(t *testing.T) {
 	})
 
 	projectAccessTokens, _, err := client.ProjectAccessTokens.ListProjectAccessTokens(1, &ListProjectAccessTokensOptions{State: Ptr("active"), ListOptions: ListOptions{Page: 1, PerPage: 20}})
-	if err != nil {
-		t.Errorf("ProjectAccessTokens.ListProjectAccessTokens returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*ProjectAccessToken{
 		{
@@ -81,9 +80,7 @@ func TestGetProjectAccessToken(t *testing.T) {
 	})
 
 	projectAccessToken, _, err := client.ProjectAccessTokens.GetProjectAccessToken(1, 1)
-	if err != nil {
-		t.Errorf("ProjectAccessTokens.GetProjectAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ProjectAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -112,9 +109,7 @@ func TestCreateProjectAccessToken(t *testing.T) {
 	})
 
 	projectAccessToken, _, err := client.ProjectAccessTokens.CreateProjectAccessToken(1, nil)
-	if err != nil {
-		t.Errorf("ProjectAccessTokens.CreateProjectAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ProjectAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -146,9 +141,7 @@ func TestRotateProjectAccessToken(t *testing.T) {
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotateProjectAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.ProjectAccessTokens.RotateProjectAccessToken(1, 42, opts)
-	if err != nil {
-		t.Errorf("ProjectAccessTokens.RotateProjectAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ProjectAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -180,9 +173,7 @@ func TestRotateProjectAccessTokenSelf(t *testing.T) {
 	expiration := ISOTime(time.Date(2023, time.August, 15, 0, 0, 0, 0, time.UTC))
 	opts := &RotateProjectAccessTokenOptions{ExpiresAt: &expiration}
 	rotatedToken, _, err := client.ProjectAccessTokens.RotateProjectAccessTokenSelf(1, opts)
-	if err != nil {
-		t.Errorf("ProjectAccessTokens.RotateProjectAccessTokenSelf returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &ProjectAccessToken{
 		PersonalAccessToken: PersonalAccessToken{
@@ -212,7 +203,5 @@ func TestRevokeProjectAccessToken(t *testing.T) {
 	})
 
 	_, err := client.ProjectAccessTokens.RevokeProjectAccessToken("1", 1234)
-	if err != nil {
-		t.Errorf("ProjectAccessTokens.RevokeProjectAccessToken returned error: %v", err)
-	}
+	require.NoError(t, err)
 }

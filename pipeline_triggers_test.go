@@ -17,13 +17,13 @@
 package gitlab
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListPipelineTriggers(t *testing.T) {
@@ -173,10 +173,9 @@ func TestRunPipelineTrigger(t *testing.T) {
 	t.Parallel()
 
 	cases := []struct {
-		name    string
-		opt     *RunPipelineTriggerOptions
-		want    map[string]any
-		wantErr error
+		name string
+		opt  *RunPipelineTriggerOptions
+		want map[string]any
 	}{
 		{
 			name: "base",
@@ -246,13 +245,7 @@ func TestRunPipelineTrigger(t *testing.T) {
 			})
 
 			pipeline, _, err := client.PipelineTriggers.RunPipelineTrigger(1, tc.opt)
-			if !errors.Is(err, tc.wantErr) {
-				t.Errorf("PipelineTriggers.RunPipelineTrigger() = error %v, want error %v", err, tc.wantErr)
-			}
-
-			if err != nil {
-				return
-			}
+			require.NoError(t, err)
 
 			want := &Pipeline{ID: 1, Status: "pending"}
 			assert.Equal(t, want, pipeline)

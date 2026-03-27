@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListGroupBadges(t *testing.T) {
@@ -35,9 +36,7 @@ func TestListGroupBadges(t *testing.T) {
 		})
 
 	badges, _, err := client.GroupBadges.ListGroupBadges(1, &ListGroupBadgesOptions{})
-	if err != nil {
-		t.Errorf("GroupBadges.ListGroupBadges returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := []*GroupBadge{{ID: 1, Name: "one", Kind: GroupBadgeKind}, {ID: 2, Name: "two", Kind: GroupBadgeKind}}
 	assert.Equal(t, want, badges)
@@ -54,9 +53,7 @@ func TestGetGroupBadge(t *testing.T) {
 		})
 
 	badge, _, err := client.GroupBadges.GetGroupBadge(1, 2)
-	if err != nil {
-		t.Errorf("GroupBadges.GetGroupBadge returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupBadge{ID: 2, Name: "two", Kind: GroupBadgeKind}
 	assert.Equal(t, want, badge)
@@ -74,9 +71,7 @@ func TestAddGroupBadge(t *testing.T) {
 
 	opt := &AddGroupBadgeOptions{ImageURL: Ptr("IMAGE"), LinkURL: Ptr("LINK")}
 	badge, _, err := client.GroupBadges.AddGroupBadge(1, opt)
-	if err != nil {
-		t.Errorf("GroupBadges.AddGroupBadge returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupBadge{ID: 3, Name: "three", ImageURL: "IMAGE", LinkURL: "LINK", Kind: GroupBadgeKind}
 	assert.Equal(t, want, badge)
@@ -94,9 +89,7 @@ func TestEditGroupBadge(t *testing.T) {
 
 	opt := &EditGroupBadgeOptions{ImageURL: Ptr("NEW_IMAGE"), LinkURL: Ptr("NEW_LINK")}
 	badge, _, err := client.GroupBadges.EditGroupBadge(1, 2, opt)
-	if err != nil {
-		t.Errorf("GroupBadges.EditGroupBadge returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &GroupBadge{ID: 2, Name: "two", ImageURL: "NEW_IMAGE", LinkURL: "NEW_LINK", Kind: GroupBadgeKind}
 	assert.Equal(t, want, badge)
@@ -114,15 +107,8 @@ func TestRemoveGroupBadge(t *testing.T) {
 	)
 
 	resp, err := client.GroupBadges.DeleteGroupBadge(1, 2)
-	if err != nil {
-		t.Errorf("GroupBadges.DeleteGroupBadge returned error: %v", err)
-	}
-
-	want := http.StatusAccepted
-	got := resp.StatusCode
-	if got != want {
-		t.Errorf("GroupsBadges.DeleteGroupBadge returned %d, want %d", got, want)
-	}
+	require.NoError(t, err)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
 
 func TestPreviewGroupBadge(t *testing.T) {

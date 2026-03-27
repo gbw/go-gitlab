@@ -20,6 +20,9 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListClusters(t *testing.T) {
@@ -61,21 +64,11 @@ func TestListClusters(t *testing.T) {
 	})
 
 	clusters, _, err := client.ProjectCluster.ListClusters(pid)
-	if err != nil {
-		t.Errorf("ProjectClusters.ListClusters returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	if len(clusters) != 1 {
-		t.Errorf("expected 1 cluster; got %d", len(clusters))
-	}
-
-	if clusters[0].ID != 18 {
-		t.Errorf("expected clusterID 1; got %d", clusters[0].ID)
-	}
-
-	if clusters[0].Domain != "example.com" {
-		t.Errorf("expected cluster domain example.com; got %q", clusters[0].Domain)
-	}
+	require.Len(t, clusters, 1)
+	assert.Equal(t, int64(18), clusters[0].ID)
+	assert.Equal(t, "example.com", clusters[0].Domain)
 }
 
 func TestGetCluster(t *testing.T) {
@@ -144,17 +137,10 @@ func TestGetCluster(t *testing.T) {
 	})
 
 	cluster, _, err := client.ProjectCluster.GetCluster(pid, 1)
-	if err != nil {
-		t.Errorf("ProjectClusters.ListClusters returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	if cluster.ID != 18 {
-		t.Errorf("expected clusterID 18; got %d", cluster.ID)
-	}
-
-	if cluster.Domain != "example.com" {
-		t.Errorf("expected cluster domain example.com; got %q", cluster.Domain)
-	}
+	assert.Equal(t, int64(18), cluster.ID)
+	assert.Equal(t, "example.com", cluster.Domain)
 }
 
 func TestAddCluster(t *testing.T) {
@@ -223,13 +209,9 @@ func TestAddCluster(t *testing.T) {
 	})
 
 	cluster, _, err := client.ProjectCluster.AddCluster(pid, &AddClusterOptions{})
-	if err != nil {
-		t.Errorf("ProjectClusters.AddCluster returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	if cluster.ID != 24 {
-		t.Errorf("expected ClusterID 24; got %d", cluster.ID)
-	}
+	assert.Equal(t, int64(24), cluster.ID)
 }
 
 func TestEditCluster(t *testing.T) {
@@ -298,13 +280,9 @@ func TestEditCluster(t *testing.T) {
 	})
 
 	cluster, _, err := client.ProjectCluster.EditCluster(pid, 1, &EditClusterOptions{})
-	if err != nil {
-		t.Errorf("ProjectClusters.EditCluster returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	if cluster.ID != 24 {
-		t.Errorf("expected ClusterID 24; got %d", cluster.ID)
-	}
+	assert.Equal(t, int64(24), cluster.ID)
 }
 
 func TestDeleteCluster(t *testing.T) {
@@ -317,13 +295,7 @@ func TestDeleteCluster(t *testing.T) {
 	})
 
 	resp, err := client.ProjectCluster.DeleteCluster(1234, 1)
-	if err != nil {
-		t.Errorf("ProjectCluster.DeleteCluster returned error: %v", err)
-	}
+	require.NoError(t, err)
 
-	want := http.StatusAccepted
-	got := resp.StatusCode
-	if got != want {
-		t.Errorf("ProjectCluster.DeleteCluster returned %d, want %d", got, want)
-	}
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }

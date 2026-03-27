@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListProjectFeatureFlags(t *testing.T) {
@@ -19,16 +20,7 @@ func TestListProjectFeatureFlags(t *testing.T) {
 		})
 
 	actual, _, err := client.ProjectFeatureFlags.ListProjectFeatureFlags(333, &ListProjectFeatureFlagOptions{})
-	if err != nil {
-		t.Errorf("ProjectFeatureFlags.ListProjectFeatureFlags returned error: %v", err)
-		return
-	}
-
-	createdAt1 := time.Date(2019, time.November, 4, 8, 13, 51, 0, time.UTC)
-	updatedAt1 := time.Date(2019, time.November, 4, 8, 13, 11, 0, time.UTC)
-
-	createdAt2 := time.Date(2019, time.November, 4, 8, 13, 10, 0, time.UTC)
-	updatedAt2 := time.Date(2019, time.November, 4, 8, 13, 10, 0, time.UTC)
+	require.NoError(t, err)
 
 	expected := []*ProjectFeatureFlag{
 		{
@@ -36,8 +28,8 @@ func TestListProjectFeatureFlags(t *testing.T) {
 			Description: "This feature is about merge train",
 			Active:      true,
 			Version:     "new_version_flag",
-			CreatedAt:   &createdAt1,
-			UpdatedAt:   &updatedAt1,
+			CreatedAt:   Ptr(time.Date(2019, time.November, 4, 8, 13, 51, 0, time.UTC)),
+			UpdatedAt:   Ptr(time.Date(2019, time.November, 4, 8, 13, 11, 0, time.UTC)),
 			Scopes:      []*ProjectFeatureFlagScope{},
 			Strategies: []*ProjectFeatureFlagStrategy{
 				{
@@ -60,8 +52,8 @@ func TestListProjectFeatureFlags(t *testing.T) {
 			Description: "This is a new live trace feature",
 			Active:      true,
 			Version:     "new_version_flag",
-			CreatedAt:   &createdAt2,
-			UpdatedAt:   &updatedAt2,
+			CreatedAt:   Ptr(time.Date(2019, time.November, 4, 8, 13, 10, 0, time.UTC)),
+			UpdatedAt:   Ptr(time.Date(2019, time.November, 4, 8, 13, 10, 0, time.UTC)),
 			Scopes:      []*ProjectFeatureFlagScope{},
 			Strategies: []*ProjectFeatureFlagStrategy{
 				{
@@ -80,9 +72,7 @@ func TestListProjectFeatureFlags(t *testing.T) {
 	}
 
 	assert.Len(t, actual, len(expected))
-	for i := range expected {
-		assert.Equal(t, expected[i], actual[i])
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestGetProjectFeatureFlag(t *testing.T) {
@@ -95,17 +85,15 @@ func TestGetProjectFeatureFlag(t *testing.T) {
 	})
 
 	actual, resp, err := client.ProjectFeatureFlags.GetProjectFeatureFlag(1, "testing")
-	if err != nil {
-		t.Fatalf("ProjectFeatureFlags.GetProjectFeatureFlag returned error: %v, response %v", err, resp)
-	}
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 
-	date := time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)
 	expected := &ProjectFeatureFlag{
 		Name:      "awesome_feature",
 		Active:    true,
 		Version:   "new_version_flag",
-		CreatedAt: &date,
-		UpdatedAt: &date,
+		CreatedAt: Ptr(time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)),
+		UpdatedAt: Ptr(time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)),
 		Scopes:    []*ProjectFeatureFlagScope{},
 		Strategies: []*ProjectFeatureFlagStrategy{
 			{
@@ -150,20 +138,14 @@ func TestCreateProjectFeatureFlag(t *testing.T) {
 	})
 
 	actual, _, err := client.ProjectFeatureFlags.UpdateProjectFeatureFlag(1, "testing", &UpdateProjectFeatureFlagOptions{})
-	if err != nil {
-		t.Errorf("ProjectFeatureFlags.UpdateProjectFeatureFlag returned error: %v", err)
-		return
-	}
-
-	createdAt := time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)
-	updatedAt := time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)
+	require.NoError(t, err)
 
 	expected := &ProjectFeatureFlag{
 		Name:      "awesome_feature",
 		Active:    true,
 		Version:   "new_version_flag",
-		CreatedAt: &createdAt,
-		UpdatedAt: &updatedAt,
+		CreatedAt: Ptr(time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)),
+		UpdatedAt: Ptr(time.Date(2020, time.May, 13, 19, 56, 33, 0, time.UTC)),
 		Scopes:    []*ProjectFeatureFlagScope{},
 		Strategies: []*ProjectFeatureFlagStrategy{
 			{
@@ -193,20 +175,14 @@ func TestUpdateProjectFeatureFlag(t *testing.T) {
 	})
 
 	actual, _, err := client.ProjectFeatureFlags.UpdateProjectFeatureFlag(1, "testing", &UpdateProjectFeatureFlagOptions{})
-	if err != nil {
-		t.Errorf("ProjectFeatureFlags.UpdateProjectFeatureFlag returned error: %v", err)
-		return
-	}
-
-	createdAt := time.Date(2020, time.May, 13, 20, 10, 32, 0, time.UTC)
-	updatedAt := time.Date(2020, time.May, 13, 20, 10, 32, 0, time.UTC)
+	require.NoError(t, err)
 
 	expected := &ProjectFeatureFlag{
 		Name:      "awesome_feature",
 		Active:    true,
 		Version:   "new_version_flag",
-		CreatedAt: &createdAt,
-		UpdatedAt: &updatedAt,
+		CreatedAt: Ptr(time.Date(2020, time.May, 13, 20, 10, 32, 0, time.UTC)),
+		UpdatedAt: Ptr(time.Date(2020, time.May, 13, 20, 10, 32, 0, time.UTC)),
 		Scopes:    []*ProjectFeatureFlagScope{},
 		Strategies: []*ProjectFeatureFlagStrategy{
 			{
@@ -249,8 +225,5 @@ func TestDeleteProjectFeatureFlag(t *testing.T) {
 	})
 
 	_, err := client.ProjectFeatureFlags.DeleteProjectFeatureFlag(1, "testing")
-	if err != nil {
-		t.Errorf("ProjectFeatureFlags.DeleteProjectFeatureFlag returned error: %v", err)
-		return
-	}
+	require.NoError(t, err)
 }

@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetMetadata(t *testing.T) {
@@ -45,9 +46,7 @@ func TestGetMetadata(t *testing.T) {
 		})
 
 	version, _, err := client.Metadata.GetMetadata()
-	if err != nil {
-		t.Errorf("Metadata.GetMetadata returned error: %v", err)
-	}
+	require.NoError(t, err)
 
 	want := &Metadata{
 		Version: "15.6.0-pre", Revision: "016e8d8bdc3", KAS: MetadataKAS{

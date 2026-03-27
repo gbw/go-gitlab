@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestListMergeStatusChecks(t *testing.T) {
@@ -18,9 +19,7 @@ func TestListMergeStatusChecks(t *testing.T) {
 	})
 
 	statusChecks, _, err := client.ExternalStatusChecks.ListMergeStatusChecks(1, 1, nil)
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.ListMergeStatusChecks returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expectedStatusChecks := []*MergeStatusCheck{
 		{
@@ -50,9 +49,7 @@ func TestListProjectStatusChecks(t *testing.T) {
 	})
 
 	projectStatusChecks, _, err := client.ExternalStatusChecks.ListProjectStatusChecks(1, nil)
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.ListProjectStatusChecks returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expectedProjectStatusChecks := []*ProjectStatusCheck{
 		{
@@ -87,9 +84,7 @@ func TestRetryFailedStatusCheckForAMergeRequest(t *testing.T) {
 	})
 
 	resp, err := client.ExternalStatusChecks.RetryFailedStatusCheckForAMergeRequest(1, 2, 3)
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.RetryFailedStatusCheckForAMergeRequest returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	assert.NotNil(t, resp)
 }
@@ -108,9 +103,7 @@ func TestCreateProjectExternalStatusChecks(t *testing.T) {
 		ExternalURL:  Ptr("https://gitlab.com/example/test.json"),
 		SharedSecret: Ptr("HMAC"),
 	})
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.CreateProjectExternalStatusCheck returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expectedProjectStatusCheck := &ProjectStatusCheck{
 		ID:          1,
@@ -147,9 +140,7 @@ func TestUpdateProjectExternalStatusChecks(t *testing.T) {
 		ExternalURL:  Ptr("https://gitlab.com/example/test.json"),
 		SharedSecret: Ptr("HMAC"),
 	})
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.UpdateProjectExternalStatusCheck returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expectedProjectStatusCheck := &ProjectStatusCheck{
 		ID:          1,
@@ -182,9 +173,7 @@ func TestListProjectMergeRequestExternalStatusChecks(t *testing.T) {
 	})
 
 	statusChecks, _, err := client.ExternalStatusChecks.ListProjectMergeRequestExternalStatusChecks(1, 1, &ListProjectMergeRequestExternalStatusChecksOptions{})
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.ListProjectMergeRequestExternalStatusChecks returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expectedStatusChecks := []*MergeStatusCheck{
 		{
@@ -214,9 +203,7 @@ func TestListProjectExternalStatusChecks(t *testing.T) {
 	})
 
 	projectStatusChecks, _, err := client.ExternalStatusChecks.ListProjectExternalStatusChecks(1, &ListProjectExternalStatusChecksOptions{})
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.ListProjectExternalStatusChecks returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	expectedProjectStatusChecks := []*ProjectStatusCheck{
 		{
@@ -251,9 +238,7 @@ func TestRetryFailedExternalStatusCheckForProjectMergeRequest(t *testing.T) {
 	})
 
 	resp, err := client.ExternalStatusChecks.RetryFailedExternalStatusCheckForProjectMergeRequest(1, 2, 3, &RetryFailedExternalStatusCheckForProjectMergeRequestOptions{})
-	if err != nil {
-		t.Fatalf("ExternalStatusChecks.RetryFailedExternalStatusCheckForProjectMergeRequest returns an error: %v", err)
-	}
+	require.NoError(t, err)
 
 	assert.NotNil(t, resp)
 }

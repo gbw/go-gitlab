@@ -21,11 +21,11 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"strings"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetUser(t *testing.T) {
@@ -774,12 +774,8 @@ func TestCreateServiceAccountUser(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-			t.Fatalf("Users.CreateServiceAccountUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.CreateServiceAccountUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		assert.NotEqual(t, -1, r.ContentLength)
 		mustWriteHTTPResponse(t, w, "testdata/create_service_account_user.json")
 	})
 
@@ -810,12 +806,8 @@ func TestCreateUser(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-			t.Fatalf("Users.CreateUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.CreateUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		assert.NotEqual(t, -1, r.ContentLength)
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `
 		{
@@ -850,12 +842,8 @@ func TestCreateUserAvatar(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data") {
-			t.Fatalf("Users.CreateUser request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.CreateUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, -1, r.ContentLength)
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `
 		{
@@ -897,12 +885,8 @@ func TestModifyUser(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-			t.Fatalf("Users.ModifyUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.ModifyUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		assert.NotEqual(t, -1, r.ContentLength)
 		fmt.Fprint(w, `{}`)
 	})
 	_, _, err := client.Users.ModifyUser(1, &ModifyUserOptions{})
@@ -917,12 +901,8 @@ func TestModifyUserAvatar(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Users.ModifyUser request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.ModifyUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, -1, r.ContentLength)
 		fmt.Fprint(w, `{}`)
 	})
 	avatar := new(bytes.Buffer)
@@ -940,20 +920,14 @@ func TestUploadAvatarUser(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/user/avatar", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		if !strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data;") {
-			t.Fatalf("Users.UploadAvatar request content-type %+v want multipart/form-data;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.UploadAvatar request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
+		assert.NotEqual(t, -1, r.ContentLength)
 		fmt.Fprint(w, `{}`)
 	})
 
 	avatar := new(bytes.Buffer)
 	_, _, err := client.Users.UploadAvatar(avatar, "avatar.png")
-	if err != nil {
-		t.Fatalf("Users.UploadAvatar returns an error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestListServiceAccounts(t *testing.T) {
@@ -1141,12 +1115,8 @@ func TestCreateUserWithViewDiffsFileByFile(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-			t.Fatalf("Users.CreateUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.CreateUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		assert.NotEqual(t, -1, r.ContentLength)
 
 		// Verify the view_diffs_file_by_file parameter is in the request body
 		testJSONBody(t, r, `{
@@ -1191,12 +1161,8 @@ func TestModifyUserWithViewDiffsFileByFile(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-			t.Fatalf("Users.ModifyUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.ModifyUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		assert.NotEqual(t, -1, r.ContentLength)
 
 		// Verify the view_diffs_file_by_file parameter is in the request body
 		testJSONBody(t, r, `{
@@ -1233,12 +1199,8 @@ func TestCreateUserWithNewFields(t *testing.T) {
 
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-			t.Fatalf("Users.CreateUser request content-type %+v want application/json;", r.Header.Get("Content-Type"))
-		}
-		if r.ContentLength == -1 {
-			t.Fatalf("Users.CreateUser request content-length is -1")
-		}
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		assert.NotEqual(t, -1, r.ContentLength)
 
 		testJSONBody(t, r, `{
 			"email": "user999@example.com",

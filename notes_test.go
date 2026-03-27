@@ -23,6 +23,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNotes_ListIssueNotes(t *testing.T) {
@@ -791,9 +792,7 @@ func TestCreateNote(t *testing.T) {
 	}
 
 	note, _, err := client.Notes.CreateIssueNote("1", 1, createNoteOptions)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Note{
 		ID:   1,
@@ -821,9 +820,7 @@ func TestCreateInternalNote(t *testing.T) {
 	}
 
 	note, _, err := client.Notes.CreateIssueNote("1", 1, createNoteOptions)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	want := &Note{
 		ID:       1,

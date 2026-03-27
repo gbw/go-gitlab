@@ -34,9 +34,7 @@ func TestUnpublishPages(t *testing.T) {
 	})
 
 	_, err := client.Pages.UnpublishPages(2)
-	if err != nil {
-		t.Errorf("Pages.UnpublishPages returned error: %v", err)
-	}
+	require.NoError(t, err)
 }
 
 func TestGetPages(t *testing.T) {
