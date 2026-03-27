@@ -1,3 +1,22 @@
+## 2.9.0
+
+### 🚀 Features
+
+- feat: Add a parameter to gitlab project ([!2823](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2823)) by [Omar Nasser](https://gitlab.com/onasser)
+
+### 🔄 Other Changes
+
+- test(no-release): use assert or require only ([!2824](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2824)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+
+
+# [2.9.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.8.0...v2.9.0) (2026-03-27)
+
+
+### Features
+
+* Add a parameter to gitlab project ([12c38e1](https://gitlab.com/gitlab-org/api/client-go/commit/12c38e1466ce88e4c23811b9adc0ad27510acf36))
+
 ## 2.8.0
 
 ### 🚀 Features
