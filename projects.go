@@ -390,6 +390,7 @@ type Project struct {
 	ForksCount                                int64                                       `json:"forks_count"`
 	StarCount                                 int64                                       `json:"star_count"`
 	RunnersToken                              string                                      `json:"runners_token"`
+	CIDisplayPipelineVariables                bool                                        `json:"ci_display_pipeline_variables"`
 	AllowMergeOnSkippedPipeline               bool                                        `json:"allow_merge_on_skipped_pipeline"`
 	AllowPipelineTriggerApproveDeployment     bool                                        `json:"allow_pipeline_trigger_approve_deployment"`
 	OnlyAllowMergeIfPipelineSucceeds          bool                                        `json:"only_allow_merge_if_pipeline_succeeds"`
@@ -1036,6 +1037,7 @@ type EditProjectOptions struct {
 	CIConfigPath                              *string                                      `url:"ci_config_path,omitempty" json:"ci_config_path,omitempty"`
 	CIDefaultGitDepth                         *int64                                       `url:"ci_default_git_depth,omitempty" json:"ci_default_git_depth,omitempty"`
 	CIDeletePipelinesInSeconds                *int64                                       `url:"ci_delete_pipelines_in_seconds,omitempty" json:"ci_delete_pipelines_in_seconds,omitempty"`
+	CIDisplayPipelineVariables                *bool                                        `url:"ci_display_pipeline_variables,omitempty" json:"ci_display_pipeline_variables,omitempty"`
 	CIForwardDeploymentEnabled                *bool                                        `url:"ci_forward_deployment_enabled,omitempty" json:"ci_forward_deployment_enabled,omitempty"`
 	CIForwardDeploymentRollbackAllowed        *bool                                        `url:"ci_forward_deployment_rollback_allowed,omitempty" json:"ci_forward_deployment_rollback_allowed,omitempty"`
 	CIPushRepositoryForJobTokenAllowed        *bool                                        `url:"ci_push_repository_for_job_token_allowed,omitempty" json:"ci_push_repository_for_job_token_allowed,omitempty"`
