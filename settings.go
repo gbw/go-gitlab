@@ -358,6 +358,7 @@ type Settings struct {
 	SentryEnvironment                                     string                    `json:"sentry_environment"`
 	ServiceAccessTokensExpirationEnforced                 bool                      `json:"service_access_tokens_expiration_enforced"`
 	SessionExpireDelay                                    int64                     `json:"session_expire_delay"`
+	SessionExpireFromInit                                 bool                      `json:"session_expire_from_init"`
 	SharedRunnersEnabled                                  bool                      `json:"shared_runners_enabled"`
 	SharedRunnersMinutes                                  int64                     `json:"shared_runners_minutes"`
 	SharedRunnersText                                     string                    `json:"shared_runners_text"`
@@ -840,6 +841,7 @@ type UpdateSettingsOptions struct {
 	SentryEnvironment                                     *string                                 `url:"sentry_environment,omitempty" json:"sentry_environment,omitempty"`
 	ServiceAccessTokensExpirationEnforced                 *bool                                   `url:"service_access_tokens_expiration_enforced,omitempty" json:"service_access_tokens_expiration_enforced,omitempty"`
 	SessionExpireDelay                                    *int64                                  `url:"session_expire_delay,omitempty" json:"session_expire_delay,omitempty"`
+	SessionExpireFromInit                                 *bool                                   `url:"session_expire_from_init,omitempty" json:"session_expire_from_init,omitempty"`
 	SharedRunnersEnabled                                  *bool                                   `url:"shared_runners_enabled,omitempty" json:"shared_runners_enabled,omitempty"`
 	SharedRunnersMinutes                                  *int64                                  `url:"shared_runners_minutes,omitempty" json:"shared_runners_minutes,omitempty"`
 	SharedRunnersText                                     *string                                 `url:"shared_runners_text,omitempty" json:"shared_runners_text,omitempty"`
