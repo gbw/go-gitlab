@@ -1,3 +1,18 @@
+## 2.10.0
+
+### 🚀 Features
+
+- feat: Add settings support for session_expire_from_init ([!2826](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2826)) by [Omar Nasser](https://gitlab.com/onasser)
+
+
+
+# [2.10.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.9.0...v2.10.0) (2026-03-28)
+
+
+### Features
+
+* Add settings support for session_expire_from_init ([6463a4e](https://gitlab.com/gitlab-org/api/client-go/commit/6463a4eca357726f399e99ad81ea2c69801e3137))
+
 ## 2.9.0
 
 ### 🚀 Features
