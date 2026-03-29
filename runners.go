@@ -574,7 +574,7 @@ func (s *RunnersService) ResetGroupRunnerRegistrationToken(gid any, options ...R
 	return res, resp, nil
 }
 
-// ResetProjectRunnerRegistrationToken resets a projects's runner registration token.
+// ResetProjectRunnerRegistrationToken resets a project's runner registration token.
 // Deprecated: for removal in GitLab 20.0, see https://docs.gitlab.com/ci/runners/new_creation_workflow/ instead
 //
 // GitLab API docs:

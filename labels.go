@@ -206,7 +206,7 @@ type UpdateLabelOptions struct {
 	Archived    *bool           `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
-// UpdateLabel updates an existing label with new name or now color. At least
+// UpdateLabel updates an existing label with new name or new color. At least
 // one parameter is required, to update the label.
 //
 // GitLab API docs: https://docs.gitlab.com/api/labels/#edit-an-existing-label
