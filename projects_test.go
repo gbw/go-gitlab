@@ -683,7 +683,7 @@ func TestGetApprovalConfiguration(t *testing.T) {
 			"disable_overriding_approvers_per_merge_request": false,
 			"merge_requests_author_approval": true,
 			"merge_requests_disable_committers_approval": true,
-			"require_password_to_approve": true
+			"require_reauthentication_to_approve": true
 		}`)
 	})
 
@@ -699,7 +699,7 @@ func TestGetApprovalConfiguration(t *testing.T) {
 		DisableOverridingApproversPerMergeRequest: false,
 		MergeRequestsAuthorApproval:               true,
 		MergeRequestsDisableCommittersApproval:    true,
-		RequirePasswordToApprove:                  true,
+		RequireReauthenticationToApprove:          true,
 	}
 
 	assert.Equal(t, want, approvals)
@@ -722,7 +722,7 @@ func TestChangeApprovalConfiguration(t *testing.T) {
 			"disable_overriding_approvers_per_merge_request": false,
 			"merge_requests_author_approval": true,
 			"merge_requests_disable_committers_approval": true,
-			"require_password_to_approve": true
+			"require_reauthentication_to_approve": true
 		}`)
 	})
 
@@ -742,7 +742,7 @@ func TestChangeApprovalConfiguration(t *testing.T) {
 		DisableOverridingApproversPerMergeRequest: false,
 		MergeRequestsAuthorApproval:               true,
 		MergeRequestsDisableCommittersApproval:    true,
-		RequirePasswordToApprove:                  true,
+		RequireReauthenticationToApprove:          true,
 	}
 
 	assert.Equal(t, want, approvals)

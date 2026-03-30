@@ -1700,11 +1700,14 @@ type ProjectApprovals struct {
 	DisableOverridingApproversPerMergeRequest bool                         `json:"disable_overriding_approvers_per_merge_request"`
 	MergeRequestsAuthorApproval               bool                         `json:"merge_requests_author_approval"`
 	MergeRequestsDisableCommittersApproval    bool                         `json:"merge_requests_disable_committers_approval"`
-	RequirePasswordToApprove                  bool                         `json:"require_password_to_approve"`
-	SelectiveCodeOwnerRemovals                bool                         `json:"selective_code_owner_removals,omitempty"`
+	RequireReauthenticationToApprove          bool                         `json:"require_reauthentication_to_approve,omitempty"`
+
+	SelectiveCodeOwnerRemovals bool `json:"selective_code_owner_removals,omitempty"`
 
 	// Deprecated: use Merge Request Approvals API instead
 	ApprovalsBeforeMerge int64 `json:"approvals_before_merge"`
+	// Deprecated: use RequireReauthenticationToApprove instead
+	RequirePasswordToApprove bool `json:"require_password_to_approve"`
 }
 
 func (s *ProjectsService) GetApprovalConfiguration(pid any, options ...RequestOptionFunc) (*ProjectApprovals, *Response, error) {
@@ -1723,12 +1726,14 @@ type ChangeApprovalConfigurationOptions struct {
 	DisableOverridingApproversPerMergeRequest *bool `url:"disable_overriding_approvers_per_merge_request,omitempty" json:"disable_overriding_approvers_per_merge_request,omitempty"`
 	MergeRequestsAuthorApproval               *bool `url:"merge_requests_author_approval,omitempty" json:"merge_requests_author_approval,omitempty"`
 	MergeRequestsDisableCommittersApproval    *bool `url:"merge_requests_disable_committers_approval,omitempty" json:"merge_requests_disable_committers_approval,omitempty"`
-	RequirePasswordToApprove                  *bool `url:"require_password_to_approve,omitempty" json:"require_password_to_approve,omitempty"`
+	RequireReauthenticationToApprove          *bool `url:"require_reauthentication_to_approve,omitempty" json:"require_reauthentication_to_approve,omitempty"`
 	ResetApprovalsOnPush                      *bool `url:"reset_approvals_on_push,omitempty" json:"reset_approvals_on_push,omitempty"`
 	SelectiveCodeOwnerRemovals                *bool `url:"selective_code_owner_removals,omitempty" json:"selective_code_owner_removals,omitempty"`
 
 	// Deprecated: use Merge Request Approvals API instead
 	ApprovalsBeforeMerge *int64 `url:"approvals_before_merge,omitempty" json:"approvals_before_merge,omitempty"`
+	// Deprecated: use RequireReauthenticationToApprove instead
+	RequirePasswordToApprove *bool `url:"require_password_to_approve,omitempty" json:"require_password_to_approve,omitempty"`
 }
 
 func (s *ProjectsService) ChangeApprovalConfiguration(pid any, opt *ChangeApprovalConfigurationOptions, options ...RequestOptionFunc) (*ProjectApprovals, *Response, error) {
