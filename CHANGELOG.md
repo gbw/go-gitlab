@@ -1,3 +1,18 @@
+## 2.11.0
+
+### 🚀 Features
+
+- Deprecate project approval password auth, add reauth to approve ([!2825](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2825)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+### 🔄 Other Changes
+
+- Fix typo in UpdateLabel comment ([!2827](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2827)) by [Bob Singh](https://gitlab.com/bobsingh.dev)
+- Fix runner comment typo ([!2828](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2828)) by [Bob Singh](https://gitlab.com/bobsingh.dev)
+
+
+
+# [2.11.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.10.0...v2.11.0) (2026-03-30)
+
 ## 2.10.0
 
 ### 🚀 Features
