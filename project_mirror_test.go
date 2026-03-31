@@ -140,7 +140,12 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 				"keep_divergent_refs": false,
 				"update_status": "none",
 				"auth_method": "password",
-				"url": "https://*****:*****@example.com/gitlab/example.git"
+				"url": "https://*****:*****@example.com/gitlab/example.git",
+				"host_keys": [
+					{
+						"fingerprint_sha256": "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"
+					}
+				]
 			}
 		`)
 	})
@@ -157,6 +162,7 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 		UpdateStatus:           "none",
 		AuthMethod:             "password",
 		URL:                    "https://*****:*****@example.com/gitlab/example.git",
+		HostKeys:               &[]HostKey{{FingerprintSha256: "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"}},
 	}
 
 	pm, resp, err := client.ProjectMirrors.AddProjectMirror(42, nil, nil)
@@ -195,7 +201,12 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 				"keep_divergent_refs": true,
 				"update_status": "finished",
 				"auth_method": "password",
-				"url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git"
+				"url": "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
+				"host_keys": [
+					{
+						"fingerprint_sha256": "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"
+					}
+				]
 			}
 		`)
 	})
@@ -209,6 +220,7 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 		UpdateStatus:          "finished",
 		AuthMethod:            "password",
 		URL:                   "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
+		HostKeys:              &[]HostKey{{FingerprintSha256: "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"}},
 	}
 
 	pm, resp, err := client.ProjectMirrors.EditProjectMirror(42, 101486, nil, nil)
