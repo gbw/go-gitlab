@@ -102,13 +102,13 @@ func WithOffsetPaginationParameters(page int64) RequestOptionFunc {
 	}
 }
 
-// withGraphQLPaginationParamters takes a PageInfo from a GraphQL response and
+// withGraphQLPaginationParameters takes a PageInfo from a GraphQL response and
 // modifies the request to use that cursor for GraphQL pagination, overriding
 // any existing "after" variable.
 //
 // GraphQL API docs:
 // https://docs.gitlab.com/development/graphql_guide/pagination/
-func withGraphQLPaginationParamters(pi PageInfo) RequestOptionFunc {
+func withGraphQLPaginationParameters(pi PageInfo) RequestOptionFunc {
 	if !pi.HasNextPage {
 		return nil
 	}
@@ -157,7 +157,7 @@ func withGraphQLPaginationParamters(pi PageInfo) RequestOptionFunc {
 func WithNext(resp *Response) (RequestOptionFunc, bool) {
 	switch {
 	case resp.PageInfo != nil:
-		return withGraphQLPaginationParamters(*resp.PageInfo), resp.PageInfo.HasNextPage
+		return withGraphQLPaginationParameters(*resp.PageInfo), resp.PageInfo.HasNextPage
 
 	case resp.NextLink != "":
 		return WithKeysetPaginationParameters(resp.NextLink), true
