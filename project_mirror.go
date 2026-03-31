@@ -87,10 +87,15 @@ type ProjectMirror struct {
 	UpdateStatus           string     `json:"update_status"`
 	URL                    string     `json:"url"`
 	AuthMethod             string     `json:"auth_method"`
+	HostKeys               *[]HostKey `json:"host_keys,omitempty"`
 }
 
 type ProjectMirrorPublicKey struct {
 	PublicKey string `json:"public_key"`
+}
+
+type HostKey struct {
+	FingerprintSha256 string `json:"fingerprint_sha256"`
 }
 
 // ListProjectMirrorOptions represents the available ListProjectMirror() options.
@@ -126,12 +131,13 @@ func (s *ProjectMirrorService) GetProjectMirrorPublicKey(pid any, mirror int64, 
 // GitLab API docs:
 // https://docs.gitlab.com/api/remote_mirrors/#create-a-push-mirror
 type AddProjectMirrorOptions struct {
-	URL                   *string `url:"url,omitempty" json:"url,omitempty"`
-	Enabled               *bool   `url:"enabled,omitempty" json:"enabled,omitempty"`
-	KeepDivergentRefs     *bool   `url:"keep_divergent_refs,omitempty" json:"keep_divergent_refs,omitempty"`
-	OnlyProtectedBranches *bool   `url:"only_protected_branches,omitempty" json:"only_protected_branches,omitempty"`
-	MirrorBranchRegex     *string `url:"mirror_branch_regex,omitempty" json:"mirror_branch_regex,omitempty"`
-	AuthMethod            *string `url:"auth_method,omitempty" json:"auth_method,omitempty"`
+	URL                   *string   `url:"url,omitempty" json:"url,omitempty"`
+	Enabled               *bool     `url:"enabled,omitempty" json:"enabled,omitempty"`
+	KeepDivergentRefs     *bool     `url:"keep_divergent_refs,omitempty" json:"keep_divergent_refs,omitempty"`
+	OnlyProtectedBranches *bool     `url:"only_protected_branches,omitempty" json:"only_protected_branches,omitempty"`
+	MirrorBranchRegex     *string   `url:"mirror_branch_regex,omitempty" json:"mirror_branch_regex,omitempty"`
+	AuthMethod            *string   `url:"auth_method,omitempty" json:"auth_method,omitempty"`
+	HostKeys              *[]string `url:"host_keys,omitempty" json:"host_keys,omitempty"`
 }
 
 func (s *ProjectMirrorService) AddProjectMirror(pid any, opt *AddProjectMirrorOptions, options ...RequestOptionFunc) (*ProjectMirror, *Response, error) {
@@ -147,13 +153,14 @@ func (s *ProjectMirrorService) AddProjectMirror(pid any, opt *AddProjectMirrorOp
 // an existing project mirror.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/api/remote_mirrors/#update-a-remote-mirrors-attributes
+// https://docs.gitlab.com/api/remote_mirrors/#update-a-remote-mirror-in-a-project
 type EditProjectMirrorOptions struct {
-	Enabled               *bool   `url:"enabled,omitempty" json:"enabled,omitempty"`
-	KeepDivergentRefs     *bool   `url:"keep_divergent_refs,omitempty" json:"keep_divergent_refs,omitempty"`
-	OnlyProtectedBranches *bool   `url:"only_protected_branches,omitempty" json:"only_protected_branches,omitempty"`
-	MirrorBranchRegex     *string `url:"mirror_branch_regex,omitempty" json:"mirror_branch_regex,omitempty"`
-	AuthMethod            *string `url:"auth_method,omitempty" json:"auth_method,omitempty"`
+	Enabled               *bool     `url:"enabled,omitempty" json:"enabled,omitempty"`
+	KeepDivergentRefs     *bool     `url:"keep_divergent_refs,omitempty" json:"keep_divergent_refs,omitempty"`
+	OnlyProtectedBranches *bool     `url:"only_protected_branches,omitempty" json:"only_protected_branches,omitempty"`
+	MirrorBranchRegex     *string   `url:"mirror_branch_regex,omitempty" json:"mirror_branch_regex,omitempty"`
+	AuthMethod            *string   `url:"auth_method,omitempty" json:"auth_method,omitempty"`
+	HostKeys              *[]string `url:"host_keys,omitempty" json:"host_keys,omitempty"`
 }
 
 func (s *ProjectMirrorService) EditProjectMirror(pid any, mirror int64, opt *EditProjectMirrorOptions, options ...RequestOptionFunc) (*ProjectMirror, *Response, error) {
