@@ -35,6 +35,14 @@ func WithBaseURL(urlStr string) ClientOptionFunc {
 	}
 }
 
+// WithAuthSourceStrategy set strategy for authSource inject auth header
+func WithAuthSourceStrategy(strategy AuthTokenStrategy) ClientOptionFunc {
+	return func(c *Client) error {
+		c.authSourceStrategy = strategy
+		return nil
+	}
+}
+
 // WithCustomBackoff can be used to configure a custom backoff policy.
 func WithCustomBackoff(backoff retryablehttp.Backoff) ClientOptionFunc {
 	return func(c *Client) error {
