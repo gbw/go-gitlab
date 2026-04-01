@@ -1,3 +1,18 @@
+## 2.13.0
+
+### 🚀 Features
+
+- feat: Added WithAuthSourceStrategy option to allow configuring multiple token source priority ([!2815](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2815)) by [Павлов Александр](https://gitlab.com/alexpts)
+
+
+
+# [2.13.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.12.0...v2.13.0) (2026-04-01)
+
+
+### Features
+
+* Added WithAuthSourceStrategy option to allow configuring multiple token source priority ([2261c80](https://gitlab.com/gitlab-org/api/client-go/commit/2261c80c289d94a0053997f203544847bc961f12))
+
 ## 2.12.0
 
 ### 🚀 Features
