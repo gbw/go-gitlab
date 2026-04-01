@@ -162,7 +162,7 @@ func TestProjectMirrorService_AddProjectMirror(t *testing.T) {
 		UpdateStatus:           "none",
 		AuthMethod:             "password",
 		URL:                    "https://*****:*****@example.com/gitlab/example.git",
-		HostKeys:               &[]HostKey{{FingerprintSha256: "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"}},
+		HostKeys:               &[]HostKey{{FingerprintSHA256: "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"}},
 	}
 
 	pm, resp, err := client.ProjectMirrors.AddProjectMirror(42, nil, nil)
@@ -220,7 +220,7 @@ func TestProjectMirrorService_EditProjectMirror(t *testing.T) {
 		UpdateStatus:          "finished",
 		AuthMethod:            "password",
 		URL:                   "https://*****:*****@gitlab.com/gitlab-org/security/gitlab.git",
-		HostKeys:              &[]HostKey{{FingerprintSha256: "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"}},
+		HostKeys:              &[]HostKey{{FingerprintSHA256: "SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM"}},
 	}
 
 	pm, resp, err := client.ProjectMirrors.EditProjectMirror(42, 101486, nil, nil)

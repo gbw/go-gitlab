@@ -95,7 +95,7 @@ type ProjectMirrorPublicKey struct {
 }
 
 type HostKey struct {
-	FingerprintSha256 string `json:"fingerprint_sha256"`
+	FingerprintSHA256 string `json:"fingerprint_sha256"`
 }
 
 // ListProjectMirrorOptions represents the available ListProjectMirror() options.
