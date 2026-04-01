@@ -1,3 +1,24 @@
+## 2.12.0
+
+### 🚀 Features
+
+- fix: update HostKey field name to FingerprintSHA256 for consistency ([!2840](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2840)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- Add push mirror host_keys to the go client. ([!2832](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2832)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+### 🔄 Other Changes
+
+- Fix: improve URL validation warning logging context and correct typo ([!2830](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2830)) by [Bob Singh](https://gitlab.com/bobsingh.dev)
+- chore(no-release): fix typos in comments and unexported function ([!2831](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2831)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+
+
+# [2.12.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.11.0...v2.12.0) (2026-04-01)
+
+
+### Bug Fixes
+
+* update HostKey field name to FingerprintSHA256 for consistency ([1b7fcfb](https://gitlab.com/gitlab-org/api/client-go/commit/1b7fcfb0ed002b007b8cadcc8e81ba529e48705b))
+
 ## 2.11.0
 
 ### 🚀 Features
