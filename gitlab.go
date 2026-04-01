@@ -56,6 +56,7 @@ const (
 
 	AccessTokenHeaderName = "Private-Token"
 	JobTokenHeaderName    = "Job-Token"
+	OAuthTokenHeaderName  = "Authorization"
 )
 
 // AuthType represents an authentication type within GitLab.
@@ -128,6 +129,8 @@ type Client struct {
 
 	// authSource is used to obtain authentication headers.
 	authSource AuthSource
+	// authSourceStrategy specifies a strategy that injects authorization headers from the AuthSource.
+	authSourceStrategy AuthTokenStrategy
 
 	// authSourceInit is used to ensure that AuthSources are initialized only
 	// once.
@@ -417,9 +420,10 @@ func NewOAuthClient(token string, options ...ClientOptionFunc) (*Client, error) 
 // NewAuthSourceClient returns a new GitLab API client that uses the AuthSource for authentication.
 func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, error) {
 	c := &Client{
-		UserAgent:        userAgent,
-		authSource:       as,
-		urlWarningLogger: slog.Default(),
+		UserAgent:          userAgent,
+		authSource:         as,
+		authSourceStrategy: &AllHeadersAuthStrategy{},
+		urlWarningLogger:   slog.Default(),
 	}
 
 	// Configure the HTTP client.
@@ -1180,15 +1184,7 @@ func (c *Client) Do(req *retryablehttp.Request, v any) (*Response, error) {
 		return nil, fmt.Errorf("initializing token source failed: %w", err)
 	}
 
-	authKey, authValue, err := c.authSource.Header(req.Context())
-	switch err {
-	case nil:
-		if v := req.Header.Values(authKey); len(v) == 0 {
-			req.Header.Set(authKey, authValue)
-		}
-	case errUnauthenticated: //nolint:errorlint
-		// we simply skip using an auth header
-	default: // err != nil
+	if err := c.authSourceStrategy.ApplyAuthHeader(c.authSource, req); err != nil {
 		return nil, err
 	}
 
@@ -1431,7 +1427,7 @@ func (as OAuthTokenSource) Header(_ context.Context) (string, string, error) {
 		return "", "", err
 	}
 
-	return "Authorization", "Bearer " + t.AccessToken, nil
+	return OAuthTokenHeaderName, "Bearer " + t.AccessToken, nil
 }
 
 // JobTokenAuthSource used as an AuthSource for CI Job Tokens
@@ -1498,4 +1494,60 @@ func (Unauthenticated) Init(context.Context, *Client) error {
 
 func (u Unauthenticated) Header(context.Context) (string, string, error) {
 	return "", "", errUnauthenticated
+}
+
+// AuthTokenStrategy - Specifies a strategy that injects authorization headers from the AuthSource.
+type AuthTokenStrategy interface {
+	ApplyAuthHeader(authSource AuthSource, req *retryablehttp.Request) error
+}
+
+// AllHeadersAuthStrategy - The default implementation for v2 of package.
+// With this authentication strategy, all token headers specified in the client will be passed in the request
+// and GitLab will determine which token to use. This means that if both a Job Token and a Private Token are
+// provided, both will be sent in the headers.
+type AllHeadersAuthStrategy struct{}
+
+func (d AllHeadersAuthStrategy) ApplyAuthHeader(authSource AuthSource, req *retryablehttp.Request) error {
+	authKey, authValue, err := authSource.Header(req.Context())
+	if errors.Is(err, errUnauthenticated) {
+		// we simply skip using an auth header
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+
+	if v := req.Header.Values(authKey); len(v) == 0 {
+		req.Header.Set(authKey, authValue)
+	}
+
+	return nil
+}
+
+// RequestLevelAuthStrategy defines an authentication strategy where tokens that are provided
+// using functions such as `WithToken` will override any tokens provided in the client constructor.
+// The "DefaultAuthStrategy" parameter can be used to define what token should be used if no token is provided
+// on a given request. It will default to `AllHeadersAuthStrategy`
+type RequestLevelAuthStrategy struct {
+	DefaultAuthStrategy AuthTokenStrategy
+}
+
+func (a RequestLevelAuthStrategy) ApplyAuthHeader(authSource AuthSource, req *retryablehttp.Request) error {
+	if value := req.Header.Get(AccessTokenHeaderName); value != "" {
+		return nil
+	}
+
+	if value := req.Header.Get(OAuthTokenHeaderName); value != "" {
+		return nil
+	}
+
+	if value := req.Header.Get(JobTokenHeaderName); value != "" {
+		return nil
+	}
+
+	if a.DefaultAuthStrategy == nil {
+		a.DefaultAuthStrategy = &AllHeadersAuthStrategy{}
+	}
+
+	return a.DefaultAuthStrategy.ApplyAuthHeader(authSource, req)
 }

@@ -19,11 +19,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 
 	retryablehttp "github.com/hashicorp/go-retryablehttp"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"golang.org/x/oauth2"
 )
 
 func TestWithContext(t *testing.T) {
@@ -493,5 +496,132 @@ func ExampleWithNext() {
 		}
 
 		page = next
+	}
+}
+
+func TestWithToken(pt *testing.T) {
+	pt.Parallel()
+
+	tests := map[string]struct {
+		clientToken     AuthSource
+		withToken       RequestOptionFunc
+		expectedHeaders map[string][]string
+	}{
+		"private token": {
+			clientToken: AccessTokenAuthSource{Token: "base"},
+			withToken:   nil,
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"base"},
+			},
+		},
+		"Job token": {
+			clientToken: JobTokenAuthSource{Token: "base2"},
+			withToken:   nil,
+			expectedHeaders: map[string][]string{
+				"Job-Token": {"base2"},
+			},
+		},
+		"Oauth token": {
+			clientToken: OAuthTokenSource{TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+				AccessToken: "base3",
+			})},
+			withToken: nil,
+			expectedHeaders: map[string][]string{
+				"Authorization": {"Bearer base3"},
+			},
+		},
+		"private: inline private": {
+			clientToken: AccessTokenAuthSource{Token: "private"},
+			withToken:   WithToken(PrivateToken, "p-1"),
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"p-1"},
+			},
+		},
+		// below problem case for many headers (not the expected behavior)
+		"not expected priority token: base-private + inline job": {
+			clientToken: AccessTokenAuthSource{Token: "private"},
+			withToken:   WithToken(JobToken, "j-1"),
+			expectedHeaders: map[string][]string{
+				"Job-Token":     {"j-1"},
+				"Private-Token": {"private"}, // not expected
+			},
+		},
+		"not expected priority token: base-private + inline oauth": {
+			clientToken: AccessTokenAuthSource{Token: "private"},
+			withToken:   WithToken(OAuthToken, "oauth-1"),
+			expectedHeaders: map[string][]string{
+				"Authorization": {"Bearer oauth-1"},
+				"Private-Token": {"private"}, // not expected
+			},
+		},
+		"priority same type token from WithToken": {
+			clientToken: OAuthTokenSource{TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+				AccessToken: "base-oauth",
+			})},
+			withToken: WithToken(OAuthToken, "personal_token"),
+			expectedHeaders: map[string][]string{
+				"Authorization": {"Bearer personal_token"},
+			},
+		},
+		"override empty token from WithToken": {
+			clientToken: AccessTokenAuthSource{Token: ""},
+			withToken:   WithToken(OAuthToken, "personal_token"),
+			expectedHeaders: map[string][]string{
+				"Private-Token": {""}, // not expected
+				"Authorization": {"Bearer personal_token"},
+			},
+		},
+		"override empty token from WithToken to private token": {
+			clientToken: AccessTokenAuthSource{Token: ""},
+			withToken:   WithToken(PrivateToken, "personal_private_token"),
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"personal_private_token"}, // withToken has priority here
+			},
+		},
+		"override token from WithToken to private token": {
+			clientToken: AccessTokenAuthSource{Token: "fallback"},
+			withToken:   WithToken(PrivateToken, "personal_private_token"),
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"personal_private_token"}, // withToken has priority here
+			},
+		},
+		"override token from WithToken to oauth token": {
+			clientToken: AccessTokenAuthSource{Token: "fallback"},
+			withToken:   WithToken(OAuthToken, "personal_access_token"),
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"fallback"},
+				"Authorization": {"Bearer personal_access_token"}, // withToken has not priority here
+			},
+		},
+	}
+
+	for testName, provider := range tests {
+		pt.Run(testName, func(t *testing.T) {
+			t.Parallel()
+
+			// default headers
+			provider.expectedHeaders["User-Agent"] = []string{"go-gitlab"}
+			provider.expectedHeaders["Accept"] = []string{"application/json"}
+			provider.expectedHeaders["Accept-Encoding"] = []string{"gzip"}
+
+			mux := http.NewServeMux()
+			// server is a test HTTP server used to provide mock API responses
+			server := httptest.NewServer(mux)
+			t.Cleanup(server.Close)
+
+			mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
+				assert.Equal(t, http.Header(provider.expectedHeaders), r.Header)
+				_, _ = fmt.Fprint(w, "[]")
+			})
+
+			client, err := NewAuthSourceClient(provider.clientToken,
+				WithBaseURL(server.URL),
+				WithHTTPClient(server.Client()),
+			)
+			require.NoError(t, err, "failed to create client %v", err)
+
+			_, _, errAPI := client.Projects.ListProjects(&ListProjectsOptions{}, provider.withToken)
+			require.NoError(t, errAPI, "HTTP request failed %v", errAPI)
+		})
 	}
 }

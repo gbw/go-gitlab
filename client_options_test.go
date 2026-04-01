@@ -1,7 +1,9 @@
 package gitlab
 
 import (
+	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -183,4 +185,88 @@ func TestClientWithInterceptor(t *testing.T) {
 		assert.Equal(t, "interceptor cannot be nil", err.Error())
 		assert.Empty(t, client.interceptors, "Nil interceptor should not be added")
 	})
+}
+
+func TestWithAuthSourceStrategy(pt *testing.T) {
+	pt.Parallel()
+
+	tests := map[string]struct {
+		clientToken     AuthSource
+		withToken       RequestOptionFunc
+		strategy        AuthTokenStrategy
+		expectedHeaders map[string][]string
+	}{
+		"default strategy: private token": {
+			clientToken: AccessTokenAuthSource{Token: "base"},
+			withToken:   nil,
+			strategy:    &AllHeadersAuthStrategy{},
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"base"},
+			},
+		},
+		"default strategy: private token + private withToken": {
+			clientToken: AccessTokenAuthSource{Token: "base"},
+			withToken:   WithToken(PrivateToken, "p-1"),
+			strategy:    &AllHeadersAuthStrategy{},
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"p-1"},
+			},
+		},
+		"default strategy: private token + no-private withToken": {
+			clientToken: AccessTokenAuthSource{Token: "base"},
+			withToken:   WithToken(JobToken, "j-1"),
+			strategy:    &AllHeadersAuthStrategy{},
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"base"},
+				"Job-Token":     {"j-1"},
+			},
+		},
+		"fallback strategy: private token + private withToken": {
+			clientToken: AccessTokenAuthSource{Token: "base"},
+			withToken:   WithToken(PrivateToken, "p-1"),
+			strategy:    &RequestLevelAuthStrategy{DefaultAuthStrategy: &AllHeadersAuthStrategy{}},
+			expectedHeaders: map[string][]string{
+				"Private-Token": {"p-1"},
+			},
+		},
+		"fallback strategy: private token + no-private withToken": {
+			clientToken: AccessTokenAuthSource{Token: "base"},
+			withToken:   WithToken(JobToken, "j-1"),
+			strategy:    &RequestLevelAuthStrategy{DefaultAuthStrategy: &AllHeadersAuthStrategy{}},
+			expectedHeaders: map[string][]string{
+				"Job-Token": {"j-1"},
+			},
+		},
+	}
+
+	for testName, provider := range tests {
+		pt.Run(testName, func(t *testing.T) {
+			t.Parallel()
+
+			// default headers
+			provider.expectedHeaders["User-Agent"] = []string{"go-gitlab"}
+			provider.expectedHeaders["Accept"] = []string{"application/json"}
+			provider.expectedHeaders["Accept-Encoding"] = []string{"gzip"}
+
+			mux := http.NewServeMux()
+			// server is a test HTTP server used to provide mock API responses
+			server := httptest.NewServer(mux)
+			t.Cleanup(server.Close)
+
+			mux.HandleFunc("/api/v4/projects", func(w http.ResponseWriter, r *http.Request) {
+				assert.Equal(t, http.Header(provider.expectedHeaders), r.Header)
+				_, _ = fmt.Fprint(w, "[]")
+			})
+
+			client, err := NewAuthSourceClient(provider.clientToken,
+				WithBaseURL(server.URL),
+				WithHTTPClient(server.Client()),
+				WithAuthSourceStrategy(provider.strategy),
+			)
+			require.NoError(t, err, "failed to create client %v", err)
+
+			_, _, errAPI := client.Projects.ListProjects(&ListProjectsOptions{}, provider.withToken)
+			require.NoError(t, errAPI, "HTTP request failed %v", errAPI)
+		})
+	}
 }
