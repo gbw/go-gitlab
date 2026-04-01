@@ -776,7 +776,7 @@ func (c *Client) retryHTTPBackoff(min, max time.Duration, attemptNum int, resp *
 //
 // min and max are mainly used for bounding the jitter that will be added to
 // the reset time retrieved from the headers. But if the final wait time is
-// less then min, min will be used instead.
+// less than min, min will be used instead.
 func rateLimitBackoff(min, max time.Duration, attemptNum int, resp *http.Response) time.Duration {
 	// First create some jitter bounded by the min and max durations.
 	jitter := time.Duration(rand.Float64() * float64(max-min))
@@ -893,7 +893,7 @@ func (c *Client) setBaseURL(urlStr string) error {
 	baseURL, err := validateBaseURL(urlStr)
 	if err != nil {
 		// Log the validation warning
-		c.urlWarningLogger.Warn("URL validation warning", "error", err)
+		c.urlWarningLogger.Warn("URL validation warning", "url", urlStr, "error", err)
 
 		// Don't return the error - just warn and continue
 		// Try to parse anyway as a fallback
