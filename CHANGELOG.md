@@ -1,3 +1,18 @@
+## 2.14.0
+
+### 🚀 Features
+
+- feat: add support for DisablePasswordAuthenticationForUsersWithSSOIdentities... ([!2839](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2839)) by [Lorenz Vonlanthen](https://gitlab.com/loelu)
+
+
+
+# [2.14.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.13.0...v2.14.0) (2026-04-03)
+
+
+### Features
+
+* add support for DisablePasswordAuthenticationForUsersWithSSOIdentities... ([6b88f05](https://gitlab.com/gitlab-org/api/client-go/commit/6b88f05609dfc6861da406b205fe1c2750c0b3e8))
+
 ## 2.13.0
 
 ### 🚀 Features
