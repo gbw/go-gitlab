@@ -390,7 +390,7 @@ func TestPaginationPopulatePageValuesOffset(t *testing.T) {
 	var linkHeaderComponents []string
 	for k, v := range wantLinkHeaders {
 		if v != "" {
-			linkHeaderComponents = append(linkHeaderComponents, fmt.Sprintf("<%s>; rel=\"%s\"", v, k))
+			linkHeaderComponents = append(linkHeaderComponents, fmt.Sprintf("<%s>; rel=%q", v, k))
 		}
 	}
 	h.Add("Link", strings.Join(linkHeaderComponents, ", "))
@@ -441,7 +441,7 @@ func TestPaginationPopulatePageValuesKeyset(t *testing.T) {
 	var linkHeaderComponents []string
 	for k, v := range wantLinkHeaders {
 		if v != "" {
-			linkHeaderComponents = append(linkHeaderComponents, fmt.Sprintf("<%s>; rel=\"%s\"", v, k))
+			linkHeaderComponents = append(linkHeaderComponents, fmt.Sprintf("<%s>; rel=%q", v, k))
 		}
 	}
 	h.Add("Link", strings.Join(linkHeaderComponents, ", "))

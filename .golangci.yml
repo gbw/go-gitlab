@@ -23,6 +23,7 @@ linters:
     - dupword
     - errorlint
     - goconst
+    - gocritic
     - godoclint
     - forbidigo
     - misspell
@@ -51,6 +52,12 @@ linters:
         - pattern: ^testing\.T\.Fatalf?$
           msg: "Do not use `t.Fatal` in tests, use testify instead"
       analyze-types: true
+    gocritic:
+      disable-all: true
+      enabled-checks:
+        - redundantSprint
+        - sprintfQuotedString
+        - typeUnparen
     misspell:
       locale: US
       ignore-rules:
