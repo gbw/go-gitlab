@@ -1,0 +1,21 @@
+{
+  "id": 5,
+  "iid": 5,
+  "project_id": 1,
+  "title": "Approvals API",
+  "description": "Test",
+  "state": "opened",
+  "approvals_required": 2,
+  "approvals_left": 1,
+  "approved": true,
+  "approved_by": [
+    {
+      "user": {
+        "id": 1,
+        "name": "Administrator",
+        "username": "root"
+      },
+      "approved_at": "2016-06-09T01:45:21.720Z"
+    }
+  ]
+}

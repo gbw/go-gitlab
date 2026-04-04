@@ -139,6 +139,49 @@ func TestGetMergeRequest(t *testing.T) {
 	require.True(t, mergeRequest.Draft)
 }
 
+func TestGetMergeRequestApprovals(t *testing.T) {
+	t.Parallel()
+
+	// GIVEN a mock HTTP server with merge request approvals response
+	mux, client := setup(t)
+
+	path := "/api/v4/projects/1/merge_requests/5/approvals"
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_merge_request_approvals.json")
+	})
+
+	// WHEN GetMergeRequestApprovals is called
+	approvals, _, err := client.MergeRequests.GetMergeRequestApprovals(1, 5)
+
+	// THEN the response is correctly parsed
+	assert.NoError(t, err)
+	assert.NotNil(t, approvals)
+
+	// Verify basic fields
+	assert.Equal(t, int64(5), approvals.ID)
+	assert.Equal(t, int64(5), approvals.IID)
+	assert.Equal(t, int64(1), approvals.ProjectID)
+	assert.Equal(t, "Approvals API", approvals.Title)
+	assert.Equal(t, "Test", approvals.Description)
+	assert.Equal(t, "opened", approvals.State)
+	assert.Equal(t, int64(2), approvals.ApprovalsRequired)
+	assert.Equal(t, int64(1), approvals.ApprovalsLeft)
+	assert.True(t, approvals.Approved)
+
+	// Verify approved_by contains the approved_at field
+	assert.Len(t, approvals.ApprovedBy, 1)
+	assert.NotNil(t, approvals.ApprovedBy[0].User)
+	assert.Equal(t, int64(1), approvals.ApprovedBy[0].User.ID)
+	assert.Equal(t, "Administrator", approvals.ApprovedBy[0].User.Name)
+	assert.Equal(t, "root", approvals.ApprovedBy[0].User.Username)
+
+	// Verify approved_at timestamp is correctly parsed
+	expectedApprovedAt := time.Date(2016, time.June, 9, 1, 45, 21, 720000000, time.UTC)
+	assert.NotNil(t, approvals.ApprovedBy[0].ApprovedAt)
+	assert.Equal(t, expectedApprovedAt, *approvals.ApprovedBy[0].ApprovedAt)
+}
+
 func TestListProjectMergeRequests(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
