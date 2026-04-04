@@ -1,3 +1,18 @@
+## 2.15.0
+
+### 🚀 Features
+
+- feat: Add approved_at field in merge request approvals API ([!2844](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2844)) by [Mohamed Asan N](https://gitlab.com/hassyyy)
+
+
+
+# [2.15.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.14.0...v2.15.0) (2026-04-04)
+
+
+### Features
+
+* Add approved_at field in merge request approvals API ([528ac9e](https://gitlab.com/gitlab-org/api/client-go/commit/528ac9ea36377454fcae3cd7eb27b9d47f69a1cd))
+
 ## 2.14.0
 
 ### 🚀 Features
