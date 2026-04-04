@@ -1,3 +1,18 @@
+## 2.16.0
+
+### 🚀 Features
+
+- feat: Add PagesUniqueDomainDefaultEnabled to Settings API ([!2845](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2845)) by [Mohamed Mongy](https://gitlab.com/mohamedmongy96)
+
+
+
+# [2.16.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.15.0...v2.16.0) (2026-04-04)
+
+
+### Features
+
+* Add PagesUniqueDomainDefaultEnabled to Settings API ([d27f3af](https://gitlab.com/gitlab-org/api/client-go/commit/d27f3af69ae8569117c51f716d00b3b116e9f88c))
+
 ## 2.15.0
 
 ### 🚀 Features
