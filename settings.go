@@ -297,6 +297,7 @@ type Settings struct {
 	PackageRegistryAllowAnyoneToPullOption                 bool                      `json:"package_registry_allow_anyone_to_pull_option"`
 	PackageRegistryCleanupPoliciesWorkerCapacity           int64                     `json:"package_registry_cleanup_policies_worker_capacity"`
 	PagesDomainVerificationEnabled                         bool                      `json:"pages_domain_verification_enabled"`
+	PagesUniqueDomainDefaultEnabled                        bool                      `json:"pages_unique_domain_default_enabled"`
 	PasswordAuthenticationEnabledForGit                    bool                      `json:"password_authentication_enabled_for_git"`
 	PasswordAuthenticationEnabledForWeb                    bool                      `json:"password_authentication_enabled_for_web"`
 	PasswordNumberRequired                                 bool                      `json:"password_number_required"`
@@ -781,6 +782,7 @@ type UpdateSettingsOptions struct {
 	PackageRegistryAllowAnyoneToPullOption                 *bool                                   `url:"package_registry_allow_anyone_to_pull_option,omitempty" json:"package_registry_allow_anyone_to_pull_option,omitempty"`
 	PackageRegistryCleanupPoliciesWorkerCapacity           *int64                                  `url:"package_registry_cleanup_policies_worker_capacity,omitempty" json:"package_registry_cleanup_policies_worker_capacity,omitempty"`
 	PagesDomainVerificationEnabled                         *bool                                   `url:"pages_domain_verification_enabled,omitempty" json:"pages_domain_verification_enabled,omitempty"`
+	PagesUniqueDomainDefaultEnabled                        *bool                                   `url:"pages_unique_domain_default_enabled,omitempty" json:"pages_unique_domain_default_enabled,omitempty"`
 	PasswordAuthenticationEnabledForGit                    *bool                                   `url:"password_authentication_enabled_for_git,omitempty" json:"password_authentication_enabled_for_git,omitempty"`
 	PasswordAuthenticationEnabledForWeb                    *bool                                   `url:"password_authentication_enabled_for_web,omitempty" json:"password_authentication_enabled_for_web,omitempty"`
 	PasswordNumberRequired                                 *bool                                   `url:"password_number_required,omitempty" json:"password_number_required,omitempty"`
