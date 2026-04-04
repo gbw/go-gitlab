@@ -453,7 +453,7 @@ func (d *DefaultBranchProtectionDefaultsOptions) EncodeValues(key string, v *url
 	if d.AllowedToMerge != nil {
 		for _, atm := range *d.AllowedToMerge {
 			if atm != nil {
-				v.Add(key+"[allowed_to_merge][][access_level]", strconv.FormatInt((int64)(*atm.AccessLevel), 10))
+				v.Add(key+"[allowed_to_merge][][access_level]", strconv.Itoa(int(*atm.AccessLevel)))
 			}
 		}
 	}
@@ -463,7 +463,7 @@ func (d *DefaultBranchProtectionDefaultsOptions) EncodeValues(key string, v *url
 	if d.AllowedToPush != nil {
 		for _, atp := range *d.AllowedToPush {
 			if atp != nil {
-				v.Add(key+"[allowed_to_push][][access_level]", strconv.FormatInt((int64)(*atp.AccessLevel), 10))
+				v.Add(key+"[allowed_to_push][][access_level]", strconv.Itoa(int(*atp.AccessLevel)))
 			}
 		}
 	}

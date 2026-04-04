@@ -1036,7 +1036,7 @@ func (c *Client) UploadRequest(method, path string, content io.Reader, filename 
 			return nil, err
 		}
 		for name := range fields {
-			if err = w.WriteField(name, fmt.Sprintf("%v", fields.Get(name))); err != nil {
+			if err = w.WriteField(name, fields.Get(name)); err != nil {
 				return nil, err
 			}
 		}
