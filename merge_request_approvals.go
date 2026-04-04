@@ -143,7 +143,8 @@ func (s MergeRequestApprovalRule) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/merge_request_approvals/#project-approval-rules
 type MergeRequestApproverUser struct {
-	User *BasicUser
+	User       *BasicUser `json:"user"`
+	ApprovedAt *time.Time `json:"approved_at"`
 }
 
 // ApproveMergeRequestOptions represents the available ApproveMergeRequest() options.
