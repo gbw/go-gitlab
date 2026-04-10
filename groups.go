@@ -60,6 +60,8 @@ type (
 		AddGroupPushRule(gid any, opt *AddGroupPushRuleOptions, options ...RequestOptionFunc) (*GroupPushRules, *Response, error)
 		EditGroupPushRule(gid any, opt *EditGroupPushRuleOptions, options ...RequestOptionFunc) (*GroupPushRules, *Response, error)
 		DeleteGroupPushRule(gid any, options ...RequestOptionFunc) (*Response, error)
+		ArchiveGroup(gid any, options ...RequestOptionFunc) (*Response, error)
+		UnarchiveGroup(gid any, options ...RequestOptionFunc) (*Response, error)
 
 		// group_hooks.go
 		ListGroupHooks(gid any, opt *ListGroupHooksOptions, options ...RequestOptionFunc) ([]*GroupHook, *Response, error)
@@ -1041,6 +1043,34 @@ func (s *GroupsService) DeleteGroupPushRule(gid any, options ...RequestOptionFun
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodDelete),
 		withPath("groups/%s/push_rule", GroupID{gid}),
+		withRequestOpts(options...),
+	)
+	return resp, err
+}
+
+// ArchiveGroup archives a group.
+// You must be an administrator or have the Owner role for the group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/groups/#archive-a-group
+func (s *GroupsService) ArchiveGroup(gid any, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("groups/%s/archive", GroupID{gid}),
+		withRequestOpts(options...),
+	)
+	return resp, err
+}
+
+// UnarchiveGroup unarchives a group.
+// You must be an administrator or have the Owner role for the group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/groups/#unarchive-a-group
+func (s *GroupsService) UnarchiveGroup(gid any, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](s.client,
+		withMethod(http.MethodPost),
+		withPath("groups/%s/unarchive", GroupID{gid}),
 		withRequestOpts(options...),
 	)
 	return resp, err

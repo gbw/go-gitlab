@@ -1515,3 +1515,29 @@ func TestGroup_MergeSettings(t *testing.T) {
 		assert.False(t, group.OnlyAllowMergeIfAllDiscussionsAreResolved)
 	})
 }
+
+func TestArchiveGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/groups/1/archive",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			fmt.Fprint(w, `{"id": 1, "name": "g"}`)
+		})
+
+	_, err := client.Groups.ArchiveGroup(1)
+	require.NoError(t, err)
+}
+
+func TestUnarchiveGroup(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+	mux.HandleFunc("/api/v4/groups/1/unarchive",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			fmt.Fprint(w, `{"id": 1, "name": "g"}`)
+		})
+
+	_, err := client.Groups.UnarchiveGroup(1)
+	require.NoError(t, err)
+}
