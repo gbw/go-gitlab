@@ -1,3 +1,20 @@
+## 2.17.0
+
+### 🚀 Features
+
+- Resolve "Add endpoint support for archiving/unarchiving groups" ([!2848](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2848)) by [Jonathan Bowe](https://gitlab.com/boweflex)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.3.1 ([!2841](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2841)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(no-release): enable gocritic linter ([!2842](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2842)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+- chore(deps): update module golang.org/x/oauth2 to v0.36.0 ([!2835](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2835)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module golang.org/x/text to v0.35.0 ([!2837](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2837)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.17.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.16.0...v2.17.0) (2026-04-10)
+
 ## 2.16.0
 
 ### 🚀 Features
