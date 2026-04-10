@@ -219,3 +219,27 @@ func Test_GroupsUpdateGroup_CodeOwnerApprovalRequired_Integration(t *testing.T) 
 	require.NotNil(t, retrievedGroup.DefaultBranchProtectionDefaults)
 	assert.True(t, retrievedGroup.DefaultBranchProtectionDefaults.CodeOwnerApprovalRequired)
 }
+
+func Test_GroupsArchive_Unarchive_Integration(t *testing.T) {
+	// GIVEN a GitLab client and a test group
+	client := SetupIntegrationClient(t)
+	group := CreateTestGroup(t, client)
+
+	// WHEN the group is archived
+	_, err := client.Groups.ArchiveGroup(group.ID)
+	require.NoError(t, err)
+
+	// THEN archiving again should fail
+	resp, err := client.Groups.ArchiveGroup(group.ID)
+	assert.Error(t, err)
+	assert.Equal(t, 422, resp.StatusCode)
+
+	// AND WHEN the group is unarchived
+	_, err = client.Groups.UnarchiveGroup(group.ID)
+	require.NoError(t, err)
+
+	// THEN unarchiving again should fail
+	resp, err = client.Groups.UnarchiveGroup(group.ID)
+	assert.Error(t, err)
+	assert.Equal(t, 422, resp.StatusCode)
+}

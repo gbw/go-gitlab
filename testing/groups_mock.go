@@ -221,6 +221,50 @@ func (c *MockGroupsServiceInterfaceAddGroupSAMLLinkCall) DoAndReturn(f func(any,
 	return c
 }
 
+// ArchiveGroup mocks base method.
+func (m *MockGroupsServiceInterface) ArchiveGroup(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ArchiveGroup", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ArchiveGroup indicates an expected call of ArchiveGroup.
+func (mr *MockGroupsServiceInterfaceMockRecorder) ArchiveGroup(gid any, options ...any) *MockGroupsServiceInterfaceArchiveGroupCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArchiveGroup", reflect.TypeOf((*MockGroupsServiceInterface)(nil).ArchiveGroup), varargs...)
+	return &MockGroupsServiceInterfaceArchiveGroupCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceArchiveGroupCall wrap *gomock.Call
+type MockGroupsServiceInterfaceArchiveGroupCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceArchiveGroupCall) Return(arg0 *gitlab.Response, arg1 error) *MockGroupsServiceInterfaceArchiveGroupCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceArchiveGroupCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceArchiveGroupCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceArchiveGroupCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceArchiveGroupCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // CreateGroup mocks base method.
 func (m *MockGroupsServiceInterface) CreateGroup(opt *gitlab.CreateGroupOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Group, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -2316,6 +2360,50 @@ func (c *MockGroupsServiceInterfaceTriggerTestGroupHookCall) Do(f func(any, int6
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockGroupsServiceInterfaceTriggerTestGroupHookCall) DoAndReturn(f func(any, int64, gitlab.GroupHookTrigger, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceTriggerTestGroupHookCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// UnarchiveGroup mocks base method.
+func (m *MockGroupsServiceInterface) UnarchiveGroup(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UnarchiveGroup", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UnarchiveGroup indicates an expected call of UnarchiveGroup.
+func (mr *MockGroupsServiceInterfaceMockRecorder) UnarchiveGroup(gid any, options ...any) *MockGroupsServiceInterfaceUnarchiveGroupCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnarchiveGroup", reflect.TypeOf((*MockGroupsServiceInterface)(nil).UnarchiveGroup), varargs...)
+	return &MockGroupsServiceInterfaceUnarchiveGroupCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceUnarchiveGroupCall wrap *gomock.Call
+type MockGroupsServiceInterfaceUnarchiveGroupCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceUnarchiveGroupCall) Return(arg0 *gitlab.Response, arg1 error) *MockGroupsServiceInterfaceUnarchiveGroupCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceUnarchiveGroupCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceUnarchiveGroupCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceUnarchiveGroupCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceUnarchiveGroupCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
