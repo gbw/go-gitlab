@@ -55,8 +55,9 @@ projects, _, err := git.Projects.ListProjects(opt)
 
 ### Examples
 
-The [examples](/examples) directory
-contains a couple for clear examples, of which one is partially listed here as well:
+A few examples of using this package are provided below. As much of the functionality in this package is wrappers for the GitLab [REST](https://docs.gitlab.com/api/rest/) and [GraphQL](https://docs.gitlab.com/api/graphql/) APIs, examples demonstrate potential processes using the client rather than a specific method or function.
+
+#### Create a Project and a Snippet
 
 ```go
 package main
@@ -233,7 +234,7 @@ func main() {
 }
 ```
 
-For complete usage of go-gitlab, see the full [package docs](https://pkg.go.dev/gitlab.com/gitlab-org/api/client-go).
+For complete usage of `client-go`, see the full [package docs](https://pkg.go.dev/gitlab.com/gitlab-org/api/client-go), and view `example_*` files in the [root directory of the project](https://gitlab.com/gitlab-org/api/client-go) for additional examples of use.
 
 ## Installation
 
