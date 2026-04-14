@@ -1,3 +1,22 @@
+## 2.18.0
+
+### 🚀 Features
+
+- Feat: Add support for application setting secret_push_protection_available ([!2849](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2849)) by [Rizart Dona](https://gitlab.com/rizart_d)
+
+### 🔄 Other Changes
+
+- fix: Correct Example Section in README ([!2850](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2850)) by [Jonathan Bowe](https://gitlab.com/boweflex)
+
+
+
+# [2.18.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.17.0...v2.18.0) (2026-04-14)
+
+
+### Bug Fixes
+
+* Correct Example Section in README ([c0759d9](https://gitlab.com/gitlab-org/api/client-go/commit/c0759d99b2eefbd4501a0e960530ee5a73ec0084))
+
 ## 2.17.0
 
 ### 🚀 Features
