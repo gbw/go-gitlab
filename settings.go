@@ -350,6 +350,7 @@ type Settings struct {
 	SecretDetectionTokenRevocationEnabled                  bool                      `json:"secret_detection_token_revocation_enabled"`
 	SecretDetectionTokenRevocationToken                    string                    `json:"secret_detection_token_revocation_token"`
 	SecretDetectionTokenRevocationURL                      string                    `json:"secret_detection_token_revocation_url"`
+	SecretPushProtectionAvailable                          bool                      `json:"secret_push_protection_available"`
 	SecurityApprovalPoliciesLimit                          int64                     `json:"security_approval_policies_limit"`
 	SecurityPolicyGlobalGroupApproversEnabled              bool                      `json:"security_policy_global_group_approvers_enabled"`
 	SecurityTXTContent                                     string                    `json:"security_txt_content"`
@@ -835,6 +836,7 @@ type UpdateSettingsOptions struct {
 	SecretDetectionTokenRevocationEnabled                  *bool                                   `url:"secret_detection_token_revocation_enabled,omitempty" json:"secret_detection_token_revocation_enabled,omitempty"`
 	SecretDetectionTokenRevocationToken                    *string                                 `url:"secret_detection_token_revocation_token,omitempty" json:"secret_detection_token_revocation_token,omitempty"`
 	SecretDetectionTokenRevocationURL                      *string                                 `url:"secret_detection_token_revocation_url,omitempty" json:"secret_detection_token_revocation_url,omitempty"`
+	SecretPushProtectionAvailable                          *bool                                   `url:"secret_push_protection_available,omitempty" json:"secret_push_protection_available,omitempty"`
 	SecurityApprovalPoliciesLimit                          *int64                                  `url:"security_approval_policies_limit,omitempty" json:"security_approval_policies_limit,omitempty"`
 	SecurityPolicyGlobalGroupApproversEnabled              *bool                                   `url:"security_policy_global_group_approvers_enabled,omitempty" json:"security_policy_global_group_approvers_enabled,omitempty"`
 	SecurityTXTContent                                     *string                                 `url:"security_txt_content,omitempty" json:"security_txt_content,omitempty"`

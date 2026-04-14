@@ -234,3 +234,47 @@ func TestGetSettings_LockMembershipsToSAML(t *testing.T) {
 
 	assert.True(t, settings.LockMembershipsToSAML)
 }
+
+func TestUpdateSettings_SecretPushProtectionAvailable(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	var requestBody map[string]any
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+
+		err := json.NewDecoder(r.Body).Decode(&requestBody)
+		assert.NoError(t, err)
+
+		fmt.Fprint(w, `{"id":1, "secret_push_protection_available": true}`)
+	})
+
+	_, _, err := client.Settings.UpdateSettings(&UpdateSettingsOptions{
+		SecretPushProtectionAvailable: Ptr(true),
+	})
+	require.NoError(t, err)
+
+	want := map[string]any{
+		"secret_push_protection_available": true,
+	}
+
+	assert.Equal(t, want["secret_push_protection_available"], requestBody["secret_push_protection_available"])
+}
+
+func TestGetSettings_SecretPushProtectionAvailable(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/application/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"secret_push_protection_available": true
+		}`)
+	})
+
+	settings, _, err := client.Settings.GetSettings()
+	require.NoError(t, err)
+
+	assert.True(t, settings.SecretPushProtectionAvailable)
+}
