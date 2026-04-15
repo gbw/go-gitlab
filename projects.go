@@ -410,7 +410,6 @@ type Project struct {
 	MirrorTriggerBuilds                       bool                                        `json:"mirror_trigger_builds"`
 	OnlyMirrorProtectedBranches               bool                                        `json:"only_mirror_protected_branches"`
 	MirrorOverwritesDivergedBranches          bool                                        `json:"mirror_overwrites_diverged_branches"`
-	PackagesEnabled                           bool                                        `json:"packages_enabled"`
 	ServiceDeskEnabled                        bool                                        `json:"service_desk_enabled"`
 	ServiceDeskAddress                        string                                      `json:"service_desk_address"`
 	IssuesAccessLevel                         AccessControlValue                          `json:"issues_access_level"`
@@ -428,6 +427,7 @@ type Project struct {
 	FeatureFlagsAccessLevel                   AccessControlValue                          `json:"feature_flags_access_level"`
 	InfrastructureAccessLevel                 AccessControlValue                          `json:"infrastructure_access_level"`
 	MonitorAccessLevel                        AccessControlValue                          `json:"monitor_access_level"`
+	PackageRegistryAccessLevel                AccessControlValue                          `json:"package_registry_access_level"`
 	AutocloseReferencedIssues                 bool                                        `json:"autoclose_referenced_issues"`
 	SuggestionCommitMessage                   string                                      `json:"suggestion_commit_message"`
 	SquashOption                              SquashOptionValue                           `json:"squash_option"`
@@ -483,6 +483,8 @@ type Project struct {
 	AutoDuoCodeReviewEnabled                  bool                                        `json:"auto_duo_code_review_enabled"`
 	MergeRequestTitleRegex                    string                                      `json:"merge_request_title_regex"`
 	MergeRequestTitleRegexDescription         string                                      `json:"merge_request_title_regex_description"`
+	// Deprecated: Use PackageRegistryAccessLevel instead.
+	PackagesEnabled bool `json:"packages_enabled"`
 	// Deprecated: use Topics instead
 	TagList []string `json:"tag_list"`
 	// Deprecated: use IssuesAccessLevel instead
@@ -849,6 +851,7 @@ type CreateProjectOptions struct {
 	CIConfigPath                              *string                              `url:"ci_config_path,omitempty" json:"ci_config_path,omitempty"`
 	ContainerExpirationPolicyAttributes       *ContainerExpirationPolicyAttributes `url:"container_expiration_policy_attributes,omitempty" json:"container_expiration_policy_attributes,omitempty"`
 	ContainerRegistryAccessLevel              *AccessControlValue                  `url:"container_registry_access_level,omitempty" json:"container_registry_access_level,omitempty"`
+	PackageRegistryAccessLevel                *AccessControlValue                  `url:"package_registry_access_level,omitempty" json:"package_registry_access_level,omitempty"`
 	DefaultBranch                             *string                              `url:"default_branch,omitempty" json:"default_branch,omitempty"`
 	Description                               *string                              `url:"description,omitempty" json:"description,omitempty"`
 	EmailsEnabled                             *bool                                `url:"emails_enabled,omitempty" json:"emails_enabled,omitempty"`
@@ -876,7 +879,6 @@ type CreateProjectOptions struct {
 	OnlyAllowMergeIfAllDiscussionsAreResolved *bool                                `url:"only_allow_merge_if_all_discussions_are_resolved,omitempty" json:"only_allow_merge_if_all_discussions_are_resolved,omitempty"`
 	OnlyAllowMergeIfPipelineSucceeds          *bool                                `url:"only_allow_merge_if_pipeline_succeeds,omitempty" json:"only_allow_merge_if_pipeline_succeeds,omitempty"`
 	OperationsAccessLevel                     *AccessControlValue                  `url:"operations_access_level,omitempty" json:"operations_access_level,omitempty"`
-	PackagesEnabled                           *bool                                `url:"packages_enabled,omitempty" json:"packages_enabled,omitempty"`
 	PagesAccessLevel                          *AccessControlValue                  `url:"pages_access_level,omitempty" json:"pages_access_level,omitempty"`
 	Path                                      *string                              `url:"path,omitempty" json:"path,omitempty"`
 	ReleasesAccessLevel                       *AccessControlValue                  `url:"releases_access_level,omitempty" json:"releases_access_level,omitempty"`
@@ -908,6 +910,8 @@ type CreateProjectOptions struct {
 	WikiAccessLevel                           *AccessControlValue                  `url:"wiki_access_level,omitempty" json:"wiki_access_level,omitempty"`
 	MergeRequestTitleRegex                    *string                              `url:"merge_request_title_regex,omitempty" json:"merge_request_title_regex,omitempty"`
 	MergeRequestTitleRegexDescription         *string                              `url:"merge_request_title_regex_description,omitempty" json:"merge_request_title_regex_description,omitempty"`
+	// Deprecated: Use PackageRegistryAccessLevel instead.
+	PackagesEnabled *bool `url:"packages_enabled,omitempty" json:"packages_enabled,omitempty"`
 	// Deprecated: use Merge Request Approvals API instead
 	ApprovalsBeforeMerge *int64 `url:"approvals_before_merge,omitempty" json:"approvals_before_merge,omitempty"`
 	// Deprecated: use PublicJobs instead
@@ -1047,6 +1051,7 @@ type EditProjectOptions struct {
 	CIPipelineVariablesMinimumOverrideRole    *CIPipelineVariablesMinimumOverrideRoleValue `url:"ci_pipeline_variables_minimum_override_role,omitempty" json:"ci_pipeline_variables_minimum_override_role,omitempty"`
 	ContainerExpirationPolicyAttributes       *ContainerExpirationPolicyAttributes         `url:"container_expiration_policy_attributes,omitempty" json:"container_expiration_policy_attributes,omitempty"`
 	ContainerRegistryAccessLevel              *AccessControlValue                          `url:"container_registry_access_level,omitempty" json:"container_registry_access_level,omitempty"`
+	PackageRegistryAccessLevel                *AccessControlValue                          `url:"package_registry_access_level,omitempty" json:"package_registry_access_level,omitempty"`
 	DefaultBranch                             *string                                      `url:"default_branch,omitempty" json:"default_branch,omitempty"`
 	Description                               *string                                      `url:"description,omitempty" json:"description,omitempty"`
 	EmailsEnabled                             *bool                                        `url:"emails_enabled,omitempty" json:"emails_enabled,omitempty"`
@@ -1080,7 +1085,6 @@ type EditProjectOptions struct {
 	OnlyAllowMergeIfPipelineSucceeds          *bool                                        `url:"only_allow_merge_if_pipeline_succeeds,omitempty" json:"only_allow_merge_if_pipeline_succeeds,omitempty"`
 	OnlyMirrorProtectedBranches               *bool                                        `url:"only_mirror_protected_branches,omitempty" json:"only_mirror_protected_branches,omitempty"`
 	OperationsAccessLevel                     *AccessControlValue                          `url:"operations_access_level,omitempty" json:"operations_access_level,omitempty"`
-	PackagesEnabled                           *bool                                        `url:"packages_enabled,omitempty" json:"packages_enabled,omitempty"`
 	PagesAccessLevel                          *AccessControlValue                          `url:"pages_access_level,omitempty" json:"pages_access_level,omitempty"`
 	Path                                      *string                                      `url:"path,omitempty" json:"path,omitempty"`
 	PublicJobs                                *bool                                        `url:"public_jobs,omitempty" json:"public_jobs,omitempty"`
@@ -1112,6 +1116,8 @@ type EditProjectOptions struct {
 	WikiAccessLevel                           *AccessControlValue                          `url:"wiki_access_level,omitempty" json:"wiki_access_level,omitempty"`
 	MergeRequestTitleRegex                    *string                                      `url:"merge_request_title_regex,omitempty" json:"merge_request_title_regex,omitempty"`
 	MergeRequestTitleRegexDescription         *string                                      `url:"merge_request_title_regex_description,omitempty" json:"merge_request_title_regex_description,omitempty"`
+	// Deprecated: Use PackageRegistryAccessLevel instead.
+	PackagesEnabled *bool `url:"packages_enabled,omitempty" json:"packages_enabled,omitempty"`
 	// Deprecated: use Merge Request Approvals API instead
 	ApprovalsBeforeMerge *int64 `url:"approvals_before_merge,omitempty" json:"approvals_before_merge,omitempty"`
 	// Deprecated: use PublicJobs instead
