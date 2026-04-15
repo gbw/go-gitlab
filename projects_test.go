@@ -420,6 +420,7 @@ func TestGetProjectByID(t *testing.T) {
 			"ci_restrict_pipeline_cancellation_role": "developer",
 			"ci_pipeline_variables_minimum_override_role": "no_one_allowed",
 			"packages_enabled": false,
+			"package_registry_access_level": "public",
 			"build_coverage_regex": "Total.*([0-9]{1,3})%",
 			"ci_delete_pipelines_in_seconds": 14,
 			"resource_group_default_process_mode": "oldest_first"
@@ -435,6 +436,7 @@ func TestGetProjectByID(t *testing.T) {
 			NextRunAt: &wantTimestamp,
 		},
 		PackagesEnabled:                        false,
+		PackageRegistryAccessLevel:             PublicAccessControl,
 		BuildCoverageRegex:                     `Total.*([0-9]{1,3})%`,
 		CIForwardDeploymentEnabled:             true,
 		CIForwardDeploymentRollbackAllowed:     true,
