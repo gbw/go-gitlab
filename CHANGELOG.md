@@ -1,3 +1,18 @@
+## 2.19.0
+
+### 🚀 Features
+
+- feat: Add PackageRegistryAccessLevel to Project structs ([!2852](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2852)) by [Caleb Madara](https://gitlab.com/calebmadara58)
+
+
+
+# [2.19.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.18.0...v2.19.0) (2026-04-15)
+
+
+### Features
+
+* Add PackageRegistryAccessLevel to Project structs ([4ce63da](https://gitlab.com/gitlab-org/api/client-go/commit/4ce63da9528e6e0da40fd7240a41236a385d7bfe))
+
 ## 2.18.0
 
 ### 🚀 Features
