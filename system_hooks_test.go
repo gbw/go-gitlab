@@ -20,12 +20,15 @@ func TestSystemHooksService_ListHooks(t *testing.T) {
 			{
 			  "id":1,
 			  "url":"https://gitlab.example.com/hook",
+			  "name":"Test Hook",
+			  "description":"A test hook",
 			  "created_at":"2016-10-31T12:32:15.192Z",
 			  "push_events":true,
 			  "tag_push_events":false,
 			  "merge_requests_events": true,
 			  "repository_update_events": true,
-			  "enable_ssl_verification":true
+			  "enable_ssl_verification":true,
+			  "url_variables":[{"key":"abc","value":"def"}]
 			}
 		]`)
 	})
@@ -37,12 +40,15 @@ func TestSystemHooksService_ListHooks(t *testing.T) {
 	want := []*Hook{{
 		ID:                     1,
 		URL:                    "https://gitlab.example.com/hook",
+		Name:                   "Test Hook",
+		Description:            "A test hook",
 		CreatedAt:              &createdAt,
 		PushEvents:             true,
 		TagPushEvents:          false,
 		MergeRequestsEvents:    true,
 		RepositoryUpdateEvents: true,
 		EnableSSLVerification:  true,
+		URLVariables:           []HookURLVariable{{Key: "abc", Value: "def"}},
 	}}
 	require.Equal(t, want, hooks)
 }
@@ -57,12 +63,15 @@ func TestSystemHooksService_GetHook(t *testing.T) {
 		{
 			"id":1,
 			"url":"https://gitlab.example.com/hook",
+			"name":"Test Hook",
+			"description":"A test hook",
 			"created_at":"2016-10-31T12:32:15.192Z",
 			"push_events":true,
 			"tag_push_events":false,
 			"merge_requests_events": true,
 			"repository_update_events": true,
-			"enable_ssl_verification":true
+			"enable_ssl_verification":true,
+			"url_variables":[{"key":"abc","value":"def"}]
 		}`)
 	})
 
@@ -73,12 +82,15 @@ func TestSystemHooksService_GetHook(t *testing.T) {
 	want := &Hook{
 		ID:                     1,
 		URL:                    "https://gitlab.example.com/hook",
+		Name:                   "Test Hook",
+		Description:            "A test hook",
 		CreatedAt:              &createdAt,
 		PushEvents:             true,
 		TagPushEvents:          false,
 		MergeRequestsEvents:    true,
 		RepositoryUpdateEvents: true,
 		EnableSSLVerification:  true,
+		URLVariables:           []HookURLVariable{{Key: "abc", Value: "def"}},
 	}
 	require.Equal(t, want, hooks)
 }
@@ -89,17 +101,31 @@ func TestSystemHooksService_AddHook(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/hooks", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		fmt.Fprint(w, `{"id": 1, "url": "https://gitlab.example.com/hook"}`)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"url": "https://gitlab.example.com/hook",
+			"name": "Test Hook",
+			"description": "A test hook",
+			"url_variables": [{"key": "abc", "value": "def"}]
+		}`)
 	})
 
 	opt := &AddHookOptions{
-		URL: Ptr("https://gitlab.example.com/hook"),
+		URL:         Ptr("https://gitlab.example.com/hook"),
+		Name:        Ptr("Test Hook"),
+		Description: Ptr("A test hook"),
 	}
 
 	hook, _, err := client.SystemHooks.AddHook(opt)
 	require.NoError(t, err)
 
-	want := &Hook{ID: 1, URL: "https://gitlab.example.com/hook", CreatedAt: (*time.Time)(nil)}
+	want := &Hook{
+		ID:           1,
+		URL:          "https://gitlab.example.com/hook",
+		Name:         "Test Hook",
+		Description:  "A test hook",
+		URLVariables: []HookURLVariable{{Key: "abc", Value: "def"}},
+	}
 	require.Equal(t, want, hook)
 }
 

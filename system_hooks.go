@@ -67,14 +67,17 @@ var _ SystemHooksServiceInterface = (*SystemHooksService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/system_hooks/
 type Hook struct {
-	ID                     int64      `json:"id"`
-	URL                    string     `json:"url"`
-	CreatedAt              *time.Time `json:"created_at"`
-	PushEvents             bool       `json:"push_events"`
-	TagPushEvents          bool       `json:"tag_push_events"`
-	MergeRequestsEvents    bool       `json:"merge_requests_events"`
-	RepositoryUpdateEvents bool       `json:"repository_update_events"`
-	EnableSSLVerification  bool       `json:"enable_ssl_verification"`
+	ID                     int64             `json:"id"`
+	URL                    string            `json:"url"`
+	Name                   string            `json:"name"`
+	Description            string            `json:"description"`
+	CreatedAt              *time.Time        `json:"created_at"`
+	PushEvents             bool              `json:"push_events"`
+	TagPushEvents          bool              `json:"tag_push_events"`
+	MergeRequestsEvents    bool              `json:"merge_requests_events"`
+	RepositoryUpdateEvents bool              `json:"repository_update_events"`
+	EnableSSLVerification  bool              `json:"enable_ssl_verification"`
+	URLVariables           []HookURLVariable `json:"url_variables"`
 }
 
 func (h Hook) String() string {
@@ -100,13 +103,17 @@ func (s *SystemHooksService) GetHook(hook int64, options ...RequestOptionFunc) (
 // GitLab API docs:
 // https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
 type AddHookOptions struct {
-	URL                    *string `url:"url,omitempty" json:"url,omitempty"`
-	Token                  *string `url:"token,omitempty" json:"token,omitempty"`
-	PushEvents             *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
-	TagPushEvents          *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
-	MergeRequestsEvents    *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
-	RepositoryUpdateEvents *bool   `url:"repository_update_events,omitempty" json:"repository_update_events,omitempty"`
-	EnableSSLVerification  *bool   `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
+	URL                    *string               `url:"url,omitempty" json:"url,omitempty"`
+	Name                   *string               `url:"name,omitempty" json:"name,omitempty"`
+	Description            *string               `url:"description,omitempty" json:"description,omitempty"`
+	Token                  *string               `url:"token,omitempty" json:"token,omitempty"`
+	PushEvents             *bool                 `url:"push_events,omitempty" json:"push_events,omitempty"`
+	PushEventsBranchFilter *string               `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
+	BranchFilterStrategy   *BranchFilterStrategy `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
+	TagPushEvents          *bool                 `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
+	MergeRequestsEvents    *bool                 `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
+	RepositoryUpdateEvents *bool                 `url:"repository_update_events,omitempty" json:"repository_update_events,omitempty"`
+	EnableSSLVerification  *bool                 `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
 }
 
 func (s *SystemHooksService) AddHook(opt *AddHookOptions, options ...RequestOptionFunc) (*Hook, *Response, error) {

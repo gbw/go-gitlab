@@ -285,6 +285,20 @@ const (
 	Scheduled          BuildStateValue = "scheduled"
 )
 
+// BranchFilterStrategy represents the strategy used to filter branches for
+// push event hooks.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
+type BranchFilterStrategy string
+
+// List of available branch filter strategies.
+const (
+	BranchFilterStrategyWildcard    BranchFilterStrategy = "wildcard"
+	BranchFilterStrategyRegex       BranchFilterStrategy = "regex"
+	BranchFilterStrategyAllBranches BranchFilterStrategy = "all_branches"
+)
+
 // CommentEventAction identifies if a comment has been newly created or updated.
 //
 // GitLab API docs:
