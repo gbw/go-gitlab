@@ -1,3 +1,18 @@
+## 2.20.0
+
+### 🚀 Features
+
+- Add missing system hook api options ([!2847](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2847)) by [Zack Knight](https://gitlab.com/zachkknowbe4)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.4.0 ([!2854](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2854)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module github.com/google/cel-go to v0.28.0 ([!2855](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2855)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.20.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.19.0...v2.20.0) (2026-04-16)
+
 ## 2.19.0
 
 ### 🚀 Features
