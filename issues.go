@@ -178,7 +178,9 @@ func (i *Issue) UnmarshalJSON(data []byte) error {
 		if _, ok := labelDetails[0].(map[string]any); ok {
 			labels := make([]any, len(labelDetails))
 			for i, details := range labelDetails {
-				labels[i] = details.(map[string]any)["name"]
+				if detailMap, ok := details.(map[string]any); ok {
+					labels[i] = detailMap["name"]
+				}
 			}
 
 			// Set the correct values

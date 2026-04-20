@@ -205,7 +205,9 @@ func (m *MergeRequest) UnmarshalJSON(data []byte) error {
 
 		labels := make([]any, len(labelDetails))
 		for i, details := range labelDetails {
-			labels[i] = details.(map[string]any)["name"]
+			if detailMap, ok := details.(map[string]any); ok {
+				labels[i] = detailMap["name"]
+			}
 		}
 
 		// Set the correct values
