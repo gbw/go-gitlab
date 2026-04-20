@@ -1,3 +1,13 @@
+## 2.20.1
+
+### 🐛 Bug Fixes
+
+- Fix potential panic in MergeRequest.UnmarshalJSON label detail loop ([!2858](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2858)) by [Zubeen](https://gitlab.com/syedzubeen)
+
+
+
+## [2.20.1](https://gitlab.com/gitlab-org/api/client-go/compare/v2.20.0...v2.20.1) (2026-04-20)
+
 ## 2.20.0
 
 ### 🚀 Features
