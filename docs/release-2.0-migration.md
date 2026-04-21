@@ -13,7 +13,7 @@ Version 2.0 introduces breaking changes to improve API consistency, naming conve
 
 ## Update minimum required Go version
 
-The client-go 2.0 major version upgrade aligns our supported Go versions to align to the Golang [Release Policy](https://go.dev/doc/devel/release#policy), and 
+The client-go 2.0 major version upgrade aligns our supported Go versions to the Golang [Release Policy](https://go.dev/doc/devel/release#policy), and 
 changes the minimum required Go version to 1.25 (up from 1.24). 
 
 client-go 3.0 will release in roughly 6 months when Go version 1.27 releases, and will change the minimum required Go version to 1.26. 
