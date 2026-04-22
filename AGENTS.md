@@ -115,7 +115,7 @@ mise exec -- make lint
 
 ## Mock generation
 
-This repository uses gomock to generate testing structs, which are in the `testing/` folder. These need to be kept up-to-date with function signatures to that the Service implementations match the interfaces that have generated mocks.
+This repository uses gomock to generate testing structs, which are in the `testing/` folder. These need to be kept up-to-date with function signatures so the Service implementations match the interfaces that have generated mocks.
 
 ### Available Generation Commands
 
