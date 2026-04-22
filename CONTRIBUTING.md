@@ -36,7 +36,7 @@ We try to follow the Go best practices, where it makes sense, and use
 As a general rule of thumb we prefer to keep line width for comments below 80
 chars and for code (where possible and sensible) below 100 chars.
 
-Before making a MR, please look at the rest this package and try to make sure
+Before making a MR, please look at the rest of this package and try to make sure
 your contribution is consistent with the rest of the coding style.
 
 New `struct` fields or methods should be placed (as much as possible) in the same
