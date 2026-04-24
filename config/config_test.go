@@ -53,7 +53,7 @@ func TestConfig_SingleInstance_Invalid_Name(t *testing.T) {
 	`))
 
 	// THEN
-	require.ErrorContains(t, err, "value length must be at least 3 characters")
+	require.ErrorContains(t, err, "must be at least 3 characters")
 	require.Nil(t, c)
 }
 
@@ -175,7 +175,7 @@ func TestConfig_Auths_Invalid_Name(t *testing.T) {
 	`))
 
 	// THEN
-	require.ErrorContains(t, err, "value length must be at least 3 characters")
+	require.ErrorContains(t, err, "must be at least 3 characters")
 	require.Nil(t, c)
 }
 
@@ -222,7 +222,7 @@ func TestConfig_Contexts_Invalid_Name(t *testing.T) {
 	`))
 
 	// THEN
-	require.ErrorContains(t, err, "value length must be at least 3 characters")
+	require.ErrorContains(t, err, "must be at least 3 characters")
 	require.Nil(t, c)
 }
 
