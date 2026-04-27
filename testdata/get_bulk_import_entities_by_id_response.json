@@ -1,0 +1,45 @@
+[
+    {
+        "id": 1,
+        "bulk_import_id": 1,
+        "status": "finished",
+        "entity_type": "group",
+        "source_full_path": "source_group",
+        "destination_full_path": "destination/full_path",
+        "destination_name": "destination_slug",
+        "destination_slug": "destination_slug",
+        "destination_namespace": "destination_path",
+        "parent_id": null,
+        "namespace_id": 1,
+        "project_id": null,
+        "created_at": "2021-06-18T09:47:37.390Z",
+        "updated_at": "2021-06-18T09:47:51.867Z",
+        "failures": [
+            {
+                "relation": "group",
+                "step": "extractor",
+                "exception_message": "Error!",
+                "exception_class": "Exception",
+                "correlation_id_value": "dfcf583058ed4508e4c7c617bd7f0edd",
+                "created_at": "2021-06-24T10:40:46.495Z",
+                "pipeline_class": "BulkImports::Groups::Pipelines::GroupPipeline",
+                "pipeline_step": "extractor"
+            }
+        ],
+        "migrate_projects": true,
+        "migrate_memberships": true,
+        "has_failures": true,
+        "stats": {
+            "labels": {
+                "source": 10,
+                "fetched": 10,
+                "imported": 10
+            },
+            "milestones": {
+                "source": 10,
+                "fetched": 10,
+                "imported": 10
+            }
+        }
+    }
+]

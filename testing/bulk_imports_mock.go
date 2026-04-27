@@ -39,6 +39,321 @@ func (m *MockBulkImportsServiceInterface) EXPECT() *MockBulkImportsServiceInterf
 	return m.recorder
 }
 
+// CancelBulkImport mocks base method.
+func (m *MockBulkImportsServiceInterface) CancelBulkImport(id int64, options ...gitlab.RequestOptionFunc) (*gitlab.BulkImport, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{id}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CancelBulkImport", varargs...)
+	ret0, _ := ret[0].(*gitlab.BulkImport)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CancelBulkImport indicates an expected call of CancelBulkImport.
+func (mr *MockBulkImportsServiceInterfaceMockRecorder) CancelBulkImport(id any, options ...any) *MockBulkImportsServiceInterfaceCancelBulkImportCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{id}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelBulkImport", reflect.TypeOf((*MockBulkImportsServiceInterface)(nil).CancelBulkImport), varargs...)
+	return &MockBulkImportsServiceInterfaceCancelBulkImportCall{Call: call}
+}
+
+// MockBulkImportsServiceInterfaceCancelBulkImportCall wrap *gomock.Call
+type MockBulkImportsServiceInterfaceCancelBulkImportCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockBulkImportsServiceInterfaceCancelBulkImportCall) Return(arg0 *gitlab.BulkImport, arg1 *gitlab.Response, arg2 error) *MockBulkImportsServiceInterfaceCancelBulkImportCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockBulkImportsServiceInterfaceCancelBulkImportCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.BulkImport, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceCancelBulkImportCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockBulkImportsServiceInterfaceCancelBulkImportCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.BulkImport, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceCancelBulkImportCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetBulkImport mocks base method.
+func (m *MockBulkImportsServiceInterface) GetBulkImport(id int64, options ...gitlab.RequestOptionFunc) (*gitlab.BulkImport, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{id}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetBulkImport", varargs...)
+	ret0, _ := ret[0].(*gitlab.BulkImport)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetBulkImport indicates an expected call of GetBulkImport.
+func (mr *MockBulkImportsServiceInterfaceMockRecorder) GetBulkImport(id any, options ...any) *MockBulkImportsServiceInterfaceGetBulkImportCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{id}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBulkImport", reflect.TypeOf((*MockBulkImportsServiceInterface)(nil).GetBulkImport), varargs...)
+	return &MockBulkImportsServiceInterfaceGetBulkImportCall{Call: call}
+}
+
+// MockBulkImportsServiceInterfaceGetBulkImportCall wrap *gomock.Call
+type MockBulkImportsServiceInterfaceGetBulkImportCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockBulkImportsServiceInterfaceGetBulkImportCall) Return(arg0 *gitlab.BulkImport, arg1 *gitlab.Response, arg2 error) *MockBulkImportsServiceInterfaceGetBulkImportCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockBulkImportsServiceInterfaceGetBulkImportCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.BulkImport, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceGetBulkImportCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockBulkImportsServiceInterfaceGetBulkImportCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.BulkImport, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceGetBulkImportCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetBulkImportEntity mocks base method.
+func (m *MockBulkImportsServiceInterface) GetBulkImportEntity(id, entityID int64, options ...gitlab.RequestOptionFunc) (*gitlab.BulkImportEntity, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{id, entityID}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetBulkImportEntity", varargs...)
+	ret0, _ := ret[0].(*gitlab.BulkImportEntity)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetBulkImportEntity indicates an expected call of GetBulkImportEntity.
+func (mr *MockBulkImportsServiceInterfaceMockRecorder) GetBulkImportEntity(id, entityID any, options ...any) *MockBulkImportsServiceInterfaceGetBulkImportEntityCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{id, entityID}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBulkImportEntity", reflect.TypeOf((*MockBulkImportsServiceInterface)(nil).GetBulkImportEntity), varargs...)
+	return &MockBulkImportsServiceInterfaceGetBulkImportEntityCall{Call: call}
+}
+
+// MockBulkImportsServiceInterfaceGetBulkImportEntityCall wrap *gomock.Call
+type MockBulkImportsServiceInterfaceGetBulkImportEntityCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockBulkImportsServiceInterfaceGetBulkImportEntityCall) Return(arg0 *gitlab.BulkImportEntity, arg1 *gitlab.Response, arg2 error) *MockBulkImportsServiceInterfaceGetBulkImportEntityCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockBulkImportsServiceInterfaceGetBulkImportEntityCall) Do(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.BulkImportEntity, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceGetBulkImportEntityCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockBulkImportsServiceInterfaceGetBulkImportEntityCall) DoAndReturn(f func(int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.BulkImportEntity, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceGetBulkImportEntityCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetBulkImportEntityFailures mocks base method.
+func (m *MockBulkImportsServiceInterface) GetBulkImportEntityFailures(id, entityID int64, options ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntityFailure, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{id, entityID}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetBulkImportEntityFailures", varargs...)
+	ret0, _ := ret[0].([]*gitlab.BulkImportEntityFailure)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetBulkImportEntityFailures indicates an expected call of GetBulkImportEntityFailures.
+func (mr *MockBulkImportsServiceInterfaceMockRecorder) GetBulkImportEntityFailures(id, entityID any, options ...any) *MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{id, entityID}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBulkImportEntityFailures", reflect.TypeOf((*MockBulkImportsServiceInterface)(nil).GetBulkImportEntityFailures), varargs...)
+	return &MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall{Call: call}
+}
+
+// MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall wrap *gomock.Call
+type MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall) Return(arg0 []*gitlab.BulkImportEntityFailure, arg1 *gitlab.Response, arg2 error) *MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall) Do(f func(int64, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntityFailure, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall) DoAndReturn(f func(int64, int64, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntityFailure, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceGetBulkImportEntityFailuresCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListBulkImports mocks base method.
+func (m *MockBulkImportsServiceInterface) ListBulkImports(opts *gitlab.ListBulkImportsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImport, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{opts}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListBulkImports", varargs...)
+	ret0, _ := ret[0].([]*gitlab.BulkImport)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListBulkImports indicates an expected call of ListBulkImports.
+func (mr *MockBulkImportsServiceInterfaceMockRecorder) ListBulkImports(opts any, options ...any) *MockBulkImportsServiceInterfaceListBulkImportsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{opts}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListBulkImports", reflect.TypeOf((*MockBulkImportsServiceInterface)(nil).ListBulkImports), varargs...)
+	return &MockBulkImportsServiceInterfaceListBulkImportsCall{Call: call}
+}
+
+// MockBulkImportsServiceInterfaceListBulkImportsCall wrap *gomock.Call
+type MockBulkImportsServiceInterfaceListBulkImportsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockBulkImportsServiceInterfaceListBulkImportsCall) Return(arg0 []*gitlab.BulkImport, arg1 *gitlab.Response, arg2 error) *MockBulkImportsServiceInterfaceListBulkImportsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockBulkImportsServiceInterfaceListBulkImportsCall) Do(f func(*gitlab.ListBulkImportsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImport, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceListBulkImportsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockBulkImportsServiceInterfaceListBulkImportsCall) DoAndReturn(f func(*gitlab.ListBulkImportsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImport, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceListBulkImportsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListBulkImportsEntities mocks base method.
+func (m *MockBulkImportsServiceInterface) ListBulkImportsEntities(opts *gitlab.ListBulkImportsEntitiesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntity, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{opts}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListBulkImportsEntities", varargs...)
+	ret0, _ := ret[0].([]*gitlab.BulkImportEntity)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListBulkImportsEntities indicates an expected call of ListBulkImportsEntities.
+func (mr *MockBulkImportsServiceInterfaceMockRecorder) ListBulkImportsEntities(opts any, options ...any) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{opts}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListBulkImportsEntities", reflect.TypeOf((*MockBulkImportsServiceInterface)(nil).ListBulkImportsEntities), varargs...)
+	return &MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall{Call: call}
+}
+
+// MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall wrap *gomock.Call
+type MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall) Return(arg0 []*gitlab.BulkImportEntity, arg1 *gitlab.Response, arg2 error) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall) Do(f func(*gitlab.ListBulkImportsEntitiesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntity, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall) DoAndReturn(f func(*gitlab.ListBulkImportsEntitiesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntity, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListBulkImportsEntitiesByID mocks base method.
+func (m *MockBulkImportsServiceInterface) ListBulkImportsEntitiesByID(id int64, opts *gitlab.ListBulkImportsEntitiesOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntity, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{id, opts}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListBulkImportsEntitiesByID", varargs...)
+	ret0, _ := ret[0].([]*gitlab.BulkImportEntity)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListBulkImportsEntitiesByID indicates an expected call of ListBulkImportsEntitiesByID.
+func (mr *MockBulkImportsServiceInterfaceMockRecorder) ListBulkImportsEntitiesByID(id, opts any, options ...any) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{id, opts}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListBulkImportsEntitiesByID", reflect.TypeOf((*MockBulkImportsServiceInterface)(nil).ListBulkImportsEntitiesByID), varargs...)
+	return &MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall{Call: call}
+}
+
+// MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall wrap *gomock.Call
+type MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall) Return(arg0 []*gitlab.BulkImportEntity, arg1 *gitlab.Response, arg2 error) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall) Do(f func(int64, *gitlab.ListBulkImportsEntitiesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntity, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall) DoAndReturn(f func(int64, *gitlab.ListBulkImportsEntitiesOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.BulkImportEntity, *gitlab.Response, error)) *MockBulkImportsServiceInterfaceListBulkImportsEntitiesByIDCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // StartMigration mocks base method.
 func (m *MockBulkImportsServiceInterface) StartMigration(startMigrationOptions *gitlab.BulkImportStartMigrationOptions, options ...gitlab.RequestOptionFunc) (*gitlab.BulkImportStartMigrationResponse, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
