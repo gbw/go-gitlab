@@ -37,6 +37,7 @@ type GroupHook struct {
 	RepositoryUpdateEvents    bool                `json:"repository_update_events"`
 	EnableSSLVerification     bool                `json:"enable_ssl_verification"`
 	AlertStatus               string              `json:"alert_status"`
+	URLVariables              []HookURLVariable   `json:"url_variables"`
 	PushEventsBranchFilter    string              `json:"push_events_branch_filter"`
 	BranchFilterStrategy      string              `json:"branch_filter_strategy"`
 	CustomWebhookTemplate     string              `json:"custom_webhook_template"`
@@ -52,13 +53,13 @@ type GroupHook struct {
 	DeploymentEvents          bool                `json:"deployment_events"`
 	FeatureFlagEvents         bool                `json:"feature_flag_events"`
 	ReleasesEvents            bool                `json:"releases_events"`
+	MilestoneEvents           bool                `json:"milestone_events"`
 	SubGroupEvents            bool                `json:"subgroup_events"`
 	EmojiEvents               bool                `json:"emoji_events"`
 	ResourceAccessTokenEvents bool                `json:"resource_access_token_events"`
 	MemberEvents              bool                `json:"member_events"`
-	ProjectEvents             bool                `json:"project_events"`
-	MilestoneEvents           bool                `json:"milestone_events"`
 	VulnerabilityEvents       bool                `json:"vulnerability_events"`
+	ProjectEvents             bool                `json:"project_events"`
 }
 
 // ListGroupHooksOptions represents the available ListGroupHooks() options.
