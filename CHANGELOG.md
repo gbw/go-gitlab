@@ -1,3 +1,20 @@
+## 2.21.0
+
+### 🚀 Features
+
+- Add BulkImports API functions and tests ([!2846](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2846)) by [Kalyaan Kanugula](https://gitlab.com/kalyaan09)
+
+### 🔄 Other Changes
+
+- Add missing `URLVariables` attribute to group_hooks ([!2866](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2866)) by [Mark Nessen](https://gitlab.com/mness)
+- docs: fix incorrect phrase 'to that' -> 'so' ([!2861](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2861)) by [Bob Singh](https://gitlab.com/bobsingh.dev)
+- docs: fix missing 'of' in contributing guide ([!2860](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2860)) by [Bob Singh](https://gitlab.com/bobsingh.dev)
+- style: remove duplicated wording in Go version sentence ([!2859](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2859)) by [Bob Singh](https://gitlab.com/bobsingh.dev)
+
+
+
+# [2.21.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.20.1...v2.21.0) (2026-04-27)
+
 ## 2.20.1
 
 ### 🐛 Bug Fixes
