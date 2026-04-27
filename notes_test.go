@@ -328,7 +328,7 @@ func TestNotes_DeleteIssueNote(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/issues/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.Notes.DeleteIssueNote(1, 2, 3)
@@ -577,7 +577,7 @@ func TestNotes_DeleteSnippetNote(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/snippets/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.Notes.DeleteSnippetNote(1, 2, 3)
@@ -732,7 +732,7 @@ func TestNotes_DeleteMergeRequestNote(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/merge_requests/2/notes/3", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.Notes.DeleteMergeRequestNote(1, 2, 3)

@@ -123,7 +123,7 @@ func TestGroupMarkdownUploads_DeleteGroupMarkdownUploadByID(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/groups/1/uploads/2", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.GroupMarkdownUploads.DeleteGroupMarkdownUploadByID(1, 2)
@@ -138,7 +138,7 @@ func TestGroupMarkdownUploads_DeleteGroupMarkdownUploadBySecretAndFilename(t *te
 
 	mux.HandleFunc("/api/v4/groups/1/uploads/secret/filename", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.GroupMarkdownUploads.DeleteGroupMarkdownUploadBySecretAndFilename(1, "secret", "filename")

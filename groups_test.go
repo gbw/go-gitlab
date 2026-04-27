@@ -916,7 +916,7 @@ func TestUnshareGroupFromGroup(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/share/2",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodDelete)
-			w.WriteHeader(204)
+			w.WriteHeader(http.StatusNoContent)
 		})
 
 	r, err := client.Groups.UnshareGroupFromGroup(1, 2)

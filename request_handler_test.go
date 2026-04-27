@@ -58,7 +58,7 @@ func TestDoRequestPOSTWithBody(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "New Project", reqBody.Name)
 
-		w.WriteHeader(201)
+		w.WriteHeader(http.StatusCreated)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{"id": 1, "name": "New Project", "description": "Test project"}`))
 	})
@@ -90,7 +90,7 @@ func TestDoRequestErrorResponse(t *testing.T) {
 	path := "/api/v4/users/999"
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		w.WriteHeader(404)
+		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "Not found"}`))
 	})
 
@@ -171,7 +171,7 @@ func TestDoRequestSliceErrorResponse(t *testing.T) {
 	path := "/api/v4/users"
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(`{"message": "Internal server error"}`))
 	})
 
@@ -195,7 +195,7 @@ func TestDoRequestVoidSuccessDELETE(t *testing.T) {
 	path := "/api/v4/users/1"
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204) // No Content
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	// WHEN
@@ -224,7 +224,7 @@ func TestDoRequestVoidSuccessPUT(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "approve", reqBody["action"])
 
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 	})
 
 	requestBody := map[string]string{"action": "approve"}
@@ -250,7 +250,7 @@ func TestDoRequestVoidErrorResponse(t *testing.T) {
 	path := "/api/v4/users/1"
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(403)
+		w.WriteHeader(http.StatusForbidden)
 		w.Write([]byte(`{"message": "Forbidden"}`))
 	})
 
@@ -305,7 +305,7 @@ func TestDoRequestProjectID(t *testing.T) {
 
 	// GIVEN
 	mux.HandleFunc("/api/v4/projects/group%2Fproject", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 	})
 
 	// WHEN
@@ -325,7 +325,7 @@ func TestDoRequestGroupID(t *testing.T) {
 
 	// GIVEN
 	mux.HandleFunc("/api/v4/groups/sub%2Fgroup", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 	})
 
 	// WHEN
@@ -345,7 +345,7 @@ func TestDoRequestRunnerID(t *testing.T) {
 
 	// GIVEN
 	mux.HandleFunc("/api/v4/runners/some%2Frunner", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 	})
 
 	// WHEN
@@ -401,7 +401,7 @@ func TestDoRequestUserID(t *testing.T) {
 
 			// GIVEN
 			mux.HandleFunc(tt.expectedPath, func(w http.ResponseWriter, r *http.Request) {
-				w.WriteHeader(200)
+				w.WriteHeader(http.StatusOK)
 			})
 
 			// WHEN
@@ -441,7 +441,7 @@ func TestDoRequestUploadSuccess(t *testing.T) {
 		testMethod(t, r, http.MethodPost)
 		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
 		assert.NotEqual(t, int64(-1), r.ContentLength)
-		w.WriteHeader(201)
+		w.WriteHeader(http.StatusCreated)
 		w.Write([]byte(`{"id": 1, "name": "test.txt"}`))
 	})
 
@@ -480,7 +480,7 @@ func TestDoRequestUploadWithAPIOpts(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "main", r.FormValue("branch"))
 
-		w.WriteHeader(201)
+		w.WriteHeader(http.StatusCreated)
 		w.Write([]byte(`{"file_name": "test.png"}`))
 	})
 
@@ -524,7 +524,7 @@ func TestDoRequestUploadAvatar(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "avatar.png", header.Filename)
 
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"id": 1}`))
 	})
 
@@ -552,7 +552,7 @@ func TestDoRequestUploadErrorResponse(t *testing.T) {
 	path := "/api/v4/projects/1/uploads"
 	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		w.WriteHeader(413)
+		w.WriteHeader(http.StatusRequestEntityTooLarge)
 		w.Write([]byte(`{"message": "File too large"}`))
 	})
 
@@ -583,7 +583,7 @@ func TestDoRequestUploadWithProjectID(t *testing.T) {
 	mux.HandleFunc("/api/v4/projects/group%2Fproject/uploads", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
 		assert.Contains(t, r.Header.Get("Content-Type"), "multipart/form-data;")
-		w.WriteHeader(201)
+		w.WriteHeader(http.StatusCreated)
 		w.Write([]byte(`{"id": 1}`))
 	})
 

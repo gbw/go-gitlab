@@ -114,7 +114,7 @@ linters:
         - useless-assert
     usestdlibvars:
       http-method: false
-      http-status-code: false
+      http-status-code: true
       time-date-month: true
     usetesting:
       context-background: true

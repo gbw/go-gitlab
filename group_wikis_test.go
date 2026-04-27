@@ -138,7 +138,7 @@ func TestDeleteGroupWikiPage(t *testing.T) {
 	mux.HandleFunc("/api/v4/groups/1/wikis/deploy",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodDelete)
-			w.WriteHeader(204)
+			w.WriteHeader(http.StatusNoContent)
 		})
 
 	r, err := client.GroupWikis.DeleteGroupWikiPage(1, "deploy")
