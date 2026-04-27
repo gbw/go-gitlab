@@ -196,7 +196,7 @@ func TestMarkdownUploads_DeleteProjectMarkdownUploadByID(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/uploads/2", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.ProjectMarkdownUploads.DeleteProjectMarkdownUploadByID(1, 2)
@@ -211,7 +211,7 @@ func TestMarkdownUploads_DeleteProjectMarkdownUploadBySecretAndFilename(t *testi
 
 	mux.HandleFunc("/api/v4/projects/1/uploads/secret/filename", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.ProjectMarkdownUploads.DeleteProjectMarkdownUploadBySecretAndFilename(1, "secret", "filename")

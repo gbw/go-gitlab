@@ -763,7 +763,7 @@ func (c *Client) retryHTTPCheck(ctx context.Context, resp *http.Response, err er
 // will pass through all calls based on the status code of the response.
 func (c *Client) retryHTTPBackoff(min, max time.Duration, attemptNum int, resp *http.Response) time.Duration {
 	// Use the rate limit backoff function when we are rate limited.
-	if resp != nil && resp.StatusCode == 429 {
+	if resp != nil && resp.StatusCode == http.StatusTooManyRequests {
 		return rateLimitBackoff(min, max, attemptNum, resp)
 	}
 
@@ -1309,9 +1309,9 @@ func (e *ErrorResponse) HasStatusCode(statusCode int) bool {
 // CheckResponse checks the API response for errors, and returns them if present.
 func CheckResponse(r *http.Response) error {
 	switch r.StatusCode {
-	case 200, 201, 202, 204, 304:
+	case http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent, http.StatusNotModified:
 		return nil
-	case 404:
+	case http.StatusNotFound:
 		return ErrNotFound
 	}
 

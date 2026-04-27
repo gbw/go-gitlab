@@ -207,7 +207,7 @@ func TestSecureFiles_RemoveSecureFile(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/secure_files/2", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodDelete)
-		w.WriteHeader(204)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	resp, err := client.SecureFiles.RemoveSecureFile(1, 2)
