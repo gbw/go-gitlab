@@ -121,7 +121,7 @@ golangci-lint:
   needs: []
   variables:
     REPORT_FILENAME: "gl-code-quality-report.json"
-  image: golang:1.25-bookworm
+  image: golang:1.26-bookworm
   script:
     - golangci-lint run
   artifacts:
@@ -144,7 +144,7 @@ verify-generated-code:
     - .go:base
   stage: lint
   needs: []
-  image: golang:1.25-bookworm
+  image: golang:1.26-bookworm
   script:
     - make generate
     - |
@@ -216,7 +216,7 @@ tests:integration:
   rules:
     - if: $ENABLE_EE_ACCEPTANCE_TESTS == "true"
   needs: []
-  image: golang:1.25-bookworm
+  image: golang:1.26-bookworm
   timeout: 2 hours
   services:
     - docker:29.4.1-dind
