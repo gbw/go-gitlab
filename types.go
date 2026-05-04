@@ -776,6 +776,22 @@ const (
 	NewestReadyFirst ResourceGroupProcessMode = "newest_ready_first"
 )
 
+// SearchType represents a search type within GitLab.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/user/search/#specify-a-search-type
+type SearchType string
+
+// List of available search types.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/user/search/#specify-a-search-type
+const (
+	BasicSearch    SearchType = "basic"
+	AdvancedSearch SearchType = "advanced"
+	ZoektSearch    SearchType = "zoekt"
+)
+
 // SharedRunnersSettingValue determines whether shared runners are enabled for a
 // group’s subgroups and projects.
 //
