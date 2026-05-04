@@ -45,15 +45,17 @@ var _ PackagesServiceInterface = (*PackagesService)(nil)
 //
 // GitLab API docs: https://docs.gitlab.com/api/packages/
 type Package struct {
-	ID               int64         `json:"id"`
-	Name             string        `json:"name"`
-	Version          string        `json:"version"`
-	PackageType      string        `json:"package_type"`
-	Status           string        `json:"status"`
-	Links            *PackageLinks `json:"_links"`
-	CreatedAt        *time.Time    `json:"created_at"`
-	LastDownloadedAt *time.Time    `json:"last_downloaded_at"`
-	Tags             []PackageTag  `json:"tags"`
+	ID               int64              `json:"id"`
+	Name             string             `json:"name"`
+	Version          string             `json:"version"`
+	PackageType      string             `json:"package_type"`
+	Status           string             `json:"status"`
+	Links            *PackageLinks      `json:"_links"`
+	Pipeline         *PackagePipeline   `json:"pipeline"`
+	Pipelines        []*PackagePipeline `json:"pipelines"`
+	CreatedAt        *time.Time         `json:"created_at"`
+	LastDownloadedAt *time.Time         `json:"last_downloaded_at"`
+	Tags             []PackageTag       `json:"tags"`
 }
 
 func (s Package) String() string {
@@ -80,6 +82,24 @@ type PackageLinks struct {
 }
 
 func (s PackageLinks) String() string {
+	return Stringify(s)
+}
+
+// PackagePipeline represents the pipeline associated with a package.
+//
+// GitLab API docs: https://docs.gitlab.com/api/packages/
+type PackagePipeline struct {
+	ID        int64      `json:"id"`
+	Status    string     `json:"status"`
+	Ref       string     `json:"ref"`
+	SHA       string     `json:"sha"`
+	WebURL    string     `json:"web_url"`
+	CreatedAt *time.Time `json:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
+	User      *BasicUser `json:"user"`
+}
+
+func (s PackagePipeline) String() string {
 	return Stringify(s)
 }
 
