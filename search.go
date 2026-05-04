@@ -61,7 +61,8 @@ var _ SearchServiceInterface = (*SearchService)(nil)
 // GitLab API docs: https://docs.gitlab.com/api/search/
 type SearchOptions struct {
 	ListOptions
-	Ref *string `url:"ref,omitempty" json:"ref,omitempty"`
+	Ref        *string     `url:"ref,omitempty" json:"ref,omitempty"`
+	SearchType *SearchType `url:"search_type,omitempty" json:"search_type,omitempty"`
 }
 
 type searchOptions struct {

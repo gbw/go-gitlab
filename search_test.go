@@ -655,7 +655,9 @@ func TestSearchService_BlobsByGroup(t *testing.T) {
 		fmt.Fprint(w, `[{"basename": "user.rb", "data": "class User"}]`)
 	})
 
-	opts := &SearchOptions{}
+	opts := &SearchOptions{
+		SearchType: Ptr(BasicSearch),
+	}
 
 	// THEN matching blobs in the group should be returned
 	blobs, resp, err := client.Search.BlobsByGroup(1, "class", opts)
