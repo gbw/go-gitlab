@@ -100,6 +100,7 @@ var serviceMap = map[any]any{
 	&NamespacesService{}:                       (*NamespacesServiceInterface)(nil),
 	&NotesService{}:                            (*NotesServiceInterface)(nil),
 	&NotificationSettingsService{}:             (*NotificationSettingsServiceInterface)(nil),
+	&OrbitService{}:                            (*OrbitServiceInterface)(nil),
 	&PackagesService{}:                         (*PackagesServiceInterface)(nil),
 	&PagesDomainsService{}:                     (*PagesDomainsServiceInterface)(nil),
 	&PagesService{}:                            (*PagesServiceInterface)(nil),

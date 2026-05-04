@@ -253,6 +253,7 @@ type Client struct {
 	Namespaces                       NamespacesServiceInterface
 	Notes                            NotesServiceInterface
 	NotificationSettings             NotificationSettingsServiceInterface
+	Orbit                            OrbitServiceInterface
 	Packages                         PackagesServiceInterface
 	Pages                            PagesServiceInterface
 	PagesDomains                     PagesDomainsServiceInterface
@@ -576,6 +577,7 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.Namespaces = &NamespacesService{client: c}
 	c.Notes = &NotesService{client: c}
 	c.NotificationSettings = &NotificationSettingsService{client: c}
+	c.Orbit = &OrbitService{client: c}
 	c.Packages = &PackagesService{client: c}
 	c.Pages = &PagesService{client: c}
 	c.PagesDomains = &PagesDomainsService{client: c}

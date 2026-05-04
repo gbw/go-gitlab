@@ -100,6 +100,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=namespaces_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 NamespacesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=notes_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 NotesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=notifications_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 NotificationSettingsServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=orbit_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 OrbitServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=packages_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 PackagesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=pages_domains_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 PagesDomainsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=pages_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 PagesServiceInterface
