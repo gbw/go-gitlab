@@ -1,3 +1,18 @@
+## 2.24.0
+
+### 🚀 Features
+
+- feat: Add search_type as attribute to search endpoints ([!2851](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2851)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+# [2.24.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.23.0...v2.24.0) (2026-05-04)
+
+
+### Features
+
+* Add search_type as attribute to search endpoints ([4d345e9](https://gitlab.com/gitlab-org/api/client-go/commit/4d345e9f76af8ebd016d3d55fbe039250a1fafb4))
+
 ## 2.23.0
 
 ### 🚀 Features
