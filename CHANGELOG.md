@@ -1,3 +1,20 @@
+## 2.22.0
+
+### 🚀 Features
+
+- Add package pipeline data. ([!2834](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2834)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+### 🔄 Other Changes
+
+- chore(deps): update module golang.org/x/text to v0.36.0 ([!2874](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2874)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update golang docker tag ([!2873](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2873)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update docker docker tag to v29.4.1 ([!2869](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2869)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- refactor(no-release): use HTTP status code constants ([!2868](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2868)) by [Oleksandr Redko](https://gitlab.com/alexandear)
+
+
+
+# [2.22.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.21.0...v2.22.0) (2026-05-04)
+
 ## 2.21.0
 
 ### 🚀 Features
