@@ -109,6 +109,7 @@ type testClientMocks struct {
 	MockNamespaces                       *MockNamespacesServiceInterface
 	MockNotes                            *MockNotesServiceInterface
 	MockNotificationSettings             *MockNotificationSettingsServiceInterface
+	MockOrbit                            *MockOrbitServiceInterface
 	MockPackages                         *MockPackagesServiceInterface
 	MockPages                            *MockPagesServiceInterface
 	MockPagesDomains                     *MockPagesDomainsServiceInterface
@@ -273,6 +274,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockNamespaces := NewMockNamespacesServiceInterface(ctrl)
 	mockNotes := NewMockNotesServiceInterface(ctrl)
 	mockNotificationSettings := NewMockNotificationSettingsServiceInterface(ctrl)
+	mockOrbit := NewMockOrbitServiceInterface(ctrl)
 	mockPackages := NewMockPackagesServiceInterface(ctrl)
 	mockPages := NewMockPagesServiceInterface(ctrl)
 	mockPagesDomains := NewMockPagesDomainsServiceInterface(ctrl)
@@ -436,6 +438,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Namespaces:                       mockNamespaces,
 		Notes:                            mockNotes,
 		NotificationSettings:             mockNotificationSettings,
+		Orbit:                            mockOrbit,
 		Packages:                         mockPackages,
 		Pages:                            mockPages,
 		PagesDomains:                     mockPagesDomains,
@@ -611,6 +614,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockNamespaces:                       mockNamespaces,
 			MockNotes:                            mockNotes,
 			MockNotificationSettings:             mockNotificationSettings,
+			MockOrbit:                            mockOrbit,
 			MockPackages:                         mockPackages,
 			MockPages:                            mockPages,
 			MockPagesDomains:                     mockPagesDomains,
