@@ -28,6 +28,32 @@ func TestPackagesService_ListProjectPackages(t *testing.T) {
 				  "web_path": "/foo/bar/-/packages/3",
 				  "delete_api_path": "https://gitlab.example.com/api/v4/projects/1/packages/3"
 				},
+				"pipeline": {
+				  "id": 123,
+				  "status": "pending",
+				  "ref": "new-pipeline",
+				  "sha": "a91957a858320c0e17f3a0eca7cfacbff50ea29a",
+				  "web_url": "https://example.com/foo/bar/pipelines/123",
+				  "created_at": "2023-01-04T20:00:00.000Z",
+				  "updated_at": "2023-01-04T20:00:00.000Z",
+				  "user": {
+				    "name": "Administrator",
+				    "avatar_url": "https://www.gravatar.com/avatar/admin"
+				  }
+				},
+				"pipelines": [{
+				  "id": 456,
+				  "status": "completed",
+				  "ref": "other-pipeline",
+				  "sha": "asdf",
+				  "web_url": "https://example.com/foo/bar/pipelines/456",
+				  "created_at": "2024-01-04T20:00:00.000Z",
+				  "updated_at": "2024-01-04T20:00:00.000Z",
+				  "user": {
+				    "name": "Maintainer",
+				    "avatar_url": "https://www.gravatar.com/avatar/maintainer"
+				  }
+				}],
 				"tags": [
 					{
 						"id": 1,
@@ -43,6 +69,7 @@ func TestPackagesService_ListProjectPackages(t *testing.T) {
 	})
 
 	timestamp := time.Date(2023, time.January, 4, 20, 0, 0, 0, time.UTC)
+	pipelinesTimestamp := time.Date(2024, time.January, 4, 20, 0, 0, 0, time.UTC)
 	want := []*Package{{
 		ID:               3,
 		Name:             "Hello/0.1@mycompany/stable",
@@ -53,6 +80,32 @@ func TestPackagesService_ListProjectPackages(t *testing.T) {
 			WebPath:       "/foo/bar/-/packages/3",
 			DeleteAPIPath: "https://gitlab.example.com/api/v4/projects/1/packages/3",
 		},
+		Pipeline: &PackagePipeline{
+			ID:        123,
+			Status:    "pending",
+			Ref:       "new-pipeline",
+			SHA:       "a91957a858320c0e17f3a0eca7cfacbff50ea29a",
+			WebURL:    "https://example.com/foo/bar/pipelines/123",
+			CreatedAt: &timestamp,
+			UpdatedAt: &timestamp,
+			User: &BasicUser{
+				Name:      "Administrator",
+				AvatarURL: "https://www.gravatar.com/avatar/admin",
+			},
+		},
+		Pipelines: []*PackagePipeline{{
+			ID:        456,
+			Status:    "completed",
+			Ref:       "other-pipeline",
+			SHA:       "asdf",
+			WebURL:    "https://example.com/foo/bar/pipelines/456",
+			CreatedAt: &pipelinesTimestamp,
+			UpdatedAt: &pipelinesTimestamp,
+			User: &BasicUser{
+				Name:      "Maintainer",
+				AvatarURL: "https://www.gravatar.com/avatar/maintainer",
+			},
+		}},
 		Tags: []PackageTag{
 			{
 				ID:        1,
