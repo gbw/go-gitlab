@@ -1,3 +1,22 @@
+## 2.23.0
+
+### 🚀 Features
+
+- feat: add OrbitService for Knowledge Graph endpoints ([!2870](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2870)) by [Dmitry Gruzd](https://gitlab.com/dgruzd)
+
+### 🔄 Other Changes
+
+- chore(deps): update module buf.build/go/protovalidate to v1.2.0 ([!2865](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2865)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.23.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.22.0...v2.23.0) (2026-05-04)
+
+
+### Features
+
+* add OrbitService for Knowledge Graph endpoints ([2ff460f](https://gitlab.com/gitlab-org/api/client-go/commit/2ff460f3a809e3ad9f2065b0144dfcb4d4f5e6d3))
+
 ## 2.22.0
 
 ### 🚀 Features
