@@ -3,8 +3,8 @@ module gitlab.com/gitlab-org/api/client-go/v2
 go 1.25.0
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260209202127-80ab13bee0bf.1
-	buf.build/go/protovalidate v1.1.3
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260415201107-50325440f8f2.1
+	buf.build/go/protovalidate v1.2.0
 	buf.build/go/protoyaml v0.6.0
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
 	github.com/google/go-querystring v1.2.0
