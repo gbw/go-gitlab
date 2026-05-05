@@ -1,3 +1,18 @@
+## 2.24.1
+
+### 🐛 Bug Fixes
+
+- fix: add FormattedText field to OrbitGraphStatus and OrbitStatus ([!2876](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2876)) by [Dmitry Gruzd](https://gitlab.com/dgruzd)
+
+
+
+## [2.24.1](https://gitlab.com/gitlab-org/api/client-go/compare/v2.24.0...v2.24.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* add FormattedText field to OrbitGraphStatus and OrbitStatus ([9457ddc](https://gitlab.com/gitlab-org/api/client-go/commit/9457ddc690600ea50953bfb8df632ac0b39cd90c))
+
 ## 2.24.0
 
 ### 🚀 Features
