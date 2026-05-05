@@ -39,7 +39,7 @@ type (
 		//
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/orbit/#get-status
-		GetStatus(options ...RequestOptionFunc) (*OrbitStatus, *Response, error)
+		GetStatus(opt *GetOrbitStatusOptions, options ...RequestOptionFunc) (*OrbitStatus, *Response, error)
 
 		// GetSchema returns the Orbit graph ontology (domains, nodes,
 		// edges).
@@ -103,15 +103,30 @@ type (
 
 var _ OrbitServiceInterface = (*OrbitService)(nil)
 
+// GetOrbitStatusOptions represents the available GetStatus() options.
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/#get-status
+type GetOrbitStatusOptions struct {
+	// ResponseFormat selects the response shape: "raw" (structured
+	// JSON, default) or "llm" (compact text for LLM consumption).
+	ResponseFormat *OrbitResponseFormatValue `url:"response_format,omitempty"`
+}
+
 // OrbitStatus represents the Orbit cluster health response returned
-// by `GET /api/v4/orbit/status` with `format=raw`.
+// by `GET /api/v4/orbit/status`.
+//
+// When ResponseFormat is "raw" (default), the structured fields
+// (Status, Timestamp, Version, Components) are populated and
+// FormattedText is empty. When ResponseFormat is "llm", only
+// FormattedText is populated and the structured fields are absent.
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#get-status
 type OrbitStatus struct {
-	Status     string                  `json:"status,omitempty"`
-	Timestamp  string                  `json:"timestamp,omitempty"`
-	Version    string                  `json:"version,omitempty"`
-	Components []*OrbitStatusComponent `json:"components,omitempty"`
+	FormattedText string                  `json:"formatted_text,omitempty"`
+	Status        string                  `json:"status,omitempty"`
+	Timestamp     string                  `json:"timestamp,omitempty"`
+	Version       string                  `json:"version,omitempty"`
+	Components    []*OrbitStatusComponent `json:"components,omitempty"`
 }
 
 // OrbitStatusComponent represents a single Orbit subsystem in the
@@ -146,7 +161,7 @@ type GetOrbitSchemaOptions struct {
 	// Format selects the response format: `raw` (structured JSON) or
 	// `llm` (TOON text optimized for LLM consumption). Defaults to
 	// `raw` server-side when omitted.
-	Format *string `url:"format,omitempty" json:"format,omitempty"`
+	Format *OrbitResponseFormatValue `url:"format,omitempty" json:"format,omitempty"`
 }
 
 // OrbitSchema represents the Orbit graph ontology returned by
@@ -251,8 +266,8 @@ type OrbitTool struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#post-query
 type OrbitQueryRequest struct {
-	Query          json.RawMessage `json:"query"`
-	ResponseFormat *string         `json:"response_format,omitempty"`
+	Query          json.RawMessage           `json:"query"`
+	ResponseFormat *OrbitResponseFormatValue `json:"response_format,omitempty"`
 }
 
 // OrbitQueryResult represents the response returned by
@@ -279,10 +294,11 @@ type OrbitQueryResult struct {
 // future versions.
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#get-status
-func (s *OrbitService) GetStatus(options ...RequestOptionFunc) (*OrbitStatus, *Response, error) {
+func (s *OrbitService) GetStatus(opt *GetOrbitStatusOptions, options ...RequestOptionFunc) (*OrbitStatus, *Response, error) {
 	return do[*OrbitStatus](s.client,
 		withMethod(http.MethodGet),
 		withPath("orbit/status"),
+		withAPIOpts(opt),
 		withRequestOpts(options...),
 	)
 }
@@ -360,18 +376,24 @@ type GetGraphStatusOptions struct {
 
 	// ResponseFormat selects the response shape: "raw" (structured
 	// JSON, default) or "llm" (compact text for LLM consumption).
-	ResponseFormat *string `url:"response_format,omitempty"`
+	ResponseFormat *OrbitResponseFormatValue `url:"response_format,omitempty"`
 }
 
 // OrbitGraphStatus represents the indexing status response returned by
 // `GET /api/v4/orbit/graph_status`.
 //
+// When ResponseFormat is "raw" (default), the structured fields
+// (Projects, Domains, Indexing) are populated and FormattedText is
+// empty. When ResponseFormat is "llm", only FormattedText is populated
+// and the structured fields are absent.
+//
 // GitLab API docs:
 // https://docs.gitlab.com/api/orbit/#get-graph-status
 type OrbitGraphStatus struct {
-	Projects *OrbitGraphStatusProjects `json:"projects,omitempty"`
-	Domains  []*OrbitGraphStatusDomain `json:"domains,omitempty"`
-	Indexing *OrbitGraphStatusIndexing `json:"indexing,omitempty"`
+	FormattedText string                    `json:"formatted_text,omitempty"`
+	Projects      *OrbitGraphStatusProjects `json:"projects,omitempty"`
+	Domains       []*OrbitGraphStatusDomain `json:"domains,omitempty"`
+	Indexing      *OrbitGraphStatusIndexing `json:"indexing,omitempty"`
 }
 
 // OrbitGraphStatusProjects holds the indexed vs total project counts

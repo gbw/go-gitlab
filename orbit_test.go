@@ -45,8 +45,8 @@ func TestOrbitService_GetStatus(t *testing.T) {
 		}`)
 	})
 
-	// WHEN GetStatus is called
-	status, resp, err := client.Orbit.GetStatus()
+	// WHEN GetStatus is called with no options
+	status, resp, err := client.Orbit.GetStatus(nil)
 
 	// THEN the typed response matches the server payload
 	require.NoError(t, err)
@@ -91,14 +91,40 @@ func TestOrbitService_GetStatus_FeatureFlagOff(t *testing.T) {
 		fmt.Fprint(w, `{"error":"404 Not Found"}`)
 	})
 
-	// WHEN GetStatus is called
-	status, resp, err := client.Orbit.GetStatus()
+	// WHEN GetStatus is called with no options
+	status, resp, err := client.Orbit.GetStatus(nil)
 
 	// THEN the caller receives the underlying response so it can map 404 to a structured error
 	require.Error(t, err)
 	require.NotNil(t, resp)
 	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 	assert.Nil(t, status)
+}
+
+func TestOrbitService_GetStatus_LLMFormat(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/status endpoint returns the compact LLM text when
+	// response_format=llm is requested
+	mux, client := setup(t)
+
+	var gotQuery string
+	mux.HandleFunc("/api/v4/orbit/status", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		gotQuery = r.URL.RawQuery
+		fmt.Fprint(w, `{"formatted_text":"status: healthy\nversion: \"0.5.0\""}`)
+	})
+
+	// WHEN GetStatus is called with response_format=llm
+	status, _, err := client.Orbit.GetStatus(&GetOrbitStatusOptions{
+		ResponseFormat: Ptr(OrbitResponseFormatLLM),
+	})
+
+	// THEN the response_format parameter is forwarded and FormattedText is populated
+	require.NoError(t, err)
+	assert.Contains(t, gotQuery, "response_format=llm")
+	require.NotNil(t, status)
+	assert.Equal(t, "status: healthy\nversion: \"0.5.0\"", status.FormattedText)
+	assert.Empty(t, status.Status, "structured fields must be absent in llm response")
 }
 
 func TestOrbitService_GetSchema(t *testing.T) {
@@ -163,10 +189,9 @@ func TestOrbitService_GetSchema_WithExpand(t *testing.T) {
 
 	// WHEN GetSchema is called with multiple expand nodes and llm format
 	expand := []string{"User", "Project", "MergeRequest"}
-	format := "llm"
 	_, _, err := client.Orbit.GetSchema(&GetOrbitSchemaOptions{
 		Expand: &expand,
-		Format: &format,
+		Format: Ptr(OrbitResponseFormatLLM),
 	})
 
 	// THEN expand is comma-joined per API convention and format is set
@@ -247,7 +272,6 @@ func TestOrbitService_Query(t *testing.T) {
 	})
 
 	// WHEN Query is called with a typed request whose query is opaque JSON
-	format := "raw"
 	queryDSL := json.RawMessage(`{
 		"query_type": "traversal",
 		"node": {"id": "p", "entity": "Project"},
@@ -255,7 +279,7 @@ func TestOrbitService_Query(t *testing.T) {
 	}`)
 	result, resp, err := client.Orbit.Query(&OrbitQueryRequest{
 		Query:          queryDSL,
-		ResponseFormat: &format,
+		ResponseFormat: Ptr(OrbitResponseFormatRaw),
 	})
 
 	// THEN the result envelope decodes and `result` stays as raw JSON
@@ -285,10 +309,9 @@ func TestOrbitService_Query_LLMFormat(t *testing.T) {
 	})
 
 	// WHEN Query is called with response_format=llm
-	format := "llm"
 	result, _, err := client.Orbit.Query(&OrbitQueryRequest{
 		Query:          json.RawMessage(`{"query_type": "traversal"}`),
-		ResponseFormat: &format,
+		ResponseFormat: Ptr(OrbitResponseFormatLLM),
 	})
 
 	// THEN the JSON-encoded string is preserved verbatim in Result
@@ -443,31 +466,31 @@ func TestOrbitService_GetGraphStatus_ByFullPath(t *testing.T) {
 
 func TestOrbitService_GetGraphStatus_LLMFormat(t *testing.T) {
 	t.Parallel()
-	// GIVEN an orbit graph_status endpoint that records the query parameters
+	// GIVEN the orbit/graph_status endpoint returns only formatted_text
+	// when response_format=llm is requested (structured fields are absent)
 	mux, client := setup(t)
 
 	var gotQuery string
 	mux.HandleFunc("/api/v4/orbit/graph_status", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		gotQuery = r.URL.RawQuery
-		fmt.Fprint(w, `{
-			"projects": {"indexed": 2, "total_known": 2},
-			"domains": [],
-			"indexing": {"state": "indexed"}
-		}`)
+		fmt.Fprint(w, `{"formatted_text":"projects:\n  indexed: 2\n  total_known: 2\nindexing:\n  state: indexed"}`)
 	})
 
 	// WHEN GetGraphStatus is called with response_format=llm
 	namespaceID := int64(7)
-	format := "llm"
-	_, _, err := client.Orbit.GetGraphStatus(&GetGraphStatusOptions{
+	status, _, err := client.Orbit.GetGraphStatus(&GetGraphStatusOptions{
 		NamespaceID:    &namespaceID,
-		ResponseFormat: &format,
+		ResponseFormat: Ptr(OrbitResponseFormatLLM),
 	})
 
-	// THEN the response_format parameter is forwarded to the server
+	// THEN the response_format parameter is forwarded and FormattedText is populated
 	require.NoError(t, err)
 	assert.Contains(t, gotQuery, "response_format=llm")
+	require.NotNil(t, status)
+	assert.Equal(t, "projects:\n  indexed: 2\n  total_known: 2\nindexing:\n  state: indexed", status.FormattedText)
+	assert.Nil(t, status.Projects, "structured fields must be absent in llm response")
+	assert.Nil(t, status.Indexing, "structured fields must be absent in llm response")
 }
 
 func TestOrbitService_GetGraphStatus_Forbidden(t *testing.T) {
