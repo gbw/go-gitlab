@@ -980,3 +980,17 @@ const (
 	DuoAvailabilityDefaultOff DuoAvailabilityValue = "default_off"
 	DuoAvailabilityNeverOn    DuoAvailabilityValue = "never_on" // Displayed as "Always Off" in the UI
 )
+
+// OrbitResponseFormatValue represents the response format for Orbit
+// API endpoints that support multiple output shapes.
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/
+type OrbitResponseFormatValue string
+
+// List of available Orbit response format values.
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/
+const (
+	OrbitResponseFormatRaw OrbitResponseFormatValue = "raw"
+	OrbitResponseFormatLLM OrbitResponseFormatValue = "llm"
+)

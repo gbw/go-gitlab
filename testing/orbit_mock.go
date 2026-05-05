@@ -130,9 +130,9 @@ func (c *MockOrbitServiceInterfaceGetSchemaCall) DoAndReturn(f func(*gitlab.GetO
 }
 
 // GetStatus mocks base method.
-func (m *MockOrbitServiceInterface) GetStatus(options ...gitlab.RequestOptionFunc) (*gitlab.OrbitStatus, *gitlab.Response, error) {
+func (m *MockOrbitServiceInterface) GetStatus(opt *gitlab.GetOrbitStatusOptions, options ...gitlab.RequestOptionFunc) (*gitlab.OrbitStatus, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
-	varargs := []any{}
+	varargs := []any{opt}
 	for _, a := range options {
 		varargs = append(varargs, a)
 	}
@@ -144,9 +144,10 @@ func (m *MockOrbitServiceInterface) GetStatus(options ...gitlab.RequestOptionFun
 }
 
 // GetStatus indicates an expected call of GetStatus.
-func (mr *MockOrbitServiceInterfaceMockRecorder) GetStatus(options ...any) *MockOrbitServiceInterfaceGetStatusCall {
+func (mr *MockOrbitServiceInterfaceMockRecorder) GetStatus(opt any, options ...any) *MockOrbitServiceInterfaceGetStatusCall {
 	mr.mock.ctrl.T.Helper()
-	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStatus", reflect.TypeOf((*MockOrbitServiceInterface)(nil).GetStatus), options...)
+	varargs := append([]any{opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStatus", reflect.TypeOf((*MockOrbitServiceInterface)(nil).GetStatus), varargs...)
 	return &MockOrbitServiceInterfaceGetStatusCall{Call: call}
 }
 
@@ -162,13 +163,13 @@ func (c *MockOrbitServiceInterfaceGetStatusCall) Return(arg0 *gitlab.OrbitStatus
 }
 
 // Do rewrite *gomock.Call.Do
-func (c *MockOrbitServiceInterfaceGetStatusCall) Do(f func(...gitlab.RequestOptionFunc) (*gitlab.OrbitStatus, *gitlab.Response, error)) *MockOrbitServiceInterfaceGetStatusCall {
+func (c *MockOrbitServiceInterfaceGetStatusCall) Do(f func(*gitlab.GetOrbitStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.OrbitStatus, *gitlab.Response, error)) *MockOrbitServiceInterfaceGetStatusCall {
 	c.Call = c.Call.Do(f)
 	return c
 }
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
-func (c *MockOrbitServiceInterfaceGetStatusCall) DoAndReturn(f func(...gitlab.RequestOptionFunc) (*gitlab.OrbitStatus, *gitlab.Response, error)) *MockOrbitServiceInterfaceGetStatusCall {
+func (c *MockOrbitServiceInterfaceGetStatusCall) DoAndReturn(f func(*gitlab.GetOrbitStatusOptions, ...gitlab.RequestOptionFunc) (*gitlab.OrbitStatus, *gitlab.Response, error)) *MockOrbitServiceInterfaceGetStatusCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
