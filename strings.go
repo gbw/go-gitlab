@@ -34,7 +34,7 @@ func Stringify(message any) string {
 
 // stringifyValue was heavily inspired by the goprotobuf library.
 func stringifyValue(buf *bytes.Buffer, val reflect.Value) {
-	if val.Kind() == reflect.Ptr && val.IsNil() {
+	if val.Kind() == reflect.Pointer && val.IsNil() {
 		buf.WriteString("<nil>")
 		return
 	}
@@ -66,7 +66,7 @@ func stringifyValue(buf *bytes.Buffer, val reflect.Value) {
 		var sep bool
 		for i := range v.NumField() {
 			fv := v.Field(i)
-			if fv.Kind() == reflect.Ptr && fv.IsNil() {
+			if fv.Kind() == reflect.Pointer && fv.IsNil() {
 				continue
 			}
 			if fv.Kind() == reflect.Slice && fv.IsNil() {

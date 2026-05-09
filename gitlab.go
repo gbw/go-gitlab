@@ -32,6 +32,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -653,8 +654,8 @@ func decorateHTTPClientTransportWithInterceptors(c *Client) {
 }
 
 func chainInterceptors(rt http.RoundTripper, interceptors ...Interceptor) http.RoundTripper {
-	for i := len(interceptors) - 1; i >= 0; i-- {
-		rt = interceptors[i](rt)
+	for _, i := range slices.Backward(interceptors) {
+		rt = i(rt)
 	}
 	return rt
 }
@@ -877,7 +878,7 @@ func validateBaseURL(baseURL string) (*url.URL, error) {
 		}
 	}
 
-	if parsedURL.Scheme != "http" && parsedURL.Scheme != "https" {
+	if parsedURL.Scheme != "http" && parsedURL.Scheme != "https" { //nolint:goconst
 		return nil, &URLValidationError{
 			URL:  baseURL,
 			Err:  fmt.Errorf("unsupported scheme %q", parsedURL.Scheme),

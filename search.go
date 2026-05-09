@@ -100,7 +100,7 @@ func (s *SearchService) ProjectsByGroup(gid any, query string, opt *SearchOption
 func (s *SearchService) Issues(query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*Issue, *Response, error) {
 	return do[[]*Issue](s.client,
 		withPath("search"),
-		withAPIOpts(&searchOptions{SearchOptions: *opt, Scope: "issues", Search: query}),
+		withAPIOpts(&searchOptions{SearchOptions: *opt, Scope: "issues", Search: query}), //nolint:goconst
 		withRequestOpts(options...),
 	)
 }
@@ -136,7 +136,7 @@ func (s *SearchService) IssuesByProject(pid any, query string, opt *SearchOption
 func (s *SearchService) MergeRequests(query string, opt *SearchOptions, options ...RequestOptionFunc) ([]*MergeRequest, *Response, error) {
 	return do[[]*MergeRequest](s.client,
 		withPath("search"),
-		withAPIOpts(&searchOptions{SearchOptions: *opt, Scope: "merge_requests", Search: query}),
+		withAPIOpts(&searchOptions{SearchOptions: *opt, Scope: "merge_requests", Search: query}), //nolint:goconst
 		withRequestOpts(options...),
 	)
 }

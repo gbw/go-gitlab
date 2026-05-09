@@ -144,6 +144,10 @@ linters:
       - path: ^testing/
         linters:
           - revive
+      # Exclude goconst from test files - tests should use literal values for clarity
+      - path: _test\.go$
+        linters:
+          - goconst
       # Enable forbidigo only in tests.
       - path-except: _test\.go$
         linters:

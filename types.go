@@ -662,7 +662,7 @@ const (
 )
 
 var notificationLevelNames = [...]string{
-	"disabled",
+	"disabled", //nolint:goconst
 	"participating",
 	"watch",
 	"global",
