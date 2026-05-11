@@ -1,3 +1,24 @@
+## 2.25.0
+
+### 🚀 Features
+
+- feat: Add GraphQL API support for security attributes and categories ([!2856](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2856)) by [Caleb Madara](https://gitlab.com/calebmadara58)
+
+### 🔄 Other Changes
+
+- chore(deps): update dependency golangci-lint to v2.12.1 ([!2880](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2880)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- Resolve lint errors on `main` causing pipeline failures ([!2882](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2882)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+- chore(deps): update dependency golangci-lint to v2.12.0 ([!2879](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2879)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.25.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.24.1...v2.25.0) (2026-05-11)
+
+
+### Features
+
+* Add GraphQL API support for security attributes and categories ([8496635](https://gitlab.com/gitlab-org/api/client-go/commit/84966353d99e83e975bd23c83fec1b7023cfd621))
+
 ## 2.24.1
 
 ### 🐛 Bug Fixes
