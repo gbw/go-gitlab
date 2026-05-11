@@ -301,6 +301,8 @@ type Client struct {
 	RunnerControllerTokens           RunnerControllerTokensServiceInterface
 	Runners                          RunnersServiceInterface
 	Search                           SearchServiceInterface
+	SecurityAttributes               SecurityAttributesServiceInterface
+	SecurityCategories               SecurityCategoriesServiceInterface
 	SecureFiles                      SecureFilesServiceInterface
 	Services                         ServicesServiceInterface
 	Settings                         SettingsServiceInterface
@@ -625,6 +627,8 @@ func NewAuthSourceClient(as AuthSource, options ...ClientOptionFunc) (*Client, e
 	c.RunnerControllerTokens = &RunnerControllerTokensService{client: c}
 	c.Runners = &RunnersService{client: c}
 	c.Search = &SearchService{client: c}
+	c.SecurityAttributes = &SecurityAttributesService{client: c}
+	c.SecurityCategories = &SecurityCategoriesService{client: c}
 	c.SecureFiles = &SecureFilesService{client: c}
 	c.Services = &ServicesService{client: c}
 	c.Settings = &SettingsService{client: c}

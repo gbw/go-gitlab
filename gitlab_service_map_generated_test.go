@@ -148,6 +148,8 @@ var serviceMap = map[any]any{
 	&RunnersService{}:                          (*RunnersServiceInterface)(nil),
 	&SearchService{}:                           (*SearchServiceInterface)(nil),
 	&SecureFilesService{}:                      (*SecureFilesServiceInterface)(nil),
+	&SecurityAttributesService{}:               (*SecurityAttributesServiceInterface)(nil),
+	&SecurityCategoriesService{}:               (*SecurityCategoriesServiceInterface)(nil),
 	&ServicesService{}:                         (*ServicesServiceInterface)(nil),
 	&SettingsService{}:                         (*SettingsServiceInterface)(nil),
 	&SidekiqService{}:                          (*SidekiqServiceInterface)(nil),
