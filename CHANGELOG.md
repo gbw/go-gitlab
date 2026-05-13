@@ -1,3 +1,23 @@
+## 2.26.0
+
+### 🚀 Features
+
+- fix: Add PublicJobs to CreateProjectOptions ([!2883](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2883)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+### 🔄 Other Changes
+
+- chore(deps): update dependency golangci-lint to v2.12.2 ([!2886](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2886)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module github.com/google/cel-go to v0.28.1 ([!2885](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2885)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.26.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.25.0...v2.26.0) (2026-05-13)
+
+
+### Bug Fixes
+
+* Add PublicJobs to CreateProjectOptions ([4bbf58a](https://gitlab.com/gitlab-org/api/client-go/commit/4bbf58ab60c776e921f737f395031eb6e8cbe9bc))
+
 ## 2.25.0
 
 ### 🚀 Features
