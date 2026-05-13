@@ -706,7 +706,8 @@ type ListProjectsOptions struct {
 }
 
 func (s *ProjectsService) ListProjects(opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error) {
-	return do[[]*Project](s.client,
+	return do[[]*Project](
+		s.client,
 		withPath("projects"),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -714,7 +715,8 @@ func (s *ProjectsService) ListProjects(opt *ListProjectsOptions, options ...Requ
 }
 
 func (s *ProjectsService) ListUserProjects(uid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error) {
-	return do[[]*Project](s.client,
+	return do[[]*Project](
+		s.client,
 		withPath("users/%s/projects", UserID{uid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -730,7 +732,8 @@ func (s *ProjectsService) ListUserProjects(uid any, opt *ListProjectsOptions, op
 // GitLab API docs:
 // https://docs.gitlab.com/api/projects/#list-projects-a-user-has-contributed-to
 func (s *ProjectsService) ListUserContributedProjects(uid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error) {
-	return do[[]*Project](s.client,
+	return do[[]*Project](
+		s.client,
 		withPath("users/%s/contributed_projects", UserID{uid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -738,7 +741,8 @@ func (s *ProjectsService) ListUserContributedProjects(uid any, opt *ListProjects
 }
 
 func (s *ProjectsService) ListUserStarredProjects(uid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error) {
-	return do[[]*Project](s.client,
+	return do[[]*Project](
+		s.client,
 		withPath("users/%s/starred_projects", UserID{uid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -764,7 +768,8 @@ type ListProjectUserOptions struct {
 }
 
 func (s *ProjectsService) ListProjectsUsers(pid any, opt *ListProjectUserOptions, options ...RequestOptionFunc) ([]*ProjectUser, *Response, error) {
-	return do[[]*ProjectUser](s.client,
+	return do[[]*ProjectUser](
+		s.client,
 		withPath("projects/%s/users", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -795,7 +800,8 @@ type ListProjectGroupOptions struct {
 }
 
 func (s *ProjectsService) ListProjectsGroups(pid any, opt *ListProjectGroupOptions, options ...RequestOptionFunc) ([]*ProjectGroup, *Response, error) {
-	return do[[]*ProjectGroup](s.client,
+	return do[[]*ProjectGroup](
+		s.client,
 		withPath("projects/%s/groups", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -809,7 +815,8 @@ func (s *ProjectsService) ListProjectsGroups(pid any, opt *ListProjectGroupOptio
 type ProjectLanguages map[string]float32
 
 func (s *ProjectsService) GetProjectLanguages(pid any, options ...RequestOptionFunc) (*ProjectLanguages, *Response, error) {
-	return do[*ProjectLanguages](s.client,
+	return do[*ProjectLanguages](
+		s.client,
 		withPath("projects/%s/languages", ProjectID{pid}),
 		withRequestOpts(options...),
 	)
@@ -825,7 +832,8 @@ type GetProjectOptions struct {
 }
 
 func (s *ProjectsService) GetProject(pid any, opt *GetProjectOptions, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withPath("projects/%s", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -888,6 +896,7 @@ type CreateProjectOptions struct {
 	MonitorAccessLevel                        *AccessControlValue                  `url:"monitor_access_level,omitempty" json:"monitor_access_level,omitempty"`
 	RemoveSourceBranchAfterMerge              *bool                                `url:"remove_source_branch_after_merge,omitempty" json:"remove_source_branch_after_merge,omitempty"`
 	PrintingMergeRequestLinkEnabled           *bool                                `url:"printing_merge_request_link_enabled,omitempty" json:"printing_merge_request_link_enabled,omitempty"`
+	PublicJobs                                *bool                                `url:"public_jobs,omitempty" json:"public_jobs,omitempty"`
 	RepositoryAccessLevel                     *AccessControlValue                  `url:"repository_access_level,omitempty" json:"repository_access_level,omitempty"`
 	RepositoryStorage                         *string                              `url:"repository_storage,omitempty" json:"repository_storage,omitempty"`
 	RequestAccessEnabled                      *bool                                `url:"request_access_enabled,omitempty" json:"request_access_enabled,omitempty"`
@@ -1180,7 +1189,8 @@ type ForkProjectOptions struct {
 }
 
 func (s *ProjectsService) ForkProject(pid any, opt *ForkProjectOptions, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/fork", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1189,7 +1199,8 @@ func (s *ProjectsService) ForkProject(pid any, opt *ForkProjectOptions, options 
 }
 
 func (s *ProjectsService) StarProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/star", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1210,7 +1221,8 @@ type ListProjectInvitedGroupOptions struct {
 }
 
 func (s *ProjectsService) ListProjectsInvitedGroups(pid any, opt *ListProjectInvitedGroupOptions, options ...RequestOptionFunc) ([]*ProjectGroup, *Response, error) {
-	return do[[]*ProjectGroup](s.client,
+	return do[[]*ProjectGroup](
+		s.client,
 		withPath("projects/%s/invited_groups", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -1218,7 +1230,8 @@ func (s *ProjectsService) ListProjectsInvitedGroups(pid any, opt *ListProjectInv
 }
 
 func (s *ProjectsService) UnstarProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/unstar", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1226,7 +1239,8 @@ func (s *ProjectsService) UnstarProject(pid any, options ...RequestOptionFunc) (
 }
 
 func (s *ProjectsService) ArchiveProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/archive", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1234,7 +1248,8 @@ func (s *ProjectsService) ArchiveProject(pid any, options ...RequestOptionFunc) 
 }
 
 func (s *ProjectsService) UnarchiveProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/unarchive", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1242,7 +1257,8 @@ func (s *ProjectsService) UnarchiveProject(pid any, options ...RequestOptionFunc
 }
 
 func (s *ProjectsService) RestoreProject(pid any, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/restore", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1259,7 +1275,8 @@ type DeleteProjectOptions struct {
 }
 
 func (s *ProjectsService) DeleteProject(pid any, opt *DeleteProjectOptions, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1278,7 +1295,8 @@ type ShareWithGroupOptions struct {
 }
 
 func (s *ProjectsService) ShareProjectWithGroup(pid any, opt *ShareWithGroupOptions, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/share", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1288,7 +1306,8 @@ func (s *ProjectsService) ShareProjectWithGroup(pid any, opt *ShareWithGroupOpti
 }
 
 func (s *ProjectsService) DeleteSharedProjectFromGroup(pid any, groupID int64, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/share/%d", ProjectID{pid}, groupID),
 		withRequestOpts(options...),
@@ -1359,7 +1378,8 @@ type ListProjectHooksOptions struct {
 }
 
 func (s *ProjectsService) ListProjectHooks(pid any, opt *ListProjectHooksOptions, options ...RequestOptionFunc) ([]*ProjectHook, *Response, error) {
-	return do[[]*ProjectHook](s.client,
+	return do[[]*ProjectHook](
+		s.client,
 		withPath("projects/%s/hooks", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -1367,7 +1387,8 @@ func (s *ProjectsService) ListProjectHooks(pid any, opt *ListProjectHooksOptions
 }
 
 func (s *ProjectsService) GetProjectHook(pid any, hook int64, options ...RequestOptionFunc) (*ProjectHook, *Response, error) {
-	return do[*ProjectHook](s.client,
+	return do[*ProjectHook](
+		s.client,
 		withPath("projects/%s/hooks/%d", ProjectID{pid}, hook),
 		withRequestOpts(options...),
 	)
@@ -1405,7 +1426,8 @@ type AddProjectHookOptions struct {
 }
 
 func (s *ProjectsService) AddProjectHook(pid any, opt *AddProjectHookOptions, options ...RequestOptionFunc) (*ProjectHook, *Response, error) {
-	return do[*ProjectHook](s.client,
+	return do[*ProjectHook](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/hooks", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1445,7 +1467,8 @@ type EditProjectHookOptions struct {
 }
 
 func (s *ProjectsService) EditProjectHook(pid any, hook int64, opt *EditProjectHookOptions, options ...RequestOptionFunc) (*ProjectHook, *Response, error) {
-	return do[*ProjectHook](s.client,
+	return do[*ProjectHook](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/hooks/%d", ProjectID{pid}, hook),
 		withAPIOpts(opt),
@@ -1454,7 +1477,8 @@ func (s *ProjectsService) EditProjectHook(pid any, hook int64, opt *EditProjectH
 }
 
 func (s *ProjectsService) DeleteProjectHook(pid any, hook int64, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/hooks/%d", ProjectID{pid}, hook),
 		withRequestOpts(options...),
@@ -1475,7 +1499,8 @@ func (s *ProjectsService) DeleteProjectHook(pid any, hook int64, options ...Requ
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_webhooks/#trigger-a-test-project-webhook
 func (s *ProjectsService) TriggerTestProjectHook(pid any, hook int64, event ProjectHookEvent, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/hooks/%d/test/%s", ProjectID{pid}, hook, string(event)),
 		withRequestOpts(options...),
@@ -1493,7 +1518,8 @@ type SetHookCustomHeaderOptions struct {
 }
 
 func (s *ProjectsService) SetProjectCustomHeader(pid any, hook int64, key string, opt *SetHookCustomHeaderOptions, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/hooks/%d/custom_headers/%s", ProjectID{pid}, hook, key),
 		withAPIOpts(opt),
@@ -1503,7 +1529,8 @@ func (s *ProjectsService) SetProjectCustomHeader(pid any, hook int64, key string
 }
 
 func (s *ProjectsService) DeleteProjectCustomHeader(pid any, hook int64, key string, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/hooks/%d/custom_headers/%s", ProjectID{pid}, hook, key),
 		withRequestOpts(options...),
@@ -1521,7 +1548,8 @@ type SetProjectWebhookURLVariableOptions struct {
 }
 
 func (s *ProjectsService) SetProjectWebhookURLVariable(pid any, hook int64, key string, opt *SetProjectWebhookURLVariableOptions, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/hooks/%d/url_variables/%s", ProjectID{pid}, hook, key),
 		withAPIOpts(opt),
@@ -1531,7 +1559,8 @@ func (s *ProjectsService) SetProjectWebhookURLVariable(pid any, hook int64, key 
 }
 
 func (s *ProjectsService) DeleteProjectWebhookURLVariable(pid any, hook int64, key string, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/hooks/%d/url_variables/%s", ProjectID{pid}, hook, key),
 		withRequestOpts(options...),
@@ -1552,7 +1581,8 @@ type ProjectForkRelation struct {
 }
 
 func (s *ProjectsService) CreateProjectForkRelation(pid any, fork int64, options ...RequestOptionFunc) (*ProjectForkRelation, *Response, error) {
-	return do[*ProjectForkRelation](s.client,
+	return do[*ProjectForkRelation](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/fork/%d", ProjectID{pid}, fork),
 		withRequestOpts(options...),
@@ -1560,7 +1590,8 @@ func (s *ProjectsService) CreateProjectForkRelation(pid any, fork int64, options
 }
 
 func (s *ProjectsService) DeleteProjectForkRelation(pid any, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/fork", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1569,7 +1600,8 @@ func (s *ProjectsService) DeleteProjectForkRelation(pid any, options ...RequestO
 }
 
 func (s *ProjectsService) UploadAvatar(pid any, avatar io.Reader, filename string, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s", ProjectID{pid}),
 		withUpload(avatar, filename, UploadAvatar),
@@ -1578,7 +1610,8 @@ func (s *ProjectsService) UploadAvatar(pid any, avatar io.Reader, filename strin
 }
 
 func (s *ProjectsService) DownloadAvatar(pid any, options ...RequestOptionFunc) (*bytes.Reader, *Response, error) {
-	buf, resp, err := do[bytes.Buffer](s.client,
+	buf, resp, err := do[bytes.Buffer](
+		s.client,
 		withPath("projects/%s/avatar", ProjectID{pid}),
 		withRequestOpts(options...),
 	)
@@ -1589,7 +1622,8 @@ func (s *ProjectsService) DownloadAvatar(pid any, options ...RequestOptionFunc) 
 }
 
 func (s *ProjectsService) ListProjectForks(pid any, opt *ListProjectsOptions, options ...RequestOptionFunc) ([]*Project, *Response, error) {
-	return do[[]*Project](s.client,
+	return do[[]*Project](
+		s.client,
 		withPath("projects/%s/forks", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -1620,7 +1654,8 @@ type ProjectPushRules struct {
 }
 
 func (s *ProjectsService) GetProjectPushRules(pid any, options ...RequestOptionFunc) (*ProjectPushRules, *Response, error) {
-	return do[*ProjectPushRules](s.client,
+	return do[*ProjectPushRules](
+		s.client,
 		withPath("projects/%s/push_rule", ProjectID{pid}),
 		withRequestOpts(options...),
 	)
@@ -1648,7 +1683,8 @@ type AddProjectPushRuleOptions struct {
 }
 
 func (s *ProjectsService) AddProjectPushRule(pid any, opt *AddProjectPushRuleOptions, options ...RequestOptionFunc) (*ProjectPushRules, *Response, error) {
-	return do[*ProjectPushRules](s.client,
+	return do[*ProjectPushRules](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/push_rule", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1678,7 +1714,8 @@ type EditProjectPushRuleOptions struct {
 }
 
 func (s *ProjectsService) EditProjectPushRule(pid any, opt *EditProjectPushRuleOptions, options ...RequestOptionFunc) (*ProjectPushRules, *Response, error) {
-	return do[*ProjectPushRules](s.client,
+	return do[*ProjectPushRules](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/push_rule", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1687,7 +1724,8 @@ func (s *ProjectsService) EditProjectPushRule(pid any, opt *EditProjectPushRuleO
 }
 
 func (s *ProjectsService) DeleteProjectPushRule(pid any, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/push_rule", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1717,7 +1755,8 @@ type ProjectApprovals struct {
 }
 
 func (s *ProjectsService) GetApprovalConfiguration(pid any, options ...RequestOptionFunc) (*ProjectApprovals, *Response, error) {
-	return do[*ProjectApprovals](s.client,
+	return do[*ProjectApprovals](
+		s.client,
 		withPath("projects/%s/approvals", ProjectID{pid}),
 		withRequestOpts(options...),
 	)
@@ -1743,7 +1782,8 @@ type ChangeApprovalConfigurationOptions struct {
 }
 
 func (s *ProjectsService) ChangeApprovalConfiguration(pid any, opt *ChangeApprovalConfigurationOptions, options ...RequestOptionFunc) (*ProjectApprovals, *Response, error) {
-	return do[*ProjectApprovals](s.client,
+	return do[*ProjectApprovals](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/approvals", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1761,7 +1801,8 @@ type GetProjectApprovalRulesListsOptions struct {
 }
 
 func (s *ProjectsService) GetProjectApprovalRules(pid any, opt *GetProjectApprovalRulesListsOptions, options ...RequestOptionFunc) ([]*ProjectApprovalRule, *Response, error) {
-	return do[[]*ProjectApprovalRule](s.client,
+	return do[[]*ProjectApprovalRule](
+		s.client,
 		withPath("projects/%s/approval_rules", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
@@ -1769,7 +1810,8 @@ func (s *ProjectsService) GetProjectApprovalRules(pid any, opt *GetProjectApprov
 }
 
 func (s *ProjectsService) GetProjectApprovalRule(pid any, ruleID int64, options ...RequestOptionFunc) (*ProjectApprovalRule, *Response, error) {
-	return do[*ProjectApprovalRule](s.client,
+	return do[*ProjectApprovalRule](
+		s.client,
 		withPath("projects/%s/approval_rules/%d", ProjectID{pid}, ruleID),
 		withRequestOpts(options...),
 	)
@@ -1793,7 +1835,8 @@ type CreateProjectLevelRuleOptions struct {
 }
 
 func (s *ProjectsService) CreateProjectApprovalRule(pid any, opt *CreateProjectLevelRuleOptions, options ...RequestOptionFunc) (*ProjectApprovalRule, *Response, error) {
-	return do[*ProjectApprovalRule](s.client,
+	return do[*ProjectApprovalRule](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/approval_rules", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1817,7 +1860,8 @@ type UpdateProjectLevelRuleOptions struct {
 }
 
 func (s *ProjectsService) UpdateProjectApprovalRule(pid any, approvalRule int64, opt *UpdateProjectLevelRuleOptions, options ...RequestOptionFunc) (*ProjectApprovalRule, *Response, error) {
-	return do[*ProjectApprovalRule](s.client,
+	return do[*ProjectApprovalRule](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/approval_rules/%d", ProjectID{pid}, approvalRule),
 		withAPIOpts(opt),
@@ -1826,7 +1870,8 @@ func (s *ProjectsService) UpdateProjectApprovalRule(pid any, approvalRule int64,
 }
 
 func (s *ProjectsService) DeleteProjectApprovalRule(pid any, approvalRule int64, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodDelete),
 		withPath("projects/%s/approval_rules/%d", ProjectID{pid}, approvalRule),
 		withRequestOpts(options...),
@@ -1855,7 +1900,8 @@ type ProjectPullMirrorDetails struct {
 }
 
 func (s *ProjectsService) GetProjectPullMirrorDetails(pid any, options ...RequestOptionFunc) (*ProjectPullMirrorDetails, *Response, error) {
-	return do[*ProjectPullMirrorDetails](s.client,
+	return do[*ProjectPullMirrorDetails](
+		s.client,
 		withPath("projects/%s/mirror/pull", ProjectID{pid}),
 		withRequestOpts(options...),
 	)
@@ -1877,7 +1923,8 @@ type ConfigureProjectPullMirrorOptions struct {
 }
 
 func (s *ProjectsService) ConfigureProjectPullMirror(pid any, opt *ConfigureProjectPullMirrorOptions, options ...RequestOptionFunc) (*ProjectPullMirrorDetails, *Response, error) {
-	return do[*ProjectPullMirrorDetails](s.client,
+	return do[*ProjectPullMirrorDetails](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/mirror/pull", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1886,7 +1933,8 @@ func (s *ProjectsService) ConfigureProjectPullMirror(pid any, opt *ConfigureProj
 }
 
 func (s *ProjectsService) StartMirroringProject(pid any, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/mirror/pull", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1903,7 +1951,8 @@ type TransferProjectOptions struct {
 }
 
 func (s *ProjectsService) TransferProject(pid any, opt *TransferProjectOptions, options ...RequestOptionFunc) (*Project, *Response, error) {
-	return do[*Project](s.client,
+	return do[*Project](
+		s.client,
 		withMethod(http.MethodPut),
 		withPath("projects/%s/transfer", ProjectID{pid}),
 		withAPIOpts(opt),
@@ -1912,7 +1961,8 @@ func (s *ProjectsService) TransferProject(pid any, opt *TransferProjectOptions, 
 }
 
 func (s *ProjectsService) StartHousekeepingProject(pid any, options ...RequestOptionFunc) (*Response, error) {
-	_, resp, err := do[none](s.client,
+	_, resp, err := do[none](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/housekeeping", ProjectID{pid}),
 		withRequestOpts(options...),
@@ -1932,7 +1982,8 @@ type ProjectRepositoryStorage struct {
 }
 
 func (s *ProjectsService) GetRepositoryStorage(pid any, options ...RequestOptionFunc) (*ProjectRepositoryStorage, *Response, error) {
-	return do[*ProjectRepositoryStorage](s.client,
+	return do[*ProjectRepositoryStorage](
+		s.client,
 		withPath("projects/%s/storage", ProjectID{pid}),
 		withRequestOpts(options...),
 	)
@@ -1957,7 +2008,8 @@ type ListProjectStarrersOptions struct {
 }
 
 func (s *ProjectsService) ListProjectStarrers(pid any, opts *ListProjectStarrersOptions, options ...RequestOptionFunc) ([]*ProjectStarrer, *Response, error) {
-	return do[[]*ProjectStarrer](s.client,
+	return do[[]*ProjectStarrer](
+		s.client,
 		withPath("projects/%s/starrers", ProjectID{pid}),
 		withAPIOpts(opts),
 		withRequestOpts(options...),
