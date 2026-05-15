@@ -77,7 +77,10 @@ const (
 
 var (
 	// ErrNotFound is returned for 404 Not Found errors
-	ErrNotFound = errors.New("404 Not Found")
+	ErrNotFound = &ErrorResponse{
+		StatusCode: http.StatusNotFound,
+		Message:    "Not Found",
+	}
 
 	// ErrEmptyResponse is returned when the API response is empty but expected to contain data
 	ErrEmptyResponse = errors.New("unexpected empty response")
@@ -1291,12 +1294,19 @@ func PathEscape(s string) string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/rest/troubleshooting/
 type ErrorResponse struct {
-	Body     []byte
-	Response *http.Response
-	Message  string
+	StatusCode int
+	Body       []byte
+	Response   *http.Response
+	Message    string
 }
 
 func (e *ErrorResponse) Error() string {
+	if e.Response == nil {
+		if e.Message != "" {
+			return fmt.Sprintf("%d %s", e.StatusCode, e.Message)
+		}
+		return fmt.Sprintf("HTTP %d", e.StatusCode)
+	}
 	path := e.Response.Request.URL.RawPath
 	if path == "" {
 		path = e.Response.Request.URL.Path
@@ -1304,13 +1314,23 @@ func (e *ErrorResponse) Error() string {
 	url := fmt.Sprintf("%s://%s%s", e.Response.Request.URL.Scheme, e.Response.Request.URL.Host, path)
 
 	if e.Message == "" {
-		return fmt.Sprintf("%s %s: %d", e.Response.Request.Method, url, e.Response.StatusCode)
+		return fmt.Sprintf("%s %s: %d", e.Response.Request.Method, url, e.StatusCode)
 	}
-	return fmt.Sprintf("%s %s: %d %s", e.Response.Request.Method, url, e.Response.StatusCode, e.Message)
+	return fmt.Sprintf("%s %s: %d %s", e.Response.Request.Method, url, e.StatusCode, e.Message)
 }
 
 func (e *ErrorResponse) HasStatusCode(statusCode int) bool {
-	return e != nil && e.Response != nil && e.Response.StatusCode == statusCode
+	return e != nil && e.StatusCode == statusCode
+}
+
+// Is matches any *ErrorResponse by status code, so errors.Is(err, ErrNotFound)
+// returns true for any response with a 404 status, regardless of pointer identity.
+func (e *ErrorResponse) Is(target error) bool {
+	var t *ErrorResponse
+	if !errors.As(target, &t) {
+		return false
+	}
+	return t.StatusCode != 0 && e.StatusCode == t.StatusCode
 }
 
 // CheckResponse checks the API response for errors, and returns them if present.
@@ -1322,7 +1342,10 @@ func CheckResponse(r *http.Response) error {
 		return ErrNotFound
 	}
 
-	errorResponse := &ErrorResponse{Response: r}
+	errorResponse := &ErrorResponse{
+		StatusCode: r.StatusCode,
+		Response:   r,
+	}
 
 	data, err := io.ReadAll(r.Body)
 	if err == nil && strings.TrimSpace(string(data)) != "" {
