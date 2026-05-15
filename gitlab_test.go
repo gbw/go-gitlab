@@ -294,6 +294,9 @@ func TestCheckResponseOnHeadRequestError(t *testing.T) {
 
 	errResp := CheckResponse(resp)
 
+	assert.ErrorIs(t, errResp, ErrNotFound)
+	assert.True(t, HasStatusCode(errResp, http.StatusNotFound))
+
 	want := "404 Not Found"
 	assert.EqualError(t, errResp, want)
 }
@@ -569,7 +572,7 @@ func TestErrorResponsePreservesURLEncoding(t *testing.T) {
 		Body:       io.NopCloser(strings.NewReader(`{"message":"Not Found"}`)),
 	}
 
-	errorResponse := &ErrorResponse{Response: resp, Message: "Not Found"}
+	errorResponse := &ErrorResponse{StatusCode: http.StatusNotFound, Response: resp, Message: "Not Found"}
 
 	require.ErrorContains(t, errorResponse, expectedEscapedPath)
 
@@ -802,13 +805,13 @@ func TestHasStatusCode(t *testing.T) {
 		},
 		{
 			name:          "error has different status code",
-			err:           &ErrorResponse{Response: &http.Response{StatusCode: http.StatusBadRequest}},
+			err:           &ErrorResponse{StatusCode: http.StatusBadRequest, Response: &http.Response{StatusCode: http.StatusBadRequest}},
 			hasStatusCode: http.StatusOK,
 			expect:        false,
 		},
 		{
 			name:          "error has expected status code",
-			err:           &ErrorResponse{Response: &http.Response{StatusCode: http.StatusOK}},
+			err:           &ErrorResponse{StatusCode: http.StatusOK, Response: &http.Response{StatusCode: http.StatusOK}},
 			hasStatusCode: http.StatusOK,
 			expect:        true,
 		},

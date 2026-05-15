@@ -893,8 +893,9 @@ func (s *WorkItemsService) CreateWorkItem(fullPath string, workItemTypeID WorkIt
 
 	if len(result.Data.WorkItemCreate.Errors) != 0 {
 		err := &ErrorResponse{
-			Message:  strings.Join(result.Data.WorkItemCreate.Errors, "; "),
-			Response: resp.Response,
+			StatusCode: resp.Response.StatusCode,
+			Message:    strings.Join(result.Data.WorkItemCreate.Errors, "; "),
+			Response:   resp.Response,
 		}
 
 		return nil, resp, err
