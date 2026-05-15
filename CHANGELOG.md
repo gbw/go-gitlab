@@ -1,3 +1,13 @@
+## 2.26.1
+
+### 🐛 Bug Fixes
+
+- Use a sentinel ErrorResponse for 404 errors, so both `Is()` and `HasStatusCode` work properly ([!2884](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2884)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+
+
+## [2.26.1](https://gitlab.com/gitlab-org/api/client-go/compare/v2.26.0...v2.26.1) (2026-05-15)
+
 ## 2.26.0
 
 ### 🚀 Features
