@@ -1709,3 +1709,94 @@ type EventLabel struct {
 	Type        string `json:"type"`
 	GroupID     int64  `json:"group_id"`
 }
+
+func parseDuration(data []byte) (float64, error) {
+	s := string(data)
+	if s == "null" || s == `""` || len(data) == 0 {
+		return 0, nil
+	}
+	// Strip quotes if present
+	if len(data) >= 2 && data[0] == '"' && data[len(data)-1] == '"' {
+		s = string(data[1 : len(data)-1])
+	}
+	return strconv.ParseFloat(s, 64)
+}
+
+func (p *PipelineEventBuild) UnmarshalJSON(data []byte) error {
+	type Alias PipelineEventBuild
+	aux := &struct {
+		Duration       json.RawMessage `json:"duration"`
+		QueuedDuration json.RawMessage `json:"queued_duration"`
+		*Alias
+	}{
+		Alias: (*Alias)(p),
+	}
+
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+
+	var err error
+	if p.Duration, err = parseDuration(aux.Duration); err != nil {
+		return err
+	}
+	if p.QueuedDuration, err = parseDuration(aux.QueuedDuration); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (p *PipelineEventObjectAttributes) UnmarshalJSON(data []byte) error {
+	type Alias PipelineEventObjectAttributes
+	aux := &struct {
+		Duration       json.RawMessage `json:"duration"`
+		QueuedDuration json.RawMessage `json:"queued_duration"`
+		*Alias
+	}{
+		Alias: (*Alias)(p),
+	}
+
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+
+	d, err := parseDuration(aux.Duration)
+	if err != nil {
+		return err
+	}
+	p.Duration = int64(d)
+
+	qd, err := parseDuration(aux.QueuedDuration)
+	if err != nil {
+		return err
+	}
+	p.QueuedDuration = int64(qd)
+
+	return nil
+}
+
+func (j *JobEvent) UnmarshalJSON(data []byte) error {
+	type Alias JobEvent
+	aux := &struct {
+		BuildDuration       json.RawMessage `json:"build_duration"`
+		BuildQueuedDuration json.RawMessage `json:"build_queued_duration"`
+		*Alias
+	}{
+		Alias: (*Alias)(j),
+	}
+
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+
+	var err error
+	if j.BuildDuration, err = parseDuration(aux.BuildDuration); err != nil {
+		return err
+	}
+	if j.BuildQueuedDuration, err = parseDuration(aux.BuildQueuedDuration); err != nil {
+		return err
+	}
+
+	return nil
+}
