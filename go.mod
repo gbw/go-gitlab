@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260415201107-50325440f8f2.1
 	buf.build/go/protovalidate v1.2.0
-	buf.build/go/protoyaml v0.6.0
+	buf.build/go/protoyaml v0.7.0
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
 	github.com/google/go-querystring v1.2.0
 	github.com/graph-gophers/graphql-go v1.9.0
