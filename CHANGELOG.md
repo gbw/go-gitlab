@@ -1,3 +1,17 @@
+## 2.28.0
+
+### 🚀 Features
+
+- Add signing_token and related fields to group_hook and project_hook ([!2891](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2891)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+### 🔄 Other Changes
+
+- WithPath already escapes, escaping again causes bad requests ([!2898](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2898)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+
+
+# [2.28.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.27.1...v2.28.0) (2026-05-18)
+
 ## 2.27.1
 
 ### 🐛 Bug Fixes
