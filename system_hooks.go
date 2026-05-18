@@ -38,6 +38,11 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
 		AddHook(opt *AddHookOptions, options ...RequestOptionFunc) (*Hook, *Response, error)
+		// EditHook edits a system hook.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/system_hooks/#update-system-hook
+		EditHook(hook int64, opt *EditHookOptions, options ...RequestOptionFunc) (*Hook, *Response, error)
 		// TestHook tests a system hook.
 		//
 		// GitLab API docs:
@@ -50,6 +55,16 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/system_hooks/#delete-system-hook
 		DeleteHook(hook int64, options ...RequestOptionFunc) (*Response, error)
+		// SetHookURLVariable creates or updates a system hook URL variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/system_hooks/#set-a-url-variable
+		SetHookURLVariable(hook int64, key string, opt *SetHookURLVariableOptions, options ...RequestOptionFunc) (*Response, error)
+		// DeleteHookURLVariable deletes a system hook URL variable.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/system_hooks/#delete-a-url-variable
+		DeleteHookURLVariable(hook int64, key string, options ...RequestOptionFunc) (*Response, error)
 	}
 
 	// SystemHooksService handles communication with the system hooks related
@@ -78,6 +93,8 @@ type Hook struct {
 	RepositoryUpdateEvents bool              `json:"repository_update_events"`
 	EnableSSLVerification  bool              `json:"enable_ssl_verification"`
 	URLVariables           []HookURLVariable `json:"url_variables"`
+	TokenPresent           bool              `json:"token_present"`
+	SigningTokenPresent    bool              `json:"signing_token_present"`
 }
 
 func (h Hook) String() string {
@@ -103,10 +120,12 @@ func (s *SystemHooksService) GetHook(hook int64, options ...RequestOptionFunc) (
 // GitLab API docs:
 // https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
 type AddHookOptions struct {
-	URL                    *string               `url:"url,omitempty" json:"url,omitempty"`
-	Name                   *string               `url:"name,omitempty" json:"name,omitempty"`
-	Description            *string               `url:"description,omitempty" json:"description,omitempty"`
-	Token                  *string               `url:"token,omitempty" json:"token,omitempty"`
+	URL         *string `url:"url,omitempty" json:"url,omitempty"`
+	Name        *string `url:"name,omitempty" json:"name,omitempty"`
+	Description *string `url:"description,omitempty" json:"description,omitempty"`
+	Token       *string `url:"token,omitempty" json:"token,omitempty"`
+	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
+	SigningToken           *string               `url:"signing_token,omitempty" json:"signing_token,omitempty"`
 	PushEvents             *bool                 `url:"push_events,omitempty" json:"push_events,omitempty"`
 	PushEventsBranchFilter *string               `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
 	BranchFilterStrategy   *BranchFilterStrategy `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
@@ -120,6 +139,35 @@ func (s *SystemHooksService) AddHook(opt *AddHookOptions, options ...RequestOpti
 	return do[*Hook](s.client,
 		withMethod(http.MethodPost),
 		withPath("hooks"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+// EditHookOptions represents the available EditHook() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/system_hooks/#update-system-hook
+type EditHookOptions struct {
+	URL         *string `url:"url,omitempty" json:"url,omitempty"`
+	Name        *string `url:"name,omitempty" json:"name,omitempty"`
+	Description *string `url:"description,omitempty" json:"description,omitempty"`
+	Token       *string `url:"token,omitempty" json:"token,omitempty"`
+	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/system_hooks/#update-system-hook
+	SigningToken           *string               `url:"signing_token,omitempty" json:"signing_token,omitempty"`
+	PushEvents             *bool                 `url:"push_events,omitempty" json:"push_events,omitempty"`
+	PushEventsBranchFilter *string               `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
+	BranchFilterStrategy   *BranchFilterStrategy `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
+	TagPushEvents          *bool                 `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
+	MergeRequestsEvents    *bool                 `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
+	RepositoryUpdateEvents *bool                 `url:"repository_update_events,omitempty" json:"repository_update_events,omitempty"`
+	EnableSSLVerification  *bool                 `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
+}
+
+func (s *SystemHooksService) EditHook(hook int64, opt *EditHookOptions, options ...RequestOptionFunc) (*Hook, *Response, error) {
+	return do[*Hook](s.client,
+		withMethod(http.MethodPut),
+		withPath("hooks/%d", hook),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
 	)
@@ -143,6 +191,7 @@ func (h HookEvent) String() string {
 
 func (s *SystemHooksService) TestHook(hook int64, options ...RequestOptionFunc) (*HookEvent, *Response, error) {
 	return do[*HookEvent](s.client,
+		withMethod(http.MethodPost),
 		withPath("hooks/%d", hook),
 		withRequestOpts(options...),
 	)
@@ -152,6 +201,35 @@ func (s *SystemHooksService) DeleteHook(hook int64, options ...RequestOptionFunc
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodDelete),
 		withPath("hooks/%d", hook),
+		withRequestOpts(options...),
+	)
+	return resp, err
+}
+
+// SetHookURLVariable creates or updates a system hook URL variable.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/system_hooks/#set-a-url-variable
+func (s *SystemHooksService) SetHookURLVariable(hook int64, key string, opt *SetHookURLVariableOptions, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](
+		s.client,
+		withMethod(http.MethodPut),
+		withPath("hooks/%d/url_variables/%s", hook, NoEscape{key}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+	return resp, err
+}
+
+// DeleteHookURLVariable deletes a system hook URL variable.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/system_hooks/#delete-a-url-variable
+func (s *SystemHooksService) DeleteHookURLVariable(hook int64, key string, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](
+		s.client,
+		withMethod(http.MethodDelete),
+		withPath("hooks/%d/url_variables/%s", hook, NoEscape{key}),
 		withRequestOpts(options...),
 	)
 	return resp, err

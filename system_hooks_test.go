@@ -129,12 +129,52 @@ func TestSystemHooksService_AddHook(t *testing.T) {
 	require.Equal(t, want, hook)
 }
 
+func TestSystemHooksService_EditHook(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/hooks/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"id": 1,
+			"url": "https://gitlab.example.com/hook",
+			"name": "Test Hook",
+			"description": "An updated test hook",
+			"token_present": true,
+			"signing_token_present": true,
+			"url_variables": [{"key": "abc", "value": "def"}]
+		}`)
+	})
+
+	opt := &EditHookOptions{
+		URL:          Ptr("https://gitlab.example.com/hook"),
+		Name:         Ptr("Test Hook"),
+		Description:  Ptr("An updated test hook"),
+		Token:        Ptr("supersecret"),
+		SigningToken: Ptr("whsec_abc"),
+	}
+
+	hook, _, err := client.SystemHooks.EditHook(1, opt)
+	require.NoError(t, err)
+
+	want := &Hook{
+		ID:                  1,
+		URL:                 "https://gitlab.example.com/hook",
+		Name:                "Test Hook",
+		Description:         "An updated test hook",
+		TokenPresent:        true,
+		SigningTokenPresent: true,
+		URLVariables:        []HookURLVariable{{Key: "abc", Value: "def"}},
+	}
+	require.Equal(t, want, hook)
+}
+
 func TestSystemHooksService_TestHook(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/v4/hooks/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"project_id" : 1,"owner_email" : "example@gitlabhq.com","owner_name" : "Someone",
 				"name" : "Ruby","path" : "ruby","event_name" : "project_create"}`)
 	})
@@ -162,5 +202,32 @@ func TestSystemHooksService_DeleteHook(t *testing.T) {
 	})
 
 	_, err := client.SystemHooks.DeleteHook(1)
+	require.NoError(t, err)
+}
+
+func TestSystemHooksService_SetHookURLVariable(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/hooks/1/url_variables/abc", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		w.WriteHeader(http.StatusCreated)
+	})
+
+	_, err := client.SystemHooks.SetHookURLVariable(1, "abc", &SetHookURLVariableOptions{
+		Value: Ptr("def"),
+	})
+	require.NoError(t, err)
+}
+
+func TestSystemHooksService_DeleteHookURLVariable(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/hooks/1/url_variables/abc", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	_, err := client.SystemHooks.DeleteHookURLVariable(1, "abc")
 	require.NoError(t, err)
 }
