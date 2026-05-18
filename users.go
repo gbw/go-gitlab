@@ -400,6 +400,7 @@ type User struct {
 	TwoFactorEnabled               bool               `json:"two_factor_enabled"`
 	Note                           string             `json:"note"`
 	Identities                     []*UserIdentity    `json:"identities"`
+	SCIMIdentities                 []*SCIMIdentity    `json:"scim_identities"`
 	External                       bool               `json:"external"`
 	PrivateProfile                 bool               `json:"private_profile"`
 	SharedRunnersMinutesLimit      int64              `json:"shared_runners_minutes_limit"`
@@ -415,6 +416,13 @@ type User struct {
 type UserIdentity struct {
 	Provider  string `json:"provider"`
 	ExternUID string `json:"extern_uid"`
+}
+
+// SCIMIdentity represents a SCIM identity for a user.
+type SCIMIdentity struct {
+	ExternUID string `json:"extern_uid"`
+	GroupID   int64  `json:"group_id"`
+	Active    bool   `json:"active"`
 }
 
 // UserAvatar represents a GitLab user avatar.

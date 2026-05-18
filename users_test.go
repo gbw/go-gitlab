@@ -63,6 +63,49 @@ func TestGetUser(t *testing.T) {
 	assert.Equal(t, want, user)
 }
 
+func TestGetUserSCIMIdentities(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a user with multiple SCIM identities (one active, one inactive)
+	mux.HandleFunc("/api/v4/users/5", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_user_with_scim_identities.json")
+	})
+
+	// WHEN retrieving the user
+	user, _, err := client.Users.GetUser(5, &GetUserOptions{})
+
+	// THEN the SCIM identities are correctly unmarshaled
+	assert.NoError(t, err)
+	assert.NotNil(t, user)
+	assert.Len(t, user.SCIMIdentities, 2)
+	assert.Equal(t, &SCIMIdentity{ExternUID: "scim-uid-abc123", GroupID: 10, Active: true}, user.SCIMIdentities[0])
+	assert.Equal(t, &SCIMIdentity{ExternUID: "scim-uid-old456", GroupID: 20, Active: false}, user.SCIMIdentities[1])
+	// AND the regular identities are still correctly unmarshaled
+	assert.Len(t, user.Identities, 1)
+	assert.Equal(t, &UserIdentity{Provider: "saml", ExternUID: "saml-uid-abc123"}, user.Identities[0])
+}
+
+func TestGetUserNoSCIMIdentities(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a user with no scim_identities field in the response
+	mux.HandleFunc("/api/v4/users/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteHTTPResponse(t, w, "testdata/get_user.json")
+	})
+
+	// WHEN retrieving the user
+	user, _, err := client.Users.GetUser(1, &GetUserOptions{})
+
+	// THEN SCIMIdentities is nil (not an empty slice)
+	assert.NoError(t, err)
+	assert.NotNil(t, user)
+	assert.Nil(t, user.SCIMIdentities)
+}
+
 func TestGetUserAdmin(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -115,6 +158,7 @@ func TestGetUserAdmin(t *testing.T) {
 		TwoFactorEnabled: true,
 		Note:             "DMCA Request: 2018-11-05 | DMCA Violation | Abuse | https://gitlab.zendesk.com/agent/tickets/123",
 		Identities:       []*UserIdentity{{Provider: "github", ExternUID: "2435223452345"}},
+		SCIMIdentities:   []*SCIMIdentity{{ExternUID: "be20d8dcc028677c931e04f387", GroupID: 1, Active: true}},
 		NamespaceID:      42,
 	}
 	assert.Equal(t, want, user)
