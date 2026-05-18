@@ -1,3 +1,23 @@
+## 2.27.0
+
+### 🚀 Features
+
+- feat(users): add SCIMIdentities field to User type ([!2888](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2888)) by [dragonrider.](https://gitlab.com/junevm)
+
+### 🔄 Other Changes
+
+- chore(deps): update node docker tag to v26 ([!2890](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2890)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update docker docker tag to v29.4.3 ([!2892](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2892)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.27.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.26.1...v2.27.0) (2026-05-18)
+
+
+### Features
+
+* **users:** add SCIMIdentities field to User type ([ccb318d](https://gitlab.com/gitlab-org/api/client-go/commit/ccb318dc531df3a2d3bf641bb273eb1a777555a4))
+
 ## 2.26.1
 
 ### 🐛 Bug Fixes
