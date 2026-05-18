@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/MakeNowJust/heredoc/v2"
-	"gitlab.com/gitlab-org/api/client-go/v2"
+	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 	"gitlab.com/gitlab-org/api/client-go/v2/config"
 )
 

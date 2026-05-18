@@ -2015,3 +2015,318 @@ func TestVulnerabilityEventUnmarshal(t *testing.T) {
 	assert.Equal(t, "Fix SQL Injection vulnerability", event.ObjectAttributes.Issues[0].Title)
 	assert.Equal(t, "https://example.com/flightjs/Flight/-/issues/10", event.ObjectAttributes.Issues[0].URL)
 }
+
+// parseDuration unit tests
+
+func TestParseDuration_RawNumber(t *testing.T) {
+	t.Parallel()
+	got, err := parseDuration([]byte(`17.1`))
+	require.NoError(t, err)
+	assert.Equal(t, 17.1, got)
+}
+
+func TestParseDuration_QuotedNumber(t *testing.T) {
+	t.Parallel()
+	got, err := parseDuration([]byte(`"17.1"`))
+	require.NoError(t, err)
+	assert.Equal(t, 17.1, got)
+}
+
+func TestParseDuration_Zero(t *testing.T) {
+	t.Parallel()
+	got, err := parseDuration([]byte(`0`))
+	require.NoError(t, err)
+	assert.Equal(t, 0.0, got)
+}
+
+func TestParseDuration_Null(t *testing.T) {
+	t.Parallel()
+	got, err := parseDuration([]byte(`null`))
+	require.NoError(t, err)
+	assert.Equal(t, 0.0, got)
+}
+
+func TestParseDuration_EmptyQuotedString(t *testing.T) {
+	t.Parallel()
+	got, err := parseDuration([]byte(`""`))
+	require.NoError(t, err)
+	assert.Equal(t, 0.0, got)
+}
+
+func TestParseDuration_EmptyBytes(t *testing.T) {
+	t.Parallel()
+	got, err := parseDuration([]byte(``))
+	require.NoError(t, err)
+	assert.Equal(t, 0.0, got)
+}
+
+func TestParseDuration_InvalidString(t *testing.T) {
+	t.Parallel()
+	_, err := parseDuration([]byte(`"not-a-number"`))
+	require.Error(t, err)
+}
+
+// JobEvent marshal/unmarshal tests for quoted durations
+
+func TestJobEventUnmarshal_QuotedDurations(t *testing.T) {
+	t.Parallel()
+
+	raw := `{
+		"object_kind": "build",
+		"build_id": 1,
+		"build_duration": "49.5",
+		"build_queued_duration": "0.19"
+	}`
+
+	var event JobEvent
+	require.NoError(t, json.Unmarshal([]byte(raw), &event))
+	assert.Equal(t, 49.5, event.BuildDuration)
+	assert.Equal(t, 0.19, event.BuildQueuedDuration)
+}
+
+func TestJobEventUnmarshal_NullDurations(t *testing.T) {
+	t.Parallel()
+
+	raw := `{
+		"object_kind": "build",
+		"build_id": 1,
+		"build_duration": null,
+		"build_queued_duration": null
+	}`
+
+	var event JobEvent
+	require.NoError(t, json.Unmarshal([]byte(raw), &event))
+	assert.Equal(t, 0.0, event.BuildDuration)
+	assert.Equal(t, 0.0, event.BuildQueuedDuration)
+}
+
+func TestJobEventMarshal_ProducesNumeric(t *testing.T) {
+	t.Parallel()
+
+	event := JobEvent{
+		BuildDuration:       49.5,
+		BuildQueuedDuration: 0.19,
+	}
+
+	data, err := json.Marshal(&event)
+	require.NoError(t, err)
+
+	var raw map[string]any
+	require.NoError(t, json.Unmarshal(data, &raw))
+	assert.Equal(t, 49.5, raw["build_duration"])
+	assert.Equal(t, 0.19, raw["build_queued_duration"])
+}
+
+// PipelineEventBuild marshal/unmarshal tests for quoted durations
+
+func TestPipelineEventBuildUnmarshal_QuotedDurations(t *testing.T) {
+	t.Parallel()
+
+	raw := `{
+		"id": 99,
+		"stage": "test",
+		"name": "unit",
+		"status": "success",
+		"duration": "17.1",
+		"queued_duration": "3.5"
+	}`
+
+	var build PipelineEventBuild
+	require.NoError(t, json.Unmarshal([]byte(raw), &build))
+	assert.Equal(t, 17.1, build.Duration)
+	assert.Equal(t, 3.5, build.QueuedDuration)
+}
+
+func TestPipelineEventBuildUnmarshal_NullDurations(t *testing.T) {
+	t.Parallel()
+
+	raw := `{
+		"id": 99,
+		"stage": "test",
+		"name": "unit",
+		"status": "success",
+		"duration": null,
+		"queued_duration": null
+	}`
+
+	var build PipelineEventBuild
+	require.NoError(t, json.Unmarshal([]byte(raw), &build))
+	assert.Equal(t, 0.0, build.Duration)
+	assert.Equal(t, 0.0, build.QueuedDuration)
+}
+
+func TestPipelineEventBuildMarshal_ProducesNumeric(t *testing.T) {
+	t.Parallel()
+
+	build := PipelineEventBuild{
+		ID:             99,
+		Duration:       17.1,
+		QueuedDuration: 3.5,
+	}
+
+	data, err := json.Marshal(&build)
+	require.NoError(t, err)
+
+	var raw map[string]any
+	require.NoError(t, json.Unmarshal(data, &raw))
+	assert.Equal(t, 17.1, raw["duration"])
+	assert.Equal(t, 3.5, raw["queued_duration"])
+}
+
+// PipelineEventObjectAttributes marshal/unmarshal tests for quoted durations
+
+func TestPipelineEventObjectAttributesUnmarshal_QuotedDurations(t *testing.T) {
+	t.Parallel()
+
+	raw := `{
+		"id": 1,
+		"iid": 1,
+		"ref": "main",
+		"status": "success",
+		"duration": "63",
+		"queued_duration": "12"
+	}`
+
+	var attrs PipelineEventObjectAttributes
+	require.NoError(t, json.Unmarshal([]byte(raw), &attrs))
+	assert.Equal(t, int64(63), attrs.Duration)
+	assert.Equal(t, int64(12), attrs.QueuedDuration)
+}
+
+func TestPipelineEventObjectAttributesUnmarshal_NullDurations(t *testing.T) {
+	t.Parallel()
+
+	raw := `{
+		"id": 1,
+		"iid": 1,
+		"ref": "main",
+		"status": "success",
+		"duration": null,
+		"queued_duration": null
+	}`
+
+	var attrs PipelineEventObjectAttributes
+	require.NoError(t, json.Unmarshal([]byte(raw), &attrs))
+	assert.Equal(t, int64(0), attrs.Duration)
+	assert.Equal(t, int64(0), attrs.QueuedDuration)
+}
+
+func TestPipelineEventObjectAttributesMarshal_ProducesNumeric(t *testing.T) {
+	t.Parallel()
+
+	attrs := PipelineEventObjectAttributes{
+		Duration:       63,
+		QueuedDuration: 12,
+	}
+
+	data, err := json.Marshal(&attrs)
+	require.NoError(t, err)
+
+	var raw map[string]any
+	require.NoError(t, json.Unmarshal(data, &raw))
+	assert.Equal(t, float64(63), raw["duration"])
+	assert.Equal(t, float64(12), raw["queued_duration"])
+}
+
+// Error case tests for UnmarshalJSON on affected structs
+
+func TestJobEventUnmarshal_InvalidJSON(t *testing.T) {
+	t.Parallel()
+	raw := `{not valid json`
+	var event JobEvent
+	require.Error(t, json.Unmarshal([]byte(raw), &event))
+}
+
+func TestJobEventUnmarshal_InvalidDuration(t *testing.T) {
+	t.Parallel()
+	raw := `{
+		"object_kind": "build",
+		"build_id": 1,
+		"build_duration": "not-a-number",
+		"build_queued_duration": "0.19"
+	}`
+	var event JobEvent
+	require.Error(t, json.Unmarshal([]byte(raw), &event))
+}
+
+func TestJobEventUnmarshal_InvalidQueuedDuration(t *testing.T) {
+	t.Parallel()
+	raw := `{
+		"object_kind": "build",
+		"build_id": 1,
+		"build_duration": "49.5",
+		"build_queued_duration": "not-a-number"
+	}`
+	var event JobEvent
+	require.Error(t, json.Unmarshal([]byte(raw), &event))
+}
+
+func TestPipelineEventBuildUnmarshal_InvalidJSON(t *testing.T) {
+	t.Parallel()
+	raw := `{not valid json`
+	var build PipelineEventBuild
+	require.Error(t, json.Unmarshal([]byte(raw), &build))
+}
+
+func TestPipelineEventBuildUnmarshal_InvalidDuration(t *testing.T) {
+	t.Parallel()
+	raw := `{
+		"id": 99,
+		"stage": "test",
+		"name": "unit",
+		"status": "success",
+		"duration": "not-a-number",
+		"queued_duration": "3.5"
+	}`
+	var build PipelineEventBuild
+	require.Error(t, json.Unmarshal([]byte(raw), &build))
+}
+
+func TestPipelineEventBuildUnmarshal_InvalidQueuedDuration(t *testing.T) {
+	t.Parallel()
+	raw := `{
+		"id": 99,
+		"stage": "test",
+		"name": "unit",
+		"status": "success",
+		"duration": "17.1",
+		"queued_duration": "not-a-number"
+	}`
+	var build PipelineEventBuild
+	require.Error(t, json.Unmarshal([]byte(raw), &build))
+}
+
+func TestPipelineEventObjectAttributesUnmarshal_InvalidJSON(t *testing.T) {
+	t.Parallel()
+	raw := `{not valid json`
+	var attrs PipelineEventObjectAttributes
+	require.Error(t, json.Unmarshal([]byte(raw), &attrs))
+}
+
+func TestPipelineEventObjectAttributesUnmarshal_InvalidDuration(t *testing.T) {
+	t.Parallel()
+	raw := `{
+		"id": 1,
+		"iid": 1,
+		"ref": "main",
+		"status": "success",
+		"duration": "not-a-number",
+		"queued_duration": "12"
+	}`
+	var attrs PipelineEventObjectAttributes
+	require.Error(t, json.Unmarshal([]byte(raw), &attrs))
+}
+
+func TestPipelineEventObjectAttributesUnmarshal_InvalidQueuedDuration(t *testing.T) {
+	t.Parallel()
+	raw := `{
+		"id": 1,
+		"iid": 1,
+		"ref": "main",
+		"status": "success",
+		"duration": "63",
+		"queued_duration": "not-a-number"
+	}`
+	var attrs PipelineEventObjectAttributes
+	require.Error(t, json.Unmarshal([]byte(raw), &attrs))
+}
