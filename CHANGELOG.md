@@ -1,3 +1,22 @@
+## 2.27.1
+
+### 🐛 Bug Fixes
+
+- fix: handle string-encoded and null durations in webhooks that happen when Sidekiq runs in compress mode with large payloads ([!2862](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2862)) by [Emmanuel 326](https://gitlab.com/Emmanuel326)
+
+### 🔄 Other Changes
+
+- chore(deps): update module buf.build/go/protoyaml to v0.7.0 ([!2894](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2894)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+## [2.27.1](https://gitlab.com/gitlab-org/api/client-go/compare/v2.27.0...v2.27.1) (2026-05-18)
+
+
+### Bug Fixes
+
+* handle string-encoded and null durations in webhooks that happen when Sidekiq runs in compress mode with large payloads ([8bfe7d3](https://gitlab.com/gitlab-org/api/client-go/commit/8bfe7d3effc77dc370ceee9939b13d81c6d383d0))
+
 ## 2.27.0
 
 ### 🚀 Features
