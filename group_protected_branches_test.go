@@ -129,6 +129,21 @@ func TestGroupGetProtectedBranch(t *testing.T) {
 	assert.Equal(t, want, protectedBranch)
 }
 
+func TestGroupGetProtectedBranch_EscapesBranchName(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/groups/1/protected_branches/release%2F1%2E0", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testURL(t, r, "/api/v4/groups/1/protected_branches/release%2F1%2E0")
+		fmt.Fprint(w, `{"id":1,"name":"release/1.0"}`)
+	})
+	protectedBranch, resp, err := client.GroupProtectedBranches.GetProtectedBranch(1, "release/1.0")
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, &GroupProtectedBranch{ID: 1, Name: "release/1.0"}, protectedBranch)
+}
+
 func TestGroupProtectRepositoryBranches(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

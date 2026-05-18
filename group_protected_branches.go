@@ -2,7 +2,6 @@ package gitlab
 
 import (
 	"net/http"
-	"net/url"
 )
 
 type (
@@ -100,7 +99,7 @@ func (s *GroupProtectedBranchesService) ListProtectedBranches(gid any, opt *List
 func (s *GroupProtectedBranchesService) GetProtectedBranch(gid any, branch string, options ...RequestOptionFunc) (*GroupProtectedBranch, *Response, error) {
 	return do[*GroupProtectedBranch](s.client,
 		withMethod(http.MethodGet),
-		withPath("groups/%s/protected_branches/%s", GroupID{gid}, url.PathEscape(branch)),
+		withPath("groups/%s/protected_branches/%s", GroupID{gid}, branch),
 		withRequestOpts(options...),
 	)
 }
@@ -161,7 +160,7 @@ type UpdateGroupProtectedBranchOptions struct {
 func (s *GroupProtectedBranchesService) UpdateProtectedBranch(gid any, branch string, opt *UpdateGroupProtectedBranchOptions, options ...RequestOptionFunc) (*GroupProtectedBranch, *Response, error) {
 	return do[*GroupProtectedBranch](s.client,
 		withMethod(http.MethodPatch),
-		withPath("groups/%s/protected_branches/%s", GroupID{gid}, url.PathEscape(branch)),
+		withPath("groups/%s/protected_branches/%s", GroupID{gid}, branch),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
 	)
@@ -170,7 +169,7 @@ func (s *GroupProtectedBranchesService) UpdateProtectedBranch(gid any, branch st
 func (s *GroupProtectedBranchesService) UnprotectRepositoryBranches(gid any, branch string, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodDelete),
-		withPath("groups/%s/protected_branches/%s", GroupID{gid}, url.PathEscape(branch)),
+		withPath("groups/%s/protected_branches/%s", GroupID{gid}, branch),
 		withRequestOpts(options...),
 	)
 	return resp, err
