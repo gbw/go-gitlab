@@ -128,6 +128,95 @@ func (c *MockSystemHooksServiceInterfaceDeleteHookCall) DoAndReturn(f func(int64
 	return c
 }
 
+// DeleteHookURLVariable mocks base method.
+func (m *MockSystemHooksServiceInterface) DeleteHookURLVariable(hook int64, key string, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{hook, key}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteHookURLVariable", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteHookURLVariable indicates an expected call of DeleteHookURLVariable.
+func (mr *MockSystemHooksServiceInterfaceMockRecorder) DeleteHookURLVariable(hook, key any, options ...any) *MockSystemHooksServiceInterfaceDeleteHookURLVariableCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{hook, key}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteHookURLVariable", reflect.TypeOf((*MockSystemHooksServiceInterface)(nil).DeleteHookURLVariable), varargs...)
+	return &MockSystemHooksServiceInterfaceDeleteHookURLVariableCall{Call: call}
+}
+
+// MockSystemHooksServiceInterfaceDeleteHookURLVariableCall wrap *gomock.Call
+type MockSystemHooksServiceInterfaceDeleteHookURLVariableCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockSystemHooksServiceInterfaceDeleteHookURLVariableCall) Return(arg0 *gitlab.Response, arg1 error) *MockSystemHooksServiceInterfaceDeleteHookURLVariableCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockSystemHooksServiceInterfaceDeleteHookURLVariableCall) Do(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceDeleteHookURLVariableCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockSystemHooksServiceInterfaceDeleteHookURLVariableCall) DoAndReturn(f func(int64, string, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceDeleteHookURLVariableCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// EditHook mocks base method.
+func (m *MockSystemHooksServiceInterface) EditHook(hook int64, opt *gitlab.EditHookOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{hook, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "EditHook", varargs...)
+	ret0, _ := ret[0].(*gitlab.Hook)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// EditHook indicates an expected call of EditHook.
+func (mr *MockSystemHooksServiceInterfaceMockRecorder) EditHook(hook, opt any, options ...any) *MockSystemHooksServiceInterfaceEditHookCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{hook, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EditHook", reflect.TypeOf((*MockSystemHooksServiceInterface)(nil).EditHook), varargs...)
+	return &MockSystemHooksServiceInterfaceEditHookCall{Call: call}
+}
+
+// MockSystemHooksServiceInterfaceEditHookCall wrap *gomock.Call
+type MockSystemHooksServiceInterfaceEditHookCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockSystemHooksServiceInterfaceEditHookCall) Return(arg0 *gitlab.Hook, arg1 *gitlab.Response, arg2 error) *MockSystemHooksServiceInterfaceEditHookCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockSystemHooksServiceInterfaceEditHookCall) Do(f func(int64, *gitlab.EditHookOptions, ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceEditHookCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockSystemHooksServiceInterfaceEditHookCall) DoAndReturn(f func(int64, *gitlab.EditHookOptions, ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceEditHookCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetHook mocks base method.
 func (m *MockSystemHooksServiceInterface) GetHook(hook int64, options ...gitlab.RequestOptionFunc) (*gitlab.Hook, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -213,6 +302,50 @@ func (c *MockSystemHooksServiceInterfaceListHooksCall) Do(f func(...gitlab.Reque
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockSystemHooksServiceInterfaceListHooksCall) DoAndReturn(f func(...gitlab.RequestOptionFunc) ([]*gitlab.Hook, *gitlab.Response, error)) *MockSystemHooksServiceInterfaceListHooksCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetHookURLVariable mocks base method.
+func (m *MockSystemHooksServiceInterface) SetHookURLVariable(hook int64, key string, opt *gitlab.SetHookURLVariableOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{hook, key, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetHookURLVariable", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetHookURLVariable indicates an expected call of SetHookURLVariable.
+func (mr *MockSystemHooksServiceInterfaceMockRecorder) SetHookURLVariable(hook, key, opt any, options ...any) *MockSystemHooksServiceInterfaceSetHookURLVariableCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{hook, key, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHookURLVariable", reflect.TypeOf((*MockSystemHooksServiceInterface)(nil).SetHookURLVariable), varargs...)
+	return &MockSystemHooksServiceInterfaceSetHookURLVariableCall{Call: call}
+}
+
+// MockSystemHooksServiceInterfaceSetHookURLVariableCall wrap *gomock.Call
+type MockSystemHooksServiceInterfaceSetHookURLVariableCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockSystemHooksServiceInterfaceSetHookURLVariableCall) Return(arg0 *gitlab.Response, arg1 error) *MockSystemHooksServiceInterfaceSetHookURLVariableCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockSystemHooksServiceInterfaceSetHookURLVariableCall) Do(f func(int64, string, *gitlab.SetHookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceSetHookURLVariableCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockSystemHooksServiceInterfaceSetHookURLVariableCall) DoAndReturn(f func(int64, string, *gitlab.SetHookURLVariableOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockSystemHooksServiceInterfaceSetHookURLVariableCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

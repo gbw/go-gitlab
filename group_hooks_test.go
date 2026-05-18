@@ -142,11 +142,14 @@ func TestGetGroupHook(t *testing.T) {
 	"member_events": true,
 	"enable_ssl_verification": true,
 	"alert_status": "executable",
+	"disabled_until": "2026-01-02T03:04:05Z",
 	"created_at": "2012-10-12T17:04:47Z",
 	"resource_access_token_events": true,
 	"project_events": true,
 	"milestone_events": true,
 	"vulnerability_events": true,
+	"token_present": true,
+	"signing_token_present": true,
 	"custom_headers": [
 		{"key": "Authorization"},
 		{"key": "OtherHeader"}
@@ -159,6 +162,7 @@ func TestGetGroupHook(t *testing.T) {
 	require.NotNil(t, resp)
 
 	datePointer := time.Date(2012, time.October, 12, 17, 4, 47, 0, time.UTC)
+	disabledUntil := time.Date(2026, time.January, 2, 3, 4, 5, 0, time.UTC)
 	want := &GroupHook{
 		ID:                        1,
 		URL:                       "http://example.com/hook",
@@ -180,11 +184,14 @@ func TestGetGroupHook(t *testing.T) {
 		MemberEvents:              true,
 		EnableSSLVerification:     true,
 		AlertStatus:               "executable",
+		DisabledUntil:             &disabledUntil,
 		CreatedAt:                 &datePointer,
 		ResourceAccessTokenEvents: true,
 		ProjectEvents:             true,
 		MilestoneEvents:           true,
 		VulnerabilityEvents:       true,
+		TokenPresent:              true,
+		SigningTokenPresent:       true,
 		CustomHeaders: []*HookCustomHeader{
 			{
 				Key: "Authorization",
@@ -219,6 +226,10 @@ func TestAddGroupHook(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/groups/1/hooks", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testBodyJSON(t, r, map[string]any{
+			"url":           "http://www.example.com/hook",
+			"signing_token": "whsec_dGVzdA==",
+		})
 		fmt.Fprint(w, `
 {
 	"id": 1,
@@ -255,7 +266,8 @@ func TestAddGroupHook(t *testing.T) {
 
 	url := "http://www.example.com/hook"
 	opt := &AddGroupHookOptions{
-		URL: &url,
+		URL:          &url,
+		SigningToken: Ptr("whsec_dGVzdA=="),
 	}
 
 	groupHooks, resp, err := client.Groups.AddGroupHook(1, opt)
@@ -311,6 +323,10 @@ func TestEditGroupHook(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/groups/1/hooks/1", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
+		testBodyJSON(t, r, map[string]any{
+			"url":           "http://www.example.com/hook",
+			"signing_token": "whsec_dGVzdA==",
+		})
 		fmt.Fprint(w, `
 {
 	"id": 1,
@@ -347,7 +363,8 @@ func TestEditGroupHook(t *testing.T) {
 
 	url := "http://www.example.com/hook"
 	opt := &EditGroupHookOptions{
-		URL: &url,
+		URL:          &url,
+		SigningToken: Ptr("whsec_dGVzdA=="),
 	}
 
 	groupHooks, resp, err := client.Groups.EditGroupHook(1, 1, opt)
