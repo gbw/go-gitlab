@@ -1,3 +1,22 @@
+## 2.29.0
+
+### 🚀 Features
+
+- Add support for project setting `protect_merge_request_pipelines` ([!2896](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2896)) by [Gatla Vishweshwar Reddy](https://gitlab.com/gatlavishweshwarreddy26)
+
+### 🐛 Bug Fixes
+
+- fix(orbit): add QueryRaw for streaming llm/GOON response body verbatim ([!2897](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2897)) by [Dmitry Gruzd](https://gitlab.com/dgruzd)
+
+
+
+# [2.29.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.28.0...v2.29.0) (2026-05-19)
+
+
+### Bug Fixes
+
+* **orbit:** add QueryRaw for streaming llm/GOON response body verbatim ([a849302](https://gitlab.com/gitlab-org/api/client-go/commit/a8493022225b928aaa340df86fc4d09c2d22c1f4))
+
 ## 2.28.0
 
 ### 🚀 Features
