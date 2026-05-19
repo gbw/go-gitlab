@@ -48,6 +48,22 @@ func TestListProjects(t *testing.T) {
 			`[{"id":1, "ci_id_token_sub_claim_components": ["project_path", "ref_type"]},{"id":2}]`,
 			[]*Project{{ID: 1, CIIdTokenSubClaimComponents: []string{"project_path", "ref_type"}}, {ID: 2}},
 		},
+		{
+			// GIVEN a project response with protect_merge_request_pipelines set to true
+			// WHEN the response is deserialized
+			// THEN the field should be true
+			"with protect_merge_request_pipelines true",
+			`[{"id":1, "protect_merge_request_pipelines": true},{"id":2}]`,
+			[]*Project{{ID: 1, ProtectMergeRequestPipelines: true}, {ID: 2}},
+		},
+		{
+			// GIVEN a project response with protect_merge_request_pipelines set to false
+			// WHEN the response is deserialized
+			// THEN the field should be false
+			"with protect_merge_request_pipelines false",
+			`[{"id":1, "protect_merge_request_pipelines": false},{"id":2}]`,
+			[]*Project{{ID: 1, ProtectMergeRequestPipelines: false}, {ID: 2}},
+		},
 	}
 
 	for _, testCase := range testCases {

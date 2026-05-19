@@ -481,6 +481,7 @@ type Project struct {
 	ModelRegistryAccessLevel                  AccessControlValue                          `json:"model_registry_access_level"`
 	PreReceiveSecretDetectionEnabled          bool                                        `json:"pre_receive_secret_detection_enabled"`
 	AutoDuoCodeReviewEnabled                  bool                                        `json:"auto_duo_code_review_enabled"`
+	ProtectMergeRequestPipelines              bool                                        `json:"protect_merge_request_pipelines"`
 	MergeRequestTitleRegex                    string                                      `json:"merge_request_title_regex"`
 	MergeRequestTitleRegexDescription         string                                      `json:"merge_request_title_regex_description"`
 	// Deprecated: Use PackageRegistryAccessLevel instead.
@@ -896,6 +897,7 @@ type CreateProjectOptions struct {
 	MonitorAccessLevel                        *AccessControlValue                  `url:"monitor_access_level,omitempty" json:"monitor_access_level,omitempty"`
 	RemoveSourceBranchAfterMerge              *bool                                `url:"remove_source_branch_after_merge,omitempty" json:"remove_source_branch_after_merge,omitempty"`
 	PrintingMergeRequestLinkEnabled           *bool                                `url:"printing_merge_request_link_enabled,omitempty" json:"printing_merge_request_link_enabled,omitempty"`
+	ProtectMergeRequestPipelines              *bool                                `url:"protect_merge_request_pipelines,omitempty" json:"protect_merge_request_pipelines,omitempty"`
 	PublicJobs                                *bool                                `url:"public_jobs,omitempty" json:"public_jobs,omitempty"`
 	RepositoryAccessLevel                     *AccessControlValue                  `url:"repository_access_level,omitempty" json:"repository_access_level,omitempty"`
 	RepositoryStorage                         *string                              `url:"repository_storage,omitempty" json:"repository_storage,omitempty"`
@@ -1105,6 +1107,7 @@ type EditProjectOptions struct {
 	RemoveSourceBranchAfterMerge              *bool                                        `url:"remove_source_branch_after_merge,omitempty" json:"remove_source_branch_after_merge,omitempty"`
 	PreventMergeWithoutJiraIssue              *bool                                        `url:"prevent_merge_without_jira_issue,omitempty" json:"prevent_merge_without_jira_issue,omitempty"`
 	PrintingMergeRequestLinkEnabled           *bool                                        `url:"printing_merge_request_link_enabled,omitempty" json:"printing_merge_request_link_enabled,omitempty"`
+	ProtectMergeRequestPipelines              *bool                                        `url:"protect_merge_request_pipelines,omitempty" json:"protect_merge_request_pipelines,omitempty"`
 	RepositoryAccessLevel                     *AccessControlValue                          `url:"repository_access_level,omitempty" json:"repository_access_level,omitempty"`
 	RepositoryStorage                         *string                                      `url:"repository_storage,omitempty" json:"repository_storage,omitempty"`
 	RequestAccessEnabled                      *bool                                        `url:"request_access_enabled,omitempty" json:"request_access_enabled,omitempty"`
