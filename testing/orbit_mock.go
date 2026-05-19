@@ -9,6 +9,7 @@
 package testing
 
 import (
+	io "io"
 	reflect "reflect"
 
 	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
@@ -259,6 +260,50 @@ func (c *MockOrbitServiceInterfaceQueryCall) Do(f func(*gitlab.OrbitQueryRequest
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockOrbitServiceInterfaceQueryCall) DoAndReturn(f func(*gitlab.OrbitQueryRequest, ...gitlab.RequestOptionFunc) (*gitlab.OrbitQueryResult, *gitlab.Response, error)) *MockOrbitServiceInterfaceQueryCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// QueryRaw mocks base method.
+func (m *MockOrbitServiceInterface) QueryRaw(opt *gitlab.OrbitQueryRequest, w io.Writer, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{opt, w}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "QueryRaw", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryRaw indicates an expected call of QueryRaw.
+func (mr *MockOrbitServiceInterfaceMockRecorder) QueryRaw(opt, w any, options ...any) *MockOrbitServiceInterfaceQueryRawCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{opt, w}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryRaw", reflect.TypeOf((*MockOrbitServiceInterface)(nil).QueryRaw), varargs...)
+	return &MockOrbitServiceInterfaceQueryRawCall{Call: call}
+}
+
+// MockOrbitServiceInterfaceQueryRawCall wrap *gomock.Call
+type MockOrbitServiceInterfaceQueryRawCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockOrbitServiceInterfaceQueryRawCall) Return(arg0 *gitlab.Response, arg1 error) *MockOrbitServiceInterfaceQueryRawCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockOrbitServiceInterfaceQueryRawCall) Do(f func(*gitlab.OrbitQueryRequest, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockOrbitServiceInterfaceQueryRawCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockOrbitServiceInterfaceQueryRawCall) DoAndReturn(f func(*gitlab.OrbitQueryRequest, io.Writer, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockOrbitServiceInterfaceQueryRawCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

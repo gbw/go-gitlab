@@ -17,6 +17,7 @@
 package gitlab
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -343,6 +344,87 @@ func TestOrbitService_Query_NamespaceForbidden(t *testing.T) {
 	require.NotNil(t, resp)
 	assert.Equal(t, http.StatusForbidden, resp.StatusCode)
 	assert.Nil(t, result)
+}
+
+func TestOrbitService_QueryRaw_LLMFormat(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/query endpoint returns GOON/TOON plain text for response_format=llm
+	mux, client := setup(t)
+
+	goonBody := "@header\nquery_type:traversal\ngoon_version:1.0.0\nnodes:1\nedges:0\n@nodes\nProject(1):\n278964 name=GitLab\n@edges\n"
+
+	mux.HandleFunc("/api/v4/orbit/query", func(w http.ResponseWriter, r *http.Request) {
+		// AND the request must be POST with the llm response_format
+		testMethod(t, r, http.MethodPost)
+		assert.Equal(t, "application/json", r.Header.Get("Content-Type"))
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		fmt.Fprint(w, goonBody)
+	})
+
+	// WHEN QueryRaw is called with response_format=llm
+	var buf bytes.Buffer
+	resp, err := client.Orbit.QueryRaw(&OrbitQueryRequest{
+		Query:          json.RawMessage(`{"query_type":"traversal"}`),
+		ResponseFormat: Ptr(OrbitResponseFormatLLM),
+	}, &buf)
+
+	// THEN the GOON bytes are forwarded verbatim — no JSON decode is attempted
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, goonBody, buf.String())
+}
+
+func TestOrbitService_QueryRaw_RawFormat(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/query endpoint returns compact JSON for response_format=raw
+	mux, client := setup(t)
+
+	// The server returns compact (non-indented) JSON — QueryRaw must not reformat it.
+	compactJSON := `{"result":[{"_id":"1","_type":"Project","name":"alpha"}],"query_type":"traversal","row_count":1}`
+
+	mux.HandleFunc("/api/v4/orbit/query", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, compactJSON)
+	})
+
+	// WHEN QueryRaw is called with response_format=raw
+	var buf bytes.Buffer
+	resp, err := client.Orbit.QueryRaw(&OrbitQueryRequest{
+		Query:          json.RawMessage(`{"query_type":"traversal"}`),
+		ResponseFormat: Ptr(OrbitResponseFormatRaw),
+	}, &buf)
+
+	// THEN the server's bytes are forwarded byte-for-byte, with no re-marshaling.
+	// Intentionally byte-exact: assert.JSONEq would accept re-encoded JSON with
+	// different whitespace/key order, defeating the purpose of this test.
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	assert.Equal(t, []byte(compactJSON), buf.Bytes()) //nolint:testifylint // byte-exact verbatim check; JSONEq is intentionally too weak here
+}
+
+func TestOrbitService_QueryRaw_NonTwoXXReturnsError(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/query endpoint returns 403 (no enabled namespace)
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/orbit/query", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		w.WriteHeader(http.StatusForbidden)
+		fmt.Fprint(w, `{"message":"403 No Knowledge Graph enabled namespaces available"}`)
+	})
+
+	// WHEN QueryRaw is called
+	var buf bytes.Buffer
+	resp, err := client.Orbit.QueryRaw(&OrbitQueryRequest{
+		Query: json.RawMessage(`{"query_type":"traversal"}`),
+	}, &buf)
+
+	// THEN an error is returned and w is not written
+	require.Error(t, err)
+	require.NotNil(t, resp)
+	assert.Equal(t, http.StatusForbidden, resp.StatusCode)
+	assert.Empty(t, buf.String(), "w must not be written on error")
 }
 
 func TestOrbitService_GetGraphStatus_ByNamespaceID(t *testing.T) {

@@ -18,6 +18,7 @@ package gitlab
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
 	"time"
 )
@@ -68,6 +69,19 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/orbit/#post-query
 		Query(opt *OrbitQueryRequest, options ...RequestOptionFunc) (*OrbitQueryResult, *Response, error)
+
+		// QueryRaw executes an Orbit (Knowledge Graph) query and
+		// writes the raw response body verbatim to w, without any
+		// JSON decoding. Use this when response_format is "llm",
+		// which returns GOON/TOON text (Content-Type: text/plain)
+		// that cannot be decoded into *OrbitQueryResult.
+		//
+		// Note: This API is experimental and may change or be
+		// removed in future versions.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/orbit/#post-query
+		QueryRaw(opt *OrbitQueryRequest, w io.Writer, options ...RequestOptionFunc) (*Response, error)
 
 		// GetGraphStatus returns the indexing status of the Knowledge
 		// Graph for a namespace or project.
@@ -344,6 +358,12 @@ func (s *OrbitService) GetTools(options ...RequestOptionFunc) (*OrbitTools, *Res
 // sets `Content-Type: application/json` automatically — there is no
 // need to manage the header manually.
 //
+// Query decodes the response body as JSON into *OrbitQueryResult.
+// This works correctly for response_format="raw" (JSON envelope), but
+// fails for response_format="llm", which returns GOON/TOON plain text
+// beginning with "@header". Use QueryRaw for the "llm" format or when
+// you want to forward the server's bytes verbatim.
+//
 // Note: This API is experimental and may change or be removed in
 // future versions.
 //
@@ -355,6 +375,39 @@ func (s *OrbitService) Query(opt *OrbitQueryRequest, options ...RequestOptionFun
 		withAPIOpts(opt),
 		withRequestOpts(options...),
 	)
+}
+
+// QueryRaw executes an Orbit (Knowledge Graph) query against
+// `POST /api/v4/orbit/query` and writes the response body verbatim
+// to w, bypassing any JSON decoding.
+//
+// Use QueryRaw instead of Query when response_format is "llm": the
+// Orbit API returns GOON/TOON plain text (Content-Type: text/plain)
+// for that format, whose first byte is "@" (the GOON header marker).
+// Passing the response through json.NewDecoder — as Query does —
+// produces an "invalid character '@' looking for beginning of value"
+// error. QueryRaw avoids this by streaming bytes from the wire
+// directly into w.
+//
+// QueryRaw is also the right choice when you want to forward the
+// server's exact bytes to a downstream consumer (CLI output, proxy,
+// log) without any key-reordering or whitespace changes that
+// re-marshaling through a typed struct would introduce.
+//
+// Non-2xx responses are still returned as errors via the standard
+// CheckResponse path; w is only written on success.
+//
+// Note: This API is experimental and may change or be removed in
+// future versions.
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/#post-query
+func (s *OrbitService) QueryRaw(opt *OrbitQueryRequest, w io.Writer, options ...RequestOptionFunc) (*Response, error) {
+	req, err := s.client.NewRequest(http.MethodPost, "orbit/query", opt, options)
+	if err != nil {
+		return nil, err
+	}
+
+	return s.client.Do(req, w)
 }
 
 // GetGraphStatusOptions represents the available GetGraphStatus()
