@@ -1,3 +1,18 @@
+## 2.30.0
+
+### 🚀 Features
+
+- feat(orbit): add GetDsl for /api/v4/orbit/schema/dsl ([!2901](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2901)) by [Michael Angelo Rivera](https://gitlab.com/michaelangeloio)
+
+
+
+# [2.30.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.29.0...v2.30.0) (2026-05-20)
+
+
+### Features
+
+* **orbit:** add GetDsl for /api/v4/orbit/schema/dsl ([530031c](https://gitlab.com/gitlab-org/api/client-go/commit/530031c2854b05d05f69815ea3a7ca8fb65341a5))
+
 ## 2.29.0
 
 ### 🚀 Features
