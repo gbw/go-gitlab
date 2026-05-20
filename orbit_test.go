@@ -231,11 +231,52 @@ func TestOrbitService_GetTools(t *testing.T) {
 	require.NotNil(t, resp)
 	require.Len(t, tools.Tools, 2)
 	assert.Equal(t, "query_graph", tools.Tools[0].Name)
-	assert.JSONEq(t,
+	assert.JSONEq(
+		t,
 		`{"type": "object", "properties": {"query": {}}}`,
 		string(tools.Tools[0].Parameters),
 	)
 	assert.Equal(t, "get_graph_schema", tools.Tools[1].Name)
+}
+
+func TestOrbitService_GetDsl_RawFormat(t *testing.T) {
+	t.Parallel()
+	// GIVEN a DSL endpoint returning a JSON Schema body
+	mux, client := setup(t)
+
+	body := `{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"QueryDSL","type":"object"}`
+	mux.HandleFunc("/api/v4/orbit/schema/dsl", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, body)
+	})
+
+	// WHEN GetDsl is called
+	dsl, resp, err := client.Orbit.GetDsl(nil)
+
+	// THEN the body is returned verbatim as a string
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	assert.Equal(t, body, dsl)
+}
+
+func TestOrbitService_GetDsl_LLMFormat(t *testing.T) {
+	t.Parallel()
+	// GIVEN a DSL endpoint returning a JSON-encoded TOON string for llm
+	mux, client := setup(t)
+
+	body := `"QueryDSL v2.1.0:\nquery_type: traversal | search"`
+	mux.HandleFunc("/api/v4/orbit/schema/dsl", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		assert.Equal(t, "llm", r.URL.Query().Get("response_format"))
+		fmt.Fprint(w, body)
+	})
+
+	// WHEN GetDsl is called with format=llm
+	dsl, _, err := client.Orbit.GetDsl(&GetOrbitDslOptions{ResponseFormat: Ptr(OrbitResponseFormatLLM)})
+
+	// THEN the body is returned verbatim
+	require.NoError(t, err)
+	assert.Equal(t, body, dsl)
 }
 
 func TestOrbitService_Query(t *testing.T) {
@@ -289,7 +330,8 @@ func TestOrbitService_Query(t *testing.T) {
 	assert.Equal(t, "traversal", result.QueryType)
 	assert.Equal(t, []string{"SELECT ..."}, result.RawQueryStrings)
 	assert.Equal(t, int64(2), result.RowCount)
-	assert.JSONEq(t,
+	assert.JSONEq(
+		t,
 		`[{"_id": "1", "_type": "Project", "name": "alpha"}, {"_id": "2", "_type": "Project", "name": "beta"}]`,
 		string(result.Result),
 	)
