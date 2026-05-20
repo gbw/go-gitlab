@@ -40,6 +40,51 @@ func (m *MockOrbitServiceInterface) EXPECT() *MockOrbitServiceInterfaceMockRecor
 	return m.recorder
 }
 
+// GetDsl mocks base method.
+func (m *MockOrbitServiceInterface) GetDsl(opt *gitlab.GetOrbitDslOptions, options ...gitlab.RequestOptionFunc) (string, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetDsl", varargs...)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetDsl indicates an expected call of GetDsl.
+func (mr *MockOrbitServiceInterfaceMockRecorder) GetDsl(opt any, options ...any) *MockOrbitServiceInterfaceGetDslCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDsl", reflect.TypeOf((*MockOrbitServiceInterface)(nil).GetDsl), varargs...)
+	return &MockOrbitServiceInterfaceGetDslCall{Call: call}
+}
+
+// MockOrbitServiceInterfaceGetDslCall wrap *gomock.Call
+type MockOrbitServiceInterfaceGetDslCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockOrbitServiceInterfaceGetDslCall) Return(arg0 string, arg1 *gitlab.Response, arg2 error) *MockOrbitServiceInterfaceGetDslCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockOrbitServiceInterfaceGetDslCall) Do(f func(*gitlab.GetOrbitDslOptions, ...gitlab.RequestOptionFunc) (string, *gitlab.Response, error)) *MockOrbitServiceInterfaceGetDslCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockOrbitServiceInterfaceGetDslCall) DoAndReturn(f func(*gitlab.GetOrbitDslOptions, ...gitlab.RequestOptionFunc) (string, *gitlab.Response, error)) *MockOrbitServiceInterfaceGetDslCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // GetGraphStatus mocks base method.
 func (m *MockOrbitServiceInterface) GetGraphStatus(opt *gitlab.GetGraphStatusOptions, options ...gitlab.RequestOptionFunc) (*gitlab.OrbitGraphStatus, *gitlab.Response, error) {
 	m.ctrl.T.Helper()

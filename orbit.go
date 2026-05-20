@@ -17,6 +17,7 @@
 package gitlab
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -60,6 +61,23 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/orbit/#get-tools
 		GetTools(options ...RequestOptionFunc) (*OrbitTools, *Response, error)
+
+		// GetDsl returns the Orbit query DSL as a raw string body
+		// from `GET /api/v4/orbit/schema/dsl`.
+		//
+		// The body is intended for agent consumption: format=raw
+		// returns a JSON Schema document, format=llm returns a
+		// JSON-encoded TOON grammar string. Both shapes are forwarded
+		// verbatim — the Orbit team treats the DSL surface as
+		// in-flux during beta and intentionally does not pin a typed
+		// schema here.
+		//
+		// Note: This API is experimental and may change or be
+		// removed in future versions.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/orbit/#get-dsl
+		GetDsl(opt *GetOrbitDslOptions, options ...RequestOptionFunc) (string, *Response, error)
 
 		// Query executes an Orbit (Knowledge Graph) query.
 		//
@@ -266,6 +284,16 @@ type OrbitTool struct {
 	Parameters  json.RawMessage `json:"parameters,omitempty"`
 }
 
+// GetOrbitDslOptions represents the available GetDsl() options.
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/#get-dsl
+type GetOrbitDslOptions struct {
+	// ResponseFormat selects the response shape: "raw" (JSON Schema
+	// document, default) or "llm" (a JSON-encoded TOON grammar
+	// string). GetDsl returns the body verbatim either way.
+	ResponseFormat *OrbitResponseFormatValue `url:"response_format,omitempty"`
+}
+
 // OrbitQueryRequest represents the JSON body sent to
 // `POST /api/v4/orbit/query`.
 //
@@ -309,7 +337,8 @@ type OrbitQueryResult struct {
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#get-status
 func (s *OrbitService) GetStatus(opt *GetOrbitStatusOptions, options ...RequestOptionFunc) (*OrbitStatus, *Response, error) {
-	return do[*OrbitStatus](s.client,
+	return do[*OrbitStatus](
+		s.client,
 		withMethod(http.MethodGet),
 		withPath("orbit/status"),
 		withAPIOpts(opt),
@@ -325,7 +354,8 @@ func (s *OrbitService) GetStatus(opt *GetOrbitStatusOptions, options ...RequestO
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#get-schema
 func (s *OrbitService) GetSchema(opt *GetOrbitSchemaOptions, options ...RequestOptionFunc) (*OrbitSchema, *Response, error) {
-	return do[*OrbitSchema](s.client,
+	return do[*OrbitSchema](
+		s.client,
 		withMethod(http.MethodGet),
 		withPath("orbit/schema"),
 		withAPIOpts(opt),
@@ -341,11 +371,39 @@ func (s *OrbitService) GetSchema(opt *GetOrbitSchemaOptions, options ...RequestO
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#get-tools
 func (s *OrbitService) GetTools(options ...RequestOptionFunc) (*OrbitTools, *Response, error) {
-	return do[*OrbitTools](s.client,
+	return do[*OrbitTools](
+		s.client,
 		withMethod(http.MethodGet),
 		withPath("orbit/tools"),
 		withRequestOpts(options...),
 	)
+}
+
+// GetDsl returns the Orbit query DSL body verbatim from
+// `GET /api/v4/orbit/schema/dsl`.
+//
+// The DSL surface is in flux during the Orbit beta and is intended
+// for agent consumption, so the body is returned as a raw string
+// rather than a typed schema. format=raw yields a JSON Schema
+// document; format=llm yields a JSON-encoded TOON grammar string.
+//
+// Note: This API is experimental and may change or be removed in
+// future versions.
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/#get-dsl
+func (s *OrbitService) GetDsl(opt *GetOrbitDslOptions, options ...RequestOptionFunc) (string, *Response, error) {
+	req, err := s.client.NewRequest(http.MethodGet, "orbit/schema/dsl", opt, options)
+	if err != nil {
+		return "", nil, err
+	}
+
+	var buf bytes.Buffer
+	resp, err := s.client.Do(req, &buf)
+	if err != nil {
+		return "", resp, err
+	}
+
+	return buf.String(), resp, nil
 }
 
 // Query executes an Orbit (Knowledge Graph) query against
@@ -369,7 +427,8 @@ func (s *OrbitService) GetTools(options ...RequestOptionFunc) (*OrbitTools, *Res
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#post-query
 func (s *OrbitService) Query(opt *OrbitQueryRequest, options ...RequestOptionFunc) (*OrbitQueryResult, *Response, error) {
-	return do[*OrbitQueryResult](s.client,
+	return do[*OrbitQueryResult](
+		s.client,
 		withMethod(http.MethodPost),
 		withPath("orbit/query"),
 		withAPIOpts(opt),
@@ -508,7 +567,8 @@ type OrbitGraphStatusIndexing struct {
 // GitLab API docs:
 // https://docs.gitlab.com/api/orbit/#get-graph-status
 func (s *OrbitService) GetGraphStatus(opt *GetGraphStatusOptions, options ...RequestOptionFunc) (*OrbitGraphStatus, *Response, error) {
-	return do[*OrbitGraphStatus](s.client,
+	return do[*OrbitGraphStatus](
+		s.client,
 		withMethod(http.MethodGet),
 		withPath("orbit/graph_status"),
 		withAPIOpts(opt),
