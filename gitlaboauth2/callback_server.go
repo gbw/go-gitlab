@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -81,11 +82,39 @@ type BrowserFunc func(url string) error
 //	}
 //	fmt.Printf("Access token: %s\n", token.AccessToken)
 func NewCallbackServer(config *oauth2.Config, addr string, browser BrowserFunc) *CallbackServer {
+	cfg := *config
 	return &CallbackServer{
-		config:  config,
+		config:  &cfg,
 		addr:    addr,
 		browser: browser,
 	}
+}
+
+// NewLocalCallbackServer creates a new callback server that listens on localhost with an ephemeral port.
+//
+// Parameters:
+//   - config: The OAuth2 configuration created with NewOAuth2Config
+//   - browser: A function that opens URLs in the user's browser
+//
+// Returns:
+//   - *CallbackServer: A configured callback server ready to handle OAuth2 flow on localhost with an ephemeral port
+//
+// Example usage:
+//
+//	config := gitlaboauth2.NewOAuth2Config("", "client-id", []string{"read_user"})
+//	browserFunc := func(url string) error {
+//		return exec.Command("open", url).Start() // macOS
+//	}
+//	server := gitlaboauth2.NewLocalCallbackServer(config, browserFunc)
+//
+//	ctx := context.Background()
+//	token, err := server.GetToken(ctx)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//	fmt.Printf("Access token: %s\n", token.AccessToken)
+func NewLocalCallbackServer(config *oauth2.Config, browser BrowserFunc) *CallbackServer {
+	return NewCallbackServer(config, "127.0.0.1:0", browser)
 }
 
 // GetToken performs the complete OAuth2 flow and returns an access token.
@@ -140,21 +169,39 @@ func (s *CallbackServer) GetToken(ctx context.Context) (*oauth2.Token, error) {
 	errorChan := make(chan error, 1)
 	defer close(errorChan)
 
-	state := oauth2.GenerateVerifier()
-	verifier := oauth2.GenerateVerifier()
-	authURL := s.config.AuthCodeURL(state, oauth2.S256ChallengeOption(verifier))
-
 	u, err := url.Parse(s.config.RedirectURL)
 	if err != nil {
 		return nil, err
 	}
+
+	// Create the listener first so we know the actual bound port before
+	// generating the auth URL. Passing port 0 (e.g. addr ":0") lets the OS
+	// assign a free ephemeral port.
+	ln, err := net.Listen("tcp", s.addr)
+	if err != nil {
+		return nil, fmt.Errorf("server failed: %w", err)
+	}
+
+	// When the redirect URL contains port 0, replace it with the actual port
+	// that was assigned by the OS.
+	if u.Port() == "0" {
+		actualPort, err := listenerPort(ln)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get listener port: %w", err)
+		}
+		u.Host = fmt.Sprintf("%s:%d", u.Hostname(), actualPort)
+		s.config.RedirectURL = u.String()
+	}
+
+	state := oauth2.GenerateVerifier()
+	verifier := oauth2.GenerateVerifier()
+	authURL := s.config.AuthCodeURL(state, oauth2.S256ChallengeOption(verifier))
 
 	// Set up HTTP server
 	mux := http.NewServeMux()
 	mux.HandleFunc("/"+strings.TrimPrefix(u.Path, "/"), s.callbackHandler(ctx, tokenChan, errorChan, state, verifier))
 
 	s.server = &http.Server{
-		Addr:         s.addr,
 		Handler:      mux,
 		ReadTimeout:  15 * time.Second,
 		WriteTimeout: 15 * time.Second,
@@ -166,7 +213,7 @@ func (s *CallbackServer) GetToken(ctx context.Context) (*oauth2.Token, error) {
 
 	// Start server
 	wg.Go(func() {
-		if err := s.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := s.server.Serve(ln); err != nil && err != http.ErrServerClosed {
 			errorChan <- fmt.Errorf("server failed: %w", err)
 		}
 	})
@@ -192,6 +239,14 @@ func (s *CallbackServer) GetToken(ctx context.Context) (*oauth2.Token, error) {
 	}
 
 	return token, nil
+}
+
+func listenerPort(ln net.Listener) (int, error) {
+	tcpAddr, ok := ln.Addr().(*net.TCPAddr)
+	if !ok {
+		return 0, fmt.Errorf("listener is not TCP: %T", ln.Addr())
+	}
+	return tcpAddr.Port, nil
 }
 
 func (s *CallbackServer) callbackHandler(ctx context.Context, tokenChan chan *oauth2.Token, errorChan chan error, expectedState, verifier string) http.HandlerFunc {

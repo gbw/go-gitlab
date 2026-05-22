@@ -241,6 +241,68 @@ func TestCallbackServer_GetToken(t *testing.T) { //nolint:paralleltest
 		assert.Nil(t, token)
 		assert.Contains(t, err.Error(), "server failed")
 	})
+
+	t.Run("ephemeral port assigned by OS", func(t *testing.T) { //nolint:paralleltest
+		// GIVEN a mock OAuth2 provider
+		mockProvider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.URL.Path == "/oauth/token" {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				fmt.Fprint(w, `{
+					"access_token": "ephemeral-access-token",
+					"token_type": "Bearer",
+					"expires_in": 3600
+				}`)
+			}
+		}))
+		defer mockProvider.Close()
+
+		// GIVEN a config with port 0 in the redirect URL so the OS picks the port
+		config := &oauth2.Config{
+			ClientID:    "test-client-id",
+			RedirectURL: "http://localhost:0/auth/redirect",
+			Endpoint: oauth2.Endpoint{
+				TokenURL: mockProvider.URL + "/oauth/token",
+			},
+			Scopes: []string{"read_user"},
+		}
+
+		var capturedURL string
+		browserFunc := func(authURL string) error {
+			capturedURL = authURL
+			// WHEN the browser opens, simulate the user completing the OAuth flow
+			go func() {
+				parsedURL, err := url.Parse(capturedURL)
+				if err != nil {
+					return
+				}
+				state := parsedURL.Query().Get("state")
+				redirectURI := parsedURL.Query().Get("redirect_uri")
+
+				callbackURL := fmt.Sprintf("%s?code=test-code&state=%s", redirectURI, state)
+				client := &http.Client{Timeout: 5 * time.Second}
+				resp, err := client.Get(callbackURL)
+				if err == nil {
+					resp.Body.Close()
+				}
+			}()
+			return nil
+		}
+
+		// GIVEN a local callback server with an ephemeral port
+		server := NewLocalCallbackServer(config, browserFunc)
+
+		ctx, cancel := context.WithTimeout(t.Context(), 5*time.Second)
+		defer cancel()
+
+		// WHEN GetToken is called
+		token, err := server.GetToken(ctx)
+
+		// THEN a token is returned
+		require.NoError(t, err)
+		assert.NotNil(t, token)
+		assert.Equal(t, "ephemeral-access-token", token.AccessToken)
+	})
 }
 
 func TestCallbackServer_CallbackHandler(t *testing.T) { //nolint:paralleltest
