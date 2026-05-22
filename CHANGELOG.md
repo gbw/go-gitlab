@@ -1,3 +1,19 @@
+## 2.31.0
+
+### 🚀 Features
+
+- Adds project service accounts API ([!2899](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2899)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+- feat(gitlaboauth2): support ephemeral ports in CallbackServer ([!2877](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2877)) by [Raphael Rösch](https://gitlab.com/raphael.roesch)
+
+
+
+# [2.31.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.30.0...v2.31.0) (2026-05-22)
+
+
+### Features
+
+* **gitlaboauth2:** support ephemeral ports in CallbackServer ([c8c388d](https://gitlab.com/gitlab-org/api/client-go/commit/c8c388d56663a8f2e27b4c74f1323d3671a6bbaf))
+
 ## 2.30.0
 
 ### 🚀 Features
