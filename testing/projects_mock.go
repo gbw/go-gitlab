@@ -446,6 +446,96 @@ func (c *MockProjectsServiceInterfaceCreateProjectForkRelationCall) DoAndReturn(
 	return c
 }
 
+// CreateProjectServiceAccount mocks base method.
+func (m *MockProjectsServiceInterface) CreateProjectServiceAccount(pid any, opt *gitlab.CreateProjectServiceAccountOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectServiceAccount, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CreateProjectServiceAccount", varargs...)
+	ret0, _ := ret[0].(*gitlab.ProjectServiceAccount)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateProjectServiceAccount indicates an expected call of CreateProjectServiceAccount.
+func (mr *MockProjectsServiceInterfaceMockRecorder) CreateProjectServiceAccount(pid, opt any, options ...any) *MockProjectsServiceInterfaceCreateProjectServiceAccountCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateProjectServiceAccount", reflect.TypeOf((*MockProjectsServiceInterface)(nil).CreateProjectServiceAccount), varargs...)
+	return &MockProjectsServiceInterfaceCreateProjectServiceAccountCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceCreateProjectServiceAccountCall wrap *gomock.Call
+type MockProjectsServiceInterfaceCreateProjectServiceAccountCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceCreateProjectServiceAccountCall) Return(arg0 *gitlab.ProjectServiceAccount, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceCreateProjectServiceAccountCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceCreateProjectServiceAccountCall) Do(f func(any, *gitlab.CreateProjectServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectServiceAccount, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectServiceAccountCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceCreateProjectServiceAccountCall) DoAndReturn(f func(any, *gitlab.CreateProjectServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectServiceAccount, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectServiceAccountCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// CreateProjectServiceAccountPersonalAccessToken mocks base method.
+func (m *MockProjectsServiceInterface) CreateProjectServiceAccountPersonalAccessToken(pid any, serviceAccount int64, opt *gitlab.CreateProjectServiceAccountPersonalAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, serviceAccount, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CreateProjectServiceAccountPersonalAccessToken", varargs...)
+	ret0, _ := ret[0].(*gitlab.PersonalAccessToken)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateProjectServiceAccountPersonalAccessToken indicates an expected call of CreateProjectServiceAccountPersonalAccessToken.
+func (mr *MockProjectsServiceInterfaceMockRecorder) CreateProjectServiceAccountPersonalAccessToken(pid, serviceAccount, opt any, options ...any) *MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, serviceAccount, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateProjectServiceAccountPersonalAccessToken", reflect.TypeOf((*MockProjectsServiceInterface)(nil).CreateProjectServiceAccountPersonalAccessToken), varargs...)
+	return &MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall wrap *gomock.Call
+type MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall) Return(arg0 *gitlab.PersonalAccessToken, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall) Do(f func(any, int64, *gitlab.CreateProjectServiceAccountPersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall) DoAndReturn(f func(any, int64, *gitlab.CreateProjectServiceAccountPersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockProjectsServiceInterfaceCreateProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // CreateTargetBranchRule mocks base method.
 func (m *MockProjectsServiceInterface) CreateTargetBranchRule(pid int64, opt *gitlab.CreateTargetBranchRuleOptions, options ...gitlab.RequestOptionFunc) (*gitlab.TargetBranchRule, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -751,6 +841,50 @@ func (c *MockProjectsServiceInterfaceDeleteProjectPushRuleCall) Do(f func(any, .
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockProjectsServiceInterfaceDeleteProjectPushRuleCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectPushRuleCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// DeleteProjectServiceAccount mocks base method.
+func (m *MockProjectsServiceInterface) DeleteProjectServiceAccount(pid any, serviceAccount int64, opt *gitlab.DeleteProjectServiceAccountOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, serviceAccount, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteProjectServiceAccount", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteProjectServiceAccount indicates an expected call of DeleteProjectServiceAccount.
+func (mr *MockProjectsServiceInterfaceMockRecorder) DeleteProjectServiceAccount(pid, serviceAccount, opt any, options ...any) *MockProjectsServiceInterfaceDeleteProjectServiceAccountCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, serviceAccount, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProjectServiceAccount", reflect.TypeOf((*MockProjectsServiceInterface)(nil).DeleteProjectServiceAccount), varargs...)
+	return &MockProjectsServiceInterfaceDeleteProjectServiceAccountCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceDeleteProjectServiceAccountCall wrap *gomock.Call
+type MockProjectsServiceInterfaceDeleteProjectServiceAccountCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceDeleteProjectServiceAccountCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectsServiceInterfaceDeleteProjectServiceAccountCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceDeleteProjectServiceAccountCall) Do(f func(any, int64, *gitlab.DeleteProjectServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectServiceAccountCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceDeleteProjectServiceAccountCall) DoAndReturn(f func(any, int64, *gitlab.DeleteProjectServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceDeleteProjectServiceAccountCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1607,6 +1741,96 @@ func (c *MockProjectsServiceInterfaceListProjectHooksCall) DoAndReturn(f func(an
 	return c
 }
 
+// ListProjectServiceAccountPersonalAccessTokens mocks base method.
+func (m *MockProjectsServiceInterface) ListProjectServiceAccountPersonalAccessTokens(pid any, serviceAccount int64, opt *gitlab.ListProjectServiceAccountPersonalAccessTokensOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.PersonalAccessToken, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, serviceAccount, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListProjectServiceAccountPersonalAccessTokens", varargs...)
+	ret0, _ := ret[0].([]*gitlab.PersonalAccessToken)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListProjectServiceAccountPersonalAccessTokens indicates an expected call of ListProjectServiceAccountPersonalAccessTokens.
+func (mr *MockProjectsServiceInterfaceMockRecorder) ListProjectServiceAccountPersonalAccessTokens(pid, serviceAccount, opt any, options ...any) *MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, serviceAccount, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListProjectServiceAccountPersonalAccessTokens", reflect.TypeOf((*MockProjectsServiceInterface)(nil).ListProjectServiceAccountPersonalAccessTokens), varargs...)
+	return &MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall wrap *gomock.Call
+type MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall) Return(arg0 []*gitlab.PersonalAccessToken, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall) Do(f func(any, int64, *gitlab.ListProjectServiceAccountPersonalAccessTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall) DoAndReturn(f func(any, int64, *gitlab.ListProjectServiceAccountPersonalAccessTokensOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectServiceAccountPersonalAccessTokensCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListProjectServiceAccounts mocks base method.
+func (m *MockProjectsServiceInterface) ListProjectServiceAccounts(pid any, opt *gitlab.ListProjectServiceAccountsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectServiceAccount, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListProjectServiceAccounts", varargs...)
+	ret0, _ := ret[0].([]*gitlab.ProjectServiceAccount)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListProjectServiceAccounts indicates an expected call of ListProjectServiceAccounts.
+func (mr *MockProjectsServiceInterfaceMockRecorder) ListProjectServiceAccounts(pid, opt any, options ...any) *MockProjectsServiceInterfaceListProjectServiceAccountsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListProjectServiceAccounts", reflect.TypeOf((*MockProjectsServiceInterface)(nil).ListProjectServiceAccounts), varargs...)
+	return &MockProjectsServiceInterfaceListProjectServiceAccountsCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceListProjectServiceAccountsCall wrap *gomock.Call
+type MockProjectsServiceInterfaceListProjectServiceAccountsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceListProjectServiceAccountsCall) Return(arg0 []*gitlab.ProjectServiceAccount, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceListProjectServiceAccountsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceListProjectServiceAccountsCall) Do(f func(any, *gitlab.ListProjectServiceAccountsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectServiceAccount, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectServiceAccountsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceListProjectServiceAccountsCall) DoAndReturn(f func(any, *gitlab.ListProjectServiceAccountsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectServiceAccount, *gitlab.Response, error)) *MockProjectsServiceInterfaceListProjectServiceAccountsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListProjectStarrers mocks base method.
 func (m *MockProjectsServiceInterface) ListProjectStarrers(pid any, opts *gitlab.ListProjectStarrersOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.ProjectStarrer, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -2053,6 +2277,95 @@ func (c *MockProjectsServiceInterfaceRestoreProjectCall) Do(f func(any, ...gitla
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockProjectsServiceInterfaceRestoreProjectCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Project, *gitlab.Response, error)) *MockProjectsServiceInterfaceRestoreProjectCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// RevokeProjectServiceAccountPersonalAccessToken mocks base method.
+func (m *MockProjectsServiceInterface) RevokeProjectServiceAccountPersonalAccessToken(pid any, serviceAccount, token int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, serviceAccount, token}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RevokeProjectServiceAccountPersonalAccessToken", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RevokeProjectServiceAccountPersonalAccessToken indicates an expected call of RevokeProjectServiceAccountPersonalAccessToken.
+func (mr *MockProjectsServiceInterfaceMockRecorder) RevokeProjectServiceAccountPersonalAccessToken(pid, serviceAccount, token any, options ...any) *MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, serviceAccount, token}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeProjectServiceAccountPersonalAccessToken", reflect.TypeOf((*MockProjectsServiceInterface)(nil).RevokeProjectServiceAccountPersonalAccessToken), varargs...)
+	return &MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall wrap *gomock.Call
+type MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall) Return(arg0 *gitlab.Response, arg1 error) *MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall) Do(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall) DoAndReturn(f func(any, int64, int64, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockProjectsServiceInterfaceRevokeProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// RotateProjectServiceAccountPersonalAccessToken mocks base method.
+func (m *MockProjectsServiceInterface) RotateProjectServiceAccountPersonalAccessToken(pid any, serviceAccount, token int64, opt *gitlab.RotateProjectServiceAccountPersonalAccessTokenOptions, options ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, serviceAccount, token, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RotateProjectServiceAccountPersonalAccessToken", varargs...)
+	ret0, _ := ret[0].(*gitlab.PersonalAccessToken)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// RotateProjectServiceAccountPersonalAccessToken indicates an expected call of RotateProjectServiceAccountPersonalAccessToken.
+func (mr *MockProjectsServiceInterfaceMockRecorder) RotateProjectServiceAccountPersonalAccessToken(pid, serviceAccount, token, opt any, options ...any) *MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, serviceAccount, token, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RotateProjectServiceAccountPersonalAccessToken", reflect.TypeOf((*MockProjectsServiceInterface)(nil).RotateProjectServiceAccountPersonalAccessToken), varargs...)
+	return &MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall wrap *gomock.Call
+type MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall) Return(arg0 *gitlab.PersonalAccessToken, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall) Do(f func(any, int64, int64, *gitlab.RotateProjectServiceAccountPersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall) DoAndReturn(f func(any, int64, int64, *gitlab.RotateProjectServiceAccountPersonalAccessTokenOptions, ...gitlab.RequestOptionFunc) (*gitlab.PersonalAccessToken, *gitlab.Response, error)) *MockProjectsServiceInterfaceRotateProjectServiceAccountPersonalAccessTokenCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2542,6 +2855,51 @@ func (c *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall) Do(f func(an
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall) DoAndReturn(f func(any, int64, *gitlab.UpdateProjectLevelRuleOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectApprovalRule, *gitlab.Response, error)) *MockProjectsServiceInterfaceUpdateProjectApprovalRuleCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// UpdateProjectServiceAccount mocks base method.
+func (m *MockProjectsServiceInterface) UpdateProjectServiceAccount(pid any, serviceAccount int64, opt *gitlab.UpdateProjectServiceAccountOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ProjectServiceAccount, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, serviceAccount, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateProjectServiceAccount", varargs...)
+	ret0, _ := ret[0].(*gitlab.ProjectServiceAccount)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// UpdateProjectServiceAccount indicates an expected call of UpdateProjectServiceAccount.
+func (mr *MockProjectsServiceInterfaceMockRecorder) UpdateProjectServiceAccount(pid, serviceAccount, opt any, options ...any) *MockProjectsServiceInterfaceUpdateProjectServiceAccountCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, serviceAccount, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateProjectServiceAccount", reflect.TypeOf((*MockProjectsServiceInterface)(nil).UpdateProjectServiceAccount), varargs...)
+	return &MockProjectsServiceInterfaceUpdateProjectServiceAccountCall{Call: call}
+}
+
+// MockProjectsServiceInterfaceUpdateProjectServiceAccountCall wrap *gomock.Call
+type MockProjectsServiceInterfaceUpdateProjectServiceAccountCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockProjectsServiceInterfaceUpdateProjectServiceAccountCall) Return(arg0 *gitlab.ProjectServiceAccount, arg1 *gitlab.Response, arg2 error) *MockProjectsServiceInterfaceUpdateProjectServiceAccountCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockProjectsServiceInterfaceUpdateProjectServiceAccountCall) Do(f func(any, int64, *gitlab.UpdateProjectServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectServiceAccount, *gitlab.Response, error)) *MockProjectsServiceInterfaceUpdateProjectServiceAccountCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockProjectsServiceInterfaceUpdateProjectServiceAccountCall) DoAndReturn(f func(any, int64, *gitlab.UpdateProjectServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.ProjectServiceAccount, *gitlab.Response, error)) *MockProjectsServiceInterfaceUpdateProjectServiceAccountCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

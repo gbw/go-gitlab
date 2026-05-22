@@ -203,6 +203,17 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/project_webhooks/#delete-a-url-variable
 		DeleteProjectWebhookURLVariable(pid any, hook int64, key string, options ...RequestOptionFunc) (*Response, error)
+
+		// project_serviceaccounts.go
+		ListProjectServiceAccounts(pid any, opt *ListProjectServiceAccountsOptions, options ...RequestOptionFunc) ([]*ProjectServiceAccount, *Response, error)
+		CreateProjectServiceAccount(pid any, opt *CreateProjectServiceAccountOptions, options ...RequestOptionFunc) (*ProjectServiceAccount, *Response, error)
+		UpdateProjectServiceAccount(pid any, serviceAccount int64, opt *UpdateProjectServiceAccountOptions, options ...RequestOptionFunc) (*ProjectServiceAccount, *Response, error)
+		DeleteProjectServiceAccount(pid any, serviceAccount int64, opt *DeleteProjectServiceAccountOptions, options ...RequestOptionFunc) (*Response, error)
+		ListProjectServiceAccountPersonalAccessTokens(pid any, serviceAccount int64, opt *ListProjectServiceAccountPersonalAccessTokensOptions, options ...RequestOptionFunc) ([]*PersonalAccessToken, *Response, error)
+		CreateProjectServiceAccountPersonalAccessToken(pid any, serviceAccount int64, opt *CreateProjectServiceAccountPersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+		RevokeProjectServiceAccountPersonalAccessToken(pid any, serviceAccount, token int64, options ...RequestOptionFunc) (*Response, error)
+		RotateProjectServiceAccountPersonalAccessToken(pid any, serviceAccount, token int64, opt *RotateProjectServiceAccountPersonalAccessTokenOptions, options ...RequestOptionFunc) (*PersonalAccessToken, *Response, error)
+
 		// CreateProjectForkRelation creates a forked from/to relation between
 		// existing projects.
 		//
