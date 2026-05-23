@@ -216,3 +216,49 @@ func TestDownloadSingleArtifactsFileByTagOrBranch(t *testing.T) {
 	assert.Equal(t, wantContent, content)
 	assert.Equal(t, 200, resp.StatusCode)
 }
+
+func TestJobsService_CancelJob(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a job cancel endpoint
+	mux.HandleFunc("/api/v4/projects/1/jobs/1/cancel", func(w http.ResponseWriter, r *http.Request) {
+		// WHEN the cancel job request is made
+		testMethod(t, r, http.MethodPost)
+		// THEN the response should contain the job details
+		fmt.Fprint(w, `{"id":1,"name":"test_job","status":"canceled"}`)
+	})
+
+	// WHEN canceling a job without force flag
+	job, resp, err := client.Jobs.CancelJob(1, 1)
+
+	// THEN the request should succeed
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), job.ID)
+	assert.Equal(t, "test_job", job.Name)
+	assert.Equal(t, "canceled", job.Status)
+}
+
+func TestJobsService_CancelJobWithOptions(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a job cancel endpoint
+	mux.HandleFunc("/api/v4/projects/1/jobs/1/cancel", func(w http.ResponseWriter, r *http.Request) {
+		// WHEN the cancel job request is made with force flag
+		testMethod(t, r, http.MethodPost)
+		// THEN the response should contain the job details
+		fmt.Fprint(w, `{"id":1,"name":"test_job","status":"canceled"}`)
+	})
+
+	// WHEN canceling a job with force flag set to true using the deprecated method
+	job, resp, err := client.Jobs.CancelJobWithOptions(1, 1, &CancelJobOptions{Force: Ptr(true)})
+
+	// THEN the request should succeed
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.Equal(t, int64(1), job.ID)
+	assert.Equal(t, "test_job", job.Name)
+	assert.Equal(t, "canceled", job.Status)
+}
