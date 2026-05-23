@@ -89,6 +89,13 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/jobs/#cancel-a-job
 		CancelJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error)
+		// CancelJobWithOptions cancels a single job of a project with options.
+		//
+		// Deprecated: CancelJobWithOptions will be removed in 4.0, and the `CancelJobOptions` will be moved into the normal `CancelJobs`.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/jobs/#cancel-a-job
+		CancelJobWithOptions(pid any, jobID int64, opt *CancelJobOptions, options ...RequestOptionFunc) (*Job, *Response, error)
 		// RetryJob retries a single job of a project
 		//
 		// GitLab API docs:
@@ -350,10 +357,15 @@ func (s *JobsService) GetTraceFile(pid any, jobID int64, options ...RequestOptio
 }
 
 func (s *JobsService) CancelJob(pid any, jobID int64, options ...RequestOptionFunc) (*Job, *Response, error) {
+	return s.CancelJobWithOptions(pid, jobID, nil, options...)
+}
+
+// Deprecated: use CancelJob instead unless you need "opt", which will be merged into CancelJob in 4.0 when this is removed.
+func (s *JobsService) CancelJobWithOptions(pid any, jobID int64, opt *CancelJobOptions, options ...RequestOptionFunc) (*Job, *Response, error) {
 	return do[*Job](s.client,
 		withMethod(http.MethodPost),
 		withPath("projects/%s/jobs/%d/cancel", ProjectID{pid}, jobID),
-		withAPIOpts(nil),
+		withAPIOpts(opt),
 		withRequestOpts(options...),
 	)
 }
@@ -383,6 +395,14 @@ func (s *JobsService) KeepArtifacts(pid any, jobID int64, options ...RequestOpti
 		withAPIOpts(nil),
 		withRequestOpts(options...),
 	)
+}
+
+// CancelJobOptions represents the available CancelJob() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/jobs/#cancel-a-job
+type CancelJobOptions struct {
+	Force *bool `json:"force,omitempty"`
 }
 
 // PlayJobOptions represents the available PlayJob() options.

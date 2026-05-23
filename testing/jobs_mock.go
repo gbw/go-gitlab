@@ -85,6 +85,51 @@ func (c *MockJobsServiceInterfaceCancelJobCall) DoAndReturn(f func(any, int64, .
 	return c
 }
 
+// CancelJobWithOptions mocks base method.
+func (m *MockJobsServiceInterface) CancelJobWithOptions(pid any, jobID int64, opt *gitlab.CancelJobOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, jobID, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CancelJobWithOptions", varargs...)
+	ret0, _ := ret[0].(*gitlab.Job)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CancelJobWithOptions indicates an expected call of CancelJobWithOptions.
+func (mr *MockJobsServiceInterfaceMockRecorder) CancelJobWithOptions(pid, jobID, opt any, options ...any) *MockJobsServiceInterfaceCancelJobWithOptionsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, jobID, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelJobWithOptions", reflect.TypeOf((*MockJobsServiceInterface)(nil).CancelJobWithOptions), varargs...)
+	return &MockJobsServiceInterfaceCancelJobWithOptionsCall{Call: call}
+}
+
+// MockJobsServiceInterfaceCancelJobWithOptionsCall wrap *gomock.Call
+type MockJobsServiceInterfaceCancelJobWithOptionsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockJobsServiceInterfaceCancelJobWithOptionsCall) Return(arg0 *gitlab.Job, arg1 *gitlab.Response, arg2 error) *MockJobsServiceInterfaceCancelJobWithOptionsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockJobsServiceInterfaceCancelJobWithOptionsCall) Do(f func(any, int64, *gitlab.CancelJobOptions, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceCancelJobWithOptionsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockJobsServiceInterfaceCancelJobWithOptionsCall) DoAndReturn(f func(any, int64, *gitlab.CancelJobOptions, ...gitlab.RequestOptionFunc) (*gitlab.Job, *gitlab.Response, error)) *MockJobsServiceInterfaceCancelJobWithOptionsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteArtifacts mocks base method.
 func (m *MockJobsServiceInterface) DeleteArtifacts(pid any, jobID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
