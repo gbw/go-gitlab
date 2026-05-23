@@ -1,3 +1,18 @@
+## 2.32.0
+
+### 🚀 Features
+
+- feat(ci-job-cancel): force cancel ([!2872](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2872)) by [Filip Aleksic](https://gitlab.com/faleksic)
+
+
+
+# [2.32.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.31.0...v2.32.0) (2026-05-23)
+
+
+### Features
+
+* **ci-job-cancel:** force cancel ([aa46bd1](https://gitlab.com/gitlab-org/api/client-go/commit/aa46bd18428834eebdb42622f2523c64686021e8))
+
 ## 2.31.0
 
 ### 🚀 Features
