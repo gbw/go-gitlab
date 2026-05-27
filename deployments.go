@@ -114,6 +114,7 @@ type DeploymentDeployablePipeline struct {
 	SHA       string     `json:"sha"`
 	Ref       string     `json:"ref"`
 	Status    string     `json:"status"`
+	WebURL    string     `json:"web_url"`
 	CreatedAt *time.Time `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at"`
 }
