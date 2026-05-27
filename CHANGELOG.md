@@ -1,3 +1,22 @@
+## 2.33.0
+
+### 🚀 Features
+
+- feat(work-items): add ListWorkItemTypes to WorkItemsService ([!2864](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2864)) by [Emmanuel 326](https://gitlab.com/Emmanuel326)
+
+### 🔄 Other Changes
+
+- chore(deps): update module cel.dev/expr to v0.25.2 ([!2881](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2881)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.33.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.32.0...v2.33.0) (2026-05-27)
+
+
+### Features
+
+* **work-items:** add ListWorkItemTypes to WorkItemsService ([e71cb99](https://gitlab.com/gitlab-org/api/client-go/commit/e71cb994482aa882eb8eb9fc4140ca1e4aac25ab))
+
 ## 2.32.0
 
 ### 🚀 Features
