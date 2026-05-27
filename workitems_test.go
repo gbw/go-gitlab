@@ -1424,3 +1424,151 @@ func validateSchema(schema *graphql.Schema, query GraphQLQuery) error {
 
 	return errs
 }
+
+func setupWorkItemTypesHandler(t *testing.T, mux *http.ServeMux, schema *graphql.Schema, response io.Reader) {
+	t.Helper()
+	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+
+		testMethod(t, r, http.MethodPost)
+
+		var q GraphQLQuery
+		if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		if err := validateSchema(schema, q); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = io.Copy(w, response)
+	})
+}
+
+func TestListWorkItemTypes_SystemAndCustomTypes(t *testing.T) {
+	t.Parallel()
+
+	schema := loadSchema(t)
+	mux, client := setup(t)
+
+	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+		"data": {
+			"namespace": {
+				"workItemTypes": {
+					"nodes": [
+						{"id": "gid://gitlab/WorkItems::Type/1",  "name": "Issue",      "enabled": true},
+						{"id": "gid://gitlab/WorkItems::Type/5",  "name": "Task",       "enabled": true},
+						{"id": "gid://gitlab/WorkItems::Type/99", "name": "CustomType", "enabled": true}
+					],
+					"pageInfo": {
+						"endCursor": "cursor123", "hasNextPage": false,
+						"startCursor": "cursor000", "hasPreviousPage": false
+					}
+				}
+			}
+		}
+	}`))
+
+	got, resp, err := client.WorkItems.ListWorkItemTypes("gitlab-org/gitlab", &ListWorkItemTypesOptions{})
+
+	require.NoError(t, err)
+	assert.Equal(t, []WorkItemType{
+		{ID: WorkItemTypeIssue, Name: "Issue", Enabled: true},
+		{ID: WorkItemTypeTask, Name: "Task", Enabled: true},
+		{ID: "gid://gitlab/WorkItems::Type/99", Name: "CustomType", Enabled: true},
+	}, got)
+	assert.Equal(t, &PageInfo{
+		EndCursor:       "cursor123",
+		HasNextPage:     false,
+		StartCursor:     "cursor000",
+		HasPreviousPage: false,
+	}, resp.PageInfo)
+}
+
+func TestListWorkItemTypes_FilterByName(t *testing.T) {
+	t.Parallel()
+
+	schema := loadSchema(t)
+	mux, client := setup(t)
+
+	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+		"data": {
+			"namespace": {
+				"workItemTypes": {
+					"nodes": [
+						{"id": "gid://gitlab/WorkItems::Type/1", "name": "Issue", "enabled": true}
+					],
+					"pageInfo": {
+						"endCursor": "", "hasNextPage": false,
+						"startCursor": "", "hasPreviousPage": false
+					}
+				}
+			}
+		}
+	}`))
+
+	got, _, err := client.WorkItems.ListWorkItemTypes(
+		"gitlab-org/gitlab",
+		&ListWorkItemTypesOptions{Name: Ptr("ISSUE")},
+	)
+
+	require.NoError(t, err)
+	assert.Equal(t, []WorkItemType{
+		{ID: WorkItemTypeIssue, Name: "Issue", Enabled: true},
+	}, got)
+}
+
+func TestListWorkItemTypes_EmptyResponse(t *testing.T) {
+	t.Parallel()
+
+	schema := loadSchema(t)
+	mux, client := setup(t)
+
+	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+		"data": {
+			"namespace": {
+				"workItemTypes": {
+					"nodes": [],
+					"pageInfo": {
+						"endCursor": "", "hasNextPage": false,
+						"startCursor": "", "hasPreviousPage": false
+					}
+				}
+			}
+		}
+	}`))
+
+	got, _, err := client.WorkItems.ListWorkItemTypes("gitlab-org/gitlab", &ListWorkItemTypesOptions{})
+
+	require.NoError(t, err)
+	assert.Equal(t, []WorkItemType{}, got)
+}
+
+func TestListWorkItemTypes_NilOptDoesNotPanic(t *testing.T) {
+	t.Parallel()
+
+	schema := loadSchema(t)
+	mux, client := setup(t)
+
+	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+		"data": {
+			"namespace": {
+				"workItemTypes": {
+					"nodes": [],
+					"pageInfo": {
+						"endCursor": "", "hasNextPage": false,
+						"startCursor": "", "hasPreviousPage": false
+					}
+				}
+			}
+		}
+	}`))
+
+	got, _, err := client.WorkItems.ListWorkItemTypes("gitlab-org/gitlab", nil)
+
+	require.NoError(t, err)
+	assert.Equal(t, []WorkItemType{}, got)
+}

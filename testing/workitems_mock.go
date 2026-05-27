@@ -173,6 +173,51 @@ func (c *MockWorkItemsServiceInterfaceGetWorkItemCall) DoAndReturn(f func(string
 	return c
 }
 
+// ListWorkItemTypes mocks base method.
+func (m *MockWorkItemsServiceInterface) ListWorkItemTypes(namespacePath string, opt *gitlab.ListWorkItemTypesOptions, options ...gitlab.RequestOptionFunc) ([]gitlab.WorkItemType, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{namespacePath, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListWorkItemTypes", varargs...)
+	ret0, _ := ret[0].([]gitlab.WorkItemType)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListWorkItemTypes indicates an expected call of ListWorkItemTypes.
+func (mr *MockWorkItemsServiceInterfaceMockRecorder) ListWorkItemTypes(namespacePath, opt any, options ...any) *MockWorkItemsServiceInterfaceListWorkItemTypesCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{namespacePath, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListWorkItemTypes", reflect.TypeOf((*MockWorkItemsServiceInterface)(nil).ListWorkItemTypes), varargs...)
+	return &MockWorkItemsServiceInterfaceListWorkItemTypesCall{Call: call}
+}
+
+// MockWorkItemsServiceInterfaceListWorkItemTypesCall wrap *gomock.Call
+type MockWorkItemsServiceInterfaceListWorkItemTypesCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockWorkItemsServiceInterfaceListWorkItemTypesCall) Return(arg0 []gitlab.WorkItemType, arg1 *gitlab.Response, arg2 error) *MockWorkItemsServiceInterfaceListWorkItemTypesCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockWorkItemsServiceInterfaceListWorkItemTypesCall) Do(f func(string, *gitlab.ListWorkItemTypesOptions, ...gitlab.RequestOptionFunc) ([]gitlab.WorkItemType, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceListWorkItemTypesCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockWorkItemsServiceInterfaceListWorkItemTypesCall) DoAndReturn(f func(string, *gitlab.ListWorkItemTypesOptions, ...gitlab.RequestOptionFunc) ([]gitlab.WorkItemType, *gitlab.Response, error)) *MockWorkItemsServiceInterfaceListWorkItemTypesCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListWorkItems mocks base method.
 func (m *MockWorkItemsServiceInterface) ListWorkItems(fullPath string, opt *gitlab.ListWorkItemsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.WorkItem, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
