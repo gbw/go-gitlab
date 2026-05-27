@@ -18,6 +18,7 @@ type (
 		ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error)
 		UpdateWorkItem(fullPath string, iid int64, opt *UpdateWorkItemOptions, options ...RequestOptionFunc) (*WorkItem, *Response, error)
 		DeleteWorkItem(fullPath string, iid int64, options ...RequestOptionFunc) (*Response, error)
+		ListWorkItemTypes(namespacePath string, opt *ListWorkItemTypesOptions, options ...RequestOptionFunc) ([]WorkItemType, *Response, error)
 	}
 
 	// WorkItemsService handles communication with the work item related methods
@@ -530,6 +531,103 @@ func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOpti
 	resp.PageInfo = &result.Data.Namespace.WorkItems.PageInfo
 
 	return ret, resp, nil
+}
+
+var listWorkItemTypesTemplate = template.Must(template.New("listWorkItemTypes").Parse(`
+query ListWorkItemTypes(
+  $namespacePath: ID!,
+  $name: IssueType,
+  $onlyAvailable: Boolean,
+  $after: String,
+  $before: String,
+  $first: Int,
+  $last: Int
+) {
+  namespace(fullPath: $namespacePath) {
+    workItemTypes(
+      name: $name,
+      onlyAvailable: $onlyAvailable,
+      after: $after,
+      before: $before,
+      first: $first,
+      last: $last
+    ) {
+      nodes {
+        id
+        name
+        enabled
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        startCursor
+        hasPreviousPage
+      }
+    }
+  }
+}
+`))
+
+// ListWorkItemTypes lists all work item types (system-defined and custom)
+// for a given namespace.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitemtype
+//
+// Experimental: The Work Items API is a work in progress and may introduce
+// breaking changes even between minor versions.
+func (s *WorkItemsService) ListWorkItemTypes(
+	namespacePath string,
+	opt *ListWorkItemTypesOptions,
+	options ...RequestOptionFunc,
+) ([]WorkItemType, *Response, error) {
+	var queryBuilder strings.Builder
+
+	if opt == nil {
+		opt = &ListWorkItemTypesOptions{}
+	}
+	if err := listWorkItemTypesTemplate.Execute(&queryBuilder, nil); err != nil {
+		return nil, nil, err
+	}
+
+	vars := map[string]any{
+		"namespacePath": namespacePath,
+		"name":          opt.Name,
+		"onlyAvailable": opt.OnlyAvailable,
+		"after":         opt.After,
+		"before":        opt.Before,
+		"first":         opt.First,
+		"last":          opt.Last,
+	}
+
+	query := GraphQLQuery{
+		Query:     queryBuilder.String(),
+		Variables: vars,
+	}
+
+	var result struct {
+		Data struct {
+			Namespace struct {
+				WorkItemTypes connectionGQL[WorkItemType] `json:"workItemTypes"`
+			} `json:"namespace"`
+		}
+		GenericGraphQLErrors
+	}
+
+	resp, err := s.client.GraphQL.Do(query, &result, options...)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	if len(result.Errors) != 0 {
+		return nil, resp, &GraphQLResponseError{
+			Err:    errors.New("GraphQL query failed"),
+			Errors: result.GenericGraphQLErrors,
+		}
+	}
+
+	resp.PageInfo = &result.Data.Namespace.WorkItemTypes.PageInfo
+
+	return result.Data.Namespace.WorkItemTypes.Nodes, resp, nil
 }
 
 // CreateWorkItemOptions represents the available CreateWorkItem() options.
@@ -1536,6 +1634,32 @@ func (w *workItemWidgetWeightGQL) unwrap() *int64 {
 	}
 
 	return w.Weight
+}
+
+// WorkItemType represents a GitLab work item type.
+//
+// GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#workitemtype
+//
+// Experimental: The Work Items API is a work in progress and may introduce
+// breaking changes even between minor versions.
+type WorkItemType struct {
+	ID      WorkItemTypeID `json:"id"`
+	Name    string         `json:"name"`
+	Enabled bool           `json:"enabled"`
+}
+
+// ListWorkItemTypesOptions specifies the optional parameters to the
+// WorkItemsService.ListWorkItemTypes method.
+//
+// Experimental: The Work Items API is a work in progress and may introduce
+// breaking changes even between minor versions.
+type ListWorkItemTypesOptions struct {
+	Name          *string `json:"name,omitempty"`
+	OnlyAvailable *bool   `json:"onlyAvailable,omitempty"`
+	After         *string `json:"after,omitempty"`
+	Before        *string `json:"before,omitempty"`
+	First         *int64  `json:"first,omitempty"`
+	Last          *int64  `json:"last,omitempty"`
 }
 
 // WorkItemTypeID represents the global ID of a work item type.
