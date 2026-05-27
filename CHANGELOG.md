@@ -1,3 +1,17 @@
+## 2.34.0
+
+### 🚀 Features
+
+- Extend DeploymentDeployablePipeline with web_url ([!2902](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2902)) by [Jan Berge Sommerdahl](https://gitlab.com/sommerdahl)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.5.1 ([!2903](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2903)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.34.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.33.0...v2.34.0) (2026-05-27)
+
 ## 2.33.0
 
 ### 🚀 Features
