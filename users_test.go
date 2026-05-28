@@ -1002,6 +1002,40 @@ func TestListServiceAccounts(t *testing.T) {
 	assert.Equal(t, want, serviceaccounts)
 }
 
+func TestUpdateInstanceServiceAccount(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	path := "/api/v4/service_accounts/57"
+
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPatch)
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		fmt.Fprint(w, `{
+			"id": 57,
+			"username": "service_account_6018816a18e515214e0c34c2b33523fc",
+			"name": "Updated Service Account",
+			"email": "service_account_abc@noreply.gitlab.example.com",
+			"unconfirmed_email": "custom_email@example.com"
+		}`)
+	})
+
+	serviceAccount, _, err := client.Users.UpdateInstanceServiceAccount(57, &UpdateServiceAccountOptions{
+		Name:  Ptr("Updated Service Account"),
+		Email: Ptr("custom_email@example.com"),
+	})
+	assert.NoError(t, err)
+
+	want := &ServiceAccount{
+		ID:               57,
+		Username:         "service_account_6018816a18e515214e0c34c2b33523fc",
+		Name:             "Updated Service Account",
+		Email:            "service_account_abc@noreply.gitlab.example.com",
+		UnconfirmedEmail: "custom_email@example.com",
+	}
+	assert.Equal(t, want, serviceAccount)
+}
+
 func TestDeleteUserIdentity(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

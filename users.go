@@ -290,6 +290,11 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/user_service_accounts/#list-all-service-account-users
 		ListServiceAccounts(opt *ListServiceAccountsOptions, options ...RequestOptionFunc) ([]*ServiceAccount, *Response, error)
+		// UpdateInstanceServiceAccount updates an instance service account.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/service_accounts/#update-an-instance-service-account
+		UpdateInstanceServiceAccount(serviceAccount int64, opt *UpdateServiceAccountOptions, options ...RequestOptionFunc) (*ServiceAccount, *Response, error)
 		// UploadAvatar uploads an avatar to the current user.
 		//
 		// GitLab API docs:
@@ -352,11 +357,13 @@ type BasicUser struct {
 // ServiceAccount represents a GitLab service account.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/api/user_service_accounts/
+// https://docs.gitlab.com/api/service_accounts/
 type ServiceAccount struct {
-	ID       int64  `json:"id"`
-	Username string `json:"username"`
-	Name     string `json:"name"`
+	ID               int64  `json:"id"`
+	Username         string `json:"username"`
+	Name             string `json:"name"`
+	Email            string `json:"email,omitempty"`
+	UnconfirmedEmail string `json:"unconfirmed_email,omitempty"`
 }
 
 // User represents a GitLab user.
@@ -1369,6 +1376,15 @@ func (s *UsersService) CreateServiceAccountUser(opts *CreateServiceAccountUserOp
 func (s *UsersService) ListServiceAccounts(opt *ListServiceAccountsOptions, options ...RequestOptionFunc) ([]*ServiceAccount, *Response, error) {
 	return do[[]*ServiceAccount](s.client,
 		withPath("service_accounts"),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+func (s *UsersService) UpdateInstanceServiceAccount(serviceAccount int64, opt *UpdateServiceAccountOptions, options ...RequestOptionFunc) (*ServiceAccount, *Response, error) {
+	return do[*ServiceAccount](s.client,
+		withMethod(http.MethodPatch),
+		withPath("service_accounts/%d", serviceAccount),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
 	)
