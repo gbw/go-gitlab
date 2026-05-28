@@ -1,3 +1,18 @@
+## 2.35.0
+
+### 🚀 Features
+
+- feat: add from_project_id field to CompareOptions ([!2878](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2878)) by [Raphael Rösch](https://gitlab.com/raphael.roesch)
+
+
+
+# [2.35.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.34.0...v2.35.0) (2026-05-28)
+
+
+### Features
+
+* add from_project_id field to CompareOptions ([78460c8](https://gitlab.com/gitlab-org/api/client-go/commit/78460c8ef7a53aff066c2fbf34a8bf5c925daf71))
+
 ## 2.34.0
 
 ### 🚀 Features
