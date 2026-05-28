@@ -1,3 +1,13 @@
+## 2.36.0
+
+### 🚀 Features
+
+- Add support for updating an instance service account ([!2900](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2900)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+
+
+# [2.36.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.35.0...v2.36.0) (2026-05-28)
+
 ## 2.35.0
 
 ### 🚀 Features
