@@ -216,10 +216,11 @@ func (c Compare) String() string {
 // GitLab API docs:
 // https://docs.gitlab.com/api/repositories/#compare-branches-tags-or-commits
 type CompareOptions struct {
-	From     *string `url:"from,omitempty" json:"from,omitempty"`
-	To       *string `url:"to,omitempty" json:"to,omitempty"`
-	Straight *bool   `url:"straight,omitempty" json:"straight,omitempty"`
-	Unidiff  *bool   `url:"unidiff,omitempty" json:"unidiff,omitempty"`
+	From          *string `url:"from,omitempty" json:"from,omitempty"`
+	To            *string `url:"to,omitempty" json:"to,omitempty"`
+	Straight      *bool   `url:"straight,omitempty" json:"straight,omitempty"`
+	Unidiff       *bool   `url:"unidiff,omitempty" json:"unidiff,omitempty"`
+	FromProjectID *int64  `url:"from_project_id,omitempty" json:"from_project_id,omitempty"`
 }
 
 func (s *RepositoriesService) Compare(pid any, opt *CompareOptions, options ...RequestOptionFunc) (*Compare, *Response, error) {
