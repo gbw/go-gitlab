@@ -2493,6 +2493,51 @@ func (c *MockUsersServiceInterfaceUnblockUserCall) DoAndReturn(f func(int64, ...
 	return c
 }
 
+// UpdateInstanceServiceAccount mocks base method.
+func (m *MockUsersServiceInterface) UpdateInstanceServiceAccount(serviceAccount int64, opt *gitlab.UpdateServiceAccountOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ServiceAccount, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{serviceAccount, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateInstanceServiceAccount", varargs...)
+	ret0, _ := ret[0].(*gitlab.ServiceAccount)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// UpdateInstanceServiceAccount indicates an expected call of UpdateInstanceServiceAccount.
+func (mr *MockUsersServiceInterfaceMockRecorder) UpdateInstanceServiceAccount(serviceAccount, opt any, options ...any) *MockUsersServiceInterfaceUpdateInstanceServiceAccountCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{serviceAccount, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateInstanceServiceAccount", reflect.TypeOf((*MockUsersServiceInterface)(nil).UpdateInstanceServiceAccount), varargs...)
+	return &MockUsersServiceInterfaceUpdateInstanceServiceAccountCall{Call: call}
+}
+
+// MockUsersServiceInterfaceUpdateInstanceServiceAccountCall wrap *gomock.Call
+type MockUsersServiceInterfaceUpdateInstanceServiceAccountCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockUsersServiceInterfaceUpdateInstanceServiceAccountCall) Return(arg0 *gitlab.ServiceAccount, arg1 *gitlab.Response, arg2 error) *MockUsersServiceInterfaceUpdateInstanceServiceAccountCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockUsersServiceInterfaceUpdateInstanceServiceAccountCall) Do(f func(int64, *gitlab.UpdateServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.ServiceAccount, *gitlab.Response, error)) *MockUsersServiceInterfaceUpdateInstanceServiceAccountCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockUsersServiceInterfaceUpdateInstanceServiceAccountCall) DoAndReturn(f func(int64, *gitlab.UpdateServiceAccountOptions, ...gitlab.RequestOptionFunc) (*gitlab.ServiceAccount, *gitlab.Response, error)) *MockUsersServiceInterfaceUpdateInstanceServiceAccountCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // UploadAvatar mocks base method.
 func (m *MockUsersServiceInterface) UploadAvatar(avatar io.Reader, filename string, options ...gitlab.RequestOptionFunc) (*gitlab.User, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
