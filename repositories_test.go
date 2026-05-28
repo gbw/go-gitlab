@@ -223,6 +223,9 @@ func TestRepositoriesService_Compare(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/12d65c8dd2b2676fa3ac47d955accc085a37a9c1/repository/compare", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		assert.Equal(t, "master", r.URL.Query().Get("from"))
+		assert.Equal(t, "feature", r.URL.Query().Get("to"))
+		assert.Equal(t, "42", r.URL.Query().Get("from_project_id"))
 		fmt.Fprintf(w, `
 			{
 			  "commit": {
@@ -257,8 +260,9 @@ func TestRepositoriesService_Compare(t *testing.T) {
 	})
 
 	opt := &CompareOptions{
-		From: Ptr("master"),
-		To:   Ptr("feature"),
+		From:          Ptr("master"),
+		To:            Ptr("feature"),
+		FromProjectID: Ptr(int64(42)),
 	}
 	want := &Compare{
 		Commit: &Commit{
