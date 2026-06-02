@@ -182,3 +182,74 @@ func (s *IntegrationsService) DeleteGroupMattermostSlashCommandsIntegration(gid 
 	)
 	return resp, err
 }
+
+// GroupDatadogIntegration represents a Datadog integration for a group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#datadog
+type GroupDatadogIntegration struct {
+	Integration
+	APIURL             string `json:"api_url"`
+	DatadogEnv         string `json:"datadog_env"`
+	DatadogService     string `json:"datadog_service"`
+	DatadogSite        string `json:"datadog_site"`
+	DatadogTags        string `json:"datadog_tags"`
+	ArchiveTraceEvents *bool  `json:"archive_trace_events"`
+}
+
+// GroupDatadogIntegrationOptions represents the available options for
+// creating or updating a Datadog integration for a group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#datadog
+type GroupDatadogIntegrationOptions struct {
+	APIKey               *string `url:"api_key,omitempty" json:"api_key,omitempty"`
+	APIURL               *string `url:"api_url,omitempty" json:"api_url,omitempty"`
+	DatadogEnv           *string `url:"datadog_env,omitempty" json:"datadog_env,omitempty"`
+	DatadogService       *string `url:"datadog_service,omitempty" json:"datadog_service,omitempty"`
+	DatadogSite          *string `url:"datadog_site,omitempty" json:"datadog_site,omitempty"`
+	DatadogTags          *string `url:"datadog_tags,omitempty" json:"datadog_tags,omitempty"`
+	ArchiveTraceEvents   *bool   `url:"archive_trace_events,omitempty" json:"archive_trace_events,omitempty"`
+	UseInheritedSettings *bool   `url:"use_inherited_settings,omitempty" json:"use_inherited_settings,omitempty"`
+}
+
+// GetGroupDatadogIntegration retrieves the Datadog integration for a group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#datadog
+func (s *IntegrationsService) GetGroupDatadogIntegration(gid any, options ...RequestOptionFunc) (*GroupDatadogIntegration, *Response, error) {
+	return do[*GroupDatadogIntegration](
+		s.client,
+		withPath("groups/%s/integrations/datadog", GroupID{gid}),
+		withMethod(http.MethodGet),
+		withRequestOpts(options...),
+	)
+}
+
+// SetGroupDatadogIntegration creates or updates the Datadog integration for a group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#datadog
+func (s *IntegrationsService) SetGroupDatadogIntegration(gid any, opt *GroupDatadogIntegrationOptions, options ...RequestOptionFunc) (*GroupDatadogIntegration, *Response, error) {
+	return do[*GroupDatadogIntegration](
+		s.client,
+		withPath("groups/%s/integrations/datadog", GroupID{gid}),
+		withMethod(http.MethodPut),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+// DeleteGroupDatadogIntegration removes the Datadog integration from a group.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/group_integrations/#datadog
+func (s *IntegrationsService) DeleteGroupDatadogIntegration(gid any, options ...RequestOptionFunc) (*Response, error) {
+	_, resp, err := do[none](
+		s.client,
+		withPath("groups/%s/integrations/datadog", GroupID{gid}),
+		withMethod(http.MethodDelete),
+		withRequestOpts(options...),
+	)
+	return resp, err
+}

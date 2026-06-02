@@ -39,6 +39,50 @@ func (m *MockIntegrationsServiceInterface) EXPECT() *MockIntegrationsServiceInte
 	return m.recorder
 }
 
+// DeleteGroupDatadogIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) DeleteGroupDatadogIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteGroupDatadogIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteGroupDatadogIntegration indicates an expected call of DeleteGroupDatadogIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) DeleteGroupDatadogIntegration(gid any, options ...any) *MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteGroupDatadogIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).DeleteGroupDatadogIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall) Return(arg0 *gitlab.Response, arg1 error) *MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDeleteGroupDatadogIntegrationCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteGroupMattermostIntegration mocks base method.
 func (m *MockIntegrationsServiceInterface) DeleteGroupMattermostIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -387,6 +431,51 @@ func (c *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall) Do(f func
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockIntegrationsServiceInterfaceDisableProjectGoogleChatCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// GetGroupDatadogIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) GetGroupDatadogIntegration(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.GroupDatadogIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGroupDatadogIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupDatadogIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetGroupDatadogIntegration indicates an expected call of GetGroupDatadogIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) GetGroupDatadogIntegration(gid any, options ...any) *MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGroupDatadogIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).GetGroupDatadogIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall) Return(arg0 *gitlab.GroupDatadogIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GroupDatadogIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.GroupDatadogIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceGetGroupDatadogIntegrationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1017,6 +1106,51 @@ func (c *MockIntegrationsServiceInterfaceListActiveGroupIntegrationsCall) Do(f f
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockIntegrationsServiceInterfaceListActiveGroupIntegrationsCall) DoAndReturn(f func(any, *gitlab.ListActiveIntegrationsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Integration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceListActiveGroupIntegrationsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SetGroupDatadogIntegration mocks base method.
+func (m *MockIntegrationsServiceInterface) SetGroupDatadogIntegration(gid any, opt *gitlab.GroupDatadogIntegrationOptions, options ...gitlab.RequestOptionFunc) (*gitlab.GroupDatadogIntegration, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetGroupDatadogIntegration", varargs...)
+	ret0, _ := ret[0].(*gitlab.GroupDatadogIntegration)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// SetGroupDatadogIntegration indicates an expected call of SetGroupDatadogIntegration.
+func (mr *MockIntegrationsServiceInterfaceMockRecorder) SetGroupDatadogIntegration(gid, opt any, options ...any) *MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGroupDatadogIntegration", reflect.TypeOf((*MockIntegrationsServiceInterface)(nil).SetGroupDatadogIntegration), varargs...)
+	return &MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall{Call: call}
+}
+
+// MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall wrap *gomock.Call
+type MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall) Return(arg0 *gitlab.GroupDatadogIntegration, arg1 *gitlab.Response, arg2 error) *MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall) Do(f func(any, *gitlab.GroupDatadogIntegrationOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupDatadogIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall) DoAndReturn(f func(any, *gitlab.GroupDatadogIntegrationOptions, ...gitlab.RequestOptionFunc) (*gitlab.GroupDatadogIntegration, *gitlab.Response, error)) *MockIntegrationsServiceInterfaceSetGroupDatadogIntegrationCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }

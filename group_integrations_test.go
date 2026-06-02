@@ -268,3 +268,129 @@ func TestDeleteGroupMattermostSlashCommandsIntegration(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
+
+func TestGetGroupDatadogIntegration(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with a Datadog integration
+	mux.HandleFunc("/api/v4/groups/1/integrations/datadog", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		mustWriteJSONResponse(t, w, map[string]any{
+			"id":                   1,
+			"title":                "Datadog",
+			"slug":                 "datadog",
+			"created_at":           "2023-01-01T00:00:00.000Z",
+			"updated_at":           "2023-01-02T00:00:00.000Z",
+			"active":               true,
+			"api_url":              "https://api.datadoghq.com",
+			"datadog_env":          "production",
+			"datadog_service":      "gitlab-production",
+			"datadog_site":         "datadoghq.com",
+			"datadog_tags":         "env:prod\nteam:platform",
+			"archive_trace_events": true,
+		})
+	})
+
+	// WHEN GetGroupDatadogIntegration is called
+	gdi, resp, err := client.Integrations.GetGroupDatadogIntegration(1)
+
+	// THEN the integration is returned without error
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
+	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
+	archiveTraceEvents := true
+
+	want := &GroupDatadogIntegration{
+		Integration: Integration{
+			ID:        1,
+			Title:     "Datadog",
+			Slug:      "datadog",
+			CreatedAt: &createdAt,
+			UpdatedAt: &updatedAt,
+			Active:    true,
+		},
+		APIURL:             "https://api.datadoghq.com",
+		DatadogEnv:         "production",
+		DatadogService:     "gitlab-production",
+		DatadogSite:        "datadoghq.com",
+		DatadogTags:        "env:prod\nteam:platform",
+		ArchiveTraceEvents: &archiveTraceEvents,
+	}
+
+	assert.Equal(t, want, gdi)
+}
+
+func TestSetGroupDatadogIntegration(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group where we want to set the Datadog integration
+	mux.HandleFunc("/api/v4/groups/1/integrations/datadog", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		mustWriteJSONResponse(t, w, map[string]any{
+			"id":                   1,
+			"title":                "Datadog",
+			"slug":                 "datadog",
+			"created_at":           "2023-01-01T00:00:00.000Z",
+			"updated_at":           "2023-01-02T00:00:00.000Z",
+			"active":               true,
+			"api_url":              "https://api.datadoghq.com",
+			"datadog_site":         "datadoghq.com",
+			"archive_trace_events": true,
+		})
+	})
+
+	opt := &GroupDatadogIntegrationOptions{
+		APIKey:             Ptr("secret-api-key"),
+		APIURL:             Ptr("https://api.datadoghq.com"),
+		DatadogSite:        Ptr("datadoghq.com"),
+		ArchiveTraceEvents: Ptr(true),
+	}
+
+	// WHEN SetGroupDatadogIntegration is called
+	gdi, resp, err := client.Integrations.SetGroupDatadogIntegration(1, opt)
+
+	// THEN the updated integration is returned without error
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+
+	createdAt, _ := time.Parse(time.RFC3339, "2023-01-01T00:00:00.000Z")
+	updatedAt, _ := time.Parse(time.RFC3339, "2023-01-02T00:00:00.000Z")
+	archiveTraceEvents := true
+
+	want := &GroupDatadogIntegration{
+		Integration: Integration{
+			ID:        1,
+			Title:     "Datadog",
+			Slug:      "datadog",
+			CreatedAt: &createdAt,
+			UpdatedAt: &updatedAt,
+			Active:    true,
+		},
+		APIURL:             "https://api.datadoghq.com",
+		DatadogSite:        "datadoghq.com",
+		ArchiveTraceEvents: &archiveTraceEvents,
+	}
+
+	assert.Equal(t, want, gdi)
+}
+
+func TestDeleteGroupDatadogIntegration(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a group with a Datadog integration
+	mux.HandleFunc("/api/v4/groups/1/integrations/datadog", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+	})
+
+	// WHEN DeleteGroupDatadogIntegration is called
+	resp, err := client.Integrations.DeleteGroupDatadogIntegration(1)
+
+	// THEN the integration is deleted without error
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
