@@ -67,15 +67,16 @@ type AccessLevelValue int
 //
 // GitLab API docs: https://docs.gitlab.com/api/access_requests/#valid-access-levels
 const (
-	NoPermissions            AccessLevelValue = 0
-	MinimalAccessPermissions AccessLevelValue = 5
-	GuestPermissions         AccessLevelValue = 10
-	PlannerPermissions       AccessLevelValue = 15
-	ReporterPermissions      AccessLevelValue = 20
-	DeveloperPermissions     AccessLevelValue = 30
-	MaintainerPermissions    AccessLevelValue = 40
-	OwnerPermissions         AccessLevelValue = 50
-	AdminPermissions         AccessLevelValue = 60
+	NoPermissions              AccessLevelValue = 0
+	MinimalAccessPermissions   AccessLevelValue = 5
+	GuestPermissions           AccessLevelValue = 10
+	PlannerPermissions         AccessLevelValue = 15
+	ReporterPermissions        AccessLevelValue = 20
+	SecurityManagerPermissions AccessLevelValue = 25
+	DeveloperPermissions       AccessLevelValue = 30
+	MaintainerPermissions      AccessLevelValue = 40
+	OwnerPermissions           AccessLevelValue = 50
+	AdminPermissions           AccessLevelValue = 60
 )
 
 type AccessLevelDetails struct {
