@@ -27,6 +27,24 @@ type (
 		// https://docs.gitlab.com/api/group_integrations/#list-all-active-integrations
 		ListActiveGroupIntegrations(gid any, opt *ListActiveIntegrationsOptions, options ...RequestOptionFunc) ([]*Integration, *Response, error)
 
+		// GetGroupDatadogIntegration retrieves the Datadog integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#datadog
+		GetGroupDatadogIntegration(gid any, options ...RequestOptionFunc) (*GroupDatadogIntegration, *Response, error)
+
+		// SetGroupDatadogIntegration creates or updates the Datadog integration for a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#datadog
+		SetGroupDatadogIntegration(gid any, opt *GroupDatadogIntegrationOptions, options ...RequestOptionFunc) (*GroupDatadogIntegration, *Response, error)
+
+		// DeleteGroupDatadogIntegration removes the Datadog integration from a group.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/group_integrations/#datadog
+		DeleteGroupDatadogIntegration(gid any, options ...RequestOptionFunc) (*Response, error)
+
 		// SetUpGroupHarbor sets up the Harbor integration for a group.
 		//
 		// GitLab API docs:
