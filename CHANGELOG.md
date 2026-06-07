@@ -1,3 +1,31 @@
+## 2.36.1
+
+### 🐛 Bug Fixes
+
+- fix: Fixed error where GraphQL calls on subpaths didn't work properly ([!2910](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2910)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+### 🔄 Other Changes
+
+- chore(deps): update module github.com/graph-gophers/graphql-go to v1.10.2 ([!2895](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2895)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- Add Security Manager access level ([!2908](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2908)) by [Kim Sondrup](https://gitlab.com/kimsondrup)
+- feat: add support for group Datadog integration ([!2907](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2907)) by [Gatla Vishweshwar Reddy](https://gitlab.com/gatlavishweshwarreddy26)
+- chore(deps): update docker docker tag to v29.5.2 ([!2904](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2904)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module golang.org/x/text to v0.37.0 ([!2906](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2906)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+## [2.36.1](https://gitlab.com/gitlab-org/api/client-go/compare/v2.36.0...v2.36.1) (2026-06-07)
+
+
+### Bug Fixes
+
+* Fixed error where GraphQL calls on subpaths didn't work properly ([be0528f](https://gitlab.com/gitlab-org/api/client-go/commit/be0528f0b26452792018c4202f71a77dc116231f))
+
+
+### Features
+
+* add support for group Datadog integration ([ce5d787](https://gitlab.com/gitlab-org/api/client-go/commit/ce5d78784df2fafeb0d07dcc0dee62360937877e))
+
 ## 2.36.0
 
 ### 🚀 Features
