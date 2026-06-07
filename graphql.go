@@ -84,8 +84,9 @@ func (g *GraphQL) Do(query GraphQLQuery, response any, options ...RequestOptionF
 	if err != nil {
 		return nil, fmt.Errorf("failed to create GraphQL request: %w", err)
 	}
+
 	// Overwrite the path of the existing request, as otherwise client-go appends /api/v4 instead.
-	request.URL.Path = GraphQLAPIEndpoint
+	request.URL.Path = strings.Replace(request.URL.Path, "/"+apiVersionPath, GraphQLAPIEndpoint, 1)
 	resp, err := g.client.Do(request, response)
 	if err != nil {
 		// return error, details can be read from Response
