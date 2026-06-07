@@ -57,6 +57,14 @@ var (
 // configured to talk to that test server.  Tests should register handlers on
 // mux which provide mock responses for the API method being tested.
 func setup(t *testing.T) (*http.ServeMux, *Client) {
+	// Setup on subpath, but pass in an empty subpath.
+	return setupOnSubpath(t, "")
+}
+
+// setupOnSubpath sets up a test HTTP server along with a gitlab.Client that is
+// configured to talk to that test server, but it sets up the client to use a baseURL
+// configured on a subpath instead of the root of the domain.
+func setupOnSubpath(t *testing.T, path string) (*http.ServeMux, *Client) {
 	// mux is the HTTP request multiplexer used with the test server.
 	mux := http.NewServeMux()
 
@@ -66,7 +74,7 @@ func setup(t *testing.T) (*http.ServeMux, *Client) {
 
 	// client is the GitLab client being tested.
 	client, err := NewClient("",
-		WithBaseURL(server.URL),
+		WithBaseURL(server.URL+path),
 		// Disable backoff to speed up tests that expect errors.
 		WithCustomBackoff(func(_, _ time.Duration, _ int, _ *http.Response) time.Duration {
 			return 0
