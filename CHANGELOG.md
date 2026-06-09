@@ -1,3 +1,18 @@
+## 2.36.3
+
+### 🐛 Bug Fixes
+
+- fix: dynamically build ListWorkItems GraphQL query to prevent API hangs, add integration test for ListWorkItems ([!2915](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2915)) by [Carlos Corona](https://gitlab.com/ccorona2)
+
+
+
+## [2.36.3](https://gitlab.com/gitlab-org/api/client-go/compare/v2.36.2...v2.36.3) (2026-06-09)
+
+
+### Bug Fixes
+
+* dynamically build ListWorkItems GraphQL query to prevent API hangs, add integration test for ListWorkItems ([8793f2b](https://gitlab.com/gitlab-org/api/client-go/commit/8793f2b3a4ff913741001666512d8ee08e7631a0))
+
 ## 2.36.2
 
 ### 🐛 Bug Fixes
