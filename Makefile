@@ -10,7 +10,7 @@ reviewable: setup generate fmt lint test ## Run before committing.
 
 fmt: ## Format code
 	@buf format -w
-	@gofumpt -l -w *.go testing/*.go
+	@gofumpt -l -w *.go testing/*.go gitlab_test/*.go
 
 lint: ## Run linter
 	@golangci-lint run

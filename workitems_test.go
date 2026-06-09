@@ -1572,3 +1572,113 @@ func TestListWorkItemTypes_NilOptDoesNotPanic(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, []WorkItemType{}, got)
 }
+
+func TestBuildListWorkItemsQuery_AllFields(t *testing.T) {
+	t.Parallel()
+
+	now := time.Date(2026, time.January, 1, 0, 0, 0, 0, time.UTC)
+
+	opt := &ListWorkItemsOptions{
+		AssigneeUsernames:    []string{"user1"},
+		AssigneeWildcardID:   Ptr("NONE"),
+		AuthorUsername:       Ptr("fforster"),
+		Confidential:         Ptr(true),
+		CRMContactID:         Ptr("contact123"),
+		CRMOrganizationID:    Ptr("org456"),
+		HealthStatusFilter:   Ptr("onTrack"),
+		IDs:                  []string{"gid://gitlab/WorkItem/1"},
+		IIDs:                 []string{"1"},
+		IncludeAncestors:     Ptr(true),
+		IncludeDescendants:   Ptr(false),
+		IterationCadenceID:   []string{"cadence1"},
+		IterationID:          []string{"iter1"},
+		IterationWildcardID:  Ptr("CURRENT"),
+		LabelName:            []string{"bug"},
+		MilestoneTitle:       []string{"v1.0"},
+		MilestoneWildcardID:  Ptr("STARTED"),
+		MyReactionEmoji:      Ptr("thumbsup"),
+		ParentIDs:            []string{"gid://gitlab/WorkItem/100"},
+		ReleaseTag:           []string{"v1.0.0"},
+		ReleaseTagWildcardID: Ptr("ANY"),
+		State:                Ptr("opened"),
+		Subscribed:           Ptr("EXPLICITLY_SUBSCRIBED"),
+		Types:                []string{"ISSUE"},
+		Weight:               Ptr("5"),
+		WeightWildcardID:     Ptr("NONE"),
+		ClosedAfter:          &now,
+		ClosedBefore:         &now,
+		CreatedAfter:         &now,
+		CreatedBefore:        &now,
+		DueAfter:             &now,
+		DueBefore:            &now,
+		UpdatedAfter:         &now,
+		UpdatedBefore:        &now,
+		Sort:                 Ptr("CREATED_DESC"),
+		Search:               Ptr("bug"),
+		In:                   []string{"TITLE"},
+		After:                Ptr("cursor123"),
+		Before:               Ptr("cursor456"),
+		First:                Ptr(int64(10)),
+		Last:                 Ptr(int64(5)),
+	}
+
+	query, vars, err := buildListWorkItemsQuery("my/project", opt)
+	require.NoError(t, err)
+
+	// every field should appear in the query string
+	for _, field := range []string{
+		"assigneeUsernames", "assigneeWildcardId", "authorUsername",
+		"confidential", "crmContactId", "crmOrganizationId",
+		"healthStatusFilter", "ids", "iids", "includeAncestors",
+		"includeDescendants", "iterationCadenceId", "iterationId",
+		"iterationWildcardId", "labelName", "milestoneTitle",
+		"milestoneWildcardId", "myReactionEmoji", "parentIds",
+		"releaseTag", "releaseTagWildcardId", "state", "subscribed",
+		"types", "weight", "weightWildcardId", "closedAfter",
+		"closedBefore", "createdAfter", "createdBefore", "dueAfter",
+		"dueBefore", "updatedAfter", "updatedBefore", "sort",
+		"search", "in", "after", "before", "first", "last",
+	} {
+		assert.Contains(t, query, "$"+field+":", "field %q missing from declaration in query string", field)
+		assert.Contains(t, query, field+": $"+field, "field %q missing from args in query string", field)
+		assert.Contains(t, vars, field, "field %q missing from vars map", field)
+	}
+
+	assert.Equal(t, "my/project", vars["fullPath"])
+}
+
+func TestBuildListWorkItemsQuery_NilOpt(t *testing.T) {
+	t.Parallel()
+
+	query, vars, err := buildListWorkItemsQuery("my/project", nil)
+	require.NoError(t, err)
+
+	// query should declare only $fullPath
+	assert.Contains(t, query, "$fullPath: ID!")
+	assert.NotContains(t, query, "$assigneeUsernames")
+	assert.NotContains(t, query, "$state")
+	assert.NotContains(t, query, "$first")
+
+	// vars map should contain only fullPath
+	assert.Equal(t, map[string]any{"fullPath": "my/project"}, vars)
+}
+
+func TestBuildListWorkItemsQuery_PartialFields(t *testing.T) {
+	t.Parallel()
+
+	opt := &ListWorkItemsOptions{
+		State: Ptr("opened"),
+		First: Ptr(int64(10)),
+	}
+
+	query, vars, err := buildListWorkItemsQuery("my/project", opt)
+	require.NoError(t, err)
+
+	assert.Contains(t, query, "$state:")
+	assert.Contains(t, query, "$first:")
+	assert.NotContains(t, query, "$assigneeUsernames")
+	assert.NotContains(t, query, "$authorUsername")
+	assert.Contains(t, vars, "state")
+	assert.Contains(t, vars, "first")
+	assert.NotContains(t, vars, "assigneeUsernames")
+}
