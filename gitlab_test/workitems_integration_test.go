@@ -61,6 +61,24 @@ func TestWorkItemLifeCycle(t *testing.T) {
 	assert.Equal(t, deref(t, createdWI.HealthStatus), deref(t, gotWI.HealthStatus), "Field: HealthStatus")
 	assert.Equal(t, deref(t, createdWI.Color), deref(t, gotWI.Color), "Field: Color")
 
+	// STEP 2.5: List work items
+	// WHEN listing work items in the group
+	first := int64(10)
+	workItems, _, err := client.WorkItems.ListWorkItems(group.FullPath, &gitlab.ListWorkItemsOptions{
+		First: gitlab.Ptr(first),
+	})
+	require.NoError(t, err, "ListWorkItems failed")
+
+	// THEN the created work item should appear in the list
+	var found bool
+	for _, wi := range workItems {
+		if wi.IID == createdWI.IID {
+			found = true
+			break
+		}
+	}
+	assert.True(t, found, "Created work item not found in ListWorkItems results")
+
 	// STEP 3: Update the work item
 	// WHEN updating the work item with new values
 	updateOpt := gitlab.UpdateWorkItemOptions{

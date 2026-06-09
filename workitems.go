@@ -334,110 +334,225 @@ type ListWorkItemsOptions struct {
 	Last   *int64
 }
 
-// listWorkItemsTemplate is chained from workItemTemplate so it has access to both
-// UserCoreBasic and WorkItem templates.
 var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()).New("ListWorkItems").Parse(`
-	query ListWorkItems(
-		$fullPath: ID!
-		$assigneeUsernames: [String!]
-		$assigneeWildcardId: AssigneeWildcardId
-		$authorUsername: String
-		$confidential: Boolean
-		$crmContactId: String
-		$crmOrganizationId: String
-		$healthStatusFilter: HealthStatusFilter
-		$ids: [WorkItemID!]
-		$iids: [String!]
-		$includeAncestors: Boolean
-		$includeDescendants: Boolean
-		$iterationCadenceId: [IterationsCadenceID!]
-		$iterationId: [ID]
-		$iterationWildcardId: IterationWildcardId
-		$labelName: [String!]
-		$milestoneTitle: [String!]
-		$milestoneWildcardId: MilestoneWildcardId
-		$myReactionEmoji: String
-		$parentIds: [WorkItemID!]
-		$releaseTag: [String!]
-		$releaseTagWildcardId: ReleaseTagWildcardId
-		$state: IssuableState
-		$subscribed: SubscriptionStatus
-		$types: [IssueType!]
-		$weight: String
-		$weightWildcardId: WeightWildcardId
-		$closedAfter: Time
-		$closedBefore: Time
-		$createdAfter: Time
-		$createdBefore: Time
-		$dueAfter: Time
-		$dueBefore: Time
-		$updatedAfter: Time
-		$updatedBefore: Time
-		$sort: WorkItemSort
-		$search: String
-		$in: [IssuableSearchableField!]
-		$after: String
-		$before: String
-		$first: Int
-		$last: Int
-	) {
-		namespace(fullPath: $fullPath) {
-			workItems(
-				assigneeUsernames: $assigneeUsernames
-				assigneeWildcardId: $assigneeWildcardId
-				authorUsername: $authorUsername
-				confidential: $confidential
-				crmContactId: $crmContactId
-				crmOrganizationId: $crmOrganizationId
-				healthStatusFilter: $healthStatusFilter
-				ids: $ids
-				iids: $iids
-				includeAncestors: $includeAncestors
-				includeDescendants: $includeDescendants
-				iterationCadenceId: $iterationCadenceId
-				iterationId: $iterationId
-				iterationWildcardId: $iterationWildcardId
-				labelName: $labelName
-				milestoneTitle: $milestoneTitle
-				milestoneWildcardId: $milestoneWildcardId
-				myReactionEmoji: $myReactionEmoji
-				parentIds: $parentIds
-				releaseTag: $releaseTag
-				releaseTagWildcardId: $releaseTagWildcardId
-				state: $state
-				subscribed: $subscribed
-				types: $types
-				weight: $weight
-				weightWildcardId: $weightWildcardId
-				closedAfter: $closedAfter
-				closedBefore: $closedBefore
-				createdAfter: $createdAfter
-				createdBefore: $createdBefore
-				dueAfter: $dueAfter
-				dueBefore: $dueBefore
-				updatedAfter: $updatedAfter
-				updatedBefore: $updatedBefore
-				sort: $sort
-				search: $search
-				in: $in
-				after: $after
-				before: $before
-				first: $first
-				last: $last
-			) {
-				nodes {
-					{{ template "WorkItem" }}
-				}
-				pageInfo {
-					endCursor
-					hasNextPage
-					startCursor
-					hasPreviousPage
-				}
-			}
-		}
-	}
+    query ListWorkItems($fullPath: ID!{{ if .Decls }}, {{ .Decls }}{{ end }}) {
+        namespace(fullPath: $fullPath) {
+            workItems({{ if .Args }}{{ .Args }}{{ end }}) {
+                nodes {
+                    {{ template "WorkItem" }}
+                }
+                pageInfo {
+                    endCursor
+                    hasNextPage
+                    startCursor
+                    hasPreviousPage
+                }
+            }
+        }
+    }
 `))
+
+type listWorkItemsQueryData struct {
+	Decls string
+	Args  string
+}
+
+type workItemQueryVar struct {
+	name    string
+	gqlType string
+	value   any
+}
+
+func buildListWorkItemsQuery(fullPath string, opt *ListWorkItemsOptions) (string, map[string]any, error) {
+	if opt == nil {
+		opt = &ListWorkItemsOptions{}
+	}
+
+	var qvars []workItemQueryVar
+	varsMap := make(map[string]any)
+
+	if len(opt.AssigneeUsernames) > 0 {
+		qvars = append(qvars, workItemQueryVar{"assigneeUsernames", "[String!]", opt.AssigneeUsernames})
+	}
+
+	if opt.AssigneeWildcardID != nil {
+		qvars = append(qvars, workItemQueryVar{"assigneeWildcardId", "AssigneeWildcardId", opt.AssigneeWildcardID})
+	}
+
+	if opt.AuthorUsername != nil {
+		qvars = append(qvars, workItemQueryVar{"authorUsername", "String", opt.AuthorUsername})
+	}
+
+	if opt.Confidential != nil {
+		qvars = append(qvars, workItemQueryVar{"confidential", "Boolean", opt.Confidential})
+	}
+
+	if opt.CRMContactID != nil {
+		qvars = append(qvars, workItemQueryVar{"crmContactId", "String", opt.CRMContactID})
+	}
+
+	if opt.CRMOrganizationID != nil {
+		qvars = append(qvars, workItemQueryVar{"crmOrganizationId", "String", opt.CRMOrganizationID})
+	}
+
+	if opt.HealthStatusFilter != nil {
+		qvars = append(qvars, workItemQueryVar{"healthStatusFilter", "HealthStatusFilter", opt.HealthStatusFilter})
+	}
+
+	if len(opt.IDs) > 0 {
+		qvars = append(qvars, workItemQueryVar{"ids", "[WorkItemID!]", opt.IDs})
+	}
+
+	if len(opt.IIDs) > 0 {
+		qvars = append(qvars, workItemQueryVar{"iids", "[String!]", opt.IIDs})
+	}
+
+	if opt.IncludeAncestors != nil {
+		qvars = append(qvars, workItemQueryVar{"includeAncestors", "Boolean", opt.IncludeAncestors})
+	}
+
+	if opt.IncludeDescendants != nil {
+		qvars = append(qvars, workItemQueryVar{"includeDescendants", "Boolean", opt.IncludeDescendants})
+	}
+
+	if len(opt.IterationCadenceID) > 0 {
+		qvars = append(qvars, workItemQueryVar{"iterationCadenceId", "[IterationsCadenceID!]", opt.IterationCadenceID})
+	}
+
+	if len(opt.IterationID) > 0 {
+		qvars = append(qvars, workItemQueryVar{"iterationId", "[ID]", opt.IterationID})
+	}
+
+	if opt.IterationWildcardID != nil {
+		qvars = append(qvars, workItemQueryVar{"iterationWildcardId", "IterationWildcardId", opt.IterationWildcardID})
+	}
+
+	if len(opt.LabelName) > 0 {
+		qvars = append(qvars, workItemQueryVar{"labelName", "[String!]", opt.LabelName})
+	}
+
+	if len(opt.MilestoneTitle) > 0 {
+		qvars = append(qvars, workItemQueryVar{"milestoneTitle", "[String!]", opt.MilestoneTitle})
+	}
+
+	if opt.MilestoneWildcardID != nil {
+		qvars = append(qvars, workItemQueryVar{"milestoneWildcardId", "MilestoneWildcardId", opt.MilestoneWildcardID})
+	}
+
+	if opt.MyReactionEmoji != nil {
+		qvars = append(qvars, workItemQueryVar{"myReactionEmoji", "String", opt.MyReactionEmoji})
+	}
+
+	if len(opt.ParentIDs) > 0 {
+		qvars = append(qvars, workItemQueryVar{"parentIds", "[WorkItemID!]", opt.ParentIDs})
+	}
+
+	if len(opt.ReleaseTag) > 0 {
+		qvars = append(qvars, workItemQueryVar{"releaseTag", "[String!]", opt.ReleaseTag})
+	}
+
+	if opt.ReleaseTagWildcardID != nil {
+		qvars = append(qvars, workItemQueryVar{"releaseTagWildcardId", "ReleaseTagWildcardId", opt.ReleaseTagWildcardID})
+	}
+
+	if opt.State != nil {
+		qvars = append(qvars, workItemQueryVar{"state", "IssuableState", opt.State})
+	}
+
+	if opt.Subscribed != nil {
+		qvars = append(qvars, workItemQueryVar{"subscribed", "SubscriptionStatus", opt.Subscribed})
+	}
+
+	if len(opt.Types) > 0 {
+		qvars = append(qvars, workItemQueryVar{"types", "[IssueType!]", opt.Types})
+	}
+
+	if opt.Weight != nil {
+		qvars = append(qvars, workItemQueryVar{"weight", "String", opt.Weight})
+	}
+
+	if opt.WeightWildcardID != nil {
+		qvars = append(qvars, workItemQueryVar{"weightWildcardId", "WeightWildcardId", opt.WeightWildcardID})
+	}
+
+	if opt.ClosedAfter != nil {
+		qvars = append(qvars, workItemQueryVar{"closedAfter", "Time", opt.ClosedAfter})
+	}
+
+	if opt.ClosedBefore != nil {
+		qvars = append(qvars, workItemQueryVar{"closedBefore", "Time", opt.ClosedBefore})
+	}
+
+	if opt.CreatedAfter != nil {
+		qvars = append(qvars, workItemQueryVar{"createdAfter", "Time", opt.CreatedAfter})
+	}
+
+	if opt.CreatedBefore != nil {
+		qvars = append(qvars, workItemQueryVar{"createdBefore", "Time", opt.CreatedBefore})
+	}
+
+	if opt.DueAfter != nil {
+		qvars = append(qvars, workItemQueryVar{"dueAfter", "Time", opt.DueAfter})
+	}
+
+	if opt.DueBefore != nil {
+		qvars = append(qvars, workItemQueryVar{"dueBefore", "Time", opt.DueBefore})
+	}
+
+	if opt.UpdatedAfter != nil {
+		qvars = append(qvars, workItemQueryVar{"updatedAfter", "Time", opt.UpdatedAfter})
+	}
+
+	if opt.UpdatedBefore != nil {
+		qvars = append(qvars, workItemQueryVar{"updatedBefore", "Time", opt.UpdatedBefore})
+	}
+
+	if opt.Sort != nil {
+		qvars = append(qvars, workItemQueryVar{"sort", "WorkItemSort", opt.Sort})
+	}
+
+	if opt.Search != nil {
+		qvars = append(qvars, workItemQueryVar{"search", "String", opt.Search})
+	}
+
+	if len(opt.In) > 0 {
+		qvars = append(qvars, workItemQueryVar{"in", "[IssuableSearchableField!]", opt.In})
+	}
+
+	if opt.After != nil {
+		qvars = append(qvars, workItemQueryVar{"after", "String", opt.After})
+	}
+
+	if opt.Before != nil {
+		qvars = append(qvars, workItemQueryVar{"before", "String", opt.Before})
+	}
+
+	if opt.First != nil {
+		qvars = append(qvars, workItemQueryVar{"first", "Int", opt.First}) //nolint:goconst
+	}
+
+	if opt.Last != nil {
+		qvars = append(qvars, workItemQueryVar{"last", "Int", opt.Last}) //nolint:goconst
+	}
+
+	varsMap["fullPath"] = fullPath
+	declParts := make([]string, 0, len(qvars))
+	argParts := make([]string, 0, len(qvars))
+	for _, qv := range qvars {
+		declParts = append(declParts, fmt.Sprintf("$%s: %s", qv.name, qv.gqlType))
+		argParts = append(argParts, fmt.Sprintf("%s: $%s", qv.name, qv.name))
+
+		varsMap[qv.name] = qv.value
+	}
+	decls := strings.Join(declParts, ", ")
+	args := strings.Join(argParts, ", ")
+
+	var queryBuilder strings.Builder
+	if err := listWorkItemsTemplate.Execute(&queryBuilder, listWorkItemsQueryData{Decls: decls, Args: args}); err != nil {
+		return "", nil, err
+	}
+	return queryBuilder.String(), varsMap, nil
+}
 
 // ListWorkItems lists workitems in a given namespace (group or project).
 //
@@ -445,61 +560,11 @@ var listWorkItemsTemplate = template.Must(template.Must(workItemTemplate.Clone()
 //
 // Experimental: The Work Items API is a work in progress and may introduce breaking changes even between minor versions.
 func (s *WorkItemsService) ListWorkItems(fullPath string, opt *ListWorkItemsOptions, options ...RequestOptionFunc) ([]*WorkItem, *Response, error) {
-	var queryBuilder strings.Builder
-
-	if err := listWorkItemsTemplate.Execute(&queryBuilder, nil); err != nil {
+	queryStr, vars, err := buildListWorkItemsQuery(fullPath, opt)
+	if err != nil {
 		return nil, nil, err
 	}
-
-	vars := map[string]any{
-		"fullPath":             fullPath,
-		"assigneeUsernames":    opt.AssigneeUsernames,
-		"assigneeWildcardId":   opt.AssigneeWildcardID,
-		"authorUsername":       opt.AuthorUsername,
-		"confidential":         opt.Confidential,
-		"crmContactId":         opt.CRMContactID,
-		"crmOrganizationId":    opt.CRMOrganizationID,
-		"healthStatusFilter":   opt.HealthStatusFilter,
-		"ids":                  opt.IDs,
-		"iids":                 opt.IIDs,
-		"includeAncestors":     opt.IncludeAncestors,
-		"includeDescendants":   opt.IncludeDescendants,
-		"iterationCadenceId":   opt.IterationCadenceID,
-		"iterationId":          opt.IterationID,
-		"iterationWildcardId":  opt.IterationWildcardID,
-		"labelName":            opt.LabelName,
-		"milestoneTitle":       opt.MilestoneTitle,
-		"milestoneWildcardId":  opt.MilestoneWildcardID,
-		"myReactionEmoji":      opt.MyReactionEmoji,
-		"parentIds":            opt.ParentIDs,
-		"releaseTag":           opt.ReleaseTag,
-		"releaseTagWildcardId": opt.ReleaseTagWildcardID,
-		"state":                opt.State,
-		"subscribed":           opt.Subscribed,
-		"types":                opt.Types,
-		"weight":               opt.Weight,
-		"weightWildcardId":     opt.WeightWildcardID,
-		"closedAfter":          opt.ClosedAfter,
-		"closedBefore":         opt.ClosedBefore,
-		"createdAfter":         opt.CreatedAfter,
-		"createdBefore":        opt.CreatedBefore,
-		"dueAfter":             opt.DueAfter,
-		"dueBefore":            opt.DueBefore,
-		"updatedAfter":         opt.UpdatedAfter,
-		"updatedBefore":        opt.UpdatedBefore,
-		"sort":                 opt.Sort,
-		"search":               opt.Search,
-		"in":                   opt.In,
-		"after":                opt.After,
-		"before":               opt.Before,
-		"first":                opt.First,
-		"last":                 opt.Last,
-	}
-
-	query := GraphQLQuery{
-		Query:     queryBuilder.String(),
-		Variables: vars,
-	}
+	query := GraphQLQuery{Query: queryStr, Variables: vars}
 
 	var result struct {
 		Data struct {
