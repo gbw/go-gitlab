@@ -1,3 +1,17 @@
+## 2.36.2
+
+### 🐛 Bug Fixes
+
+- Update JobEvent webhook type to reflect GitLab documentation ([!2914](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2914)) by [Möhsün Babayev](https://gitlab.com/mohsunb)
+
+### 🔄 Other Changes
+
+- chore(deps): update module golang.org/x/sys to v0.45.0 ([!2836](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2836)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+## [2.36.2](https://gitlab.com/gitlab-org/api/client-go/compare/v2.36.1...v2.36.2) (2026-06-09)
+
 ## 2.36.1
 
 ### 🐛 Bug Fixes
