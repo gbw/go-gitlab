@@ -478,6 +478,7 @@ type JobEvent struct {
 	Tag                 bool                `json:"tag"`
 	BeforeSHA           string              `json:"before_sha"`
 	SHA                 string              `json:"sha"`
+	RetriesCount        int64               `json:"retries_count"`
 	BuildID             int64               `json:"build_id"`
 	BuildName           string              `json:"build_name"`
 	BuildStage          string              `json:"build_stage"`
@@ -485,18 +486,21 @@ type JobEvent struct {
 	BuildCreatedAt      string              `json:"build_created_at"`
 	BuildStartedAt      string              `json:"build_started_at"`
 	BuildFinishedAt     string              `json:"build_finished_at"`
+	BuildCreatedAtISO   string              `json:"build_created_at_iso"`
+	BuildStartedAtISO   string              `json:"build_started_at_iso"`
+	BuildFinishedAtISO  string              `json:"build_finished_at_iso"`
 	BuildDuration       float64             `json:"build_duration"`
 	BuildQueuedDuration float64             `json:"build_queued_duration"`
 	BuildAllowFailure   bool                `json:"build_allow_failure"`
 	BuildFailureReason  string              `json:"build_failure_reason"`
-	RetriesCount        int64               `json:"retries_count"`
 	PipelineID          int64               `json:"pipeline_id"`
+	Runner              JobEventRunner      `json:"runner"`
 	ProjectID           int64               `json:"project_id"`
 	ProjectName         string              `json:"project_name"`
 	User                *EventUser          `json:"user"`
 	Commit              JobEventCommit      `json:"commit"`
 	Repository          *Repository         `json:"repository"`
-	Runner              JobEventRunner      `json:"runner"`
+	Project             JobEventProject     `json:"project"`
 	Environment         EventEnvironment    `json:"environment"`
 	SourcePipeline      EventSourcePipeline `json:"source_pipeline"`
 }
@@ -517,11 +521,26 @@ type JobEventCommit struct {
 
 type JobEventRunner struct {
 	ID          int64    `json:"id"`
-	Active      bool     `json:"active"`
-	RunnerType  string   `json:"runner_type"`
-	IsShared    bool     `json:"is_shared"`
 	Description string   `json:"description"`
+	RunnerType  string   `json:"runner_type"`
+	Active      bool     `json:"active"`
+	IsShared    bool     `json:"is_shared"`
 	Tags        []string `json:"tags"`
+}
+
+type JobEventProject struct {
+	ID                int64  `json:"id"`
+	Name              string `json:"name"`
+	Description       string `json:"description"`
+	WebURL            string `json:"web_url"`
+	AvatarURL         string `json:"avatar_url"`
+	GitSSHURL         string `json:"git_ssh_url"`
+	GitHTTPURL        string `json:"git_http_url"`
+	Namespace         string `json:"namespace"`
+	VisibilityLevel   int64  `json:"visibility_level"`
+	PathWithNamespace string `json:"path_with_namespace"`
+	DefaultBranch     string `json:"default_branch"`
+	CIConfigPath      string `json:"ci_config_path"`
 }
 
 type EventEnvironment struct {

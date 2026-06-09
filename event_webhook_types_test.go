@@ -170,6 +170,7 @@ func TestJobEventUnmarshal(t *testing.T) {
 		Tag:                 false,
 		BeforeSHA:           "0000000000000000000000000000000000000000",
 		SHA:                 "95d49d1efbd941908580e79d65e4b5ecaf4a8305",
+		RetriesCount:        1,
 		BuildID:             3580121225,
 		BuildName:           "auto_deploy:start",
 		BuildStage:          "coordinated:tag",
@@ -177,20 +178,43 @@ func TestJobEventUnmarshal(t *testing.T) {
 		BuildCreatedAt:      "2023-01-10 13:50:02 UTC",
 		BuildStartedAt:      "2023-01-10 13:50:05 UTC",
 		BuildFinishedAt:     "2023-01-10 13:50:54 UTC",
+		BuildCreatedAtISO:   "2023-01-10T13:50:02Z",
+		BuildStartedAtISO:   "2023-01-10T13:50:05Z",
+		BuildFinishedAtISO:  "2023-01-10T13:50:54Z",
 		BuildDuration:       49.503592,
 		BuildQueuedDuration: 0.193009,
 		BuildAllowFailure:   false,
 		BuildFailureReason:  "unknown_failure",
-		RetriesCount:        1,
 		PipelineID:          743121198,
-		ProjectID:           31537070,
-		ProjectName:         "John Smith / release-tools-fake",
+		Runner: JobEventRunner{
+			ID:          12270837,
+			Description: "4-blue.shared.runners-manager.gitlab.com/default",
+			RunnerType:  "instance_type",
+			Active:      true,
+			IsShared:    true,
+			Tags:        []string{"linux", "docker"},
+		},
+		ProjectID:   31537070,
+		ProjectName: "John Smith / release-tools-fake",
 		User: &EventUser{
 			ID:        2967854,
 			Name:      "John Smith",
 			Username:  "jsmithy2",
 			AvatarURL: "https://gitlab.com/uploads/-/system/user/avatar/2967852/avatar.png",
 			Email:     "john@smith.com",
+		},
+		Commit: JobEventCommit{
+			ID:          743121198,
+			Name:        "Build pipeline",
+			SHA:         "95d49d1efbd941908580e79d65e4b5ecaf4a8305",
+			Message:     "Remove test jobs and add back other jobs",
+			AuthorName:  "John Smith",
+			AuthorEmail: "john@smith.com",
+			AuthorURL:   "https://gitlab.com/jsmithy2",
+			Status:      "running",
+			Duration:    128,
+			StartedAt:   "2023-01-10 13:50:05 UTC",
+			FinishedAt:  "2022-10-12 08:09:29 UTC",
 		},
 		Repository: &Repository{
 			Name:              "release-tools-fake",
@@ -208,35 +232,35 @@ func TestJobEventUnmarshal(t *testing.T) {
 			SSHURL:            "",
 			HTTPURL:           "",
 		},
+		Project: JobEventProject{
+			ID:                1,
+			Name:              "Gitlab Test",
+			Description:       "Atque in sunt eos similique dolores voluptatem.",
+			WebURL:            "http://192.168.64.1:3005/gitlab-org/gitlab-test",
+			AvatarURL:         "",
+			GitSSHURL:         "git@192.168.64.1:gitlab-org/gitlab-test.git",
+			GitHTTPURL:        "http://192.168.64.1:3005/gitlab-org/gitlab-test.git",
+			Namespace:         "Gitlab Org",
+			VisibilityLevel:   20,
+			PathWithNamespace: "gitlab-org/gitlab-test",
+			DefaultBranch:     "master",
+			CIConfigPath:      "",
+		},
+		Environment: EventEnvironment{
+			Name:           "production",
+			Action:         "start",
+			DeploymentTier: "production",
+		},
+		SourcePipeline: EventSourcePipeline{
+			Project: EventSourcePipelineProject{
+				ID:                41,
+				WebURL:            "https://gitlab.example.com/gitlab-org/upstream-project",
+				PathWithNamespace: "gitlab-org/upstream-project",
+			},
+			PipelineID: 30,
+			JobID:      3401,
+		},
 	}
-	expectedEvent.Commit.ID = 743121198
-	expectedEvent.Commit.Name = "Build pipeline"
-	expectedEvent.Commit.SHA = "95d49d1efbd941908580e79d65e4b5ecaf4a8305"
-	expectedEvent.Commit.Message = "Remove test jobs and add back other jobs"
-	expectedEvent.Commit.AuthorName = "John Smith"
-	expectedEvent.Commit.AuthorEmail = "john@smith.com"
-	expectedEvent.Commit.AuthorURL = "https://gitlab.com/jsmithy2"
-	expectedEvent.Commit.Status = "running"
-	expectedEvent.Commit.Duration = 128
-	expectedEvent.Commit.StartedAt = "2023-01-10 13:50:05 UTC"
-	expectedEvent.Commit.FinishedAt = "2022-10-12 08:09:29 UTC"
-
-	expectedEvent.Runner.ID = 12270837
-	expectedEvent.Runner.Description = "4-blue.shared.runners-manager.gitlab.com/default"
-	expectedEvent.Runner.RunnerType = "instance_type"
-	expectedEvent.Runner.Active = true
-	expectedEvent.Runner.IsShared = true
-	expectedEvent.Runner.Tags = []string{"linux", "docker"}
-
-	expectedEvent.Environment.Name = "production"
-	expectedEvent.Environment.Action = "start"
-	expectedEvent.Environment.DeploymentTier = "production"
-
-	expectedEvent.SourcePipeline.Project.ID = 41
-	expectedEvent.SourcePipeline.Project.WebURL = "https://gitlab.example.com/gitlab-org/upstream-project"
-	expectedEvent.SourcePipeline.Project.PathWithNamespace = "gitlab-org/upstream-project"
-	expectedEvent.SourcePipeline.PipelineID = 30
-	expectedEvent.SourcePipeline.JobID = 3401
 
 	assert.Equal(t, expectedEvent, event, "event should be equal to the expected one")
 }

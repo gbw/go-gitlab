@@ -4,6 +4,7 @@
   "tag": false,
   "before_sha": "0000000000000000000000000000000000000000",
   "sha": "95d49d1efbd941908580e79d65e4b5ecaf4a8305",
+  "retries_count": 1,
   "build_id": 3580121225,
   "build_name": "auto_deploy:start",
   "build_stage": "coordinated:tag",
@@ -11,14 +12,14 @@
   "build_created_at": "2023-01-10 13:50:02 UTC",
   "build_started_at": "2023-01-10 13:50:05 UTC",
   "build_finished_at": "2023-01-10 13:50:54 UTC",
+  "build_created_at_iso": "2023-01-10T13:50:02Z",
+  "build_started_at_iso": "2023-01-10T13:50:05Z",
+  "build_finished_at_iso": "2023-01-10T13:50:54Z",
   "build_duration": 49.503592,
   "build_queued_duration": 0.193009,
   "build_allow_failure": false,
   "build_failure_reason": "unknown_failure",
-  "retries_count": 1,
   "pipeline_id": 743121198,
-  "project_id": 31537070,
-  "project_name": "John Smith / release-tools-fake",
   "runner": {
     "id": 12270837,
     "description": "4-blue.shared.runners-manager.gitlab.com/default",
@@ -27,6 +28,8 @@
     "is_shared": true,
     "tags": ["linux", "docker"]
   },
+  "project_id": 31537070,
+  "project_name": "John Smith / release-tools-fake",
   "user": {
     "id": 2967854,
     "name": "John Smith",
@@ -55,6 +58,20 @@
     "git_http_url": "https://gitlab.com/jsmithy2/release-tools-fake.git",
     "git_ssh_url": "git@gitlab.com:jsmithy2/release-tools-fake.git",
     "visibility_level": 20
+  },
+  "project": {
+    "id": 1,
+    "name": "Gitlab Test",
+    "description": "Atque in sunt eos similique dolores voluptatem.",
+    "web_url": "http://192.168.64.1:3005/gitlab-org/gitlab-test",
+    "avatar_url": null,
+    "git_ssh_url": "git@192.168.64.1:gitlab-org/gitlab-test.git",
+    "git_http_url": "http://192.168.64.1:3005/gitlab-org/gitlab-test.git",
+    "namespace": "Gitlab Org",
+    "visibility_level": 20,
+    "path_with_namespace": "gitlab-org/gitlab-test",
+    "default_branch": "master",
+    "ci_config_path": ""
   },
   "environment": {
     "name": "production",
