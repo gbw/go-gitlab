@@ -20,12 +20,44 @@ import "net/http"
 
 type (
 	GroupLabelsServiceInterface interface {
+		// ListGroupLabels gets all labels for a given group.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/group_labels/#list-group-labels
 		ListGroupLabels(gid any, opt *ListGroupLabelsOptions, options ...RequestOptionFunc) ([]*GroupLabel, *Response, error)
+
+		// GetGroupLabel gets a single label for a given group.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/group_labels/#get-a-single-group-label
 		GetGroupLabel(gid any, lid any, options ...RequestOptionFunc) (*GroupLabel, *Response, error)
+
+		// CreateGroupLabel creates a new label for a given group with given name and color.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/group_labels/#create-a-new-group-label
 		CreateGroupLabel(gid any, opt *CreateGroupLabelOptions, options ...RequestOptionFunc) (*GroupLabel, *Response, error)
+
+		// DeleteGroupLabel deletes a group label given by its name or ID.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/group_labels/#delete-a-group-label
 		DeleteGroupLabel(gid any, lid any, opt *DeleteGroupLabelOptions, options ...RequestOptionFunc) (*Response, error)
+
+		// UpdateGroupLabel updates an existing group label. At least one parameter is
+		// required, to update the label.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/group_labels/#update-a-group-label
 		UpdateGroupLabel(gid any, lid any, opt *UpdateGroupLabelOptions, options ...RequestOptionFunc) (*GroupLabel, *Response, error)
+
+		// SubscribeToGroupLabel subscribes the authenticated user to a label to receive
+		// notifications. If the user is already subscribed to the label, the status
+		// code 304 is returned.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/group_labels/#subscribe-to-a-group-label
 		SubscribeToGroupLabel(gid any, lid any, options ...RequestOptionFunc) (*GroupLabel, *Response, error)
+
+		// UnsubscribeFromGroupLabel unsubscribes the authenticated user from a label to
+		// not receive notifications from it. If the user is not subscribed to the label,
+		// the status code 304 is returned.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/group_labels/#unsubscribe-from-a-group-label
 		UnsubscribeFromGroupLabel(gid any, lid any, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -59,12 +91,9 @@ type ListGroupLabelsOptions struct {
 	IncludeDescendantGroups *bool   `url:"include_descendant_groups,omitempty" json:"include_descendant_groups,omitempty"`
 	OnlyGroupLabels         *bool   `url:"only_group_labels,omitempty" json:"only_group_labels,omitempty"`
 	Search                  *string `url:"search,omitempty" json:"search,omitempty"`
+	Archived                *bool   `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
-// ListGroupLabels gets all labels for given group.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_labels/#list-group-labels
 func (s *GroupLabelsService) ListGroupLabels(gid any, opt *ListGroupLabelsOptions, options ...RequestOptionFunc) ([]*GroupLabel, *Response, error) {
 	return do[[]*GroupLabel](s.client,
 		withPath("groups/%s/labels", GroupID{gid}),
@@ -73,10 +102,6 @@ func (s *GroupLabelsService) ListGroupLabels(gid any, opt *ListGroupLabelsOption
 	)
 }
 
-// GetGroupLabel get a single label for a given group.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_labels/#get-a-single-group-label
 func (s *GroupLabelsService) GetGroupLabel(gid any, lid any, options ...RequestOptionFunc) (*GroupLabel, *Response, error) {
 	return do[*GroupLabel](s.client,
 		withPath("groups/%s/labels/%s", GroupID{gid}, LabelID{lid}),
@@ -93,13 +118,9 @@ type CreateGroupLabelOptions struct {
 	Color       *string         `url:"color,omitempty" json:"color,omitempty"`
 	Description *string         `url:"description,omitempty" json:"description,omitempty"`
 	Priority    Nullable[int64] `url:"priority,omitempty" json:"priority,omitempty"`
+	Archived    *bool           `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
-// CreateGroupLabel creates a new label for given group with given name and
-// color.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_labels/#create-a-new-group-label
 func (s *GroupLabelsService) CreateGroupLabel(gid any, opt *CreateGroupLabelOptions, options ...RequestOptionFunc) (*GroupLabel, *Response, error) {
 	return do[*GroupLabel](s.client,
 		withMethod(http.MethodPost),
@@ -117,10 +138,6 @@ type DeleteGroupLabelOptions struct {
 	Name *string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// DeleteGroupLabel deletes a group label given by its name or ID.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_labels/#delete-a-group-label
 func (s *GroupLabelsService) DeleteGroupLabel(gid any, lid any, opt *DeleteGroupLabelOptions, options ...RequestOptionFunc) (*Response, error) {
 	reqOpts := make([]doOption, 0, 4)
 	reqOpts = append(reqOpts,
@@ -149,13 +166,9 @@ type UpdateGroupLabelOptions struct {
 	Color       *string         `url:"color,omitempty" json:"color,omitempty"`
 	Description *string         `url:"description,omitempty" json:"description,omitempty"`
 	Priority    Nullable[int64] `url:"priority,omitempty" json:"priority,omitempty"`
+	Archived    *bool           `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
-// UpdateGroupLabel updates an existing label with new name or now color. At least
-// one parameter is required, to update the label.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_labels/#update-a-group-label
 func (s *GroupLabelsService) UpdateGroupLabel(gid any, lid any, opt *UpdateGroupLabelOptions, options ...RequestOptionFunc) (*GroupLabel, *Response, error) {
 	reqOpts := make([]doOption, 0, 4)
 	reqOpts = append(reqOpts,
@@ -173,12 +186,6 @@ func (s *GroupLabelsService) UpdateGroupLabel(gid any, lid any, opt *UpdateGroup
 	return do[*GroupLabel](s.client, reqOpts...)
 }
 
-// SubscribeToGroupLabel subscribes the authenticated user to a label to receive
-// notifications. If the user is already subscribed to the label, the status
-// code 304 is returned.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_labels/#subscribe-to-a-group-label
 func (s *GroupLabelsService) SubscribeToGroupLabel(gid any, lid any, options ...RequestOptionFunc) (*GroupLabel, *Response, error) {
 	return do[*GroupLabel](s.client,
 		withMethod(http.MethodPost),
@@ -187,12 +194,6 @@ func (s *GroupLabelsService) SubscribeToGroupLabel(gid any, lid any, options ...
 	)
 }
 
-// UnsubscribeFromGroupLabel unsubscribes the authenticated user from a label to not
-// receive notifications from it. If the user is not subscribed to the label, the
-// status code 304 is returned.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/group_labels/#unsubscribe-from-a-group-label
 func (s *GroupLabelsService) UnsubscribeFromGroupLabel(gid any, lid any, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),

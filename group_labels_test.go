@@ -31,16 +31,17 @@ func TestCreateGroupGroupLabel(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/groups/1/labels", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		fmt.Fprint(w, `{"id":1, "name": "MyGroupLabel", "color" : "#11FF22"}`)
+		fmt.Fprint(w, `{"id":1, "name": "MyGroupLabel", "color" : "#11FF22", "archived": true}`)
 	})
 
 	l := &CreateGroupLabelOptions{
-		Name:  Ptr("MyGroupLabel"),
-		Color: Ptr("#11FF22"),
+		Name:     Ptr("MyGroupLabel"),
+		Color:    Ptr("#11FF22"),
+		Archived: Ptr(true),
 	}
 	label, _, err := client.GroupLabels.CreateGroupLabel("1", l)
 	require.NoError(t, err)
-	want := &GroupLabel{ID: 1, Name: "MyGroupLabel", Color: "#11FF22"}
+	want := &GroupLabel{ID: 1, Name: "MyGroupLabel", Color: "#11FF22", Archived: true}
 	assert.Equal(t, want, label)
 }
 
@@ -110,21 +111,21 @@ func TestUpdateGroupLabel(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/groups/1/labels/MyGroupLabel", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		fmt.Fprint(w, `{"id":1, "name": "NewLabel", "color" : "#11FF23" , "description":"This is updated label"}`)
+		fmt.Fprint(w, `{"id":1, "name": "NewLabel", "color" : "#11FF23" , "description":"This is updated label", "archived": true}`)
 	})
 
 	l := &UpdateGroupLabelOptions{
 		NewName:     Ptr("NewLabel"),
 		Color:       Ptr("#11FF23"),
 		Description: Ptr("This is updated label"),
+		Archived:    Ptr(true),
 	}
 
 	label, resp, err := client.GroupLabels.UpdateGroupLabel("1", "MyGroupLabel", l)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	want := &GroupLabel{ID: 1, Name: "NewLabel", Color: "#11FF23", Description: "This is updated label"}
-
+	want := &GroupLabel{ID: 1, Name: "NewLabel", Color: "#11FF23", Description: "This is updated label", Archived: true}
 	assert.Equal(t, want, label)
 }
 

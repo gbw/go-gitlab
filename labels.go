@@ -24,13 +24,49 @@ import (
 
 type (
 	LabelsServiceInterface interface {
+		// ListLabels gets all labels for given project.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#list-all-project-labels
 		ListLabels(pid any, opt *ListLabelsOptions, options ...RequestOptionFunc) ([]*Label, *Response, error)
+
+		// GetLabel gets a single label for a given project.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#retrieve-a-project-label
 		GetLabel(pid any, lid any, options ...RequestOptionFunc) (*Label, *Response, error)
+
+		// CreateLabel creates a new label for given repository with given name and color.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#create-a-project-label
 		CreateLabel(pid any, opt *CreateLabelOptions, options ...RequestOptionFunc) (*Label, *Response, error)
+
+		// DeleteLabel deletes a label given by its name or ID.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#delete-a-project-label
 		DeleteLabel(pid any, lid any, opt *DeleteLabelOptions, options ...RequestOptionFunc) (*Response, error)
+
+		// UpdateLabel updates an existing label with new name or new color. At least
+		// one parameter is required, to update the label.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#update-a-project-label
 		UpdateLabel(pid any, lid any, opt *UpdateLabelOptions, options ...RequestOptionFunc) (*Label, *Response, error)
+
+		// SubscribeToLabel subscribes the authenticated user to a label to receive
+		// notifications. If the user is already subscribed to the label, the status
+		// code 304 is returned.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#subscribe-to-a-project-label
 		SubscribeToLabel(pid any, lid any, options ...RequestOptionFunc) (*Label, *Response, error)
+
+		// UnsubscribeFromLabel unsubscribes the authenticated user from a label to not
+		// receive notifications from it. If the user is not subscribed to the label,
+		// the status code 304 is returned.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#unsubscribe-from-a-project-label
 		UnsubscribeFromLabel(pid any, lid any, options ...RequestOptionFunc) (*Response, error)
+
+		// PromoteLabel promotes a project label to a group label.
+		//
+		// GitLab API docs: https://docs.gitlab.com/api/labels/#promote-a-project-label-to-a-group-label
 		PromoteLabel(pid any, lid any, options ...RequestOptionFunc) (*Response, error)
 	}
 
@@ -60,6 +96,7 @@ type Label struct {
 	Subscribed             bool            `json:"subscribed"`
 	Priority               Nullable[int64] `json:"priority"`
 	IsProjectLabel         bool            `json:"is_project_label"`
+	Archived               bool            `json:"archived"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
@@ -121,9 +158,6 @@ type ListLabelsOptions struct {
 	Archived              *bool   `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
-// ListLabels gets all labels for given project.
-//
-// GitLab API docs: https://docs.gitlab.com/api/labels/#list-labels
 func (s *LabelsService) ListLabels(pid any, opt *ListLabelsOptions, options ...RequestOptionFunc) ([]*Label, *Response, error) {
 	return do[[]*Label](s.client,
 		withPath("projects/%s/labels", ProjectID{pid}),
@@ -132,9 +166,6 @@ func (s *LabelsService) ListLabels(pid any, opt *ListLabelsOptions, options ...R
 	)
 }
 
-// GetLabel get a single label for a given project.
-//
-// GitLab API docs: https://docs.gitlab.com/api/labels/#get-a-single-project-label
 func (s *LabelsService) GetLabel(pid any, lid any, options ...RequestOptionFunc) (*Label, *Response, error) {
 	return do[*Label](s.client,
 		withPath("projects/%s/labels/%s", ProjectID{pid}, LabelID{lid}),
@@ -153,10 +184,6 @@ type CreateLabelOptions struct {
 	Archived    *bool           `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
-// CreateLabel creates a new label for given repository with given name and
-// color.
-//
-// GitLab API docs: https://docs.gitlab.com/api/labels/#create-a-new-label
 func (s *LabelsService) CreateLabel(pid any, opt *CreateLabelOptions, options ...RequestOptionFunc) (*Label, *Response, error) {
 	return do[*Label](s.client,
 		withMethod(http.MethodPost),
@@ -173,9 +200,6 @@ type DeleteLabelOptions struct {
 	Name *string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// DeleteLabel deletes a label given by its name or ID.
-//
-// GitLab API docs: https://docs.gitlab.com/api/labels/#delete-a-label
 func (s *LabelsService) DeleteLabel(pid any, lid any, opt *DeleteLabelOptions, options ...RequestOptionFunc) (*Response, error) {
 	reqOpts := make([]doOption, 0, 4)
 	reqOpts = append(reqOpts,
@@ -206,10 +230,6 @@ type UpdateLabelOptions struct {
 	Archived    *bool           `url:"archived,omitempty" json:"archived,omitempty"`
 }
 
-// UpdateLabel updates an existing label with new name or new color. At least
-// one parameter is required, to update the label.
-//
-// GitLab API docs: https://docs.gitlab.com/api/labels/#edit-an-existing-label
 func (s *LabelsService) UpdateLabel(pid any, lid any, opt *UpdateLabelOptions, options ...RequestOptionFunc) (*Label, *Response, error) {
 	reqOpts := make([]doOption, 0, 4)
 	reqOpts = append(reqOpts,
@@ -227,12 +247,6 @@ func (s *LabelsService) UpdateLabel(pid any, lid any, opt *UpdateLabelOptions, o
 	return do[*Label](s.client, reqOpts...)
 }
 
-// SubscribeToLabel subscribes the authenticated user to a label to receive
-// notifications. If the user is already subscribed to the label, the status
-// code 304 is returned.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/labels/#subscribe-to-a-label
 func (s *LabelsService) SubscribeToLabel(pid any, lid any, options ...RequestOptionFunc) (*Label, *Response, error) {
 	return do[*Label](s.client,
 		withMethod(http.MethodPost),
@@ -241,12 +255,6 @@ func (s *LabelsService) SubscribeToLabel(pid any, lid any, options ...RequestOpt
 	)
 }
 
-// UnsubscribeFromLabel unsubscribes the authenticated user from a label to not
-// receive notifications from it. If the user is not subscribed to the label, the
-// status code 304 is returned.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/labels/#unsubscribe-from-a-label
 func (s *LabelsService) UnsubscribeFromLabel(pid any, lid any, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPost),
@@ -256,10 +264,6 @@ func (s *LabelsService) UnsubscribeFromLabel(pid any, lid any, options ...Reques
 	return resp, err
 }
 
-// PromoteLabel Promotes a project label to a group label.
-//
-// GitLab API docs:
-// https://docs.gitlab.com/api/labels/#promote-a-project-label-to-a-group-label
 func (s *LabelsService) PromoteLabel(pid any, lid any, options ...RequestOptionFunc) (*Response, error) {
 	_, resp, err := do[none](s.client,
 		withMethod(http.MethodPut),
