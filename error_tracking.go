@@ -24,14 +24,24 @@ type (
 		// GetErrorTrackingSettings gets error tracking settings.
 		//
 		// GitLab API docs:
-		// https://docs.gitlab.com/api/error_tracking/#get-error-tracking-settings
+		// https://docs.gitlab.com/api/error_tracking/#retrieve-error-tracking-settings
 		GetErrorTrackingSettings(pid any, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error)
 
-		// EnableDisableErrorTracking allows you to enable or disable the error tracking
-		// settings for a project.
+		// CreateErrorTrackingSettings creates the error tracking settings for a
+		// project. Uses PUT and creates the settings record if it does not exist.
 		//
 		// GitLab API docs:
-		// https://docs.gitlab.com/api/error_tracking/#enable-or-disable-the-error-tracking-project-settings
+		// https://docs.gitlab.com/api/error_tracking/#create-error-tracking-settings
+		CreateErrorTrackingSettings(pid any, opt *CreateErrorTrackingSettingsOptions, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error)
+
+		// UpdateErrorTrackingSettings updates the error tracking settings for a
+		// project, enabling or disabling it.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/error_tracking/#update-error-tracking-project-settings
+		UpdateErrorTrackingSettings(pid any, opt *UpdateErrorTrackingSettingsOptions, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error)
+
+		// Deprecated: Use UpdateErrorTrackingSettings instead.
 		EnableDisableErrorTracking(pid any, opt *EnableDisableErrorTrackingOptions, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error)
 
 		// ListClientKeys lists error tracking project client keys.
@@ -101,23 +111,56 @@ func (s *ErrorTrackingService) GetErrorTrackingSettings(pid any, options ...Requ
 	)
 }
 
-// EnableDisableErrorTrackingOptions represents the available
-// EnableDisableErrorTracking() options.
+// CreateErrorTrackingSettingsOptions represents the available
+// CreateErrorTrackingSettings() options.
 //
 // GitLab API docs:
-// https://docs.gitlab.com/api/error_tracking/#enable-or-disable-the-error-tracking-project-settings
-type EnableDisableErrorTrackingOptions struct {
+// https://docs.gitlab.com/api/error_tracking/#create-error-tracking-settings
+type CreateErrorTrackingSettingsOptions struct {
 	Active     *bool `url:"active,omitempty" json:"active,omitempty"`
 	Integrated *bool `url:"integrated,omitempty" json:"integrated,omitempty"`
 }
 
-func (s *ErrorTrackingService) EnableDisableErrorTracking(pid any, opt *EnableDisableErrorTrackingOptions, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error) {
+func (s *ErrorTrackingService) CreateErrorTrackingSettings(pid any, opt *CreateErrorTrackingSettingsOptions, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error) {
+	return do[*ErrorTrackingSettings](s.client,
+		withMethod(http.MethodPut),
+		withPath("projects/%s/error_tracking/settings", ProjectID{pid}),
+		withAPIOpts(opt),
+		withRequestOpts(options...),
+	)
+}
+
+// UpdateErrorTrackingSettingsOptions represents the available
+// UpdateErrorTrackingSettings() options.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/error_tracking/#update-error-tracking-project-settings
+type UpdateErrorTrackingSettingsOptions struct {
+	Active     *bool `url:"active,omitempty" json:"active,omitempty"`
+	Integrated *bool `url:"integrated,omitempty" json:"integrated,omitempty"`
+}
+
+func (s *ErrorTrackingService) UpdateErrorTrackingSettings(pid any, opt *UpdateErrorTrackingSettingsOptions, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error) {
 	return do[*ErrorTrackingSettings](s.client,
 		withMethod(http.MethodPatch),
 		withPath("projects/%s/error_tracking/settings", ProjectID{pid}),
 		withAPIOpts(opt),
 		withRequestOpts(options...),
 	)
+}
+
+// EnableDisableErrorTrackingOptions represents the available
+// EnableDisableErrorTracking() options.
+//
+// Deprecated: Use UpdateErrorTrackingSettingsOptions instead.
+type EnableDisableErrorTrackingOptions = UpdateErrorTrackingSettingsOptions
+
+// EnableDisableErrorTracking allows you to enable or disable the error tracking
+// settings for a project.
+//
+// Deprecated: Use UpdateErrorTrackingSettings instead.
+func (s *ErrorTrackingService) EnableDisableErrorTracking(pid any, opt *EnableDisableErrorTrackingOptions, options ...RequestOptionFunc) (*ErrorTrackingSettings, *Response, error) {
+	return s.UpdateErrorTrackingSettings(pid, opt, options...)
 }
 
 // ListClientKeysOptions represents the available ListClientKeys() options.
