@@ -1,3 +1,17 @@
+## 2.37.0
+
+### 🚀 Features
+
+- Add missing events to hooks and integration tests. ([!2909](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2909)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+### 🔄 Other Changes
+
+- chore(deps): update module golang.org/x/time to v0.15.0 ([!2838](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2838)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.37.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.36.3...v2.37.0) (2026-06-10)
+
 ## 2.36.3
 
 ### 🐛 Bug Fixes
