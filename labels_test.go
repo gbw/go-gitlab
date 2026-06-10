@@ -31,18 +31,18 @@ func TestCreateLabel(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/labels", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		fmt.Fprint(w, `{"id":1, "name": "MyLabel", "color" : "#11FF22", "priority": 2}`)
+		fmt.Fprint(w, `{"id":1, "name": "MyLabel", "color" : "#11FF22", "priority": 2, "archived": true}`)
 	})
 
-	// Create new label
 	l := &CreateLabelOptions{
 		Name:     Ptr("MyLabel"),
 		Color:    Ptr("#11FF22"),
 		Priority: NewNullableWithValue(int64(2)),
+		Archived: Ptr(true),
 	}
 	label, _, err := client.Labels.CreateLabel("1", l)
 	require.NoError(t, err)
-	want := &Label{ID: 1, Name: "MyLabel", Color: "#11FF22", Priority: NewNullableWithValue(int64(2))}
+	want := &Label{ID: 1, Name: "MyLabel", Color: "#11FF22", Priority: NewNullableWithValue(int64(2)), Archived: true}
 	assert.Equal(t, want, label)
 }
 
@@ -82,23 +82,22 @@ func TestUpdateLabel(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/labels/MyLabel", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		fmt.Fprint(w, `{"id":1, "name": "New Label", "color" : "#11FF23" , "description":"This is updated label", "priority": 42}`)
+		fmt.Fprint(w, `{"id":1, "name": "New Label", "color" : "#11FF23" , "description":"This is updated label", "priority": 42, "archived": true}`)
 	})
 
-	// Update label
 	l := &UpdateLabelOptions{
 		NewName:     Ptr("New Label"),
 		Color:       Ptr("#11FF23"),
 		Description: Ptr("This is updated label"),
 		Priority:    NewNullableWithValue(int64(42)),
+		Archived:    Ptr(true),
 	}
 
 	label, resp, err := client.Labels.UpdateLabel("1", "MyLabel", l)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 
-	want := &Label{ID: 1, Name: "New Label", Color: "#11FF23", Description: "This is updated label", Priority: NewNullableWithValue(int64(42))}
-
+	want := &Label{ID: 1, Name: "New Label", Color: "#11FF23", Description: "This is updated label", Priority: NewNullableWithValue(int64(42)), Archived: true}
 	assert.Equal(t, want, label)
 }
 
@@ -158,14 +157,14 @@ func TestGetLabel(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/labels/5", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		fmt.Fprint(w, `{  "id" : 5, "name" : "kind/bug", "color" : "#d9534f", "description": "Bug reported by user", "open_issues_count": 1, "closed_issues_count": 0, "open_merge_requests_count": 1, "subscribed": true,"priority": null}`)
+		fmt.Fprint(w, `{"id":5, "name":"kind/bug", "color":"#d9534f", "description":"Bug reported by user", "open_issues_count":1, "closed_issues_count":0, "open_merge_requests_count":1, "subscribed":true, "priority":null, "archived":true}`)
 	})
 
 	label, _, err := client.Labels.GetLabel("1", 5)
 	if err != nil {
 		t.Log(err)
 	}
-	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64]()}
+	want := &Label{ID: 5, Name: "kind/bug", Color: "#d9534f", Description: "Bug reported by user", OpenIssuesCount: 1, ClosedIssuesCount: 0, OpenMergeRequestsCount: 1, Subscribed: true, Priority: NewNullNullable[int64](), Archived: true}
 	assert.Equal(t, want, label)
 }
 
