@@ -120,12 +120,9 @@ func (s *SystemHooksService) GetHook(hook int64, options ...RequestOptionFunc) (
 // GitLab API docs:
 // https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
 type AddHookOptions struct {
-	URL         *string `url:"url,omitempty" json:"url,omitempty"`
-	Name        *string `url:"name,omitempty" json:"name,omitempty"`
-	Description *string `url:"description,omitempty" json:"description,omitempty"`
-	Token       *string `url:"token,omitempty" json:"token,omitempty"`
-	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
-	SigningToken           *string               `url:"signing_token,omitempty" json:"signing_token,omitempty"`
+	URL                    *string               `url:"url,omitempty" json:"url,omitempty"`
+	Name                   *string               `url:"name,omitempty" json:"name,omitempty"`
+	Description            *string               `url:"description,omitempty" json:"description,omitempty"`
 	PushEvents             *bool                 `url:"push_events,omitempty" json:"push_events,omitempty"`
 	PushEventsBranchFilter *string               `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
 	BranchFilterStrategy   *BranchFilterStrategy `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
@@ -133,6 +130,9 @@ type AddHookOptions struct {
 	MergeRequestsEvents    *bool                 `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
 	RepositoryUpdateEvents *bool                 `url:"repository_update_events,omitempty" json:"repository_update_events,omitempty"`
 	EnableSSLVerification  *bool                 `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
+	Token                  *string               `url:"token,omitempty" json:"token,omitempty"`
+	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/system_hooks/#add-new-system-hook
+	SigningToken *string `url:"signing_token,omitempty" json:"signing_token,omitempty"`
 }
 
 func (s *SystemHooksService) AddHook(opt *AddHookOptions, options ...RequestOptionFunc) (*Hook, *Response, error) {
@@ -149,12 +149,9 @@ func (s *SystemHooksService) AddHook(opt *AddHookOptions, options ...RequestOpti
 // GitLab API docs:
 // https://docs.gitlab.com/api/system_hooks/#update-system-hook
 type EditHookOptions struct {
-	URL         *string `url:"url,omitempty" json:"url,omitempty"`
-	Name        *string `url:"name,omitempty" json:"name,omitempty"`
-	Description *string `url:"description,omitempty" json:"description,omitempty"`
-	Token       *string `url:"token,omitempty" json:"token,omitempty"`
-	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/system_hooks/#update-system-hook
-	SigningToken           *string               `url:"signing_token,omitempty" json:"signing_token,omitempty"`
+	URL                    *string               `url:"url,omitempty" json:"url,omitempty"`
+	Name                   *string               `url:"name,omitempty" json:"name,omitempty"`
+	Description            *string               `url:"description,omitempty" json:"description,omitempty"`
 	PushEvents             *bool                 `url:"push_events,omitempty" json:"push_events,omitempty"`
 	PushEventsBranchFilter *string               `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
 	BranchFilterStrategy   *BranchFilterStrategy `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
@@ -162,6 +159,9 @@ type EditHookOptions struct {
 	MergeRequestsEvents    *bool                 `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
 	RepositoryUpdateEvents *bool                 `url:"repository_update_events,omitempty" json:"repository_update_events,omitempty"`
 	EnableSSLVerification  *bool                 `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
+	Token                  *string               `url:"token,omitempty" json:"token,omitempty"`
+	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/system_hooks/#update-system-hook
+	SigningToken *string `url:"signing_token,omitempty" json:"signing_token,omitempty"`
 }
 
 func (s *SystemHooksService) EditHook(hook int64, opt *EditHookOptions, options ...RequestOptionFunc) (*Hook, *Response, error) {

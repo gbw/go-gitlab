@@ -57,6 +57,7 @@ func TestListProjectHooks(t *testing.T) {
 		"alert_status": "executable",
 		"created_at": "2024-10-13T13:37:00Z",
 		"resource_access_token_events": true,
+		"resource_deploy_token_events": true,
 		"custom_webhook_template": "my custom template",
 		"custom_headers": [
 			{"key": "Authorization"},
@@ -95,6 +96,7 @@ func TestListProjectHooks(t *testing.T) {
 		CreatedAt:                 &createdAt,
 		AlertStatus:               "executable",
 		ResourceAccessTokenEvents: true,
+		ResourceDeployTokenEvents: true,
 		CustomWebhookTemplate:     "my custom template",
 		CustomHeaders: []*HookCustomHeader{
 			{
@@ -134,6 +136,7 @@ func TestAddProjectHook(t *testing.T) {
 	"tag_push_events": true,
 	"emoji_events": true,
 	"enable_ssl_verification": true,
+	"resource_deploy_token_events": true,
 	"created_at": "2024-10-13T13:37:00Z"
 }`)
 	})
@@ -153,16 +156,17 @@ func TestAddProjectHook(t *testing.T) {
 
 	createdAt := time.Date(2024, time.October, 13, 13, 37, 0, 0, time.UTC)
 	want := &ProjectHook{
-		ID:                    1,
-		URL:                   "http://example.com/hook",
-		ProjectID:             1,
-		PushEvents:            true,
-		IssuesEvents:          true,
-		MergeRequestsEvents:   true,
-		TagPushEvents:         true,
-		EmojiEvents:           true,
-		EnableSSLVerification: true,
-		CreatedAt:             &createdAt,
+		ID:                        1,
+		URL:                       "http://example.com/hook",
+		ProjectID:                 1,
+		PushEvents:                true,
+		IssuesEvents:              true,
+		MergeRequestsEvents:       true,
+		TagPushEvents:             true,
+		EmojiEvents:               true,
+		EnableSSLVerification:     true,
+		ResourceDeployTokenEvents: true,
+		CreatedAt:                 &createdAt,
 	}
 
 	assert.Equal(t, want, hook)
@@ -193,6 +197,7 @@ func TestEditProjectHook(t *testing.T) {
 	"tag_push_events": true,
 	"emoji_events": true,
 	"enable_ssl_verification": true,
+	"resource_deploy_token_events": true,
 	"created_at": "2024-10-13T13:37:00Z"
 }`)
 	})
@@ -212,16 +217,17 @@ func TestEditProjectHook(t *testing.T) {
 
 	createdAt := time.Date(2024, time.October, 13, 13, 37, 0, 0, time.UTC)
 	want := &ProjectHook{
-		ID:                    1,
-		URL:                   "http://example.com/hook",
-		ProjectID:             1,
-		PushEvents:            false,
-		IssuesEvents:          true,
-		MergeRequestsEvents:   true,
-		TagPushEvents:         true,
-		EmojiEvents:           true,
-		EnableSSLVerification: true,
-		CreatedAt:             &createdAt,
+		ID:                        1,
+		URL:                       "http://example.com/hook",
+		ProjectID:                 1,
+		PushEvents:                false,
+		IssuesEvents:              true,
+		MergeRequestsEvents:       true,
+		TagPushEvents:             true,
+		EmojiEvents:               true,
+		EnableSSLVerification:     true,
+		ResourceDeployTokenEvents: true,
+		CreatedAt:                 &createdAt,
 	}
 
 	assert.Equal(t, want, hook)
