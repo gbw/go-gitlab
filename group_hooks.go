@@ -34,7 +34,6 @@ type GroupHook struct {
 	PushEvents                bool                `json:"push_events"`
 	TagPushEvents             bool                `json:"tag_push_events"`
 	MergeRequestsEvents       bool                `json:"merge_requests_events"`
-	RepositoryUpdateEvents    bool                `json:"repository_update_events"`
 	EnableSSLVerification     bool                `json:"enable_ssl_verification"`
 	AlertStatus               string              `json:"alert_status"`
 	DisabledUntil             *time.Time          `json:"disabled_until"`
@@ -117,37 +116,37 @@ func (s *GroupsService) ResendGroupHookEvent(gid any, hook int64, hookEventID in
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_webhooks/#add-a-group-hook
 type AddGroupHookOptions struct {
-	URL                      *string `url:"url,omitempty" json:"url,omitempty"`
-	Name                     *string `url:"name,omitempty" json:"name,omitempty"`
-	Description              *string `url:"description,omitempty" json:"description,omitempty"`
-	PushEvents               *bool   `url:"push_events,omitempty"  json:"push_events,omitempty"`
-	PushEventsBranchFilter   *string `url:"push_events_branch_filter,omitempty"  json:"push_events_branch_filter,omitempty"`
-	BranchFilterStrategy     *string `url:"branch_filter_strategy,omitempty"  json:"branch_filter_strategy,omitempty"`
-	IssuesEvents             *bool   `url:"issues_events,omitempty"  json:"issues_events,omitempty"`
-	ConfidentialIssuesEvents *bool   `url:"confidential_issues_events,omitempty"  json:"confidential_issues_events,omitempty"`
-	MergeRequestsEvents      *bool   `url:"merge_requests_events,omitempty"  json:"merge_requests_events,omitempty"`
-	TagPushEvents            *bool   `url:"tag_push_events,omitempty"  json:"tag_push_events,omitempty"`
-	NoteEvents               *bool   `url:"note_events,omitempty"  json:"note_events,omitempty"`
-	ConfidentialNoteEvents   *bool   `url:"confidential_note_events,omitempty"  json:"confidential_note_events,omitempty"`
-	JobEvents                *bool   `url:"job_events,omitempty"  json:"job_events,omitempty"`
-	PipelineEvents           *bool   `url:"pipeline_events,omitempty"  json:"pipeline_events,omitempty"`
-	ProjectEvents            *bool   `url:"project_events,omitempty"  json:"project_events,omitempty"`
-	WikiPageEvents           *bool   `url:"wiki_page_events,omitempty"  json:"wiki_page_events,omitempty"`
-	DeploymentEvents         *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
-	FeatureFlagEvents        *bool   `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
-	ReleasesEvents           *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
-	MilestoneEvents          *bool   `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
-	SubGroupEvents           *bool   `url:"subgroup_events,omitempty" json:"subgroup_events,omitempty"`
-	EmojiEvents              *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
-	MemberEvents             *bool   `url:"member_events,omitempty" json:"member_events,omitempty"`
-	VulnerabilityEvents      *bool   `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
-	EnableSSLVerification    *bool   `url:"enable_ssl_verification,omitempty"  json:"enable_ssl_verification,omitempty"`
-	Token                    *string `url:"token,omitempty" json:"token,omitempty"`
+	URL                       *string `url:"url,omitempty" json:"url,omitempty"`
+	Name                      *string `url:"name,omitempty" json:"name,omitempty"`
+	Description               *string `url:"description,omitempty" json:"description,omitempty"`
+	PushEvents                *bool   `url:"push_events,omitempty"  json:"push_events,omitempty"`
+	PushEventsBranchFilter    *string `url:"push_events_branch_filter,omitempty"  json:"push_events_branch_filter,omitempty"`
+	BranchFilterStrategy      *string `url:"branch_filter_strategy,omitempty"  json:"branch_filter_strategy,omitempty"`
+	IssuesEvents              *bool   `url:"issues_events,omitempty"  json:"issues_events,omitempty"`
+	ConfidentialIssuesEvents  *bool   `url:"confidential_issues_events,omitempty"  json:"confidential_issues_events,omitempty"`
+	MergeRequestsEvents       *bool   `url:"merge_requests_events,omitempty"  json:"merge_requests_events,omitempty"`
+	TagPushEvents             *bool   `url:"tag_push_events,omitempty"  json:"tag_push_events,omitempty"`
+	NoteEvents                *bool   `url:"note_events,omitempty"  json:"note_events,omitempty"`
+	ConfidentialNoteEvents    *bool   `url:"confidential_note_events,omitempty"  json:"confidential_note_events,omitempty"`
+	JobEvents                 *bool   `url:"job_events,omitempty"  json:"job_events,omitempty"`
+	PipelineEvents            *bool   `url:"pipeline_events,omitempty"  json:"pipeline_events,omitempty"`
+	ProjectEvents             *bool   `url:"project_events,omitempty"  json:"project_events,omitempty"`
+	WikiPageEvents            *bool   `url:"wiki_page_events,omitempty"  json:"wiki_page_events,omitempty"`
+	DeploymentEvents          *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
+	FeatureFlagEvents         *bool   `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
+	ReleasesEvents            *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
+	MilestoneEvents           *bool   `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
+	SubGroupEvents            *bool   `url:"subgroup_events,omitempty" json:"subgroup_events,omitempty"`
+	EmojiEvents               *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
+	MemberEvents              *bool   `url:"member_events,omitempty" json:"member_events,omitempty"`
+	VulnerabilityEvents       *bool   `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
+	ResourceAccessTokenEvents *bool   `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
+	EnableSSLVerification     *bool   `url:"enable_ssl_verification,omitempty"  json:"enable_ssl_verification,omitempty"`
+	Token                     *string `url:"token,omitempty" json:"token,omitempty"`
 	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/group_webhooks/#update-a-group-hook
-	SigningToken              *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
-	ResourceAccessTokenEvents *bool                `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
-	CustomWebhookTemplate     *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
-	CustomHeaders             *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
+	SigningToken          *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
+	CustomWebhookTemplate *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
+	CustomHeaders         *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
 }
 
 // AddGroupHook creates a new group scoped webhook.
@@ -169,38 +168,37 @@ func (s *GroupsService) AddGroupHook(gid any, opt *AddGroupHookOptions, options 
 // GitLab API docs:
 // https://docs.gitlab.com/api/group_webhooks/#edit-group-hook
 type EditGroupHookOptions struct {
-	URL                                   *string `url:"url,omitempty" json:"url,omitempty"`
-	Name                                  *string `url:"name,omitempty" json:"name,omitempty"`
-	Description                           *string `url:"description,omitempty" json:"description,omitempty"`
-	PushEvents                            *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
-	PushEventsBranchFilter                *string `url:"push_events_branch_filter,omitempty"  json:"push_events_branch_filter,omitempty"`
-	BranchFilterStrategy                  *string `url:"branch_filter_strategy,omitempty"  json:"branch_filter_strategy,omitempty"`
-	IssuesEvents                          *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
-	ConfidentialIssuesEvents              *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
-	MergeRequestsEvents                   *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
-	TagPushEvents                         *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
-	NoteEvents                            *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
-	ConfidentialNoteEvents                *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
-	JobEvents                             *bool   `url:"job_events,omitempty" json:"job_events,omitempty"`
-	PipelineEvents                        *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
-	ProjectEvents                         *bool   `url:"project_events,omitempty" json:"project_events,omitempty"`
-	WikiPageEvents                        *bool   `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
-	DeploymentEvents                      *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
-	FeatureFlagEvents                     *bool   `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
-	ReleasesEvents                        *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
-	MilestoneEvents                       *bool   `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
-	SubGroupEvents                        *bool   `url:"subgroup_events,omitempty" json:"subgroup_events,omitempty"`
-	EmojiEvents                           *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
-	MemberEvents                          *bool   `url:"member_events,omitempty" json:"member_events,omitempty"`
-	VulnerabilityEvents                   *bool   `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
-	EnableSSLVerification                 *bool   `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
-	ServiceAccessTokensExpirationEnforced *bool   `url:"service_access_tokens_expiration_enforced,omitempty" json:"service_access_tokens_expiration_enforced,omitempty"`
-	Token                                 *string `url:"token,omitempty" json:"token,omitempty"`
+	URL                       *string `url:"url,omitempty" json:"url,omitempty"`
+	Name                      *string `url:"name,omitempty" json:"name,omitempty"`
+	Description               *string `url:"description,omitempty" json:"description,omitempty"`
+	PushEvents                *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
+	PushEventsBranchFilter    *string `url:"push_events_branch_filter,omitempty"  json:"push_events_branch_filter,omitempty"`
+	BranchFilterStrategy      *string `url:"branch_filter_strategy,omitempty"  json:"branch_filter_strategy,omitempty"`
+	IssuesEvents              *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
+	ConfidentialIssuesEvents  *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
+	MergeRequestsEvents       *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
+	TagPushEvents             *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
+	NoteEvents                *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
+	ConfidentialNoteEvents    *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
+	JobEvents                 *bool   `url:"job_events,omitempty" json:"job_events,omitempty"`
+	PipelineEvents            *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
+	ProjectEvents             *bool   `url:"project_events,omitempty" json:"project_events,omitempty"`
+	WikiPageEvents            *bool   `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
+	DeploymentEvents          *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
+	FeatureFlagEvents         *bool   `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
+	ReleasesEvents            *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
+	MilestoneEvents           *bool   `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
+	SubGroupEvents            *bool   `url:"subgroup_events,omitempty" json:"subgroup_events,omitempty"`
+	EmojiEvents               *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
+	MemberEvents              *bool   `url:"member_events,omitempty" json:"member_events,omitempty"`
+	VulnerabilityEvents       *bool   `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
+	ResourceAccessTokenEvents *bool   `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
+	EnableSSLVerification     *bool   `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
+	Token                     *string `url:"token,omitempty" json:"token,omitempty"`
 	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/group_webhooks/#update-a-group-hook
-	SigningToken              *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
-	ResourceAccessTokenEvents *bool                `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
-	CustomWebhookTemplate     *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
-	CustomHeaders             *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
+	SigningToken          *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
+	CustomWebhookTemplate *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
+	CustomHeaders         *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
 }
 
 // EditGroupHook edits a hook for a specified group.

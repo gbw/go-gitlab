@@ -69,6 +69,7 @@ type ProjectHook struct {
 	URLVariables              []HookURLVariable   `json:"url_variables"`
 	CreatedAt                 *time.Time          `json:"created_at"`
 	ResourceAccessTokenEvents bool                `json:"resource_access_token_events"`
+	ResourceDeployTokenEvents bool                `json:"resource_deploy_token_events"`
 	CustomWebhookTemplate     string              `json:"custom_webhook_template"`
 	CustomHeaders             []*HookCustomHeader `json:"custom_headers"`
 	VulnerabilityEvents       bool                `json:"vulnerability_events"`
@@ -115,35 +116,35 @@ func (s *ProjectsService) GetProjectHook(pid any, hook int64, options ...Request
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_webhooks/#add-a-webhook-to-a-project
 type AddProjectHookOptions struct {
-	Name                     *string `url:"name,omitempty" json:"name,omitempty"`
-	Description              *string `url:"description,omitempty" json:"description,omitempty"`
-	ConfidentialIssuesEvents *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
-	ConfidentialNoteEvents   *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
-	DeploymentEvents         *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
-	EnableSSLVerification    *bool   `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
-	IssuesEvents             *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
-	JobEvents                *bool   `url:"job_events,omitempty" json:"job_events,omitempty"`
-	MergeRequestsEvents      *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
-	NoteEvents               *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
-	PipelineEvents           *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
-	PushEvents               *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
-	PushEventsBranchFilter   *string `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
-	ReleasesEvents           *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
-	EmojiEvents              *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
-	TagPushEvents            *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
-	Token                    *string `url:"token,omitempty" json:"token,omitempty"`
+	Name                      *string `url:"name,omitempty" json:"name,omitempty"`
+	Description               *string `url:"description,omitempty" json:"description,omitempty"`
+	URL                       *string `url:"url,omitempty" json:"url,omitempty"`
+	PushEvents                *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
+	PushEventsBranchFilter    *string `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
+	BranchFilterStrategy      *string `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
+	IssuesEvents              *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
+	ConfidentialIssuesEvents  *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
+	MergeRequestsEvents       *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
+	TagPushEvents             *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
+	NoteEvents                *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
+	ConfidentialNoteEvents    *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
+	JobEvents                 *bool   `url:"job_events,omitempty" json:"job_events,omitempty"`
+	PipelineEvents            *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
+	WikiPageEvents            *bool   `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
+	DeploymentEvents          *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
+	FeatureFlagEvents         *bool   `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
+	ReleasesEvents            *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
+	MilestoneEvents           *bool   `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
+	EmojiEvents               *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
+	VulnerabilityEvents       *bool   `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
+	ResourceAccessTokenEvents *bool   `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
+	ResourceDeployTokenEvents *bool   `url:"resource_deploy_token_events,omitempty" json:"resource_deploy_token_events,omitempty"`
+	EnableSSLVerification     *bool   `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
+	Token                     *string `url:"token,omitempty" json:"token,omitempty"`
 	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/project_webhooks/#add-a-webhook-to-a-project
-	SigningToken              *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
-	URL                       *string              `url:"url,omitempty" json:"url,omitempty"`
-	WikiPageEvents            *bool                `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
-	ResourceAccessTokenEvents *bool                `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
-	CustomWebhookTemplate     *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
-	CustomHeaders             *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
-	VulnerabilityEvents       *bool                `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
-	BranchFilterStrategy      *string              `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
-	FeatureFlagEvents         *bool                `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
-	MilestoneEvents           *bool                `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
-	ResourceDeployTokenEvents *bool                `url:"resource_deploy_token_events,omitempty" json:"resource_deploy_token_events,omitempty"`
+	SigningToken          *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
+	CustomWebhookTemplate *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
+	CustomHeaders         *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
 }
 
 // AddProjectHook adds a hook to a specified project.
@@ -165,35 +166,35 @@ func (s *ProjectsService) AddProjectHook(pid any, opt *AddProjectHookOptions, op
 // GitLab API docs:
 // https://docs.gitlab.com/api/project_webhooks/#edit-a-project-webhook
 type EditProjectHookOptions struct {
-	Name                     *string `url:"name,omitempty" json:"name,omitempty"`
-	Description              *string `url:"description,omitempty" json:"description,omitempty"`
-	ConfidentialIssuesEvents *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
-	ConfidentialNoteEvents   *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
-	DeploymentEvents         *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
-	EnableSSLVerification    *bool   `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
-	IssuesEvents             *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
-	JobEvents                *bool   `url:"job_events,omitempty" json:"job_events,omitempty"`
-	MergeRequestsEvents      *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
-	NoteEvents               *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
-	PipelineEvents           *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
-	PushEvents               *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
-	PushEventsBranchFilter   *string `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
-	ReleasesEvents           *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
-	EmojiEvents              *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
-	TagPushEvents            *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
-	Token                    *string `url:"token,omitempty" json:"token,omitempty"`
+	Name                      *string `url:"name,omitempty" json:"name,omitempty"`
+	Description               *string `url:"description,omitempty" json:"description,omitempty"`
+	URL                       *string `url:"url,omitempty" json:"url,omitempty"`
+	PushEvents                *bool   `url:"push_events,omitempty" json:"push_events,omitempty"`
+	PushEventsBranchFilter    *string `url:"push_events_branch_filter,omitempty" json:"push_events_branch_filter,omitempty"`
+	BranchFilterStrategy      *string `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
+	IssuesEvents              *bool   `url:"issues_events,omitempty" json:"issues_events,omitempty"`
+	ConfidentialIssuesEvents  *bool   `url:"confidential_issues_events,omitempty" json:"confidential_issues_events,omitempty"`
+	MergeRequestsEvents       *bool   `url:"merge_requests_events,omitempty" json:"merge_requests_events,omitempty"`
+	TagPushEvents             *bool   `url:"tag_push_events,omitempty" json:"tag_push_events,omitempty"`
+	NoteEvents                *bool   `url:"note_events,omitempty" json:"note_events,omitempty"`
+	ConfidentialNoteEvents    *bool   `url:"confidential_note_events,omitempty" json:"confidential_note_events,omitempty"`
+	JobEvents                 *bool   `url:"job_events,omitempty" json:"job_events,omitempty"`
+	PipelineEvents            *bool   `url:"pipeline_events,omitempty" json:"pipeline_events,omitempty"`
+	WikiPageEvents            *bool   `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
+	DeploymentEvents          *bool   `url:"deployment_events,omitempty" json:"deployment_events,omitempty"`
+	FeatureFlagEvents         *bool   `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
+	ReleasesEvents            *bool   `url:"releases_events,omitempty" json:"releases_events,omitempty"`
+	MilestoneEvents           *bool   `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
+	EmojiEvents               *bool   `url:"emoji_events,omitempty" json:"emoji_events,omitempty"`
+	VulnerabilityEvents       *bool   `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
+	ResourceAccessTokenEvents *bool   `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
+	ResourceDeployTokenEvents *bool   `url:"resource_deploy_token_events,omitempty" json:"resource_deploy_token_events,omitempty"`
+	EnableSSLVerification     *bool   `url:"enable_ssl_verification,omitempty" json:"enable_ssl_verification,omitempty"`
+	Token                     *string `url:"token,omitempty" json:"token,omitempty"`
 	// SigningToken is write-only and controlled by a feature flag currently. See https://docs.gitlab.com/api/project_webhooks/#update-a-project-webhook
-	SigningToken              *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
-	URL                       *string              `url:"url,omitempty" json:"url,omitempty"`
-	WikiPageEvents            *bool                `url:"wiki_page_events,omitempty" json:"wiki_page_events,omitempty"`
-	ResourceAccessTokenEvents *bool                `url:"resource_access_token_events,omitempty" json:"resource_access_token_events,omitempty"`
-	CustomWebhookTemplate     *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
-	CustomHeaders             *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
-	VulnerabilityEvents       *bool                `url:"vulnerability_events,omitempty" json:"vulnerability_events,omitempty"`
-	BranchFilterStrategy      *string              `url:"branch_filter_strategy,omitempty" json:"branch_filter_strategy,omitempty"`
-	FeatureFlagEvents         *bool                `url:"feature_flag_events,omitempty" json:"feature_flag_events,omitempty"`
-	MilestoneEvents           *bool                `url:"milestone_events,omitempty" json:"milestone_events,omitempty"`
-	ResourceDeployTokenEvents *bool                `url:"resource_deploy_token_events,omitempty" json:"resource_deploy_token_events,omitempty"`
+	SigningToken          *string              `url:"signing_token,omitempty" json:"signing_token,omitempty"`
+	CustomWebhookTemplate *string              `url:"custom_webhook_template,omitempty" json:"custom_webhook_template,omitempty"`
+	CustomHeaders         *[]*HookCustomHeader `url:"custom_headers,omitempty" json:"custom_headers,omitempty"`
 }
 
 // EditProjectHook edits a hook for a specified project.
