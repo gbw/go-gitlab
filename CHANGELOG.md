@@ -1,3 +1,14 @@
+## 2.38.0
+
+### 🚀 Features
+
+- Add missing error tracking method ([!2911](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2911)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+- Add archive to group and project labels ([!2913](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2913)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+
+
+# [2.38.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.37.0...v2.38.0) (2026-06-10)
+
 ## 2.37.0
 
 ### 🚀 Features
