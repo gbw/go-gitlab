@@ -54,6 +54,41 @@ func TestGetErrorTracking(t *testing.T) {
 	assert.Equal(t, want, et)
 }
 
+func TestUpdateErrorTrackingSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/error_tracking/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPatch)
+		fmt.Fprint(w, `{
+			"active": false,
+			"project_name": "sample sentry project",
+			"sentry_external_url": "https://sentry.io/myawesomeproject/project",
+			"api_url": "https://sentry.io/api/1/projects/myawesomeproject/project",
+			"integrated": false
+		}`)
+	})
+
+	et, _, err := client.ErrorTracking.UpdateErrorTrackingSettings(
+		1,
+		&UpdateErrorTrackingSettingsOptions{
+			Active:     Ptr(false),
+			Integrated: Ptr(false),
+		},
+	)
+	require.NoError(t, err)
+
+	want := &ErrorTrackingSettings{
+		Active:            false,
+		ProjectName:       "sample sentry project",
+		SentryExternalURL: "https://sentry.io/myawesomeproject/project",
+		APIURL:            "https://sentry.io/api/1/projects/myawesomeproject/project",
+		Integrated:        false,
+	}
+
+	assert.Equal(t, want, et)
+}
+
 func TestDisableErrorTracking(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -84,6 +119,38 @@ func TestDisableErrorTracking(t *testing.T) {
 		SentryExternalURL: "https://sentry.io/myawesomeproject/project",
 		APIURL:            "https://sentry.io/api/1/projects/myawesomeproject/project",
 		Integrated:        false,
+	}
+
+	assert.Equal(t, want, et)
+}
+
+func TestCreateErrorTrackingSettings(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/projects/1/error_tracking/settings", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		fmt.Fprint(w, `{
+			"active": true,
+			"project_name": null,
+			"sentry_external_url": null,
+			"api_url": null,
+			"integrated": true
+		}`)
+	})
+
+	et, _, err := client.ErrorTracking.CreateErrorTrackingSettings(
+		1,
+		&CreateErrorTrackingSettingsOptions{
+			Active:     Ptr(true),
+			Integrated: Ptr(true),
+		},
+	)
+	require.NoError(t, err)
+
+	want := &ErrorTrackingSettings{
+		Active:     true,
+		Integrated: true,
 	}
 
 	assert.Equal(t, want, et)

@@ -84,6 +84,51 @@ func (c *MockErrorTrackingServiceInterfaceCreateClientKeyCall) DoAndReturn(f fun
 	return c
 }
 
+// CreateErrorTrackingSettings mocks base method.
+func (m *MockErrorTrackingServiceInterface) CreateErrorTrackingSettings(pid any, opt *gitlab.CreateErrorTrackingSettingsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ErrorTrackingSettings, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CreateErrorTrackingSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.ErrorTrackingSettings)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateErrorTrackingSettings indicates an expected call of CreateErrorTrackingSettings.
+func (mr *MockErrorTrackingServiceInterfaceMockRecorder) CreateErrorTrackingSettings(pid, opt any, options ...any) *MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateErrorTrackingSettings", reflect.TypeOf((*MockErrorTrackingServiceInterface)(nil).CreateErrorTrackingSettings), varargs...)
+	return &MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall{Call: call}
+}
+
+// MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall wrap *gomock.Call
+type MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall) Return(arg0 *gitlab.ErrorTrackingSettings, arg1 *gitlab.Response, arg2 error) *MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall) Do(f func(any, *gitlab.CreateErrorTrackingSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.ErrorTrackingSettings, *gitlab.Response, error)) *MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall) DoAndReturn(f func(any, *gitlab.CreateErrorTrackingSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.ErrorTrackingSettings, *gitlab.Response, error)) *MockErrorTrackingServiceInterfaceCreateErrorTrackingSettingsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // DeleteClientKey mocks base method.
 func (m *MockErrorTrackingServiceInterface) DeleteClientKey(pid any, keyID int64, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -259,6 +304,51 @@ func (c *MockErrorTrackingServiceInterfaceListClientKeysCall) Do(f func(any, *gi
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockErrorTrackingServiceInterfaceListClientKeysCall) DoAndReturn(f func(any, *gitlab.ListClientKeysOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.ErrorTrackingClientKey, *gitlab.Response, error)) *MockErrorTrackingServiceInterfaceListClientKeysCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// UpdateErrorTrackingSettings mocks base method.
+func (m *MockErrorTrackingServiceInterface) UpdateErrorTrackingSettings(pid any, opt *gitlab.UpdateErrorTrackingSettingsOptions, options ...gitlab.RequestOptionFunc) (*gitlab.ErrorTrackingSettings, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{pid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateErrorTrackingSettings", varargs...)
+	ret0, _ := ret[0].(*gitlab.ErrorTrackingSettings)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// UpdateErrorTrackingSettings indicates an expected call of UpdateErrorTrackingSettings.
+func (mr *MockErrorTrackingServiceInterfaceMockRecorder) UpdateErrorTrackingSettings(pid, opt any, options ...any) *MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{pid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateErrorTrackingSettings", reflect.TypeOf((*MockErrorTrackingServiceInterface)(nil).UpdateErrorTrackingSettings), varargs...)
+	return &MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall{Call: call}
+}
+
+// MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall wrap *gomock.Call
+type MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall) Return(arg0 *gitlab.ErrorTrackingSettings, arg1 *gitlab.Response, arg2 error) *MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall) Do(f func(any, *gitlab.UpdateErrorTrackingSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.ErrorTrackingSettings, *gitlab.Response, error)) *MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall) DoAndReturn(f func(any, *gitlab.UpdateErrorTrackingSettingsOptions, ...gitlab.RequestOptionFunc) (*gitlab.ErrorTrackingSettings, *gitlab.Response, error)) *MockErrorTrackingServiceInterfaceUpdateErrorTrackingSettingsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
