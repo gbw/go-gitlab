@@ -1,3 +1,13 @@
+## 2.39.0
+
+### 🚀 Features
+
+- Add Scopes field to Application struct ([!2918](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2918)) by [Ashraf Abdellatif](https://gitlab.com/ash-abdellatif)
+
+
+
+# [2.39.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.38.0...v2.39.0) (2026-06-12)
+
 ## 2.38.0
 
 ### 🚀 Features
