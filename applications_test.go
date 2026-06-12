@@ -29,26 +29,32 @@ func TestCreateApplication(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
+	// GIVEN a server that returns a created application with scopes
 	mux.HandleFunc("/api/v4/applications",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodPost)
 			fmt.Fprint(w, `
 {
     "id":1,
-    "application_name":"testApplication"
+    "application_name":"testApplication",
+    "scopes":["api","read_user"]
 }`)
 		},
 	)
 
+	// WHEN creating an application with scopes
 	opt := &CreateApplicationOptions{
-		Name: Ptr("testApplication"),
+		Name:   Ptr("testApplication"),
+		Scopes: Ptr("api read_user"),
 	}
 	app, _, err := client.Applications.CreateApplication(opt)
 	require.NoError(t, err)
 
+	// THEN the returned application contains the scopes
 	want := &Application{
 		ID:              1,
 		ApplicationName: "testApplication",
+		Scopes:          []string{"api", "read_user"},
 	}
 	assert.Equal(t, want, app)
 }
@@ -57,22 +63,25 @@ func TestListApplications(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
 
+	// GIVEN a server that returns applications with scopes
 	mux.HandleFunc("/api/v4/applications",
 		func(w http.ResponseWriter, r *http.Request) {
 			testMethod(t, r, http.MethodGet)
 			fmt.Fprint(w, `[
-    {"id":1},
-    {"id":2}
+    {"id":1,"scopes":["api"]},
+    {"id":2,"scopes":["read_user","email"]}
 ]`)
 		},
 	)
 
+	// WHEN listing applications
 	apps, _, err := client.Applications.ListApplications(&ListApplicationsOptions{})
 	require.NoError(t, err)
 
+	// THEN the returned applications contain their scopes
 	want := []*Application{
-		{ID: 1},
-		{ID: 2},
+		{ID: 1, Scopes: []string{"api"}},
+		{ID: 2, Scopes: []string{"read_user", "email"}},
 	}
 	assert.Equal(t, want, apps)
 }
