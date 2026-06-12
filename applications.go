@@ -54,12 +54,13 @@ var _ ApplicationsServiceInterface = (*ApplicationsService)(nil)
 
 // Application represents a GitLab application
 type Application struct {
-	ID              int64  `json:"id"`
-	ApplicationID   string `json:"application_id"`
-	ApplicationName string `json:"application_name"`
-	Secret          string `json:"secret"`
-	CallbackURL     string `json:"callback_url"`
-	Confidential    bool   `json:"confidential"`
+	ID              int64    `json:"id"`
+	ApplicationID   string   `json:"application_id"`
+	ApplicationName string   `json:"application_name"`
+	Secret          string   `json:"secret"`
+	CallbackURL     string   `json:"callback_url"`
+	Confidential    bool     `json:"confidential"`
+	Scopes          []string `json:"scopes"`
 }
 
 // CreateApplicationOptions represents the available CreateApplication() options.
