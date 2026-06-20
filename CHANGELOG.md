@@ -1,3 +1,18 @@
+## 2.40.0
+
+### 🚀 Features
+
+- feat: add support for container registry tag protection rules ([!2919](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2919)) by [Prakash Divy](https://gitlab.com/prakashdivyy)
+
+
+
+# [2.40.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.39.0...v2.40.0) (2026-06-20)
+
+
+### Features
+
+* add support for container registry tag protection rules ([8083227](https://gitlab.com/gitlab-org/api/client-go/commit/80832278d603b69ead1a052aeb675f78fa390bbb))
+
 ## 2.39.0
 
 ### 🚀 Features
