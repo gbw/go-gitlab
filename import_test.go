@@ -208,11 +208,11 @@ func TestImportService_ImportRepositoryFromBitbucketCloud(t *testing.T) {
 	}
 
 	opt := &ImportRepositoryFromBitbucketCloudOptions{
-		BitbucketUsername:    Ptr("username"),
-		BitbucketAppPassword: Ptr("password"),
-		RepoPath:             Ptr("/root/my-repo"),
-		TargetNamespace:      Ptr("/root/"),
-		NewName:              Ptr("my-repo"),
+		BitbucketAPIToken: Ptr("token"),
+		BitbucketEmail:    Ptr("email"),
+		RepoPath:          Ptr("/root/my-repo"),
+		TargetNamespace:   Ptr("/root/"),
+		NewName:           Ptr("my-repo"),
 	}
 
 	bci, resp, err := client.Import.ImportRepositoryFromBitbucketCloud(opt)

@@ -238,6 +238,8 @@ func (s BitbucketCloudImport) String() string {
 type ImportRepositoryFromBitbucketCloudOptions struct {
 	BitbucketUsername    *string `url:"bitbucket_username,omitempty" json:"bitbucket_username,omitempty"`
 	BitbucketAppPassword *string `url:"bitbucket_app_password,omitempty" json:"bitbucket_app_password,omitempty"`
+	BitbucketAPIToken    *string `url:"bitbucket_api_token,omitempty" json:"bitbucket_api_token,omitempty"`
+	BitbucketEmail       *string `url:"bitbucket_email,omitempty" json:"bitbucket_email,omitempty"`
 	RepoPath             *string `url:"repo_path,omitempty" json:"repo_path,omitempty"`
 	TargetNamespace      *string `url:"target_namespace,omitempty" json:"target_namespace,omitempty"`
 	NewName              *string `url:"new_name,omitempty" json:"new_name,omitempty"`
