@@ -35,7 +35,6 @@ include:
     inputs:
       stage: lint
 
-
   # Add Work Type Classification labels to merge requests,
   # see https://gitlab.com/gitlab-com/gl-infra/common-ci-tasks/-/blob/main/autolabels.md
   - project: "gitlab-com/gl-infra/common-ci-tasks"
@@ -66,8 +65,8 @@ stages:
   parallel:
     matrix:
       - GOLANG_IMAGE_VERSION:
-        - '1.25'
-        - '1.26'
+          - "1.25"
+          - "1.26"
 
 .go:base:
   extends:
@@ -157,37 +156,15 @@ verify-generated-code:
         exit 1;
       }
 
-Download GraphQL schema:
-  stage: test
-  needs: []
-  image: node:26-alpine
-  script:
-    - |
-      if [ ! -f schema/gitlab.graphql ]; then
-        mkdir schema
-        npm install -g get-graphql-schema
-        get-graphql-schema "${CI_API_GRAPHQL_URL}" --sdl >schema/gitlab.graphql
-      fi
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - schema/gitlab.graphql
-    policy: pull-push
-  artifacts:
-    paths:
-      - schema/gitlab.graphql
-
 tests:unit:
   extends:
     - .go:versions
   stage: test
-  needs:
-    - Download GraphQL schema
   image: golang:$GOLANG_IMAGE_VERSION
   variables:
     # configure tooling versions
-    GOTESTSUM_VERSION: 'v1.13.0'
-    GOCOVER_COBERTURA_VERSION: 'v1.4.0'
+    GOTESTSUM_VERSION: "v1.13.0"
+    GOCOVER_COBERTURA_VERSION: "v1.4.0"
 
     # configure artifact files
     JUNIT_FILENAME: tests.xml
@@ -231,12 +208,12 @@ tests:integration:
     GITLAB_BASE_URL: http://docker:8095/api/v4
 
     # Since we're not using the makefile, this doesn't default to the testing token
-    # properly. 
+    # properly.
     GITLAB_TOKEN: "glpat-ACCTEST1234567890123"
 
     # configure tooling versions
-    GOTESTSUM_VERSION: 'v1.13.0'
-    GOCOVER_COBERTURA_VERSION: 'v1.4.0'
+    GOTESTSUM_VERSION: "v1.13.0"
+    GOCOVER_COBERTURA_VERSION: "v1.4.0"
     MISE_VERSION: v2025.6.1
 
     # configure artifact files
@@ -265,7 +242,6 @@ tests:integration:
     - go run github.com/boumenot/gocover-cobertura@${GOCOVER_COBERTURA_VERSION} < $COVERPROFILE_FILENAME > $COVERPROFILE_XML_FILENAME
     - go tool cover -func $COVERPROFILE_FILENAME
 
-
 # Update rules on SAST to ensure the jobs show up in the pipeline
 # this prevents forks that don't have `ultimate` from skipping SAST scans
 # since gitlab-advaced-sast replaces semgrep.
@@ -274,7 +250,7 @@ semgrep-sast:
   rules:
     - when: always
 
-# Update rules on dependency scanning so that it only runs when on the 
+# Update rules on dependency scanning so that it only runs when on the
 # canonical project or the community fork. This ensures that when people
 # use personal forks, it doesn't fail stating the forks are unlicensed.
 dependency-scanning:
