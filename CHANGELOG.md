@@ -1,3 +1,23 @@
+## 2.40.1
+
+### 🐛 Bug Fixes
+
+- Fix Bitbucket cloud import parameters ([!2912](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2912)) by [Tom van Dijk](https://gitlab.com/tevd)
+- fix: backward-compatible OrbitStatus for nested status response shape ([!2923](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2923)) by [Dmitry Gruzd](https://gitlab.com/dgruzd)
+
+### 🔄 Other Changes
+
+- Temporarily cache the GraphQL schema in the repository ([!2921](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2921)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+## [2.40.1](https://gitlab.com/gitlab-org/api/client-go/compare/v2.40.0...v2.40.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* backward-compatible OrbitStatus for nested status response shape ([4cd72af](https://gitlab.com/gitlab-org/api/client-go/commit/4cd72afbdf34ac7ab4aab1754449e04aefe5a1b0))
+
 ## 2.40.0
 
 ### 🚀 Features
