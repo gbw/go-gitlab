@@ -128,6 +128,142 @@ func TestOrbitService_GetStatus_LLMFormat(t *testing.T) {
 	assert.Empty(t, status.Status, "structured fields must be absent in llm response")
 }
 
+func TestOrbitService_GetStatus_NewNestedRaw(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/status endpoint returns the new nested shape with
+	// user access info and system health inside a "system" wrapper
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/orbit/status", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"user": {"available": true},
+			"system": {
+				"status": "healthy",
+				"timestamp": "2026-06-19T10:00:00Z",
+				"version": "0.6.0",
+				"components": [
+					{"name": "clickhouse", "status": "healthy", "replicas": {"ready": 3, "desired": 3}, "metrics": {}}
+				]
+			}
+		}`)
+	})
+
+	// WHEN GetStatus is called with no options
+	status, resp, err := client.Orbit.GetStatus(nil)
+
+	// THEN the nested User and System fields are populated
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotNil(t, status.User)
+	assert.True(t, status.User.Available)
+	require.NotNil(t, status.System)
+	assert.Equal(t, "healthy", status.System.Status)
+	assert.Equal(t, "2026-06-19T10:00:00Z", status.System.Timestamp)
+	assert.Equal(t, "0.6.0", status.System.Version)
+	require.Len(t, status.System.Components, 1)
+	assert.Equal(t, "clickhouse", status.System.Components[0].Name)
+
+	// AND the flat fields are promoted from System for backward
+	// compatibility
+	assert.Equal(t, "healthy", status.Status)
+	assert.Equal(t, "2026-06-19T10:00:00Z", status.Timestamp)
+	assert.Equal(t, "0.6.0", status.Version)
+	require.Len(t, status.Components, 1)
+	assert.Equal(t, "clickhouse", status.Components[0].Name)
+}
+
+func TestOrbitService_GetStatus_NewNestedError(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/status endpoint returns the new nested shape where
+	// the backend could not reach the gRPC cluster, so system carries
+	// status "unknown" and an error message
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/orbit/status", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"user": {"available": true},
+			"system": {
+				"status": "unknown",
+				"error": "Service unreachable"
+			}
+		}`)
+	})
+
+	// WHEN GetStatus is called
+	status, resp, err := client.Orbit.GetStatus(nil)
+
+	// THEN the error field is populated on System
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotNil(t, status.System)
+	assert.Equal(t, "unknown", status.System.Status)
+	assert.Equal(t, "Service unreachable", status.System.Error)
+
+	// AND the flat status is promoted
+	assert.Equal(t, "unknown", status.Status)
+}
+
+func TestOrbitService_GetStatus_NewNestedLLM(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/status endpoint returns the new nested shape with
+	// response_format=llm, where system carries formatted_text
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/orbit/status", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{
+			"user": {"available": true},
+			"system": {"formatted_text": "status: healthy\nversion: \"0.6.0\""}
+		}`)
+	})
+
+	// WHEN GetStatus is called with response_format=llm
+	status, _, err := client.Orbit.GetStatus(&GetOrbitStatusOptions{
+		ResponseFormat: Ptr(OrbitResponseFormatLLM),
+	})
+
+	// THEN the nested System.FormattedText is populated
+	require.NoError(t, err)
+	require.NotNil(t, status.User)
+	assert.True(t, status.User.Available)
+	require.NotNil(t, status.System)
+	assert.Equal(t, "status: healthy\nversion: \"0.6.0\"", status.System.FormattedText)
+
+	// AND the flat FormattedText is promoted for backward compatibility
+	assert.Equal(t, "status: healthy\nversion: \"0.6.0\"", status.FormattedText)
+	assert.Empty(t, status.Status, "structured fields must be absent in llm response")
+}
+
+func TestOrbitService_GetStatus_NewNestedNoAccess(t *testing.T) {
+	t.Parallel()
+	// GIVEN the orbit/status endpoint returns the new nested shape
+	// where the user has no access (system is null)
+	mux, client := setup(t)
+
+	mux.HandleFunc("/api/v4/orbit/status", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"user":{"available":false},"system":null}`)
+	})
+
+	// WHEN GetStatus is called
+	status, resp, err := client.Orbit.GetStatus(nil)
+
+	// THEN User.Available is false, System is nil, and flat fields
+	// are empty
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotNil(t, status.User)
+	assert.False(t, status.User.Available)
+	assert.Nil(t, status.System)
+	assert.Empty(t, status.FormattedText)
+	assert.Empty(t, status.Status)
+	assert.Empty(t, status.Timestamp)
+	assert.Empty(t, status.Version)
+	assert.Empty(t, status.Components)
+}
+
 func TestOrbitService_GetSchema(t *testing.T) {
 	t.Parallel()
 	// GIVEN a schema response with two domains and summary node entries

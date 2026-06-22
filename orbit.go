@@ -147,17 +147,97 @@ type GetOrbitStatusOptions struct {
 // OrbitStatus represents the Orbit cluster health response returned
 // by `GET /api/v4/orbit/status`.
 //
-// When ResponseFormat is "raw" (default), the structured fields
-// (Status, Timestamp, Version, Components) are populated and
-// FormattedText is empty. When ResponseFormat is "llm", only
-// FormattedText is populated and the structured fields are absent.
+// The endpoint can return two shapes:
+//
+// Old (flat): the top-level object carries status, timestamp,
+// version, components, and formatted_text directly.
+//
+// New (nested): the top-level object carries "user" and "system"
+// keys. The system object contains the same health fields that the
+// old flat shape had (or null when the user has no access).
+//
+// For backward compatibility the flat fields (FormattedText, Status,
+// Timestamp, Version, Components) are always populated — when the
+// new nested shape is received, the system object's fields are
+// promoted into the flat fields automatically via a custom
+// UnmarshalJSON. Callers that only read the flat fields continue to
+// work unchanged; new callers can inspect User and System directly.
 //
 // GitLab API docs: https://docs.gitlab.com/api/orbit/#get-status
 type OrbitStatus struct {
+	// User holds user-level access information. Present only in the
+	// new nested response shape; nil for the old flat shape.
+	User *OrbitStatusUser `json:"user,omitempty"`
+
+	// System holds the cluster health object. Present only in the
+	// new nested response shape; nil for the old flat shape or when
+	// the user has no access.
+	System *OrbitStatusSystem `json:"system,omitempty"`
+
+	// Flat fields — populated directly when the old flat shape
+	// arrives, or promoted from System when the new nested shape
+	// arrives.
 	FormattedText string                  `json:"formatted_text,omitempty"`
 	Status        string                  `json:"status,omitempty"`
 	Timestamp     string                  `json:"timestamp,omitempty"`
 	Version       string                  `json:"version,omitempty"`
+	Components    []*OrbitStatusComponent `json:"components,omitempty"`
+}
+
+// orbitStatusAlias is an alias of OrbitStatus used inside
+// UnmarshalJSON to avoid infinite recursion.
+type orbitStatusAlias OrbitStatus
+
+// UnmarshalJSON decodes OrbitStatus from either the old flat shape
+// or the new nested shape. When the nested shape is detected (i.e.
+// System is non-nil after standard decoding), the system's health
+// fields are promoted into the top-level flat fields so that
+// existing callers continue to work. Promotion is all-or-nothing:
+// when system is present its fields fully replace any top-level
+// flat fields (the upstream API never emits both nested and
+// top-level health fields in the same response).
+func (s *OrbitStatus) UnmarshalJSON(data []byte) error {
+	var alias orbitStatusAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+
+	*s = OrbitStatus(alias)
+
+	// Promote nested system fields into flat fields for
+	// backward compatibility.
+	if s.System != nil {
+		s.FormattedText = s.System.FormattedText
+		s.Status = s.System.Status
+		s.Timestamp = s.System.Timestamp
+		s.Version = s.System.Version
+		s.Components = s.System.Components
+	}
+
+	return nil
+}
+
+// OrbitStatusUser represents user-level access information in the
+// new nested response shape of `GET /api/v4/orbit/status`.
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/#get-status
+type OrbitStatusUser struct {
+	Available bool `json:"available"`
+}
+
+// OrbitStatusSystem represents the cluster health object in the new
+// nested response shape of `GET /api/v4/orbit/status`. It carries
+// the same fields that the old flat OrbitStatus shape had, plus an
+// Error field emitted when the backend cannot reach the gRPC
+// cluster (status will be "unknown" in that case).
+//
+// GitLab API docs: https://docs.gitlab.com/api/orbit/#get-status
+type OrbitStatusSystem struct {
+	FormattedText string                  `json:"formatted_text,omitempty"`
+	Status        string                  `json:"status,omitempty"`
+	Timestamp     string                  `json:"timestamp,omitempty"`
+	Version       string                  `json:"version,omitempty"`
+	Error         string                  `json:"error,omitempty"`
 	Components    []*OrbitStatusComponent `json:"components,omitempty"`
 }
 
