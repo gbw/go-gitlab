@@ -124,6 +124,53 @@ func TestGetGroup(t *testing.T) {
 	assert.Equal(t, want, group)
 }
 
+func TestGetGroup_FullResponseFields(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a GitLab API that returns a response containing every group field
+	// the GitLab Groups API documents.
+	mux.HandleFunc("/api/v4/groups/g",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			fmt.Fprint(w, `{
+				"id": 1,
+				"name": "g",
+				"organization_id": 7,
+				"archived": true,
+				"prevent_sharing_groups_outside_hierarchy": true,
+				"enabled_git_access_protocol": "all",
+				"duo_availability": "default_on",
+				"experiment_features_enabled": true,
+				"duo_features_enabled": true,
+				"lock_duo_features_enabled": true,
+				"math_rendering_limits_enabled": true,
+				"lock_math_rendering_limits_enabled": true
+			}`)
+		})
+
+	// WHEN GetGroup is called
+	group, _, err := client.Groups.GetGroup("g", &GetGroupOptions{})
+	require.NoError(t, err)
+
+	// THEN every newly-exposed field is unmarshaled onto the Group struct.
+	want := &Group{
+		ID:                                   1,
+		Name:                                 "g",
+		OrganizationID:                       7,
+		Archived:                             true,
+		PreventSharingGroupsOutsideHierarchy: true,
+		EnabledGitAccessProtocol:             EnabledGitAccessProtocolAll,
+		DuoAvailability:                      DuoAvailabilityDefaultOn,
+		ExperimentFeaturesEnabled:            true,
+		DuoFeaturesEnabled:                   true,
+		LockDuoFeaturesEnabled:               true,
+		MathRenderingLimitsEnabled:           true,
+		LockMathRenderingLimitsEnabled:       true,
+	}
+	assert.Equal(t, want, group)
+}
+
 func TestGetGroupWithFileTemplateId(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
@@ -159,6 +206,70 @@ func TestCreateGroup(t *testing.T) {
 	group, _, err := client.Groups.CreateGroup(opt, nil)
 	require.NoError(t, err)
 
+	want := &Group{ID: 1, Name: "g", Path: "g"}
+	assert.Equal(t, want, group)
+}
+
+func TestCreateGroup_FullAttributes(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN every non-deprecated, non-Avatar attribute on CreateGroupOptions.
+	// Building once and reusing for both the request-body assertion and the
+	// actual call guarantees the test stays in sync with the struct.
+	opt := &CreateGroupOptions{
+		Name:                            Ptr("g"),
+		Path:                            Ptr("g"),
+		DefaultBranch:                   Ptr("main"),
+		Description:                     Ptr("a description"),
+		MembershipLock:                  Ptr(true),
+		Visibility:                      Ptr(PrivateVisibility),
+		ShareWithGroupLock:              Ptr(true),
+		RequireTwoFactorAuth:            Ptr(true),
+		TwoFactorGracePeriod:            Ptr(int64(48)),
+		ProjectCreationLevel:            Ptr(MaintainerProjectCreation),
+		AutoDevopsEnabled:               Ptr(true),
+		SubGroupCreationLevel:           Ptr(MaintainerSubGroupCreationLevelValue),
+		EmailsEnabled:                   Ptr(true),
+		MentionsDisabled:                Ptr(true),
+		LFSEnabled:                      Ptr(true),
+		DefaultBranchProtectionDefaults: &DefaultBranchProtectionDefaultsOptions{CodeOwnerApprovalRequired: Ptr(true)},
+		RequestAccessEnabled:            Ptr(true),
+		ParentID:                        Ptr(int64(2)),
+		SharedRunnersMinutesLimit:       Ptr(int64(100)),
+		ExtraSharedRunnersMinutesLimit:  Ptr(int64(50)),
+		WikiAccessLevel:                 Ptr(EnabledAccessControl),
+		EnabledGitAccessProtocol:        Ptr(EnabledGitAccessProtocolAll),
+		OrganizationID:                  Ptr(int64(7)),
+		DuoAvailability:                 Ptr(DuoAvailabilityDefaultOn),
+		ExperimentFeaturesEnabled:       Ptr(true),
+
+		UniqueProjectDownloadLimit:                  Ptr(int64(10)),
+		UniqueProjectDownloadLimitIntervalInSeconds: Ptr(int64(60)),
+		UniqueProjectDownloadLimitAllowlist:         &[]string{"alice"},
+		UniqueProjectDownloadLimitAlertlist:         &[]int64{42},
+		AutoBanUserOnExcessiveProjectsDownload:      Ptr(true),
+
+		MathRenderingLimitsEnabled: Ptr(true),
+
+		WebBasedCommitSigningEnabled: Ptr(true),
+		AllowPersonalSnippets:        Ptr(true),
+	}
+
+	// AND a GitLab API stub that asserts the request body carries that full
+	// payload verbatim.
+	mux.HandleFunc("/api/v4/groups",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testBodyJSON(t, r, opt)
+			fmt.Fprint(w, `{"id": 1, "name": "g", "path": "g"}`)
+		})
+
+	// WHEN CreateGroup is called with that fully populated options struct.
+	group, _, err := client.Groups.CreateGroup(opt, nil)
+	require.NoError(t, err)
+
+	// THEN the request body validation passes and a group is returned.
 	want := &Group{ID: 1, Name: "g", Path: "g"}
 	assert.Equal(t, want, group)
 }
@@ -1540,4 +1651,126 @@ func TestUnarchiveGroup(t *testing.T) {
 
 	_, err := client.Groups.UnarchiveGroup(1)
 	require.NoError(t, err)
+}
+
+func TestListSAMLUsers(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN the SAML users endpoint returns one user and the request carries
+	// the filter query parameters.
+	mux.HandleFunc("/api/v4/groups/1/saml_users",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testParam(t, r, "username", "alice")
+			testParam(t, r, "active", "true")
+			fmt.Fprint(w, `[{"id": 7, "username": "alice"}]`)
+		})
+
+	// WHEN ListSAMLUsers is called with filters.
+	users, _, err := client.Groups.ListSAMLUsers(1, &ListSAMLUsersOptions{
+		Username: Ptr("alice"),
+		Active:   Ptr(true),
+	})
+	require.NoError(t, err)
+
+	// THEN the returned slice contains the parsed user.
+	want := []*User{{ID: 7, Username: "alice"}}
+	assert.Equal(t, want, users)
+}
+
+func TestListGroupsSharedWith(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN the shared-groups endpoint returns one group and the request
+	// carries the search filter.
+	mux.HandleFunc("/api/v4/groups/1/groups/shared",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testParam(t, r, "search", "foo")
+			fmt.Fprint(w, `[{"id": 2, "name": "shared"}]`)
+		})
+
+	// WHEN ListGroupsSharedWith is called.
+	groups, _, err := client.Groups.ListGroupsSharedWith(1, &ListGroupsSharedWithOptions{
+		Search: Ptr("foo"),
+	})
+	require.NoError(t, err)
+
+	// THEN the response is unmarshaled into Group slice.
+	want := []*Group{{ID: 2, Name: "shared"}}
+	assert.Equal(t, want, groups)
+}
+
+func TestListInvitedGroups(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN the invited-groups endpoint returns one group and the request
+	// carries the relation filter.
+	mux.HandleFunc("/api/v4/groups/1/invited_groups",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testParam(t, r, "relation", "direct,inherited")
+			fmt.Fprint(w, `[{"id": 3, "name": "invited"}]`)
+		})
+
+	// WHEN ListInvitedGroups is called.
+	groups, _, err := client.Groups.ListInvitedGroups(1, &ListInvitedGroupsOptions{
+		Relation: &[]string{"direct", "inherited"},
+	})
+	require.NoError(t, err)
+
+	// THEN the response is unmarshaled into Group slice.
+	want := []*Group{{ID: 3, Name: "invited"}}
+	assert.Equal(t, want, groups)
+}
+
+func TestListTransferLocations(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN the transfer-locations endpoint returns one parent candidate.
+	mux.HandleFunc("/api/v4/groups/1/transfer_locations",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testParam(t, r, "search", "parent")
+			fmt.Fprint(w, `[{"id": 9, "name": "Parent", "full_path": "parent", "web_url": "https://gitlab.example.com/groups/parent"}]`)
+		})
+
+	// WHEN ListTransferLocations is called.
+	locations, _, err := client.Groups.ListTransferLocations(1, &ListTransferLocationsOptions{
+		Search: Ptr("parent"),
+	})
+	require.NoError(t, err)
+
+	// THEN the response is unmarshaled into TransferLocation slice.
+	want := []*TransferLocation{{
+		ID:       9,
+		Name:     "Parent",
+		FullPath: "parent",
+		WebURL:   "https://gitlab.example.com/groups/parent",
+	}}
+	assert.Equal(t, want, locations)
+}
+
+func TestSyncGroupWithLDAP(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN the LDAP sync endpoint responds with 202 Accepted.
+	mux.HandleFunc("/api/v4/groups/1/ldap_sync",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			w.WriteHeader(http.StatusAccepted)
+		})
+
+	// WHEN SyncGroupWithLDAP is called.
+	resp, err := client.Groups.SyncGroupWithLDAP(1)
+	require.NoError(t, err)
+
+	// THEN the response carries the 202 status.
+	require.NotNil(t, resp)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
