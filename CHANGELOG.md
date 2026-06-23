@@ -1,3 +1,17 @@
+## 2.41.0
+
+### 🚀 Features
+
+- Add missing attributes and endpoints to group ([!2905](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2905)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.5.3 ([!2924](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2924)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+
+
+
+# [2.41.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.40.1...v2.41.0) (2026-06-23)
+
 ## 2.40.1
 
 ### 🐛 Bug Fixes
