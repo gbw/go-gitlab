@@ -1605,6 +1605,96 @@ func (c *MockGroupsServiceInterfaceListGroupsCall) DoAndReturn(f func(*gitlab.Li
 	return c
 }
 
+// ListGroupsSharedWith mocks base method.
+func (m *MockGroupsServiceInterface) ListGroupsSharedWith(gid any, opt *gitlab.ListGroupsSharedWithOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Group, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListGroupsSharedWith", varargs...)
+	ret0, _ := ret[0].([]*gitlab.Group)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListGroupsSharedWith indicates an expected call of ListGroupsSharedWith.
+func (mr *MockGroupsServiceInterfaceMockRecorder) ListGroupsSharedWith(gid, opt any, options ...any) *MockGroupsServiceInterfaceListGroupsSharedWithCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListGroupsSharedWith", reflect.TypeOf((*MockGroupsServiceInterface)(nil).ListGroupsSharedWith), varargs...)
+	return &MockGroupsServiceInterfaceListGroupsSharedWithCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceListGroupsSharedWithCall wrap *gomock.Call
+type MockGroupsServiceInterfaceListGroupsSharedWithCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceListGroupsSharedWithCall) Return(arg0 []*gitlab.Group, arg1 *gitlab.Response, arg2 error) *MockGroupsServiceInterfaceListGroupsSharedWithCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceListGroupsSharedWithCall) Do(f func(any, *gitlab.ListGroupsSharedWithOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceListGroupsSharedWithCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceListGroupsSharedWithCall) DoAndReturn(f func(any, *gitlab.ListGroupsSharedWithOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceListGroupsSharedWithCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListInvitedGroups mocks base method.
+func (m *MockGroupsServiceInterface) ListInvitedGroups(gid any, opt *gitlab.ListInvitedGroupsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.Group, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListInvitedGroups", varargs...)
+	ret0, _ := ret[0].([]*gitlab.Group)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListInvitedGroups indicates an expected call of ListInvitedGroups.
+func (mr *MockGroupsServiceInterfaceMockRecorder) ListInvitedGroups(gid, opt any, options ...any) *MockGroupsServiceInterfaceListInvitedGroupsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListInvitedGroups", reflect.TypeOf((*MockGroupsServiceInterface)(nil).ListInvitedGroups), varargs...)
+	return &MockGroupsServiceInterfaceListInvitedGroupsCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceListInvitedGroupsCall wrap *gomock.Call
+type MockGroupsServiceInterfaceListInvitedGroupsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceListInvitedGroupsCall) Return(arg0 []*gitlab.Group, arg1 *gitlab.Response, arg2 error) *MockGroupsServiceInterfaceListInvitedGroupsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceListInvitedGroupsCall) Do(f func(any, *gitlab.ListInvitedGroupsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceListInvitedGroupsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceListInvitedGroupsCall) DoAndReturn(f func(any, *gitlab.ListInvitedGroupsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceListInvitedGroupsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
 // ListMembershipsForBillableGroupMember mocks base method.
 func (m *MockGroupsServiceInterface) ListMembershipsForBillableGroupMember(gid any, user int64, opt *gitlab.ListMembershipsForBillableGroupMemberOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.BillableUserMembership, *gitlab.Response, error) {
 	m.ctrl.T.Helper()
@@ -1691,6 +1781,51 @@ func (c *MockGroupsServiceInterfaceListProvisionedUsersCall) Do(f func(any, *git
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockGroupsServiceInterfaceListProvisionedUsersCall) DoAndReturn(f func(any, *gitlab.ListProvisionedUsersOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.User, *gitlab.Response, error)) *MockGroupsServiceInterfaceListProvisionedUsersCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListSAMLUsers mocks base method.
+func (m *MockGroupsServiceInterface) ListSAMLUsers(gid any, opt *gitlab.ListSAMLUsersOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.User, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListSAMLUsers", varargs...)
+	ret0, _ := ret[0].([]*gitlab.User)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListSAMLUsers indicates an expected call of ListSAMLUsers.
+func (mr *MockGroupsServiceInterfaceMockRecorder) ListSAMLUsers(gid, opt any, options ...any) *MockGroupsServiceInterfaceListSAMLUsersCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSAMLUsers", reflect.TypeOf((*MockGroupsServiceInterface)(nil).ListSAMLUsers), varargs...)
+	return &MockGroupsServiceInterfaceListSAMLUsersCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceListSAMLUsersCall wrap *gomock.Call
+type MockGroupsServiceInterfaceListSAMLUsersCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceListSAMLUsersCall) Return(arg0 []*gitlab.User, arg1 *gitlab.Response, arg2 error) *MockGroupsServiceInterfaceListSAMLUsersCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceListSAMLUsersCall) Do(f func(any, *gitlab.ListSAMLUsersOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.User, *gitlab.Response, error)) *MockGroupsServiceInterfaceListSAMLUsersCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceListSAMLUsersCall) DoAndReturn(f func(any, *gitlab.ListSAMLUsersOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.User, *gitlab.Response, error)) *MockGroupsServiceInterfaceListSAMLUsersCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -1826,6 +1961,51 @@ func (c *MockGroupsServiceInterfaceListSubGroupsCall) Do(f func(any, *gitlab.Lis
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockGroupsServiceInterfaceListSubGroupsCall) DoAndReturn(f func(any, *gitlab.ListSubGroupsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceListSubGroupsCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// ListTransferLocations mocks base method.
+func (m *MockGroupsServiceInterface) ListTransferLocations(gid any, opt *gitlab.ListTransferLocationsOptions, options ...gitlab.RequestOptionFunc) ([]*gitlab.TransferLocation, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid, opt}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListTransferLocations", varargs...)
+	ret0, _ := ret[0].([]*gitlab.TransferLocation)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListTransferLocations indicates an expected call of ListTransferLocations.
+func (mr *MockGroupsServiceInterfaceMockRecorder) ListTransferLocations(gid, opt any, options ...any) *MockGroupsServiceInterfaceListTransferLocationsCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid, opt}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTransferLocations", reflect.TypeOf((*MockGroupsServiceInterface)(nil).ListTransferLocations), varargs...)
+	return &MockGroupsServiceInterfaceListTransferLocationsCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceListTransferLocationsCall wrap *gomock.Call
+type MockGroupsServiceInterfaceListTransferLocationsCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceListTransferLocationsCall) Return(arg0 []*gitlab.TransferLocation, arg1 *gitlab.Response, arg2 error) *MockGroupsServiceInterfaceListTransferLocationsCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceListTransferLocationsCall) Do(f func(any, *gitlab.ListTransferLocationsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.TransferLocation, *gitlab.Response, error)) *MockGroupsServiceInterfaceListTransferLocationsCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceListTransferLocationsCall) DoAndReturn(f func(any, *gitlab.ListTransferLocationsOptions, ...gitlab.RequestOptionFunc) ([]*gitlab.TransferLocation, *gitlab.Response, error)) *MockGroupsServiceInterfaceListTransferLocationsCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
@@ -2226,6 +2406,50 @@ func (c *MockGroupsServiceInterfaceShareGroupWithGroupCall) Do(f func(any, *gitl
 
 // DoAndReturn rewrite *gomock.Call.DoAndReturn
 func (c *MockGroupsServiceInterfaceShareGroupWithGroupCall) DoAndReturn(f func(any, *gitlab.ShareGroupWithGroupOptions, ...gitlab.RequestOptionFunc) (*gitlab.Group, *gitlab.Response, error)) *MockGroupsServiceInterfaceShareGroupWithGroupCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
+
+// SyncGroupWithLDAP mocks base method.
+func (m *MockGroupsServiceInterface) SyncGroupWithLDAP(gid any, options ...gitlab.RequestOptionFunc) (*gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{gid}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SyncGroupWithLDAP", varargs...)
+	ret0, _ := ret[0].(*gitlab.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SyncGroupWithLDAP indicates an expected call of SyncGroupWithLDAP.
+func (mr *MockGroupsServiceInterfaceMockRecorder) SyncGroupWithLDAP(gid any, options ...any) *MockGroupsServiceInterfaceSyncGroupWithLDAPCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{gid}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncGroupWithLDAP", reflect.TypeOf((*MockGroupsServiceInterface)(nil).SyncGroupWithLDAP), varargs...)
+	return &MockGroupsServiceInterfaceSyncGroupWithLDAPCall{Call: call}
+}
+
+// MockGroupsServiceInterfaceSyncGroupWithLDAPCall wrap *gomock.Call
+type MockGroupsServiceInterfaceSyncGroupWithLDAPCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockGroupsServiceInterfaceSyncGroupWithLDAPCall) Return(arg0 *gitlab.Response, arg1 error) *MockGroupsServiceInterfaceSyncGroupWithLDAPCall {
+	c.Call = c.Call.Return(arg0, arg1)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockGroupsServiceInterfaceSyncGroupWithLDAPCall) Do(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceSyncGroupWithLDAPCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockGroupsServiceInterfaceSyncGroupWithLDAPCall) DoAndReturn(f func(any, ...gitlab.RequestOptionFunc) (*gitlab.Response, error)) *MockGroupsServiceInterfaceSyncGroupWithLDAPCall {
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
