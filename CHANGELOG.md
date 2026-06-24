@@ -1,3 +1,13 @@
+## 2.42.0
+
+### 🚀 Features
+
+- Add missing fields to project level jira integration ([!2925](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2925)) by [Heidi Berry](https://gitlab.com/heidi.berry)
+
+
+
+# [2.42.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.41.0...v2.42.0) (2026-06-24)
+
 ## 2.41.0
 
 ### 🚀 Features
