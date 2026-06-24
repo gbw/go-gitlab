@@ -1,0 +1,5 @@
+mutation DeleteWorkItem($id: WorkItemID!) {
+					workItemDelete(input: { id: $id }) {
+							errors
+					}
+			}
