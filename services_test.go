@@ -521,7 +521,32 @@ func TestSetJiraServiceProjectKeys(t *testing.T) {
 
 	mux.HandleFunc("/api/v4/projects/1/integrations/jira", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPut)
-		fmt.Fprint(w, `{"id":1, "properties": {}}`)
+		fmt.Fprint(w, `{"id":1, "properties": {
+			"url": "asd",
+			"api_url": "asd",
+			"username": "aas",
+			"password": "asd",
+			"active": true,
+			"jira_issue_prefix": "ASD",
+			"jira_issue_regex": "ASD",
+			"jira_issue_transition_automatic": true,
+			"jira_issue_transition_id": "2,3",
+			"commit_events": true,
+			"merge_requests_events": true,
+			"comment_on_event_enabled": true,
+			"issues_enabled": true,
+			"project_keys": ["as"],
+			"use_inherited_settings": true,
+			"vulnerabilities_enabled": true,
+			"vulnerabilities_issuetype": 123,
+			"project_key": "as",
+			"customize_jira_issue_enabled": true,
+			"jira_check_enabled": true,
+			"jira_exists_check_enabled": true,
+			"jira_assignee_check_enabled": true,
+			"jira_status_check_enabled": true,
+			"jira_allowed_statuses_as_string": "done"
+		}}`)
 	})
 
 	opt := &SetJiraServiceOptions{
@@ -540,11 +565,50 @@ func TestSetJiraServiceProjectKeys(t *testing.T) {
 		IssuesEnabled:                Ptr(true),
 		ProjectKeys:                  Ptr([]string{"as"}),
 		UseInheritedSettings:         Ptr(true),
+		VulnerabilitiesEnabled:       Ptr(true),
+		VulnerabilitiesIssueType:     Ptr(int64(123)),
+		ProjectKey:                   Ptr("as"),
+		CustomizeJiraIssueEnabled:    Ptr(true),
+		JiraCheckEnabled:             Ptr(true),
+		JiraExistsCheckEnabled:       Ptr(true),
+		JiraAssigneeCheckEnabled:     Ptr(true),
+		JiraStatusCheckEnabled:       Ptr(true),
+		JiraAllowedStatusesAsString:  Ptr("done"),
 	}
 
-	_, resp, err := client.Services.SetJiraService(1, opt)
+	jira, resp, err := client.Services.SetJiraService(1, opt)
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
+	assert.NotNil(t, jira)
+	assert.Equal(t, &JiraService{
+		Service: Service{ID: 1},
+		Properties: &JiraServiceProperties{
+			URL:                          "asd",
+			APIURL:                       "asd",
+			Username:                     "aas",
+			Password:                     "asd",
+			Active:                       true,
+			JiraIssuePrefix:              "ASD",
+			JiraIssueRegex:               "ASD",
+			JiraIssueTransitionAutomatic: true,
+			JiraIssueTransitionID:        "2,3",
+			CommitEvents:                 true,
+			MergeRequestsEvents:          true,
+			CommentOnEventEnabled:        true,
+			IssuesEnabled:                true,
+			ProjectKeys:                  []string{"as"},
+			UseInheritedSettings:         true,
+			VulnerabilitiesEnabled:       true,
+			VulnerabilitiesIssueType:     123,
+			ProjectKey:                   "as",
+			CustomizeJiraIssueEnabled:    true,
+			JiraCheckEnabled:             true,
+			JiraExistsCheckEnabled:       true,
+			JiraAssigneeCheckEnabled:     true,
+			JiraStatusCheckEnabled:       true,
+			JiraAllowedStatusesAsString:  "done",
+		},
+	}, jira)
 }
 
 func TestSetJiraServiceAuthTypeBasicAuth(t *testing.T) {
