@@ -1,0 +1,112 @@
+query GetWorkItem($fullPath: ID!, $iid: String!) {
+		namespace(fullPath: $fullPath) {
+			workItem(iid: $iid) {
+				
+	id
+	iid
+	workItemType {
+	  name
+	}
+	state
+	title
+	description
+	confidential
+	author {
+	  
+	id
+	username
+	name
+	state
+	createdAt
+	avatarUrl
+	webUrl
+
+	}
+	createdAt
+	updatedAt
+	closedAt
+	webUrl
+	features {
+		assignees {
+			assignees {
+				nodes {
+					
+	id
+	username
+	name
+	state
+	createdAt
+	avatarUrl
+	webUrl
+
+				}
+			}
+		}
+		color {
+			color
+			textColor
+		}
+		healthStatus {
+			healthStatus
+		}
+		hierarchy {
+			hasParent
+			parent {
+				iid
+				namespace {
+					fullPath
+				}
+			}
+		}
+		iteration {
+			iteration {
+				id
+			}
+		}
+		labels {
+			labels {
+				nodes {
+					id
+					title
+					color
+					description
+					descriptionHtml
+					textColor
+				}
+			}
+		}
+		linkedItems {
+			linkedItems {
+				nodes {
+					workItem {
+						iid
+						namespace {
+							fullPath
+						}
+					}
+					linkType
+				}
+			}
+		}
+		milestone {
+			milestone {
+				id
+			}
+		}
+		startAndDueDate {
+			startDate
+			dueDate
+		}
+		status {
+			status {
+				name
+			}
+		}
+		weight {
+			weight
+		}
+	}
+
+			}
+		}
+	}

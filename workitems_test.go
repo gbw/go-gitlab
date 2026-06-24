@@ -13,7 +13,6 @@ import (
 	"testing"
 	"time"
 
-	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -154,8 +153,6 @@ func TestGetWorkItem(t *testing.T) {
 		},
 	}
 
-	schema := loadSchema(t)
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -173,10 +170,9 @@ func TestGetWorkItem(t *testing.T) {
 					return
 				}
 
-				if err := validateSchema(schema, q); err != nil {
-					http.Error(w, err.Error(), http.StatusBadRequest)
-					return
-				}
+				// GIVEN a GetWorkItem request
+				// THEN the query matches the golden file
+				assertQueryMatches(t, q.Query, "testdata/query_get_work_item.graphql")
 
 				w.Header().Set("Content-Type", "application/json")
 				tt.response.WriteTo(w)
@@ -357,8 +353,6 @@ func TestListWorkItems(t *testing.T) {
 		},
 	}
 
-	schema := loadSchema(t)
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -372,11 +366,6 @@ func TestListWorkItems(t *testing.T) {
 				var q GraphQLQuery
 
 				if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
-					http.Error(w, err.Error(), http.StatusBadRequest)
-					return
-				}
-
-				if err := validateSchema(schema, q); err != nil {
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
 				}
@@ -497,8 +486,6 @@ func TestListWorkItems_Pagination(t *testing.T) {
 		`,
 	}
 
-	schema := loadSchema(t)
-
 	mux, client := setup(t)
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
@@ -509,11 +496,6 @@ func TestListWorkItems_Pagination(t *testing.T) {
 		var q GraphQLQuery
 
 		if err := json.NewDecoder(r.Body).Decode(&q); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		if err := validateSchema(schema, q); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
@@ -895,8 +877,6 @@ func TestCreateWorkItem(t *testing.T) {
 		},
 	}
 
-	schema := loadSchema(t)
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -914,10 +894,9 @@ func TestCreateWorkItem(t *testing.T) {
 					return
 				}
 
-				if err := validateSchema(schema, q); err != nil {
-					http.Error(w, err.Error(), http.StatusBadRequest)
-					return
-				}
+				// GIVEN a CreateWorkItem mutation request
+				// THEN the query matches the golden file
+				assertQueryMatches(t, q.Query, "testdata/mutation_create_work_item.graphql")
 
 				t.Logf("q.Variables = %q", q.Variables)
 
@@ -1192,8 +1171,6 @@ func TestUpdateWorkItem(t *testing.T) {
 		},
 	}
 
-	schema := loadSchema(t)
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -1211,17 +1188,20 @@ func TestUpdateWorkItem(t *testing.T) {
 					return
 				}
 
-				if err := validateSchema(schema, q); err != nil {
-					http.Error(w, err.Error(), http.StatusBadRequest)
-					return
-				}
-
 				w.Header().Set("Content-Type", "application/json")
 
+				// GIVEN an UpdateWorkItem request
+				// WHEN the query is for the work item ID lookup
 				if strings.Contains(q.Query, "GetWorkItemID") {
+					// THEN the query matches the golden file for ID lookup
+					assertQueryMatches(t, q.Query, "testdata/query_get_work_item_id.graphql")
 					io.WriteString(w, tt.idResponse)
 					return
 				}
+
+				// WHEN the query is the update mutation
+				// THEN the query matches the golden file for the update mutation
+				assertQueryMatches(t, q.Query, "testdata/mutation_update_work_item.graphql")
 
 				// Verify inputs if wantInputs is specified
 				if len(tt.wantInputs) > 0 {
@@ -1339,8 +1319,6 @@ func TestDeleteWorkItem(t *testing.T) {
 		},
 	}
 
-	schema := loadSchema(t)
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -1357,17 +1335,19 @@ func TestDeleteWorkItem(t *testing.T) {
 					return
 				}
 
-				if err := validateSchema(schema, q); err != nil {
-					http.Error(w, err.Error(), http.StatusBadRequest)
-					return
-				}
-
 				w.Header().Set("Content-Type", "application/json")
 
+				// GIVEN a DeleteWorkItem request
 				switch {
+				// WHEN the query is for the work item ID lookup
 				case strings.Contains(q.Query, "GetWorkItemID"):
+					// THEN the query matches the golden file for ID lookup
+					assertQueryMatches(t, q.Query, "testdata/query_get_work_item_id.graphql")
 					tt.getIDResponse.WriteTo(w)
+				// WHEN the query is the delete mutation
 				case strings.Contains(q.Query, "DeleteWorkItem"):
+					// THEN the query matches the golden file for the delete mutation
+					assertQueryMatches(t, q.Query, "testdata/mutation_delete_work_item.graphql")
 					if assert.NotNil(t, tt.deleteResponse) {
 						tt.deleteResponse.WriteTo(w)
 					}
@@ -1388,44 +1368,20 @@ func TestDeleteWorkItem(t *testing.T) {
 	}
 }
 
-func loadSchema(t *testing.T) *graphql.Schema {
+// assertQueryMatches reads the exact query file from `testdata` and asserts that the
+// received query string matches it (after trimming leading/trailing whitespace).
+// Exact query files in testdata/ contain the exact GraphQL query strings the client
+// is expected to produce, making query validation always active and intentional.
+func assertQueryMatches(t *testing.T, got, goldenFile string) {
 	t.Helper()
 
-	const filename = "schema/gitlab.graphql"
+	data, err := os.ReadFile(goldenFile)
+	require.NoError(t, err, "reading exact file %s", goldenFile)
 
-	fh, err := os.Open(filename)
-	if errors.Is(err, os.ErrNotExist) {
-		t.Skipf("GraphQL schema file %q is not available; generate it with: "+
-			"npm install -g get-graphql-schema && "+
-			"get-graphql-schema https://gitlab.com/api/graphql --sdl > schema/gitlab.graphql", filename)
-	}
-	require.NoError(t, err, "opening schema")
-
-	data, err := io.ReadAll(fh)
-	require.NoError(t, err)
-
-	schema, err := graphql.ParseSchema(string(data), nil)
-	require.NoError(t, err)
-
-	return schema
+	assert.Equal(t, strings.TrimSpace(string(data)), strings.TrimSpace(got))
 }
 
-func validateSchema(schema *graphql.Schema, query GraphQLQuery) error {
-	if schema == nil {
-		return nil
-	}
-
-	queryErrors := schema.ValidateWithVariables(query.Query, query.Variables)
-
-	var errs error
-	for _, err := range queryErrors {
-		errs = errors.Join(errs, err)
-	}
-
-	return errs
-}
-
-func setupWorkItemTypesHandler(t *testing.T, mux *http.ServeMux, schema *graphql.Schema, response io.Reader) {
+func setupWorkItemTypesHandler(t *testing.T, mux *http.ServeMux, response io.Reader) {
 	t.Helper()
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
@@ -1438,10 +1394,7 @@ func setupWorkItemTypesHandler(t *testing.T, mux *http.ServeMux, schema *graphql
 			return
 		}
 
-		if err := validateSchema(schema, q); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+		assertQueryMatches(t, q.Query, "testdata/query_list_work_item_types.graphql")
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = io.Copy(w, response)
@@ -1451,10 +1404,9 @@ func setupWorkItemTypesHandler(t *testing.T, mux *http.ServeMux, schema *graphql
 func TestListWorkItemTypes_SystemAndCustomTypes(t *testing.T) {
 	t.Parallel()
 
-	schema := loadSchema(t)
 	mux, client := setup(t)
 
-	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+	setupWorkItemTypesHandler(t, mux, strings.NewReader(`{
 		"data": {
 			"namespace": {
 				"workItemTypes": {
@@ -1491,10 +1443,9 @@ func TestListWorkItemTypes_SystemAndCustomTypes(t *testing.T) {
 func TestListWorkItemTypes_FilterByName(t *testing.T) {
 	t.Parallel()
 
-	schema := loadSchema(t)
 	mux, client := setup(t)
 
-	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+	setupWorkItemTypesHandler(t, mux, strings.NewReader(`{
 		"data": {
 			"namespace": {
 				"workItemTypes": {
@@ -1524,10 +1475,9 @@ func TestListWorkItemTypes_FilterByName(t *testing.T) {
 func TestListWorkItemTypes_EmptyResponse(t *testing.T) {
 	t.Parallel()
 
-	schema := loadSchema(t)
 	mux, client := setup(t)
 
-	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+	setupWorkItemTypesHandler(t, mux, strings.NewReader(`{
 		"data": {
 			"namespace": {
 				"workItemTypes": {
@@ -1550,10 +1500,9 @@ func TestListWorkItemTypes_EmptyResponse(t *testing.T) {
 func TestListWorkItemTypes_NilOptDoesNotPanic(t *testing.T) {
 	t.Parallel()
 
-	schema := loadSchema(t)
 	mux, client := setup(t)
 
-	setupWorkItemTypesHandler(t, mux, schema, strings.NewReader(`{
+	setupWorkItemTypesHandler(t, mux, strings.NewReader(`{
 		"data": {
 			"namespace": {
 				"workItemTypes": {

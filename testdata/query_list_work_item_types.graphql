@@ -1,0 +1,32 @@
+query ListWorkItemTypes(
+  $namespacePath: ID!,
+  $name: IssueType,
+  $onlyAvailable: Boolean,
+  $after: String,
+  $before: String,
+  $first: Int,
+  $last: Int
+) {
+  namespace(fullPath: $namespacePath) {
+    workItemTypes(
+      name: $name,
+      onlyAvailable: $onlyAvailable,
+      after: $after,
+      before: $before,
+      first: $first,
+      last: $last
+    ) {
+      nodes {
+        id
+        name
+        enabled
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        startCursor
+        hasPreviousPage
+      }
+    }
+  }
+}
