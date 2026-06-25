@@ -122,6 +122,7 @@ func TestCommitCommentEventUnmarshal(t *testing.T) {
 			ProjectID:    5,
 			LineCode:     "bec9703f7a456cd2b4ab5fb3220ae016e3e394e3_0_1",
 			CommitID:     "cfe32cf61b73a0d5e9f13e774abde7ff789b1660",
+			DiscussionID: "e1c5835f5f99414806f6fe45b28s48cfebb89ee1",
 			System:       false,
 			StDiff: &Diff{
 				Diff:        "--- /dev/null\n+++ b/six\n@@ -0,0 +1 @@\n+Subproject commit 409f37c4f05865e4fb208c771485f211a22c4c2d\n",
@@ -439,6 +440,7 @@ func TestIssueCommentEventUnmarshal(t *testing.T) {
 			UpdatedAt:    "2015-05-17 17:06:40 UTC",
 			ProjectID:    5,
 			NoteableID:   92,
+			DiscussionID: "e1c5835f5f99414806f6fe45b28s48cfebb89ee1",
 			System:       false,
 			Description:  "Hello world",
 			Action:       CommentEventActionCreate,
@@ -679,12 +681,14 @@ func TestMergeCommentEventUnmarshal(t *testing.T) {
 		ObjectAttributes: MergeCommentEventObjectAttributes{
 			ID:           1244,
 			Note:         "This MR needs work.",
+			Description:  "This MR needs work.",
 			NoteableType: "MergeRequest",
 			AuthorID:     1,
 			CreatedAt:    "2015-05-17 18:21:36 UTC",
 			UpdatedAt:    "2015-05-17 18:21:36 UTC",
 			ProjectID:    5,
 			NoteableID:   7,
+			DiscussionID: "e1c5835f5f99414806f6fe45b28s48cfebb89ee1",
 			Action:       CommentEventActionCreate,
 			URL:          "http://example.com/gitlab-org/gitlab-test/merge_requests/1#note_1244",
 		},
@@ -1550,6 +1554,7 @@ func TestSnippetCommentEventUnmarshal(t *testing.T) {
 	assert.Equal(t, "Snippet", event.ObjectAttributes.NoteableType)
 	assert.Equal(t, int64(1), event.ObjectAttributes.AuthorID)
 	assert.Equal(t, int64(53), event.ObjectAttributes.NoteableID)
+	assert.Equal(t, "e1c5835f5f99414806f6fe45b28s48cfebb89ee1", event.ObjectAttributes.DiscussionID)
 	assert.Equal(t, CommentEventActionCreate, event.ObjectAttributes.Action)
 	assert.Equal(t, "http://example.com/gitlab-org/gitlab-test/snippets/53#note_1245", event.ObjectAttributes.URL)
 
