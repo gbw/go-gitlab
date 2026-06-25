@@ -1,3 +1,17 @@
+## 2.43.0
+
+### 🚀 Features
+
+- Support `discussion_id` field in commit and snippet comment webhook ([!2920](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2920)) by [vntw](https://gitlab.com/vntw)
+
+### 🔄 Other Changes
+
+- test(workitems): replace schema validation with exact query files ([!2928](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2928)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+
+
+# [2.43.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.42.0...v2.43.0) (2026-06-25)
+
 ## 2.42.0
 
 ### 🚀 Features
