@@ -1,0 +1,17 @@
+# Install mise and the project toolchain before any flow runs
+setup_script:
+  - curl https://mise.run | sh
+  - echo 'eval "$(~/.local/bin/mise activate bash --shims)"' >> ~/.bashrc
+  - eval "$(~/.local/bin/mise activate bash --shims)" && mise install
+  - eval "$(~/.local/bin/mise activate bash --shims)" && mise exec -- make setup
+
+# Cache Go module downloads and the mise tool cache between runs
+cache:
+  key:
+    files:
+      - go.mod
+      - go.sum
+  paths:
+    - ~/go/pkg/mod/
+    - ~/.cache/go-build/
+    - ~/.local/share/mise/
