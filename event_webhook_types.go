@@ -120,6 +120,7 @@ type CommitCommentEventObjectAttributes struct {
 	Attachment   string             `json:"attachment"`
 	LineCode     string             `json:"line_code"`
 	CommitID     string             `json:"commit_id"`
+	DiscussionID string             `json:"discussion_id"`
 	NoteableID   int64              `json:"noteable_id"`
 	System       bool               `json:"system"`
 	StDiff       *Diff              `json:"st_diff"`
@@ -1226,6 +1227,7 @@ type SnippetCommentEventObjectAttributes struct {
 	AuthorID     int64              `json:"author_id"`
 	CreatedAt    string             `json:"created_at"`
 	UpdatedAt    string             `json:"updated_at"`
+	DiscussionID string             `json:"discussion_id"`
 	ProjectID    int64              `json:"project_id"`
 	Attachment   string             `json:"attachment"`
 	LineCode     string             `json:"line_code"`
