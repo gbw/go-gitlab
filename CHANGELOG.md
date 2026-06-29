@@ -1,3 +1,23 @@
+## 2.44.0
+
+### 🚀 Features
+
+- feat: support renew application secret api endpoint ([!2934](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2934)) by [BoxBoxJason](https://gitlab.com/BoxBoxJason)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.6.0 ([!2930](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2930)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- test(workitems): split t.Run() sub-tests into individual parent test functions ([!2929](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2929)) by [Patrick Rice](https://gitlab.com/PatrickRice)
+
+
+
+# [2.44.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.43.0...v2.44.0) (2026-06-29)
+
+
+### Features
+
+* support renew application secret api endpoint ([576fa15](https://gitlab.com/gitlab-org/api/client-go/commit/576fa15ec5d4e26a21e7d5a006f2afcc6e3d59ac))
+
 ## 2.43.0
 
 ### 🚀 Features
