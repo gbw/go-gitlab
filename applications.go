@@ -39,6 +39,12 @@ type (
 		// GitLab API docs:
 		// https://docs.gitlab.com/api/applications/#delete-an-application
 		DeleteApplication(application int64, options ...RequestOptionFunc) (*Response, error)
+
+		// RenewApplicationSecret renews the secret for a specific application.
+		//
+		// GitLab API docs:
+		// https://docs.gitlab.com/api/applications/#renew-an-application-secret
+		RenewApplicationSecret(application int64, options ...RequestOptionFunc) (*Application, *Response, error)
 	}
 
 	// ApplicationsService handles communication with administrables applications
@@ -105,4 +111,16 @@ func (s *ApplicationsService) DeleteApplication(application int64, options ...Re
 		withRequestOpts(options...),
 	)
 	return resp, err
+}
+
+// RenewApplicationSecret renews the secret for a specific application.
+//
+// GitLab API docs:
+// https://docs.gitlab.com/api/applications/#renew-an-application-secret
+func (s *ApplicationsService) RenewApplicationSecret(application int64, options ...RequestOptionFunc) (*Application, *Response, error) {
+	return do[*Application](s.client,
+		withMethod(http.MethodPost),
+		withPath("applications/%d/renew-secret", application),
+		withRequestOpts(options...),
+	)
 }

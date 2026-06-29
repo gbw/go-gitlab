@@ -102,3 +102,41 @@ func TestDeleteApplication(t *testing.T) {
 
 	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
+
+func TestRenewApplicationSecret(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	// GIVEN a server that returns an application with a renewed secret
+	mux.HandleFunc("/api/v4/applications/1/renew-secret",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			fmt.Fprint(w, `
+{
+    "id":1,
+    "application_id":"abc123",
+    "application_name":"testApplication",
+    "secret":"newSecret",
+    "callback_url":"http://example.com",
+    "confidential":true,
+    "scopes":["api"]
+}`)
+		},
+	)
+
+	// WHEN renewing the secret for an application
+	app, _, err := client.Applications.RenewApplicationSecret(1)
+	require.NoError(t, err)
+
+	// THEN the returned application contains the new secret
+	want := &Application{
+		ID:              1,
+		ApplicationID:   "abc123",
+		ApplicationName: "testApplication",
+		Secret:          "newSecret",
+		CallbackURL:     "http://example.com",
+		Confidential:    true,
+		Scopes:          []string{"api"},
+	}
+	assert.Equal(t, want, app)
+}

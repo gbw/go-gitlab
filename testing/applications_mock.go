@@ -172,3 +172,48 @@ func (c *MockApplicationsServiceInterfaceListApplicationsCall) DoAndReturn(f fun
 	c.Call = c.Call.DoAndReturn(f)
 	return c
 }
+
+// RenewApplicationSecret mocks base method.
+func (m *MockApplicationsServiceInterface) RenewApplicationSecret(application int64, options ...gitlab.RequestOptionFunc) (*gitlab.Application, *gitlab.Response, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{application}
+	for _, a := range options {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RenewApplicationSecret", varargs...)
+	ret0, _ := ret[0].(*gitlab.Application)
+	ret1, _ := ret[1].(*gitlab.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// RenewApplicationSecret indicates an expected call of RenewApplicationSecret.
+func (mr *MockApplicationsServiceInterfaceMockRecorder) RenewApplicationSecret(application any, options ...any) *MockApplicationsServiceInterfaceRenewApplicationSecretCall {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{application}, options...)
+	call := mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RenewApplicationSecret", reflect.TypeOf((*MockApplicationsServiceInterface)(nil).RenewApplicationSecret), varargs...)
+	return &MockApplicationsServiceInterfaceRenewApplicationSecretCall{Call: call}
+}
+
+// MockApplicationsServiceInterfaceRenewApplicationSecretCall wrap *gomock.Call
+type MockApplicationsServiceInterfaceRenewApplicationSecretCall struct {
+	*gomock.Call
+}
+
+// Return rewrite *gomock.Call.Return
+func (c *MockApplicationsServiceInterfaceRenewApplicationSecretCall) Return(arg0 *gitlab.Application, arg1 *gitlab.Response, arg2 error) *MockApplicationsServiceInterfaceRenewApplicationSecretCall {
+	c.Call = c.Call.Return(arg0, arg1, arg2)
+	return c
+}
+
+// Do rewrite *gomock.Call.Do
+func (c *MockApplicationsServiceInterfaceRenewApplicationSecretCall) Do(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Application, *gitlab.Response, error)) *MockApplicationsServiceInterfaceRenewApplicationSecretCall {
+	c.Call = c.Call.Do(f)
+	return c
+}
+
+// DoAndReturn rewrite *gomock.Call.DoAndReturn
+func (c *MockApplicationsServiceInterfaceRenewApplicationSecretCall) DoAndReturn(f func(int64, ...gitlab.RequestOptionFunc) (*gitlab.Application, *gitlab.Response, error)) *MockApplicationsServiceInterfaceRenewApplicationSecretCall {
+	c.Call = c.Call.DoAndReturn(f)
+	return c
+}
