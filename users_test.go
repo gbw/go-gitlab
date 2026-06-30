@@ -1269,6 +1269,45 @@ func TestModifyUserWithViewDiffsFileByFile(t *testing.T) {
 	assert.Equal(t, want, user)
 }
 
+func TestModifyUserWithAuditor(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	path := "/api/v4/users/1"
+
+	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		assert.Contains(t, r.Header.Get("Content-Type"), "application/json")
+		assert.NotEqual(t, -1, r.ContentLength)
+
+		testJSONBody(t, r, `{
+			"auditor": true
+		}`)
+
+		fmt.Fprint(w, `{
+			"id": 1,
+			"username": "john_smith",
+			"email": "john@example.com",
+			"name": "John Smith",
+			"is_auditor": true
+		}`)
+	})
+
+	user, _, err := client.Users.ModifyUser(1, &ModifyUserOptions{
+		Auditor: Ptr(true),
+	})
+	assert.NoError(t, err)
+
+	want := &User{
+		ID:        1,
+		Username:  "john_smith",
+		Email:     "john@example.com",
+		Name:      "John Smith",
+		IsAuditor: true,
+	}
+	assert.Equal(t, want, user)
+}
+
 func TestCreateUserWithNewFields(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)
