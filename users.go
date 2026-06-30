@@ -565,6 +565,7 @@ func (s *UsersService) CreateUser(opt *CreateUserOptions, options ...RequestOpti
 // GitLab API docs: https://docs.gitlab.com/api/users/#modify-a-user
 type ModifyUserOptions struct {
 	Admin               *bool       `url:"admin,omitempty" json:"admin,omitempty"`
+	Auditor             *bool       `url:"auditor,omitempty" json:"auditor,omitempty"`
 	Avatar              *UserAvatar `url:"-" json:"avatar,omitempty"`
 	Bio                 *string     `url:"bio,omitempty" json:"bio,omitempty"`
 	CanCreateGroup      *bool       `url:"can_create_group,omitempty" json:"can_create_group,omitempty"`
