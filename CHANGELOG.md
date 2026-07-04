@@ -1,3 +1,24 @@
+## 2.45.0
+
+### 🚀 Features
+
+- feat: add security scan profile GraphQL service ([!2932](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2932)) by [Oscar Tovar](https://gitlab.com/hacks4oats)
+
+### 🔄 Other Changes
+
+- chore(deps): update docker docker tag to v29.6.1 ([!2941](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2941)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module golang.org/x/text to v0.38.0 ([!2938](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2938)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- Add Auditor field in ModifyUserOptions ([!2935](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2935)) by [Giannis Kepas](https://gitlab.com/gkepas)
+
+
+
+# [2.45.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.44.0...v2.45.0) (2026-07-04)
+
+
+### Features
+
+* add security scan profile GraphQL service ([fbd1bcd](https://gitlab.com/gitlab-org/api/client-go/commit/fbd1bcd0a82bea085ef42f58719f024de902cdd2))
+
 ## 2.44.0
 
 ### 🚀 Features
