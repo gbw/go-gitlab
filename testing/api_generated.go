@@ -151,6 +151,7 @@ package testing
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=secure_files_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 SecureFilesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=security_attributes_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 SecurityAttributesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=security_categories_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 SecurityCategoriesServiceInterface
+//go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=security_scan_profiles_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 SecurityScanProfilesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=services_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 ServicesServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=settings_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 SettingsServiceInterface
 //go:generate go run go.uber.org/mock/mockgen@v0.6.0 -typed -destination=sidekiq_metrics_mock.go -write_package_comment=false -package=testing gitlab.com/gitlab-org/api/client-go/v2 SidekiqServiceInterface
