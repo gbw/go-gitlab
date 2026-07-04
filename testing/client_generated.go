@@ -159,6 +159,7 @@ type testClientMocks struct {
 	MockSearch                              *MockSearchServiceInterface
 	MockSecurityAttributes                  *MockSecurityAttributesServiceInterface
 	MockSecurityCategories                  *MockSecurityCategoriesServiceInterface
+	MockSecurityScanProfiles                *MockSecurityScanProfilesServiceInterface
 	MockSecureFiles                         *MockSecureFilesServiceInterface
 	MockServices                            *MockServicesServiceInterface
 	MockSettings                            *MockSettingsServiceInterface
@@ -327,6 +328,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 	mockSearch := NewMockSearchServiceInterface(ctrl)
 	mockSecurityAttributes := NewMockSecurityAttributesServiceInterface(ctrl)
 	mockSecurityCategories := NewMockSecurityCategoriesServiceInterface(ctrl)
+	mockSecurityScanProfiles := NewMockSecurityScanProfilesServiceInterface(ctrl)
 	mockSecureFiles := NewMockSecureFilesServiceInterface(ctrl)
 	mockServices := NewMockServicesServiceInterface(ctrl)
 	mockSettings := NewMockSettingsServiceInterface(ctrl)
@@ -494,6 +496,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 		Search:                              mockSearch,
 		SecurityAttributes:                  mockSecurityAttributes,
 		SecurityCategories:                  mockSecurityCategories,
+		SecurityScanProfiles:                mockSecurityScanProfiles,
 		SecureFiles:                         mockSecureFiles,
 		Services:                            mockServices,
 		Settings:                            mockSettings,
@@ -673,6 +676,7 @@ func newTestClientWithCtrl(ctrl *gomock.Controller, options ...gitlab.ClientOpti
 			MockSearch:                              mockSearch,
 			MockSecurityAttributes:                  mockSecurityAttributes,
 			MockSecurityCategories:                  mockSecurityCategories,
+			MockSecurityScanProfiles:                mockSecurityScanProfiles,
 			MockSecureFiles:                         mockSecureFiles,
 			MockServices:                            mockServices,
 			MockSettings:                            mockSettings,

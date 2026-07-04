@@ -151,6 +151,7 @@ var serviceMap = map[any]any{
 	&SecureFilesService{}:                         (*SecureFilesServiceInterface)(nil),
 	&SecurityAttributesService{}:                  (*SecurityAttributesServiceInterface)(nil),
 	&SecurityCategoriesService{}:                  (*SecurityCategoriesServiceInterface)(nil),
+	&SecurityScanProfilesService{}:                (*SecurityScanProfilesServiceInterface)(nil),
 	&ServicesService{}:                            (*ServicesServiceInterface)(nil),
 	&SettingsService{}:                            (*SettingsServiceInterface)(nil),
 	&SidekiqService{}:                             (*SidekiqServiceInterface)(nil),
