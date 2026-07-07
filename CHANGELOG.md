@@ -1,3 +1,13 @@
+## 2.46.0
+
+### 🚀 Features
+
+- Add projects reviewer_assignment_strategy ([!2940](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2940)) by [Giannis Kepas](https://gitlab.com/gkepas)
+
+
+
+# [2.46.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.45.0...v2.46.0) (2026-07-07)
+
 ## 2.45.0
 
 ### 🚀 Features
