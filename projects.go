@@ -485,6 +485,7 @@ type Project struct {
 	ExternalAuthorizationClassificationLabel  string                                      `json:"external_authorization_classification_label"`
 	RequirementsEnabled                       bool                                        `json:"requirements_enabled"`
 	RequirementsAccessLevel                   AccessControlValue                          `json:"requirements_access_level"`
+	ReviewerAssignmentStrategy                ReviewerAssignmentStrategyValue             `json:"reviewer_assignment_strategy"`
 	SecurityAndComplianceEnabled              bool                                        `json:"security_and_compliance_enabled"`
 	SecurityAndComplianceAccessLevel          AccessControlValue                          `json:"security_and_compliance_access_level"`
 	MergeRequestDefaultTargetSelf             bool                                        `json:"mr_default_target_self"`
@@ -915,6 +916,7 @@ type CreateProjectOptions struct {
 	RequestAccessEnabled                      *bool                                `url:"request_access_enabled,omitempty" json:"request_access_enabled,omitempty"`
 	RequirementsAccessLevel                   *AccessControlValue                  `url:"requirements_access_level,omitempty" json:"requirements_access_level,omitempty"`
 	ResolveOutdatedDiffDiscussions            *bool                                `url:"resolve_outdated_diff_discussions,omitempty" json:"resolve_outdated_diff_discussions,omitempty"`
+	ReviewerAssignmentStrategy                *ReviewerAssignmentStrategyValue     `url:"reviewer_assignment_strategy,omitempty" json:"reviewer_assignment_strategy,omitempty"`
 	SecurityAndComplianceAccessLevel          *AccessControlValue                  `url:"security_and_compliance_access_level,omitempty" json:"security_and_compliance_access_level,omitempty"`
 	SharedRunnersEnabled                      *bool                                `url:"shared_runners_enabled,omitempty" json:"shared_runners_enabled,omitempty"`
 	GroupRunnersEnabled                       *bool                                `url:"group_runners_enabled,omitempty" json:"group_runners_enabled,omitempty"`
@@ -1124,6 +1126,7 @@ type EditProjectOptions struct {
 	RequestAccessEnabled                      *bool                                        `url:"request_access_enabled,omitempty" json:"request_access_enabled,omitempty"`
 	RequirementsAccessLevel                   *AccessControlValue                          `url:"requirements_access_level,omitempty" json:"requirements_access_level,omitempty"`
 	ResolveOutdatedDiffDiscussions            *bool                                        `url:"resolve_outdated_diff_discussions,omitempty" json:"resolve_outdated_diff_discussions,omitempty"`
+	ReviewerAssignmentStrategy                *ReviewerAssignmentStrategyValue             `url:"reviewer_assignment_strategy,omitempty" json:"reviewer_assignment_strategy,omitempty"`
 	SecurityAndComplianceAccessLevel          *AccessControlValue                          `url:"security_and_compliance_access_level,omitempty" json:"security_and_compliance_access_level,omitempty"`
 	ServiceDeskEnabled                        *bool                                        `url:"service_desk_enabled,omitempty" json:"service_desk_enabled,omitempty"`
 	SharedRunnersEnabled                      *bool                                        `url:"shared_runners_enabled,omitempty" json:"shared_runners_enabled,omitempty"`

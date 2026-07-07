@@ -384,6 +384,32 @@ func TestEditProject(t *testing.T) {
 	assert.Equal(t, int64(14), project.CIDeletePipelinesInSeconds)
 }
 
+func TestEditProjectWithReviewerAssignmentStrategy(t *testing.T) {
+	t.Parallel()
+	mux, client := setup(t)
+
+	opt := &EditProjectOptions{
+		ReviewerAssignmentStrategy: Ptr(CodeOwnersReviewerAssignmentStrategy),
+	}
+
+	mux.HandleFunc("/api/v4/projects/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPut)
+		testBodyJSON(t, r, map[string]any{
+			"reviewer_assignment_strategy": "code_owners",
+		})
+
+		fmt.Fprint(w, `{
+			"id": 1,
+			"reviewer_assignment_strategy": "code_owners"
+		}`)
+	})
+
+	project, resp, err := client.Projects.EditProject(1, opt)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, CodeOwnersReviewerAssignmentStrategy, project.ReviewerAssignmentStrategy)
+}
+
 func TestListStarredProjects(t *testing.T) {
 	t.Parallel()
 	mux, client := setup(t)

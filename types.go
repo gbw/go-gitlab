@@ -58,6 +58,22 @@ const (
 	PublicAccessControl   AccessControlValue = "public"
 )
 
+// ReviewerAssignmentStrategyValue represents a reviewer assignment strategy
+// within GitLab, used for automatically assigning reviewers to merge
+// requests.
+//
+// GitLab API docs: https://docs.gitlab.com/api/projects/
+type ReviewerAssignmentStrategyValue string
+
+// List of available reviewer assignment strategy values.
+//
+// GitLab API docs: https://docs.gitlab.com/api/projects/
+const (
+	DisabledReviewerAssignmentStrategy   ReviewerAssignmentStrategyValue = "disabled"
+	CodeOwnersReviewerAssignmentStrategy ReviewerAssignmentStrategyValue = "code_owners"
+	DAPPoweredReviewerAssignmentStrategy ReviewerAssignmentStrategyValue = "dap_powered"
+)
+
 // AccessLevelValue represents a permission level within GitLab.
 //
 // GitLab API docs: https://docs.gitlab.com/user/permissions/#roles
