@@ -40,6 +40,39 @@ type (
 
 var _ SecurityScanProfilesServiceInterface = (*SecurityScanProfilesService)(nil)
 
+const (
+	securityScanProfileAttachMutation = `
+			mutation SecurityScanProfileAttach($input: SecurityScanProfileAttachInput!) {
+				securityScanProfileAttach(input: $input) {
+					errors
+				}
+			}
+		`
+
+	securityScanProfileDetachMutation = `
+			mutation SecurityScanProfileDetach($input: SecurityScanProfileDetachInput!) {
+				securityScanProfileDetach(input: $input) {
+					errors
+				}
+			}
+		`
+
+	scanProfileStatusesQuery = `
+			query($fullPath: ID!) {
+				project(fullPath: $fullPath) {
+					scanProfileStatuses {
+						status
+						scanProfile {
+							id
+							name
+							scanType
+						}
+					}
+				}
+			}
+		`
+)
+
 // ScanProfile represents a security scan profile.
 //
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#scanprofiletype
@@ -124,13 +157,7 @@ func (s *SecurityScanProfilesService) AttachSecurityScanProfile(opt *AttachSecur
 	}
 
 	mutation := GraphQLQuery{
-		Query: `
-			mutation SecurityScanProfileAttach($input: SecurityScanProfileAttachInput!) {
-				securityScanProfileAttach(input: $input) {
-					errors
-				}
-			}
-		`,
+		Query: securityScanProfileAttachMutation,
 		Variables: map[string]any{
 			"input": map[string]any{
 				"securityScanProfileId": opt.SecurityScanProfileID,
@@ -173,13 +200,7 @@ func (s *SecurityScanProfilesService) DetachSecurityScanProfile(opt *DetachSecur
 	}
 
 	mutation := GraphQLQuery{
-		Query: `
-			mutation SecurityScanProfileDetach($input: SecurityScanProfileDetachInput!) {
-				securityScanProfileDetach(input: $input) {
-					errors
-				}
-			}
-		`,
+		Query: securityScanProfileDetachMutation,
 		Variables: map[string]any{
 			"input": map[string]any{
 				"securityScanProfileId": opt.SecurityScanProfileID,
@@ -219,20 +240,7 @@ func (s *SecurityScanProfilesService) DetachSecurityScanProfile(opt *DetachSecur
 // GitLab API docs: https://docs.gitlab.com/api/graphql/reference/#project-scanprofilestatuses
 func (s *SecurityScanProfilesService) ListProjectScanProfileStatuses(projectFullPath string, options ...RequestOptionFunc) ([]ScanProfileStatus, *Response, error) {
 	query := GraphQLQuery{
-		Query: `
-			query($fullPath: ID!) {
-				project(fullPath: $fullPath) {
-					scanProfileStatuses {
-						status
-						scanProfile {
-							id
-							name
-							scanType
-						}
-					}
-				}
-			}
-		`,
+		Query: scanProfileStatusesQuery,
 		Variables: map[string]any{
 			"fullPath": projectFullPath,
 		},
