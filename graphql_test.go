@@ -1,6 +1,7 @@
 package gitlab
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"testing"
@@ -8,6 +9,16 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+// testGraphQLRequestBody asserts that the request body sent to the GraphQL
+// endpoint exactly matches want's query and variables.
+func testGraphQLRequestBody(t *testing.T, r *http.Request, want GraphQLQuery) {
+	t.Helper()
+
+	body, err := json.Marshal(want)
+	require.NoError(t, err)
+	testJSONBody(t, r, string(body))
+}
 
 func TestGraphQL_Do_Success(t *testing.T) {
 	t.Parallel()

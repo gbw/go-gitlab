@@ -16,6 +16,16 @@ func TestSecurityScanProfiles_AttachSecurityScanProfile(t *testing.T) {
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testGraphQLRequestBody(t, r, GraphQLQuery{
+			Query: securityScanProfileAttachMutation,
+			Variables: map[string]any{
+				"input": map[string]any{
+					"securityScanProfileId": SecurityScanProfileGID("dependency_scanning_post_processing"),
+					"projectIds":            []string{"gid://gitlab/Project/1"},
+					"groupIds":              []string{},
+				},
+			},
+		})
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `
 			{
@@ -52,6 +62,16 @@ func TestSecurityScanProfiles_AttachSecurityScanProfile_errors(t *testing.T) {
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testGraphQLRequestBody(t, r, GraphQLQuery{
+			Query: securityScanProfileAttachMutation,
+			Variables: map[string]any{
+				"input": map[string]any{
+					"securityScanProfileId": SecurityScanProfileGID("dependency_scanning_post_processing"),
+					"projectIds":            []string{"gid://gitlab/Project/1"},
+					"groupIds":              []string{},
+				},
+			},
+		})
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `
 			{
@@ -81,6 +101,16 @@ func TestSecurityScanProfiles_AttachSecurityScanProfile_topLevelErrors(t *testin
 	// GraphQL error with HTTP 200 and a null data payload.
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testGraphQLRequestBody(t, r, GraphQLQuery{
+			Query: securityScanProfileAttachMutation,
+			Variables: map[string]any{
+				"input": map[string]any{
+					"securityScanProfileId": SecurityScanProfileGID("dependency_scanning_post_processing"),
+					"projectIds":            []string{"gid://gitlab/Project/1"},
+					"groupIds":              []string{},
+				},
+			},
+		})
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `
 			{
@@ -107,6 +137,16 @@ func TestSecurityScanProfiles_DetachSecurityScanProfile(t *testing.T) {
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testGraphQLRequestBody(t, r, GraphQLQuery{
+			Query: securityScanProfileDetachMutation,
+			Variables: map[string]any{
+				"input": map[string]any{
+					"securityScanProfileId": SecurityScanProfileGID("dependency_scanning_post_processing"),
+					"projectIds":            []string{"gid://gitlab/Project/1"},
+					"groupIds":              []string{},
+				},
+			},
+		})
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `
 			{
@@ -143,6 +183,16 @@ func TestSecurityScanProfiles_DetachSecurityScanProfile_errors(t *testing.T) {
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testGraphQLRequestBody(t, r, GraphQLQuery{
+			Query: securityScanProfileDetachMutation,
+			Variables: map[string]any{
+				"input": map[string]any{
+					"securityScanProfileId": SecurityScanProfileGID("dependency_scanning_post_processing"),
+					"projectIds":            []string{"gid://gitlab/Project/1"},
+					"groupIds":              []string{},
+				},
+			},
+		})
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `
 			{
@@ -170,6 +220,12 @@ func TestSecurityScanProfiles_ListProjectScanProfileStatuses(t *testing.T) {
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testGraphQLRequestBody(t, r, GraphQLQuery{
+			Query: scanProfileStatusesQuery,
+			Variables: map[string]any{
+				"fullPath": "mygroup/myproject",
+			},
+		})
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `
 			{
@@ -214,6 +270,12 @@ func TestSecurityScanProfiles_ListProjectScanProfileStatuses_projectNotFound(t *
 
 	mux.HandleFunc("/api/graphql", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
+		testGraphQLRequestBody(t, r, GraphQLQuery{
+			Query: scanProfileStatusesQuery,
+			Variables: map[string]any{
+				"fullPath": "nonexistent/project",
+			},
+		})
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `{"data": {"project": null}}`)
 	})
