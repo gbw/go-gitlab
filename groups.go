@@ -350,6 +350,9 @@ type Group struct {
 	MathRenderingLimitsEnabled     bool `json:"math_rendering_limits_enabled"`
 	LockMathRenderingLimitsEnabled bool `json:"lock_math_rendering_limits_enabled"`
 
+	// Customer relations management
+	CRMEnabled bool `json:"crm_enabled"`
+
 	// Deprecated: will be removed in v5 of the API, use ListGroupProjects instead
 	Projects []*Project `json:"projects"`
 
@@ -602,6 +605,8 @@ type CreateGroupOptions struct {
 
 	MathRenderingLimitsEnabled *bool `url:"math_rendering_limits_enabled,omitempty" json:"math_rendering_limits_enabled,omitempty"`
 
+	CRMEnabled *bool `url:"crm_enabled,omitempty" json:"crm_enabled,omitempty"`
+
 	WebBasedCommitSigningEnabled *bool `url:"web_based_commit_signing_enabled,omitempty" json:"web_based_commit_signing_enabled,omitempty"`
 	AllowPersonalSnippets        *bool `url:"allow_personal_snippets,omitempty" json:"allow_personal_snippets,omitempty"`
 }
@@ -752,6 +757,8 @@ type UpdateGroupOptions struct {
 	LockMathRenderingLimitsEnabled *bool                 `url:"lock_math_rendering_limits_enabled,omitempty" json:"lock_math_rendering_limits_enabled,omitempty"`
 	DuoFeaturesEnabled             *bool                 `url:"duo_features_enabled,omitempty" json:"duo_features_enabled,omitempty"`
 	LockDuoFeaturesEnabled         *bool                 `url:"lock_duo_features_enabled,omitempty" json:"lock_duo_features_enabled,omitempty"`
+
+	CRMEnabled *bool `url:"crm_enabled,omitempty" json:"crm_enabled,omitempty"`
 
 	WebBasedCommitSigningEnabled *bool `url:"web_based_commit_signing_enabled,omitempty" json:"web_based_commit_signing_enabled,omitempty"`
 	AllowPersonalSnippets        *bool `url:"allow_personal_snippets,omitempty" json:"allow_personal_snippets,omitempty"`

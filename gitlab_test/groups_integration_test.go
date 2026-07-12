@@ -254,6 +254,10 @@ func Test_GroupsCreateGroup_AllFields_Integration(t *testing.T) {
 		"default_branch_protection_defaults": "nested struct; covered by CodeOwnerApprovalRequired test",
 		"enabled_git_access_protocol":        "not returned in create response; tested via update",
 
+		// Skip due to async creation
+		// see: https://gitlab.com/gitlab-community/gitlab-org/gitlab/-/blob/master/app/services/groups/create_service.rb?ref_type=heads#L93
+		"crm_enabled": "Gets set as part of a background process, so race conditions cause it to come back as `false` on the response",
+
 		// Duo isn't yet enabled on the integration test instance — see
 		// https://gitlab.com/gitlab-org/terraform-provider-gitlab/-/merge_requests/3086
 		// for the in-flight work to wire it up. Re-enable when that lands.
@@ -388,6 +392,11 @@ func Test_GroupsUpdateGroup_AllFields_Integration(t *testing.T) {
 		"default_branch_protection":            "deprecated",
 		"default_branch_protection_defaults":   "nested struct; covered by CodeOwnerApprovalRequired test",
 		"step_up_auth_required_oauth_provider": "needs a configured OAuth provider",
+
+		// Skip due to async creation
+		// see: https://gitlab.com/gitlab-community/gitlab-org/gitlab/-/blob/master/app/services/groups/create_service.rb?ref_type=heads#L93
+		"crm_enabled": "Gets set as part of a background process, so race conditions cause it to come back as `false` on the response",
+
 		// Duo isn't yet enabled on the integration test instance — see
 		// https://gitlab.com/gitlab-org/terraform-provider-gitlab/-/merge_requests/3086
 		// for the in-flight work to wire it up. Re-enable when that lands.

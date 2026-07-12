@@ -145,7 +145,8 @@ func TestGetGroup_FullResponseFields(t *testing.T) {
 				"duo_features_enabled": true,
 				"lock_duo_features_enabled": true,
 				"math_rendering_limits_enabled": true,
-				"lock_math_rendering_limits_enabled": true
+				"lock_math_rendering_limits_enabled": true,
+				"crm_enabled": true
 			}`)
 		})
 
@@ -167,6 +168,7 @@ func TestGetGroup_FullResponseFields(t *testing.T) {
 		LockDuoFeaturesEnabled:               true,
 		MathRenderingLimitsEnabled:           true,
 		LockMathRenderingLimitsEnabled:       true,
+		CRMEnabled:                           true,
 	}
 	assert.Equal(t, want, group)
 }
@@ -251,6 +253,8 @@ func TestCreateGroup_FullAttributes(t *testing.T) {
 		AutoBanUserOnExcessiveProjectsDownload:      Ptr(true),
 
 		MathRenderingLimitsEnabled: Ptr(true),
+
+		CRMEnabled: Ptr(true),
 
 		WebBasedCommitSigningEnabled: Ptr(true),
 		AllowPersonalSnippets:        Ptr(true),
