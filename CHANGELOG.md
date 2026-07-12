@@ -1,3 +1,20 @@
+## 2.47.0
+
+### 🚀 Features
+
+- Expose crm enabled on groups ([!2933](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2933)) by [Jimmy Spagnola](https://gitlab.com/jspagnola)
+
+### 🔄 Other Changes
+
+- chore(deps): update module github.com/google/cel-go to v0.29.1 ([!2948](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2948)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module github.com/google/cel-go to v0.29.0 ([!2943](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2943)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- chore(deps): update module buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go to v1.36.11-20260709200747-435963d16310.1 ([!2946](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2946)) by [GitLab Dependency Bot](https://gitlab.com/gitlab-dependency-update-bot)
+- test(security-scan-profiles): Validate GraphQL request structure ([!2942](https://gitlab.com/gitlab-org/api/client-go/-/merge_requests/2942)) by [Oscar Tovar](https://gitlab.com/hacks4oats)
+
+
+
+# [2.47.0](https://gitlab.com/gitlab-org/api/client-go/compare/v2.46.0...v2.47.0) (2026-07-12)
+
 ## 2.46.0
 
 ### 🚀 Features
